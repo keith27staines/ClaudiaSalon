@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="EditSaleViewController">
+            <connections>
+                <outlet property="cancelButton" destination="SGM-s6-MYi" id="SOg-YS-btp"/>
+                <outlet property="chooseItemsLabel" destination="ZaP-is-LDd" id="jdJ-0a-Leq"/>
+                <outlet property="doneButton" destination="BSW-wn-TrX" id="jp8-gj-FB3"/>
+                <outlet property="editButton" destination="Wi0-bV-Q76" id="9l2-Kt-s6L"/>
+                <outlet property="makePaymentViewController" destination="uLj-r0-uhF" id="mOg-o0-Nqz"/>
+                <outlet property="nextStep" destination="nqh-tj-4C0" id="61b-xw-soT"/>
+                <outlet property="panelTitle" destination="Y6q-m4-n1y" id="DNO-DN-D2R"/>
+                <outlet property="previousStep" destination="LyM-0O-Btl" id="3TE-gI-k9f"/>
+                <outlet property="receiptPrinterWindowController" destination="ye7-H9-W13" id="s6H-DT-peU"/>
+                <outlet property="selectCustomerLabel" destination="015-6n-DJn" id="Rdt-rs-sSE"/>
+                <outlet property="selectCustomerViewController" destination="kct-he-UEn" id="a2i-bc-zwA"/>
+                <outlet property="selectItemsViewController" destination="yxg-bu-GvJ" id="wEr-IB-9nz"/>
+                <outlet property="takePaymentLabel" destination="TrK-sv-Px4" id="jfx-gI-7ti"/>
+                <outlet property="view" destination="LuO-rj-gjL" id="nV3-yU-Ib7"/>
+                <outlet property="wizardStepContainerView" destination="D4d-Aa-k2R" id="aCu-Kl-ynU"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <viewController id="kct-he-UEn" customClass="SelectCustomerStepViewController">
+            <connections>
+                <outlet property="delegate" destination="-2" id="Kft-Vl-BdF"/>
+            </connections>
+        </viewController>
+        <viewController id="yxg-bu-GvJ" customClass="SelectItemsStepViewController">
+            <connections>
+                <outlet property="delegate" destination="-2" id="xn8-I2-cs5"/>
+            </connections>
+        </viewController>
+        <viewController id="uLj-r0-uhF" customClass="MakePaymentStepViewController">
+            <connections>
+                <outlet property="delegate" destination="-2" id="lwQ-AU-tSr"/>
+            </connections>
+        </viewController>
+        <customObject id="ye7-H9-W13" customClass="AMCReceiptWindowController">
+            <connections>
+                <outlet property="delegate" destination="-2" id="ngZ-0B-xuq"/>
+            </connections>
+        </customObject>
+        <customView id="LuO-rj-gjL">
+            <rect key="frame" x="0.0" y="0.0" width="1303" height="812"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y6q-m4-n1y">
+                    <rect key="frame" x="621" y="770" width="94" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Panel Title" id="sSj-eW-Rby">
+                        <font key="font" metaFont="system" size="18"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wi0-bV-Q76">
+                    <rect key="frame" x="1245" y="765" width="38" height="28"/>
+                    <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9L3-Td-DBK">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                        <string key="keyEquivalent">e</string>
+                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="enterEditMode:" target="-2" id="Ykp-V5-Wl0"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BSW-wn-TrX">
+                    <rect key="frame" x="1154" y="28" width="129" height="28"/>
+                    <buttonCell key="cell" type="smallSquare" title="Done" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="G5G-m7-17N">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="doneButton:" target="-2" id="qNM-oF-7kU"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SGM-s6-MYi">
+                    <rect key="frame" x="635" y="28" width="129" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="129" id="8wY-Dk-Cos"/>
+                        <constraint firstAttribute="height" constant="26" id="akY-h3-L8v"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" title="Cancel" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Fa1-zz-5K0">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cancelButton:" target="-2" id="pyV-2e-M3s"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LyM-0O-Btl">
+                    <rect key="frame" x="830" y="28" width="129" height="28"/>
+                    <buttonCell key="cell" type="smallSquare" title="⬅︎ Previous" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="W16-Zl-B6v">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="18" name="HiraKakuProN-W3"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="previousStep:" target="-2" id="b7B-r0-QdF"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nqh-tj-4C0">
+                    <rect key="frame" x="971" y="28" width="129" height="28"/>
+                    <buttonCell key="cell" type="smallSquare" title="Next ➡" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="w5f-qb-Wwj">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="18" name="HiraKakuProN-W3"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="nextStep:" target="-2" id="Ldb-Fh-U60"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="015-6n-DJn">
+                    <rect key="frame" x="376" y="713" width="148" height="27"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="Select Customer" drawsBackground="YES" id="t2q-W6-jkP">
+                        <font key="font" metaFont="system" size="18"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZaP-is-LDd">
+                    <rect key="frame" x="594" y="713" width="148" height="27"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="148" id="j3e-RV-XyA"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="Choose items" drawsBackground="YES" id="tar-pF-lBe">
+                        <font key="font" metaFont="system" size="18"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TrK-sv-Px4">
+                    <rect key="frame" x="812" y="713" width="148" height="27"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="Take payment" drawsBackground="YES" id="Uvh-Ui-RBA">
+                        <font key="font" metaFont="system" size="18"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </textFieldCell>
+                </textField>
+                <customView identifier="Wizard Step Container View" appearanceType="aqua" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D4d-Aa-k2R" userLabel="Wizard Step Container View">
+                    <rect key="frame" x="48" y="83" width="1235" height="605"/>
+                </customView>
+                <box appearanceType="aqua" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="GDe-TO-G59">
+                    <rect key="frame" x="18" y="20" width="4" height="1"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <box appearanceType="aqua" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="asM-Tf-f2X">
+                    <rect key="frame" x="18" y="20" width="4" height="1"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <box horizontalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="DBi-Uy-v51">
+                    <rect key="frame" x="440" y="20" width="4" height="1"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="76J-rL-kJK">
+                    <rect key="frame" x="523" y="724" width="72" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="qpt-uB-uPO">
+                    <rect key="frame" x="742" y="724" width="72" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+            </subviews>
+        </customView>
+    </objects>
+</document>

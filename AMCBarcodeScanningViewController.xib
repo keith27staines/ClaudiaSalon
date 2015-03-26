@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCBarcodeScanningViewController">
+            <connections>
+                <outlet property="actionContainerView" destination="8Ea-1T-YBA" id="9KQ-9S-Bc4"/>
+                <outlet property="actionViewController" destination="pWu-sz-h9U" id="5yW-Tt-jR6"/>
+                <outlet property="barcode" destination="C3X-mp-XI0" id="TCY-Vw-Il9"/>
+                <outlet property="barcodeRecognisedLabel" destination="fyi-VO-hkw" id="hTz-wS-yIW"/>
+                <outlet property="productSelectorWindowController" destination="Qu3-Xx-ory" id="tgS-gw-xtH"/>
+                <outlet property="scanResultImage" destination="XK8-MI-knB" id="gZa-Aa-3fk"/>
+                <outlet property="stockedProductEditor" destination="ZHh-dc-X8q" id="Oxw-PP-EgD"/>
+                <outlet property="view" destination="yBz-Kv-pip" id="Msl-rP-Wt4"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="9Cp-pF-H4G">
+            <rect key="frame" x="0.0" y="0.0" width="601" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B7C-LD-qhg">
+                    <rect key="frame" x="55" y="163" width="491" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="This barcode is not currently known to the system. What would you like to do? " id="IoW-eh-KHF">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Dm-4w-YiK">
+                    <rect key="frame" x="24" y="102" width="396" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Create a new product on the system identified by this barcode?" id="2Me-YT-P3F">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lN7-7u-Z1n">
+                    <rect key="frame" x="123" y="63" width="297" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Associate this barcode with an existing product" id="Riy-Fj-ZFB">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kgn-Cj-FVc">
+                    <rect key="frame" x="420" y="93" width="167" height="32"/>
+                    <buttonCell key="cell" type="push" title="Create product..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kgl-Kz-7Sw">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="createProduct:" target="-2" id="PNx-FU-MOk"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="81c-jT-Vr0">
+                    <rect key="frame" x="420" y="52" width="167" height="32"/>
+                    <buttonCell key="cell" type="push" title="Associate barcode..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ijh-Mx-Xzy">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="associateBarcode:" target="-2" id="fYZ-O6-qEu"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Pd-m8-TFg">
+                    <rect key="frame" x="420" y="13" width="167" height="32"/>
+                    <buttonCell key="cell" type="push" title="Ignore" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Yjp-JN-SKl">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="ignoreBarcode:" target="-2" id="VGt-87-JhL"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aEr-rF-5Io">
+                    <rect key="frame" x="296" y="24" width="124" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Ignore this barcode" id="Cil-gW-RWc">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Kgn-Cj-FVc" firstAttribute="leading" secondItem="81c-jT-Vr0" secondAttribute="leading" id="1dc-Mo-jPl"/>
+                <constraint firstAttribute="bottom" secondItem="8Pd-m8-TFg" secondAttribute="bottom" constant="20" id="5zY-Vq-l0Y"/>
+                <constraint firstItem="Kgn-Cj-FVc" firstAttribute="baseline" secondItem="3Dm-4w-YiK" secondAttribute="baseline" constant="-1" id="8aA-ho-C3K"/>
+                <constraint firstItem="aEr-rF-5Io" firstAttribute="top" secondItem="lN7-7u-Z1n" secondAttribute="bottom" constant="22" id="BeW-Wj-YK9"/>
+                <constraint firstItem="81c-jT-Vr0" firstAttribute="leading" secondItem="lN7-7u-Z1n" secondAttribute="trailing" constant="8" symbolic="YES" id="Dz4-Sx-lO3"/>
+                <constraint firstItem="3Dm-4w-YiK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9Cp-pF-H4G" secondAttribute="leading" constant="20" id="FVN-Kt-7DM"/>
+                <constraint firstItem="B7C-LD-qhg" firstAttribute="top" secondItem="9Cp-pF-H4G" secondAttribute="top" constant="20" id="KmK-ol-fAs"/>
+                <constraint firstItem="Kgn-Cj-FVc" firstAttribute="leading" secondItem="8Pd-m8-TFg" secondAttribute="leading" id="NlD-CS-hl0"/>
+                <constraint firstItem="lN7-7u-Z1n" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9Cp-pF-H4G" secondAttribute="leading" constant="20" id="P8J-az-eZY"/>
+                <constraint firstItem="Kgn-Cj-FVc" firstAttribute="width" secondItem="81c-jT-Vr0" secondAttribute="width" id="Vrb-c5-xGs"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kgn-Cj-FVc" secondAttribute="trailing" constant="20" symbolic="YES" id="ZTP-fp-c1X"/>
+                <constraint firstItem="8Pd-m8-TFg" firstAttribute="baseline" secondItem="aEr-rF-5Io" secondAttribute="baseline" constant="1" id="hhA-75-A0R"/>
+                <constraint firstItem="B7C-LD-qhg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9Cp-pF-H4G" secondAttribute="leading" constant="20" id="jlG-dn-2af"/>
+                <constraint firstItem="lN7-7u-Z1n" firstAttribute="baseline" secondItem="81c-jT-Vr0" secondAttribute="baseline" constant="-1" id="lbb-j5-H1h"/>
+                <constraint firstItem="Kgn-Cj-FVc" firstAttribute="width" secondItem="8Pd-m8-TFg" secondAttribute="width" id="n7Y-Zv-s4I"/>
+                <constraint firstItem="lN7-7u-Z1n" firstAttribute="top" secondItem="3Dm-4w-YiK" secondAttribute="bottom" constant="22" id="nA3-Nl-fWZ"/>
+                <constraint firstItem="8Pd-m8-TFg" firstAttribute="leading" secondItem="aEr-rF-5Io" secondAttribute="trailing" constant="8" symbolic="YES" id="nJ9-Yt-vfx"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="B7C-LD-qhg" secondAttribute="trailing" constant="20" symbolic="YES" id="nNx-WD-pcQ"/>
+                <constraint firstItem="aEr-rF-5Io" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9Cp-pF-H4G" secondAttribute="leading" constant="20" symbolic="YES" id="s1T-wo-eFD"/>
+                <constraint firstItem="Kgn-Cj-FVc" firstAttribute="leading" secondItem="3Dm-4w-YiK" secondAttribute="trailing" constant="8" symbolic="YES" id="sCm-OR-WG4"/>
+                <constraint firstItem="3Dm-4w-YiK" firstAttribute="top" secondItem="B7C-LD-qhg" secondAttribute="bottom" constant="44" id="tPk-tn-qSW"/>
+                <constraint firstAttribute="centerX" secondItem="B7C-LD-qhg" secondAttribute="centerX" id="vUM-nh-iPI"/>
+            </constraints>
+            <point key="canvasLocation" x="334.5" y="581"/>
+        </customView>
+        <viewController id="pWu-sz-h9U" userLabel="Not recognised View Controller">
+            <connections>
+                <outlet property="view" destination="9Cp-pF-H4G" id="m9l-1m-o3m"/>
+            </connections>
+        </viewController>
+        <customObject id="ZHh-dc-X8q" customClass="EditStockProductViewController"/>
+        <customObject id="Qu3-Xx-ory" customClass="AMCProductSelectorWindowController"/>
+        <customView id="yBz-Kv-pip">
+            <rect key="frame" x="0.0" y="0.0" width="439" height="285"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C3X-mp-XI0">
+                    <rect key="frame" x="120" y="201" width="200" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="FBR-xH-aSH"/>
+                        <constraint firstAttribute="height" constant="34" id="hRr-YG-YWs"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" placeholderString="Scan a barcode" drawsBackground="YES" id="66i-ec-bNm">
+                        <font key="font" metaFont="system" size="24"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="barcodeScanned:" target="-2" id="Ui4-SS-4Tl"/>
+                    </connections>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2w8-a2-AcP">
+                    <rect key="frame" x="112" y="13" width="216" height="32"/>
+                    <buttonCell key="cell" type="push" title="Exit barcode scanning mode" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nLs-2z-M37">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="dismissController:" target="-2" id="Pfj-wc-76p"/>
+                    </connections>
+                </button>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TcI-JM-3yI">
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="2Km-cH-UQa"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mzi-8n-wpo">
+                    <rect key="frame" x="116" y="243" width="207" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Barcode Scanning mode" id="QLb-AI-5Ux">
+                        <font key="font" metaFont="system" size="18"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fyi-VO-hkw">
+                    <rect key="frame" x="138" y="150" width="164" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Barode recognised!" id="pZu-Sl-mzs">
+                        <font key="font" metaFont="system" size="18"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XK8-MI-knB">
+                    <rect key="frame" x="340" y="149" width="24" height="24"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="GreenTickIcon" id="uHh-Y0-vmY"/>
+                </imageView>
+                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="CdN-KN-QKz">
+                    <rect key="frame" x="20" y="59" width="399" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <customView horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Ea-1T-YBA">
+                    <rect key="frame" x="20" y="82" width="400" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="400" id="EHV-bb-GfO"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="GnR-no-lJl"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="CdN-KN-QKz" firstAttribute="leading" secondItem="yBz-Kv-pip" secondAttribute="leading" constant="20" id="58x-Iw-eLO"/>
+                <constraint firstAttribute="centerX" secondItem="C3X-mp-XI0" secondAttribute="centerX" id="DvA-7d-DXL"/>
+                <constraint firstItem="8Ea-1T-YBA" firstAttribute="leading" secondItem="yBz-Kv-pip" secondAttribute="leading" constant="20" symbolic="YES" id="HoK-wB-rmu"/>
+                <constraint firstAttribute="centerX" secondItem="2w8-a2-AcP" secondAttribute="centerX" id="IAw-Ch-bVy"/>
+                <constraint firstItem="fyi-VO-hkw" firstAttribute="centerY" secondItem="XK8-MI-knB" secondAttribute="centerY" id="O37-Ge-SoT"/>
+                <constraint firstItem="fyi-VO-hkw" firstAttribute="top" secondItem="C3X-mp-XI0" secondAttribute="bottom" constant="29" id="OHO-8g-QV1"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="XK8-MI-knB" secondAttribute="trailing" constant="64" id="SRz-4t-E5f"/>
+                <constraint firstItem="2w8-a2-AcP" firstAttribute="top" secondItem="CdN-KN-QKz" secondAttribute="bottom" constant="20" id="T3O-h6-Yuc"/>
+                <constraint firstItem="mzi-8n-wpo" firstAttribute="top" secondItem="yBz-Kv-pip" secondAttribute="top" constant="20" id="Uvz-Ry-sg5"/>
+                <constraint firstItem="XK8-MI-knB" firstAttribute="leading" secondItem="fyi-VO-hkw" secondAttribute="trailing" constant="40" id="aYP-HU-vHe"/>
+                <constraint firstAttribute="centerX" secondItem="8Ea-1T-YBA" secondAttribute="centerX" id="hQx-T8-TfJ"/>
+                <constraint firstItem="8Ea-1T-YBA" firstAttribute="top" secondItem="fyi-VO-hkw" secondAttribute="bottom" constant="18" id="m8a-j8-9my"/>
+                <constraint firstAttribute="centerX" secondItem="mzi-8n-wpo" secondAttribute="centerX" id="mu0-Ta-ON1"/>
+                <constraint firstItem="CdN-KN-QKz" firstAttribute="top" secondItem="8Ea-1T-YBA" secondAttribute="bottom" constant="20" id="ru7-NA-5Q3"/>
+                <constraint firstItem="C3X-mp-XI0" firstAttribute="top" secondItem="mzi-8n-wpo" secondAttribute="bottom" constant="8" id="vlX-sl-hCL"/>
+                <constraint firstAttribute="bottom" secondItem="2w8-a2-AcP" secondAttribute="bottom" constant="20" id="x8g-aj-fmI"/>
+                <constraint firstAttribute="centerX" secondItem="fyi-VO-hkw" secondAttribute="centerX" id="y7m-3Q-iDh"/>
+                <constraint firstAttribute="trailing" secondItem="CdN-KN-QKz" secondAttribute="trailing" constant="20" id="yFa-8v-zaC"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mzi-8n-wpo" secondAttribute="trailing" constant="87" id="zbn-Up-Ob2"/>
+            </constraints>
+            <point key="canvasLocation" x="305.5" y="222"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="GreenTickIcon" width="24" height="24"/>
+    </resources>
+</document>

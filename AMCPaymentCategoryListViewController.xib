@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCPaymentCategoryListViewController">
+            <connections>
+                <outlet property="dataTable" destination="F5p-NC-4Ov" id="TsS-mc-Mka"/>
+                <outlet property="paymentCategoryArrayController" destination="oVr-vK-YiR" id="mul-ji-CnN"/>
+                <outlet property="view" destination="lF0-wF-VIL" id="jCp-M1-0fw"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <arrayController mode="entity" entityName="PaymentCategory" automaticallyPreparesContent="YES" id="oVr-vK-YiR">
+            <connections>
+                <binding destination="-2" name="managedObjectContext" keyPath="self.moc" id="ihD-Wf-aPD"/>
+            </connections>
+        </arrayController>
+        <userDefaultsController representsSharedInstance="YES" id="JPQ-wF-yPJ"/>
+        <customView id="lF0-wF-VIL">
+            <rect key="frame" x="0.0" y="0.0" width="1000" height="304"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0GC-ue-RsC">
+                    <rect key="frame" x="20" y="61" width="960" height="223"/>
+                    <clipView key="contentView" id="0Y9-ND-qDH">
+                        <rect key="frame" x="1" y="0.0" width="238" height="134"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="CqJ-6M-lmB" id="F5p-NC-4Ov">
+                                <rect key="frame" x="0.0" y="0.0" width="958" height="19"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn width="130.91015625" minWidth="40" maxWidth="1000" id="aVJ-yH-CLs">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Category">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="fmR-j5-kqF">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="oVr-vK-YiR" name="value" keyPath="arrangedObjects.categoryName" id="0Si-Z9-va6"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="358" minWidth="40" maxWidth="1000" id="8iD-6b-Hjr">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Description">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="ysF-Dj-B6K">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="oVr-vK-YiR" name="value" keyPath="arrangedObjects.fullDescription" id="jH1-yk-UrK"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="3e6-uc-GT1">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Default">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="overlaps" inset="2" id="7gU-eN-nPx">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="oVr-vK-YiR" name="value" keyPath="arrangedObjects.isDefault" id="u3F-IU-7xb"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="6b2-VZ-70J">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Account Transfer">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="overlaps" inset="2" id="zI4-oY-9Am">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="oVr-vK-YiR" name="value" keyPath="arrangedObjects.isTransferBetweenAccounts" id="hXk-Ez-pt9"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="74" minWidth="10" maxWidth="3.4028234663852886e+38" id="p0g-cL-fNd">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Startup cost">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="above" alignment="center" inset="2" id="y9u-YH-wMK">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="oVr-vK-YiR" name="value" keyPath="arrangedObjects.isStartupCost" id="PQK-0e-NRz"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="97" minWidth="10" maxWidth="3.4028234663852886e+38" id="eAo-Yf-URr">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Director's loan">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="overlaps" alignment="left" inset="2" id="qRb-gD-9Kz">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="oVr-vK-YiR" name="value" keyPath="arrangedObjects.isDirectorsLoan" id="HrA-VT-9fc"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="149" minWidth="10" maxWidth="3.4028234663852886e+38" id="qs7-pn-O9B">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Managers Budget Category">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="left" inset="2" id="wKw-MP-4Cm">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="oVr-vK-YiR" name="value" keyPath="arrangedObjects.isManagersBudgetItem" id="Ijb-eZ-IOz"/>
+                                        </connections>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <binding destination="oVr-vK-YiR" name="content" keyPath="arrangedObjects" id="Ph2-Kp-jIn"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="hGc-Uh-Ccy">
+                        <rect key="frame" x="1" y="119" width="223" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="K5I-FL-dVY">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <tableHeaderView key="headerView" id="CqJ-6M-lmB">
+                        <rect key="frame" x="0.0" y="0.0" width="238" height="17"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableHeaderView>
+                </scrollView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fY5-79-BZY">
+                    <rect key="frame" x="14" y="13" width="66" height="32"/>
+                    <buttonCell key="cell" type="push" title="Add" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7Az-8G-9RB">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="add:" target="oVr-vK-YiR" id="CTk-Ke-pqx"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b5r-BP-z15">
+                    <rect key="frame" x="410" y="13" width="128" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Kc5-Hn-o0N"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XUv-zA-KlG">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="dismissController:" target="-2" id="WSu-hf-qi0"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="0GC-ue-RsC" secondAttribute="trailing" constant="20" id="6Cf-fe-DSe"/>
+                <constraint firstItem="0GC-ue-RsC" firstAttribute="top" secondItem="lF0-wF-VIL" secondAttribute="top" constant="20" id="SI7-cH-gn1"/>
+                <constraint firstItem="b5r-BP-z15" firstAttribute="top" secondItem="0GC-ue-RsC" secondAttribute="bottom" constant="20" id="Tzb-KI-EGV"/>
+                <constraint firstItem="b5r-BP-z15" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fY5-79-BZY" secondAttribute="trailing" constant="40" id="bT4-Jw-ONb"/>
+                <constraint firstItem="fY5-79-BZY" firstAttribute="leading" secondItem="0GC-ue-RsC" secondAttribute="leading" id="ehc-rB-zBE"/>
+                <constraint firstAttribute="bottom" secondItem="b5r-BP-z15" secondAttribute="bottom" constant="20" id="jIT-Hz-MAg"/>
+                <constraint firstAttribute="centerX" secondItem="b5r-BP-z15" secondAttribute="centerX" id="rt0-pY-u2v"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="b5r-BP-z15" secondAttribute="trailing" constant="40" id="sgx-gM-a3r"/>
+                <constraint firstItem="fY5-79-BZY" firstAttribute="top" secondItem="0GC-ue-RsC" secondAttribute="bottom" constant="20" id="vVC-9f-mfH"/>
+                <constraint firstItem="0GC-ue-RsC" firstAttribute="leading" secondItem="lF0-wF-VIL" secondAttribute="leading" constant="20" id="xMn-UB-Bm9"/>
+            </constraints>
+            <point key="canvasLocation" x="611" y="-20"/>
+        </customView>
+    </objects>
+</document>

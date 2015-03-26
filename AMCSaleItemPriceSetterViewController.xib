@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCSaleItemPriceSetterViewController">
+            <connections>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY" customClass="AMCSaleItemPriceSetterView">
+            <rect key="frame" x="0.0" y="0.0" width="621" height="90"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bia-bw-pGc">
+                    <rect key="frame" x="0.0" y="68" width="621" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="aSy-kT-0jv"/>
+                    </constraints>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="SaleItem service name" id="n4d-3B-hy4">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bdc-Lp-thY">
+                    <rect key="frame" x="6" y="16" width="269" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="A4p-vD-J62"/>
+                    </constraints>
+                    <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" allowsTickMarkValuesOnly="YES" sliderType="linear" id="FD1-Xe-rnL"/>
+                    <connections>
+                        <action selector="priceChanged:" target="Hz6-mo-xeY" id="vNS-Op-6Nd"/>
+                    </connections>
+                </slider>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A51-5D-3NV">
+                    <rect key="frame" x="6" y="2" width="62" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Min Price" id="pBD-gv-tSg">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w0R-G4-AQC">
+                    <rect key="frame" x="210" y="2" width="65" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Max Price" id="Q5B-1W-rv1">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TD2-fa-QMm">
+                    <rect key="frame" x="72" y="43" width="137" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Price before discount" id="HdO-a2-pTM">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zGx-HN-XQG">
+                    <rect key="frame" x="279" y="13" width="105" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="MZw-FU-Qmz"/>
+                    </constraints>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="bBZ-jJ-mst" id="sRa-Hp-9Q1">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" title="OtherViews" id="1g8-J0-9EC">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="bBZ-jJ-mst"/>
+                                <menuItem title="Item 2" id="A2t-rq-JvE"/>
+                                <menuItem title="Item 3" id="tfa-Rc-x2S"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="discountChanged:" target="Hz6-mo-xeY" id="1VJ-S9-epp"/>
+                    </connections>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hVW-PW-q1P">
+                    <rect key="frame" x="399" y="19" width="204" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="ZPy-Qc-kgw"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Price after discount £999.00" id="RwI-hh-hne">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="bia-bw-pGc" secondAttribute="trailing" constant="2" id="0C6-sl-CUU"/>
+                <constraint firstItem="TD2-fa-QMm" firstAttribute="top" secondItem="bia-bw-pGc" secondAttribute="bottom" constant="8" symbolic="YES" id="3WV-S0-kG8"/>
+                <constraint firstItem="hVW-PW-q1P" firstAttribute="leading" secondItem="zGx-HN-XQG" secondAttribute="trailing" constant="20" id="8mx-NT-e38"/>
+                <constraint firstItem="w0R-G4-AQC" firstAttribute="baseline" secondItem="A51-5D-3NV" secondAttribute="baseline" id="I0P-4e-pib"/>
+                <constraint firstItem="bia-bw-pGc" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="2" id="LRF-r7-9MQ"/>
+                <constraint firstAttribute="trailing" secondItem="hVW-PW-q1P" secondAttribute="trailing" constant="20" id="Pv3-NE-ixT"/>
+                <constraint firstItem="bdc-Lp-thY" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="St2-VX-uUE"/>
+                <constraint firstItem="w0R-G4-AQC" firstAttribute="top" secondItem="bdc-Lp-thY" secondAttribute="bottom" constant="-1" id="UtH-G7-RsH"/>
+                <constraint firstItem="bdc-Lp-thY" firstAttribute="trailing" secondItem="w0R-G4-AQC" secondAttribute="trailing" id="WDJ-Jm-ZTw"/>
+                <constraint firstItem="bdc-Lp-thY" firstAttribute="top" secondItem="TD2-fa-QMm" secondAttribute="bottom" constant="8" symbolic="YES" id="ahj-5q-9DE"/>
+                <constraint firstItem="hVW-PW-q1P" firstAttribute="baseline" secondItem="zGx-HN-XQG" secondAttribute="baseline" id="bN6-6U-sYZ"/>
+                <constraint firstItem="bdc-Lp-thY" firstAttribute="leading" secondItem="A51-5D-3NV" secondAttribute="leading" id="bR7-5Y-o1V"/>
+                <constraint firstItem="bdc-Lp-thY" firstAttribute="centerX" secondItem="TD2-fa-QMm" secondAttribute="centerX" id="dIO-Ey-vOK"/>
+                <constraint firstItem="bdc-Lp-thY" firstAttribute="centerY" secondItem="zGx-HN-XQG" secondAttribute="centerY" id="fOV-WM-PZO"/>
+                <constraint firstItem="bia-bw-pGc" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="2" id="nRi-Wu-HiZ"/>
+                <constraint firstItem="zGx-HN-XQG" firstAttribute="leading" secondItem="bdc-Lp-thY" secondAttribute="trailing" constant="8" symbolic="YES" id="tck-da-xh7"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="w0R-G4-AQC" secondAttribute="bottom" constant="2" id="v8I-SI-av8"/>
+            </constraints>
+            <connections>
+                <outlet property="actualPriceLabel" destination="hVW-PW-q1P" id="RJl-q7-n8X"/>
+                <outlet property="discountPopup" destination="zGx-HN-XQG" id="t9D-pB-MVH"/>
+                <outlet property="maximumPriceLabel" destination="w0R-G4-AQC" id="YHd-Vn-A1e"/>
+                <outlet property="minimumPriceLabel" destination="A51-5D-3NV" id="hMu-r9-L17"/>
+                <outlet property="nominalPriceLabel" destination="TD2-fa-QMm" id="ULX-rL-eIi"/>
+                <outlet property="priceSlider" destination="bdc-Lp-thY" id="lLq-Dz-MP5"/>
+                <outlet property="serviceNameLabel" destination="bia-bw-pGc" id="neK-v9-cgq"/>
+            </connections>
+            <point key="canvasLocation" x="254.5" y="155"/>
+        </customView>
+    </objects>
+</document>

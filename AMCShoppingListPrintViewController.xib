@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCShoppingListPrintViewController">
+            <connections>
+                <outlet property="shoppingListView" destination="VnT-bo-4mr" id="niW-Cx-6Rk"/>
+                <outlet property="view" destination="OYj-UC-FEj" id="8Hz-rT-DrT"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <userDefaultsController representsSharedInstance="YES" id="Oag-W1-bnL"/>
+        <customView id="OYj-UC-FEj">
+            <rect key="frame" x="0.0" y="0.0" width="441" height="675"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="VnT-bo-4mr" customClass="AMCShoppingListPrintView">
+                    <rect key="frame" x="0.0" y="61" width="441" height="614"/>
+                </customView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Qh-iJ-UpY">
+                    <rect key="frame" x="247" y="13" width="76" height="32"/>
+                    <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3ov-Xy-ozo">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="dismissController:" target="-2" id="K8L-sh-GD6"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B1k-59-tV0">
+                    <rect key="frame" x="351" y="13" width="76" height="32"/>
+                    <buttonCell key="cell" type="push" title="Print" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hRH-Ct-XAc">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="print:" target="-2" id="iTA-Ih-PEF"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="2Qh-iJ-UpY" firstAttribute="width" secondItem="B1k-59-tV0" secondAttribute="width" id="2bs-ag-FE7"/>
+                <constraint firstItem="B1k-59-tV0" firstAttribute="leading" secondItem="2Qh-iJ-UpY" secondAttribute="trailing" constant="40" id="9Ub-aB-TZ8"/>
+                <constraint firstAttribute="trailing" secondItem="B1k-59-tV0" secondAttribute="trailing" constant="20" symbolic="YES" id="BlQ-Ob-gap"/>
+                <constraint firstItem="2Qh-iJ-UpY" firstAttribute="top" secondItem="B1k-59-tV0" secondAttribute="top" id="Uvf-fU-sVw"/>
+                <constraint firstAttribute="bottom" secondItem="B1k-59-tV0" secondAttribute="bottom" constant="20" symbolic="YES" id="Xh4-HH-x1m"/>
+                <constraint firstItem="VnT-bo-4mr" firstAttribute="top" secondItem="OYj-UC-FEj" secondAttribute="top" id="c0f-Cc-jHt"/>
+                <constraint firstItem="VnT-bo-4mr" firstAttribute="leading" secondItem="OYj-UC-FEj" secondAttribute="leading" id="geU-1g-Hst"/>
+                <constraint firstItem="B1k-59-tV0" firstAttribute="top" secondItem="VnT-bo-4mr" secondAttribute="bottom" constant="20" symbolic="YES" id="nLt-mM-HBv"/>
+                <constraint firstAttribute="trailing" secondItem="VnT-bo-4mr" secondAttribute="trailing" id="vqR-Nh-oXY"/>
+            </constraints>
+            <point key="canvasLocation" x="269.5" y="254.5"/>
+        </customView>
+    </objects>
+</document>

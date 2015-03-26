@@ -1,0 +1,173 @@
+//
+//  EditEmployeeWindowController.m
+//  ClaudiasSalon
+//
+//  Created by Keith Staines on 19/07/2014.
+//  Copyright (c) 2014 Keith Staines. All rights reserved.
+//
+
+#import "EditEmployeeViewController.h"
+#import "AppDelegate.h"
+#import "Employee+Methods.h"
+#import "AMCSalaryEditorViewController.h"
+#import "AMCSalonDocument.h"
+
+@interface EditEmployeeViewController ()
+@property (strong) IBOutlet AMCSalaryEditorViewController *salaryEditorViewController;
+
+@end
+
+@implementation EditEmployeeViewController
+
+#pragma mark - NSWindowController overrides
+
+-(NSString *)windowNibName
+{
+    return @"EditEmployeeViewController";
+}
+#pragma mark - editObjectViewController overrides
+-(NSString*)objectName
+{
+    return @"Staff Member";
+}
+-(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
+{
+    [super prepareForDisplayWithSalon:salonDocument];
+    Employee * employee = (Employee*)self.objectToEdit;
+    self.firstName.stringValue  = employee.firstName;
+    self.lastName.stringValue = employee.lastName;
+    self.email.stringValue = employee.email;
+    self.mobile.stringValue = employee.phone;
+    self.postcode.stringValue = employee.postcode;
+    self.addressLine1.stringValue = employee.addressLine1;
+    self.addressLine2.stringValue = employee.addressLine2;
+    self.startingDate.dateValue = employee.startingDate;
+    self.leavingDate.dateValue  = employee.leavingDate;
+    self.activeMemberOfStaffCheckbox.state = (employee.isActive.boolValue)?NSOnState:NSOffState;
+    NSUInteger monthOfBirth = employee.monthOfBirth.integerValue;
+    NSUInteger dayOfBirth = employee.dayOfBirth.integerValue;
+    [self.dayAndMonthPopupController selectMonthNumber:monthOfBirth dayNumber:dayOfBirth];
+    
+    switch (self.editMode) {
+        case EditModeView:
+        {
+            [self.dayAndMonthPopupController setEnabled:NO];
+            [self.leavingDate setHidden:NO];
+            [self.leavingDate setEnabled:NO];
+            break;
+        }
+        case EditModeCreate:
+        {
+            [self.dayAndMonthPopupController setEnabled:YES];
+            [self.leavingDate setHidden:YES];
+            [self.leavingDate setEnabled:NO];
+            break;
+        }
+        case EditModeEdit:
+        {
+            [self.dayAndMonthPopupController setEnabled:YES];
+            [self.leavingDate setHidden:NO];
+            [self.leavingDate setEnabled:YES];
+            break;
+        }
+    }
+}
+
+-(NSArray *)editableControls
+{
+ return  @[self.firstName,
+           self.lastName,
+           self.email,
+           self.mobile,
+           self.startingDate,
+           self.leavingDate,
+           self.postcode,
+           self.addressLine1,
+           self.addressLine2];
+}
+-(BOOL)isValid
+{
+    if (![self validateName:self.firstName.stringValue]) return NO;
+    if (![self validateName:self.lastName.stringValue]) return NO;
+    if (![self validateEmailAddress:self.email.stringValue]) return NO;
+    if (![self validatePhoneNumber:self.mobile.stringValue]) return NO;
+    return YES;
+}
+-(void)updateObject
+{
+    Employee * employee = self.objectToEdit;
+    employee.firstName = self.firstName.stringValue;
+    employee.lastName = self.lastName.stringValue;
+    employee.phone = self.mobile.stringValue;
+    employee.email = self.email.stringValue;
+    employee.postcode = self.postcode.stringValue;
+    employee.addressLine1 = self.addressLine1.stringValue;
+    employee.addressLine2 = self.addressLine2.stringValue;
+    employee.startingDate = self.startingDate.dateValue;
+    employee.leavingDate = self.leavingDate.dateValue;
+    employee.monthOfBirth = @(self.dayAndMonthPopupController.monthNumber);
+    employee.dayOfBirth = @(self.dayAndMonthPopupController.dayNumber);
+    employee.isActive = @(self.activeMemberOfStaffCheckbox.state == NSOnState);
+    employee.lastUpdatedDate = [NSDate date];
+    [self.salonDocument commitAndSave:nil];
+}
+#pragma mark - NSControlTextEditingDelegate
+-(void)controlTextDidChange:(NSNotification *)notification
+{
+    if (notification.object == self.firstName) {
+        self.firstName.stringValue = [self.firstName.stringValue capitalizedString];
+    }
+    if (notification.object == self.lastName) {
+        self.lastName.stringValue = [self.lastName.stringValue capitalizedString];
+    }
+    if (notification.object == self.addressLine1) {
+        self.addressLine1.stringValue = [self.addressLine1.stringValue capitalizedString];
+    }
+    if (notification.object == self.addressLine2) {
+        self.addressLine2.stringValue = [self.addressLine2.stringValue capitalizedString];
+    }
+    if (notification.object == self.postcode) {
+        self.postcode.stringValue = [self.postcode.stringValue uppercaseString];
+    }
+}
+-(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
+{
+    BOOL controlIsValid = NO;
+    [self.doneButton setEnabled:NO];
+    if (control == self.firstName) {
+        controlIsValid = [self validateName:fieldEditor.string];
+    }
+    if (control == self.lastName) {
+        controlIsValid = [self validateName:fieldEditor.string];
+    }
+    if (control == self.email) {
+        controlIsValid = [self validateEmailAddress:fieldEditor.string];
+    }
+    if (control == self.mobile) {
+        controlIsValid = [self validatePhoneNumber:fieldEditor.string];
+    }
+    if (control == self.postcode) {
+        controlIsValid = YES;
+    }
+    [self.doneButton setEnabled:[self isValid]];
+    return controlIsValid;
+}
+-(void)controlTextDidEndEditing:(NSNotification *)obj
+{
+    // Actively reformat entered text to remove white space, etc
+    if (obj.object == self.mobile) {
+        self.mobile.stringValue = [self extractPhoneNumber:self.mobile.stringValue];
+    }
+    [self.doneButton setEnabled:[self isValid]];
+}
+#pragma mark - AMCDayAndMonthPopupViewControllerDelegate
+-(void)dayAndMonthControllerDidUpdate:(AMCDayAndMonthPopupViewController *)dayAndMonthController
+{
+    
+}
+- (IBAction)viewSalaryButtonClicked:(id)sender {
+    [self.salaryEditorViewController updateWithEmployee:self.objectToEdit forDate:[NSDate date]];
+    [self presentViewControllerAsSheet:self.salaryEditorViewController];
+}
+
+@end

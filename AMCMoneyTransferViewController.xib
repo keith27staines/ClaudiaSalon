@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCMoneyTransferViewController">
+            <connections>
+                <outlet property="amountToTransfer" destination="mNu-Av-LgK" id="VbO-9w-f86"/>
+                <outlet property="cancelButton" destination="wP9-jO-Bxu" id="aCl-v1-a1k"/>
+                <outlet property="fromAccountPopupButton" destination="XDa-Fp-9QB" id="bmz-aN-KVd"/>
+                <outlet property="okButton" destination="hcT-52-Kch" id="jDh-50-y66"/>
+                <outlet property="toAccountPopupButton" destination="HcI-Vp-lWF" id="vcs-6j-VNh"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="380" height="262"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4wH-dY-TdN">
+                    <rect key="frame" x="18" y="225" width="219" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Transfer money between accounts" id="r0x-zI-oci">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XDa-Fp-9QB">
+                    <rect key="frame" x="18" y="143" width="75" height="26"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oWj-S4-ic4" id="RaJ-Ng-dZM">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="Uei-0a-sGk">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="oWj-S4-ic4"/>
+                                <menuItem title="Item 2" id="T3L-Hp-Wg7"/>
+                                <menuItem title="Item 3" id="A58-8m-cq5"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="fromAccountChanged:" target="-2" id="zST-3y-n0d"/>
+                    </connections>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HcI-Vp-lWF">
+                    <rect key="frame" x="288" y="143" width="75" height="26"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="MjF-9t-yaV" id="k0e-qO-kba">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="dVo-Wn-8KZ">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="MjF-9t-yaV"/>
+                                <menuItem title="Item 2" id="nNF-Va-ZkJ"/>
+                                <menuItem title="Item 3" id="uj4-zU-MMM"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="toAccountChanged:" target="-2" id="Eyi-Id-OkA"/>
+                    </connections>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MdU-cb-JqV">
+                    <rect key="frame" x="18" y="175" width="144" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Transfer from account" id="dpm-IB-OwM">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hGn-fg-dvn">
+                    <rect key="frame" x="288" y="175" width="73" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="To account" id="W5r-x5-rpf">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FLb-ne-9Hf">
+                    <rect key="frame" x="18" y="84" width="129" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Amount to transfer:" id="lX9-Hw-mKR">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hcT-52-Kch">
+                    <rect key="frame" x="284" y="13" width="82" height="32"/>
+                    <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Npz-Uk-4Aa">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="okButonClicked:" target="-2" id="odh-MI-bJB"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wP9-jO-Bxu">
+                    <rect key="frame" x="14" y="13" width="82" height="32"/>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SUT-wf-Vs1">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cancelButtonClicked:" target="-2" id="YP1-Em-2gs"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mNu-Av-LgK">
+                    <rect key="frame" x="153" y="82" width="88" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="88" id="LEX-Vo-gsZ"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="¤ 0.00" drawsBackground="YES" id="XUM-l0-SSD">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" id="EyX-Cd-ix5">
+                            <real key="minimum" value="0.0"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="ghH-KC-bqF"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="XDa-Fp-9QB" firstAttribute="top" secondItem="MdU-cb-JqV" secondAttribute="bottom" constant="8" symbolic="YES" id="06I-hT-mZ6"/>
+                <constraint firstItem="hGn-fg-dvn" firstAttribute="leading" secondItem="HcI-Vp-lWF" secondAttribute="leading" id="2of-BC-3Xu"/>
+                <constraint firstItem="mNu-Av-LgK" firstAttribute="baseline" secondItem="FLb-ne-9Hf" secondAttribute="baseline" id="5JW-Ra-9QX"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hGn-fg-dvn" secondAttribute="trailing" constant="20" symbolic="YES" id="HTW-9x-GjB"/>
+                <constraint firstItem="hGn-fg-dvn" firstAttribute="baseline" secondItem="MdU-cb-JqV" secondAttribute="baseline" id="KbD-Fk-jq4"/>
+                <constraint firstItem="4wH-dY-TdN" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="Ldy-L3-Ux3"/>
+                <constraint firstItem="MdU-cb-JqV" firstAttribute="top" secondItem="4wH-dY-TdN" secondAttribute="bottom" constant="33" id="Q9U-Zj-GyO"/>
+                <constraint firstItem="4wH-dY-TdN" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="Qv0-bx-qhj"/>
+                <constraint firstItem="MdU-cb-JqV" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="Sbf-j1-Hn8"/>
+                <constraint firstItem="mNu-Av-LgK" firstAttribute="leading" secondItem="FLb-ne-9Hf" secondAttribute="trailing" constant="8" id="T8F-Cz-TRT"/>
+                <constraint firstItem="XDa-Fp-9QB" firstAttribute="baseline" secondItem="HcI-Vp-lWF" secondAttribute="baseline" id="WBe-xu-oG0"/>
+                <constraint firstAttribute="bottom" secondItem="hcT-52-Kch" secondAttribute="bottom" constant="20" id="X4h-db-vFn"/>
+                <constraint firstItem="XDa-Fp-9QB" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="aJ8-T4-uPM"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4wH-dY-TdN" secondAttribute="trailing" constant="20" symbolic="YES" id="cR4-ib-Pdl"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HcI-Vp-lWF" secondAttribute="trailing" constant="20" symbolic="YES" id="dsr-ga-NQA"/>
+                <constraint firstItem="wP9-jO-Bxu" firstAttribute="top" secondItem="FLb-ne-9Hf" secondAttribute="bottom" constant="43" id="gnH-Pf-2Co"/>
+                <constraint firstAttribute="trailing" secondItem="hcT-52-Kch" secondAttribute="trailing" constant="20" symbolic="YES" id="ldS-S2-ant"/>
+                <constraint firstItem="FLb-ne-9Hf" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="lwu-rd-82P"/>
+                <constraint firstItem="FLb-ne-9Hf" firstAttribute="top" secondItem="XDa-Fp-9QB" secondAttribute="bottom" constant="45" id="mYh-Hw-QK2"/>
+                <constraint firstItem="hcT-52-Kch" firstAttribute="width" secondItem="wP9-jO-Bxu" secondAttribute="width" id="qoX-jV-VJX"/>
+                <constraint firstAttribute="bottom" secondItem="wP9-jO-Bxu" secondAttribute="bottom" constant="20" id="tyb-Qu-wOb"/>
+                <constraint firstItem="wP9-jO-Bxu" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="vnR-Xl-1Cf"/>
+                <constraint firstItem="HcI-Vp-lWF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XDa-Fp-9QB" secondAttribute="trailing" constant="200" id="wSR-He-p9s"/>
+                <constraint firstItem="hGn-fg-dvn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MdU-cb-JqV" secondAttribute="trailing" constant="100" id="zk5-iu-Gfd"/>
+            </constraints>
+            <point key="canvasLocation" x="388" y="246"/>
+        </customView>
+    </objects>
+</document>

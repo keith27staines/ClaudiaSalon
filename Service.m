@@ -1,0 +1,37 @@
+//
+//  Service.m
+//  ClaudiasSalon
+//
+//  Created by Keith Staines on 19/02/2015.
+//  Copyright (c) 2015 Keith Staines. All rights reserved.
+//
+
+#import "Service.h"
+#import "Employee.h"
+#import "Note.h"
+#import "Product.h"
+#import "SaleItem.h"
+#import "ServiceCategory.h"
+
+
+@implementation Service
+
+@dynamic createdDate;
+@dynamic deluxe;
+@dynamic expectedTimeRequired;
+@dynamic hairLength;
+@dynamic hidden;
+@dynamic lastUpdatedDate;
+@dynamic maximumCharge;
+@dynamic minimumCharge;
+@dynamic name;
+@dynamic nominalCharge;
+@dynamic priceNegotiable;
+@dynamic selectable;
+@dynamic canBeDoneBy;
+@dynamic notes;
+@dynamic product;
+@dynamic saleItem;
+@dynamic serviceCategory;
+
+@end

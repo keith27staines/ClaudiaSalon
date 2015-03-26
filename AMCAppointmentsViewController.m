@@ -1,0 +1,650 @@
+//
+//  AMCAppointmentsViewController.m
+//  ClaudiasSalon
+//
+//  Created by Keith Staines on 23/08/2014.
+//  Copyright (c) 2014 Keith Staines. All rights reserved.
+//
+
+#import "AMCAppointmentsViewController.h"
+#import "Appointment+Methods.h"
+#import "NSDate+AMCDate.h"
+#import "Service+Methods.h"
+#import "Customer+Methods.h"
+#import "Employee+Methods.h"
+#import "AMCWizardForNewAppointmentWindowController.h"
+#import "EditObjectViewController.h"
+#import "AMCAssociatedNotesViewController.h"
+#import "AMCCancelAppointmentViewController.h"
+#import "AMCCompleteAppointmentViewController.h"
+#import "AMCAppointmentCompletionBoilerPlate.h"
+#import "Sale+Methods.h"
+#import "SaleItem+Methods.h"
+#import "AMCQuickQuoteViewController.h"
+#import "AMCSalonDocument.h"
+
+typedef NS_ENUM(NSInteger, AMCPeriod) {
+    AMCperiodNone = -1,
+    AMCPeriodAll = 0,
+    AMCPeriodToday = 1,
+    AMCPeriodTomorrow = 2,
+    AMCPeriodNextSevenDays = 3,
+    AMCPeriodNextThirtyDays = 4,
+    AMCPeriodYesterday = 5,
+    AMCPeriodPreviousSevenDays = 6,
+    AMCPeriodPreviousThirtyDays = 7,
+};
+
+@interface AMCAppointmentsViewController ()
+<
+NSTableViewDataSource,
+NSTableViewDelegate,
+NSPopoverDelegate,
+AMCAppointmentsViewDelegate,
+AMCWizardWindowControllerDelegate,
+NSAnimationDelegate>
+{
+    NSArray * _appointments;
+    NSArray * _saleItems;
+    NSArray * _searchFilteredAppointments;
+    AMCCancelAppointmentViewController * _cancelAppointmentViewController;
+    AMCCompleteAppointmentViewController * _completeAppointmentViewController;
+    AMCQuickQuoteViewController * _quickQuoteViewController;
+    AMCAssociatedNotesViewController * _associatedNotesViewController;
+}
+@property NSArray * appointments;
+@property (readonly) NSArray * searchFilteredAppointments;
+@property (readonly) NSArray * saleItems;
+@property (strong) AMCWizardWindowController * currentWizard;
+@property (readonly) Appointment * selectedAppointment;
+@property (readonly) SaleItem * selectedSaleItem;
+@property NSViewAnimation * notesUpAnimation;
+@property NSViewAnimation * notesDownAnimation;
+@property NSRect notesButtonInitialRect;
+@property (readonly) AMCCancelAppointmentViewController * cancelAppointmentViewController;
+@property (readonly) AMCCompleteAppointmentViewController * completeAppointmentViewController;
+@property (readonly) AMCQuickQuoteViewController * quickQuoteViewController;
+@property (readonly) AMCAssociatedNotesViewController * associatedNotesViewController;
+@property Appointment * previouslySelectedAppointment;
+@end
+
+@implementation AMCAppointmentsViewController
+
+-(NSString *)nibName
+{
+    return @"AMCAppointmentsViewController";
+}
+#pragma mark - AMCAppointmentsViewDelegate
+-(void)appointmentsViewDidAwakeFromNib:(AMCAppointmentsView *)appointmentsView
+{
+    [self buildIntervalSegmentedControl:appointmentsView.intervalPickerSegmentedControl];
+    [self reloadData];
+}
+#pragma mark - NSTableViewDataSource
+-(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
+{
+    if (tableView == self.appointmentsTable) {
+        return self.searchFilteredAppointments.count;
+    } else {
+        return self.saleItems.count;
+    }
+}
+-(id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    if (tableView == self.appointmentsTable) {
+        if (!self.searchFilteredAppointments || self.searchFilteredAppointments.count == 0) return nil;
+        
+        Appointment * appointment = self.searchFilteredAppointments[row];
+        if ([tableColumn.identifier isEqualToString:@"appointmentDate"]) {
+            return appointment.appointmentDate;
+        }
+        if ([tableColumn.identifier isEqualToString:@"appointmentTime"]) {
+            return appointment.appointmentDate;
+        }
+        if ([tableColumn.identifier isEqualToString:@"customerFirstName"]) {
+            return appointment.customer.firstName;
+        }
+        if ([tableColumn.identifier isEqualToString:@"customerBirthday"]) {
+            return appointment.customer.birthday;
+        }
+        if ([tableColumn.identifier isEqualToString:@"customerLastName"]) {
+            return appointment.customer.lastName;
+        }
+        if ([tableColumn.identifier isEqualToString:@"customerPhone"]) {
+            return appointment.customer.phone;
+        }
+        if ([tableColumn.identifier isEqualToString:@"bookedDurationInMinutes"]) {
+            NSInteger time = appointment.bookedDurationInMinutes;
+            if (time == 0) {
+                return @"unknown";
+            } else {
+                return[self stringDescribingTimeSpecifiedInMinutes:time];
+            }
+        }
+        if ([tableColumn.identifier isEqualToString:@"status"]) {
+            if (appointment.cancelled.boolValue) {
+                NSString * cancelled = @"Cancelled - ";
+                NSString * cancelledExplanation = @"";
+                AMCancellationType cancelType = appointment.cancellationType.integerValue;
+                if (appointment.cancellationNote && appointment.cancellationNote.length > 0) {
+                    cancelledExplanation = [cancelledExplanation stringByAppendingString:appointment.cancellationNote];
+                } else {
+                    cancelledExplanation = [cancelledExplanation stringByAppendingString:[AMCAppointmentCompletionBoilerPlate boilerPlateExplanationForCancellationType:cancelType]];
+                }
+                cancelled = [cancelled stringByAppendingString:cancelledExplanation];
+                return cancelled;
+            }
+            if (appointment.completed.boolValue) {
+                NSString * completed = @"Completed - ";
+                NSString * completedExplanation = @"";
+                AMCompletionType completionType = appointment.completionType.integerValue;
+                if (appointment.completionNote && appointment.completionNote.length > 0) {
+                    completedExplanation = [completedExplanation stringByAppendingString:appointment.completionNote];
+                } else {
+                    completedExplanation = [AMCAppointmentCompletionBoilerPlate boilerPlateExplanationForCompletionType:completionType];
+                }
+                completed = [completed stringByAppendingString:completedExplanation];
+                return completed;
+            }
+            if ([appointment.appointmentDate isGreaterThan:[NSDate date]]) {
+                return @"Booked";
+            } else {
+                if ([appointment.appointmentEndDate isGreaterThan:[NSDate date]]) {
+                    return @"Booked - customer due now";
+                } else {
+                    return @"Customer No-Show";
+                }
+            }
+        }
+    } else {
+        SaleItem * saleItem = self.saleItems[row];
+        if ([tableColumn.identifier isEqualToString:@"serviceName"]) {
+            return saleItem.service.name;
+        }
+        if ([tableColumn.identifier isEqualToString:@"serviceExpectedTimeRequired"]) {
+            NSInteger time = saleItem.service.expectedTimeRequired.integerValue;
+            if (time == 0) {
+                return @"unknown";
+            } else {
+                return [self stringDescribingTimeSpecifiedInMinutes:time];
+            }
+        }
+        if ([tableColumn.identifier isEqualToString:@"employeeFullName"]) {
+            return saleItem.performedBy.fullName;
+        }
+        
+    }
+    return nil;
+}
+#pragma mark - NSTableViewDelegate
+-(BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
+{
+    return NO;
+}
+-(void)tableViewSelectionIsChanging:(NSNotification *)notification {
+    NSTableView * tableView = notification.object;
+    if (tableView == self.appointmentsTable) {
+        [self.saleItemsTable deselectAll:self];
+        _saleItems = @[];
+        [self.saleItemsTable reloadData];
+    }
+    if (tableView == self.saleItemsTable) {
+    }
+}
+-(void)tableViewSelectionDidChange:(NSNotification *)notification
+{
+    NSTableView * tableView = notification.object;
+    if (tableView == self.appointmentsTable) {
+        [self appointmentSelectionChanged];
+    }
+    if (tableView == self.saleItemsTable) {
+    }
+}
+#pragma mark - Helpers
+-(NSString*)stringDescribingTimeSpecifiedInMinutes:(NSInteger)time {
+    if (time < 60) {
+        return [NSString stringWithFormat:@"%li minutes",(long)time];
+    }
+    long hours = time / 60;
+    long minutes = fmod(time, 60);
+    return [NSString stringWithFormat:@"%li hours %li minutes",hours,minutes];
+}
+-(void)appointmentSelectionChanged
+{
+    [self configureButtons];
+    [self.saleItemsTable deselectAll:self];
+    [self.saleItemsTable reloadData];
+    [self saleItemSelectionChanged];
+    [self animateNotesIconIfNecessary];
+}
+-(void)animateNotesIconIfNecessary {
+    Appointment * appointment = [self selectedAppointment];
+    Customer * customer = appointment.customer;
+    if (customer && customer.nonAuditNotes.count > 0) {
+        [self animateNotesIcon];
+    }
+}
+-(void)animateNotesIcon {
+    if (!self.notesUpAnimation) {
+        NSView * notesView = self.showNotesButton;
+        NSRect notesViewFrame;
+        self.notesButtonInitialRect = notesView.frame;
+        NSRect newViewFrame;
+        NSMutableDictionary* notesViewDict;
+        
+        // Create the attributes dictionary for the notes view
+        notesViewDict = [NSMutableDictionary dictionaryWithCapacity:3];
+        notesViewFrame = [notesView frame];
+        
+        // Specify which view to modify.
+        [notesViewDict setObject:notesView forKey:NSViewAnimationTargetKey];
+        
+        // Specify the starting position of the view.
+        [notesViewDict setObject:[NSValue valueWithRect:notesViewFrame]
+                          forKey:NSViewAnimationStartFrameKey];
+        
+        // Change the ending position of the view.
+        newViewFrame = notesViewFrame;
+        newViewFrame.origin.y += 25;
+        [notesViewDict setObject:[NSValue valueWithRect:newViewFrame]
+                          forKey:NSViewAnimationEndFrameKey];
+        
+        // Create the view animation object.
+        NSViewAnimation *theAnim;
+        theAnim = [[NSViewAnimation alloc] initWithViewAnimations:@[notesViewDict]];
+        
+        // Set some additional attributes for the animation.
+        [theAnim setDuration:0.5];    // One and a half seconds.
+        [theAnim setAnimationCurve:NSAnimationEaseInOut];
+        [theAnim setAnimationBlockingMode:NSAnimationNonblocking];
+        [theAnim setDelegate:self];
+        self.notesUpAnimation = theAnim;
+        
+        [notesViewDict setObject:[NSValue valueWithRect:newViewFrame]
+                          forKey:NSViewAnimationStartFrameKey];
+        [notesViewDict setObject:[NSValue valueWithRect:notesViewFrame]
+                          forKey:NSViewAnimationEndFrameKey];
+        theAnim = [[NSViewAnimation alloc] initWithViewAnimations:@[notesViewDict]];
+        
+        // Set some additional attributes for the animation.
+        [theAnim setDuration:0.5];    // One and a half seconds.
+        [theAnim setAnimationCurve:NSAnimationEaseInOut];
+        [theAnim setAnimationBlockingMode:NSAnimationNonblocking];
+        [theAnim setDelegate:self];
+        self.notesDownAnimation = theAnim;
+    }
+    
+    // Run the animation.
+    [self.notesUpAnimation startAnimation];
+}
+-(void)animation:(NSAnimation *)animation didReachProgressMark:(NSAnimationProgress)progress {
+    if (progress == 1 && animation == self.notesUpAnimation) {
+        [self.notesDownAnimation startAnimation];
+    }
+}
+-(void)configureButtons {
+    Appointment * appointment = [self selectedAppointment];
+    BOOL appointmentSelected = (appointment!=nil)?YES:NO;
+    [self.editAppointmentButton setEnabled:appointmentSelected];
+    [self.viewCustomerButton setEnabled:appointmentSelected];
+    [self.cancelAppointmentButton setEnabled:appointmentSelected];
+    [self.showNotesButton setEnabled:appointmentSelected];
+    [self.completeAppointmentButton setEnabled:appointmentSelected];
+    [self.showQuickQuoteButton setEnabled:appointmentSelected];
+    if (appointmentSelected) {
+        self.totalLabel.stringValue = [NSString stringWithFormat:@"Total: £%1.2f",appointment.sale.actualCharge.doubleValue];
+        if (appointment.cancelled.boolValue) {
+            // appointment is currently cancelled
+            self.cancelAppointmentButton.title = @"Reinstate booking";
+            [self.completeAppointmentButton setEnabled:NO];
+            [self.editAppointmentButton setEnabled:NO];
+        } else {
+            self.cancelAppointmentButton.title = @"Cancel booking";
+        }
+        if (appointment.completed.boolValue) {
+            // appointment is currently completed
+            self.cancelAppointmentButton.title = @"Cancel booking";
+            [self.cancelAppointmentButton setEnabled:NO];
+            [self.completeAppointmentButton setEnabled:NO];
+            [self.editAppointmentButton setEnabled:NO];
+        }
+        if (!appointment.completed.boolValue && !appointment.cancelled.boolValue) {
+            self.cancelAppointmentButton.title = @"Cancel booking";
+            [self.cancelAppointmentButton setEnabled:YES];
+            [self.completeAppointmentButton setEnabled:YES];
+            [self.editAppointmentButton setEnabled:YES];
+        }
+    } else {
+        self.totalLabel.stringValue = @"";
+    }
+}
+-(void)saleItemSelectionChanged {
+
+}
+-(Appointment*)selectedAppointment
+{
+    if (self.appointmentsTable.selectedRow <0) return nil;
+    return self.searchFilteredAppointments[self.appointmentsTable.selectedRow];
+}
+-(SaleItem*)selectedSaleItem
+{
+    if (self.saleItemsTable.selectedRow <0) return nil;
+    return self.saleItems[self.saleItemsTable.selectedRow];
+}
+-(void)selectAppointment:(Appointment*)appointment {
+    if (appointment) {
+        NSInteger row = [self.appointments indexOfObject:appointment];
+        if (row != NSNotFound) {
+            [self.appointmentsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+        }
+    }
+}
+-(void)reloadData
+{
+    _appointments = nil;
+    _saleItems = nil;
+    _searchFilteredAppointments = nil;
+    [self.appointmentsTable reloadData];
+    [self.saleItemsTable reloadData];
+    [self appointmentSelectionChanged];
+    [self saleItemSelectionChanged];
+}
+-(void)buildIntervalSegmentedControl:(NSSegmentedControl*)segmented
+{
+    segmented.segmentCount = 8;
+    [segmented setLabel:@"All" forSegment:0];
+    [segmented setLabel:@"Today" forSegment:1];
+    [segmented setLabel:@"Tomorrow" forSegment:2];
+    [segmented setLabel:@"Next 7 days" forSegment:3];
+    [segmented setLabel:@"Next 30 days" forSegment:4];
+    [segmented setLabel:@"Yesterday" forSegment:5];
+    [segmented setLabel:@"Last 7 days" forSegment:6];
+    [segmented setLabel:@"Last 30 days" forSegment:7];
+    [segmented setSelectedSegment:0];
+    [segmented setSelectedSegment:AMCPeriodToday];
+}
+-(void)setAppointments:(NSArray *)appointments
+{
+    _appointments = appointments;
+}
+-(NSArray*)saleItems {
+    if (!self.selectedAppointment) return @[];
+    NSArray * array = self.selectedAppointment.sale.saleItem.allObjects;
+    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:YES];
+    return [array sortedArrayUsingDescriptors:@[sort]];
+}
+-(NSArray*)appointments
+{
+    NSManagedObjectContext * moc = self.documentMoc;
+    _searchFilteredAppointments = nil;
+    AMCPeriod interval = self.intervalPickerSegmentedControl.selectedSegment;
+    NSDate * intervalStart;
+    NSDate * intervalEnd;
+    NSDate * rightNow = [NSDate date];
+    NSInteger secondsInDay = 24 * 3600;
+    switch (interval) {
+        case AMCperiodNone:
+        {
+            intervalStart = [NSDate distantPast];
+            intervalEnd = [NSDate distantFuture];
+            break;
+        }
+        case AMCPeriodAll:
+        {
+            intervalStart = [NSDate distantPast];
+            intervalEnd = [NSDate distantFuture];
+            break;
+        }
+        case AMCPeriodToday:
+        {
+            intervalStart = [rightNow beginningOfDay];
+            intervalEnd = [rightNow endOfDay];
+            break;
+        }
+        case AMCPeriodTomorrow:
+        {
+            intervalStart = [rightNow endOfDay];
+            intervalEnd = [intervalStart dateByAddingTimeInterval:secondsInDay];
+            break;
+        }
+        case AMCPeriodNextSevenDays:
+        {
+            intervalStart = rightNow;
+            intervalEnd = [rightNow dateByAddingTimeInterval:8 * secondsInDay];
+            intervalEnd = [intervalEnd beginningOfDay];
+            break;
+        }
+        case AMCPeriodNextThirtyDays:
+        {
+            intervalStart = rightNow;
+            intervalEnd = [rightNow dateByAddingTimeInterval:30 * secondsInDay];
+            intervalEnd = [intervalEnd beginningOfDay];
+            break;
+        }
+        case AMCPeriodYesterday:
+        {
+            intervalEnd = [rightNow beginningOfDay];
+            intervalStart = [intervalEnd dateByAddingTimeInterval:-secondsInDay];
+            break;
+        }
+        case AMCPeriodPreviousSevenDays:
+        {
+            intervalEnd = rightNow;
+            intervalStart = [rightNow dateByAddingTimeInterval:-8*secondsInDay];
+            intervalStart = [intervalStart endOfDay];
+            break;
+        }
+        case AMCPeriodPreviousThirtyDays:
+        {
+            intervalEnd = rightNow;
+            intervalStart = [rightNow dateByAddingTimeInterval:-30*secondsInDay];
+            intervalStart = [intervalStart endOfDay];
+            break;
+        }
+    }
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Appointment" inManagedObjectContext:moc];
+    [fetchRequest setEntity:entity];
+    // Specify criteria for filtering which objects to fetch
+    NSPredicate *statePredicate;
+    NSInteger appointmentState = self.appointmentStateSelectorButton.indexOfSelectedItem;
+    switch (appointmentState) {
+        case 0:
+        {
+            // Show open appointments (ie, not cancelled and not completed)
+            statePredicate = [NSPredicate predicateWithFormat:@"appointmentDate >= %@ and appointmentDate <= %@ and cancelled == %@ and completed == %@", intervalStart, intervalEnd,@(NO),@(NO)];
+            break;
+        }
+        case 1:
+        {
+            // Show completed appointments
+            statePredicate = [NSPredicate predicateWithFormat:@"appointmentDate >= %@ and appointmentDate <= %@ and completed == %@", intervalStart, intervalEnd,@(YES)];
+            break;
+        }
+        case 2:
+        {
+            // Show cancelled appointments
+            statePredicate = [NSPredicate predicateWithFormat:@"appointmentDate >= %@ and appointmentDate <= %@ and cancelled == %@", intervalStart, intervalEnd,@(YES)];
+            break;
+        }
+    }
+    [fetchRequest setPredicate:statePredicate];
+    // Specify how the fetched objects should be sorted
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"appointmentDate" ascending:NO];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+    
+    NSError *error = nil;
+    return [moc executeFetchRequest:fetchRequest error:&error];
+}
+-(NSArray*)searchFilteredAppointments {
+    if (!_searchFilteredAppointments) {
+        NSString * searchText = self.searchField.stringValue;
+        NSPredicate * searchPredicate = nil;
+        if (searchText.length > 0) {
+            searchPredicate = [NSPredicate predicateWithFormat:@"(customer.firstName beginswith[cd] %@ or customer.lastName beginswith[cd] %@ or customer.phone beginswith %@)",searchText, searchText,searchText];
+            _searchFilteredAppointments = [self.appointments filteredArrayUsingPredicate:searchPredicate];
+        } else {
+            _searchFilteredAppointments = self.appointments;
+        }
+    }
+    return _searchFilteredAppointments;
+}
+-(void)showBookingWizardInMode:(EditMode)editMode {
+    [self.salonDocument commitAndSave:nil];
+    self.currentWizard = [[AMCWizardForNewAppointmentWindowController alloc] init];
+    self.currentWizard.delegate = self;
+    self.currentWizard.editMode = editMode;
+    if (editMode == EditModeCreate) {
+        self.currentWizard.objectToManage = [Appointment newObjectWithMoc:self.documentMoc];
+    } else {
+        self.currentWizard.objectToManage = [self selectedAppointment];
+    }
+    self.currentWizard.document = self.salonDocument;
+    [NSApp beginSheet:self.currentWizard.window modalForWindow:self.view.window modalDelegate:self.view.window didEndSelector:NULL contextInfo:nil];
+}
+-(void)convertAppointmentToQuote:(Appointment*)appointment {
+    Sale * sale = appointment.sale;
+    NSAssert(sale, @"Sale must not be nil");
+    NSAssert(sale.isQuote.boolValue == YES, @"Sale must be in quote state");
+    sale.hidden = @(NO);
+    sale.createdDate = [NSDate date];
+    sale.lastUpdatedDate = [NSDate date];
+    NSError * error;
+    if (![self.salonDocument commitAndSave:&error] && error) {
+        [NSApp presentError:error];
+    } else {
+        NSAlert * alert = [[NSAlert alloc] init];
+        alert.messageText = @"Sale generated!";
+        alert.informativeText = @"The sale has been created as a quote on the Sales tab. You must edit the quote to finalize prices and complete the sale. You will need to switch to the Sales tab to do this.";
+        [alert beginSheetModalForWindow:self.view.window completionHandler:nil];
+    };
+}
+-(NSRect)rectOfCellForRow:(NSUInteger)row column:(NSUInteger)col {
+    NSRect rowBounds = [self.appointmentsTable rectOfRow:row];
+    NSRect colBounds = [self.appointmentsTable rectOfColumn:col];
+    return NSIntersectionRect(rowBounds, colBounds);
+}
+#pragma mark - AMCWizardStepWindowControllerDelegate
+-(void)wizardWindowControllerDidFinish:(AMCWizardWindowController *)controller
+{
+    [NSApp endSheet:self.currentWizard.window];
+    if (self.currentWizard.cancelled) {
+        NSManagedObjectContext * moc = self.documentMoc;
+        if (self.currentWizard.editMode == EditModeCreate) {
+            [moc deleteObject:self.currentWizard.objectToManage];
+        } else {
+            [moc rollback];
+        }
+    } else {
+        self.previouslySelectedAppointment = (Appointment*)self.currentWizard.objectToManage;
+    }
+    [self.salonDocument commitAndSave:nil];
+    [self reloadData];
+    [self selectAppointment:self.previouslySelectedAppointment];
+    [self.view.window makeFirstResponder:self.appointmentsTable];
+}
+#pragma mark - Actions
+- (IBAction)createNewAppointment:(id)sender {
+    self.previouslySelectedAppointment = self.selectedAppointment;
+    [self showBookingWizardInMode:EditModeCreate];
+}
+- (IBAction)editAppointment:(id)sender {
+    self.previouslySelectedAppointment = self.selectedAppointment;
+    [self showBookingWizardInMode:EditModeEdit];
+}
+-(IBAction)cancelAppointment:(id)sender {
+    AMCCancelAppointmentViewController * vc = self.cancelAppointmentViewController;
+    vc.appointment = self.selectedAppointment;
+    [self presentViewController:vc asPopoverRelativeToRect:self.cancelAppointmentButton.bounds ofView:self.cancelAppointmentButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+}
+-(IBAction)completeAppointment:(id)sender {
+    AMCCompleteAppointmentViewController * vc = [self completeAppointmentViewController];
+    vc.appointment = self.selectedAppointment;
+    [self presentViewController:vc asPopoverRelativeToRect:self.completeAppointmentButton.bounds ofView:self.completeAppointmentButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+}
+- (IBAction)viewCustomer:(id)sender {
+    EditObjectViewController * viewController = self.editCustomerViewController;
+    viewController.editMode = EditModeView;
+    [viewController clear];
+    viewController.objectToEdit = self.selectedAppointment.customer;
+    [self presentViewControllerAsSheet:viewController];
+}
+- (IBAction)intervalChanged:(id)sender {
+    [self reloadData];
+}
+
+- (IBAction)showNotesButtonClicked:(id)sender {
+    AMCAssociatedNotesViewController * vc = self.associatedNotesViewController;
+    vc.objectWithNotes = self.selectedAppointment.customer;
+    [vc prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewController:vc asPopoverRelativeToRect:self.showNotesButton.bounds ofView:self.showNotesButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+}
+- (IBAction)showQuickQuoteButtonClicked:(id)sender {
+    NSButton * button = (NSButton*)sender;
+    self.previouslySelectedAppointment = self.selectedAppointment;
+    AMCQuickQuoteViewController* vc = self.quickQuoteViewController;
+    vc.sale = self.selectedAppointment.sale;
+    [vc prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+}
+- (IBAction)appointmentStateSelectorChanged:(id)sender {
+    [self reloadData];
+}
+- (IBAction)searchFieldChanged:(id)sender {
+    _searchFilteredAppointments = nil;
+    [self.appointmentsTable reloadData];
+    [self.saleItemsTable reloadData];
+    [self appointmentSelectionChanged];
+    [self saleItemSelectionChanged];
+}
+
+-(void)dismissViewController:(NSViewController *)viewController {
+    if (viewController == self.cancelAppointmentViewController) {
+        if (!self.cancelAppointmentViewController.cancelled) {
+            [self reloadData];
+        }
+    }
+    if (viewController == self.completeAppointmentViewController) {
+        if (!self.completeAppointmentViewController.cancelled) {
+            [self reloadData];
+            if (self.completeAppointmentViewController.appointment.completionType.integerValue == AMCompletionTypeCompletedWithConversionToQuote) {
+                [self convertAppointmentToQuote:self.completeAppointmentViewController.appointment];
+            }
+        }
+    }
+    if (viewController == self.quickQuoteViewController) {
+        [self reloadData];
+        [self selectAppointment:self.previouslySelectedAppointment];
+        [self configureButtons];
+    }
+    [super dismissViewController:viewController];
+}
+-(AMCCancelAppointmentViewController *)cancelAppointmentViewController {
+    if (!_cancelAppointmentViewController) {
+        _cancelAppointmentViewController = [AMCCancelAppointmentViewController new];
+        _cancelAppointmentViewController.salonDocument = self.salonDocument;
+    }
+    return _cancelAppointmentViewController;
+}
+-(AMCCompleteAppointmentViewController *)completeAppointmentViewController {
+    if (!_completeAppointmentViewController) {
+        _completeAppointmentViewController = [AMCCompleteAppointmentViewController new];
+        _completeAppointmentViewController.salonDocument = self.salonDocument;
+    }
+    return _completeAppointmentViewController;
+}
+-(AMCQuickQuoteViewController *)quickQuoteViewController {
+    if (!_quickQuoteViewController) {
+        _quickQuoteViewController = [AMCQuickQuoteViewController new];
+        _quickQuoteViewController.salonDocument = self.salonDocument;
+    }
+    return _quickQuoteViewController;
+}
+-(AMCAssociatedNotesViewController *)associatedNotesViewController {
+    if (!_associatedNotesViewController) {
+        _associatedNotesViewController = [AMCAssociatedNotesViewController new];
+        _associatedNotesViewController.salonDocument = self.salonDocument;
+    }
+    return _associatedNotesViewController;
+}
+@end

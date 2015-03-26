@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCSalaryEditorViewController">
+            <connections>
+                <outlet property="containerView" destination="jJE-pX-eNN" id="Lkb-qI-jY6"/>
+                <outlet property="currentSalaryButton" destination="Pfs-RW-f8R" id="D7Q-e9-va7"/>
+                <outlet property="currentSalaryLabel" destination="XOp-sL-X8h" id="PBg-VC-LLC"/>
+                <outlet property="dailyRateField" destination="0Lv-6y-w2u" id="tRR-cw-byC"/>
+                <outlet property="extraHoursRate" destination="uhx-RT-ayr" id="n5X-g6-awU"/>
+                <outlet property="hourlyRateField" destination="g4o-p2-Lap" id="7k6-10-uBR"/>
+                <outlet property="hoursPerWeekViewController" destination="4bJ-b2-h0A" id="Zle-m5-W3g"/>
+                <outlet property="hoursWorkedPerWeekContainer" destination="XZR-kG-Sgb" id="FYE-bG-0UN"/>
+                <outlet property="nextSalaryButton" destination="cU4-Qp-zS5" id="eOt-Vu-5zT"/>
+                <outlet property="paidFromManagersBudgetCheckbox" destination="orM-cE-a9c" id="2zw-Zr-1h1"/>
+                <outlet property="payByHourRadioButton" destination="aWc-LK-3sD" id="9xj-qn-X3V"/>
+                <outlet property="payByHourViewController" destination="lQ1-Ly-13L" id="tWm-kh-iP8"/>
+                <outlet property="payByPercentageRadioButton" destination="YlG-Ib-fbl" id="fsJ-Oc-smR"/>
+                <outlet property="payByPercentageViewController" destination="TIZ-mc-UR6" id="JNK-At-NXJ"/>
+                <outlet property="percentageLabel" destination="xa8-Yu-rZR" id="cew-TV-6te"/>
+                <outlet property="percentageSlider" destination="p9f-wb-fG8" id="Oi4-Aa-iQ5"/>
+                <outlet property="previousSalaryButton" destination="ngJ-Ip-iHZ" id="o7A-TN-CAh"/>
+                <outlet property="salaryTypeRadioGroup" destination="fA1-PW-RjO" id="HIc-iX-rOb"/>
+                <outlet property="titleLabel" destination="Hle-26-kCi" id="nHc-9d-TTS"/>
+                <outlet property="validFromDate" destination="ZBF-Mg-ayB" id="Xwa-j0-daa"/>
+                <outlet property="validToDate" destination="mvN-g8-sda" id="Tjn-bl-xIQ"/>
+                <outlet property="validToLabel" destination="YWH-i3-mRI" id="sL7-qP-mKg"/>
+                <outlet property="view" destination="464-y0-LFS" id="NE3-UP-WiJ"/>
+                <outlet property="weeklyRateField" destination="xjj-aO-GZj" id="27F-HJ-3zm"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <viewController title="payByHourViewController" id="lQ1-Ly-13L">
+            <connections>
+                <outlet property="view" destination="jjJ-dg-KaW" id="0F6-Wk-2bo"/>
+            </connections>
+        </viewController>
+        <viewController title="payByPercentageViewController" id="TIZ-mc-UR6">
+            <connections>
+                <outlet property="view" destination="dXH-Vq-9Zi" id="Thz-lS-3Bw"/>
+            </connections>
+        </viewController>
+        <customView id="jjJ-dg-KaW">
+            <rect key="frame" x="0.0" y="0.0" width="550" height="274"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fCO-b7-2Es">
+                    <rect key="frame" x="132" y="125" width="134" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="(Effective hourly rate)" id="5Q1-0Y-3fJ">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pUH-gS-sr9">
+                    <rect key="frame" x="141" y="94" width="125" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="(Effective daily rate)" id="wiq-Ot-YKI">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g4o-p2-Lap">
+                    <rect key="frame" x="272" y="123" width="96" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="96" id="Imh-wI-3Y7"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="OTg-qb-FlM">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="qEb-Eg-ZPI">
+                            <real key="minimum" value="0.0"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="hourlyRateChanged:" target="-2" id="amT-sC-LkV"/>
+                    </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xjj-aO-GZj">
+                    <rect key="frame" x="232" y="155" width="96" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="96" id="UXx-Mg-JW1"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="ycH-na-9da">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="jZq-ko-7di">
+                            <real key="minimum" value="0.0"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="weeklyRateChanged:" target="-2" id="kGM-ZM-WgH"/>
+                        <binding destination="-2" name="enabled" keyPath="isSalaryEditable" id="dwD-gC-zwM"/>
+                    </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Lv-6y-w2u">
+                    <rect key="frame" x="272" y="92" width="96" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="96" id="G3K-OU-Cml"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="rNM-9g-h4y">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="Vza-74-G24">
+                            <real key="minimum" value="0.0"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g3N-0Z-82P">
+                    <rect key="frame" x="114" y="52" width="112" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Extra-hours rate" id="JLL-JC-2Gd">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uhx-RT-ayr">
+                    <rect key="frame" x="232" y="50" width="96" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="7oh-hp-61B">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="22f-tW-21e">
+                            <real key="minimum" value="0.0"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="extraHoursRateChanged:" target="-2" id="Ekr-88-O0u"/>
+                        <binding destination="-2" name="enabled" keyPath="isSalaryEditable" id="EvZ-di-4xX"/>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Wp-nV-J2e">
+                    <rect key="frame" x="80" y="217" width="420" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Set the standard weekly rate and extra-hours rate for this employee" id="u4n-pW-uFa">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2me-gv-Gcj">
+                    <rect key="frame" x="145" y="157" width="81" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Weekly rate" id="DUR-VR-na0">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="uhx-RT-ayr" firstAttribute="leading" secondItem="xjj-aO-GZj" secondAttribute="leading" id="0ZU-Az-s0Z"/>
+                <constraint firstItem="0Lv-6y-w2u" firstAttribute="top" secondItem="g4o-p2-Lap" secondAttribute="bottom" constant="9" id="3Ek-Qo-u4i"/>
+                <constraint firstItem="g4o-p2-Lap" firstAttribute="top" secondItem="xjj-aO-GZj" secondAttribute="bottom" constant="10" symbolic="YES" id="7bz-S5-5z8"/>
+                <constraint firstItem="0Lv-6y-w2u" firstAttribute="leading" secondItem="pUH-gS-sr9" secondAttribute="trailing" constant="8" id="9Kr-Ea-FOh"/>
+                <constraint firstItem="xjj-aO-GZj" firstAttribute="top" secondItem="2Wp-nV-J2e" secondAttribute="bottom" constant="40" id="9dR-zy-m74"/>
+                <constraint firstItem="uhx-RT-ayr" firstAttribute="leading" secondItem="g3N-0Z-82P" secondAttribute="trailing" constant="8" id="AzP-8g-q4W"/>
+                <constraint firstItem="g4o-p2-Lap" firstAttribute="leading" secondItem="xjj-aO-GZj" secondAttribute="leading" constant="40" id="EwL-y9-Mg5"/>
+                <constraint firstItem="pUH-gS-sr9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jjJ-dg-KaW" secondAttribute="leading" constant="40" id="Fwk-Wt-rw5"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2Wp-nV-J2e" secondAttribute="trailing" constant="40" id="I3j-g3-9yP"/>
+                <constraint firstItem="2me-gv-Gcj" firstAttribute="baseline" secondItem="xjj-aO-GZj" secondAttribute="baseline" id="Is6-Nk-Dy0"/>
+                <constraint firstItem="g4o-p2-Lap" firstAttribute="leading" secondItem="0Lv-6y-w2u" secondAttribute="leading" id="JYW-js-tzg"/>
+                <constraint firstItem="xjj-aO-GZj" firstAttribute="leading" secondItem="2me-gv-Gcj" secondAttribute="trailing" constant="8" id="Myl-in-NKi"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="uhx-RT-ayr" secondAttribute="bottom" constant="40" id="ORG-Bv-s7s"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="g4o-p2-Lap" secondAttribute="trailing" constant="40" id="U1A-VL-dWm"/>
+                <constraint firstItem="fCO-b7-2Es" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jjJ-dg-KaW" secondAttribute="leading" constant="40" id="Xmr-np-ET1"/>
+                <constraint firstItem="g4o-p2-Lap" firstAttribute="leading" secondItem="fCO-b7-2Es" secondAttribute="trailing" constant="8" id="YsT-Q9-Ghi"/>
+                <constraint firstItem="fCO-b7-2Es" firstAttribute="baseline" secondItem="g4o-p2-Lap" secondAttribute="baseline" id="ZfH-v7-AQC"/>
+                <constraint firstItem="0Lv-6y-w2u" firstAttribute="baseline" secondItem="pUH-gS-sr9" secondAttribute="baseline" id="f0u-vn-s4b"/>
+                <constraint firstItem="2Wp-nV-J2e" firstAttribute="centerX" secondItem="g4o-p2-Lap" secondAttribute="centerX" constant="-30" id="gZZ-z6-bN1"/>
+                <constraint firstItem="2Wp-nV-J2e" firstAttribute="top" secondItem="jjJ-dg-KaW" secondAttribute="top" constant="40" id="gs1-gn-lio"/>
+                <constraint firstItem="2Wp-nV-J2e" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jjJ-dg-KaW" secondAttribute="leading" constant="40" id="h9h-OD-KyM"/>
+                <constraint firstItem="2me-gv-Gcj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jjJ-dg-KaW" secondAttribute="leading" constant="40" id="j0S-7F-Tdb"/>
+                <constraint firstItem="g3N-0Z-82P" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jjJ-dg-KaW" secondAttribute="leading" constant="40" id="m0y-Ft-r7E"/>
+                <constraint firstAttribute="centerX" secondItem="2Wp-nV-J2e" secondAttribute="centerX" constant="-15" id="pzk-og-6Ic"/>
+                <constraint firstItem="uhx-RT-ayr" firstAttribute="baseline" secondItem="g3N-0Z-82P" secondAttribute="baseline" id="qd2-0b-gxU"/>
+                <constraint firstItem="uhx-RT-ayr" firstAttribute="top" secondItem="0Lv-6y-w2u" secondAttribute="bottom" constant="20" id="sjK-Ua-rdF"/>
+                <constraint firstItem="uhx-RT-ayr" firstAttribute="width" secondItem="xjj-aO-GZj" secondAttribute="width" id="y57-Aq-EUb"/>
+            </constraints>
+            <point key="canvasLocation" x="32" y="-214"/>
+        </customView>
+        <customView id="dXH-Vq-9Zi">
+            <rect key="frame" x="0.0" y="0.0" width="550" height="274"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p9f-wb-fG8">
+                    <rect key="frame" x="77" y="37" width="26" height="142"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="137" id="S09-13-vTm"/>
+                    </constraints>
+                    <sliderCell key="cell" continuous="YES" alignment="left" maxValue="100" doubleValue="65" tickMarkPosition="right" numberOfTickMarks="21" allowsTickMarkValuesOnly="YES" sliderType="linear" id="PVm-Wo-me3"/>
+                    <connections>
+                        <action selector="percentageChanged:" target="-2" id="2CU-YY-SoS"/>
+                        <binding destination="-2" name="enabled" keyPath="isSalaryEditable" id="brH-IE-C3f"/>
+                    </connections>
+                </slider>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QyV-Az-tnc">
+                    <rect key="frame" x="77" y="217" width="397" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Set percentage of takings that go to the salon for this employee" id="4xj-YJ-nnn">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hK6-uU-c9T">
+                    <rect key="frame" x="109" y="40" width="85" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0 % to Salon" id="3tf-yu-8vw">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s5Z-7P-q9e">
+                    <rect key="frame" x="109" y="160" width="100" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="100 % to Salon" id="R0E-pA-gaH">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xa8-Yu-rZR">
+                    <rect key="frame" x="301" y="84" width="148" height="51"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="144" id="jKW-SV-YIi"/>
+                    </constraints>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="60% to salon  40% to employee" id="A3Z-Rh-hBX">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="QyV-Az-tnc" secondAttribute="trailing" constant="40" id="04Y-aL-lgf"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xa8-Yu-rZR" secondAttribute="trailing" constant="40" id="112-de-nxJ"/>
+                <constraint firstItem="p9f-wb-fG8" firstAttribute="centerY" secondItem="xa8-Yu-rZR" secondAttribute="centerY" constant="0.5" id="2M8-4a-Lmz"/>
+                <constraint firstItem="QyV-Az-tnc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="dXH-Vq-9Zi" secondAttribute="leading" constant="40" id="34S-En-lC4"/>
+                <constraint firstItem="p9f-wb-fG8" firstAttribute="top" secondItem="s5Z-7P-q9e" secondAttribute="top" id="98Q-OE-kjx"/>
+                <constraint firstItem="p9f-wb-fG8" firstAttribute="top" secondItem="QyV-Az-tnc" secondAttribute="bottom" constant="40" id="FrG-iW-tYD"/>
+                <constraint firstItem="xa8-Yu-rZR" firstAttribute="leading" secondItem="p9f-wb-fG8" secondAttribute="trailing" constant="200" id="Ghk-XX-lX7"/>
+                <constraint firstAttribute="bottom" secondItem="p9f-wb-fG8" secondAttribute="bottom" constant="40" id="I5n-EB-DRT"/>
+                <constraint firstItem="p9f-wb-fG8" firstAttribute="bottom" secondItem="hK6-uU-c9T" secondAttribute="bottom" id="IPC-C7-yu1"/>
+                <constraint firstItem="QyV-Az-tnc" firstAttribute="top" secondItem="dXH-Vq-9Zi" secondAttribute="top" constant="40" id="Rze-hf-dE5"/>
+                <constraint firstItem="s5Z-7P-q9e" firstAttribute="leading" secondItem="p9f-wb-fG8" secondAttribute="trailing" constant="8" symbolic="YES" id="aHI-eg-wJN"/>
+                <constraint firstItem="hK6-uU-c9T" firstAttribute="leading" secondItem="p9f-wb-fG8" secondAttribute="trailing" constant="8" symbolic="YES" id="fKp-3J-9Vj"/>
+                <constraint firstItem="p9f-wb-fG8" firstAttribute="leading" secondItem="QyV-Az-tnc" secondAttribute="leading" id="o15-Zb-Mbq"/>
+                <constraint firstAttribute="centerX" secondItem="QyV-Az-tnc" secondAttribute="centerX" id="z6e-Wx-SmI"/>
+            </constraints>
+            <point key="canvasLocation" x="39" y="-558"/>
+        </customView>
+        <customObject id="4bJ-b2-h0A" customClass="AMCHoursWorkedEachDayOfWeekViewController"/>
+        <userDefaultsController representsSharedInstance="YES" id="5oP-Wy-UbQ"/>
+        <customView id="464-y0-LFS">
+            <rect key="frame" x="0.0" y="0.0" width="692" height="640"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fA1-PW-RjO">
+                    <rect key="frame" x="310" y="281" width="228" height="18"/>
+                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    <size key="cellSize" width="112" height="18"/>
+                    <size key="intercellSpacing" width="4" height="2"/>
+                    <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="mB6-10-RdF">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <cells>
+                        <column>
+                            <buttonCell type="radio" title="By time" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="aWc-LK-3sD">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <connections>
+                                    <action selector="salaryTypeSetToPayByHour:" target="-2" id="1U5-KQ-erl"/>
+                                </connections>
+                            </buttonCell>
+                        </column>
+                        <column>
+                            <buttonCell type="radio" title="By percentage" imagePosition="left" alignment="left" inset="2" id="YlG-Ib-fbl">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                                <connections>
+                                    <action selector="salaryTypeSetToPayByPercentage:" target="-2" id="ydf-qN-egG"/>
+                                </connections>
+                            </buttonCell>
+                        </column>
+                    </cells>
+                    <connections>
+                        <binding destination="-2" name="enabled" keyPath="isSalaryEditable" id="Kjq-ez-X33"/>
+                    </connections>
+                </matrix>
+                <box verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="r1A-VQ-gbZ">
+                    <rect key="frame" x="40" y="503" width="600" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="jJE-pX-eNN">
+                    <rect key="frame" x="46" y="70" width="600" height="200"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="600" id="nn0-kG-yaA"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="yCr-6G-FyL"/>
+                    </constraints>
+                </customView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CPJ-5F-bkG">
+                    <rect key="frame" x="308" y="13" width="76" height="32"/>
+                    <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dXc-f9-5Sx">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="dismissController:" target="-2" id="FlW-Fj-qHV"/>
+                    </connections>
+                </button>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="XZR-kG-Sgb">
+                    <rect key="frame" x="46" y="318" width="600" height="147"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="147" id="J70-N5-wuc"/>
+                    </constraints>
+                </customView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bsw-BE-1TA">
+                    <rect key="frame" x="48" y="480" width="513" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Specify the days and hours that this employee will work on a normal working week" id="mcM-hM-qg8">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5Nd-ae-ASd">
+                    <rect key="frame" x="48" y="281" width="247" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Specify how this employee will be paid:" id="Vue-aj-xEr">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vLk-yf-o4R">
+                    <rect key="frame" x="496" y="554" width="152" height="32"/>
+                    <buttonCell key="cell" type="push" title="End current salary" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Kh5-iv-JSG">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="createNewSalary:" target="-2" id="SIw-gE-Bvl"/>
+                    </connections>
+                </button>
+                <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mvN-g8-sda">
+                    <rect key="frame" x="311" y="521" width="113" height="27"/>
+                    <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="tAa-eD-4g3">
+                        <font key="font" metaFont="system"/>
+                        <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
+                            <!--1982-02-12 16:00:00 +0000-->
+                            <timeZone key="timeZone" name="US/Pacific"/>
+                        </calendarDate>
+                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                    </datePickerCell>
+                    <connections>
+                        <action selector="toDateChanged:" target="-2" id="EJ2-gN-NtJ"/>
+                    </connections>
+                </datePicker>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YWH-i3-mRI">
+                    <rect key="frame" x="244" y="524" width="61" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Last day:" id="D6M-gg-ECq">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cU4-Qp-zS5">
+                    <rect key="frame" x="427" y="554" width="49" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="37" id="J0n-jx-P3j"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="&gt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h6n-Zo-gFU">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="gotoNextSalary:" target="-2" id="0zE-NN-uLL"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ngJ-Ip-iHZ">
+                    <rect key="frame" x="216" y="554" width="49" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="37" id="in2-ke-EJt"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="&lt;" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JpP-fZ-ZLc">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="gotoPreviousSalary:" target="-2" id="uw6-aM-hKo"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pfs-RW-f8R">
+                    <rect key="frame" x="265" y="554" width="162" height="32"/>
+                    <buttonCell key="cell" type="push" title="Go to current salary" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Nwl-DK-EBB">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="gotoCurrentSalary:" target="-2" id="Oi8-P9-7qc"/>
+                    </connections>
+                </button>
+                <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZBF-Mg-ayB">
+                    <rect key="frame" x="116" y="521" width="113" height="27"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="110" id="qzr-62-xzl"/>
+                    </constraints>
+                    <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="Xct-tu-dt6">
+                        <font key="font" metaFont="system"/>
+                        <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
+                            <!--1982-02-12 16:00:00 +0000-->
+                            <timeZone key="timeZone" name="US/Pacific"/>
+                        </calendarDate>
+                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                    </datePickerCell>
+                    <connections>
+                        <action selector="fromDateChanged:" target="-2" id="5gD-gw-LDf"/>
+                    </connections>
+                </datePicker>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XOp-sL-X8h">
+                    <rect key="frame" x="427" y="524" width="166" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="This is the current salary" id="mG6-VX-JsP">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <box verticalHuggingPriority="750" ambiguous="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Pxx-D5-1xq">
+                    <rect key="frame" x="0.0" y="59" width="600" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="phh-Rh-WLn">
+                    <rect key="frame" x="48" y="524" width="62" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="First day:" id="ugu-Ey-b6s">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="orM-cE-a9c">
+                    <rect key="frame" x="431" y="602" width="199" height="18"/>
+                    <buttonCell key="cell" type="check" title="Paid from Manager's Budget" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jdx-3A-66w">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="paidFromManagersBudgetChanged:" target="-2" id="tED-QV-QaA"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Hle-26-kCi">
+                    <rect key="frame" x="289" y="602" width="114" height="18"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Salary for Maria" id="Cid-u7-PDY">
+                        <font key="font" metaFont="system" size="15"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="CPJ-5F-bkG" secondAttribute="centerX" id="0re-Ad-fwC"/>
+                <constraint firstAttribute="centerX" secondItem="Pfs-RW-f8R" secondAttribute="centerX" id="0ye-K6-gln"/>
+                <constraint firstItem="fA1-PW-RjO" firstAttribute="leading" secondItem="5Nd-ae-ASd" secondAttribute="trailing" constant="17" id="1BY-dw-jn6"/>
+                <constraint firstAttribute="centerX" secondItem="Hle-26-kCi" secondAttribute="centerX" id="1dS-Yn-J7g"/>
+                <constraint firstItem="mvN-g8-sda" firstAttribute="baseline" secondItem="YWH-i3-mRI" secondAttribute="baseline" id="6LF-b9-wXr"/>
+                <constraint firstItem="fA1-PW-RjO" firstAttribute="centerY" secondItem="5Nd-ae-ASd" secondAttribute="centerY" id="7xV-2c-F8V"/>
+                <constraint firstItem="5Nd-ae-ASd" firstAttribute="leading" secondItem="XZR-kG-Sgb" secondAttribute="leading" constant="4" id="A2x-x1-clI"/>
+                <constraint firstAttribute="centerX" secondItem="XZR-kG-Sgb" secondAttribute="centerX" id="BBZ-G0-MuE"/>
+                <constraint firstItem="XZR-kG-Sgb" firstAttribute="leading" secondItem="phh-Rh-WLn" secondAttribute="leading" constant="-4" id="DZC-mi-r47"/>
+                <constraint firstItem="mvN-g8-sda" firstAttribute="leading" secondItem="YWH-i3-mRI" secondAttribute="trailing" constant="8" symbolic="YES" id="E1p-YS-XZm"/>
+                <constraint firstItem="jJE-pX-eNN" firstAttribute="width" secondItem="r1A-VQ-gbZ" secondAttribute="width" id="F3E-np-lhV"/>
+                <constraint firstItem="YWH-i3-mRI" firstAttribute="leading" relation="lessThanOrEqual" secondItem="ZBF-Mg-ayB" secondAttribute="trailing" constant="40" id="GdI-nD-oEQ"/>
+                <constraint firstItem="XZR-kG-Sgb" firstAttribute="leading" secondItem="bsw-BE-1TA" secondAttribute="leading" constant="-4" id="J6y-tH-imf"/>
+                <constraint firstItem="XZR-kG-Sgb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="464-y0-LFS" secondAttribute="leading" constant="40" id="KdF-Lv-las"/>
+                <constraint firstItem="XOp-sL-X8h" firstAttribute="leading" secondItem="mvN-g8-sda" secondAttribute="trailing" constant="8" symbolic="YES" id="Khl-Rl-nav"/>
+                <constraint firstItem="YWH-i3-mRI" firstAttribute="leading" secondItem="ZBF-Mg-ayB" secondAttribute="trailing" priority="750" constant="20" id="LaD-eK-G36"/>
+                <constraint firstItem="mvN-g8-sda" firstAttribute="baseline" secondItem="phh-Rh-WLn" secondAttribute="baseline" id="Mme-La-SLa"/>
+                <constraint firstItem="orM-cE-a9c" firstAttribute="leading" secondItem="Hle-26-kCi" secondAttribute="trailing" constant="32" id="ORA-pW-cRH"/>
+                <constraint firstItem="Hle-26-kCi" firstAttribute="baseline" secondItem="orM-cE-a9c" secondAttribute="baseline" id="TMF-Om-kzp"/>
+                <constraint firstItem="Pfs-RW-f8R" firstAttribute="top" secondItem="Hle-26-kCi" secondAttribute="bottom" constant="20" id="Uee-0s-luz"/>
+                <constraint firstItem="r1A-VQ-gbZ" firstAttribute="top" secondItem="phh-Rh-WLn" secondAttribute="bottom" constant="18" id="V46-EV-9Iq"/>
+                <constraint firstItem="Pfs-RW-f8R" firstAttribute="leading" secondItem="ngJ-Ip-iHZ" secondAttribute="trailing" constant="12" symbolic="YES" id="WF0-4b-Gzr"/>
+                <constraint firstItem="XZR-kG-Sgb" firstAttribute="top" secondItem="bsw-BE-1TA" secondAttribute="bottom" constant="15" id="XQF-ex-uHV"/>
+                <constraint firstItem="YWH-i3-mRI" firstAttribute="baseline" secondItem="XOp-sL-X8h" secondAttribute="baseline" id="Z9D-rf-9or"/>
+                <constraint firstItem="mvN-g8-sda" firstAttribute="baseline" secondItem="ZBF-Mg-ayB" secondAttribute="baseline" id="aN9-BQ-VR4"/>
+                <constraint firstItem="ngJ-Ip-iHZ" firstAttribute="top" secondItem="Pfs-RW-f8R" secondAttribute="top" id="b6c-NH-EjV"/>
+                <constraint firstItem="bsw-BE-1TA" firstAttribute="top" secondItem="r1A-VQ-gbZ" secondAttribute="bottom" constant="8" id="bnp-UO-5lE"/>
+                <constraint firstItem="vLk-yf-o4R" firstAttribute="baseline" secondItem="cU4-Qp-zS5" secondAttribute="baseline" id="cT3-NA-Mqw"/>
+                <constraint firstAttribute="bottom" secondItem="CPJ-5F-bkG" secondAttribute="bottom" constant="20" id="ekc-OB-1hR"/>
+                <constraint firstItem="phh-Rh-WLn" firstAttribute="leading" secondItem="464-y0-LFS" secondAttribute="leading" constant="50" id="eoP-aF-59u"/>
+                <constraint firstItem="Pxx-D5-1xq" firstAttribute="width" secondItem="jJE-pX-eNN" secondAttribute="width" id="epp-SD-pWR"/>
+                <constraint firstItem="cU4-Qp-zS5" firstAttribute="leading" secondItem="Pfs-RW-f8R" secondAttribute="trailing" constant="12" symbolic="YES" id="f5j-Aw-RGN"/>
+                <constraint firstItem="phh-Rh-WLn" firstAttribute="top" secondItem="ngJ-Ip-iHZ" secondAttribute="bottom" constant="20" id="gwj-Wv-1Yl"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="orM-cE-a9c" secondAttribute="trailing" constant="40" id="hvR-6x-OMn"/>
+                <constraint firstItem="vLk-yf-o4R" firstAttribute="leading" secondItem="cU4-Qp-zS5" secondAttribute="trailing" constant="32" id="i5g-Zu-V6k"/>
+                <constraint firstItem="5Nd-ae-ASd" firstAttribute="top" secondItem="XZR-kG-Sgb" secondAttribute="bottom" constant="20" id="ica-aq-iVN"/>
+                <constraint firstItem="ZBF-Mg-ayB" firstAttribute="leading" secondItem="phh-Rh-WLn" secondAttribute="trailing" constant="8" symbolic="YES" id="iye-mX-cLv"/>
+                <constraint firstItem="jJE-pX-eNN" firstAttribute="top" secondItem="fA1-PW-RjO" secondAttribute="bottom" constant="11" id="nJP-SQ-qgR"/>
+                <constraint firstItem="CPJ-5F-bkG" firstAttribute="top" secondItem="Pxx-D5-1xq" secondAttribute="bottom" constant="20" symbolic="YES" id="ohd-r1-JaW"/>
+                <constraint firstAttribute="centerX" secondItem="jJE-pX-eNN" secondAttribute="centerX" id="pnt-zM-ybZ"/>
+                <constraint firstItem="jJE-pX-eNN" firstAttribute="width" secondItem="XZR-kG-Sgb" secondAttribute="width" id="q6E-I4-qjR"/>
+                <constraint firstItem="ZBF-Mg-ayB" firstAttribute="width" secondItem="mvN-g8-sda" secondAttribute="width" id="sWT-79-fMJ"/>
+                <constraint firstItem="cU4-Qp-zS5" firstAttribute="top" secondItem="Pfs-RW-f8R" secondAttribute="top" id="srn-v1-kNn"/>
+                <constraint firstItem="Hle-26-kCi" firstAttribute="top" secondItem="464-y0-LFS" secondAttribute="top" constant="20" id="x5e-EC-alF"/>
+                <constraint firstItem="Pxx-D5-1xq" firstAttribute="top" secondItem="jJE-pX-eNN" secondAttribute="bottom" constant="8" symbolic="YES" id="xm7-NT-GIs"/>
+            </constraints>
+            <point key="canvasLocation" x="45" y="-1084"/>
+        </customView>
+    </objects>
+</document>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MakePaymentStepViewController">
+            <connections>
+                <outlet property="additionalDiscountPopup" destination="kgV-if-JCE" id="eK9-xQ-bcE"/>
+                <outlet property="amountGivenByCustomer" destination="fBy-0L-Io1" id="AiE-9h-ayQ"/>
+                <outlet property="cardCashSegmentedControl" destination="uCG-Sn-09s" id="sei-rQ-dvN"/>
+                <outlet property="changeToReturn" destination="Jja-Vf-uHa" id="0KZ-2i-oAf"/>
+                <outlet property="costAfterIndividualDiscounts" destination="2i3-En-gXF" id="gPz-97-Heu"/>
+                <outlet property="costOfAllWithoutAdditionalDiscount" destination="gdv-Pq-HPb" id="Fo4-wP-hUB"/>
+                <outlet property="paymentCompleteButton" destination="eMv-Pq-pOI" id="adc-dv-diK"/>
+                <outlet property="paymentCompleteWindowController" destination="OqP-uT-VRh" id="Ajo-eZ-ZYh"/>
+                <outlet property="saveAsQuoteButton" destination="N0f-DP-eTj" id="OEF-H5-csa"/>
+                <outlet property="totalDiscount" destination="jJv-MA-thh" id="wzg-Tr-6sz"/>
+                <outlet property="totalToPay" destination="WT3-3c-6lN" id="SDW-HA-8Sr"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY" customClass="WizardStepView">
+            <rect key="frame" x="0.0" y="0.0" width="1235" height="605"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rnp-BS-Yzd">
+                    <rect key="frame" x="18" y="552" width="446" height="33"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Price  before individual discounts:" id="7xb-yr-iQ4">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6bm-74-Eg9">
+                    <rect key="frame" x="79" y="108" width="521" height="39"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Enter amount given by customer:" id="fvR-Af-kiV">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HkG-7D-2di">
+                    <rect key="frame" x="79" y="29" width="521" height="39"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Change to return to customer:" id="wRV-Ya-pyP">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gdv-Pq-HPb">
+                    <rect key="frame" x="463" y="547" width="154" height="38"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="61q-tL-VwW">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ipo-aC-XGm">
+                    <rect key="frame" x="656" y="547" width="425" height="38"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Price after individual discounts:" id="xtI-Ih-bo3">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2i3-En-gXF">
+                    <rect key="frame" x="1068" y="547" width="157" height="38"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="jl8-y5-PFJ">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jJv-MA-thh">
+                    <rect key="frame" x="611" y="373" width="167" height="38"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="1lE-Ma-Ea7">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kgV-if-JCE">
+                    <rect key="frame" x="715" y="484" width="185" height="26"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="BZc-F0-AmN" id="9BP-Ye-vmw">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="6FX-8l-Pgq">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="BZc-F0-AmN"/>
+                                <menuItem title="Item 2" id="MRl-VU-Aex"/>
+                                <menuItem title="Item 3" id="IGK-bx-Pxz"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="extraDiscountChanged:" target="-2" id="XFi-La-kCV"/>
+                    </connections>
+                </popUpButton>
+                <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="iBw-2K-VxA">
+                    <rect key="frame" x="12" y="184" width="1211" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jja-Vf-uHa">
+                    <rect key="frame" x="612" y="29" width="167" height="38"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="8Lc-Ys-4Ep">
+                        <font key="font" metaFont="systemBold" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMv-Pq-pOI">
+                    <rect key="frame" x="839" y="28" width="200" height="41"/>
+                    <buttonCell key="cell" type="smallSquare" title="Payment Complete " bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UaD-i5-yha">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="paymentComplete:" target="-2" id="TDU-ZJ-4Cd"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rt7-2h-wGO">
+                    <rect key="frame" x="138" y="373" width="461" height="38"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Total discount for customer:" id="9QB-Sb-VnC">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="OTp-s3-VZx">
+                    <rect key="frame" x="12" y="323" width="1211" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <box autoresizesSubviews="NO" fixedFrame="YES" boxType="custom" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="22T-eZ-9qn">
+                    <rect key="frame" x="0.0" y="186" width="1235" height="140"/>
+                    <view key="contentView">
+                        <rect key="frame" x="1" y="1" width="1233" height="138"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WT3-3c-6lN">
+                                <rect key="frame" x="615" y="50" width="163" height="38"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" drawsBackground="YES" id="4LI-SA-T7e">
+                                    <font key="font" metaFont="systemBold" size="27"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="14y-F8-wTs">
+                                <rect key="frame" x="121" y="50" width="495" height="38"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Total customer must pay:         " drawsBackground="YES" id="tVb-6C-oxW">
+                                    <font key="font" metaFont="system" size="27"/>
+                                    <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </box>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cas-tp-mWS">
+                    <rect key="frame" x="46" y="478" width="665" height="38"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Apply additional discount to undiscounted items:" id="BSl-Ah-Bej">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N0f-DP-eTj">
+                    <rect key="frame" x="839" y="236" width="200" height="41"/>
+                    <buttonCell key="cell" type="smallSquare" title="Save as Quote" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EaS-3B-9RJ">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="saveAsQuote:" target="-2" id="I1Y-1R-LOI"/>
+                    </connections>
+                </button>
+                <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uCG-Sn-09s">
+                    <rect key="frame" x="880" y="121" width="123" height="24"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="aML-ao-A6r">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment label="CASH" selected="YES"/>
+                            <segment label="CARD" tag="1"/>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="cardCashSegmentedControlChanged:" target="-2" id="2J5-KZ-b4V"/>
+                    </connections>
+                </segmentedControl>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fBy-0L-Io1" customClass="AMCCashEntryField">
+                    <rect key="frame" x="614" y="110" width="184" height="46"/>
+                </customView>
+            </subviews>
+        </customView>
+        <customObject id="OqP-uT-VRh" customClass="AMCPaymentCompleteWindowController">
+            <connections>
+                <outlet property="delegate" destination="-2" id="r6v-6o-ukT"/>
+            </connections>
+        </customObject>
+    </objects>
+</document>

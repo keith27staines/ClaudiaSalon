@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCJobsColumnViewController">
+            <connections>
+                <outlet property="view" destination="V91-nE-OgB" id="EMQ-UW-kNT"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application"/>
+        <tableCellView id="V91-nE-OgB" customClass="AMCJobsColumnView">
+            <rect key="frame" x="0.0" y="0.0" width="628" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6bW-he-z1I">
+                    <rect key="frame" x="3" y="13" width="14" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="14" id="OTg-CH-KOf"/>
+                        <constraint firstAttribute="width" constant="14" id="yQV-oj-irQ"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="OCW-O2-MZT"/>
+                </imageView>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n1Y-Ej-NBi">
+                    <rect key="frame" x="23" y="12" width="99" height="17"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="bXW-C2-UrN">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yQW-lD-cWR">
+                    <rect key="frame" x="556" y="10" width="65" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="recessed" bezelStyle="recessed" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rTD-ya-nIE">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                        <font key="font" metaFont="systemBold" size="12"/>
+                        <menu key="menu" title="OtherViews" id="PZo-dM-RzV">
+                            <items>
+                                <menuItem title="Item 1" id="oNn-pE-zAL"/>
+                                <menuItem title="Item 2" id="zvy-pC-Khd"/>
+                                <menuItem title="Item 3" id="1Lx-3I-h6A"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="stylistChanged:" target="V91-nE-OgB" id="efd-PE-leg"/>
+                    </connections>
+                </popUpButton>
+            </subviews>
+            <constraints>
+                <constraint firstItem="yQW-lD-cWR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="n1Y-Ej-NBi" secondAttribute="trailing" constant="8" symbolic="YES" id="5ew-om-FdP"/>
+                <constraint firstAttribute="centerY" secondItem="yQW-lD-cWR" secondAttribute="centerY" id="PmP-G8-g9I"/>
+                <constraint firstAttribute="trailing" secondItem="yQW-lD-cWR" secondAttribute="trailing" constant="7" id="dPq-kq-6Iv"/>
+                <constraint firstItem="6bW-he-z1I" firstAttribute="leading" secondItem="V91-nE-OgB" secondAttribute="leading" constant="3" id="en9-9T-mca"/>
+                <constraint firstAttribute="centerY" secondItem="6bW-he-z1I" secondAttribute="centerY" id="qTu-hO-h9h"/>
+                <constraint firstItem="n1Y-Ej-NBi" firstAttribute="leading" secondItem="6bW-he-z1I" secondAttribute="trailing" constant="7" id="ujq-Dl-cM9"/>
+                <constraint firstAttribute="centerY" secondItem="n1Y-Ej-NBi" secondAttribute="centerY" id="za0-mC-gtV"/>
+            </constraints>
+            <connections>
+                <outlet property="imageView" destination="6bW-he-z1I" id="WS2-XY-TZx"/>
+                <outlet property="stylistPopup" destination="yQW-lD-cWR" id="m07-vP-zdl"/>
+                <outlet property="textField" destination="n1Y-Ej-NBi" id="LV5-f3-KlA"/>
+            </connections>
+        </tableCellView>
+    </objects>
+    <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
+    </resources>
+</document>

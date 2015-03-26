@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6205"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCRefundViewController">
+            <connections>
+                <outlet property="actualSumToRefund" destination="yCK-b4-wow" id="Mwz-IG-wlQ"/>
+                <outlet property="amountPaidLabel" destination="iSR-xy-ZEZ" id="CdW-ST-Xxh"/>
+                <outlet property="cancelButtonClicked" destination="68i-eA-Kle" id="ljj-n1-6uj"/>
+                <outlet property="refundReason" destination="JR0-8K-XVo" id="YZW-8y-Gl5"/>
+                <outlet property="repayButton" destination="CyQ-V0-Ik3" id="afy-QM-tRW"/>
+                <outlet property="saleitemToRefundLabel" destination="jSd-05-vyY" id="QtW-17-ymd"/>
+                <outlet property="sumToRefundField" destination="zd5-Wi-1U5" id="HDo-Kl-h6H"/>
+                <outlet property="titleField" destination="gH3-EC-tpT" id="aG8-Q5-lZi"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY" customClass="AMCRefundView">
+            <rect key="frame" x="0.0" y="0.0" width="448" height="321"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gH3-EC-tpT">
+                    <rect key="frame" x="18" y="284" width="357" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Refund the customer for service:" id="WVu-zV-wpt">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jSd-05-vyY">
+                    <rect key="frame" x="18" y="259" width="91" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Item to refund" id="Ksi-7l-pgJ">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Znn-fw-Svj">
+                    <rect key="frame" x="18" y="234" width="294" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Original price charged (after all discounts) was:" id="d0z-0a-cay">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iSR-xy-ZEZ">
+                    <rect key="frame" x="314" y="234" width="100" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="£Price" id="E8P-zp-Oos">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="68i-eA-Kle">
+                    <rect key="frame" x="16" y="13" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Pls-LQ-UmY">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cancelButton:" target="-2" id="IMb-J2-r1s"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yCK-b4-wow">
+                    <rect key="frame" x="240" y="94" width="96" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="96" id="XsL-JT-gCt"/>
+                        <constraint firstAttribute="height" constant="22" id="t2M-Th-m0a"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="VUq-Je-lEY">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="oGr-pd-6vI"/>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zd5-Wi-1U5">
+                    <rect key="frame" x="112" y="97" width="92" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Sum to refund" id="xUw-pV-Uc5">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xcl-4s-1zI">
+                    <rect key="frame" x="220" y="97" width="12" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="£" id="jBw-te-ebY">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JR0-8K-XVo">
+                    <rect key="frame" x="20" y="142" width="408" height="24"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Reason for refund" drawsBackground="YES" id="XkI-AO-9w0">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="C7V-Ot-M7k"/>
+                    </connections>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UCM-Ov-dzL">
+                    <rect key="frame" x="18" y="174" width="115" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Reason for refund" id="5xh-h4-5Uj">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Lab-tF-qI5">
+                    <rect key="frame" x="20" y="59" width="408" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ink-dM-MbS">
+                    <rect key="frame" x="398" y="275" width="30" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="DNq-le-Rwd"/>
+                        <constraint firstAttribute="height" constant="35" id="uha-y3-8e2"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSCaution" id="Lie-FR-PdO"/>
+                </imageView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CyQ-V0-Ik3">
+                    <rect key="frame" x="293" y="13" width="141" height="32"/>
+                    <buttonCell key="cell" type="push" title="Repay customer" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DDb-aQ-E5m">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="refundButtonClicked:" target="-2" id="1a7-2C-sRK"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Xcl-4s-1zI" firstAttribute="leading" secondItem="zd5-Wi-1U5" secondAttribute="trailing" constant="20" id="1Cw-aZ-5a7"/>
+                <constraint firstItem="UCM-Ov-dzL" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="3dy-zx-uF8"/>
+                <constraint firstItem="yCK-b4-wow" firstAttribute="baseline" secondItem="Xcl-4s-1zI" secondAttribute="baseline" id="5G7-og-BV7"/>
+                <constraint firstItem="iSR-xy-ZEZ" firstAttribute="leading" secondItem="Znn-fw-Svj" secondAttribute="trailing" constant="6" id="6vh-u6-gUw"/>
+                <constraint firstItem="CyQ-V0-Ik3" firstAttribute="bottom" secondItem="68i-eA-Kle" secondAttribute="bottom" id="8MV-TK-aOn"/>
+                <constraint firstItem="JR0-8K-XVo" firstAttribute="top" secondItem="UCM-Ov-dzL" secondAttribute="bottom" constant="8" id="8sC-XV-aFc"/>
+                <constraint firstItem="jSd-05-vyY" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="9LK-R9-pN0"/>
+                <constraint firstItem="yCK-b4-wow" firstAttribute="leading" secondItem="Xcl-4s-1zI" secondAttribute="trailing" constant="10" id="AWQ-fZ-vPr"/>
+                <constraint firstItem="gH3-EC-tpT" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="DlX-Nc-8AO"/>
+                <constraint firstItem="iSR-xy-ZEZ" firstAttribute="baseline" secondItem="Znn-fw-Svj" secondAttribute="baseline" id="Ffg-4a-zIM"/>
+                <constraint firstItem="Znn-fw-Svj" firstAttribute="top" secondItem="jSd-05-vyY" secondAttribute="bottom" constant="8" id="GVx-bl-a0H"/>
+                <constraint firstItem="jSd-05-vyY" firstAttribute="top" secondItem="gH3-EC-tpT" secondAttribute="bottom" constant="8" id="H4M-tD-up3"/>
+                <constraint firstAttribute="trailing" secondItem="Lab-tF-qI5" secondAttribute="trailing" constant="20" symbolic="YES" id="JG0-Dd-ZJj"/>
+                <constraint firstItem="yCK-b4-wow" firstAttribute="baseline" secondItem="zd5-Wi-1U5" secondAttribute="baseline" id="JN2-fa-v5m"/>
+                <constraint firstAttribute="trailing" secondItem="ink-dM-MbS" secondAttribute="trailing" constant="20" id="LS5-CW-Bnw"/>
+                <constraint firstAttribute="trailing" secondItem="iSR-xy-ZEZ" secondAttribute="trailing" constant="36" id="PKO-un-7ML"/>
+                <constraint firstItem="gH3-EC-tpT" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="RDr-Qm-Ef0"/>
+                <constraint firstItem="yCK-b4-wow" firstAttribute="top" secondItem="JR0-8K-XVo" secondAttribute="bottom" constant="26" id="Thj-e6-EPs"/>
+                <constraint firstAttribute="trailing" secondItem="CyQ-V0-Ik3" secondAttribute="trailing" constant="20" id="VTG-aE-OvL"/>
+                <constraint firstItem="Znn-fw-Svj" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="WLE-tb-R1D"/>
+                <constraint firstAttribute="bottom" secondItem="68i-eA-Kle" secondAttribute="bottom" constant="20" id="cUu-4N-cls"/>
+                <constraint firstItem="68i-eA-Kle" firstAttribute="top" secondItem="Lab-tF-qI5" secondAttribute="bottom" constant="20" id="dYf-xi-eWt"/>
+                <constraint firstItem="Lab-tF-qI5" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="eGd-V6-tCq"/>
+                <constraint firstAttribute="trailing" secondItem="JR0-8K-XVo" secondAttribute="trailing" constant="20" id="ezU-GV-Rn7"/>
+                <constraint firstAttribute="trailing" secondItem="yCK-b4-wow" secondAttribute="trailing" constant="112" id="fR3-8e-Rjw"/>
+                <constraint firstItem="68i-eA-Kle" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="22" id="kSV-HL-mDb"/>
+                <constraint firstItem="ink-dM-MbS" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="11" id="mJy-ig-7ac"/>
+                <constraint firstAttribute="bottom" secondItem="CyQ-V0-Ik3" secondAttribute="bottom" constant="20" id="rTF-TR-wK0"/>
+                <constraint firstItem="UCM-Ov-dzL" firstAttribute="top" secondItem="Znn-fw-Svj" secondAttribute="bottom" constant="43" id="via-Rq-fLZ"/>
+                <constraint firstItem="JR0-8K-XVo" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="xEY-WN-w9m"/>
+                <constraint firstItem="ink-dM-MbS" firstAttribute="leading" secondItem="gH3-EC-tpT" secondAttribute="trailing" constant="25" id="zCE-P3-8vj"/>
+            </constraints>
+            <point key="canvasLocation" x="118" y="58.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="NSCaution" width="32" height="32"/>
+    </resources>
+</document>

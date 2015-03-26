@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCPaymentAmountViewController">
+            <connections>
+                <outlet property="accountPopup" destination="w1x-if-D5T" id="Rs0-2B-vpa"/>
+                <outlet property="amountFormatter" destination="IT2-gE-jrw" id="K3l-9q-l9c"/>
+                <outlet property="amountTextField" destination="EXb-PE-OH9" id="0bg-HF-XbV"/>
+                <outlet property="payButton" destination="p0A-0W-bAO" id="U3c-7H-5m6"/>
+                <outlet property="titleLabel" destination="iwk-FI-BmA" id="E97-h4-d7h"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="289" height="127"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mEY-67-AFm">
+                    <rect key="frame" x="20" y="60" width="117" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Pay from account:" id="ida-Z3-Nak">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lIA-ab-Ioa">
+                    <rect key="frame" x="20" y="22" width="99" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Amount to pay:" id="uN7-Cv-pb0">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EXb-PE-OH9">
+                    <rect key="frame" x="158" y="20" width="51" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="51" id="OC4-h2-Lpl"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="lsq-Lc-PDZ">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="IT2-gE-jrw">
+                            <real key="minimum" value="0.0"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="amountChanged:" target="-2" id="Zqm-OU-eXA"/>
+                    </connections>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w1x-if-D5T">
+                    <rect key="frame" x="156" y="54" width="116" height="26"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="x78-PN-Pcy" id="UT3-8Z-prT">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="tzr-sU-yft">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="x78-PN-Pcy"/>
+                                <menuItem title="Item 2" id="07m-uV-ypg"/>
+                                <menuItem title="Item 3" id="Zgo-sT-aLt"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="accountChanged:" target="-2" id="0uS-eb-hLd"/>
+                    </connections>
+                </popUpButton>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p0A-0W-bAO">
+                    <rect key="frame" x="211" y="13" width="64" height="32"/>
+                    <buttonCell key="cell" type="push" title="Pay" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9sc-wU-cOd">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="dismissController:" target="-2" id="0pK-ZL-5aK"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iwk-FI-BmA">
+                    <rect key="frame" x="18" y="95" width="253" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="249" id="Eau-8s-CIQ"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Title" id="tTW-XN-bGu">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="lIA-ab-Ioa" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="22" id="1mY-ew-H7J"/>
+                <constraint firstItem="w1x-if-D5T" firstAttribute="baseline" secondItem="mEY-67-AFm" secondAttribute="baseline" id="2nS-2t-rCd"/>
+                <constraint firstItem="mEY-67-AFm" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="22" id="3IJ-rA-CXW"/>
+                <constraint firstItem="EXb-PE-OH9" firstAttribute="leading" secondItem="w1x-if-D5T" secondAttribute="leading" id="8Vk-53-NJQ"/>
+                <constraint firstItem="EXb-PE-OH9" firstAttribute="top" secondItem="w1x-if-D5T" secondAttribute="bottom" constant="15" id="Hmm-xo-m9u"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="iwk-FI-BmA" secondAttribute="trailing" constant="20" symbolic="YES" id="Inz-Mk-Afi"/>
+                <constraint firstItem="iwk-FI-BmA" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="15" id="QPZ-ha-Nr7"/>
+                <constraint firstItem="EXb-PE-OH9" firstAttribute="baseline" secondItem="lIA-ab-Ioa" secondAttribute="baseline" id="S7M-Ei-UyR"/>
+                <constraint firstItem="p0A-0W-bAO" firstAttribute="leading" secondItem="EXb-PE-OH9" secondAttribute="trailing" constant="8" id="d6l-2W-2Ub"/>
+                <constraint firstItem="w1x-if-D5T" firstAttribute="top" secondItem="iwk-FI-BmA" secondAttribute="bottom" constant="17" id="e8k-0W-KuT"/>
+                <constraint firstItem="iwk-FI-BmA" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="hMn-vX-ZUP"/>
+                <constraint firstItem="w1x-if-D5T" firstAttribute="leading" secondItem="mEY-67-AFm" secondAttribute="trailing" constant="23" id="l7l-kv-zLH"/>
+                <constraint firstAttribute="bottom" secondItem="EXb-PE-OH9" secondAttribute="bottom" constant="20" id="nHc-FN-MpC"/>
+                <constraint firstItem="w1x-if-D5T" firstAttribute="trailing" secondItem="p0A-0W-bAO" secondAttribute="trailing" id="owJ-nq-9aO"/>
+                <constraint firstItem="EXb-PE-OH9" firstAttribute="bottom" secondItem="p0A-0W-bAO" secondAttribute="bottom" id="pYy-hE-rZb"/>
+                <constraint firstAttribute="centerX" secondItem="iwk-FI-BmA" secondAttribute="centerX" id="xxc-ve-jWc"/>
+                <constraint firstAttribute="trailing" secondItem="w1x-if-D5T" secondAttribute="trailing" constant="20" id="zlH-lT-Ygy"/>
+            </constraints>
+            <point key="canvasLocation" x="40.5" y="54.5"/>
+        </customView>
+    </objects>
+</document>

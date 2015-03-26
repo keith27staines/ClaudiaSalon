@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="EditProductViewController">
+            <connections>
+                <outlet property="brandName" destination="FLC-D3-3sf" id="9br-oJ-4j4"/>
+                <outlet property="cancelButton" destination="ubO-0U-xFh" id="pO7-Yu-hVi"/>
+                <outlet property="doneButton" destination="btV-LE-59L" id="P8a-qE-6Gu"/>
+                <outlet property="editButton" destination="x3y-XR-LKY" id="BhX-tC-bx4"/>
+                <outlet property="panelTitle" destination="Zyl-ai-bw7" id="xzL-Xk-z0n"/>
+                <outlet property="productType" destination="Eel-uy-ZbT" id="g2A-8V-Yp7"/>
+                <outlet property="view" destination="w2H-Ov-xVJ" id="4kQ-Fm-bzV"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="w2H-Ov-xVJ">
+            <rect key="frame" x="0.0" y="0.0" width="586" height="383"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dgt-l7-PZz">
+                    <rect key="frame" x="39" y="204" width="109" height="28"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Brand name:" id="qGe-zJ-cmy">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nIu-85-BGK">
+                    <rect key="frame" x="36" y="156" width="114" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Product type:" id="VEz-f5-xcq">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FLC-D3-3sf">
+                    <rect key="frame" x="156" y="205" width="364" height="27"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Brand name - e.g L' Oreal" drawsBackground="YES" id="bEK-fl-d0A">
+                        <font key="font" metaFont="system" size="18"/>
+                        <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="62D-2O-RBg"/>
+                    </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eel-uy-ZbT">
+                    <rect key="frame" x="156" y="151" width="364" height="27"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Product Type - e.g Hair colour" drawsBackground="YES" id="PdF-FP-thE">
+                        <font key="font" metaFont="system" size="18"/>
+                        <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="Cd8-8h-nWR"/>
+                    </connections>
+                </textField>
+                <box appearanceType="aqua" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="25E-Qg-L0A">
+                    <rect key="frame" x="20" y="320" width="546" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <box appearanceType="aqua" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="c2e-9L-SXP">
+                    <rect key="frame" x="20" y="60" width="546" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zyl-ai-bw7">
+                    <rect key="frame" x="18" y="340" width="454" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Panel Title" id="aFu-X4-2aN">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3y-XR-LKY">
+                    <rect key="frame" x="492" y="336" width="74" height="28"/>
+                    <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rtx-Pa-KYy">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                        <string key="keyEquivalent">e</string>
+                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="enterEditMode:" target="-2" id="6FR-Rg-aFw"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="btV-LE-59L">
+                    <rect key="frame" x="492" y="19" width="74" height="28"/>
+                    <buttonCell key="cell" type="smallSquare" title="Done" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VgP-o7-2B6">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="doneButton:" target="-2" id="tdg-bt-bUn"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ubO-0U-xFh">
+                    <rect key="frame" x="20" y="19" width="100" height="28"/>
+                    <buttonCell key="cell" type="smallSquare" title="Cancel" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="I8l-Ea-9ug">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cancelButton:" target="-2" id="tid-Mi-dpk"/>
+                    </connections>
+                </button>
+            </subviews>
+            <point key="canvasLocation" x="338" y="232.5"/>
+        </customView>
+    </objects>
+</document>

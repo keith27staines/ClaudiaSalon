@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6205"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCReceiptWindowController">
+            <connections>
+                <outlet property="cancelButton" destination="pZf-f8-koY" id="o6D-t1-tN8"/>
+                <outlet property="printReceiptButton" destination="LEL-hX-ahV" id="PDP-8I-pPQ"/>
+                <outlet property="receiptView" destination="ZKy-JL-hpw" id="tjc-wI-f9I"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="595" height="923"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="595" height="923"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LEL-hX-ahV">
+                        <rect key="frame" x="405" y="13" width="115" height="32"/>
+                        <buttonCell key="cell" type="push" title="Print receipt" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YcC-fb-fZN">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="printReceipt:" target="-2" id="yza-gr-N9M"/>
+                        </connections>
+                    </button>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="ZKy-JL-hpw" customClass="AMCReceiptView">
+                        <rect key="frame" x="0.0" y="81" width="595" height="842"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="595" id="O4s-yh-Uck"/>
+                            <constraint firstAttribute="height" constant="842" id="udH-aa-X0l"/>
+                        </constraints>
+                    </customView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pZf-f8-koY">
+                        <rect key="frame" x="221" y="13" width="152" height="32"/>
+                        <buttonCell key="cell" type="push" title="Don't print receipt" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LZz-6A-nHQ">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="pNm-VZ-bVG"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="pZf-f8-koY" firstAttribute="top" secondItem="ZKy-JL-hpw" secondAttribute="bottom" constant="40" id="7j4-Rq-kBr"/>
+                    <constraint firstItem="pZf-f8-koY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="G1M-IR-EQf"/>
+                    <constraint firstAttribute="centerX" secondItem="pZf-f8-koY" secondAttribute="centerX" id="Ilb-mn-Iq4"/>
+                    <constraint firstAttribute="bottom" secondItem="LEL-hX-ahV" secondAttribute="bottom" constant="20" id="JRI-Vs-Rvp"/>
+                    <constraint firstItem="ZKy-JL-hpw" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="Sav-7c-X6b"/>
+                    <constraint firstAttribute="trailing" secondItem="ZKy-JL-hpw" secondAttribute="trailing" id="Sw7-kg-LMZ"/>
+                    <constraint firstAttribute="bottom" secondItem="pZf-f8-koY" secondAttribute="bottom" constant="20" id="Tt2-9V-grR"/>
+                    <constraint firstItem="LEL-hX-ahV" firstAttribute="leading" secondItem="pZf-f8-koY" secondAttribute="trailing" constant="44" id="XVX-MW-Unu"/>
+                    <constraint firstItem="pZf-f8-koY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="se5-gp-TjO" secondAttribute="top" constant="400" id="Zau-xo-4jV"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LEL-hX-ahV" secondAttribute="trailing" constant="20" id="oPB-Tp-9AB"/>
+                    <constraint firstItem="ZKy-JL-hpw" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="tGK-Hf-qxx"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="417.5" y="222.5"/>
+        </window>
+    </objects>
+</document>
