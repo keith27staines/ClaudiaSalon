@@ -2210,7 +2210,7 @@
 				532377CF1AA89253009FA91D /* ClaudiasSalon 2.xcdatamodel */,
 				532377CD1AA8923B009FA91D /* ClaudiasSalon.xcdatamodel */,
 			);
-			currentVersion = 532377CD1AA8923B009FA91D /* ClaudiasSalon.xcdatamodel */;
+			currentVersion = 532377CF1AA89253009FA91D /* ClaudiasSalon 2.xcdatamodel */;
 			path = ClaudiasSalon.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

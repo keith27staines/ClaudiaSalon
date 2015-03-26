@@ -299,14 +299,7 @@
     payment.account = [Account accountWithFriendlyName:kAMCTillAccountName withMoc:self.documentMoc];
     payment.amount = @(amount);
     payment.payeeName = self.employee.fullName;
-//    payment.isManagersBudgetItem = self.employee.paidFromManagersBudget;
-    NSLog(@"Employing hack to assign salaries of core staff to managers budget");
-    if ([[employee.firstName lowercaseString] isEqualToString:@"maria"] ||
-        [[employee.firstName lowercaseString] isEqualToString:@"simona"]) {
-        payment.isManagersBudgetItem = @NO;
-    } else {
-        payment.isManagersBudgetItem = @YES;
-    }
+    payment.isManagersBudgetItem = self.employee.paidFromManagersBudget;
     if (bonusDate) {
         payment.reason = [NSString stringWithFormat:@"Bonus for %@ %@",[bonusDate stringNamingDayOfWeek], [bonusDate dayAndMonthString]];
     } else {

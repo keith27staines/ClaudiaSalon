@@ -72,8 +72,6 @@
 
 -(IBAction)percentageChanged:(id)sender;
 
-@property (weak) IBOutlet NSButton *paidFromManagersBudgetChanged;
-
 
 @property (weak) Employee * employee;
 @property (copy) NSDate * salaryDate;
@@ -125,11 +123,10 @@
     self.salary = [self.employee salaryForDate:self.salaryDate];
     [self reloadHoursPerWeekView];
     if (self.salary) {
-        NSLog(@"%@",self.salary);
         self.validFromDate.dateValue = self.salary.validFromDate;
         self.validToDate.dateValue = self.salary.validToDate;
         self.validToDate.minDate = [self.salary.validFromDate dateByAddingTimeInterval:24*3600];
-        self.paidFromManagersBudgetCheckbox.state = NSOnState;//(self.employee.paidFromManagersBudget.boolValue)?NSOnState:NSOffState;
+        self.paidFromManagersBudgetCheckbox.state = (self.employee.paidFromManagersBudget.boolValue)?NSOnState:NSOffState;
         Salary * nextSalary = [self.employee salaryFollowingSalary:self.salary];
         self.validToDate.maxDate = [nextSalary.validToDate dateByAddingTimeInterval:-24*3600];
         if ([self isCurrentSalary:self.salary]) {
