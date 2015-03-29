@@ -147,29 +147,6 @@
 		53D69D1C1A9B240C0004CE10 /* AMCCancelAppointmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C961A9B240C0004CE10 /* AMCCancelAppointmentView.m */; };
 		53D69D1D1A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C971A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m */; };
 		53D69D1E1A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C981A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m */; };
-		53D69D201A9B240C0004CE10 /* SaleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C9A1A9B240C0004CE10 /* SaleItem.m */; };
-		53D69D211A9B240C0004CE10 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C9B1A9B240C0004CE10 /* Product.m */; };
-		53D69D221A9B240C0004CE10 /* StockedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C9C1A9B240C0004CE10 /* StockedItem.m */; };
-		53D69D231A9B240C0004CE10 /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C9D1A9B240C0004CE10 /* Payment.m */; };
-		53D69D241A9B240C0004CE10 /* AccountReconciliation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C9E1A9B240C0004CE10 /* AccountReconciliation.m */; };
-		53D69D251A9B240C0004CE10 /* Appointment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C9F1A9B240C0004CE10 /* Appointment.m */; };
-		53D69D261A9B240C0004CE10 /* ShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CA01A9B240C0004CE10 /* ShoppingList.m */; };
-		53D69D271A9B240C0004CE10 /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CA11A9B240C0004CE10 /* Salon.m */; };
-		53D69D281A9B240C0004CE10 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CA21A9B240C0004CE10 /* Employee.m */; };
-		53D69D291A9B240C0004CE10 /* StockedBrand.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CA31A9B240C0004CE10 /* StockedBrand.m */; };
-		53D69D2A1A9B240C0004CE10 /* PaymentCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CA41A9B240C0004CE10 /* PaymentCategory.m */; };
-		53D69D2B1A9B240C0004CE10 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CA51A9B240C0004CE10 /* Customer.m */; };
-		53D69D2C1A9B240C0004CE10 /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CA61A9B240C0004CE10 /* Service.m */; };
-		53D69D2D1A9B240C0004CE10 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CA71A9B240C0004CE10 /* Note.m */; };
-		53D69D2E1A9B240C0004CE10 /* WorkRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CA81A9B240C0004CE10 /* WorkRecord.m */; };
-		53D69D2F1A9B240C0004CE10 /* ServiceCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CA91A9B240C0004CE10 /* ServiceCategory.m */; };
-		53D69D301A9B240C0004CE10 /* StockedCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CAA1A9B240C0004CE10 /* StockedCategory.m */; };
-		53D69D311A9B240C0004CE10 /* ShoppingListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CAB1A9B240C0004CE10 /* ShoppingListItem.m */; };
-		53D69D321A9B240C0004CE10 /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CAC1A9B240C0004CE10 /* Sale.m */; };
-		53D69D331A9B240C0004CE10 /* Salary.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CAD1A9B240C0004CE10 /* Salary.m */; };
-		53D69D341A9B240C0004CE10 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CAE1A9B240C0004CE10 /* Account.m */; };
-		53D69D351A9B240C0004CE10 /* LastUpdatedBy.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CAF1A9B240C0004CE10 /* LastUpdatedBy.m */; };
-		53D69D361A9B240C0004CE10 /* StockedProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB01A9B240C0004CE10 /* StockedProduct.m */; };
 		53D69D371A9B240C0004CE10 /* PaymentCategory+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB11A9B240C0004CE10 /* PaymentCategory+Methods.m */; };
 		53D69D381A9B240C0004CE10 /* Appointment+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB21A9B240C0004CE10 /* Appointment+Methods.m */; };
 		53D69D391A9B240C0004CE10 /* Employee+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB31A9B240C0004CE10 /* Employee+Methods.m */; };
@@ -224,6 +201,37 @@
 		53D69DFF1A9B41B60004CE10 /* AMCSalonDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69DFE1A9B41B60004CE10 /* AMCSalonDocument.m */; };
 		53D69E011A9B43890004CE10 /* AMCSalonDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D69E001A9B43890004CE10 /* AMCSalonDocument.xib */; };
 		53D69E061A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69E051A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m */; };
+		53D933AF1AC6B1BA001D6C64 /* LastUpdatedBy.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933AE1AC6B1BA001D6C64 /* LastUpdatedBy.m */; };
+		53D933B21AC6B1BB001D6C64 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933B11AC6B1BB001D6C64 /* Product.m */; };
+		53D933B51AC6B1BB001D6C64 /* Salary.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933B41AC6B1BB001D6C64 /* Salary.m */; };
+		53D933B81AC6B1BB001D6C64 /* RecurringBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933B71AC6B1BB001D6C64 /* RecurringBill.m */; };
+		53D933BB1AC6B1BB001D6C64 /* SaleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933BA1AC6B1BB001D6C64 /* SaleItem.m */; };
+		53D933BE1AC6B1BB001D6C64 /* Appointment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933BD1AC6B1BB001D6C64 /* Appointment.m */; };
+		53D933C11AC6B1BB001D6C64 /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933C01AC6B1BB001D6C64 /* Payment.m */; };
+		53D933C41AC6B1BC001D6C64 /* PaymentCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933C31AC6B1BC001D6C64 /* PaymentCategory.m */; };
+		53D933C71AC6B1BC001D6C64 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933C61AC6B1BC001D6C64 /* Customer.m */; };
+		53D933CA1AC6B1BC001D6C64 /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933C91AC6B1BC001D6C64 /* Sale.m */; };
+		53D933CD1AC6B1BC001D6C64 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933CC1AC6B1BC001D6C64 /* Employee.m */; };
+		53D933D01AC6B1BC001D6C64 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933CF1AC6B1BC001D6C64 /* Account.m */; };
+		53D933D31AC6B1BC001D6C64 /* AccountReconciliation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933D21AC6B1BC001D6C64 /* AccountReconciliation.m */; };
+		53D933D61AC6B1BD001D6C64 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933D51AC6B1BD001D6C64 /* Note.m */; };
+		53D933D91AC6B1BD001D6C64 /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933D81AC6B1BD001D6C64 /* Salon.m */; };
+		53D933DC1AC6B1F0001D6C64 /* ShoppingListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933DB1AC6B1F0001D6C64 /* ShoppingListItem.m */; };
+		53D933DF1AC6B1F1001D6C64 /* IntervalDuringDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933DE1AC6B1F1001D6C64 /* IntervalDuringDay.m */; };
+		53D933E21AC6B1F1001D6C64 /* StockedProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933E11AC6B1F1001D6C64 /* StockedProduct.m */; };
+		53D933E51AC6B1F1001D6C64 /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933E41AC6B1F1001D6C64 /* Service.m */; };
+		53D933E81AC6B1F1001D6C64 /* ShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933E71AC6B1F1001D6C64 /* ShoppingList.m */; };
+		53D933EB1AC6B1F1001D6C64 /* StockedBrand.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933EA1AC6B1F1001D6C64 /* StockedBrand.m */; };
+		53D933EE1AC6B1F1001D6C64 /* WorkRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933ED1AC6B1F1001D6C64 /* WorkRecord.m */; };
+		53D933F11AC6B1F1001D6C64 /* CalendarDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933F01AC6B1F1001D6C64 /* CalendarDay.m */; };
+		53D933F41AC6B1F2001D6C64 /* ServiceCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933F31AC6B1F2001D6C64 /* ServiceCategory.m */; };
+		53D933FD1AC6B1F2001D6C64 /* StockedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933FC1AC6B1F2001D6C64 /* StockedItem.m */; };
+		53D934001AC6B1F2001D6C64 /* StockedCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D933FF1AC6B1F2001D6C64 /* StockedCategory.m */; };
+		53D934031AC6B1F2001D6C64 /* Holiday.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D934021AC6B1F2001D6C64 /* Holiday.m */; };
+		53D934081AC71E1B001D6C64 /* AMCSalonDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D934061AC71E1B001D6C64 /* AMCSalonDetailsViewController.m */; };
+		53D934091AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D934071AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib */; };
+		53D9340C1AC72491001D6C64 /* OpeningHoursDayTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9340B1AC72491001D6C64 /* OpeningHoursDayTemplate.m */; };
+		53D9340F1AC72492001D6C64 /* OpeningHoursWeekTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D9340E1AC72492001D6C64 /* OpeningHoursWeekTemplate.m */; };
 		53FFAF911AB220470078E9CC /* AMCEmployeeForServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */; };
 /* End PBXBuildFile section */
 
@@ -265,6 +273,7 @@
 		5346C5A21AC00341005D4540 /* AMCCategoriesRootNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCategoriesRootNode.m; sourceTree = "<group>"; };
 		5346C5A51AC06D15005D4540 /* AMCServiceCategoriesNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCServiceCategoriesNode.h; sourceTree = "<group>"; };
 		5346C5A61AC06D15005D4540 /* AMCServiceCategoriesNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCServiceCategoriesNode.m; sourceTree = "<group>"; };
+		534B9B281AC5381B00146E98 /* ClaudiasSalon 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 3.xcdatamodel"; sourceTree = "<group>"; };
 		535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAccountStatementViewController.xib; sourceTree = "<group>"; };
 		535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementItem.m; sourceTree = "<group>"; };
 		535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementViewController.m; sourceTree = "<group>"; };
@@ -405,29 +414,6 @@
 		53D69C961A9B240C0004CE10 /* AMCCancelAppointmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCancelAppointmentView.m; sourceTree = "<group>"; };
 		53D69C971A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAppointmentCompletionBoilerPlate.m; sourceTree = "<group>"; };
 		53D69C981A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCompleteAppointmentViewController.m; sourceTree = "<group>"; };
-		53D69C9A1A9B240C0004CE10 /* SaleItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaleItem.m; sourceTree = "<group>"; };
-		53D69C9B1A9B240C0004CE10 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
-		53D69C9C1A9B240C0004CE10 /* StockedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedItem.m; sourceTree = "<group>"; };
-		53D69C9D1A9B240C0004CE10 /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
-		53D69C9E1A9B240C0004CE10 /* AccountReconciliation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountReconciliation.m; sourceTree = "<group>"; };
-		53D69C9F1A9B240C0004CE10 /* Appointment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appointment.m; sourceTree = "<group>"; };
-		53D69CA01A9B240C0004CE10 /* ShoppingList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingList.m; sourceTree = "<group>"; };
-		53D69CA11A9B240C0004CE10 /* Salon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salon.m; sourceTree = "<group>"; };
-		53D69CA21A9B240C0004CE10 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
-		53D69CA31A9B240C0004CE10 /* StockedBrand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedBrand.m; sourceTree = "<group>"; };
-		53D69CA41A9B240C0004CE10 /* PaymentCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentCategory.m; sourceTree = "<group>"; };
-		53D69CA51A9B240C0004CE10 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
-		53D69CA61A9B240C0004CE10 /* Service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
-		53D69CA71A9B240C0004CE10 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
-		53D69CA81A9B240C0004CE10 /* WorkRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkRecord.m; sourceTree = "<group>"; };
-		53D69CA91A9B240C0004CE10 /* ServiceCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceCategory.m; sourceTree = "<group>"; };
-		53D69CAA1A9B240C0004CE10 /* StockedCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedCategory.m; sourceTree = "<group>"; };
-		53D69CAB1A9B240C0004CE10 /* ShoppingListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingListItem.m; sourceTree = "<group>"; };
-		53D69CAC1A9B240C0004CE10 /* Sale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sale.m; sourceTree = "<group>"; };
-		53D69CAD1A9B240C0004CE10 /* Salary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salary.m; sourceTree = "<group>"; };
-		53D69CAE1A9B240C0004CE10 /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
-		53D69CAF1A9B240C0004CE10 /* LastUpdatedBy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LastUpdatedBy.m; sourceTree = "<group>"; };
-		53D69CB01A9B240C0004CE10 /* StockedProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedProduct.m; sourceTree = "<group>"; };
 		53D69CB11A9B240C0004CE10 /* PaymentCategory+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PaymentCategory+Methods.m"; sourceTree = "<group>"; };
 		53D69CB21A9B240C0004CE10 /* Appointment+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Appointment+Methods.m"; sourceTree = "<group>"; };
 		53D69CB31A9B240C0004CE10 /* Employee+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Employee+Methods.m"; sourceTree = "<group>"; };
@@ -529,29 +515,6 @@
 		53D69DA51A9B243C0004CE10 /* AMCCancelAppointmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCancelAppointmentView.h; sourceTree = "<group>"; };
 		53D69DA61A9B243C0004CE10 /* AMCAppointmentCompletionBoilerPlate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCAppointmentCompletionBoilerPlate.h; sourceTree = "<group>"; };
 		53D69DA71A9B243C0004CE10 /* AMCCompleteAppointmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCompleteAppointmentViewController.h; sourceTree = "<group>"; };
-		53D69DA91A9B243C0004CE10 /* SaleItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleItem.h; sourceTree = "<group>"; };
-		53D69DAA1A9B243C0004CE10 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
-		53D69DAB1A9B243C0004CE10 /* StockedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedItem.h; sourceTree = "<group>"; };
-		53D69DAC1A9B243C0004CE10 /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
-		53D69DAD1A9B243C0004CE10 /* AccountReconciliation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountReconciliation.h; sourceTree = "<group>"; };
-		53D69DAE1A9B243C0004CE10 /* Appointment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appointment.h; sourceTree = "<group>"; };
-		53D69DAF1A9B243C0004CE10 /* ShoppingList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingList.h; sourceTree = "<group>"; };
-		53D69DB01A9B243C0004CE10 /* Salon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salon.h; sourceTree = "<group>"; };
-		53D69DB11A9B243C0004CE10 /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
-		53D69DB21A9B243C0004CE10 /* StockedBrand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedBrand.h; sourceTree = "<group>"; };
-		53D69DB31A9B243C0004CE10 /* PaymentCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentCategory.h; sourceTree = "<group>"; };
-		53D69DB41A9B243C0004CE10 /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
-		53D69DB51A9B243C0004CE10 /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
-		53D69DB61A9B243C0004CE10 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		53D69DB71A9B243C0004CE10 /* WorkRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkRecord.h; sourceTree = "<group>"; };
-		53D69DB81A9B243C0004CE10 /* ServiceCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceCategory.h; sourceTree = "<group>"; };
-		53D69DB91A9B243C0004CE10 /* StockedCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedCategory.h; sourceTree = "<group>"; };
-		53D69DBA1A9B243C0004CE10 /* ShoppingListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingListItem.h; sourceTree = "<group>"; };
-		53D69DBB1A9B243C0004CE10 /* Sale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sale.h; sourceTree = "<group>"; };
-		53D69DBC1A9B243C0004CE10 /* Salary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salary.h; sourceTree = "<group>"; };
-		53D69DBD1A9B243C0004CE10 /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
-		53D69DBE1A9B243C0004CE10 /* LastUpdatedBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LastUpdatedBy.h; sourceTree = "<group>"; };
-		53D69DBF1A9B243C0004CE10 /* StockedProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedProduct.h; sourceTree = "<group>"; };
 		53D69DC01A9B243C0004CE10 /* PaymentCategory+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PaymentCategory+Methods.h"; sourceTree = "<group>"; };
 		53D69DC11A9B243C0004CE10 /* Appointment+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Appointment+Methods.h"; sourceTree = "<group>"; };
 		53D69DC21A9B243C0004CE10 /* Employee+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Employee+Methods.h"; sourceTree = "<group>"; };
@@ -609,6 +572,67 @@
 		53D69E001A9B43890004CE10 /* AMCSalonDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCSalonDocument.xib; sourceTree = "<group>"; };
 		53D69E041A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSPersistentDocument+SalonMethods.h"; sourceTree = "<group>"; };
 		53D69E051A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPersistentDocument+SalonMethods.m"; sourceTree = "<group>"; };
+		53D933AD1AC6B1BA001D6C64 /* LastUpdatedBy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LastUpdatedBy.h; sourceTree = "<group>"; };
+		53D933AE1AC6B1BA001D6C64 /* LastUpdatedBy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LastUpdatedBy.m; sourceTree = "<group>"; };
+		53D933B01AC6B1BB001D6C64 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
+		53D933B11AC6B1BB001D6C64 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
+		53D933B31AC6B1BB001D6C64 /* Salary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salary.h; sourceTree = "<group>"; };
+		53D933B41AC6B1BB001D6C64 /* Salary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salary.m; sourceTree = "<group>"; };
+		53D933B61AC6B1BB001D6C64 /* RecurringBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurringBill.h; sourceTree = "<group>"; };
+		53D933B71AC6B1BB001D6C64 /* RecurringBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecurringBill.m; sourceTree = "<group>"; };
+		53D933B91AC6B1BB001D6C64 /* SaleItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleItem.h; sourceTree = "<group>"; };
+		53D933BA1AC6B1BB001D6C64 /* SaleItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaleItem.m; sourceTree = "<group>"; };
+		53D933BC1AC6B1BB001D6C64 /* Appointment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appointment.h; sourceTree = "<group>"; };
+		53D933BD1AC6B1BB001D6C64 /* Appointment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appointment.m; sourceTree = "<group>"; };
+		53D933BF1AC6B1BB001D6C64 /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
+		53D933C01AC6B1BB001D6C64 /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
+		53D933C21AC6B1BC001D6C64 /* PaymentCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentCategory.h; sourceTree = "<group>"; };
+		53D933C31AC6B1BC001D6C64 /* PaymentCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentCategory.m; sourceTree = "<group>"; };
+		53D933C51AC6B1BC001D6C64 /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
+		53D933C61AC6B1BC001D6C64 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
+		53D933C81AC6B1BC001D6C64 /* Sale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sale.h; sourceTree = "<group>"; };
+		53D933C91AC6B1BC001D6C64 /* Sale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sale.m; sourceTree = "<group>"; };
+		53D933CB1AC6B1BC001D6C64 /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
+		53D933CC1AC6B1BC001D6C64 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
+		53D933CE1AC6B1BC001D6C64 /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
+		53D933CF1AC6B1BC001D6C64 /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
+		53D933D11AC6B1BC001D6C64 /* AccountReconciliation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountReconciliation.h; sourceTree = "<group>"; };
+		53D933D21AC6B1BC001D6C64 /* AccountReconciliation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountReconciliation.m; sourceTree = "<group>"; };
+		53D933D41AC6B1BD001D6C64 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		53D933D51AC6B1BD001D6C64 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		53D933D71AC6B1BD001D6C64 /* Salon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salon.h; sourceTree = "<group>"; };
+		53D933D81AC6B1BD001D6C64 /* Salon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salon.m; sourceTree = "<group>"; };
+		53D933DA1AC6B1F0001D6C64 /* ShoppingListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingListItem.h; sourceTree = "<group>"; };
+		53D933DB1AC6B1F0001D6C64 /* ShoppingListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingListItem.m; sourceTree = "<group>"; };
+		53D933DD1AC6B1F1001D6C64 /* IntervalDuringDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntervalDuringDay.h; sourceTree = "<group>"; };
+		53D933DE1AC6B1F1001D6C64 /* IntervalDuringDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntervalDuringDay.m; sourceTree = "<group>"; };
+		53D933E01AC6B1F1001D6C64 /* StockedProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedProduct.h; sourceTree = "<group>"; };
+		53D933E11AC6B1F1001D6C64 /* StockedProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedProduct.m; sourceTree = "<group>"; };
+		53D933E31AC6B1F1001D6C64 /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
+		53D933E41AC6B1F1001D6C64 /* Service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
+		53D933E61AC6B1F1001D6C64 /* ShoppingList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingList.h; sourceTree = "<group>"; };
+		53D933E71AC6B1F1001D6C64 /* ShoppingList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingList.m; sourceTree = "<group>"; };
+		53D933E91AC6B1F1001D6C64 /* StockedBrand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedBrand.h; sourceTree = "<group>"; };
+		53D933EA1AC6B1F1001D6C64 /* StockedBrand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedBrand.m; sourceTree = "<group>"; };
+		53D933EC1AC6B1F1001D6C64 /* WorkRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkRecord.h; sourceTree = "<group>"; };
+		53D933ED1AC6B1F1001D6C64 /* WorkRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkRecord.m; sourceTree = "<group>"; };
+		53D933EF1AC6B1F1001D6C64 /* CalendarDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarDay.h; sourceTree = "<group>"; };
+		53D933F01AC6B1F1001D6C64 /* CalendarDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarDay.m; sourceTree = "<group>"; };
+		53D933F21AC6B1F2001D6C64 /* ServiceCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceCategory.h; sourceTree = "<group>"; };
+		53D933F31AC6B1F2001D6C64 /* ServiceCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceCategory.m; sourceTree = "<group>"; };
+		53D933FB1AC6B1F2001D6C64 /* StockedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedItem.h; sourceTree = "<group>"; };
+		53D933FC1AC6B1F2001D6C64 /* StockedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedItem.m; sourceTree = "<group>"; };
+		53D933FE1AC6B1F2001D6C64 /* StockedCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedCategory.h; sourceTree = "<group>"; };
+		53D933FF1AC6B1F2001D6C64 /* StockedCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedCategory.m; sourceTree = "<group>"; };
+		53D934011AC6B1F2001D6C64 /* Holiday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Holiday.h; sourceTree = "<group>"; };
+		53D934021AC6B1F2001D6C64 /* Holiday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Holiday.m; sourceTree = "<group>"; };
+		53D934051AC71E1B001D6C64 /* AMCSalonDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSalonDetailsViewController.h; sourceTree = "<group>"; };
+		53D934061AC71E1B001D6C64 /* AMCSalonDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSalonDetailsViewController.m; sourceTree = "<group>"; };
+		53D934071AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCSalonDetailsViewController.xib; sourceTree = "<group>"; };
+		53D9340A1AC72491001D6C64 /* OpeningHoursDayTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningHoursDayTemplate.h; sourceTree = "<group>"; };
+		53D9340B1AC72491001D6C64 /* OpeningHoursDayTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningHoursDayTemplate.m; sourceTree = "<group>"; };
+		53D9340D1AC72492001D6C64 /* OpeningHoursWeekTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningHoursWeekTemplate.h; sourceTree = "<group>"; };
+		53D9340E1AC72492001D6C64 /* OpeningHoursWeekTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningHoursWeekTemplate.m; sourceTree = "<group>"; };
 		53FFAF8F1AB220470078E9CC /* AMCEmployeeForServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCEmployeeForServiceSelector.h; sourceTree = "<group>"; };
 		53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCEmployeeForServiceSelector.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1557,6 +1581,7 @@
 		53D69BDB1A9B23910004CE10 /* Top Level objects */ = {
 			isa = PBXGroup;
 			children = (
+				53D934041AC71DF0001D6C64 /* Salon details */,
 				5346C58F1ABB221A005D4540 /* Accountancy Group manager */,
 				5346C5891ABB0717005D4540 /* Preferences Window */,
 				535F0DEF1AB2339A0035CFD8 /* AMCAutoCloseViewController.h */,
@@ -1591,52 +1616,73 @@
 		53D69E031A9B6BE70004CE10 /* Data model objects */ = {
 			isa = PBXGroup;
 			children = (
-				53D69DA91A9B243C0004CE10 /* SaleItem.h */,
-				53D69C9A1A9B240C0004CE10 /* SaleItem.m */,
-				53D69DAA1A9B243C0004CE10 /* Product.h */,
-				53D69C9B1A9B240C0004CE10 /* Product.m */,
-				53D69DAB1A9B243C0004CE10 /* StockedItem.h */,
-				53D69C9C1A9B240C0004CE10 /* StockedItem.m */,
-				53D69DAC1A9B243C0004CE10 /* Payment.h */,
-				53D69C9D1A9B240C0004CE10 /* Payment.m */,
-				53D69DAD1A9B243C0004CE10 /* AccountReconciliation.h */,
-				53D69C9E1A9B240C0004CE10 /* AccountReconciliation.m */,
-				53D69DAE1A9B243C0004CE10 /* Appointment.h */,
-				53D69C9F1A9B240C0004CE10 /* Appointment.m */,
-				53D69DAF1A9B243C0004CE10 /* ShoppingList.h */,
-				53D69CA01A9B240C0004CE10 /* ShoppingList.m */,
-				53D69DB01A9B243C0004CE10 /* Salon.h */,
-				53D69CA11A9B240C0004CE10 /* Salon.m */,
-				53D69DB11A9B243C0004CE10 /* Employee.h */,
-				53D69CA21A9B240C0004CE10 /* Employee.m */,
-				53D69DB21A9B243C0004CE10 /* StockedBrand.h */,
-				53D69CA31A9B240C0004CE10 /* StockedBrand.m */,
-				53D69DB31A9B243C0004CE10 /* PaymentCategory.h */,
-				53D69CA41A9B240C0004CE10 /* PaymentCategory.m */,
-				53D69DB41A9B243C0004CE10 /* Customer.h */,
-				53D69CA51A9B240C0004CE10 /* Customer.m */,
-				53D69DB51A9B243C0004CE10 /* Service.h */,
-				53D69CA61A9B240C0004CE10 /* Service.m */,
-				53D69DB61A9B243C0004CE10 /* Note.h */,
-				53D69CA71A9B240C0004CE10 /* Note.m */,
-				53D69DB71A9B243C0004CE10 /* WorkRecord.h */,
-				53D69CA81A9B240C0004CE10 /* WorkRecord.m */,
-				53D69DB81A9B243C0004CE10 /* ServiceCategory.h */,
-				53D69CA91A9B240C0004CE10 /* ServiceCategory.m */,
-				53D69DB91A9B243C0004CE10 /* StockedCategory.h */,
-				53D69CAA1A9B240C0004CE10 /* StockedCategory.m */,
-				53D69DBA1A9B243C0004CE10 /* ShoppingListItem.h */,
-				53D69CAB1A9B240C0004CE10 /* ShoppingListItem.m */,
-				53D69DBB1A9B243C0004CE10 /* Sale.h */,
-				53D69CAC1A9B240C0004CE10 /* Sale.m */,
-				53D69DBC1A9B243C0004CE10 /* Salary.h */,
-				53D69CAD1A9B240C0004CE10 /* Salary.m */,
-				53D69DBD1A9B243C0004CE10 /* Account.h */,
-				53D69CAE1A9B240C0004CE10 /* Account.m */,
-				53D69DBE1A9B243C0004CE10 /* LastUpdatedBy.h */,
-				53D69CAF1A9B240C0004CE10 /* LastUpdatedBy.m */,
-				53D69DBF1A9B243C0004CE10 /* StockedProduct.h */,
-				53D69CB01A9B240C0004CE10 /* StockedProduct.m */,
+				53D9340D1AC72492001D6C64 /* OpeningHoursWeekTemplate.h */,
+				53D9340E1AC72492001D6C64 /* OpeningHoursWeekTemplate.m */,
+				53D9340A1AC72491001D6C64 /* OpeningHoursDayTemplate.h */,
+				53D9340B1AC72491001D6C64 /* OpeningHoursDayTemplate.m */,
+				53D934011AC6B1F2001D6C64 /* Holiday.h */,
+				53D934021AC6B1F2001D6C64 /* Holiday.m */,
+				53D933FE1AC6B1F2001D6C64 /* StockedCategory.h */,
+				53D933FF1AC6B1F2001D6C64 /* StockedCategory.m */,
+				53D933FB1AC6B1F2001D6C64 /* StockedItem.h */,
+				53D933FC1AC6B1F2001D6C64 /* StockedItem.m */,
+				53D933F21AC6B1F2001D6C64 /* ServiceCategory.h */,
+				53D933F31AC6B1F2001D6C64 /* ServiceCategory.m */,
+				53D933EF1AC6B1F1001D6C64 /* CalendarDay.h */,
+				53D933F01AC6B1F1001D6C64 /* CalendarDay.m */,
+				53D933EC1AC6B1F1001D6C64 /* WorkRecord.h */,
+				53D933ED1AC6B1F1001D6C64 /* WorkRecord.m */,
+				53D933E91AC6B1F1001D6C64 /* StockedBrand.h */,
+				53D933EA1AC6B1F1001D6C64 /* StockedBrand.m */,
+				53D933E61AC6B1F1001D6C64 /* ShoppingList.h */,
+				53D933E71AC6B1F1001D6C64 /* ShoppingList.m */,
+				53D933E31AC6B1F1001D6C64 /* Service.h */,
+				53D933E41AC6B1F1001D6C64 /* Service.m */,
+				53D933E01AC6B1F1001D6C64 /* StockedProduct.h */,
+				53D933E11AC6B1F1001D6C64 /* StockedProduct.m */,
+				53D933DD1AC6B1F1001D6C64 /* IntervalDuringDay.h */,
+				53D933DE1AC6B1F1001D6C64 /* IntervalDuringDay.m */,
+				53D933DA1AC6B1F0001D6C64 /* ShoppingListItem.h */,
+				53D933DB1AC6B1F0001D6C64 /* ShoppingListItem.m */,
+				53D933D71AC6B1BD001D6C64 /* Salon.h */,
+				53D933D81AC6B1BD001D6C64 /* Salon.m */,
+				53D933D41AC6B1BD001D6C64 /* Note.h */,
+				53D933D51AC6B1BD001D6C64 /* Note.m */,
+				53D933D11AC6B1BC001D6C64 /* AccountReconciliation.h */,
+				53D933D21AC6B1BC001D6C64 /* AccountReconciliation.m */,
+				53D933CE1AC6B1BC001D6C64 /* Account.h */,
+				53D933CF1AC6B1BC001D6C64 /* Account.m */,
+				53D933CB1AC6B1BC001D6C64 /* Employee.h */,
+				53D933CC1AC6B1BC001D6C64 /* Employee.m */,
+				53D933C81AC6B1BC001D6C64 /* Sale.h */,
+				53D933C91AC6B1BC001D6C64 /* Sale.m */,
+				53D933C51AC6B1BC001D6C64 /* Customer.h */,
+				53D933C61AC6B1BC001D6C64 /* Customer.m */,
+				53D933C21AC6B1BC001D6C64 /* PaymentCategory.h */,
+				53D933C31AC6B1BC001D6C64 /* PaymentCategory.m */,
+				53D933BF1AC6B1BB001D6C64 /* Payment.h */,
+				53D933C01AC6B1BB001D6C64 /* Payment.m */,
+				53D933BC1AC6B1BB001D6C64 /* Appointment.h */,
+				53D933BD1AC6B1BB001D6C64 /* Appointment.m */,
+				53D933B91AC6B1BB001D6C64 /* SaleItem.h */,
+				53D933BA1AC6B1BB001D6C64 /* SaleItem.m */,
+				53D933B61AC6B1BB001D6C64 /* RecurringBill.h */,
+				53D933B71AC6B1BB001D6C64 /* RecurringBill.m */,
+				53D933B31AC6B1BB001D6C64 /* Salary.h */,
+				53D933B41AC6B1BB001D6C64 /* Salary.m */,
+				53D933B01AC6B1BB001D6C64 /* Product.h */,
+				53D933B11AC6B1BB001D6C64 /* Product.m */,
+				53D933AD1AC6B1BA001D6C64 /* LastUpdatedBy.h */,
+				53D933AE1AC6B1BA001D6C64 /* LastUpdatedBy.m */,
+				53D933AC1AC6B0B4001D6C64 /* Method Categories on Data Objects */,
+			);
+			name = "Data model objects";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		53D933AC1AC6B0B4001D6C64 /* Method Categories on Data Objects */ = {
+			isa = PBXGroup;
+			children = (
 				53D69DC01A9B243C0004CE10 /* PaymentCategory+Methods.h */,
 				53D69CB11A9B240C0004CE10 /* PaymentCategory+Methods.m */,
 				53D69DC11A9B243C0004CE10 /* Appointment+Methods.h */,
@@ -1678,8 +1724,17 @@
 				53D69DD41A9B243C0004CE10 /* Salary+Methods.h */,
 				53D69CC41A9B240C0004CE10 /* Salary+Methods.m */,
 			);
-			name = "Data model objects";
-			path = ..;
+			name = "Method Categories on Data Objects";
+			sourceTree = "<group>";
+		};
+		53D934041AC71DF0001D6C64 /* Salon details */ = {
+			isa = PBXGroup;
+			children = (
+				53D934051AC71E1B001D6C64 /* AMCSalonDetailsViewController.h */,
+				53D934061AC71E1B001D6C64 /* AMCSalonDetailsViewController.m */,
+				53D934071AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib */,
+			);
+			name = "Salon details";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1817,6 +1872,7 @@
 				53D69C501A9B23B70004CE10 /* EditServiceViewController.xib in Resources */,
 				53D69C321A9B23B60004CE10 /* AMCBookingViewController.xib in Resources */,
 				53D69C3D1A9B23B70004CE10 /* AMCStockedBrandMaintenanceWindowController.xib in Resources */,
+				53D934091AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib in Resources */,
 				53D69C481A9B23B70004CE10 /* SelectCustomerStepViewController.xib in Resources */,
 				53D69C3F1A9B23B70004CE10 /* AMCPaymentsViewController.xib in Resources */,
 				53D69DFB1A9B24E60004CE10 /* png.png in Resources */,
@@ -1854,48 +1910,56 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53D933B21AC6B1BB001D6C64 /* Product.m in Sources */,
 				53D69D3C1A9B240C0004CE10 /* Product+Methods.m in Sources */,
+				53D933B81AC6B1BB001D6C64 /* RecurringBill.m in Sources */,
 				53D69D0E1A9B240C0004CE10 /* AMCShoppingListPrintViewController.m in Sources */,
+				53D933FD1AC6B1F2001D6C64 /* StockedItem.m in Sources */,
 				53D69D4F1A9B240C0004CE10 /* EditSaleViewController.m in Sources */,
-				53D69D321A9B240C0004CE10 /* Sale.m in Sources */,
+				53D933CA1AC6B1BC001D6C64 /* Sale.m in Sources */,
+				53D933F41AC6B1F2001D6C64 /* ServiceCategory.m in Sources */,
 				53D69D171A9B240C0004CE10 /* AMCEntityViewController.m in Sources */,
 				53D69D521A9B240C0004CE10 /* SelectCustomerStepViewController.m in Sources */,
 				535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */,
-				53D69D231A9B240C0004CE10 /* Payment.m in Sources */,
 				53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */,
+				53D9340F1AC72492001D6C64 /* OpeningHoursWeekTemplate.m in Sources */,
 				53D69CFD1A9B240C0004CE10 /* AMCWizardStepSelectCustomerViewController.m in Sources */,
 				53D69CFB1A9B240C0004CE10 /* AMCWizardStepViewController.m in Sources */,
 				53D69D391A9B240C0004CE10 /* Employee+Methods.m in Sources */,
+				53D933D61AC6B1BD001D6C64 /* Note.m in Sources */,
 				53D69D561A9B240C0004CE10 /* AMCReceiptView.m in Sources */,
+				53D933BB1AC6B1BB001D6C64 /* SaleItem.m in Sources */,
+				53D933DF1AC6B1F1001D6C64 /* IntervalDuringDay.m in Sources */,
 				53D69D1C1A9B240C0004CE10 /* AMCCancelAppointmentView.m in Sources */,
 				532377CE1AA8923B009FA91D /* ClaudiasSalon.xcdatamodeld in Sources */,
+				53D934031AC6B1F2001D6C64 /* Holiday.m in Sources */,
 				53D69D671A9B240C0004CE10 /* AMCViewController.m in Sources */,
+				53D933B51AC6B1BB001D6C64 /* Salary.m in Sources */,
 				53D69CE91A9B240C0004CE10 /* AMCHoursWorkedOnDayViewController.m in Sources */,
-				53D69D211A9B240C0004CE10 /* Product.m in Sources */,
 				5346C59D1ABFFA8A005D4540 /* AMCSystemTreeNode.m in Sources */,
 				53D69D641A9B240C0004CE10 /* AMCStaffBusyView.m in Sources */,
-				53D69D311A9B240C0004CE10 /* ShoppingListItem.m in Sources */,
+				53D933BE1AC6B1BB001D6C64 /* Appointment.m in Sources */,
+				53D933EB1AC6B1F1001D6C64 /* StockedBrand.m in Sources */,
 				53D69E061A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m in Sources */,
 				53D69CF91A9B240C0004CE10 /* AMCWizardWindowController.m in Sources */,
 				53D69CE31A9B240C0004CE10 /* AMCConstants.m in Sources */,
 				53D69D191A9B240C0004CE10 /* AMCAppointmentsViewController.m in Sources */,
+				53D934081AC71E1B001D6C64 /* AMCSalonDetailsViewController.m in Sources */,
 				53D69DFF1A9B41B60004CE10 /* AMCSalonDocument.m in Sources */,
 				53D69D1B1A9B240C0004CE10 /* AMCCancelAppointmentViewController.m in Sources */,
 				53D69D541A9B240C0004CE10 /* AMCRefundView.m in Sources */,
+				53D933D01AC6B1BC001D6C64 /* Account.m in Sources */,
 				53D69D501A9B240C0004CE10 /* WizardStepViewController.m in Sources */,
-				53D69D281A9B240C0004CE10 /* Employee.m in Sources */,
-				53D69D2D1A9B240C0004CE10 /* Note.m in Sources */,
-				53D69D2A1A9B240C0004CE10 /* PaymentCategory.m in Sources */,
 				53D69D471A9B240C0004CE10 /* StockedItem+Methods.m in Sources */,
 				53D69D0A1A9B240C0004CE10 /* AMCManagersBudgetWindowController.m in Sources */,
 				53D69CE61A9B240C0004CE10 /* AMCPaymentAmountViewController.m in Sources */,
 				53D69D441A9B240C0004CE10 /* Salon+Methods.m in Sources */,
 				53D69D4E1A9B240C0004CE10 /* EditStockProductViewController.m in Sources */,
+				53D933F11AC6B1F1001D6C64 /* CalendarDay.m in Sources */,
 				53D69D0D1A9B240C0004CE10 /* AMCStockControlViewController.m in Sources */,
 				53D69CF41A9B240C0004CE10 /* AMCStorePopulator.m in Sources */,
 				53D69D5B1A9B240C0004CE10 /* AMCPaymentFormatter.m in Sources */,
 				53D69D451A9B240C0004CE10 /* StockedBrand+Methods.m in Sources */,
-				53D69D271A9B240C0004CE10 /* Salon.m in Sources */,
 				53D69D611A9B240C0004CE10 /* EditEmployeeViewController.m in Sources */,
 				535F0DF71AB2339A0035CFD8 /* AMCAutoCloseWindowController.m in Sources */,
 				53D69D0C1A9B240C0004CE10 /* AMCBarcodeScanningViewController.m in Sources */,
@@ -1905,11 +1969,10 @@
 				53D69D3D1A9B240C0004CE10 /* Service+Methods.m in Sources */,
 				53D69D651A9B240C0004CE10 /* AMCStaffCanDoViewController.m in Sources */,
 				53D69D051A9B240C0004CE10 /* AMCBookingRowViewController.m in Sources */,
-				53D69D341A9B240C0004CE10 /* Account.m in Sources */,
 				53D69CF81A9B240C0004CE10 /* AMCNoteView.m in Sources */,
+				53D933E51AC6B1F1001D6C64 /* Service.m in Sources */,
 				53D69D3E1A9B240C0004CE10 /* ServiceCategory+Methods.m in Sources */,
 				53D69CED1A9B240C0004CE10 /* AMCCashEntryField.m in Sources */,
-				53D69D2C1A9B240C0004CE10 /* Service.m in Sources */,
 				53D69D1A1A9B240C0004CE10 /* AMCAppointmentsView.m in Sources */,
 				53D69D1E1A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m in Sources */,
 				53D69D491A9B240C0004CE10 /* WorkRecord+Methods.m in Sources */,
@@ -1919,39 +1982,38 @@
 				53D69D181A9B240C0004CE10 /* AMCPaymentCategoryListViewController.m in Sources */,
 				53D69D431A9B240C0004CE10 /* AccountReconciliation+Methods.m in Sources */,
 				53D325661A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m in Sources */,
-				53D69D291A9B240C0004CE10 /* StockedBrand.m in Sources */,
 				53D69CF31A9B240C0004CE10 /* AMCDayAndMonthPopupViewController.m in Sources */,
 				53D69D0F1A9B240C0004CE10 /* AMCShoppingListPrintView.m in Sources */,
 				53D69D381A9B240C0004CE10 /* Appointment+Methods.m in Sources */,
 				53D69D101A9B240C0004CE10 /* AMCStockedCategoryMaintenanceViewController.m in Sources */,
 				53D69D631A9B240C0004CE10 /* AMCStaffBusyViewController.m in Sources */,
-				53D69D361A9B240C0004CE10 /* StockedProduct.m in Sources */,
 				53D69CEF1A9B240C0004CE10 /* AMCQuickQuoteViewController.m in Sources */,
 				531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */,
 				53D69D5C1A9B240C0004CE10 /* EditCustomerViewController.m in Sources */,
 				53D69D5D1A9B240C0004CE10 /* EditPaymentViewController.m in Sources */,
 				5346C58D1ABB074C005D4540 /* AMCPreferencesWindowController.m in Sources */,
-				53D69D351A9B240C0004CE10 /* LastUpdatedBy.m in Sources */,
 				53D69D591A9B240C0004CE10 /* MakePaymentStepViewController.m in Sources */,
 				5346C5A31AC00341005D4540 /* AMCCategoriesRootNode.m in Sources */,
+				53D9340C1AC72491001D6C64 /* OpeningHoursDayTemplate.m in Sources */,
 				53D69D161A9B240C0004CE10 /* AMCFinancialAnalysisViewController.m in Sources */,
+				53D933C41AC6B1BC001D6C64 /* PaymentCategory.m in Sources */,
 				53D69D131A9B240C0004CE10 /* AMCReportsViewController.m in Sources */,
 				535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */,
+				53D934001AC6B1F2001D6C64 /* StockedCategory.m in Sources */,
 				53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */,
-				53D69D301A9B240C0004CE10 /* StockedCategory.m in Sources */,
-				53D69D251A9B240C0004CE10 /* Appointment.m in Sources */,
 				535F0DF51AB2339A0035CFD8 /* AMCAutoCloseViewController.m in Sources */,
 				53D69D4D1A9B240C0004CE10 /* EditObjectViewController.m in Sources */,
+				53D933E81AC6B1F1001D6C64 /* ShoppingList.m in Sources */,
 				53D69BB81A9B22830004CE10 /* main.m in Sources */,
 				5346C5971ABB2887005D4540 /* AMCTreeNode.m in Sources */,
 				5346C5931ABB2265005D4540 /* AMCCategoryManagerViewController.m in Sources */,
 				53D69D061A9B240C0004CE10 /* AMCDateRangeSelectorViewController.m in Sources */,
 				53D69CFA1A9B240C0004CE10 /* AMCWizardForNewAppointmentWindowController.m in Sources */,
+				53D933CD1AC6B1BC001D6C64 /* Employee.m in Sources */,
 				53D69D5E1A9B240C0004CE10 /* EditServiceViewController.m in Sources */,
 				53D69CF01A9B240C0004CE10 /* AMCSaleItemPriceSetterViewController.m in Sources */,
 				53D69CEB1A9B240C0004CE10 /* AMCAccountReconciliationViewController.m in Sources */,
 				53D69D1D1A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m in Sources */,
-				53D69D221A9B240C0004CE10 /* StockedItem.m in Sources */,
 				53D69D041A9B240C0004CE10 /* AMCBookingRowView.m in Sources */,
 				53D69D371A9B240C0004CE10 /* PaymentCategory+Methods.m in Sources */,
 				531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */,
@@ -1961,16 +2023,13 @@
 				53D69D5A1A9B240C0004CE10 /* AMCDiscountCalculator.m in Sources */,
 				53D69D081A9B240C0004CE10 /* AMCSaleItemViewController.m in Sources */,
 				53FFAF911AB220470078E9CC /* AMCEmployeeForServiceSelector.m in Sources */,
-				53D69D201A9B240C0004CE10 /* SaleItem.m in Sources */,
 				532377DD1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m in Sources */,
 				53D69CF51A9B240C0004CE10 /* NSDate+AMCDate.m in Sources */,
 				53D69D511A9B240C0004CE10 /* WizardStepView.m in Sources */,
-				53D69D331A9B240C0004CE10 /* Salary.m in Sources */,
 				53D69D4C1A9B240C0004CE10 /* ProductSelectorViewController.m in Sources */,
 				53D69D031A9B240C0004CE10 /* AMCBookingViewController.m in Sources */,
-				53D69D2E1A9B240C0004CE10 /* WorkRecord.m in Sources */,
-				53D69D2B1A9B240C0004CE10 /* Customer.m in Sources */,
 				53D69D481A9B240C0004CE10 /* StockedCategory+Methods.m in Sources */,
+				53D933C11AC6B1BB001D6C64 /* Payment.m in Sources */,
 				53D69CEE1A9B240C0004CE10 /* AMCServiceSelectorViewController.m in Sources */,
 				53D69D4A1A9B240C0004CE10 /* Salary+Methods.m in Sources */,
 				5346C5A71AC06D15005D4540 /* AMCServiceCategoriesNode.m in Sources */,
@@ -1980,18 +2039,21 @@
 				53D69D111A9B240C0004CE10 /* AMCStockedCategoryMaintenanceWindowController.m in Sources */,
 				53D69D121A9B240C0004CE10 /* AMCStockedBrandMaintenanceWindowController.m in Sources */,
 				53D69CFF1A9B240C0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.m in Sources */,
+				53D933E21AC6B1F1001D6C64 /* StockedProduct.m in Sources */,
 				53D69CE81A9B240C0004CE10 /* AMCHoursWorkedEachDayOfWeekViewController.m in Sources */,
 				53D69D661A9B240C0004CE10 /* AMCMoneyTransferViewController.m in Sources */,
+				53D933C71AC6B1BC001D6C64 /* Customer.m in Sources */,
+				53D933DC1AC6B1F0001D6C64 /* ShoppingListItem.m in Sources */,
 				53D69CF11A9B240C0004CE10 /* AMCSaleItemPriceSetterView.m in Sources */,
 				53D69D421A9B240C0004CE10 /* Account+Methods.m in Sources */,
 				53D69D4B1A9B240C0004CE10 /* ObjectSelectorViewController.m in Sources */,
 				53D69D151A9B240C0004CE10 /* AMCPaymentsViewController.m in Sources */,
 				53D69D601A9B240C0004CE10 /* EditServiceCategoryViewController.m in Sources */,
+				53D933EE1AC6B1F1001D6C64 /* WorkRecord.m in Sources */,
 				53D69D571A9B240C0004CE10 /* AMCReceiptWindowController.m in Sources */,
-				53D69D261A9B240C0004CE10 /* ShoppingList.m in Sources */,
-				53D69D2F1A9B240C0004CE10 /* ServiceCategory.m in Sources */,
+				53D933AF1AC6B1BA001D6C64 /* LastUpdatedBy.m in Sources */,
+				53D933D91AC6B1BD001D6C64 /* Salon.m in Sources */,
 				53D69D3A1A9B240C0004CE10 /* Sale+Methods.m in Sources */,
-				53D69D241A9B240C0004CE10 /* AccountReconciliation.m in Sources */,
 				53D69CF71A9B240C0004CE10 /* AMCNoteViewController.m in Sources */,
 				53D69BB61A9B22830004CE10 /* AppDelegate.m in Sources */,
 				53D325A51A9E390B00AFCDE4 /* AMCWelcomeScreen.m in Sources */,
@@ -2001,6 +2063,7 @@
 				53D69D091A9B240C0004CE10 /* AMCSaleItemView.m in Sources */,
 				53D69D0B1A9B240C0004CE10 /* AMCRequestPasswordWindowController.m in Sources */,
 				53D69D5F1A9B240C0004CE10 /* EditProductViewController.m in Sources */,
+				53D933D31AC6B1BC001D6C64 /* AccountReconciliation.m in Sources */,
 				53D69CE51A9B240C0004CE10 /* AMCSalaryEditorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2207,10 +2270,11 @@
 		532377CC1AA8923B009FA91D /* ClaudiasSalon.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				534B9B281AC5381B00146E98 /* ClaudiasSalon 3.xcdatamodel */,
 				532377CF1AA89253009FA91D /* ClaudiasSalon 2.xcdatamodel */,
 				532377CD1AA8923B009FA91D /* ClaudiasSalon.xcdatamodel */,
 			);
-			currentVersion = 532377CF1AA89253009FA91D /* ClaudiasSalon 2.xcdatamodel */;
+			currentVersion = 534B9B281AC5381B00146E98 /* ClaudiasSalon 3.xcdatamodel */;
 			path = ClaudiasSalon.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

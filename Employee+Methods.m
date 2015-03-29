@@ -11,6 +11,7 @@
 #import "Service+Methods.h"
 #import "NSDate+AMCDate.h"
 #import "WorkRecord+Methods.h"
+#import "Salon+Methods.h"
 
 @implementation Employee (Methods)
 
@@ -130,7 +131,8 @@
     }
     if (workRecords.count == 0) {
         WorkRecord * workRecord = [WorkRecord newObjectWithMoc:self.managedObjectContext];
-        workRecord.weekEndingDate = [[date lastDayOfWeek] endOfDay];
+        Salon * salon = [Salon salonWithMoc:self.managedObjectContext];
+        workRecord.weekEndingDate = [[date lastDayOfSalonWeek:salon] endOfDay];
         WorkRecord * templateWorkRecord = [self ensureWorkRecordTemplateExists];
         workRecord.hoursWorkedDictionary = templateWorkRecord.hoursWorkedDictionary;
         [self addWorkRecordsObject:workRecord];

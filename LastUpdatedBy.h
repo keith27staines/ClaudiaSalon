@@ -1,9 +1,9 @@
 //
 //  LastUpdatedBy.h
-//  ClaudiasSalon
+//  ClaudiaSalon
 //
-//  Created by Keith Staines on 19/02/2015.
-//  Copyright (c) 2015 Keith Staines. All rights reserved.
+//  Created by Keith Staines on 28/03/2015.
+//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -12,9 +12,9 @@
 
 @interface LastUpdatedBy : NSManagedObject
 
-@property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * computerIdentity;
-@property (nonatomic, retain) NSString * userIdentity;
+@property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * macAddress;
+@property (nonatomic, retain) NSString * userIdentity;
 
 @end

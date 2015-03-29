@@ -12,5 +12,5 @@
 #import "AMCConstants.h"
 
 @interface Salon (Methods)
-
++(Salon*)salonWithMoc:(NSManagedObjectContext*)moc;
 @end

@@ -1,15 +1,16 @@
 //
 //  Payment.m
-//  ClaudiasSalon
+//  ClaudiaSalon
 //
-//  Created by Keith Staines on 19/02/2015.
-//  Copyright (c) 2015 Keith Staines. All rights reserved.
+//  Created by Keith Staines on 28/03/2015.
+//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import "Payment.h"
 #import "Account.h"
 #import "Note.h"
 #import "PaymentCategory.h"
+#import "RecurringBill.h"
 #import "SaleItem.h"
 #import "ShoppingList.h"
 #import "WorkRecord.h"
@@ -32,6 +33,7 @@
 @dynamic reconciledWithBankStatement;
 @dynamic sourceAccount;
 @dynamic voided;
+@dynamic transactionFeeIncoming;
 @dynamic account;
 @dynamic bonusForWorkRecord;
 @dynamic notes;
@@ -39,5 +41,6 @@
 @dynamic refunding;
 @dynamic shoppingList;
 @dynamic workRecord;
+@dynamic recurringBill;
 
 @end

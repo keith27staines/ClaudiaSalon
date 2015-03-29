@@ -1,9 +1,9 @@
 //
 //  LastUpdatedBy.m
-//  ClaudiasSalon
+//  ClaudiaSalon
 //
-//  Created by Keith Staines on 19/02/2015.
-//  Copyright (c) 2015 Keith Staines. All rights reserved.
+//  Created by Keith Staines on 28/03/2015.
+//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import "LastUpdatedBy.h"
@@ -11,9 +11,9 @@
 
 @implementation LastUpdatedBy
 
-@dynamic date;
 @dynamic computerIdentity;
-@dynamic userIdentity;
+@dynamic date;
 @dynamic macAddress;
+@dynamic userIdentity;
 
 @end

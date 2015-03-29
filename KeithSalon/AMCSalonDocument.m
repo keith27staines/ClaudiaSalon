@@ -30,6 +30,7 @@
 #import "EditObjectViewController.h"
 
 // Data models
+#import "Salon+Methods.h"
 #import "Account+Methods.h"
 #import "AccountReconciliation+Methods.h"
 #import "Appointment+Methods.h"
@@ -45,14 +46,17 @@
 #import "Sale+Methods.h"
 #import "SaleItem+Methods.h"
 #import "WorkRecord+Methods.h"
+#import "AMCSalonDetailsViewController.h"
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 
 @interface AMCSalonDocument() <NSTabViewDelegate, NSTableViewDelegate,AMCDayAndMonthPopupViewControllerDelegate, NSControlTextEditingDelegate, NSAnimationDelegate, AMCReceiptPrinterWindowControllerDelegate, EditObjectViewControllerDelegate, AMCQuickQuoteViewControllerDelegate>
 {
     BOOL _storeNeedsInitializing;
-
+    Salon * _salon;
+    OpeningHoursWeekTemplate * _openingHoursWeekTemplate;
 }
+
 @property (weak) IBOutlet AMCReceiptWindowController * receiptWindowController;
 @property (weak) IBOutlet AMCRequestPasswordWindowController *requestPasswordWindowController;
 @property (weak) IBOutlet AMCManagersBudgetWindowController *managersBudgetWindowController;
@@ -63,6 +67,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property (weak) IBOutlet AMCAccountStatementViewController * accountStatementViewController;
 @property (strong) IBOutlet AMCCategoryManagerViewController *accountGroupingsViewController;
 
+@property (strong) IBOutlet AMCSalonDetailsViewController *salonDetailsViewController;
 @property (weak) IBOutlet NSButton *showPaySalary;
 
 @property AMCViewController * mainViewController;
@@ -83,6 +88,13 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     }
     return self;
 }
+-(Salon *)salon {
+    if (!_salon) {
+        _salon = [Salon salonWithMoc:self.managedObjectContext];
+        [self commitAndSave:nil];
+    }
+    return _salon;
+}
 - (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url ofType:(NSString *)fileType modelConfiguration:(NSString *)configuration storeOptions:(NSDictionary *)storeOptions error:(NSError **)error
 {
     NSMutableDictionary *newStoreOptions;
@@ -100,6 +112,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [newStoreOptions setObject:[NSNumber numberWithBool:YES] forKey:NSInferMappingModelAutomaticallyOption];
     
     BOOL result = [super configurePersistentStoreCoordinatorForURL:url ofType:fileType modelConfiguration:configuration storeOptions:newStoreOptions error:error];
+    [self salon];
     return result;
 }
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
@@ -879,5 +892,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 - (IBAction)manageAccountancyGroupings:(id)sender {
     [self.accountGroupingsViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.accountGroupingsViewController];
+}
+-(IBAction)showSalonDetails:(id)sender {
+    self.salonDetailsViewController.salonProperties = self.salon;
+    [self.salonDetailsViewController prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewControllerAsSheet:self.salonDetailsViewController];
 }
 @end

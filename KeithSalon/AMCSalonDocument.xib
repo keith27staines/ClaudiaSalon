@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D113c" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
     </dependencies>
@@ -49,6 +49,7 @@
                 <outlet property="saleArrayController" destination="dTb-Cy-kbI" id="I4V-e9-EHz"/>
                 <outlet property="salesTable" destination="4AW-pB-Kgv" id="kh5-T4-tTn"/>
                 <outlet property="salesView" destination="BdB-2l-gtV" id="h4l-b8-fFv"/>
+                <outlet property="salonDetailsViewController" destination="Tv1-mr-T9C" id="vkS-eD-c6c"/>
                 <outlet property="serviceArrayController" destination="VxO-sN-dJO" id="cN9-I9-GbV"/>
                 <outlet property="serviceCategoryArrayController" destination="5oy-do-uA9" id="xbA-eM-dRX"/>
                 <outlet property="serviceCategoryTable" destination="Knb-ho-Mgu" id="tHP-A2-vjk"/>
@@ -82,7 +83,11 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customObject id="lY1-5d-xCC" customClass="AMCManagersBudgetWindowController"/>
+        <customObject id="lY1-5d-xCC" customClass="AMCManagersBudgetWindowController">
+            <connections>
+                <outlet property="salonDocument" destination="-2" id="8UA-Mn-DuJ"/>
+            </connections>
+        </customObject>
         <window title="Claudia's Salon Manager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -1753,6 +1758,7 @@
         <customObject id="1Jk-n8-g41" customClass="AMCAccountStatementViewController"/>
         <customObject id="hnE-af-XOM" customClass="AMCStaffCanDoViewController"/>
         <customObject id="NHf-SU-kAv" customClass="AMCCategoryManagerViewController"/>
+        <customObject id="Tv1-mr-T9C" customClass="AMCSalonDetailsViewController"/>
     </objects>
     <resources>
         <image name="BarChart" width="32" height="32"/>

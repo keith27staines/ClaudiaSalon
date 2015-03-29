@@ -110,6 +110,9 @@
         }
     }];
 }
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowDidBecomeKeyNotification object:nil];
+}
 -(NSURL*)urlOfDefaultSalon {
     if (!self.pathOfDefaultSalon || self.pathOfDefaultSalon.length == 0) {
         return nil;

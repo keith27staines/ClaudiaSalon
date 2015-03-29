@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMCReportsViewController;
+@class Salon,AMCReportsViewController;
 @class AMCAppointmentsViewController;
 @class AMCPaymentsViewController;
 @class AMCStockControlViewController;
@@ -22,7 +22,7 @@
 #import "AMCViewController.h"
 
 @interface AMCSalonDocument : NSPersistentDocument 
-
+@property (readonly) Salon * salon;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 // Top tab view
@@ -165,9 +165,6 @@
 - (IBAction)salonToolbarButton:(id)sender;
 
 - (IBAction)showMoneyInTill:(id)sender;
-
-
-
 
 
 

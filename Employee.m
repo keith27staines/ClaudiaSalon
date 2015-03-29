@@ -1,12 +1,13 @@
 //
 //  Employee.m
-//  ClaudiasSalon
+//  ClaudiaSalon
 //
-//  Created by Keith Staines on 19/02/2015.
-//  Copyright (c) 2015 Keith Staines. All rights reserved.
+//  Created by Keith Staines on 28/03/2015.
+//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import "Employee.h"
+#import "Holiday.h"
 #import "Note.h"
 #import "Salary.h"
 #import "SaleItem.h"
@@ -31,6 +32,7 @@
 @dynamic lastUpdatedDate;
 @dynamic leavingDate;
 @dynamic monthOfBirth;
+@dynamic paidFromManagersBudget;
 @dynamic phone;
 @dynamic postcode;
 @dynamic startingDate;
@@ -43,6 +45,6 @@
 @dynamic salaries;
 @dynamic workRecords;
 @dynamic workRecordTemplate;
-@dynamic paidFromManagersBudget;
+@dynamic holidays;
 
 @end

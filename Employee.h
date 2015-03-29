@@ -1,15 +1,15 @@
 //
 //  Employee.h
-//  ClaudiasSalon
+//  ClaudiaSalon
 //
-//  Created by Keith Staines on 19/02/2015.
-//  Copyright (c) 2015 Keith Staines. All rights reserved.
+//  Created by Keith Staines on 28/03/2015.
+//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Note, Salary, SaleItem, Salon, Service, WorkRecord;
+@class Holiday, Note, Salary, SaleItem, Salon, Service, WorkRecord;
 
 @interface Employee : NSManagedObject
 
@@ -27,6 +27,7 @@
 @property (nonatomic, retain) NSDate * lastUpdatedDate;
 @property (nonatomic, retain) NSDate * leavingDate;
 @property (nonatomic, retain) NSNumber * monthOfBirth;
+@property (nonatomic, retain) NSNumber * paidFromManagersBudget;
 @property (nonatomic, retain) NSString * phone;
 @property (nonatomic, retain) NSString * postcode;
 @property (nonatomic, retain) NSDate * startingDate;
@@ -39,7 +40,7 @@
 @property (nonatomic, retain) NSSet *salaries;
 @property (nonatomic, retain) NSSet *workRecords;
 @property (nonatomic, retain) WorkRecord *workRecordTemplate;
-@property (nonatomic, retain) NSNumber * paidFromManagersBudget;
+@property (nonatomic, retain) NSSet *holidays;
 @end
 
 @interface Employee (CoreDataGeneratedAccessors)
@@ -73,5 +74,10 @@
 - (void)removeWorkRecordsObject:(WorkRecord *)value;
 - (void)addWorkRecords:(NSSet *)values;
 - (void)removeWorkRecords:(NSSet *)values;
+
+- (void)addHolidaysObject:(Holiday *)value;
+- (void)removeHolidaysObject:(Holiday *)value;
+- (void)addHolidays:(NSSet *)values;
+- (void)removeHolidays:(NSSet *)values;
 
 @end

@@ -101,7 +101,10 @@
     [self.weekViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.weekViewContainer addSubview:self.weekViewController.view];
     self.employeeIndex = 0;
-    self.lastDayOfWeek = [[[NSDate date] lastDayOfWeek] beginningOfDay];
+    self.lastDayOfWeek = [[[NSDate date] lastDayOfSalonWeek:self.salonDocument.salon] beginningOfDay];
+}
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"hours worked on day changed" object:nil];
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
@@ -124,7 +127,7 @@
 }
 -(NSDate *)lastDayOfWeek {
     if (!_lastDayOfWeek) {
-        self.lastDayOfWeek = [[[NSDate date] lastDayOfWeek] beginningOfDay];
+        self.lastDayOfWeek = [[[NSDate date] lastDayOfSalonWeek:self.salonDocument.salon] beginningOfDay];
     }
     return _lastDayOfWeek;
 }
@@ -133,7 +136,7 @@
     self.weekViewController.endDate = lastDayOfWeek;
     self.workRecord = [self.employee workRecordsForDate:lastDayOfWeek][0];
     self.periodToPayLabel.stringValue = [NSString stringWithFormat:@"Pay salary for week ending %@ %@",[lastDayOfWeek stringNamingDayOfWeek],[lastDayOfWeek dayAndMonthString]];
-    self.nextPeriodButton.enabled = [lastDayOfWeek isLessThan:[[NSDate date] lastDayOfWeek]];
+    self.nextPeriodButton.enabled = [lastDayOfWeek isLessThan:[[NSDate date] lastDayOfSalonWeek:self.salonDocument.salon]];
     [self displayEmployee];
 }
 -(WorkRecord *)workRecord {

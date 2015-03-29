@@ -88,6 +88,9 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hoursWorkedOnDayChangedNotification:) name:@"hours worked on day changed" object:nil];
 }
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"hours worked on day changed" object:nil];
+}
 -(AMCSalaryCalculator *)calculator {
     if (!_calculator) {
         _calculator = [[AMCSalaryCalculator alloc] init];
@@ -208,7 +211,7 @@
         [containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|" options:0 metrics:nil views:views]];
     }
     self.hoursPerWeekViewController.workRecordTemplate = [self.employee ensureWorkRecordTemplateExists];
-    self.hoursPerWeekViewController.endDate = [[NSDate date] lastDayOfWeek];
+    self.hoursPerWeekViewController.endDate = [[NSDate date] lastDayOfSalonWeek:self.salonDocument.salon];
 }
 -(void)reloadPayByHourView {
     [self showSubview: self.payByHourViewController.view];

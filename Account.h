@@ -1,15 +1,15 @@
 //
 //  Account.h
-//  ClaudiasSalon
+//  ClaudiaSalon
 //
-//  Created by Keith Staines on 19/02/2015.
-//  Copyright (c) 2015 Keith Staines. All rights reserved.
+//  Created by Keith Staines on 28/03/2015.
+//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class AccountReconciliation, Payment, Sale;
+@class AccountReconciliation, Payment, RecurringBill, Sale, Salon;
 
 @interface Account : NSManagedObject
 
@@ -17,9 +17,13 @@
 @property (nonatomic, retain) NSString * bankName;
 @property (nonatomic, retain) NSString * friendlyName;
 @property (nonatomic, retain) NSString * sortCode;
+@property (nonatomic, retain) Salon *cardPaymentAccountForSalon;
 @property (nonatomic, retain) NSSet *payments;
+@property (nonatomic, retain) Salon *primaryBankAccountForSalon;
 @property (nonatomic, retain) NSSet *reconciliations;
+@property (nonatomic, retain) RecurringBill *recurringBill;
 @property (nonatomic, retain) NSSet *sales;
+@property (nonatomic, retain) Salon *tillAccountForSalon;
 @end
 
 @interface Account (CoreDataGeneratedAccessors)

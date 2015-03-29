@@ -7,6 +7,7 @@
 //
 
 #import "NSDate+AMCDate.h"
+#import "Salon+Methods.h"
 
 @implementation NSDate (AMCDate)
 +(NSDate*)beginningOfDayOnDate:(NSDate*)date
@@ -28,10 +29,18 @@
 {
     return [NSDate endOfDayOnDate:self];
 }
--(NSDate*)lastDayOfWeek {
-    return [[[[self firstDayOfWeek] dateByAddingTimeInterval:7*24*3600] dateByAddingTimeInterval:-1] beginningOfDay];
+-(NSDate*)firstDayOfMonth {
+    return [NSDate firstDayOfMonthContainingDate:self];
 }
--(NSDate*)firstDayOfWeek {
+-(NSDate*)lastDayOfMonth {
+    return [NSDate lastDayOfMonthContainingDate:self];
+}
+-(NSDate*)lastDayOfSalonWeek:(Salon*)salon {
+    return [[[[self firstDayOfSalonWeek:salon] dateByAddingTimeInterval:7*24*3600] dateByAddingTimeInterval:-1] beginningOfDay];
+}
+-(NSDate*)firstDayOfSalonWeek:(Salon*)salon {
+    NSInteger dayNumberInWeek = salon.firstDayOfWeek.integerValue;
+    NSString * firstDay = [[NSDate stringNamingDayOfWeek:dayNumberInWeek] lowercaseString];
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDate *startOfWeek;
     [calendar rangeOfUnit:NSCalendarUnitWeekOfYear
@@ -39,13 +48,44 @@
                  interval:nil
                   forDate:self];
     startOfWeek = [[self beginningOfDay] dateByAddingTimeInterval:12*3600]; // work on midday to avoid rounding problems;
-    if ( [[startOfWeek stringNamingDayOfWeek] isEqualToString:@"Saturday"] ) {
+    if ( [[[startOfWeek stringNamingDayOfWeek] lowercaseString] isEqualToString:firstDay] ) {
         return [startOfWeek beginningOfDay];
-    } else
-        while ( ![[startOfWeek stringNamingDayOfWeek] isEqualToString:@"Saturday"] ) {
+    } else {
+        while ( ![[[startOfWeek stringNamingDayOfWeek] lowercaseString] isEqualToString:firstDay] ) {
             startOfWeek = [startOfWeek dateByAddingTimeInterval:-24*3600];
         }
+    }
     return [startOfWeek beginningOfDay];
+}
++(NSString*)stringNamingDayOfWeek:(NSInteger)cocoaDayNumber {
+    switch (cocoaDayNumber) {
+        case 1:
+            return @"Sunday";
+        case 2:
+            return @"Monday";
+        case 3:
+            return @"Tuesday";
+        case 4:
+            return @"Wednesday";
+        case 5:
+            return @"Thursday";
+        case 6:
+            return @"Friday";
+        case 7:
+            return @"Saturday";
+        default:
+            return @"Unknown";
+    }
+}
++(NSInteger)cocoaDayNumberForDayNamed:(NSString*)dayName {
+    if ([[dayName lowercaseString] isEqualToString:@"sunday"]) return 1;
+    if ([[dayName lowercaseString] isEqualToString:@"monday"]) return 2;
+    if ([[dayName lowercaseString] isEqualToString:@"tuesday"]) return 3;
+    if ([[dayName lowercaseString] isEqualToString:@"wednesday"]) return 4;
+    if ([[dayName lowercaseString] isEqualToString:@"thursday"]) return 5;
+    if ([[dayName lowercaseString] isEqualToString:@"friday"]) return 6;
+    if ([[dayName lowercaseString] isEqualToString:@"saturday"]) return 7;
+    return 0;
 }
 -(NSString*)dateStringWithMediumDateFormatShortTimeFormat {
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];

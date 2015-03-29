@@ -14,6 +14,7 @@
 #import "PaymentCategory+Methods.h"
 #import "Account+Methods.h"
 #import "AMCConstants.h"
+#import "AMCSalonDocument.h"
 
 @interface AMCManagersBudgetWindowController () <NSTableViewDataSource, NSTableViewDelegate>
 {
@@ -100,7 +101,7 @@
     return _sales;
 }
 -(NSDate*)endOfWeekFromDate:(NSDate*)date {
-    return [[date lastDayOfWeek] endOfDay];
+    return [[date lastDayOfSalonWeek:self.salonDocument.salon] endOfDay];
 }
 -(NSDate*)startOfWeekFromDate:(NSDate*)date {
     return [[self endOfWeekFromDate:date] dateByAddingTimeInterval:-7*24*3600];
@@ -108,7 +109,7 @@
 -(void)analyzeWeeks {
     self.overviewSpendingSinceLabel.stringValue = [NSString stringWithFormat:@"Sales and Spending since %@ %@",[self.startDate stringNamingDayOfWeek],[self.startDate dateStringWithMediumDateFormat]];
     self.periodData = [NSMutableArray array];
-    NSDate * weekEnding = [self.startDate lastDayOfWeek];
+    NSDate * weekEnding = [self.startDate lastDayOfSalonWeek:self.salonDocument.salon];
     NSDictionary * weeksDictionary;
     double totalSales = 0;
     double totalSpend = 0;
@@ -116,8 +117,8 @@
     double totalBillsSpend = 0;
     double totalSalesTarget = 0;
     NSInteger row = 0;
-    while ( [weekEnding isLessThanOrEqualTo:[[NSDate date] lastDayOfWeek]] ) {
-        NSDate * weekStarting = [[weekEnding dateByAddingTimeInterval:-10] firstDayOfWeek];
+    while ( [weekEnding isLessThanOrEqualTo:[[NSDate date] lastDayOfSalonWeek:self.salonDocument.salon]] ) {
+        NSDate * weekStarting = [[weekEnding dateByAddingTimeInterval:-10] firstDayOfSalonWeek:self.salonDocument.salon];
         weeksDictionary = [self analyzePeriodBeginning:[weekStarting beginningOfDay] ending:[weekEnding endOfDay]];
         totalSpend += ((NSNumber*)(weeksDictionary[@"totalSpend"])).doubleValue;
         totalBillsSpend += ((NSNumber*)(weeksDictionary[@"billsSpend"])).doubleValue;;
@@ -127,7 +128,7 @@
         self.periodData[row] = weeksDictionary;
         row++;
         weekEnding = [[weekEnding beginningOfDay] dateByAddingTimeInterval:6*24*3600];
-        weekEnding = [weekEnding lastDayOfWeek];
+        weekEnding = [weekEnding lastDayOfSalonWeek:self.salonDocument.salon];
     }
     self.totalSpendLabel.doubleValue = totalSpend;
     self.rentAndBillsLabel.doubleValue = totalBillsSpend;

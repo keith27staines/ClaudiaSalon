@@ -1,15 +1,15 @@
 //
 //  PaymentCategory.h
-//  ClaudiasSalon
+//  ClaudiaSalon
 //
-//  Created by Keith Staines on 19/02/2015.
-//  Copyright (c) 2015 Keith Staines. All rights reserved.
+//  Created by Keith Staines on 28/03/2015.
+//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Payment;
+@class Payment, RecurringBill;
 
 @interface PaymentCategory : NSManagedObject
 
@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSNumber * isStartupCost;
 @property (nonatomic, retain) NSNumber * isTransferBetweenAccounts;
 @property (nonatomic, retain) NSSet *payments;
+@property (nonatomic, retain) RecurringBill *recurringBill;
 @end
 
 @interface PaymentCategory (CoreDataGeneratedAccessors)
