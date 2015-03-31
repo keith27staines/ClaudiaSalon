@@ -364,9 +364,35 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Financials" id="BYX-ia-yfb">
+                <menuItem title="Manage" id="qM2-7r-z2i">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Financials" id="xoi-LE-SRT">
+                    <menu key="submenu" title="Manage" id="Bgb-FL-QbE">
+                        <items>
+                            <menuItem title="Accounts..." id="dUR-2r-DtE">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showAccountManager:" target="-1" id="QjL-eq-Cq3"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Accountancy groupings..." id="0Hx-f3-O8g">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="manageAccountancyGroupings:" target="-1" id="K5Q-gk-3qJ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="G9k-eM-p1k"/>
+                            <menuItem title="Recurring items..." id="nUI-KU-Wvu">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showRecurringEventManager:" target="-1" id="p19-at-fiR"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Financial" id="BYX-ia-yfb">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Financial" id="xoi-LE-SRT">
                         <items>
                             <menuItem title="Show account statements" id="wes-i8-Gxc">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -393,13 +419,6 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="cDG-1M-rlD"/>
-                            <menuItem title="Manage accountancy groupings..." id="WIj-CY-pWU">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="manageAccountancyGroupings:" target="-1" id="Bjo-6f-B7d"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="ESV-6a-VN3"/>
                             <menuItem title="Pay staff..." id="xYR-ZV-aVw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

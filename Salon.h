@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSString * addressLine1;
 @property (nonatomic, retain) NSString * addressLine2;
-@property (nonatomic, retain) NSDate * endOfYear;
+@property (nonatomic, retain) NSDate * startOfAccountingYear;
 @property (nonatomic, retain) NSDate * firstDayOfTrading;
 @property (nonatomic, retain) NSString * fullDescription;
 @property (nonatomic, retain) NSString * phone;

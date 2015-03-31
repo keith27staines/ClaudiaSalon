@@ -15,7 +15,7 @@
 
 @dynamic addressLine1;
 @dynamic addressLine2;
-@dynamic endOfYear;
+@dynamic startOfAccountingYear;
 @dynamic firstDayOfTrading;
 @dynamic fullDescription;
 @dynamic phone;

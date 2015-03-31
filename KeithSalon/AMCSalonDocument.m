@@ -68,6 +68,12 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property (strong) IBOutlet AMCCategoryManagerViewController *accountGroupingsViewController;
 
 @property (strong) IBOutlet AMCSalonDetailsViewController *salonDetailsViewController;
+
+@property (strong) IBOutlet AMCViewController *recurringEventManagementViewController;
+
+@property (strong) IBOutlet AMCViewController *accountManagementViewController;
+
+
 @property (weak) IBOutlet NSButton *showPaySalary;
 
 @property AMCViewController * mainViewController;
@@ -897,5 +903,13 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     self.salonDetailsViewController.salonProperties = self.salon;
     [self.salonDetailsViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.salonDetailsViewController];
+}
+- (IBAction)showRecurringEventManager:(id)sender {
+    [self.recurringEventManagementViewController prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewControllerAsSheet:self.recurringEventManagementViewController];
+}
+- (IBAction)showAccountManager:(id)sender {
+    [self.accountManagementViewController prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewControllerAsSheet:self.accountManagementViewController];
 }
 @end

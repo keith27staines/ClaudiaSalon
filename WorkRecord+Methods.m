@@ -93,8 +93,6 @@
             [templateHours removeObjectForKey:key];
         }
     }
-    NSAssert(templateHours.count == 0, @"The specified dictionary does not contain all required entries");
-    NSAssert(dictionary.count == 7, @"The specified dictionary does not contain the correct number of entries");
 }
 -(NSDate*)weekBeginningDate {
     return [[self.weekEndingDate dateByAddingTimeInterval:-7*24*3600] beginningOfDay];

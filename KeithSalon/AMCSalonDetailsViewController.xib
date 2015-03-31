@@ -20,12 +20,12 @@
                 <outlet property="salonAddressLine2Field" destination="SwT-os-Fpn" id="1Y2-9i-lJe"/>
                 <outlet property="salonNameField" destination="ZGX-Sk-34n" id="X2l-Hz-ZxR"/>
                 <outlet property="serviceEmailField" destination="tLp-3I-3Sc" id="FNt-3E-biV"/>
+                <outlet property="startOfAccountingYearDatePicker" destination="pOK-NZ-4wy" id="0kt-ga-Zgf"/>
                 <outlet property="telephoneField" destination="nFY-Yy-lpV" id="nLl-zC-GNa"/>
                 <outlet property="tillAccountPopup" destination="uUm-nT-wSg" id="I9K-RX-AUk"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
                 <outlet property="viewSelector" destination="KH9-Pi-70S" id="ZzJ-F2-5x3"/>
                 <outlet property="weekStartsOnPopup" destination="WYK-2m-xkV" id="20o-vY-0EI"/>
-                <outlet property="yearEndDatePicker" destination="pOK-NZ-4wy" id="Z7E-7b-39O"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -140,6 +140,9 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="managerChanged:" target="-2" id="9QC-Sz-LqC"/>
+                    </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Zd-Kl-w2o">
                     <rect key="frame" x="58" y="27" width="58" height="17"/>
@@ -301,10 +304,13 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="weekStartDayChanged:" target="-2" id="tuP-yI-0BC"/>
+                    </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9E1-h9-5Qq">
-                    <rect key="frame" x="20" y="208" width="62" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Year end:" id="8a0-xf-Ic2">
+                    <rect key="frame" x="20" y="208" width="108" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Accounting year:" id="8a0-xf-Ic2">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -321,6 +327,9 @@
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                     </datePickerCell>
+                    <connections>
+                        <action selector="accountingYearChanged:" target="-2" id="lbn-a8-Mma"/>
+                    </connections>
                 </datePicker>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rs0-EA-WLC">
                     <rect key="frame" x="484" y="208" width="96" height="17"/>
@@ -349,6 +358,9 @@
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                     </datePickerCell>
+                    <connections>
+                        <action selector="firstDayOfTradingChanged:" target="-2" id="WWG-iI-y4L"/>
+                    </connections>
                 </datePicker>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1vq-Bj-l48">
                     <rect key="frame" x="18" y="109" width="147" height="17"/>
@@ -374,6 +386,9 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="tillAccountChanged:" target="-2" id="HUe-qc-bpa"/>
+                    </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ifu-25-b8r">
                     <rect key="frame" x="18" y="68" width="147" height="17"/>
@@ -399,6 +414,9 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="cardPaymentAccountChanged:" target="-2" id="sCD-Cb-rx0"/>
+                    </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KhH-mk-mND">
                     <rect key="frame" x="18" y="27" width="147" height="17"/>
@@ -424,6 +442,9 @@
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="primaryBankAccountChanged:" target="-2" id="16y-Fb-k5E"/>
+                    </connections>
                 </popUpButton>
             </subviews>
             <constraints>

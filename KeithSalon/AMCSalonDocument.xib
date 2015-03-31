@@ -7,6 +7,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AMCSalonDocument">
             <connections>
                 <outlet property="accountGroupingsViewController" destination="NHf-SU-kAv" id="BOI-Dh-Hks"/>
+                <outlet property="accountManagementViewController" destination="Rhe-aG-xw3" id="VY5-te-bhS"/>
                 <outlet property="accountStatementViewController" destination="1Jk-n8-g41" id="cxc-b7-2KS"/>
                 <outlet property="addressLine1Filter" destination="LTh-qI-Eq5" id="ypU-6R-UTm"/>
                 <outlet property="addressLine2Filter" destination="b6Q-1v-Nap" id="7pJ-89-qlw"/>
@@ -43,6 +44,7 @@
                 <outlet property="productsView" destination="gzb-4w-4aP" id="LiQ-yd-Jk8"/>
                 <outlet property="quickQuoteViewController" destination="Zjg-iR-Mm5" id="AYa-Kt-DKZ"/>
                 <outlet property="receiptWindowController" destination="tFr-Ud-Tfw" id="if5-PM-4Gi"/>
+                <outlet property="recurringEventManagementViewController" destination="aEQ-Oc-c3b" id="YhB-f1-4uN"/>
                 <outlet property="reportsViewController" destination="Idc-1W-TmU" id="lhn-FL-j6R"/>
                 <outlet property="requestPasswordWindowController" destination="1nv-NK-Vvr" id="1bD-ce-UKV"/>
                 <outlet property="salaryPaymentViewController" destination="BIc-nr-cPO" id="Q57-Zz-wqm"/>
@@ -1759,6 +1761,8 @@
         <customObject id="hnE-af-XOM" customClass="AMCStaffCanDoViewController"/>
         <customObject id="NHf-SU-kAv" customClass="AMCCategoryManagerViewController"/>
         <customObject id="Tv1-mr-T9C" customClass="AMCSalonDetailsViewController"/>
+        <customObject id="aEQ-Oc-c3b" customClass="AMCRecurringEventManagementViewController"/>
+        <customObject id="Rhe-aG-xw3" customClass="AMCAccountManagementViewController"/>
     </objects>
     <resources>
         <image name="BarChart" width="32" height="32"/>

@@ -28,4 +28,6 @@
 +(NSDate*)lastDayOfMonthContainingDate:(NSDate*)date;
 -(NSDate*)firstDayOfSalonWeek:(Salon*)salon;
 -(NSDate*)lastDayOfSalonWeek:(Salon*)salon;
+-(NSDate*)firstDayOfWeekWithFirstDay:(NSInteger)numberOfFirstDayInWeek;
+-(NSDate*)lastDayOfWeekWithFirstDay:(NSInteger)numberOfFirstDayInWeek;
 @end

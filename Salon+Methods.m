@@ -29,7 +29,7 @@
         salon.salonName = @"New Salon";
         salon.firstDayOfTrading = [NSDate date];
         salon.firstDayOfWeek = @(1);
-        salon.endOfYear = salon.firstDayOfTrading;
+        salon.startOfAccountingYear = salon.firstDayOfTrading;
         [salon addOpeningHoursWeekTemplate];
         [salon addDefaultAccounts];
     } else {

@@ -79,7 +79,7 @@
         <attribute name="paidFromManagersBudget" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="449319600" defaultValueString="&quot;now&quot;" syncable="YES"/>
+        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="449406000" defaultValueString="&quot;now&quot;" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="canDo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="canBeDoneBy" inverseEntity="Service" syncable="YES"/>
         <relationship name="holidays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Holiday" inverseName="employee" inverseEntity="Holiday" syncable="YES"/>
@@ -253,7 +253,6 @@
     <entity name="Salon" representedClassName="Salon" syncable="YES">
         <attribute name="addressLine1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="addressLine2" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="endOfYear" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="firstDayOfTrading" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="firstDayOfWeek" attributeType="Integer 32" defaultValueString="1" syncable="YES"/>
         <attribute name="fullDescription" optional="YES" attributeType="String" syncable="YES"/>
@@ -262,6 +261,7 @@
         <attribute name="purpose" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="salonName" attributeType="String" syncable="YES"/>
         <attribute name="serviceEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startOfAccountingYear" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="cardPaymentAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="cardPaymentAccountForSalon" inverseEntity="Account" syncable="YES"/>
         <relationship name="manager" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="manages" inverseEntity="Employee" syncable="YES"/>
         <relationship name="openingHoursWeekTemplate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OpeningHoursWeekTemplate" inverseName="salon" inverseEntity="OpeningHoursWeekTemplate" syncable="YES"/>

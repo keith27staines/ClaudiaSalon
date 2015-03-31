@@ -36,11 +36,13 @@
     return [NSDate lastDayOfMonthContainingDate:self];
 }
 -(NSDate*)lastDayOfSalonWeek:(Salon*)salon {
-    return [[[[self firstDayOfSalonWeek:salon] dateByAddingTimeInterval:7*24*3600] dateByAddingTimeInterval:-1] beginningOfDay];
+    return [self lastDayOfWeekWithFirstDay:salon.firstDayOfWeek.integerValue];
 }
--(NSDate*)firstDayOfSalonWeek:(Salon*)salon {
-    NSInteger dayNumberInWeek = salon.firstDayOfWeek.integerValue;
-    NSString * firstDay = [[NSDate stringNamingDayOfWeek:dayNumberInWeek] lowercaseString];
+-(NSDate*)lastDayOfWeekWithFirstDay:(NSInteger)numberOfFirstDayInWeek {
+    return [[[[self firstDayOfWeekWithFirstDay:numberOfFirstDayInWeek] dateByAddingTimeInterval:7*24*3600] dateByAddingTimeInterval:-1] beginningOfDay];
+}
+-(NSDate*)firstDayOfWeekWithFirstDay:(NSInteger)numberOfFirstDayInWeek {
+    NSString * firstDay = [[NSDate stringNamingDayOfWeek:numberOfFirstDayInWeek] lowercaseString];
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDate *startOfWeek;
     [calendar rangeOfUnit:NSCalendarUnitWeekOfYear
@@ -56,6 +58,9 @@
         }
     }
     return [startOfWeek beginningOfDay];
+}
+-(NSDate*)firstDayOfSalonWeek:(Salon*)salon {
+    return [self firstDayOfWeekWithFirstDay:salon.firstDayOfWeek.integerValue];
 }
 +(NSString*)stringNamingDayOfWeek:(NSInteger)cocoaDayNumber {
     switch (cocoaDayNumber) {

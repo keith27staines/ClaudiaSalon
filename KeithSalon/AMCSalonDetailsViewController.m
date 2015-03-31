@@ -44,7 +44,7 @@
 
 @property (weak) IBOutlet NSPopUpButton *managerSelectorPopup;
 
-@property (weak) IBOutlet NSDatePicker *yearEndDatePicker;
+@property (weak) IBOutlet NSDatePicker *startOfAccountingYearDatePicker;
 
 @property (weak) IBOutlet NSDatePicker *firstDayOfTradingDatePicker;
 
@@ -78,6 +78,8 @@
     [self populateAccountSelectorPopup:self.cardPaymentAccountPopup selectAccount:self.salonProperties.cardPaymentAccount];
     [self populateAccountSelectorPopup:self.primaryBankAccountPopup selectAccount:self.salonProperties.primaryBankAccount];
     [self populateWeekStartsOnPopup];
+    self.firstDayOfTradingDatePicker.dateValue = self.salonProperties.firstDayOfTrading;
+    self.startOfAccountingYearDatePicker.dateValue = self.salonProperties.startOfAccountingYear;
 }
 - (IBAction)selectView:(NSSegmentedControl *)sender {
     NSInteger newSegment = sender.selectedSegment;
@@ -150,7 +152,7 @@
         NSMenuItem * menuItem = [[NSMenuItem alloc] init];
         NSString * dayName = [NSDate stringNamingDayOfWeek:i];
         menuItem.title = dayName;
-        menuItem.representedObject = dayName;
+        menuItem.representedObject = @(i);
         [self.weekStartsOnPopup.menu addItem:menuItem];
         if (i == self.salonDocument.salon.firstDayOfWeek.integerValue) {
             [self.weekStartsOnPopup selectItem:menuItem];
@@ -182,4 +184,51 @@
 -(NSArray*)activeEmployees {
     return  [Employee allActiveEmployeesWithMoc:self.documentMoc];
 }
+- (IBAction)managerChanged:(id)sender {
+    self.salonProperties.manager = self.managerSelectorPopup.selectedItem.representedObject;
+}
+
+- (IBAction)primaryBankAccountChanged:(id)sender {
+    self.salonProperties.primaryBankAccount = self.primaryBankAccountPopup.selectedItem.representedObject;
+}
+- (IBAction)tillAccountChanged:(id)sender {
+    self.salonProperties.tillAccount = self.tillAccountPopup.selectedItem.representedObject;
+}
+
+- (IBAction)cardPaymentAccountChanged:(id)sender {
+    self.salonProperties.cardPaymentAccount = self.cardPaymentAccountPopup.selectedItem.representedObject;
+}
+
+- (IBAction)weekStartDayChanged:(id)sender {
+    self.salonProperties.firstDayOfWeek = self.weekStartsOnPopup.selectedItem.representedObject;
+}
+
+- (IBAction)accountingYearChanged:(id)sender {
+    self.salonProperties.startOfAccountingYear = self.startOfAccountingYearDatePicker.dateValue;
+}
+- (IBAction)firstDayOfTradingChanged:(id)sender {
+    self.salonProperties.firstDayOfTrading = self.firstDayOfTradingDatePicker.dateValue;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end

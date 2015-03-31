@@ -14,6 +14,7 @@
 #import "Service+Methods.h"
 #import "ServiceCategory+Methods.h"
 #import "NSDate+AMCDate.h"
+#import "Salon+Methods.h"
 
 typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
     AMCReportingIntervalDaily,
@@ -90,7 +91,8 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
                 } else {
                     beautyTotal += saleItem.actualCharge.doubleValue;
                 }
-            }        }
+            }
+        }
         for (Payment * payment in payments) {
             if (payment.voided.boolValue) continue;
             if ([payment.direction isEqualToString:kAMCPaymentDirectionOut]) {
@@ -191,22 +193,7 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
 }
 -(NSDate*)beginningOfWeek:(NSDate*)date
 {
-    NSDate * beginningOfDay = [self beginningOfDayOnDate:date];
-    NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    
-    // Get the weekday component of the current date
-    NSDateComponents *weekdayComponents = [gregorian components:NSCalendarUnitWeekday
-                                                       fromDate:beginningOfDay];
-    NSDateComponents *componentsToSubtract = [[NSDateComponents alloc] init];
-    [componentsToSubtract setDay: [self firstDayOfWeek] - ([weekdayComponents weekday])];
-    
-    NSDate *beginningOfWeek = [gregorian dateByAddingComponents:componentsToSubtract
-                                                         toDate:beginningOfDay options:0];
-    if ([beginningOfWeek isGreaterThan:beginningOfDay]) {
-        beginningOfWeek = [beginningOfWeek dateByAddingTimeInterval:-7*24*3600];
-    }
-    return [self beginningOfDayOnDate:beginningOfWeek];
+    return [date firstDayOfWeekWithFirstDay:[self.weekStartPopop indexOfSelectedItem]+1];
 }
 -(NSDate*)previousStartDate:(NSDate*)currentStartDate;
 {
@@ -291,6 +278,7 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
     [self loadPeriodPopup];
     [self loadWeekStartPopup];
     [self loadMonthStartPopup];
+    self.yearStartStepper.dateValue = [self.salonDocument.salon.firstDayOfTrading beginningOfDay];
 }
 #pragma mark - NSTableViewDataSource
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
@@ -364,6 +352,6 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
     [self.weekStartPopop addItemWithTitle:@"Thursday"];
     [self.weekStartPopop addItemWithTitle:@"Friday"];
     [self.weekStartPopop addItemWithTitle:@"Saturday"];
-    [self.weekStartPopop selectItemAtIndex:6];
+    [self.weekStartPopop selectItemAtIndex:self.salonDocument.salon.firstDayOfWeek.doubleValue-1];
 }
 @end
