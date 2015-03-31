@@ -36,8 +36,11 @@
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     self.paymentDetailsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.paymentDetailsViewController.view.frame = self.detailsContainerView.frame;
-    [self.detailsContainerView addSubview:self.paymentDetailsViewController.view];
+    NSView * detailView = self.paymentDetailsViewController.view;
+    [self.detailsContainerView addSubview:detailView];
+    NSDictionary * views = NSDictionaryOfVariableBindings(detailView);
+    [self.detailsContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[detailView]|" options:0 metrics:nil views:views]];
+    [self.detailsContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[detailView]" options:0 metrics:nil views:views]];
     [self loadAccountPopup];
     [self loadCategoryPopup];
     [self tableViewSelectionDidChange:nil];
