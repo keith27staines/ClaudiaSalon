@@ -2,7 +2,7 @@
 //  Salon.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 28/03/2015.
+//  Created by Keith Staines on 31/03/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -11,23 +11,24 @@
 #import "Employee.h"
 #import "OpeningHoursWeekTemplate.h"
 
+
 @implementation Salon
 
 @dynamic addressLine1;
 @dynamic addressLine2;
-@dynamic startOfAccountingYear;
 @dynamic firstDayOfTrading;
+@dynamic firstDayOfWeek;
 @dynamic fullDescription;
 @dynamic phone;
-@dynamic serviceEmail;
 @dynamic postcode;
 @dynamic purpose;
 @dynamic salonName;
-@dynamic firstDayOfWeek;
+@dynamic serviceEmail;
+@dynamic startOfAccountingYear;
 @dynamic cardPaymentAccount;
 @dynamic manager;
+@dynamic openingHoursWeekTemplate;
 @dynamic primaryBankAccount;
 @dynamic tillAccount;
-@dynamic openingHoursWeekTemplate;
 
 @end

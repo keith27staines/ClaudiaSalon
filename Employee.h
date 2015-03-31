@@ -2,7 +2,7 @@
 //  Employee.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 28/03/2015.
+//  Created by Keith Staines on 31/03/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -33,6 +33,7 @@
 @property (nonatomic, retain) NSDate * startingDate;
 @property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSSet *canDo;
+@property (nonatomic, retain) NSSet *holidays;
 @property (nonatomic, retain) Salon *manages;
 @property (nonatomic, retain) NSSet *notes;
 @property (nonatomic, retain) NSSet *notesCreated;
@@ -40,7 +41,6 @@
 @property (nonatomic, retain) NSSet *salaries;
 @property (nonatomic, retain) NSSet *workRecords;
 @property (nonatomic, retain) WorkRecord *workRecordTemplate;
-@property (nonatomic, retain) NSSet *holidays;
 @end
 
 @interface Employee (CoreDataGeneratedAccessors)
@@ -49,6 +49,11 @@
 - (void)removeCanDoObject:(Service *)value;
 - (void)addCanDo:(NSSet *)values;
 - (void)removeCanDo:(NSSet *)values;
+
+- (void)addHolidaysObject:(Holiday *)value;
+- (void)removeHolidaysObject:(Holiday *)value;
+- (void)addHolidays:(NSSet *)values;
+- (void)removeHolidays:(NSSet *)values;
 
 - (void)addNotesObject:(Note *)value;
 - (void)removeNotesObject:(Note *)value;
@@ -74,10 +79,5 @@
 - (void)removeWorkRecordsObject:(WorkRecord *)value;
 - (void)addWorkRecords:(NSSet *)values;
 - (void)removeWorkRecords:(NSSet *)values;
-
-- (void)addHolidaysObject:(Holiday *)value;
-- (void)removeHolidaysObject:(Holiday *)value;
-- (void)addHolidays:(NSSet *)values;
-- (void)removeHolidays:(NSSet *)values;
 
 @end

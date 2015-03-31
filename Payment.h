@@ -2,14 +2,14 @@
 //  Payment.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 28/03/2015.
+//  Created by Keith Staines on 31/03/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Account, Note, PaymentCategory, RecurringBill, SaleItem, ShoppingList, WorkRecord;
+@class Account, Note, PaymentCategory, RecurringItem, SaleItem, ShoppingList, WorkRecord;
 
 @interface Payment : NSManagedObject
 
@@ -27,16 +27,16 @@
 @property (nonatomic, retain) NSString * reason;
 @property (nonatomic, retain) NSNumber * reconciledWithBankStatement;
 @property (nonatomic, retain) NSString * sourceAccount;
-@property (nonatomic, retain) NSNumber * voided;
 @property (nonatomic, retain) NSNumber * transactionFeeIncoming;
+@property (nonatomic, retain) NSNumber * voided;
 @property (nonatomic, retain) Account *account;
 @property (nonatomic, retain) WorkRecord *bonusForWorkRecord;
 @property (nonatomic, retain) NSSet *notes;
 @property (nonatomic, retain) PaymentCategory *paymentCategory;
+@property (nonatomic, retain) RecurringItem *templateForRecurringItem;
 @property (nonatomic, retain) SaleItem *refunding;
 @property (nonatomic, retain) ShoppingList *shoppingList;
 @property (nonatomic, retain) WorkRecord *workRecord;
-@property (nonatomic, retain) RecurringBill *recurringBill;
 @end
 
 @interface Payment (CoreDataGeneratedAccessors)
