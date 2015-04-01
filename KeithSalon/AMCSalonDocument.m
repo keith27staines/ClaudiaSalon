@@ -47,6 +47,7 @@
 #import "SaleItem+Methods.h"
 #import "WorkRecord+Methods.h"
 #import "AMCSalonDetailsViewController.h"
+#import "RecurringItem+Methods.h"
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 
@@ -94,9 +95,14 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     }
     return self;
 }
+-(void)processRecurringEvents:(id)sender {
+    [RecurringItem processOutstandingItemsFor:self.managedObjectContext error:nil];
+}
 -(Salon *)salon {
     if (!_salon) {
         _salon = [Salon salonWithMoc:self.managedObjectContext];
+        [self processRecurringEvents:self];
+        [NSTimer scheduledTimerWithTimeInterval:3600 target:self selector:@selector(processRecurringEvents:) userInfo:nil repeats:YES];
         [self commitAndSave:nil];
     }
     return _salon;

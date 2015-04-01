@@ -2,7 +2,7 @@
 //  RecurringItem.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
+//  Created by Keith Staines on 01/04/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -13,11 +13,13 @@
 @implementation RecurringItem
 
 @dynamic createdDate;
-@dynamic isActive;
-@dynamic period;
-@dynamic nextActionDate;
-@dynamic name;
 @dynamic explanation;
+@dynamic isActive;
+@dynamic name;
+@dynamic nameOfReccurencePeriod;
+@dynamic nameOfRecurringaction;
+@dynamic nextActionDate;
+@dynamic period;
 @dynamic paymentTemplate;
 
 @end

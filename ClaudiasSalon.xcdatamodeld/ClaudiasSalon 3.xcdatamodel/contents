@@ -78,7 +78,7 @@
         <attribute name="paidFromManagersBudget" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="449492400" defaultValueString="&quot;now&quot;" syncable="YES"/>
+        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="449578800" defaultValueString="&quot;now&quot;" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="canDo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="canBeDoneBy" inverseEntity="Service" syncable="YES"/>
         <relationship name="holidays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Holiday" inverseName="employee" inverseEntity="Holiday" syncable="YES"/>
@@ -195,6 +195,8 @@
         <attribute name="explanation" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isActive" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nameOfReccurencePeriod" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nameOfRecurringaction" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
         <attribute name="nextActionDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="period" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="paymentTemplate" maxCount="1" deletionRule="Nullify" destinationEntity="Payment" inverseName="templateForRecurringItem" inverseEntity="Payment" syncable="YES"/>
@@ -374,7 +376,7 @@
         <element name="Payment" positionX="0" positionY="0" width="128" height="403"/>
         <element name="PaymentCategory" positionX="0" positionY="0" width="128" height="210"/>
         <element name="Product" positionX="0" positionY="0" width="128" height="165"/>
-        <element name="RecurringItem" positionX="9" positionY="153" width="128" height="148"/>
+        <element name="RecurringItem" positionX="9" positionY="153" width="128" height="178"/>
         <element name="Salary" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Sale" positionX="0" positionY="0" width="128" height="300"/>
         <element name="SaleItem" positionX="0" positionY="0" width="128" height="225"/>

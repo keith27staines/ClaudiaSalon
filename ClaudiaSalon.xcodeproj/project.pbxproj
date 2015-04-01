@@ -39,10 +39,11 @@
 		530171781ACB15EB0047116D /* StockedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171771ACB15EB0047116D /* StockedItem.m */; };
 		5301717B1ACB15EB0047116D /* ServiceCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301717A1ACB15EB0047116D /* ServiceCategory.m */; };
 		5301717E1ACB15EB0047116D /* ShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301717D1ACB15EB0047116D /* ShoppingList.m */; };
-		530171811ACB171B0047116D /* RecurringItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171801ACB171B0047116D /* RecurringItem.m */; };
+		530171851ACBD21F0047116D /* RecurringItem+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171841ACBD21F0047116D /* RecurringItem+Methods.m */; };
 		531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25521AB80E5100EB3472 /* AMCCashBook.m */; };
 		531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25561AB960F600EB3472 /* AMCCashBookViewController.m */; };
 		531B25591AB960F600EB3472 /* AMCCashBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531B25571AB960F600EB3472 /* AMCCashBookViewController.xib */; };
+		531D67291ACC1C62000472BD /* RecurringItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D67281ACC1C62000472BD /* RecurringItem.m */; };
 		532377CE1AA8923B009FA91D /* ClaudiasSalon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 532377CC1AA8923B009FA91D /* ClaudiasSalon.xcdatamodeld */; };
 		532377DD1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532377DB1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m */; };
 		532377DE1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 532377DC1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.xib */; };
@@ -312,14 +313,16 @@
 		5301717A1ACB15EB0047116D /* ServiceCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceCategory.m; sourceTree = "<group>"; };
 		5301717C1ACB15EB0047116D /* ShoppingList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingList.h; sourceTree = "<group>"; };
 		5301717D1ACB15EB0047116D /* ShoppingList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingList.m; sourceTree = "<group>"; };
-		5301717F1ACB171B0047116D /* RecurringItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurringItem.h; sourceTree = "<group>"; };
-		530171801ACB171B0047116D /* RecurringItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecurringItem.m; sourceTree = "<group>"; };
+		530171831ACBD21F0047116D /* RecurringItem+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RecurringItem+Methods.h"; sourceTree = "<group>"; };
+		530171841ACBD21F0047116D /* RecurringItem+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RecurringItem+Methods.m"; sourceTree = "<group>"; };
 		53146BFC1AB225EC003B7658 /* ClaudiaSalon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ClaudiaSalon.entitlements; sourceTree = "<group>"; };
 		531B25511AB80E5100EB3472 /* AMCCashBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBook.h; sourceTree = "<group>"; };
 		531B25521AB80E5100EB3472 /* AMCCashBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBook.m; sourceTree = "<group>"; };
 		531B25551AB960F600EB3472 /* AMCCashBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBookViewController.h; sourceTree = "<group>"; };
 		531B25561AB960F600EB3472 /* AMCCashBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBookViewController.m; sourceTree = "<group>"; };
 		531B25571AB960F600EB3472 /* AMCCashBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCCashBookViewController.xib; sourceTree = "<group>"; };
+		531D67271ACC1C62000472BD /* RecurringItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecurringItem.h; sourceTree = "<group>"; };
+		531D67281ACC1C62000472BD /* RecurringItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecurringItem.m; sourceTree = "<group>"; };
 		532377CD1AA8923B009FA91D /* ClaudiasSalon.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClaudiasSalon.xcdatamodel; sourceTree = "<group>"; };
 		532377CF1AA89253009FA91D /* ClaudiasSalon 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 2.xcdatamodel"; sourceTree = "<group>"; };
 		532377DA1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSaleMiniEditorViewController.h; sourceTree = "<group>"; };
@@ -1648,8 +1651,8 @@
 		53D69E031A9B6BE70004CE10 /* Data model objects */ = {
 			isa = PBXGroup;
 			children = (
-				5301717F1ACB171B0047116D /* RecurringItem.h */,
-				530171801ACB171B0047116D /* RecurringItem.m */,
+				531D67271ACC1C62000472BD /* RecurringItem.h */,
+				531D67281ACC1C62000472BD /* RecurringItem.m */,
 				5301717C1ACB15EB0047116D /* ShoppingList.h */,
 				5301717D1ACB15EB0047116D /* ShoppingList.m */,
 				530171791ACB15EB0047116D /* ServiceCategory.h */,
@@ -1755,6 +1758,8 @@
 				53D69CC31A9B240C0004CE10 /* WorkRecord+Methods.m */,
 				53D69DD41A9B243C0004CE10 /* Salary+Methods.h */,
 				53D69CC41A9B240C0004CE10 /* Salary+Methods.m */,
+				530171831ACBD21F0047116D /* RecurringItem+Methods.h */,
+				530171841ACBD21F0047116D /* RecurringItem+Methods.m */,
 			);
 			name = "Method Categories on Data Objects";
 			sourceTree = "<group>";
@@ -1965,6 +1970,7 @@
 				53D69D671A9B240C0004CE10 /* AMCViewController.m in Sources */,
 				53D69CE91A9B240C0004CE10 /* AMCHoursWorkedOnDayViewController.m in Sources */,
 				5346C59D1ABFFA8A005D4540 /* AMCSystemTreeNode.m in Sources */,
+				530171851ACBD21F0047116D /* RecurringItem+Methods.m in Sources */,
 				53D69D641A9B240C0004CE10 /* AMCStaffBusyView.m in Sources */,
 				53D69E061A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m in Sources */,
 				53D69CF91A9B240C0004CE10 /* AMCWizardWindowController.m in Sources */,
@@ -1997,7 +2003,6 @@
 				53D69D551A9B240C0004CE10 /* SelectItemsStepViewController.m in Sources */,
 				530171781ACB15EB0047116D /* StockedItem.m in Sources */,
 				53D69D3D1A9B240C0004CE10 /* Service+Methods.m in Sources */,
-				530171811ACB171B0047116D /* RecurringItem.m in Sources */,
 				53D69D651A9B240C0004CE10 /* AMCStaffCanDoViewController.m in Sources */,
 				530171301ACB15C10047116D /* CalendarDay.m in Sources */,
 				53D69D051A9B240C0004CE10 /* AMCBookingRowViewController.m in Sources */,
@@ -2036,6 +2041,7 @@
 				530171541ACB15C20047116D /* Product.m in Sources */,
 				53D69D161A9B240C0004CE10 /* AMCFinancialAnalysisViewController.m in Sources */,
 				530171511ACB15C10047116D /* LastUpdatedBy.m in Sources */,
+				531D67291ACC1C62000472BD /* RecurringItem.m in Sources */,
 				530171631ACB15EA0047116D /* StockedProduct.m in Sources */,
 				53D69D131A9B240C0004CE10 /* AMCReportsViewController.m in Sources */,
 				535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */,

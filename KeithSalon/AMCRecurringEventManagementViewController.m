@@ -7,7 +7,7 @@
 //
 
 #import "AMCRecurringEventManagementViewController.h"
-#import "RecurringItem.h"
+#import "RecurringItem+Methods.h"
 #import "Payment+Methods.h"
 #import "Salon+Methods.h"
 #import "Account+Methods.h"
@@ -25,6 +25,7 @@
 @property (weak) IBOutlet NSTextField *amountField;
 @property (weak) IBOutlet NSPopUpButton *accountPopup;
 @property (weak) IBOutlet NSPopUpButton *categoryPopup;
+@property (weak) IBOutlet NSPopUpButton *periodPopupButton;
 
 @end
 
@@ -43,26 +44,31 @@
     [self.detailsContainerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[detailView]" options:0 metrics:nil views:views]];
     [self loadAccountPopup];
     [self loadCategoryPopup];
+    [self loadPeriodPopup];
     [self tableViewSelectionDidChange:nil];
 }
 - (IBAction)addRecurringItem:(id)sender {
     RecurringItem * item = [NSEntityDescription insertNewObjectForEntityForName:@"RecurringItem" inManagedObjectContext:self.documentMoc];
     item.createdDate = [NSDate date];
-    item.name = @"Payee";
-    item.explanation = @"Reason for payment";
-    item.period = @(0);
+    item.period = @(AMCRecurrencePeriodMonthly);
     item.nextActionDate = [NSDate date];
     item.isActive = @(NO);
     item.paymentTemplate = [Payment newObjectWithMoc:self.documentMoc];
     item.paymentTemplate.voided = @(YES);
     item.paymentTemplate.payeeName = item.name;
-    item.paymentTemplate.amount = @(1);
+    item.paymentTemplate.amount = @(0);
+    item.paymentTemplate.direction = kAMCPaymentDirectionOut;
     item.paymentTemplate.reason = item.explanation;
     item.paymentTemplate.paymentDate = item.nextActionDate;
     item.paymentTemplate.account = self.salonDocument.salon.primaryBankAccount;
     [self.arrayController addObject:item];
 }
-
+-(void)loadPeriodPopup {
+    [self.periodPopupButton removeAllItems];
+    for (NSInteger i = 0; i < 3; i++) {
+        [self.periodPopupButton insertItemWithTitle:[RecurringItem nameOfReccurencePeriod:i] atIndex:i];
+    }
+}
 -(void)loadAccountPopup {
     [self.accountPopup removeAllItems];
     for (Account * account in [Account allObjectsWithMoc:self.documentMoc]) {
@@ -85,19 +91,19 @@
     RecurringItem * recurringItem = [self selectedRecurringItem];
     if (recurringItem) {
         Payment * payment = recurringItem.paymentTemplate;
-        self.payeeNameField.stringValue = payment.payeeName;
-        self.reasonField.stringValue = payment.reason;
-        self.amountField.doubleValue = payment.amount.doubleValue;
         [self selectAccount:payment.account];
         [self selectCategory:payment.paymentCategory];
+        [self selectPeriod:recurringItem.period.integerValue];
     } else {
-        self.payeeNameField.stringValue = @"";
-        self.reasonField.stringValue = @"";
         [self.accountPopup selectItemAtIndex:-1];
         [self.categoryPopup selectItemAtIndex:-1];
+        [self.periodPopupButton selectItemAtIndex:-1];
         self.accountPopup.title = @"Select account";
         self.categoryPopup.title = @"Select category";
     }
+}
+-(void)selectPeriod:(AMCRecurrencePeriod)period {
+    [self.periodPopupButton selectItemAtIndex:period];
 }
 -(void)selectAccount:(Account*)account {
     [self.accountPopup selectItemAtIndex:-1];
@@ -131,6 +137,13 @@
     RecurringItem * item = [self selectedRecurringItem];
     item.paymentTemplate.paymentCategory = self.categoryPopup.selectedItem.representedObject;
 }
+- (IBAction)periodChanged:(id)sender {
+    RecurringItem * item = [self selectedRecurringItem];
+    item.period = @(self.periodPopupButton.indexOfSelectedItem);
+}
 
+- (IBAction)process:(id)sender {
+    [RecurringItem processOutstandingItemsFor:self.documentMoc error:nil];
+}
 
 @end
