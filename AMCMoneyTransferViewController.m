@@ -12,7 +12,7 @@
 #import "Payment+Methods.h"
 #import "AMCSalonDocument.h"
 #import "PaymentCategory+Methods.h"
-
+#import "Salon+Methods.h"
 @interface AMCMoneyTransferViewController ()
 {
 
@@ -34,10 +34,8 @@
     [self reloadData];
 }
 -(void)reloadData {
-    Account * till = [Account accountWithFriendlyName:kAMCTillAccountName withMoc:self.documentMoc];
-    Account * barclays = [Account accountWithFriendlyName:kAMCBarclaysAccountName withMoc:self.documentMoc];
-    [self.fromAccountPopupButton selectItemAtIndex:[self.accounts indexOfObject:till]];
-    [self.toAccountPopupButton selectItemAtIndex:[self.accounts indexOfObject:barclays]];
+    [self.fromAccountPopupButton selectItemAtIndex:[self.accounts indexOfObject:self.salonDocument.salon.tillAccount]];
+    [self.toAccountPopupButton selectItemAtIndex:[self.accounts indexOfObject:self.salonDocument.salon.primaryBankAccount]];
     [self enableOKButton];
 }
 -(void)loadAccountPopupButton:(NSPopUpButton*)popup {

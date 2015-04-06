@@ -240,14 +240,14 @@
 - (IBAction)tillPaymentClicked:(id)sender {
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
     Payment * payment = [self createNewPayment];
-    Account * account = [Account accountWithFriendlyName:kAMCTillAccountName withMoc:self.documentMoc];
+    Account * account = self.salonDocument.salon.tillAccount;
     payment.account = account;
     [self editObject:payment forSalon:self.salonDocument inMode:EditModeCreate withViewController:self.editObjectViewController];
 }
 - (IBAction)bankPaymentClicked:(id)sender {
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
     Payment * payment = [self createNewPayment];
-    Account * account = [Account accountWithFriendlyName:kAMCBarclaysAccountName withMoc:self.documentMoc];
+    Account * account = self.salonDocument.salon.primaryBankAccount;
     payment.account = account;
     [self editObject:payment forSalon:self.salonDocument inMode:EditModeCreate withViewController:self.editObjectViewController];
 }

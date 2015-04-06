@@ -17,6 +17,7 @@
 #import "AMCReceiptView.h"
 #import "Account+Methods.h"
 #import "AMCSalonDocument.h"
+#import "Salon+Methods.h"
 
 @interface MakePaymentStepViewController ()
 {
@@ -92,7 +93,7 @@
     if (sale) {
         NSAssert(sale.account, @"Account should not be nil");
         if (self.editMode == EditModeCreate || self.editMode == EditModeEdit) {
-            if (sale.account == [Account accountWithFriendlyName:kAMCTillAccountName withMoc:self.documentMoc]) {
+            if (sale.account == self.salonDocument.salon.tillAccount) {
                 [self.cardCashSegmentedControl selectSegmentWithTag:0];
             } else {
                 [self.cardCashSegmentedControl selectSegmentWithTag:1];
@@ -142,7 +143,7 @@
 {
     Sale * sale = [self.delegate wizardStepRequiresSale:self];
     if (!sale.account) {
-        sale.account = [Account accountWithFriendlyName:kAMCTillAccountName withMoc:self.documentMoc];
+        sale.account = self.salonDocument.salon.tillAccount;
     }
     return sale;
 }
@@ -244,9 +245,9 @@
 
 - (IBAction)cardCashSegmentedControlChanged:(id)sender {
     if (self.cardCashSegmentedControl.selectedSegment == 0) {
-        self.sale.account = [Account accountWithFriendlyName:kAMCTillAccountName withMoc:self.documentMoc];
+        self.sale.account = self.salonDocument.salon.tillAccount;
     } else {
-        self.sale.account = [Account accountWithFriendlyName:kAMCPayPalAccountName withMoc:self.documentMoc];
+        self.sale.account = self.salonDocument.salon.cardPaymentAccount;
     }
     [self applySale];
 }

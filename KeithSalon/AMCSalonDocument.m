@@ -851,7 +851,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.windowForSheet beginSheet:window completionHandler:^(NSModalResponse returnCode) {
         if ([self.requestPasswordWindowController.state isEqualToString:@"ok"]) {
             AMCAccountReconciliationViewController*vc = [AMCAccountReconciliationViewController new];
-            vc.account = [Account accountWithFriendlyName:kAMCTillAccountName withMoc:self.managedObjectContext];
+            vc.account = self.salon.tillAccount;
             [vc prepareForDisplayWithSalon:self];
             [self.mainViewController presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMaxYEdge behavior:NSPopoverBehaviorTransient];
         }

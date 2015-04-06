@@ -22,7 +22,6 @@
     account.bankName = @"";
     return account;
 }
-
 +accountWithFriendlyName:(NSString*)friendlyName withMoc:(NSManagedObjectContext*)moc {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Account" inManagedObjectContext:moc];

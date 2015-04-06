@@ -282,24 +282,22 @@
 }
 
 - (IBAction)payFromTill:(id)sender {
-    Account * till = [Account accountWithFriendlyName:kAMCTillAccountName withMoc:self.documentMoc];
     [self makePaymentOfAmount:[self.calculator amountOfPayOutstandingForWorkRecord:self.workRecord]
-                  fromAccount:till
+                  fromAccount:self.salonDocument.salon.tillAccount
                   forEmployee:self.employee
                     bonusDate:nil];
     [self displayEmployee];
 }
 - (IBAction)payFromBank:(id)sender {
-    Account * till = [Account accountWithFriendlyName:kAMCBarclaysAccountName withMoc:self.documentMoc];
     [self makePaymentOfAmount:[self.calculator amountOfPayOutstandingForWorkRecord:self.workRecord]
-                  fromAccount:till
+                  fromAccount:self.salonDocument.salon.primaryBankAccount
                   forEmployee:self.employee
                     bonusDate:nil];
     [self displayEmployee];
 }
 -(void)makePaymentOfAmount:(double)amount fromAccount:(Account*)account forEmployee:(Employee*)employee bonusDate:(NSDate*)bonusDate {
     Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
-    payment.account = [Account accountWithFriendlyName:kAMCTillAccountName withMoc:self.documentMoc];
+    payment.account = self.salonDocument.salon.tillAccount;
     payment.amount = @(amount);
     payment.payeeName = self.employee.fullName;
     payment.isManagersBudgetItem = self.employee.paidFromManagersBudget;
@@ -320,7 +318,7 @@
     AMCPaymentAmountViewController * vc = [AMCPaymentAmountViewController new];
     vc.salonDocument = self.salonDocument;
     PaymentCategory * category = [PaymentCategory paymentCategoryForSalaryWithMoc:self.documentMoc];
-    Account * account = [Account accountWithFriendlyName:kAMCTillAccountName withMoc:self.documentMoc];
+    Account * account = self.salonDocument.salon.tillAccount;
     [vc makePaymentWithTitle:[NSString stringWithFormat:@"Pay bonus to %@",self.employee.fullName] amount:5 allowingLowerPayment:YES inCategory:category fromAccount:account toPayee:self.employee.fullName withReason:@"Bonus for selling services"];
     [self presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorTransient];
 }

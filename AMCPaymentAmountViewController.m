@@ -11,6 +11,7 @@
 #import "Payment+Methods.h"
 #import "PaymentCategory+Methods.h"
 #import "AMCConstants.h"
+#import "Salon+Methods.h"
 
 @interface AMCPaymentAmountViewController ()
 {
@@ -106,7 +107,7 @@
 }
 -(Account*)account {
     if (!_account) {
-        _account = [Account accountWithFriendlyName:kAMCBarclaysAccountName withMoc:self.documentMoc];
+        _account = self.salonDocument.salon.primaryBankAccount;
     }
     return _account;
 }

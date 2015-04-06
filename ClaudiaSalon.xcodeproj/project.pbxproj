@@ -63,6 +63,9 @@
 		535F0DF61AB2339A0035CFD8 /* AMCAutoCloseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DF11AB2339A0035CFD8 /* AMCAutoCloseViewController.xib */; };
 		535F0DF71AB2339A0035CFD8 /* AMCAutoCloseWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DF31AB2339A0035CFD8 /* AMCAutoCloseWindowController.m */; };
 		535F0DF81AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DF41AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib */; };
+		5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */; };
+		5393EA321AD26100009B336C /* AMCBankStatementReconciliationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */; };
+		5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA341AD2CBE7009B336C /* AMCStatementParser.m */; };
 		53AE26D11AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */; };
 		53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */; };
 		53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE270A1AA317B200A1B3E4 /* AMCJobsColumnViewController.m */; };
@@ -356,6 +359,11 @@
 		535F0DF21AB2339A0035CFD8 /* AMCAutoCloseWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCAutoCloseWindowController.h; sourceTree = "<group>"; };
 		535F0DF31AB2339A0035CFD8 /* AMCAutoCloseWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAutoCloseWindowController.m; sourceTree = "<group>"; };
 		535F0DF41AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAutoCloseWindowController.xib; sourceTree = "<group>"; };
+		5393EA2E1AD26100009B336C /* AMCBankStatementReconciliationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCBankStatementReconciliationViewController.h; sourceTree = "<group>"; };
+		5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCBankStatementReconciliationViewController.m; sourceTree = "<group>"; };
+		5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCBankStatementReconciliationViewController.xib; sourceTree = "<group>"; };
+		5393EA331AD2CBE7009B336C /* AMCStatementParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCStatementParser.h; sourceTree = "<group>"; };
+		5393EA341AD2CBE7009B336C /* AMCStatementParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCStatementParser.m; sourceTree = "<group>"; };
 		53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeeForServiceSelector.xib; sourceTree = "<group>"; };
 		53AE27071AA317B200A1B3E4 /* AMCJobsColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCJobsColumnView.h; sourceTree = "<group>"; };
 		53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCJobsColumnView.m; sourceTree = "<group>"; };
@@ -792,6 +800,7 @@
 		535F0DE61AB232B10035CFD8 /* Account Statement */ = {
 			isa = PBXGroup;
 			children = (
+				5393EA2C1AD26012009B336C /* Bank statement reconciliation */,
 				531B25501AB80E1700EB3472 /* AMCCashBook */,
 				535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */,
 				535F0DEB1AB232CB0035CFD8 /* AMCAccountStatementViewController.h */,
@@ -800,6 +809,18 @@
 				535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */,
 			);
 			name = "Account Statement";
+			sourceTree = "<group>";
+		};
+		5393EA2C1AD26012009B336C /* Bank statement reconciliation */ = {
+			isa = PBXGroup;
+			children = (
+				5393EA2E1AD26100009B336C /* AMCBankStatementReconciliationViewController.h */,
+				5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */,
+				5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */,
+				5393EA331AD2CBE7009B336C /* AMCStatementParser.h */,
+				5393EA341AD2CBE7009B336C /* AMCStatementParser.m */,
+			);
+			name = "Bank statement reconciliation";
 			sourceTree = "<group>";
 		};
 		53ADE6271AA0A85400E0ACC8 /* AMCQuickQuoteViewController */ = {
@@ -1907,6 +1928,7 @@
 				53D69C231A9B23B60004CE10 /* AMCAccountReconciliationViewController.xib in Resources */,
 				53D69C211A9B23B60004CE10 /* AMCHoursWorkedOnDayViewController.xib in Resources */,
 				53AE270E1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib in Resources */,
+				5393EA321AD26100009B336C /* AMCBankStatementReconciliationViewController.xib in Resources */,
 				53D69C491A9B23B70004CE10 /* AMCRefundViewController.xib in Resources */,
 				53D69C501A9B23B70004CE10 /* EditServiceViewController.xib in Resources */,
 				53D69C321A9B23B60004CE10 /* AMCBookingViewController.xib in Resources */,
@@ -1979,6 +2001,7 @@
 				53D934081AC71E1B001D6C64 /* AMCSalonDetailsViewController.m in Sources */,
 				53D69DFF1A9B41B60004CE10 /* AMCSalonDocument.m in Sources */,
 				53D69D1B1A9B240C0004CE10 /* AMCCancelAppointmentViewController.m in Sources */,
+				5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */,
 				530171421ACB15C10047116D /* Employee.m in Sources */,
 				53D69D541A9B240C0004CE10 /* AMCRefundView.m in Sources */,
 				53D69D501A9B240C0004CE10 /* WizardStepViewController.m in Sources */,
@@ -2078,6 +2101,7 @@
 				53D69D031A9B240C0004CE10 /* AMCBookingViewController.m in Sources */,
 				53D69D481A9B240C0004CE10 /* StockedCategory+Methods.m in Sources */,
 				53D69CEE1A9B240C0004CE10 /* AMCServiceSelectorViewController.m in Sources */,
+				5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */,
 				53D69D4A1A9B240C0004CE10 /* Salary+Methods.m in Sources */,
 				5346C5A71AC06D15005D4540 /* AMCServiceCategoriesNode.m in Sources */,
 				53D69D141A9B240C0004CE10 /* AMCReportsView.m in Sources */,

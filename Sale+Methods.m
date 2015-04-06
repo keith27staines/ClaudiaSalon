@@ -11,6 +11,7 @@
 #import "Payment+Methods.h"
 #import "Account+Methods.h"
 #import "AMCDiscountCalculator.h"
+#import "Salon+Methods.h"
 
 
 @implementation Sale (Methods)
@@ -25,7 +26,7 @@
     
     sale.createdDate = rightNow;
     sale.lastUpdatedDate = rightNow;
-    sale.account = [Account accountWithFriendlyName:kAMCTillAccountName withMoc:moc];
+    sale.account = [Salon salonWithMoc:moc].tillAccount;
     return sale;
 }
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc {

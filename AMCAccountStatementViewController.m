@@ -19,6 +19,7 @@
 #import "AMCCashBook.h"
 #import "NSDate+AMCDate.h"
 #import "AMCCashBookViewController.h"
+#import "AMCBankStatementReconciliationViewController.h"
 
 @interface AMCAccountStatementViewController () <NSTableViewDataSource, NSTableViewDelegate>
 {
@@ -49,6 +50,7 @@
 @property (readonly) NSDate * startDate;
 @property (readonly) NSDate * endDate;
 @property double balance;
+@property (strong) IBOutlet AMCBankStatementReconciliationViewController *bankStatementReconciliationViewController;
 
 @end
 
@@ -306,6 +308,9 @@
     [self.cashBookViewController prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewControllerAsSheet:self.cashBookViewController];
 }
-
+- (IBAction)reconcileStatement:(id)sender {
+    [self.bankStatementReconciliationViewController prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewControllerAsSheet:self.bankStatementReconciliationViewController];
+}
 
 @end
