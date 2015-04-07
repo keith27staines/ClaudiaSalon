@@ -15,11 +15,9 @@
 @property NSInteger rowCount;
 @property (copy,readonly) NSDate * date;
 @property NSInteger headerRows;
-@property NSInteger dateRow;
 @property NSInteger dateCol;
-@property NSInteger broughtForwardRow;
-@property NSInteger broughtForwardCol;
-@property NSInteger carryForwardRow;
-@property NSInteger carryForwardCol;
+@property NSInteger grossAmountColumn;
+@property NSInteger feeColumn;
+@property NSInteger netAmountColumn;
 -(id)objectForColumnWithIdentifier:(NSString*)identifier row:(NSInteger)row;
 @end

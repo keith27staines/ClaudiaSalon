@@ -22,11 +22,6 @@
     if (self) {
         self.csvString = string;
         self.dateCol = -1;
-        self.dateRow = -1;
-        self.broughtForwardCol = -1;
-        self.broughtForwardRow = -1;
-        self.carryForwardRow = -1;
-        self.carryForwardCol = -1;
     }
     return self;
 }
