@@ -83,16 +83,18 @@
     [self.dynamicConstraints addObject:constraint];
     NSDictionary * views = NSDictionaryOfVariableBindings(containerView,subview);
     NSArray * otherConstraints = nil;
-    otherConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=0)-[subview]-(>=0)-|" options:0 metrics:nil views:views];
+    otherConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[subview]|" options:0 metrics:nil views:views];
     [self.dynamicConstraints addObjectsFromArray:otherConstraints];
     [containerView addConstraints:otherConstraints];
-    otherConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=0)-[subview]-(>=0)-|" options:0 metrics:nil views:views];
+    otherConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[subview]|" options:0 metrics:nil views:views];
     [self.dynamicConstraints addObjectsFromArray:otherConstraints];
     [containerView addConstraints:otherConstraints];
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
+    self.parser = nil;
     self.subview = self.configureCSVViewController.view;
+    self.pathLabel.stringValue = @"";
     [self emplaceSubview];
 }
 - (IBAction)loadCSV:(id)sender {
