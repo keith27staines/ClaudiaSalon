@@ -17,7 +17,14 @@
 @property NSInteger headerRows;
 @property NSInteger dateCol;
 @property NSInteger grossAmountColumn;
+@property NSInteger noteColumn;
 @property NSInteger feeColumn;
 @property NSInteger netAmountColumn;
--(id)objectForColumnWithIdentifier:(NSString*)identifier row:(NSInteger)row;
+@property (readonly) NSMutableArray* transactionDictionaries;
+
+-(NSString*)csvStringForIdentifier:(NSString*)identifier row:(NSInteger)row;
+-(NSDate*)dateForRow:(NSInteger)row;
+-(NSNumber*)amountForRow:(NSInteger)row;
+-(NSString*)noteForRow:(NSInteger)row;
+-(NSString*)reconciledForRow:(NSInteger)row;
 @end

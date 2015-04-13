@@ -309,6 +309,8 @@
     [self presentViewControllerAsSheet:self.cashBookViewController];
 }
 - (IBAction)reconcileStatement:(id)sender {
+    self.bankStatementReconciliationViewController.account = self.account;
+    self.bankStatementReconciliationViewController.computerRecords = self.statementItems;
     [self.bankStatementReconciliationViewController prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewControllerAsSheet:self.bankStatementReconciliationViewController];
 }

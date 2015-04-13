@@ -21,7 +21,7 @@
     NSDate * rightNow = [NSDate date];
     
     employee.firstName = @"";
-    employee.LastName = @"";
+    employee.lastName = @"";
     employee.phone = @"";
     employee.email = @"";
     employee.postcode = @"";
