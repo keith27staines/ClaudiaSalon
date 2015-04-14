@@ -24,4 +24,5 @@
 @property (readonly) BOOL isReconciled;
 @property (copy,readonly) NSString * direction;
 @property (readonly) BOOL isPayment;
+@property NSDictionary * pairingRecord;
 @end

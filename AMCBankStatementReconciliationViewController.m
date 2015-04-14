@@ -34,12 +34,27 @@
 @property AMCStatementParser * parser;
 @property (weak) IBOutlet NSTableView *statementTransactionsTable;
 @property (weak) IBOutlet NSTableView *documentTransactionsTable;
+@property (weak) IBOutlet NSTableView *pairedTable;
+
 @property NSArray * filteredBankStatementRows;
+@property NSMutableSet * pairedRecords;
+@property NSMutableArray * pairedRecordsArray;
+@property NSMutableSet * pairedComputerRecords;
+@property NSMutableSet * pairedStatementTransactions;
 
 @end
 
 @implementation AMCBankStatementReconciliationViewController
-
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        self.pairedRecords = [NSMutableSet set];
+        self.pairedStatementTransactions = [NSMutableSet set];
+        self.pairedComputerRecords = [NSMutableSet set];
+        self.pairedRecordsArray = [NSMutableArray array];
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSInteger i = 0;
@@ -102,6 +117,11 @@
     self.subview = self.configureCSVViewController.view;
     self.pathLabel.stringValue = @"";
     [self emplaceSubview];
+    self.pairedRecords = [NSMutableSet set];
+    self.pairedStatementTransactions = [NSMutableSet set];
+    self.pairedComputerRecords = [NSMutableSet set];
+    self.pairedRecordsArray = [NSMutableArray array];
+    [self updateTransactionTables];
 }
 - (IBAction)loadCSV:(id)sender {
     NSOpenPanel * openPanel = [NSOpenPanel openPanel];
@@ -135,6 +155,10 @@
             self.pathLabel.stringValue = fileURL.path;
         }
     }
+    [self.pairedStatementTransactions removeAllObjects];
+    [self.pairedComputerRecords removeAllObjects];
+    [self.pairedRecords removeAllObjects];
+    [self.pairedRecordsArray removeAllObjects];
     [self.csvTable reloadData];
 }
 - (IBAction)headerLinesCountChanged:(id)sender {
@@ -219,6 +243,9 @@
     if (tableView == self.documentTransactionsTable) {
         return self.computerRecords.count;
     }
+    if (tableView == self.pairedTable) {
+        return self.pairedRecordsArray.count;
+    }
     return 0;
 }
 
@@ -233,7 +260,7 @@
     if (tableView == self.documentTransactionsTable) {
         AMCAccountStatementItem * item = self.computerRecords[row];
         if ([tableColumn.identifier isEqualToString:@"reconciled"]) {
-            return (item.isReconciled)?@"Y":@"";
+            return (item.pairingRecord)?@"Y":@"";
         }
         if ([tableColumn.identifier isEqualToString:@"date"]) {
             return item.date;
@@ -245,28 +272,144 @@
             return item.note;
         }
     }
+    if (tableView == self.pairedTable) {
+        NSDictionary * pairing = self.pairedRecordsArray[row];
+        NSDictionary * transactionDictionary = pairing[@"statementTransaction"];
+        AMCAccountStatementItem * item = pairing[@"computerRecord"];
+        if ([tableColumn.identifier isEqualToString:@"leftDate"]) {
+            return transactionDictionary[@"date"];
+        }
+        if ([tableColumn.identifier isEqualToString:@"rightDate"]) {
+            return item.date;
+        }
+        if ([tableColumn.identifier isEqualToString:@"leftAmount"]) {
+            return transactionDictionary[@"amount"];
+        }
+        if ([tableColumn.identifier isEqualToString:@"rightAmount"]) {
+            return @(item.amountGross);
+        }
+        if ([tableColumn.identifier isEqualToString:@"leftNote"]) {
+            return transactionDictionary[@"note"];
+        }
+        if ([tableColumn.identifier isEqualToString:@"rightNote"]) {
+            return item.note;
+        }
+        if ([tableColumn.identifier isEqualToString:@"mismatch"]) {
+            return pairing[@"mismatch"];
+        }
+    }
     return nil;
 }
-
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
     if (notification.object == self.statementTransactionsTable) {
         [self highlightComputerRecordMatchingSelectedStatementTransaction];
     }
+    if (notification.object == self.pairedTable) {
+        NSInteger pairedIndex = self.pairedTable.selectedRow;
+        if (pairedIndex >= 0) {
+            NSDictionary * pairing = self.pairedRecordsArray[pairedIndex];
+            NSDictionary * transactionDictionary = pairing[@"statementTransaction"];
+            [self highlightComputerRecordMatchingSelectedStatementTransaction:transactionDictionary];
+        }
+    }
+}
+//-(NSArray*)bestMatch {
+//    NSMutableArray * matches = [self computerRecordsMatchingDateAndAmount:transactionDictionary];
+//    NSMutableIndexSet * indexes = [NSMutableIndexSet indexSet];
+//    for (NSDictionary * dictionary in matches) {
+//        NSNumber * mismatchNumber = dictionary[@"mismatch"];
+//        if (mismatchNumber.doubleValue < 1) {
+//            AMCAccountStatementItem * item = dictionary[@"item"];
+//            [indexes addIndex:[self.computerRecords indexOfObject:item]];
+//        }
+//    }
+//}
+-(void)highlightComputerRecordMatchingSelectedStatementTransaction:(NSDictionary*)transactionDictionary {
+    NSInteger statementIndex = [self.parser.transactionDictionaries indexOfObject:transactionDictionary];
+    if (statementIndex != NSNotFound) {
+        [self.statementTransactionsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:statementIndex] byExtendingSelection:NO];
+        [self.statementTransactionsTable scrollRowToVisible:statementIndex];
+
+        NSDictionary * pairing = [self pairingRecordForStatementTransaction:transactionDictionary];
+        AMCAccountStatementItem * item = pairing[@"computerRecord"];
+        NSInteger computerRecordIndex = [self.computerRecords indexOfObject:item];
+        if (computerRecordIndex != NSNotFound) {
+            [self.documentTransactionsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:computerRecordIndex] byExtendingSelection:NO];
+            [self.documentTransactionsTable scrollRowToVisible:computerRecordIndex];
+        }
+    }
+    
 }
 -(void)highlightComputerRecordMatchingSelectedStatementTransaction {
     NSInteger statementTransactionIndex = self.statementTransactionsTable.selectedRow;
     NSMutableDictionary * transactionDictionary = self.parser.transactionDictionaries[statementTransactionIndex];
-    NSMutableArray * matches = [self computerRecordsMatchingDateAndAmount:transactionDictionary];
-    NSMutableIndexSet * indexes = [NSMutableIndexSet indexSet];
-    for (NSDictionary * dictionary in matches) {
-        NSNumber * mismatchNumber = dictionary[@"mismatch"];
-        if (mismatchNumber.doubleValue < 1) {
-            AMCAccountStatementItem * item = dictionary[@"item"];
-            [indexes addIndex:[self.computerRecords indexOfObject:item]];
+    [self highlightComputerRecordMatchingSelectedStatementTransaction:transactionDictionary];
+}
+-(void)unpairStatementTransaction:(NSMutableDictionary*)transactionDicitonary {
+    if (![self isStatementTransactionPaired:transactionDicitonary]) {
+        return;
+    }
+    NSDictionary * pairedRecord = [self pairingRecordForStatementTransaction:transactionDicitonary];
+    [self.pairedRecords removeObject:pairedRecord];
+    [self.pairedStatementTransactions removeObject:transactionDicitonary];
+    AMCAccountStatementItem * item = pairedRecord[@"computerRecord"];
+    [self.pairedComputerRecords removeObject:item];
+    item.pairingRecord = nil;
+    transactionDicitonary[@"reconciled"] = @"";
+    [self updateTransactionTables];
+}
+-(void)updateTransactionTables {
+    self.pairedRecordsArray = [[self.pairedRecords allObjects] mutableCopy];
+    [self.statementTransactionsTable reloadData];
+    [self.documentTransactionsTable reloadData];
+    [self.pairedTable reloadData];
+}
+-(void)unpairComputerRecord:(AMCAccountStatementItem*)item {
+    if (![self isComputerRecordPaired:item]) {
+        return;
+    }
+    NSDictionary * pairedRecord = [self pairingRecordForComputerRecord:item];
+    NSMutableDictionary * statementTransaction = pairedRecord[@"statementTransaction"];
+    [self unpairStatementTransaction:statementTransaction];
+}
+-(NSInteger)pairStatementTransaction:(NSMutableDictionary*)transactionDictionary withComputerRecord:(AMCAccountStatementItem*)item {
+    [self unpairStatementTransaction:transactionDictionary];
+    [self unpairComputerRecord:item];
+    NSDictionary * pairedRecord = @{@"statementTransaction":transactionDictionary,
+             @"computerRecord":item};
+    [self.pairedRecords addObject:pairedRecord];
+    [self.pairedComputerRecords addObject:item];
+    [self.pairedStatementTransactions addObject:transactionDictionary];
+    item.pairingRecord = pairedRecord;
+    transactionDictionary[@"reconciled"] = @"Y";
+    [self updateTransactionTables];
+    return self.pairedRecords.count - 1;
+}
+-(BOOL)isComputerRecordPaired:(AMCAccountStatementItem*)item {
+    return [self.pairedComputerRecords containsObject:item];
+}
+-(BOOL)isStatementTransactionPaired:(NSDictionary*)transactionDictionary {
+    return [self.pairedStatementTransactions containsObject:transactionDictionary];
+}
+-(NSDictionary*)pairingRecordForStatementTransaction:(NSDictionary*)statementTransaction {
+    if ([self isStatementTransactionPaired:statementTransaction]) {
+        for (NSDictionary * pairing in self.pairedRecords) {
+            if (pairing[@"statementTransaction"] == statementTransaction) {
+                return pairing;
+            }
         }
     }
-    [self.documentTransactionsTable selectRowIndexes:indexes byExtendingSelection:NO];
-    [self.documentTransactionsTable scrollRowToVisible:indexes.firstIndex];
+    return nil;
+}
+-(NSDictionary*)pairingRecordForComputerRecord:(AMCAccountStatementItem*)item {
+    if ([self isComputerRecordPaired:item]) {
+        for (NSDictionary * pairing in self.pairedRecords) {
+            if (pairing[@"computerRecord"] == item) {
+                return pairing;
+            }
+        }
+    }
+    return nil;
 }
 -(NSMutableArray*)computerRecordsMatchingDateAndAmount:(NSMutableDictionary*)transactionDictionary {
     NSDate * date = transactionDictionary[@"date"];
@@ -306,7 +449,19 @@
     }
 }
 
-
+- (IBAction)pair:(id)sender {
+    NSInteger statementTransactionIndex = self.statementTransactionsTable.selectedRow;
+    NSMutableDictionary * transactionDictionary = self.parser.transactionDictionaries[statementTransactionIndex];
+    NSInteger computerRecordIndex = self.documentTransactionsTable.selectedRow;
+    AMCAccountStatementItem * item = self.computerRecords[computerRecordIndex];
+    NSInteger pairedIndex = [self pairStatementTransaction:transactionDictionary withComputerRecord:item];
+    [self.pairedTable selectRowIndexes:[NSIndexSet indexSetWithIndex:pairedIndex] byExtendingSelection:NO];
+}
+- (IBAction)unpair:(id)sender {
+    NSInteger statementTransactionIndex = self.statementTransactionsTable.selectedRow;
+    NSMutableDictionary * transactionDictionary = self.parser.transactionDictionaries[statementTransactionIndex];
+    [self unpairStatementTransaction:transactionDictionary];
+}
 
 
 

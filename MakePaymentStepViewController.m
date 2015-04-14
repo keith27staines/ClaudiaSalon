@@ -91,7 +91,9 @@
     self.receiptRequired = NO;
     Sale * sale = [self sale];
     if (sale) {
-        NSAssert(sale.account, @"Account should not be nil");
+        if (!sale.account) {
+            sale.account = self.salonDocument.salon.tillAccount;
+        }
         if (self.editMode == EditModeCreate || self.editMode == EditModeEdit) {
             if (sale.account == self.salonDocument.salon.tillAccount) {
                 [self.cardCashSegmentedControl selectSegmentWithTag:0];
