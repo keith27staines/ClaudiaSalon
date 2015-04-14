@@ -7,6 +7,7 @@
 //
 
 #import "AMCStatementParser.h"
+#import <Cocoa/Cocoa.h>
 
 @interface AMCStatementParser()
 {
@@ -187,4 +188,6 @@
 -(NSString*)reconciledForRow:(NSInteger)row {
     return [self csvStringForIdentifier:@"reconciled" row:row];
 }
+
+
 @end
