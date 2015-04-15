@@ -182,4 +182,12 @@
 -(BOOL)isPayment {
     return (self.payment != nil);
 }
+-(void)voidTransaction {
+    if (self.payment) {
+        self.payment.voided = @(YES);
+    }
+    if (self.sale) {
+        self.sale.voided = @(YES);
+    }
+}
 @end

@@ -8,22 +8,26 @@
             <connections>
                 <outlet property="UnpairStatementMenuItem" destination="yfg-66-ghx" id="3rF-Kt-0mt"/>
                 <outlet property="addPairedComputerRecordsMenuItem" destination="mLc-3D-b7B" id="Bvn-jL-XZY"/>
+                <outlet property="cancelButton" destination="bGO-3I-KM1" id="Dh1-Ks-2GY"/>
                 <outlet property="computerRecordsTableContextMenu" destination="c3D-Ga-qbA" id="Js5-8g-xLL"/>
                 <outlet property="configureCSVViewController" destination="1Lk-eY-5qY" id="z1A-ct-hfu"/>
                 <outlet property="containerView" destination="HgP-Mv-g0G" id="VwM-gl-abw"/>
                 <outlet property="csvTable" destination="MzM-dP-2bC" id="8Ya-9A-g5M"/>
                 <outlet property="dateColumnField" destination="qS2-7S-fnY" id="aV6-V6-j7f"/>
                 <outlet property="documentTransactionsTable" destination="cmf-0R-OMs" id="UXX-me-VCb"/>
+                <outlet property="doneButton" destination="fW8-az-uhX" id="40o-3g-elQ"/>
                 <outlet property="feeColumnField" destination="wwq-xc-YuX" id="HS7-AZ-8Dt"/>
                 <outlet property="grossAmountColumnField" destination="kb4-wQ-qQj" id="y1j-Ds-nAu"/>
                 <outlet property="headerLinesCountField" destination="88N-0b-5ar" id="6WZ-Vm-hcd"/>
                 <outlet property="netAmountColumnField" destination="KYx-2M-RDk" id="fu0-Bs-Xo7"/>
+                <outlet property="nextButton" destination="Dgc-HK-w1V" id="tL3-wb-SUn"/>
                 <outlet property="noteColumnField" destination="QrT-nt-Mhd" id="gWX-CQ-Ne6"/>
                 <outlet property="pairComputerRecordMenuItem" destination="6Eg-19-dgz" id="paE-5S-Ggy"/>
                 <outlet property="pairStatementMenuItem" destination="OXN-df-cUY" id="v1Q-yR-maR"/>
                 <outlet property="pairedTable" destination="lJ1-SK-ZId" id="2HO-Op-dnd"/>
                 <outlet property="pairedTableContextMenu" destination="U3S-S1-31n" id="I9l-ng-laA"/>
                 <outlet property="pathLabel" destination="ba4-lM-494" id="deH-d4-ZWW"/>
+                <outlet property="previousButton" destination="nKN-CN-7eh" id="qe9-4o-ME0"/>
                 <outlet property="reconcileTransactionsViewController" destination="Vyt-r2-Lgp" id="ctb-1J-3zx"/>
                 <outlet property="statementTransactionsTable" destination="YM8-fs-ces" id="1V8-sr-YBS"/>
                 <outlet property="statementTransactionsTableContextMenu" destination="B9h-8b-s25" id="SCc-Lz-n1O"/>
@@ -1684,6 +1688,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="reconciled"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="date" width="64" minWidth="40" maxWidth="1000" id="icp-pV-VA0">
@@ -1698,6 +1703,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="date"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="amount" width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="RWZ-Xj-wqZ">
@@ -1712,6 +1718,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="amount"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="note" width="299.69921875" minWidth="10" maxWidth="3.4028234663852886e+38" id="6Pd-Dy-qhh">
@@ -1725,6 +1732,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="note"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                 </tableColumns>
@@ -1796,6 +1804,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="reconciled"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="date" width="64" minWidth="40" maxWidth="1000" id="Ex9-rD-dy9">
@@ -1805,10 +1814,12 @@ Gw
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
                                         <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="UZj-Wn-2En">
+                                            <dateFormatter key="formatter" dateStyle="short" id="bx4-GB-ZU6"/>
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="date"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="amount" width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="7Ej-dh-jCJ">
@@ -1823,6 +1834,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="amount"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="note" width="300.40625" minWidth="10" maxWidth="3.4028234663852886e+38" id="Kvt-0o-Qek">
@@ -1836,6 +1848,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="note"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                 </tableColumns>
@@ -1904,7 +1917,7 @@ Gw
                         <rect key="frame" x="1" y="17" width="238" height="117"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="XDz-Bk-MDQ" id="lJ1-SK-ZId">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="XDz-Bk-MDQ" id="lJ1-SK-ZId">
                                 <rect key="frame" x="0.0" y="0.0" width="238" height="117"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -1918,10 +1931,12 @@ Gw
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
                                         <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="bgk-VB-5oi">
+                                            <dateFormatter key="formatter" dateStyle="short" id="TRW-9P-jtH"/>
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="leftDate"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="rightDate" width="100" minWidth="40" maxWidth="1000" id="bYo-cG-N0c">
@@ -1931,10 +1946,12 @@ Gw
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
                                         <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="F9B-NW-OPV">
+                                            <dateFormatter key="formatter" dateStyle="short" id="nQo-fo-giW"/>
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="rightDate"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="leftAmount" width="100" minWidth="10" maxWidth="3.4028234663852886e+38" id="X2d-jT-lQ6">
@@ -1948,6 +1965,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="leftAmount"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="rightAmount" width="100" minWidth="10" maxWidth="3.4028234663852886e+38" id="aJE-PN-Hcg">
@@ -1961,6 +1979,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="rightAmount"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="leftNote" width="200" minWidth="10" maxWidth="3.4028234663852886e+38" id="emQ-6Z-0kK">
@@ -1974,6 +1993,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="leftNote"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="rightNote" width="200" minWidth="10" maxWidth="3.4028234663852886e+38" id="pwJ-uN-DDv">
@@ -1987,6 +2007,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="rightNote"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="mismatch" width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="IWT-ft-FfA">
@@ -2000,6 +2021,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="mismatch"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                 </tableColumns>

@@ -2,7 +2,7 @@
 //  Account.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
+//  Created by Keith Staines on 15/04/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -17,6 +17,10 @@
 @property (nonatomic, retain) NSString * bankName;
 @property (nonatomic, retain) NSString * friendlyName;
 @property (nonatomic, retain) NSString * sortCode;
+@property (nonatomic, retain) NSNumber * csvHeaderLines;
+@property (nonatomic, retain) NSNumber * csvDateColumn;
+@property (nonatomic, retain) NSNumber * csvNoteColumn;
+@property (nonatomic, retain) NSNumber * csvAmountColumn;
 @property (nonatomic, retain) Salon *cardPaymentAccountForSalon;
 @property (nonatomic, retain) NSSet *payments;
 @property (nonatomic, retain) Salon *primaryBankAccountForSalon;

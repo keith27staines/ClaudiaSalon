@@ -2,7 +2,7 @@
 //  Account.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
+//  Created by Keith Staines on 15/04/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -19,6 +19,10 @@
 @dynamic bankName;
 @dynamic friendlyName;
 @dynamic sortCode;
+@dynamic csvHeaderLines;
+@dynamic csvDateColumn;
+@dynamic csvNoteColumn;
+@dynamic csvAmountColumn;
 @dynamic cardPaymentAccountForSalon;
 @dynamic payments;
 @dynamic primaryBankAccountForSalon;

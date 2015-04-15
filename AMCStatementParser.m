@@ -8,44 +8,67 @@
 
 #import "AMCStatementParser.h"
 #import <Cocoa/Cocoa.h>
+#import "Account.h"
 
 @interface AMCStatementParser()
 {
     NSString * _csvString;
     NSMutableArray * _transactionDictionaries;
-    NSInteger _headerRows;
-    NSInteger _dateCol;
+    NSArray * _sortDescriptorsForTransactionDictionaries;
 }
 @property NSMutableArray * rows;
 @property (readonly) NSMutableArray * filteredRows;
+@property Account * account;
 @end
 
 @implementation AMCStatementParser
 
--(instancetype)initWithCSVString:(NSString*)string {
+-(instancetype)initWithCSVString:(NSString*)string account:(Account*)account {
     self = [super init];
     if (self) {
+        self.account = account;
         self.csvString = string;
-        self.dateCol = -1;
-        self.grossAmountColumn = -1;
-        self.noteColumn = -1;
+        self.dateCol = account.csvDateColumn.integerValue;
+        self.grossAmountColumn = account.csvAmountColumn.integerValue;
+        self.noteColumn = account.csvNoteColumn.integerValue;
         self.feeColumn = -1;
         self.netAmountColumn = -1;
     }
     return self;
 }
+-(NSArray *)sortDescriptorsForTransactionDictionaries {
+    return _sortDescriptorsForTransactionDictionaries;
+}
+-(void)setSortDescriptorsForTransactionDictionaries:(NSArray *)sortDescriptorsForTransactionDictionaries {
+    _sortDescriptorsForTransactionDictionaries = sortDescriptorsForTransactionDictionaries;
+    [self.transactionDictionaries sortUsingDescriptors:_sortDescriptorsForTransactionDictionaries];
+}
 -(NSInteger)dateCol {
-    return _dateCol;
+    return self.account.csvDateColumn.integerValue;
 }
 -(void)setDateCol:(NSInteger)dateCol {
-    _dateCol = dateCol;
+    self.account.csvDateColumn = @(dateCol);
     _transactionDictionaries = nil;
 }
 -(NSInteger)headerRows {
-    return _headerRows;
+    return self.account.csvHeaderLines.integerValue;
 }
 -(void)setHeaderRows:(NSInteger)headerRows {
-    _headerRows = headerRows;
+    self.account.csvHeaderLines = @(headerRows);
+    _transactionDictionaries = nil;
+}
+-(NSInteger)noteColumn {
+    return self.account.csvNoteColumn.integerValue;
+}
+-(void)setNoteColumn:(NSInteger)noteColumn {
+    self.account.csvNoteColumn = @(noteColumn);
+    _transactionDictionaries = nil;
+}
+-(NSInteger)grossAmountColumn {
+    return self.account.csvAmountColumn.integerValue;
+}
+-(void)setGrossAmountColumn:(NSInteger)grossAmountColumn {
+    self.account.csvAmountColumn = @(grossAmountColumn);
     _transactionDictionaries = nil;
 }
 -(NSInteger)transactionRows {
@@ -71,7 +94,7 @@
             // Can't sort
         } else {
             // sort on date
-            [_transactionDictionaries sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"Date" ascending:YES]]];
+            [_transactionDictionaries sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
         }
     }
     return _transactionDictionaries;

@@ -2,12 +2,13 @@
 //  PaymentCategory.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
+//  Created by Keith Staines on 15/04/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import "PaymentCategory.h"
 #import "Payment.h"
+#import "Salon.h"
 
 
 @implementation PaymentCategory
@@ -23,5 +24,6 @@
 @dynamic isStartupCost;
 @dynamic isTransferBetweenAccounts;
 @dynamic payments;
+@dynamic defaultCategoryForSalon;
 
 @end

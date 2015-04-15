@@ -25,4 +25,5 @@
 @property (copy,readonly) NSString * direction;
 @property (readonly) BOOL isPayment;
 @property NSDictionary * pairingRecord;
+-(void)voidTransaction;
 @end

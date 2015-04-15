@@ -51,7 +51,6 @@
 @property (readonly) NSDate * endDate;
 @property double balance;
 @property (strong) IBOutlet AMCBankStatementReconciliationViewController *bankStatementReconciliationViewController;
-
 @end
 
 @implementation AMCAccountStatementViewController
@@ -144,9 +143,7 @@
 }
 -(void)loadAccount {
     self.account = self.accountPopup.selectedItem.representedObject;
-    if (!self.account) {
-        return;
-    }
+    if (!self.account) {return;}
     self.statementItems = [NSMutableArray array];
     NSArray * transactions = [self.payments copy];
     transactions = [transactions arrayByAddingObjectsFromArray:self.sales];
@@ -310,7 +307,7 @@
 }
 - (IBAction)reconcileStatement:(id)sender {
     self.bankStatementReconciliationViewController.account = self.account;
-    self.bankStatementReconciliationViewController.computerRecords = self.statementItems;
+    self.bankStatementReconciliationViewController.computerRecords = [self.statementItems mutableCopy];
     [self.bankStatementReconciliationViewController prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewControllerAsSheet:self.bankStatementReconciliationViewController];
 }

@@ -8,6 +8,7 @@
 
 #import "Payment+Methods.h"
 #import "AMCConstants.h"
+#import "Salon+Methods.h"
 
 @implementation Payment (Methods)
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc
@@ -21,6 +22,7 @@
     payment.reason = @"";
     payment.amount = @(0);
     payment.direction = kAMCPaymentDirectionOut;
+    payment.paymentCategory = [Salon salonWithMoc:moc].defaultPaymentCategory;
     return payment;
 }
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc {

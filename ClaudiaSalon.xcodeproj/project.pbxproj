@@ -17,10 +17,8 @@
 		530171331ACB15C10047116D /* Holiday.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171321ACB15C10047116D /* Holiday.m */; };
 		530171391ACB15C10047116D /* Salary.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171381ACB15C10047116D /* Salary.m */; };
 		5301713C1ACB15C10047116D /* OpeningHoursWeekTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301713B1ACB15C10047116D /* OpeningHoursWeekTemplate.m */; };
-		5301713F1ACB15C10047116D /* PaymentCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301713E1ACB15C10047116D /* PaymentCategory.m */; };
 		530171421ACB15C10047116D /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171411ACB15C10047116D /* Employee.m */; };
 		530171451ACB15C10047116D /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171441ACB15C10047116D /* Sale.m */; };
-		530171481ACB15C10047116D /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171471ACB15C10047116D /* Account.m */; };
 		5301714B1ACB15C10047116D /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301714A1ACB15C10047116D /* Note.m */; };
 		5301714E1ACB15C10047116D /* IntervalDuringDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301714D1ACB15C10047116D /* IntervalDuringDay.m */; };
 		530171511ACB15C10047116D /* LastUpdatedBy.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171501ACB15C10047116D /* LastUpdatedBy.m */; };
@@ -35,7 +33,6 @@
 		5301716C1ACB15EB0047116D /* SaleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301716B1ACB15EB0047116D /* SaleItem.m */; };
 		5301716F1ACB15EB0047116D /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301716E1ACB15EB0047116D /* Service.m */; };
 		530171721ACB15EB0047116D /* StockedBrand.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171711ACB15EB0047116D /* StockedBrand.m */; };
-		530171751ACB15EB0047116D /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171741ACB15EB0047116D /* Salon.m */; };
 		530171781ACB15EB0047116D /* StockedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171771ACB15EB0047116D /* StockedItem.m */; };
 		5301717B1ACB15EB0047116D /* ServiceCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301717A1ACB15EB0047116D /* ServiceCategory.m */; };
 		5301717E1ACB15EB0047116D /* ShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301717D1ACB15EB0047116D /* ShoppingList.m */; };
@@ -63,6 +60,9 @@
 		535F0DF61AB2339A0035CFD8 /* AMCAutoCloseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DF11AB2339A0035CFD8 /* AMCAutoCloseViewController.xib */; };
 		535F0DF71AB2339A0035CFD8 /* AMCAutoCloseWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DF31AB2339A0035CFD8 /* AMCAutoCloseWindowController.m */; };
 		535F0DF81AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DF41AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib */; };
+		53628E221ADE542200964D44 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 53628E211ADE542200964D44 /* Account.m */; };
+		53628E281ADE9CE000964D44 /* PaymentCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 53628E271ADE9CE000964D44 /* PaymentCategory.m */; };
+		53628E2B1ADE9CE100964D44 /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53628E2A1ADE9CE100964D44 /* Salon.m */; };
 		5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */; };
 		5393EA321AD26100009B336C /* AMCBankStatementReconciliationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */; };
 		5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA341AD2CBE7009B336C /* AMCStatementParser.m */; };
@@ -272,14 +272,10 @@
 		530171381ACB15C10047116D /* Salary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salary.m; sourceTree = "<group>"; };
 		5301713A1ACB15C10047116D /* OpeningHoursWeekTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningHoursWeekTemplate.h; sourceTree = "<group>"; };
 		5301713B1ACB15C10047116D /* OpeningHoursWeekTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningHoursWeekTemplate.m; sourceTree = "<group>"; };
-		5301713D1ACB15C10047116D /* PaymentCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentCategory.h; sourceTree = "<group>"; };
-		5301713E1ACB15C10047116D /* PaymentCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentCategory.m; sourceTree = "<group>"; };
 		530171401ACB15C10047116D /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
 		530171411ACB15C10047116D /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
 		530171431ACB15C10047116D /* Sale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sale.h; sourceTree = "<group>"; };
 		530171441ACB15C10047116D /* Sale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sale.m; sourceTree = "<group>"; };
-		530171461ACB15C10047116D /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
-		530171471ACB15C10047116D /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
 		530171491ACB15C10047116D /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		5301714A1ACB15C10047116D /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		5301714C1ACB15C10047116D /* IntervalDuringDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntervalDuringDay.h; sourceTree = "<group>"; };
@@ -308,8 +304,6 @@
 		5301716E1ACB15EB0047116D /* Service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
 		530171701ACB15EB0047116D /* StockedBrand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedBrand.h; sourceTree = "<group>"; };
 		530171711ACB15EB0047116D /* StockedBrand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedBrand.m; sourceTree = "<group>"; };
-		530171731ACB15EB0047116D /* Salon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salon.h; sourceTree = "<group>"; };
-		530171741ACB15EB0047116D /* Salon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salon.m; sourceTree = "<group>"; };
 		530171761ACB15EB0047116D /* StockedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedItem.h; sourceTree = "<group>"; };
 		530171771ACB15EB0047116D /* StockedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedItem.m; sourceTree = "<group>"; };
 		530171791ACB15EB0047116D /* ServiceCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceCategory.h; sourceTree = "<group>"; };
@@ -359,6 +353,13 @@
 		535F0DF21AB2339A0035CFD8 /* AMCAutoCloseWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCAutoCloseWindowController.h; sourceTree = "<group>"; };
 		535F0DF31AB2339A0035CFD8 /* AMCAutoCloseWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAutoCloseWindowController.m; sourceTree = "<group>"; };
 		535F0DF41AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAutoCloseWindowController.xib; sourceTree = "<group>"; };
+		53628E1C1ADE52B200964D44 /* ClaudiasSalon 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 4.xcdatamodel"; sourceTree = "<group>"; };
+		53628E201ADE542200964D44 /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
+		53628E211ADE542200964D44 /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
+		53628E261ADE9CE000964D44 /* PaymentCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentCategory.h; sourceTree = "<group>"; };
+		53628E271ADE9CE000964D44 /* PaymentCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentCategory.m; sourceTree = "<group>"; };
+		53628E291ADE9CE100964D44 /* Salon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salon.h; sourceTree = "<group>"; };
+		53628E2A1ADE9CE100964D44 /* Salon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salon.m; sourceTree = "<group>"; };
 		5393EA2E1AD26100009B336C /* AMCBankStatementReconciliationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCBankStatementReconciliationViewController.h; sourceTree = "<group>"; };
 		5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCBankStatementReconciliationViewController.m; sourceTree = "<group>"; };
 		5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCBankStatementReconciliationViewController.xib; sourceTree = "<group>"; };
@@ -1672,6 +1673,12 @@
 		53D69E031A9B6BE70004CE10 /* Data model objects */ = {
 			isa = PBXGroup;
 			children = (
+				53628E291ADE9CE100964D44 /* Salon.h */,
+				53628E2A1ADE9CE100964D44 /* Salon.m */,
+				53628E261ADE9CE000964D44 /* PaymentCategory.h */,
+				53628E271ADE9CE000964D44 /* PaymentCategory.m */,
+				53628E201ADE542200964D44 /* Account.h */,
+				53628E211ADE542200964D44 /* Account.m */,
 				531D67271ACC1C62000472BD /* RecurringItem.h */,
 				531D67281ACC1C62000472BD /* RecurringItem.m */,
 				5301717C1ACB15EB0047116D /* ShoppingList.h */,
@@ -1680,8 +1687,6 @@
 				5301717A1ACB15EB0047116D /* ServiceCategory.m */,
 				530171761ACB15EB0047116D /* StockedItem.h */,
 				530171771ACB15EB0047116D /* StockedItem.m */,
-				530171731ACB15EB0047116D /* Salon.h */,
-				530171741ACB15EB0047116D /* Salon.m */,
 				530171701ACB15EB0047116D /* StockedBrand.h */,
 				530171711ACB15EB0047116D /* StockedBrand.m */,
 				5301716D1ACB15EB0047116D /* Service.h */,
@@ -1710,14 +1715,10 @@
 				5301714D1ACB15C10047116D /* IntervalDuringDay.m */,
 				530171491ACB15C10047116D /* Note.h */,
 				5301714A1ACB15C10047116D /* Note.m */,
-				530171461ACB15C10047116D /* Account.h */,
-				530171471ACB15C10047116D /* Account.m */,
 				530171431ACB15C10047116D /* Sale.h */,
 				530171441ACB15C10047116D /* Sale.m */,
 				530171401ACB15C10047116D /* Employee.h */,
 				530171411ACB15C10047116D /* Employee.m */,
-				5301713D1ACB15C10047116D /* PaymentCategory.h */,
-				5301713E1ACB15C10047116D /* PaymentCategory.m */,
 				5301713A1ACB15C10047116D /* OpeningHoursWeekTemplate.h */,
 				5301713B1ACB15C10047116D /* OpeningHoursWeekTemplate.m */,
 				530171371ACB15C10047116D /* Salary.h */,
@@ -2037,16 +2038,15 @@
 				53D69D1E1A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m in Sources */,
 				53D69D491A9B240C0004CE10 /* WorkRecord+Methods.m in Sources */,
 				53D69D531A9B240C0004CE10 /* AMCRefundViewController.m in Sources */,
+				53628E281ADE9CE000964D44 /* PaymentCategory.m in Sources */,
 				5346C59A1ABFF6AC005D4540 /* AMCCashBookNode.m in Sources */,
 				53D69D411A9B240C0004CE10 /* Note+Methods.m in Sources */,
-				530171481ACB15C10047116D /* Account.m in Sources */,
 				5301712A1ACB15C00047116D /* Appointment.m in Sources */,
 				53D69D181A9B240C0004CE10 /* AMCPaymentCategoryListViewController.m in Sources */,
 				53D69D431A9B240C0004CE10 /* AccountReconciliation+Methods.m in Sources */,
 				53D325661A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m in Sources */,
 				53D69CF31A9B240C0004CE10 /* AMCDayAndMonthPopupViewController.m in Sources */,
 				530171721ACB15EB0047116D /* StockedBrand.m in Sources */,
-				530171751ACB15EB0047116D /* Salon.m in Sources */,
 				53D69D0F1A9B240C0004CE10 /* AMCShoppingListPrintView.m in Sources */,
 				53D69D381A9B240C0004CE10 /* Appointment+Methods.m in Sources */,
 				53D69D101A9B240C0004CE10 /* AMCStockedCategoryMaintenanceViewController.m in Sources */,
@@ -2099,6 +2099,7 @@
 				530171661ACB15EA0047116D /* WorkRecord.m in Sources */,
 				53D69D4C1A9B240C0004CE10 /* ProductSelectorViewController.m in Sources */,
 				53D69D031A9B240C0004CE10 /* AMCBookingViewController.m in Sources */,
+				53628E2B1ADE9CE100964D44 /* Salon.m in Sources */,
 				53D69D481A9B240C0004CE10 /* StockedCategory+Methods.m in Sources */,
 				53D69CEE1A9B240C0004CE10 /* AMCServiceSelectorViewController.m in Sources */,
 				5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */,
@@ -2111,12 +2112,12 @@
 				530171331ACB15C10047116D /* Holiday.m in Sources */,
 				53D69D121A9B240C0004CE10 /* AMCStockedBrandMaintenanceWindowController.m in Sources */,
 				53D69CFF1A9B240C0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.m in Sources */,
+				53628E221ADE542200964D44 /* Account.m in Sources */,
 				53D69CE81A9B240C0004CE10 /* AMCHoursWorkedEachDayOfWeekViewController.m in Sources */,
 				53D69D661A9B240C0004CE10 /* AMCMoneyTransferViewController.m in Sources */,
 				53D69CF11A9B240C0004CE10 /* AMCSaleItemPriceSetterView.m in Sources */,
 				53D69D421A9B240C0004CE10 /* Account+Methods.m in Sources */,
 				53D69D4B1A9B240C0004CE10 /* ObjectSelectorViewController.m in Sources */,
-				5301713F1ACB15C10047116D /* PaymentCategory.m in Sources */,
 				53D69D151A9B240C0004CE10 /* AMCPaymentsViewController.m in Sources */,
 				53D69D601A9B240C0004CE10 /* EditServiceCategoryViewController.m in Sources */,
 				53D69D571A9B240C0004CE10 /* AMCReceiptWindowController.m in Sources */,
@@ -2340,11 +2341,12 @@
 		532377CC1AA8923B009FA91D /* ClaudiasSalon.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				53628E1C1ADE52B200964D44 /* ClaudiasSalon 4.xcdatamodel */,
 				534B9B281AC5381B00146E98 /* ClaudiasSalon 3.xcdatamodel */,
 				532377CF1AA89253009FA91D /* ClaudiasSalon 2.xcdatamodel */,
 				532377CD1AA8923B009FA91D /* ClaudiasSalon.xcdatamodel */,
 			);
-			currentVersion = 534B9B281AC5381B00146E98 /* ClaudiasSalon 3.xcdatamodel */;
+			currentVersion = 53628E1C1ADE52B200964D44 /* ClaudiasSalon 4.xcdatamodel */;
 			path = ClaudiasSalon.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

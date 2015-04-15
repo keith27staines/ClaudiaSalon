@@ -7,6 +7,7 @@
 //
 
 #import "AMCPaymentCategoryListViewController.h"
+#import "PaymentCategory+Methods.h"
 
 @interface AMCPaymentCategoryListViewController ()
 @property (weak) IBOutlet NSTableView *dataTable;
@@ -25,5 +26,20 @@
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     [self.dataTable reloadData];
+}
+-(void)dismissController:(id)sender {
+    BOOL defaultCategorySet = NO;
+    for (PaymentCategory * category in [PaymentCategory allObjectsWithMoc:self.documentMoc]) {
+        if (category.isDefault.boolValue) {
+            if (!defaultCategorySet) {
+                defaultCategorySet = YES;
+                category.defaultCategoryForSalon = self.salonDocument.salon;
+            } else {
+                category.isDefault = @(NO);
+            }
+        }
+    }
+    self.salonDocument.salon.defaultPaymentCategory.isDefault = @(YES);
+    [super dismissController:sender];
 }
 @end

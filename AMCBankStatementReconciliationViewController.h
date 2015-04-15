@@ -11,5 +11,5 @@
 @interface AMCBankStatementReconciliationViewController : AMCViewController
 
 @property Account * account;
-@property NSArray * computerRecords;
+@property NSMutableArray * computerRecords;
 @end

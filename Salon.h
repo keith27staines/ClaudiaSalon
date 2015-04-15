@@ -2,14 +2,14 @@
 //  Salon.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
+//  Created by Keith Staines on 15/04/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Account, Employee, OpeningHoursWeekTemplate;
+@class Account, Employee, OpeningHoursWeekTemplate, PaymentCategory;
 
 @interface Salon : NSManagedObject
 
@@ -29,5 +29,6 @@
 @property (nonatomic, retain) OpeningHoursWeekTemplate *openingHoursWeekTemplate;
 @property (nonatomic, retain) Account *primaryBankAccount;
 @property (nonatomic, retain) Account *tillAccount;
+@property (nonatomic, retain) PaymentCategory *defaultPaymentCategory;
 
 @end

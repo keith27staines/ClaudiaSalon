@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D130a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCAccountStatementViewController">
@@ -77,7 +77,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1460" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
                                     <tableColumn identifier="date" width="116" minWidth="40" maxWidth="1000" id="KZC-Ka-uHM">
@@ -248,6 +248,11 @@
                     </buttonCell>
                     <connections>
                         <action selector="exportToCSV:" target="-2" id="pD4-oH-o34"/>
+                        <binding destination="-2" name="enabled" keyPath="self.account" id="Lwh-lQ-ZKL">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="4hA-Dc-dJm">
@@ -327,6 +332,11 @@
                     </buttonCell>
                     <connections>
                         <action selector="showCashBook:" target="-2" id="mXy-dW-Mxb"/>
+                        <binding destination="-2" name="enabled" keyPath="self.account" id="dj0-zI-Ctf">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
                 <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XK7-H0-Bwb">
@@ -377,6 +387,11 @@
                     </buttonCell>
                     <connections>
                         <action selector="reconcileStatement:" target="-2" id="hsu-P5-uXB"/>
+                        <binding destination="-2" name="enabled" keyPath="self.account" id="agE-HG-bQL">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
             </subviews>

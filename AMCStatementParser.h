@@ -6,11 +6,13 @@
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
+@class Account;
+
 #import <Foundation/Foundation.h>
 
 @interface AMCStatementParser : NSObject
 
--(instancetype)initWithCSVString:(NSString*)string;
+-(instancetype)initWithCSVString:(NSString*)string account:(Account*)account;
 @property (copy) NSString * csvString;
 @property NSInteger rowCount;
 @property (copy,readonly) NSDate * date;
@@ -21,6 +23,7 @@
 @property NSInteger feeColumn;
 @property NSInteger netAmountColumn;
 @property (readonly) NSMutableArray* transactionDictionaries;
+@property NSArray * sortDescriptorsForTransactionDictionaries;
 
 -(NSString*)csvStringForIdentifier:(NSString*)identifier row:(NSInteger)row;
 -(NSDate*)dateForRow:(NSInteger)row;
