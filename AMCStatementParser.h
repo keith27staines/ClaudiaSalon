@@ -24,6 +24,9 @@
 @property NSInteger netAmountColumn;
 @property (readonly) NSMutableArray* transactionDictionaries;
 @property NSArray * sortDescriptorsForTransactionDictionaries;
+@property NSInteger statusColumn;
+@property NSString * statusInclude;
+@property NSString * statusExclude;
 
 -(NSString*)csvStringForIdentifier:(NSString*)identifier row:(NSInteger)row;
 -(NSDate*)dateForRow:(NSInteger)row;

@@ -33,6 +33,9 @@
         self.noteColumn = account.csvNoteColumn.integerValue;
         self.feeColumn = -1;
         self.netAmountColumn = -1;
+        self.statusColumn = -1;
+        self.statusInclude = @"";
+        self.statusExclude = @"";
     }
     return self;
 }
@@ -71,6 +74,40 @@
     self.account.csvAmountColumn = @(grossAmountColumn);
     _transactionDictionaries = nil;
 }
+-(NSInteger)feeColumn {
+    return self.account.csvFeeColumn.integerValue;
+}
+-(void)setFeeColumn:(NSInteger)feeColumn {
+    self.account.csvFeeColumn = @(feeColumn);
+    _transactionDictionaries = nil;
+}
+-(NSInteger)netAmountColumn {
+    return self.account.csvNetAmountColumn.integerValue;
+}
+-(void)setNetAmountColumn:(NSInteger)netAmountColumn {
+    self.account.csvNetAmountColumn = @(netAmountColumn);
+    _transactionDictionaries = nil;
+}
+-(NSInteger)statusColumn {
+    return self.account.csvStatusColumn.integerValue;
+}
+-(void)setStatusColumn:(NSInteger)statusColumn {
+    self.account.csvStatusColumn = @(statusColumn);
+}
+-(NSString *)statusInclude {
+    return self.account.csvStatusInclude;
+}
+-(void)setStatusInclude:(NSString *)statusInclude {
+    self.account.csvStatusInclude = statusInclude;
+    _transactionDictionaries = nil;
+}
+-(NSString *)statusExclude {
+    return self.account.csvStatusExclude;
+}
+-(void)setStatusExclude:(NSString *)statusExclude {
+    self.account.csvStatusExclude = statusExclude;
+    _transactionDictionaries = nil;
+}
 -(NSInteger)transactionRows {
     if (self.headerRows > 0) {
         return self.rowCount - self.headerRows;
@@ -88,7 +125,8 @@
             lastRow = lastRow - self.headerRows;
         }
         for (NSInteger i = firstRow; i < lastRow; i++) {
-            [_transactionDictionaries addObject:[self transactionDictionaryForTransactionRow:i-firstRow]];
+            NSDictionary * transactionDictionary = [self transactionDictionaryForTransactionRow:i-firstRow];
+            [_transactionDictionaries addObject:transactionDictionary];
         }
         if (self.dateCol < 0) {
             // Can't sort
@@ -110,6 +148,17 @@
     dictionary[@"amount"] = [self amountForRow:row];
     dictionary[@"note"] = [self noteForRow:row];
     return dictionary;
+}
+-(BOOL)includeRow:(NSInteger)row {
+    if (self.statusColumn < 0) {return YES;}
+    NSString * rowString = self.rows[row];
+    NSDictionary * columnDictionary = [self columnDictionaryForCSVRowString:rowString];
+    NSString * key = [NSString stringWithFormat:@"Column %lu",self.statusColumn];
+    NSString * state = columnDictionary[key];
+    if ([state isEqualToString:@""] || [state isEqualToString:@"*"] || [state isEqualToString:self.statusInclude]) {
+        return YES;
+    }
+    return NO;
 }
 -(NSString *)csvString {
     return _csvString;
@@ -136,7 +185,6 @@
     return [self columnDictionaryForCSVRowString:rowString];
 }
 -(NSDictionary*)columnDictionaryForCSVRowString:(NSString*)rowString {
-    //NSArray * columns = [rowString componentsSeparatedByString:@","];
     NSArray * columns = [self columnsFromRowString:rowString];
     NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
     NSInteger i = 0;

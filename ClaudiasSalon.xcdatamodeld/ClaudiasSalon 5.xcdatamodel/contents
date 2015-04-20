@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14E7f" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Account" representedClassName="Account" syncable="YES">
+        <attribute name="accountNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bankName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="csvAmountColumn" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
+        <attribute name="csvDateColumn" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
+        <attribute name="csvFeeColumn" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
+        <attribute name="csvHeaderLines" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="csvNetAmountColumn" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
+        <attribute name="csvNoteColumn" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
+        <attribute name="csvStatusColumn" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
+        <attribute name="csvStatusExclude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="csvStatusInclude" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="friendlyName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortCode" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="cardPaymentAccountForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="cardPaymentAccount" inverseEntity="Salon" syncable="YES"/>
+        <relationship name="payments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Payment" inverseName="account" inverseEntity="Payment" syncable="YES"/>
+        <relationship name="primaryBankAccountForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="primaryBankAccount" inverseEntity="Salon" syncable="YES"/>
+        <relationship name="reconciliations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AccountReconciliation" inverseName="account" inverseEntity="AccountReconciliation" syncable="YES"/>
+        <relationship name="sales" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Sale" inverseName="account" inverseEntity="Sale" syncable="YES"/>
+        <relationship name="tillAccountForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="tillAccount" inverseEntity="Salon" syncable="YES"/>
+    </entity>
+    <entity name="AccountReconciliation" representedClassName="AccountReconciliation" syncable="YES">
+        <attribute name="actualBalance" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="reconciliationDate" attributeType="Date" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="reconciliations" inverseEntity="Account" syncable="YES"/>
+    </entity>
+    <entity name="Appointment" representedClassName="Appointment" syncable="YES">
+        <attribute name="appointmentDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="appointmentEndDate" optional="YES" transient="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="bookedDuration" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cancellationNote" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cancellationType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="cancelled" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="completed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="completionNote" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="completionType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="customer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Customer" inverseName="appointments" inverseEntity="Customer" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="appointment" inverseEntity="Note" syncable="YES"/>
+        <relationship name="sale" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sale" inverseName="fromAppointment" inverseEntity="Sale" syncable="YES"/>
+    </entity>
+    <entity name="CalendarDay" representedClassName="CalendarDay" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="openingTimes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="IntervalDuringDay" inverseName="calendarDay" inverseEntity="IntervalDuringDay" syncable="YES"/>
+    </entity>
+    <entity name="Customer" representedClassName="Customer" syncable="YES">
+        <attribute name="addressLine1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressLine2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="birthday" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dayOfBirth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fullName" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastVisitDate" optional="YES" transient="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="monthOfBirth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="saleType" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="appointments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Appointment" inverseName="customer" inverseEntity="Appointment" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="customer" inverseEntity="Note" syncable="YES"/>
+        <relationship name="sales" toMany="YES" deletionRule="Nullify" destinationEntity="Sale" inverseName="customer" inverseEntity="Sale" syncable="YES"/>
+    </entity>
+    <entity name="Employee" representedClassName="Employee" syncable="YES">
+        <attribute name="addressLine1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressLine2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="basicHourlyRate" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="basicHoursPerWeek" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dayOfBirth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isActive" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="leavingDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="monthOfBirth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="paidFromManagersBudget" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="451220400" defaultValueString="&quot;now&quot;" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="canDo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="canBeDoneBy" inverseEntity="Service" syncable="YES"/>
+        <relationship name="holidays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Holiday" inverseName="employee" inverseEntity="Holiday" syncable="YES"/>
+        <relationship name="manages" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="manager" inverseEntity="Salon" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="employee" inverseEntity="Note" syncable="YES"/>
+        <relationship name="notesCreated" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="createdBy" inverseEntity="Note" syncable="YES"/>
+        <relationship name="performedService" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SaleItem" inverseName="performedBy" inverseEntity="SaleItem" syncable="YES"/>
+        <relationship name="salaries" toMany="YES" deletionRule="Nullify" destinationEntity="Salary" inverseName="employee" inverseEntity="Salary" syncable="YES"/>
+        <relationship name="workRecords" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkRecord" inverseName="employee" inverseEntity="WorkRecord" syncable="YES"/>
+        <relationship name="workRecordTemplate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkRecord" inverseName="workRecordTemplateForEmployee" inverseEntity="WorkRecord" syncable="YES"/>
+    </entity>
+    <entity name="Holiday" representedClassName="Holiday" syncable="YES">
+        <attribute name="holidayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isPublicHoliday" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isSalonHoliday" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="wholeDay" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="holidays" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="intervalDuringDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="IntervalDuringDay" inverseName="holiday" inverseEntity="IntervalDuringDay" syncable="YES"/>
+    </entity>
+    <entity name="IntervalDuringDay" representedClassName="IntervalDuringDay" syncable="YES">
+        <attribute name="endTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="startTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="calendarDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CalendarDay" inverseName="openingTimes" inverseEntity="CalendarDay" syncable="YES"/>
+        <relationship name="holiday" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Holiday" inverseName="intervalDuringDay" inverseEntity="Holiday" syncable="YES"/>
+        <relationship name="openingHoursDayTemplate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OpeningHoursDayTemplate" inverseName="intervalDuringDay" inverseEntity="OpeningHoursDayTemplate" syncable="YES"/>
+    </entity>
+    <entity name="LastUpdatedBy" representedClassName="LastUpdatedBy" syncable="YES">
+        <attribute name="computerIdentity" attributeType="String" syncable="YES"/>
+        <attribute name="date" attributeType="Date" syncable="YES"/>
+        <attribute name="macAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userIdentity" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Note" representedClassName="Note" syncable="YES">
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="isAuditNote" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="appointment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Appointment" inverseName="notes" inverseEntity="Appointment" syncable="YES"/>
+        <relationship name="createdBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="notesCreated" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="customer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Customer" inverseName="notes" inverseEntity="Customer" syncable="YES"/>
+        <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="notes" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="payment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Payment" inverseName="notes" inverseEntity="Payment" syncable="YES"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Product" inverseName="notes" inverseEntity="Product" syncable="YES"/>
+        <relationship name="sale" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sale" inverseName="notes" inverseEntity="Sale" syncable="YES"/>
+        <relationship name="saleItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SaleItem" inverseName="notes" inverseEntity="SaleItem" syncable="YES"/>
+        <relationship name="service" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Service" inverseName="notes" inverseEntity="Service" syncable="YES"/>
+        <relationship name="serviceCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceCategory" inverseName="notes" inverseEntity="ServiceCategory" syncable="YES"/>
+        <relationship name="stockedBrand" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StockedBrand" inverseName="notes" inverseEntity="StockedBrand" syncable="YES"/>
+        <relationship name="stockedCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StockedCategory" inverseName="notes" inverseEntity="StockedCategory" syncable="YES"/>
+        <relationship name="stockedItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StockedItem" inverseName="notes" inverseEntity="StockedItem" syncable="YES"/>
+        <relationship name="stockedType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StockedProduct" inverseName="notes" inverseEntity="StockedProduct" syncable="YES"/>
+    </entity>
+    <entity name="OpeningHoursDayTemplate" representedClassName="OpeningHoursDayTemplate" syncable="YES">
+        <attribute name="dayName" attributeType="String" syncable="YES"/>
+        <relationship name="intervalDuringDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="IntervalDuringDay" inverseName="openingHoursDayTemplate" inverseEntity="IntervalDuringDay" syncable="YES"/>
+        <relationship name="openingHoursWeekTemplate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OpeningHoursWeekTemplate" inverseName="dayTemplates" inverseEntity="OpeningHoursWeekTemplate" syncable="YES"/>
+    </entity>
+    <entity name="OpeningHoursWeekTemplate" representedClassName="OpeningHoursWeekTemplate" syncable="YES">
+        <relationship name="dayTemplates" toMany="YES" deletionRule="Nullify" destinationEntity="OpeningHoursDayTemplate" inverseName="openingHoursWeekTemplate" inverseEntity="OpeningHoursDayTemplate" syncable="YES"/>
+        <relationship name="salon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="openingHoursWeekTemplate" inverseEntity="Salon" syncable="YES"/>
+    </entity>
+    <entity name="Payment" representedClassName="Payment" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="bankStatementTransactionDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="direction" attributeType="String" defaultValueString="OUT" syncable="YES"/>
+        <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isManagersBudgetItem" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isManagersBudgetStatusManuallyChanged" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="payeeName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="payeeUID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="paymentDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="reason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reconciledWithBankStatement" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="sourceAccount" attributeType="String" defaultValueString="TILL" syncable="YES"/>
+        <attribute name="transactionFeeIncoming" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="voided" attributeType="Boolean" defaultValueString="NO" elementID="void" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="payments" inverseEntity="Account" syncable="YES"/>
+        <relationship name="bonusForWorkRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkRecord" inverseName="bonuses" inverseEntity="WorkRecord" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="payment" inverseEntity="Note" syncable="YES"/>
+        <relationship name="paymentCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PaymentCategory" inverseName="payments" inverseEntity="PaymentCategory" syncable="YES"/>
+        <relationship name="refunding" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SaleItem" inverseName="refund" inverseEntity="SaleItem" syncable="YES"/>
+        <relationship name="shoppingList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingList" inverseName="payment" inverseEntity="ShoppingList" syncable="YES"/>
+        <relationship name="templateForRecurringItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecurringItem" inverseName="paymentTemplate" inverseEntity="RecurringItem" syncable="YES"/>
+        <relationship name="workRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkRecord" inverseName="wages" inverseEntity="WorkRecord" syncable="YES"/>
+    </entity>
+    <entity name="PaymentCategory" representedClassName="PaymentCategory" syncable="YES">
+        <attribute name="categoryName" optional="YES" attributeType="String" defaultValueString="New category" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="fullDescription" optional="YES" attributeType="String" defaultValueString="Description" syncable="YES"/>
+        <attribute name="isDefault" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isDirectorsLoan" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isManagersBudgetItem" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isSalary" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isSale" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isStartupCost" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isTransferBetweenAccounts" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <relationship name="defaultCategoryForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="defaultPaymentCategory" inverseEntity="Salon" syncable="YES"/>
+        <relationship name="payments" toMany="YES" deletionRule="Nullify" destinationEntity="Payment" inverseName="paymentCategory" inverseEntity="Payment" syncable="YES"/>
+    </entity>
+    <entity name="Product" representedClassName="Product" syncable="YES">
+        <attribute name="brandName" attributeType="String" minValueString="3" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="productType" optional="YES" attributeType="String" minValueString="3" syncable="YES"/>
+        <attribute name="selectable" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="product" inverseEntity="Note" syncable="YES"/>
+        <relationship name="service" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Service" inverseName="product" inverseEntity="Service" syncable="YES"/>
+    </entity>
+    <entity name="RecurringItem" representedClassName="RecurringItem" syncable="YES">
+        <attribute name="createdDate" attributeType="Date" syncable="YES"/>
+        <attribute name="explanation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isActive" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nameOfReccurencePeriod" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nameOfRecurringaction" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nextActionDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="period" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="paymentTemplate" maxCount="1" deletionRule="Nullify" destinationEntity="Payment" inverseName="templateForRecurringItem" inverseEntity="Payment" syncable="YES"/>
+    </entity>
+    <entity name="Salary" representedClassName="Salary" syncable="YES">
+        <attribute name="extraHoursRate" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="hourlyRate" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="nominalDaysPerWeek" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="nominalHoursPerDay" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="payByHour" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="percentage" attributeType="Double" minValueString="0" maxValueString="100" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="validFromDate" attributeType="Date" syncable="YES"/>
+        <attribute name="validToDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="salaries" inverseEntity="Employee" syncable="YES"/>
+    </entity>
+    <entity name="Sale" representedClassName="Sale" syncable="YES">
+        <attribute name="actualCharge" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="amountGivenByCustomer" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="changeGiven" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="chargeAfterIndividualDiscounts" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="discountAmount" transient="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="discountType" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" syncable="YES"/>
+        <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isQuote" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="nominalCharge" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="voided" attributeType="Boolean" defaultValueString="NO" elementID="void" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="sales" inverseEntity="Account" syncable="YES"/>
+        <relationship name="customer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Customer" inverseName="sales" inverseEntity="Customer" syncable="YES"/>
+        <relationship name="fromAppointment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Appointment" inverseName="sale" inverseEntity="Appointment" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="sale" inverseEntity="Note" syncable="YES"/>
+        <relationship name="saleItem" toMany="YES" deletionRule="Cascade" destinationEntity="SaleItem" inverseName="sale" inverseEntity="SaleItem" syncable="YES"/>
+    </entity>
+    <entity name="SaleItem" representedClassName="SaleItem" syncable="YES">
+        <attribute name="actualCharge" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="discountType" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="maximumCharge" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="minimumCharge" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="nominalCharge" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="saleItem" inverseEntity="Note" syncable="YES"/>
+        <relationship name="performedBy" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="performedService" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="refund" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Payment" inverseName="refunding" inverseEntity="Payment" syncable="YES"/>
+        <relationship name="sale" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sale" inverseName="saleItem" inverseEntity="Sale" syncable="YES"/>
+        <relationship name="service" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Service" inverseName="saleItem" inverseEntity="Service" syncable="YES"/>
+    </entity>
+    <entity name="Salon" representedClassName="Salon" syncable="YES">
+        <attribute name="addressLine1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressLine2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstDayOfTrading" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="firstDayOfWeek" attributeType="Integer 32" defaultValueString="1" syncable="YES"/>
+        <attribute name="fullDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="purpose" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="salonName" attributeType="String" syncable="YES"/>
+        <attribute name="serviceEmail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startOfAccountingYear" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="cardPaymentAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="cardPaymentAccountForSalon" inverseEntity="Account" syncable="YES"/>
+        <relationship name="defaultPaymentCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PaymentCategory" inverseName="defaultCategoryForSalon" inverseEntity="PaymentCategory" syncable="YES"/>
+        <relationship name="manager" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="manages" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="openingHoursWeekTemplate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OpeningHoursWeekTemplate" inverseName="salon" inverseEntity="OpeningHoursWeekTemplate" syncable="YES"/>
+        <relationship name="primaryBankAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="primaryBankAccountForSalon" inverseEntity="Account" syncable="YES"/>
+        <relationship name="tillAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="tillAccountForSalon" inverseEntity="Account" syncable="YES"/>
+    </entity>
+    <entity name="Service" representedClassName="Service" syncable="YES">
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="deluxe" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="expectedTimeRequired" attributeType="Integer 64" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="hairLength" attributeType="Integer 64" minValueString="-1" defaultValueString="-1" syncable="YES"/>
+        <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="maximumCharge" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="minimumCharge" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" attributeType="String" minValueString="3" syncable="YES"/>
+        <attribute name="nominalCharge" attributeType="Double" minValueString="0" maxValueString="200" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="priceNegotiable" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="selectable" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <relationship name="canBeDoneBy" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="canDo" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="service" inverseEntity="Note" syncable="YES"/>
+        <relationship name="product" toMany="YES" deletionRule="Nullify" destinationEntity="Product" inverseName="service" inverseEntity="Product" syncable="YES"/>
+        <relationship name="saleItem" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SaleItem" inverseName="service" inverseEntity="SaleItem" syncable="YES"/>
+        <relationship name="serviceCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceCategory" inverseName="service" inverseEntity="ServiceCategory" syncable="YES"/>
+    </entity>
+    <entity name="ServiceCategory" representedClassName="ServiceCategory" syncable="YES">
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selectable" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="serviceCategory" inverseEntity="Note" syncable="YES"/>
+        <relationship name="service" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="serviceCategory" inverseEntity="Service" syncable="YES"/>
+    </entity>
+    <entity name="ShoppingList" representedClassName="ShoppingList" syncable="YES">
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="shoppingDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="items" toMany="YES" deletionRule="Nullify" destinationEntity="ShoppingListItem" inverseName="shoppingList" inverseEntity="ShoppingListItem" syncable="YES"/>
+        <relationship name="payment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Payment" inverseName="shoppingList" inverseEntity="Payment" syncable="YES"/>
+    </entity>
+    <entity name="ShoppingListItem" representedClassName="ShoppingListItem" syncable="YES">
+        <attribute name="numberActuallyPurchased" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="numberToPurchase" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="shoppingList" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingList" inverseName="items" inverseEntity="ShoppingList" syncable="YES"/>
+        <relationship name="stockedProduct" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StockedProduct" inverseName="shoppingListItems" inverseEntity="StockedProduct" syncable="YES"/>
+    </entity>
+    <entity name="StockedBrand" representedClassName="StockedBrand" syncable="YES">
+        <attribute name="brandName" attributeType="String" minValueString="1" defaultValueString="Full Brand Name" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="shortBrandName" attributeType="String" minValueString="1" defaultValueString="Brand Name" syncable="YES"/>
+        <relationship name="notes" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="stockedBrand" inverseEntity="Note" syncable="YES"/>
+        <relationship name="stockedProducts" toMany="YES" deletionRule="Nullify" destinationEntity="StockedProduct" inverseName="stockedBrand" inverseEntity="StockedProduct" syncable="YES"/>
+    </entity>
+    <entity name="StockedCategory" representedClassName="StockedCategory" syncable="YES">
+        <attribute name="categoryName" attributeType="String" minValueString="1" defaultValueString="New Category" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="fullDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="stockedCategory" inverseEntity="Note" syncable="YES"/>
+        <relationship name="parentCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StockedCategory" inverseName="subCategories" inverseEntity="StockedCategory" syncable="YES"/>
+        <relationship name="stockedProduct" toMany="YES" deletionRule="Nullify" destinationEntity="StockedProduct" inverseName="stockedCategory" inverseEntity="StockedProduct" syncable="YES"/>
+        <relationship name="subCategories" toMany="YES" deletionRule="Nullify" destinationEntity="StockedCategory" inverseName="parentCategory" inverseEntity="StockedCategory" syncable="YES"/>
+    </entity>
+    <entity name="StockedItem" representedClassName="StockedItem" syncable="YES">
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="percentageRemaining" optional="YES" attributeType="Integer 32" minValueString="0" maxValueString="100" defaultValueString="100" syncable="YES"/>
+        <attribute name="purchaseDate" attributeType="Date" syncable="YES"/>
+        <attribute name="useByDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="notes" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="stockedItem" inverseEntity="Note" syncable="YES"/>
+        <relationship name="stockedProduct" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StockedProduct" inverseName="stockedItems" inverseEntity="StockedProduct" syncable="YES"/>
+    </entity>
+    <entity name="StockedProduct" representedClassName="StockedProduct" syncable="YES">
+        <attribute name="barcode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="code" attributeType="String" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="currentStockLevel" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <attribute name="isConsumable" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="minimumStockTrigger" attributeType="Integer 32" minValueString="0" defaultValueString="1" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="numberToBuy" attributeType="Integer 32" minValueString="0" defaultValueString="0" syncable="YES"/>
+        <relationship name="notes" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="stockedType" inverseEntity="Note" syncable="YES"/>
+        <relationship name="shoppingListItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ShoppingListItem" inverseName="stockedProduct" inverseEntity="ShoppingListItem" syncable="YES"/>
+        <relationship name="stockedBrand" maxCount="1" deletionRule="Nullify" destinationEntity="StockedBrand" inverseName="stockedProducts" inverseEntity="StockedBrand" syncable="YES"/>
+        <relationship name="stockedCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StockedCategory" inverseName="stockedProduct" inverseEntity="StockedCategory" syncable="YES"/>
+        <relationship name="stockedItems" toMany="YES" deletionRule="Nullify" destinationEntity="StockedItem" inverseName="stockedProduct" inverseEntity="StockedItem" syncable="YES"/>
+    </entity>
+    <entity name="WorkRecord" representedClassName="WorkRecord" syncable="YES">
+        <attribute name="friday" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="isTemplate" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="monday" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="saturday" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="sunday" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="thursday" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="tuesday" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="wednesday" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="weekEndingDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="bonuses" toMany="YES" deletionRule="Nullify" destinationEntity="Payment" inverseName="bonusForWorkRecord" inverseEntity="Payment" syncable="YES"/>
+        <relationship name="employee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="workRecords" inverseEntity="Employee" syncable="YES"/>
+        <relationship name="wages" toMany="YES" deletionRule="Nullify" destinationEntity="Payment" inverseName="workRecord" inverseEntity="Payment" syncable="YES"/>
+        <relationship name="workRecordTemplateForEmployee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="workRecordTemplate" inverseEntity="Employee" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Account" positionX="0" positionY="0" width="128" height="330"/>
+        <element name="AccountReconciliation" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="Appointment" positionX="0" positionY="0" width="128" height="255"/>
+        <element name="CalendarDay" positionX="18" positionY="162" width="128" height="73"/>
+        <element name="Customer" positionX="0" positionY="0" width="128" height="360"/>
+        <element name="Employee" positionX="0" positionY="0" width="128" height="463"/>
+        <element name="Holiday" positionX="27" positionY="171" width="128" height="133"/>
+        <element name="IntervalDuringDay" positionX="36" positionY="180" width="128" height="118"/>
+        <element name="LastUpdatedBy" positionX="9" positionY="153" width="128" height="103"/>
+        <element name="Note" positionX="0" positionY="0" width="128" height="330"/>
+        <element name="OpeningHoursDayTemplate" positionX="54" positionY="189" width="128" height="88"/>
+        <element name="OpeningHoursWeekTemplate" positionX="72" positionY="198" width="128" height="73"/>
+        <element name="Payment" positionX="0" positionY="0" width="128" height="403"/>
+        <element name="PaymentCategory" positionX="0" positionY="0" width="128" height="225"/>
+        <element name="Product" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="RecurringItem" positionX="9" positionY="153" width="128" height="178"/>
+        <element name="Salary" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="Sale" positionX="0" positionY="0" width="128" height="300"/>
+        <element name="SaleItem" positionX="0" positionY="0" width="128" height="225"/>
+        <element name="Salon" positionX="0" positionY="0" width="128" height="300"/>
+        <element name="Service" positionX="0" positionY="0" width="128" height="300"/>
+        <element name="ServiceCategory" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="ShoppingList" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="ShoppingListItem" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="StockedBrand" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="StockedCategory" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="StockedItem" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="StockedProduct" positionX="0" positionY="0" width="128" height="255"/>
+        <element name="WorkRecord" positionX="0" positionY="0" width="128" height="238"/>
+    </elements>
+</model>

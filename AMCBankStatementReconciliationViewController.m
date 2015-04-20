@@ -36,6 +36,9 @@
 @property (weak) IBOutlet NSTextField *feeColumnField;
 @property (weak) IBOutlet NSTextField *netAmountColumnField;
 @property (weak) IBOutlet NSTextField *noteColumnField;
+@property (weak) IBOutlet NSTextField *statusColumnField;
+@property (weak) IBOutlet NSTextField *includeStatesField;
+@property (weak) IBOutlet NSTextField *excludeStatesField;
 
 @property (weak) IBOutlet NSTableView *csvTable;
 @property (weak) IBOutlet NSTableView *statementTransactionsTable;
@@ -171,6 +174,9 @@
             self.noteColumnField.integerValue = self.parser.noteColumn;
             self.feeColumnField.integerValue = self.parser.feeColumn;
             self.netAmountColumnField.integerValue = self.parser.netAmountColumn;
+            self.statusColumnField.integerValue = self.parser.statusColumn;
+            self.includeStatesField.stringValue = self.parser.statusInclude;
+            self.excludeStatesField.stringValue = self.parser.statusExclude;
             self.pathLabel.stringValue = fileURL.path;
         } else {
             self.headerLinesCountField.integerValue = 0;
@@ -178,14 +184,13 @@
             self.grossAmountColumnField.integerValue = -1;
             self.feeColumnField.integerValue = -1;
             self.netAmountColumnField.integerValue = -1;
+            self.statusColumnField.integerValue = -1;
+            self.includeStatesField.stringValue = @"";
+            self.excludeStatesField.stringValue = @"";
             self.pathLabel.stringValue = fileURL.path;
         }
     }
-    self.pairedStatementTransactions = [NSMutableSet set];
-    self.pairedComputerRecords = [NSMutableSet set];
-    self.pairedRecords = [NSMutableSet set];
-    self.pairedRecordsArray = [NSMutableArray array];
-    [self.csvTable reloadData];
+    [self reloadData];
 }
 -(void)highlightComputerRecordMatchingSelectedStatementTransaction:(NSDictionary*)transactionDictionary {
     NSInteger statementIndex = [self.parser.transactionDictionaries indexOfObject:transactionDictionary];
@@ -373,6 +378,23 @@
         [self.csvTable scrollColumnToVisible:feeColumn];
     }
 }
+- (IBAction)statusColumnChanged:(id)sender {
+    [self.csvTable deselectAll:self];
+    NSInteger statusColumn = self.statusColumnField.integerValue;
+    self.parser.statusColumn = statusColumn;
+    if (statusColumn >=0) {
+        NSIndexSet * indexSet = [NSIndexSet indexSetWithIndex:statusColumn];
+        [self.csvTable selectColumnIndexes:indexSet byExtendingSelection:NO];
+        [self.csvTable scrollColumnToVisible:statusColumn];
+    }
+}
+- (IBAction)includeStatesChanged:(id)sender {
+    self.parser.statusInclude = self.includeStatesField.stringValue;
+}
+- (IBAction)excludeStatesChanged:(id)sender {
+    self.parser.statusExclude = self.excludeStatesField.stringValue;
+}
+
 - (IBAction)netAmountColumnChanged:(id)sender {
     [self.csvTable deselectAll:self];
     NSInteger netAmountColumn = self.netAmountColumnField.integerValue;
@@ -646,5 +668,12 @@
     [self.documentTransactionsTable reloadData];
     [self.pairedTable reloadData];
 }
-
+-(void)reloadData {
+    [super reloadData];
+    self.pairedStatementTransactions = [NSMutableSet set];
+    self.pairedComputerRecords = [NSMutableSet set];
+    self.pairedRecords = [NSMutableSet set];
+    self.pairedRecordsArray = [NSMutableArray array];
+    [self.csvTable reloadData];
+}
 @end

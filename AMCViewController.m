@@ -22,7 +22,7 @@
 }
 
 -(void)reloadData {
-    
+
 }
 
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument*)salonDocument {
