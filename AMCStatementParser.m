@@ -31,10 +31,10 @@
         self.dateCol = account.csvDateColumn.integerValue;
         self.grossAmountColumn = account.csvAmountColumn.integerValue;
         self.noteColumn = account.csvNoteColumn.integerValue;
-        self.feeColumn = -1;
-        self.netAmountColumn = -1;
-        self.statusColumn = -1;
-        self.statusInclude = @"";
+        self.feeColumn = account.csvFeeColumn.integerValue;
+        self.netAmountColumn = account.csvNetAmountColumn.integerValue;
+        self.statusColumn = account.csvStatusColumn.integerValue;
+        self.statusInclude = account.csvStatusInclude;
         self.statusExclude = @"";
     }
     return self;
@@ -95,14 +95,20 @@
     self.account.csvStatusColumn = @(statusColumn);
 }
 -(NSString *)statusInclude {
-    return self.account.csvStatusInclude;
+    if (self.account.csvStatusInclude && self.account.csvStatusInclude.length > 0) {
+        return self.account.csvStatusInclude;
+    }
+    return @"";
 }
 -(void)setStatusInclude:(NSString *)statusInclude {
     self.account.csvStatusInclude = statusInclude;
     _transactionDictionaries = nil;
 }
 -(NSString *)statusExclude {
-    return self.account.csvStatusExclude;
+    if (self.account.csvStatusExclude && self.account.csvStatusExclude.length > 0) {
+        return self.account.csvStatusExclude;
+    }
+    return @"";
 }
 -(void)setStatusExclude:(NSString *)statusExclude {
     self.account.csvStatusExclude = statusExclude;
@@ -126,7 +132,9 @@
         }
         for (NSInteger i = firstRow; i < lastRow; i++) {
             NSDictionary * transactionDictionary = [self transactionDictionaryForTransactionRow:i-firstRow];
-            [_transactionDictionaries addObject:transactionDictionary];
+            if (transactionDictionary) {
+                [_transactionDictionaries addObject:transactionDictionary];
+            }
         }
         if (self.dateCol < 0) {
             // Can't sort
@@ -138,12 +146,10 @@
     return _transactionDictionaries;
 }
 -(NSDictionary*)transactionDictionaryForTransactionRow:(NSInteger)transactionRow {
-    NSInteger row = transactionRow;
-    if (self.headerRows > 0) {
-        row = transactionRow + self.headerRows;
-    }
+    NSInteger row = (self.headerRows > 0)?transactionRow + self.headerRows:transactionRow;
+    if (![self includeRow:row]) {return nil;}
     NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    dictionary[@"reconciled"] = [self reconciledForRow:row];
+    dictionary[@"paired"] = [self pairedForRow:row];
     dictionary[@"date"] = [self dateForRow:row];
     dictionary[@"amount"] = [self amountForRow:row];
     dictionary[@"note"] = [self noteForRow:row];
@@ -153,12 +159,15 @@
     if (self.statusColumn < 0) {return YES;}
     NSString * rowString = self.rows[row];
     NSDictionary * columnDictionary = [self columnDictionaryForCSVRowString:rowString];
-    NSString * key = [NSString stringWithFormat:@"Column %lu",self.statusColumn];
+    NSString * key = [self keyForColumn:self.statusColumn];
     NSString * state = columnDictionary[key];
     if ([state isEqualToString:@""] || [state isEqualToString:@"*"] || [state isEqualToString:self.statusInclude]) {
         return YES;
     }
     return NO;
+}
+-(NSString*)keyForColumn:(NSInteger)column {
+    return [NSString stringWithFormat:@"Column %lu",column];
 }
 -(NSString *)csvString {
     return _csvString;
@@ -189,13 +198,64 @@
     NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
     NSInteger i = 0;
     for (NSString * columnString in columns) {
-        NSString * key = [NSString stringWithFormat:@"Column %lu",i];
+        NSString * key = [self keyForColumn:i];
         dictionary[key] = columnString;
         i++;
     }
-    dictionary[@"reconciled"] = @"";
+    dictionary[@"paired"] = @"";
     return dictionary;
 }
+-(NSString*)csvStringForIdentifier:(NSString*)identifier row:(NSInteger)row {
+    NSString * string = [self columnDictionaryForRow:row][identifier];
+    if (!string) return nil;
+    return string;
+}
+-(NSDate*)dateFromString:(NSString*)string {
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeDate
+                                                               error:nil];
+    NSArray *matches = [detector matchesInString:string
+                                         options:0
+                                           range:NSMakeRange(0, [string length])];
+    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateStyle = NSDateFormatterShortStyle;
+    dateFormatter.timeStyle = NSDateFormatterShortStyle;
+    for (NSTextCheckingResult *match in matches) {
+        if ([match resultType] == NSTextCheckingTypeDate) {
+            return [match date];
+        }
+    }
+    return nil;
+}
+-(NSDate*)dateForRow:(NSInteger)row {
+    if (self.dateCol >=0) {
+        NSString * key = [self keyForColumn:self.dateCol];
+        NSString * dateString = [self csvStringForIdentifier:key row:row];
+        return [self dateFromString:dateString];
+    }
+    return nil;
+}
+-(NSNumber*)amountForRow:(NSInteger)row {
+    if (self.grossAmountColumn >=0) {
+        NSString * key = [self keyForColumn:self.grossAmountColumn];
+        NSString * stringAmount = [self csvStringForIdentifier:key row:row];
+        stringAmount = [stringAmount stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        return @(stringAmount.doubleValue);
+    }
+    return nil;
+}
+-(NSString*)noteForRow:(NSInteger)row {
+    if (self.noteColumn >=0) {
+        NSString * key = [self keyForColumn:self.noteColumn];
+        NSString * note = [self csvStringForIdentifier:key row:row];
+        return note;
+    }
+    return nil;
+}
+-(NSString*)pairedForRow:(NSInteger)row {
+    return [self csvStringForIdentifier:@"paired" row:row];
+}
+
+#pragma mark - CSV processing functions
 -(NSArray*)columnsFromRowString:(NSString*)rowString {
     NSMutableArray * columnStrings = [NSMutableArray array];
     NSRange nextFieldRange = [self nextStringRangeInCSVRowString:rowString beginningAtIndex:0];
@@ -255,55 +315,5 @@
     }
     return -1;
 }
--(NSString*)csvStringForIdentifier:(NSString*)identifier row:(NSInteger)row {
-    NSString * string = [self columnDictionaryForRow:row][identifier];
-    if (!string) return nil;
-    return string;
-}
--(NSDate*)dateFromString:(NSString*)string {
-    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeDate
-                                                               error:nil];
-    NSArray *matches = [detector matchesInString:string
-                                         options:0
-                                           range:NSMakeRange(0, [string length])];
-    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateStyle = NSDateFormatterShortStyle;
-    dateFormatter.timeStyle = NSDateFormatterShortStyle;
-    for (NSTextCheckingResult *match in matches) {
-        if ([match resultType] == NSTextCheckingTypeDate) {
-            return [match date];
-        }
-    }
-    return nil;
-}
--(NSDate*)dateForRow:(NSInteger)row {
-    if (self.dateCol >=0) {
-        NSString * key = [NSString stringWithFormat:@"Column %lu",self.dateCol];
-        NSString * dateString = [self csvStringForIdentifier:key row:row];
-        return [self dateFromString:dateString];
-    }
-    return nil;
-}
--(NSNumber*)amountForRow:(NSInteger)row {
-    if (self.grossAmountColumn >=0) {
-        NSString * key = [NSString stringWithFormat:@"Column %lu",self.grossAmountColumn];
-        NSString * stringAmount = [self csvStringForIdentifier:key row:row];
-        stringAmount = [stringAmount stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-        return @(stringAmount.doubleValue);
-    }
-    return nil;
-}
--(NSString*)noteForRow:(NSInteger)row {
-    if (self.noteColumn >=0) {
-        NSString * key = [NSString stringWithFormat:@"Column %lu",self.noteColumn];
-        NSString * note = [self csvStringForIdentifier:key row:row];
-        return note;
-    }
-    return nil;
-}
--(NSString*)reconciledForRow:(NSInteger)row {
-    return [self csvStringForIdentifier:@"reconciled" row:row];
-}
-
 
 @end

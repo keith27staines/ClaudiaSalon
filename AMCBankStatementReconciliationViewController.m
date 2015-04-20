@@ -223,7 +223,7 @@
     AMCAccountStatementItem * item = pairedRecord[@"computerRecord"];
     [self.pairedComputerRecords removeObject:item];
     item.pairingRecord = nil;
-    transactionDicitonary[@"reconciled"] = @"";
+    transactionDicitonary[@"paired"] = @"";
 }
 -(void)unpairComputerRecord:(AMCAccountStatementItem*)item {
     if (![self isComputerRecordPaired:item]) {
@@ -236,15 +236,20 @@
 -(NSInteger)pairStatementTransaction:(NSMutableDictionary*)transactionDictionary withComputerRecord:(AMCAccountStatementItem*)item {
     [self unpairStatementTransaction:transactionDictionary];
     [self unpairComputerRecord:item];
+    double mismatch = [self mismatchBetweenTransactionDictionary:transactionDictionary item:item];
     NSDictionary * pairedRecord = @{@"statementTransaction":transactionDictionary,
-             @"computerRecord":item};
+                                    @"computerRecord":item, @"mismatch":@(mismatch)};
     [self.pairedRecords addObject:pairedRecord];
     [self.pairedRecordsArray addObject:pairedRecord];
     [self.pairedComputerRecords addObject:item];
     [self.pairedStatementTransactions addObject:transactionDictionary];
     item.pairingRecord = pairedRecord;
-    transactionDictionary[@"reconciled"] = @"Y";
+    transactionDictionary[@"paired"] = @"Y";
     return self.pairedRecords.count - 1;
+}
+-(double)mismatchBetweenTransactionDictionary:(NSDictionary*)transaction item:(AMCAccountStatementItem*)item {
+    return [self mismatchFirstAmount:transaction[@"amount"] secondAmount:@(item.amountGross)] +
+    [self mismatchFirstDate:transaction[@"date"] secondDate:item.date];
 }
 -(BOOL)isComputerRecordPaired:(AMCAccountStatementItem*)item {
     return [self.pairedComputerRecords containsObject:item];
@@ -279,7 +284,8 @@
     for (AMCAccountStatementItem * item in self.computerRecords) {
         double dateMismatch = [self mismatchFirstDate:date secondDate:item.date];
         double amountMismatch = [self mismatchFirstAmount:amount secondAmount:@(item.amountGross)];
-        NSDictionary * dictionary = @{@"mismatch" : @(dateMismatch+amountMismatch),
+        double mismatch = [self mismatchBetweenTransactionDictionary:transactionDictionary item:item];
+        NSDictionary * dictionary = @{@"mismatch" : @(mismatch),
                                       @"dateMismatch" : @(dateMismatch),
                                       @"amountMismatch" : @(amountMismatch),
                                       @"item":item};
@@ -298,11 +304,11 @@
     return round(fabs(firstAmount.doubleValue*100 - secondAmount.doubleValue*100));
 }
 
--(AMCAccountStatementItem*)bestMatchForStatementTransaction:(NSMutableDictionary*)transactionDictionary {
+-(AMCAccountStatementItem*)unpairedExactMatchForStatementTransaction:(NSMutableDictionary*)transactionDictionary {
     NSMutableArray * matches = [self computerRecordsMatchingDateAndAmount:transactionDictionary];
     for (NSDictionary * dictionary in matches) {
         NSNumber * mismatchNumber = dictionary[@"mismatch"];
-        if (mismatchNumber.doubleValue < 1) {
+        if (mismatchNumber.doubleValue == 0) {
             AMCAccountStatementItem * item = dictionary[@"item"];
             if (!item.pairingRecord) {
                 return item;
@@ -435,11 +441,35 @@
 }
 
 - (IBAction)pairClickedItem:(id)sender {
-    NSLog(@"pairClickedItem: not implemented yet");
-    [self reloadPairingData];
-}
+    NSMutableDictionary * transactionDictionary;
+    AMCAccountStatementItem * item;
+    if (sender == self.pairStatementMenuItem) {
+        transactionDictionary =[self actionItemsForTable:self.statementTransactionsTable];
+        NSInteger computerRecordIndex = self.documentTransactionsTable.selectedRow;
+        item = self.computerRecords[computerRecordIndex];
 
+    }
+    if (sender == self.documentTransactionsTable) {
+        item = [self actionItemsForTable:self.documentTransactionsTable];
+        NSInteger statementIndex = self.statementTransactionsTable.selectedRow;
+        transactionDictionary = self.parser.transactionDictionaries[statementIndex];
+    }
+    // Pair if a transaction dictionary and a computer record have been identified
+    if (transactionDictionary && item) {
+        NSInteger pairedIndex = [self pairStatementTransaction:transactionDictionary withComputerRecord:item];
+        [self.pairedTable selectRowIndexes:[NSIndexSet indexSetWithIndex:pairedIndex] byExtendingSelection:NO];
+        [self reloadPairingData];
+    }
+}
 - (IBAction)unpairClickeditem:(id)sender {
+    if (sender == self.pairStatementMenuItem) {
+        NSMutableDictionary * transactionDictionary = [self actionItemsForTable:self.statementTransactionsTable];
+        [self unpairStatementTransaction:transactionDictionary];
+    }
+    if (sender == self.documentTransactionsTable) {
+        AMCAccountStatementItem * item = [self actionItemsForTable:self.documentTransactionsTable];
+        [self unpairComputerRecord:item];
+    }
     [self reloadPairingData];
 }
 - (IBAction)addMatchingComputerRecord:(id)sender {
@@ -471,9 +501,9 @@
 }
 - (IBAction)autoPairAll:(id)sender {
     for (NSMutableDictionary * transactionDictionary in self.parser.transactionDictionaries) {
-        AMCAccountStatementItem * bestMatch = [self bestMatchForStatementTransaction:transactionDictionary];
-        if (bestMatch) {
-            [self pairStatementTransaction:transactionDictionary withComputerRecord:bestMatch];
+        AMCAccountStatementItem * exactMatch = [self unpairedExactMatchForStatementTransaction:transactionDictionary];
+        if (exactMatch) {
+            [self pairStatementTransaction:transactionDictionary withComputerRecord:exactMatch];
         }
     }
     [self reloadPairingData];
@@ -510,8 +540,8 @@
     }
     if (tableView == self.documentTransactionsTable) {
         AMCAccountStatementItem * item = self.computerRecords[row];
-        if ([tableColumn.identifier isEqualToString:@"reconciled"]) {
-            return (item.pairingRecord)?@"Y":@"";
+        if ([tableColumn.identifier isEqualToString:@"paired"]) {
+            return (item.paired)?@"Y":@"";
         }
         if ([tableColumn.identifier isEqualToString:@"date"]) {
             return item.date;

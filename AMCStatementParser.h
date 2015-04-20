@@ -32,5 +32,5 @@
 -(NSDate*)dateForRow:(NSInteger)row;
 -(NSNumber*)amountForRow:(NSInteger)row;
 -(NSString*)noteForRow:(NSInteger)row;
--(NSString*)reconciledForRow:(NSInteger)row;
+-(NSString*)pairedForRow:(NSInteger)row;
 @end

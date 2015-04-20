@@ -190,4 +190,7 @@
         self.sale.voided = @(YES);
     }
 }
+-(BOOL)paired {
+    return (self.pairingRecord)?YES:NO;
+}
 @end
