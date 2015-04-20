@@ -105,7 +105,7 @@
         row = transactionRow + self.headerRows;
     }
     NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    dictionary[@"reconciled"] = [self reconciledForRow:row + self.headerRows];
+    dictionary[@"reconciled"] = [self reconciledForRow:row];
     dictionary[@"date"] = [self dateForRow:row];
     dictionary[@"amount"] = [self amountForRow:row];
     dictionary[@"note"] = [self noteForRow:row];
@@ -136,7 +136,8 @@
     return [self columnDictionaryForCSVRowString:rowString];
 }
 -(NSDictionary*)columnDictionaryForCSVRowString:(NSString*)rowString {
-    NSArray * columns = [rowString componentsSeparatedByString:@","];
+    //NSArray * columns = [rowString componentsSeparatedByString:@","];
+    NSArray * columns = [self columnsFromRowString:rowString];
     NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
     NSInteger i = 0;
     for (NSString * columnString in columns) {
@@ -147,25 +148,68 @@
     dictionary[@"reconciled"] = @"";
     return dictionary;
 }
-
+-(NSArray*)columnsFromRowString:(NSString*)rowString {
+    NSMutableArray * columnStrings = [NSMutableArray array];
+    NSRange nextFieldRange = [self nextStringRangeInCSVRowString:rowString beginningAtIndex:0];
+    while (nextFieldRange.length < rowString.length) {
+        NSString * field = [rowString substringWithRange:nextFieldRange];
+        [columnStrings addObject:field];
+        nextFieldRange = [self nextStringRangeInCSVRowString:rowString beginningAtIndex:NSMaxRange(nextFieldRange)+1];
+    }
+    return [columnStrings copy];
+}
+-(NSRange)nextStringRangeInCSVRowString:(NSString*)rowstring beginningAtIndex:(NSInteger)index {
+    if (index >= rowstring.length) {
+        return NSMakeRange(rowstring.length, 0);
+    }
+    NSInteger firstNonDelimiterCharacter = [self firstNonDelimiterCharacter:rowstring beginningAtIndex:index];
+    if (firstNonDelimiterCharacter < 0) {
+        return NSMakeRange(0, rowstring.length);
+    }
+    NSString * delimiter = [self expectedDelimiterForString:rowstring beginningAtIndex:firstNonDelimiterCharacter];
+    NSInteger lastNonDelimiterCharacter = [self lastNonDelimiterCharacter:rowstring beginningAtIndex:firstNonDelimiterCharacter delimiter:delimiter];
+    return NSMakeRange(firstNonDelimiterCharacter, 1+lastNonDelimiterCharacter-firstNonDelimiterCharacter);
+}
+-(NSString*)expectedDelimiterForString:(NSString*)string beginningAtIndex:(NSInteger)index {
+    NSString * delimiter = [self firstDelimiterInString:string priorToIndex:index];
+    delimiter = (delimiter)?delimiter:@",";
+    return delimiter;
+}
+-(NSString*)firstDelimiterInString:(NSString*)string priorToIndex:(NSInteger)index {
+    while (index >0) {
+        NSString * previousChar = [string substringWithRange:NSMakeRange(index-1, 1)];
+        if ([previousChar isEqualToString:@","] || [previousChar isEqualToString:@"\""]) {
+            return previousChar;
+        }
+        index--;
+    }
+    return nil;
+}
+-(NSInteger)firstNonDelimiterCharacter:(NSString*)string beginningAtIndex:(NSInteger)index {
+    NSString * nextChar;
+    while (index < string.length) {
+        nextChar = [string substringWithRange:NSMakeRange(index, 1)];
+        if (![nextChar isEqualToString:@","] && ![nextChar isEqualToString:@"\""]) {
+            return index;
+        }
+        index++;
+    }
+    return -1;
+}
+-(NSInteger)lastNonDelimiterCharacter:(NSString*)string  beginningAtIndex:(NSInteger)index delimiter:(NSString*)fieldDelimiter {
+    NSString * nextChar;
+    while (index < string.length) {
+        nextChar = [string substringWithRange:NSMakeRange(index, 1)];
+        if ([nextChar isEqualToString:fieldDelimiter]) {
+            return index-1;
+        }
+        index++;
+    }
+    return -1;
+}
 -(NSString*)csvStringForIdentifier:(NSString*)identifier row:(NSInteger)row {
     NSString * string = [self columnDictionaryForRow:row][identifier];
     if (!string) return nil;
-    NSError *error = nil;
-    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeDate
-                                                               error:&error];
-    NSArray *matches = [detector matchesInString:string
-                                         options:0
-                                           range:NSMakeRange(0, [string length])];
-    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateStyle = NSDateFormatterShortStyle;
-    dateFormatter.timeStyle = NSDateFormatterShortStyle;
-    for (NSTextCheckingResult *match in matches) {
-        if ([match resultType] == NSTextCheckingTypeDate) {
-            
-            return [dateFormatter stringFromDate:[match date]];
-        }
-    }
     return string;
 }
 -(NSDate*)dateFromString:(NSString*)string {
@@ -196,6 +240,7 @@
     if (self.grossAmountColumn >=0) {
         NSString * key = [NSString stringWithFormat:@"Column %lu",self.grossAmountColumn];
         NSString * stringAmount = [self csvStringForIdentifier:key row:row];
+        stringAmount = [stringAmount stringByReplacingOccurrencesOfString:@"\"" withString:@""];
         return @(stringAmount.doubleValue);
     }
     return nil;

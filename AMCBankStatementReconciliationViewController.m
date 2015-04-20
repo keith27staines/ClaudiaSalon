@@ -90,6 +90,7 @@
         self.previousButton.enabled = NO;
         self.nextButton.enabled = YES;
         self.doneButton.enabled = NO;
+        [self.csvTable reloadData];
     }
     if (self.subview == self.reconcileTransactionsViewController.view) {
         self.viewTitle.stringValue = @"Reconcile transactions with statement";
@@ -98,6 +99,13 @@
         self.previousButton.enabled = YES;
         self.nextButton.enabled = NO;
         self.doneButton.enabled = YES;
+        for (AMCAccountStatementItem * item in self.computerRecords) {
+            if (![self isComputerRecordPaired:item]) {
+                item.pairingRecord = nil;
+            }
+            item.pairingRecord = nil;
+        }
+        [self reloadPairingData];
     }
     [self.view setNeedsUpdateConstraints:YES];
     [self.containerView setNeedsDisplay:YES];
