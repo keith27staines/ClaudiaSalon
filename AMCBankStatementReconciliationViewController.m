@@ -11,6 +11,7 @@
 #import "AMCAccountStatementItem.h"
 #import "NSDate+AMCDate.h"
 #import "Payment+Methods.h"
+#import "AMCMatchingPaymentSelectorViewController.h"
 
 @interface AMCBankStatementReconciliationViewController () <NSTableViewDataSource, NSTableViewDelegate, NSMenuDelegate>
 
@@ -29,6 +30,7 @@
 @property (weak) IBOutlet NSButton *previousButton;
 @property (weak) IBOutlet NSButton *nextButton;
 @property (weak) IBOutlet NSButton *doneButton;
+@property (strong) IBOutlet AMCMatchingPaymentSelectorViewController *viewBestMatchesController;
 
 @property (weak) IBOutlet NSTextField *headerLinesCountField;
 @property (weak) IBOutlet NSTextField *dateColumnField;
@@ -61,6 +63,7 @@
 @property (weak) IBOutlet NSMenuItem *unpairComputerRecordMenuItem;
 @property (weak) IBOutlet NSMenuItem *voidComputerRecordMenuItem;
 @property (weak) IBOutlet NSMenuItem *unpairPairedRecordMenuItem;
+@property (weak) IBOutlet NSMenuItem *viewBestMatchesMenuItem;
 
 @end
 
@@ -74,9 +77,19 @@
         column.identifier = [NSString stringWithFormat:@"Column %lu",i];
         i++;
     }
-    self.statementTransactionsTable.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
-    self.documentTransactionsTable.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
+    self.statementTransactionsTable.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"paired" ascending:YES],
+                                                        [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
+    self.documentTransactionsTable.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"paired" ascending:YES],
+                                                       [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
     self.pairedTable.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"leftDate" ascending:YES]];
+}
+-(void)dismissViewController:(NSViewController *)viewController {
+    if (viewController == self.viewBestMatchesController) {
+        AMCMatchingPaymentSelectorViewController * vc = (AMCMatchingPaymentSelectorViewController*)viewController;
+        AMCAccountStatementItem * item = vc.computerRecord;
+        NSMutableDictionary * transactionDictionary = vc.transactionDictionary;
+        [self pairStatementTransaction:transactionDictionary withComputerRecord:item];
+    }
 }
 -(void)emplaceSubview {
     for (NSView * view in self.containerView.subviews) {
@@ -94,6 +107,8 @@
         self.nextButton.enabled = YES;
         self.doneButton.enabled = NO;
         [self.csvTable reloadData];
+        [self.view setNeedsUpdateConstraints:YES];
+        [self.containerView setNeedsDisplay:YES];
     }
     if (self.subview == self.reconcileTransactionsViewController.view) {
         self.viewTitle.stringValue = @"Reconcile transactions with statement";
@@ -108,12 +123,12 @@
             }
             item.pairingRecord = nil;
         }
+        [self.view setNeedsUpdateConstraints:YES];
+        [self.containerView setNeedsDisplay:YES];
         [self reloadPairingData];
+        [self autoPairAll:self];
     }
-    [self.view setNeedsUpdateConstraints:YES];
-    [self.containerView setNeedsDisplay:YES];
 }
-
 -(void)updateViewConstraints {
     [super updateViewConstraints];
     NSView * containerView = self.containerView;
@@ -237,8 +252,13 @@
     [self unpairStatementTransaction:transactionDictionary];
     [self unpairComputerRecord:item];
     double mismatch = [self mismatchBetweenTransactionDictionary:transactionDictionary item:item];
+    double dateMismatch = [self mismatchFirstDate:transactionDictionary[@"date"] secondDate:item.date];
+    double amountMismatch = [self mismatchFirstAmount:transactionDictionary[@"amount"] secondAmount:@(item.amountGross)];
     NSDictionary * pairedRecord = @{@"statementTransaction":transactionDictionary,
-                                    @"computerRecord":item, @"mismatch":@(mismatch)};
+                                    @"computerRecord":item,
+                                    @"mismatch":@(mismatch),
+                                    @"dateMismatch":@(dateMismatch),
+                                    @"amountMismatch":@(amountMismatch)};
     [self.pairedRecords addObject:pairedRecord];
     [self.pairedRecordsArray addObject:pairedRecord];
     [self.pairedComputerRecords addObject:item];
@@ -423,6 +443,21 @@
 }
 
 #pragma mark - Actions for pairing
+- (IBAction)viewBestMatches:(id)sender {
+    NSMutableDictionary * transactionDictionary = [self actionItemsForTable:self.statementTransactionsTable];
+    if (transactionDictionary) {
+        // prepare controller for display
+        self.viewBestMatchesController.transactionDictionary = transactionDictionary;
+        self.viewBestMatchesController.pairingRecords = [self computerRecordsMatchingDateAndAmount:transactionDictionary];
+        [self.viewBestMatchesController prepareForDisplayWithSalon:self.salonDocument];
+        // figure out where to present it
+        NSInteger row = [self.statementTransactionsTable clickedRow];
+        NSInteger col = [self.statementTransactionsTable clickedColumn];
+        NSRect cellFrame = [self.statementTransactionsTable frameOfCellAtColumn:row row:col];
+        // Now we can present it
+        [self presentViewController:self.viewBestMatchesController asPopoverRelativeToRect:cellFrame ofView:self.statementTransactionsTable preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorApplicationDefined];
+    }
+}
 
 - (IBAction)pair:(id)sender {
     NSInteger statementTransactionIndex = self.statementTransactionsTable.selectedRow;
@@ -679,13 +714,15 @@
         }
         return NO;
     }
-    
     if (menuItem == self.unpairPairedRecordMenuItem) {
         NSDictionary * paired = [self actionItemsForTable:self.documentTransactionsTable];
         if (paired) {
             return YES;
         }
         return NO;
+    }
+    if (menuItem == self.viewBestMatchesMenuItem) {
+        return YES;
     }
     return NO;
 }

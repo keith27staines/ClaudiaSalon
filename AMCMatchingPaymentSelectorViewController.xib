@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14E7f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCMatchingPaymentSelectorViewController">
+            <connections>
+                <outlet property="arrayController" destination="aBE-Cp-mi3" id="iUw-B1-Mt1"/>
+                <outlet property="dataTable" destination="6lc-aC-ehO" id="XfP-A7-Kgh"/>
+                <outlet property="filterSelector" destination="vT5-9V-XbD" id="79O-GY-XAp"/>
+                <outlet property="statementAmountLabel" destination="xSA-gP-PJu" id="0Ys-Ix-572"/>
+                <outlet property="statementDateLabel" destination="3Yk-lD-Juy" id="Eup-0u-5Ub"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="559" height="620"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hsk-3a-EY2">
+                    <rect key="frame" x="462" y="13" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Pair" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9bL-Lr-odU">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="okButtonClicked:" target="-2" id="UCP-Od-8J0"/>
+                        <binding destination="aBE-Cp-mi3" name="enabled" keyPath="selectedObjects.@count" id="GjB-zS-w1c"/>
+                    </connections>
+                </button>
+                <searchField wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EU3-ZP-35R">
+                    <rect key="frame" x="20" y="20" width="277" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="282" id="3AL-ev-Y4A"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="SV3-A6-1qQ"/>
+                    </constraints>
+                    <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="zR5-tf-1CR">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </searchFieldCell>
+                </searchField>
+                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vT5-9V-XbD">
+                    <rect key="frame" x="18" y="411" width="468" height="24"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="lsH-0D-UEA">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment label="Matching date and amount" selected="YES"/>
+                            <segment label="Matching date" tag="1"/>
+                            <segment label="Matching amount"/>
+                            <segment label="All"/>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="changeFilter:" target="-2" id="cqf-nh-joI"/>
+                    </connections>
+                </segmentedControl>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="edV-9x-nCJ">
+                    <rect key="frame" x="-2" y="-14" width="4" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="OMu-ri-nIF">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Boz-s4-QkB">
+                    <rect key="frame" x="20" y="50" width="519" height="355"/>
+                    <clipView key="contentView" id="Bxq-bg-Htx">
+                        <rect key="frame" x="1" y="17" width="238" height="117"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="DlV-mt-ZaX" id="6lc-aC-ehO">
+                                <rect key="frame" x="0.0" y="0.0" width="238" height="117"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn identifier="paired" width="44.94921875" minWidth="10" maxWidth="3.4028234663852886e+38" id="SKr-B1-bGI">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Paired">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="hfM-bm-pXq">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="aBE-Cp-mi3" name="value" keyPath="arrangedObjects.item.pairingRecord" id="YsO-eG-v40">
+                                                <dictionary key="options">
+                                                    <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                </dictionary>
+                                            </binding>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn identifier="date" width="116" minWidth="40" maxWidth="1000" id="pb4-jE-G8N">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Date">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="3As-O4-Wpq">
+                                            <dateFormatter key="formatter" dateStyle="short" id="l5z-42-ds9"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="aBE-Cp-mi3" name="value" keyPath="arrangedObjects.item.date" id="soV-bE-pFI"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn identifier="amount" width="64" minWidth="40" maxWidth="1000" id="BIA-lA-mVg">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Amount">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="Ug8-pA-9DB">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="RVw-Oe-cEb"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="aBE-Cp-mi3" name="value" keyPath="arrangedObjects.item.amountGross" id="OaE-O8-dmq"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn identifier="mismatch" width="68.21875" minWidth="10" maxWidth="3.4028234663852886e+38" id="Y4T-Xb-GT7">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Mismatch">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="4aM-sk-Ok1">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="3Ix-Za-94I"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="aBE-Cp-mi3" name="value" keyPath="arrangedObjects.mismatch" id="Sr3-Ql-kfX"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn identifier="dateMismatch" width="77.01953125" minWidth="10" maxWidth="3.4028234663852886e+38" id="cmw-qy-9KE">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Date mismatch">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="fD6-fW-tNx">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="tPU-MG-j9Y"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="aBE-Cp-mi3" name="value" keyPath="arrangedObjects.dateMismatch" id="oDm-3B-sKL"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn identifier="mismatchAmount" width="66.8984375" minWidth="10" maxWidth="3.4028234663852886e+38" id="s9W-o4-mVk">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Amount mismatch">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="g1J-kK-5Xl">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="MvL-Vw-Yc8"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="aBE-Cp-mi3" name="value" keyPath="arrangedObjects.amountMismatch" id="kk4-be-JTI"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn identifier="note" width="59" minWidth="10" maxWidth="3.4028234663852886e+38" id="icB-gv-Ace">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Note">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="Tx9-Gv-t6p">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="aBE-Cp-mi3" name="value" keyPath="arrangedObjects.item.note" id="4eK-h1-Iwp"/>
+                                        </connections>
+                                    </tableColumn>
+                                </tableColumns>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </clipView>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="355" id="RHK-F9-ZqI"/>
+                    </constraints>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="pdm-ko-FWS">
+                        <rect key="frame" x="1" y="119" width="223" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="OB2-rX-5Jx">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <tableHeaderView key="headerView" id="DlV-mt-ZaX">
+                        <rect key="frame" x="0.0" y="0.0" width="238" height="17"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableHeaderView>
+                </scrollView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bng-fE-2Xc">
+                    <rect key="frame" x="18" y="591" width="523" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="csS-aX-UqC"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Pair statement item to sale or payment record" id="tp1-vI-rMR">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FBi-w7-OjI">
+                    <rect key="frame" x="18" y="447" width="523" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Select payment or sale that matches statement" id="fUZ-gZ-faa">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <box autoresizesSubviews="NO" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="cKe-cW-2ry">
+                    <rect key="frame" x="17" y="481" width="525" height="100"/>
+                    <view key="contentView">
+                        <rect key="frame" x="1" y="1" width="523" height="84"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eBS-hU-5En">
+                                <rect key="frame" x="16" y="25" width="107" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Transaction date" id="DfS-wM-fwA">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OGh-Gz-Jtr">
+                                <rect key="frame" x="261" y="25" width="52" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Amount" id="Lq5-2H-XvM">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Yk-lD-Juy">
+                                <rect key="frame" x="127" y="25" width="38" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="vEg-8r-L1u">
+                                    <dateFormatter key="formatter" dateStyle="short" id="7nG-8O-Tdd"/>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xSA-gP-PJu">
+                                <rect key="frame" x="317" y="25" width="38" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="CLv-Ey-czu">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="cD9-0S-9h4"/>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oOE-tB-4e0">
+                                <rect key="frame" x="16" y="62" width="491" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Statement item details" id="Hcb-wY-dKM">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="3Yk-lD-Juy" secondAttribute="bottom" constant="22" id="27Y-6t-BBK"/>
+                        <constraint firstItem="eBS-hU-5En" firstAttribute="leading" secondItem="cKe-cW-2ry" secondAttribute="leading" constant="16" id="BXK-1l-ItQ"/>
+                        <constraint firstItem="oOE-tB-4e0" firstAttribute="top" secondItem="cKe-cW-2ry" secondAttribute="top" constant="20" id="Lfi-8h-q5h"/>
+                        <constraint firstAttribute="trailing" secondItem="oOE-tB-4e0" secondAttribute="trailing" constant="16" id="MzQ-Ee-DnE"/>
+                        <constraint firstItem="OGh-Gz-Jtr" firstAttribute="leading" secondItem="3Yk-lD-Juy" secondAttribute="trailing" constant="100" id="NDQ-Fb-R5u"/>
+                        <constraint firstAttribute="bottom" secondItem="xSA-gP-PJu" secondAttribute="bottom" constant="22" id="R1d-Zl-QAH"/>
+                        <constraint firstItem="oOE-tB-4e0" firstAttribute="leading" secondItem="cKe-cW-2ry" secondAttribute="leading" constant="16" id="UEs-Z7-Boo"/>
+                        <constraint firstAttribute="bottom" secondItem="OGh-Gz-Jtr" secondAttribute="bottom" constant="22" id="Vxy-uf-sWh"/>
+                        <constraint firstItem="eBS-hU-5En" firstAttribute="top" secondItem="oOE-tB-4e0" secondAttribute="bottom" constant="20" id="dp8-3T-9dg"/>
+                        <constraint firstAttribute="bottom" secondItem="eBS-hU-5En" secondAttribute="bottom" constant="22" id="i4r-2f-rWB"/>
+                        <constraint firstItem="xSA-gP-PJu" firstAttribute="leading" secondItem="OGh-Gz-Jtr" secondAttribute="trailing" constant="8" symbolic="YES" id="vG7-hr-zpF"/>
+                        <constraint firstItem="3Yk-lD-Juy" firstAttribute="leading" secondItem="eBS-hU-5En" secondAttribute="trailing" constant="8" symbolic="YES" id="zAi-BH-h5L"/>
+                    </constraints>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </box>
+                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="2Kn-8g-I8J">
+                    <rect key="frame" x="20" y="470" width="519" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rdm-GN-6U1">
+                    <rect key="frame" x="351" y="13" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NpI-9s-gyp">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cancelButtonClicked:" target="-2" id="fpa-Xx-oes"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="EU3-ZP-35R" secondAttribute="bottom" constant="20" id="1Mr-tz-7Ut"/>
+                <constraint firstItem="EU3-ZP-35R" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="2j3-Ps-aqh"/>
+                <constraint firstAttribute="trailing" secondItem="cKe-cW-2ry" secondAttribute="trailing" constant="20" id="2qQ-WX-ASd"/>
+                <constraint firstItem="2Kn-8g-I8J" firstAttribute="top" secondItem="cKe-cW-2ry" secondAttribute="bottom" constant="12" id="4M4-ys-tPh"/>
+                <constraint firstAttribute="trailing" secondItem="FBi-w7-OjI" secondAttribute="trailing" constant="20" symbolic="YES" id="4jU-3n-3DW"/>
+                <constraint firstItem="bng-fE-2Xc" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="CNL-ti-afz"/>
+                <constraint firstItem="vT5-9V-XbD" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="DCZ-gG-yJP"/>
+                <constraint firstItem="2Kn-8g-I8J" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="E9Y-iD-Vd8"/>
+                <constraint firstItem="hsk-3a-EY2" firstAttribute="width" secondItem="rdm-GN-6U1" secondAttribute="width" id="Gza-TY-bxR"/>
+                <constraint firstItem="bng-fE-2Xc" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="12" id="Jjm-uR-WUD"/>
+                <constraint firstItem="hsk-3a-EY2" firstAttribute="leading" secondItem="rdm-GN-6U1" secondAttribute="trailing" constant="40" id="Q2O-Ek-km5"/>
+                <constraint firstItem="vT5-9V-XbD" firstAttribute="top" secondItem="FBi-w7-OjI" secondAttribute="bottom" constant="13" id="UD3-b3-sZW"/>
+                <constraint firstAttribute="trailing" secondItem="2Kn-8g-I8J" secondAttribute="trailing" constant="20" id="UU0-1h-WI3"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vT5-9V-XbD" secondAttribute="trailing" constant="20" id="W3i-Cl-cd4"/>
+                <constraint firstItem="EU3-ZP-35R" firstAttribute="top" secondItem="Boz-s4-QkB" secondAttribute="bottom" constant="8" symbolic="YES" id="WBu-pP-brl"/>
+                <constraint firstItem="cKe-cW-2ry" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="YaN-xO-33n"/>
+                <constraint firstItem="FBi-w7-OjI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="bdG-a6-lMm"/>
+                <constraint firstItem="rdm-GN-6U1" firstAttribute="leading" secondItem="EU3-ZP-35R" secondAttribute="trailing" priority="750" constant="60" id="dNw-Dd-LWF"/>
+                <constraint firstItem="Boz-s4-QkB" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="hHo-RQ-DhK"/>
+                <constraint firstItem="hsk-3a-EY2" firstAttribute="top" secondItem="rdm-GN-6U1" secondAttribute="top" id="jK7-3o-lXe"/>
+                <constraint firstItem="FBi-w7-OjI" firstAttribute="top" secondItem="2Kn-8g-I8J" secondAttribute="bottom" constant="8" id="jXI-rl-agq"/>
+                <constraint firstItem="cKe-cW-2ry" firstAttribute="top" secondItem="bng-fE-2Xc" secondAttribute="bottom" constant="10" id="o0i-MJ-p2i"/>
+                <constraint firstAttribute="trailing" secondItem="hsk-3a-EY2" secondAttribute="trailing" constant="20" symbolic="YES" id="peT-N7-XQk"/>
+                <constraint firstAttribute="trailing" secondItem="bng-fE-2Xc" secondAttribute="trailing" constant="20" symbolic="YES" id="pn5-GX-ozY"/>
+                <constraint firstItem="rdm-GN-6U1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="EU3-ZP-35R" secondAttribute="trailing" constant="40" id="r1M-ZU-u9z"/>
+                <constraint firstItem="Boz-s4-QkB" firstAttribute="top" secondItem="vT5-9V-XbD" secondAttribute="bottom" constant="8" symbolic="YES" id="sE1-QF-D7C"/>
+                <constraint firstAttribute="bottom" secondItem="hsk-3a-EY2" secondAttribute="bottom" constant="20" symbolic="YES" id="xC1-ry-8vq"/>
+                <constraint firstAttribute="trailing" secondItem="Boz-s4-QkB" secondAttribute="trailing" constant="20" id="xKa-hJ-TRM"/>
+            </constraints>
+            <point key="canvasLocation" x="269.5" y="68"/>
+        </customView>
+        <arrayController automaticallyPreparesContent="YES" id="aBE-Cp-mi3">
+            <declaredKeys>
+                <string>date</string>
+                <string>amount</string>
+                <string>mismatch</string>
+                <string>dateMismatch</string>
+                <string>amountMismatch</string>
+                <string>note</string>
+                <string>paired</string>
+            </declaredKeys>
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="pairingRecords" id="kdm-sl-UnO"/>
+                <binding destination="-2" name="filterPredicate" keyPath="filterPredicate" id="1cE-gy-1ke"/>
+            </connections>
+        </arrayController>
+        <userDefaultsController representsSharedInstance="YES" id="hCC-nV-Ap1"/>
+    </objects>
+</document>
