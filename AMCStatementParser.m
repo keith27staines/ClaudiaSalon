@@ -152,6 +152,12 @@
     dictionary[@"paired"] = [self pairedForRow:row];
     dictionary[@"date"] = [self dateForRow:row];
     dictionary[@"amount"] = [self amountForRow:row];
+    if (self.feeColumn >= 0) {
+        dictionary[@"fee"] = [self feeForRow:row];
+    }
+    if (self.netAmountColumn >=0) {
+        dictionary[@"amountNet"] = [self amountNetForRow:row];
+    }
     dictionary[@"note"] = [self noteForRow:row];
     return dictionary;
 }
@@ -231,6 +237,25 @@
         NSString * key = [self keyForColumn:self.dateCol];
         NSString * dateString = [self csvStringForIdentifier:key row:row];
         return [self dateFromString:dateString];
+    }
+    return nil;
+}
+-(NSNumber*)feeForRow:(NSInteger)row {
+    if (self.feeColumn >=0 ) {
+        NSString * key = [self keyForColumn:self.feeColumn];
+        NSString * stringAmount = [self csvStringForIdentifier:key row:row];
+        stringAmount = [stringAmount stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        double fee = fabs(stringAmount.doubleValue);
+        return @(fee);
+    }
+    return nil;
+}
+-(NSNumber*)amountNetForRow:(NSInteger)row {
+    if (self.netAmountColumn >=0 ) {
+        NSString * key = [self keyForColumn:self.netAmountColumn];
+        NSString * stringAmount = [self csvStringForIdentifier:key row:row];
+        stringAmount = [stringAmount stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        return @(stringAmount.doubleValue);
     }
     return nil;
 }

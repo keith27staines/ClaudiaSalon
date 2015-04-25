@@ -65,6 +65,7 @@
 		53628E2B1ADE9CE100964D44 /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53628E2A1ADE9CE100964D44 /* Salon.m */; };
 		536E57D01AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57CE1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m */; };
 		536E57D11AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 536E57CF1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib */; };
+		536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57D31AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m */; };
 		5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */; };
 		5393EA321AD26100009B336C /* AMCBankStatementReconciliationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */; };
 		5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA341AD2CBE7009B336C /* AMCStatementParser.m */; };
@@ -366,6 +367,8 @@
 		536E57CD1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCMatchingPaymentSelectorViewController.h; sourceTree = "<group>"; };
 		536E57CE1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCMatchingPaymentSelectorViewController.m; sourceTree = "<group>"; };
 		536E57CF1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCMatchingPaymentSelectorViewController.xib; sourceTree = "<group>"; };
+		536E57D21AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCStatementItemComputerRecordMismatchCalculator.h; sourceTree = "<group>"; };
+		536E57D31AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCStatementItemComputerRecordMismatchCalculator.m; sourceTree = "<group>"; };
 		5393EA2E1AD26100009B336C /* AMCBankStatementReconciliationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCBankStatementReconciliationViewController.h; sourceTree = "<group>"; };
 		5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCBankStatementReconciliationViewController.m; sourceTree = "<group>"; };
 		5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCBankStatementReconciliationViewController.xib; sourceTree = "<group>"; };
@@ -834,6 +837,8 @@
 				536E57CC1AE62B5E00A60D36 /* Best matches */,
 				5393EA2E1AD26100009B336C /* AMCBankStatementReconciliationViewController.h */,
 				5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */,
+				536E57D21AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.h */,
+				536E57D31AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m */,
 				5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */,
 				5393EA331AD2CBE7009B336C /* AMCStatementParser.h */,
 				5393EA341AD2CBE7009B336C /* AMCStatementParser.m */,
@@ -2118,6 +2123,7 @@
 				530171661ACB15EA0047116D /* WorkRecord.m in Sources */,
 				53D69D4C1A9B240C0004CE10 /* ProductSelectorViewController.m in Sources */,
 				53D69D031A9B240C0004CE10 /* AMCBookingViewController.m in Sources */,
+				536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */,
 				536E57D01AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m in Sources */,
 				53628E2B1ADE9CE100964D44 /* Salon.m in Sources */,
 				53D69D481A9B240C0004CE10 /* StockedCategory+Methods.m in Sources */,

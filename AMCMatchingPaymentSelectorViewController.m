@@ -8,6 +8,8 @@
 
 #import "AMCMatchingPaymentSelectorViewController.h"
 #import "AMCAccountStatementItem.h"
+#import "Payment+Methods.h"
+#import "Sale+Methods.h"
 
 @interface AMCMatchingPaymentSelectorViewController ()
 @property (weak) IBOutlet NSTextField *statementDateLabel;
@@ -27,7 +29,7 @@
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     self.dataTable.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"mismatch" ascending:YES]];
-    self.filterPredicate = [NSPredicate predicateWithFormat:@"mismatch = 0"];
+    [self changeFilter:self];
     self.statementDateLabel.objectValue = self.transactionDictionary[@"date"];
     self.statementAmountLabel.objectValue = self.transactionDictionary[@"amount"];
 }
@@ -36,7 +38,73 @@
     if (row >= 0) {
         NSDictionary * dictionary = self.arrayController.arrangedObjects[row];
         self.computerRecord = dictionary[@"item"];
-        [self dismissController:self];
+        NSNumber * mismatch = dictionary[@"mismatch"];
+        NSNumber * dateMismatch = dictionary[@"dateMismatch"];
+        NSNumber * amountMismatch = dictionary[@"amountMismatch"];
+        NSNumber * feeMismatch = dictionary[@"feeMismatch"];
+        NSNumber * amountNetMismatch = dictionary[@"amountNetMismatch"];
+        NSDate * statementDate = self.transactionDictionary[@"date"];
+        NSNumber * statementAmount = self.transactionDictionary[@"amount"];
+        NSNumber * statementFee = self.transactionDictionary[@"fee"];
+        NSNumber * statementAmountNet = self.transactionDictionary[@"amountNet"];
+        
+        NSDate * itemDate = self.computerRecord.date;
+        NSNumber * itemAmount = @(self.computerRecord.amountGross);
+        NSNumber * itemFee = @(self.computerRecord.transactionFee);
+        NSNumber * itemAmountNet = @(self.computerRecord.amountNet);
+        NSDateFormatter * df = [[NSDateFormatter alloc] init];
+        df.dateStyle = NSDateFormatterShortStyle;
+        df.timeStyle = NSDateFormatterNoStyle;
+        NSNumberFormatter * nf = [[NSNumberFormatter alloc] init];
+        nf.numberStyle = NSNumberFormatterCurrencyStyle;
+        
+        if (mismatch.doubleValue != 0) {
+            NSAlert * alert = [[NSAlert alloc] init];
+            alert.messageText = @"Statement item and computer record disagree";
+            if (dateMismatch.doubleValue != 0) {
+                alert.informativeText = [alert.informativeText stringByAppendingFormat:@"\n\nStatement date: %@  computer record date: %@",[df stringFromDate:statementDate],[df stringFromDate:itemDate]];
+            }
+            if (amountMismatch.doubleValue !=0) {
+                alert.informativeText = [alert.informativeText stringByAppendingFormat:@"\n\nStatement amount: %@  computer record amount: %@",[nf stringFromNumber:statementAmount],[nf stringFromNumber:itemAmount]];
+            }
+            if (statementFee && feeMismatch.doubleValue != 0) {
+                alert.informativeText = [alert.informativeText stringByAppendingFormat:@"\n\nStatement fee: %@  computer record fee: %@",[nf stringFromNumber:statementFee],[nf stringFromNumber:itemFee]];
+            }
+            if (statementAmountNet && amountNetMismatch.doubleValue !=0) {
+                alert.informativeText = [alert.informativeText stringByAppendingFormat:@"\n\nStatement amount (net): %@  computer record amount (net): %@",[nf stringFromNumber:statementAmountNet],[nf stringFromNumber:itemAmountNet]];
+            }
+            alert.informativeText = [alert.informativeText stringByAppendingFormat:@"\n\n"];
+            [alert addButtonWithTitle:@"Adjust computer record and pair with statement"];
+            [alert addButtonWithTitle:@"Cancel"];
+            switch ([alert runModal]) {
+                case NSAlertFirstButtonReturn: {
+                    if (self.computerRecord.isPayment) {
+                        Payment * payment = self.computerRecord.financialTransaction;
+                        payment.createdDate = statementDate;
+                        payment.paymentDate = statementDate;
+                        payment.bankStatementTransactionDate = statementDate;
+                        if (statementAmount.doubleValue > 0) {
+                            payment.direction = kAMCPaymentDirectionIn;
+                            payment.amount = @(fabs(statementAmount.doubleValue));
+                        } else {
+                            payment.direction = kAMCPaymentDirectionOut;
+                            payment.amount = @(statementAmount.doubleValue);
+                        }
+                        if (statementFee) {
+                            payment.transactionFeeIncoming = statementFee;
+                        }
+                    } else {
+                        Sale * sale = self.computerRecord.financialTransaction;
+                        sale.createdDate = statementDate;
+                        sale.actualCharge = @(statementAmount.doubleValue);
+                    }
+                    [self dismissController:self];
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
     }
 }
 - (IBAction)cancelButtonClicked:(id)sender {
@@ -46,19 +114,19 @@
 - (IBAction)changeFilter:(id)sender {
     switch (self.filterSelector.selectedSegment) {
         case 0: {
-            self.filterPredicate = [NSPredicate predicateWithFormat:@"mismatch = 0"];
+            self.filterPredicate = [NSPredicate predicateWithFormat:@"mismatch = %@ and item.paired = %@",@(0),@NO];
             break;
         }
         case 1: {
-            self.filterPredicate = [NSPredicate predicateWithFormat:@"dateMismatch = 0"];
+            self.filterPredicate = [NSPredicate predicateWithFormat:@"dateMismatch = %@ and item.paired = %@",@(0),@NO];
             break;
         }
         case 2: {
-            self.filterPredicate = [NSPredicate predicateWithFormat:@"amountMismatch = 0"];
+            self.filterPredicate = [NSPredicate predicateWithFormat:@"amountMismatch = %@ and item.paired = %@",@(0),@NO];
             break;
         }
         default:
-            self.filterPredicate = nil;
+            self.filterPredicate = [NSPredicate predicateWithFormat:@"item.paired = %@",@NO];
             break;
     }
 }

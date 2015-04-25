@@ -14,8 +14,10 @@
 -(instancetype)initWithSale:(Sale*)sale;
 -(instancetype)initWithPayment:(Payment*)payment;
 @property (copy,readonly) NSDate * date;
-@property (readonly) double amountNet;
+@property (readonly) double signedAmountGross;
 @property (readonly) double amountGross;
+@property (readonly) double signedAmountNet;
+@property (readonly) double amountNet;
 @property (readonly) double transactionFee;
 @property double balance;
 @property (copy,readonly) NSString * payeeName;

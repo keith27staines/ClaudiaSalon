@@ -105,8 +105,27 @@
     }
     return 0;
 }
--(double)transactionFee {
-    return fabs(fabs([self amountGross]) - fabs([self amountNet]));
+-(double)signedAmountGross {
+    if (self.payment) {
+        if ([self.payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+            return fabs(self.amountGross);
+        } else {
+            return -fabs(self.amountGross);
+        }
+    } else {
+        return self.amountGross;
+    }
+}
+-(double)signedAmountNet {
+    if (self.payment) {
+        if ([self.payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+            return fabs(self.amountNet);
+        } else {
+            return -fabs(self.amountNet);
+        }
+    } else {
+        return self.amountNet;
+    }
 }
 -(double)amountNet {
     if (self.payment) {
@@ -128,6 +147,9 @@
         }
     }
     return 0;
+}
+-(double)transactionFee {
+    return fabs(fabs([self amountGross]) - fabs([self amountNet]));
 }
 -(double)amountAfterFeeFrom:(double)amount withFeePercentage:(double)feePercent {
     double fee = round(amount *100 * feePercent/100.0);

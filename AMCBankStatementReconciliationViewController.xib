@@ -24,7 +24,7 @@
                 <outlet property="netAmountColumnField" destination="KYx-2M-RDk" id="fu0-Bs-Xo7"/>
                 <outlet property="nextButton" destination="Dgc-HK-w1V" id="tL3-wb-SUn"/>
                 <outlet property="noteColumnField" destination="QrT-nt-Mhd" id="gWX-CQ-Ne6"/>
-                <outlet property="pairComputerRecordMenuItem" destination="6Eg-19-dgz" id="paE-5S-Ggy"/>
+                <outlet property="pairWithBestMatch" destination="Drh-bf-fe5" id="zgj-KR-YO8"/>
                 <outlet property="pairedTable" destination="lJ1-SK-ZId" id="2HO-Op-dnd"/>
                 <outlet property="pairedTableContextMenu" destination="U3S-S1-31n" id="I9l-ng-laA"/>
                 <outlet property="pathLabel" destination="ba4-lM-494" id="deH-d4-ZWW"/>
@@ -37,7 +37,6 @@
                 <outlet property="unpairPairedRecordMenuItem" destination="3z5-Cl-uBa" id="3lB-qU-2zC"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
                 <outlet property="viewBestMatchesController" destination="UbU-vm-lyX" id="nBz-aK-5Xc"/>
-                <outlet property="viewBestMatchesMenuItem" destination="Drh-bf-fe5" id="KWT-Gq-JqI"/>
                 <outlet property="viewTitle" destination="aGG-ov-Gar" id="YdG-4X-8Jc"/>
                 <outlet property="voidComputerRecordMenuItem" destination="sDw-UW-Wof" id="63h-Dd-4FI"/>
             </connections>
@@ -1748,16 +1747,16 @@ Gw
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TAh-i4-GUB">
-                    <rect key="frame" x="183" y="487" width="180" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Transactions from statement" id="yHS-cS-L2h">
+                    <rect key="frame" x="221" y="487" width="105" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Statement items" id="yHS-cS-L2h">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FPC-Dc-VFU">
-                    <rect key="frame" x="748" y="487" width="144" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Recorded transactions" id="xVO-ci-FyE">
+                    <rect key="frame" x="694" y="487" width="252" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Computer-recorded sales and payments" id="xVO-ci-FyE">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1775,7 +1774,7 @@ Gw
                         <rect key="frame" x="1" y="17" width="238" height="117"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="99P-9P-OUd" id="YM8-fs-ces">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="99P-9P-OUd" id="YM8-fs-ces">
                                 <rect key="frame" x="0.0" y="0.0" width="504" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -1867,41 +1866,8 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tZj-HW-V6q">
-                    <rect key="frame" x="14" y="8" width="81" height="32"/>
-                    <buttonCell key="cell" type="push" title="Unpair" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="U4y-Ql-ToD">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="unpair:" target="-2" id="gaN-xn-DPY"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p8F-FW-DUp">
-                    <rect key="frame" x="445" y="236" width="203" height="32"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="191" id="8Rm-t7-HAJ"/>
-                    </constraints>
-                    <buttonCell key="cell" type="push" title="Pair" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ouF-wP-3eN">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="pair:" target="-2" id="zCS-iT-sjM"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tMv-nI-r1h">
-                    <rect key="frame" x="13" y="236" width="192" height="32"/>
-                    <buttonCell key="cell" type="push" title="Auto-pair exact matches" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Lac-3t-2SZ">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="autoPairAll:" target="-2" id="A8p-hh-a7C"/>
-                    </connections>
-                </button>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nx2-Cu-zkL">
-                    <rect key="frame" x="20" y="39" width="1053" height="163"/>
+                    <rect key="frame" x="20" y="20" width="1053" height="186"/>
                     <clipView key="contentView" id="Jwy-B7-Gx8">
                         <rect key="frame" x="1" y="17" width="238" height="117"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1925,7 +1891,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="leftDate"/>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="statementTransaction.date"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="rightDate" width="100" minWidth="40" maxWidth="1000" id="bYo-cG-N0c">
@@ -1940,7 +1906,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="rightDate"/>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="computerRecord.date"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="leftAmount" width="100" minWidth="10" maxWidth="3.4028234663852886e+38" id="X2d-jT-lQ6">
@@ -1954,7 +1920,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="leftAmount"/>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="statementTransaction.amount"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="rightAmount" width="100" minWidth="10" maxWidth="3.4028234663852886e+38" id="aJE-PN-Hcg">
@@ -1968,7 +1934,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="rightAmount"/>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="computerRecord.signedAmountGross"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="leftNote" width="200" minWidth="10" maxWidth="3.4028234663852886e+38" id="emQ-6Z-0kK">
@@ -1982,7 +1948,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="leftNote"/>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="statementTransaction.note"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="rightNote" width="200" minWidth="10" maxWidth="3.4028234663852886e+38" id="pwJ-uN-DDv">
@@ -1996,7 +1962,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="rightNote"/>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="computerRecord.note"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="mismatch" width="230" minWidth="10" maxWidth="3.4028234663852886e+38" id="IWT-ft-FfA">
@@ -2042,7 +2008,7 @@ Gw
                         <rect key="frame" x="1" y="17" width="238" height="117"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="0dT-ca-fMU" id="cmf-0R-OMs">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="0dT-ca-fMU" id="cmf-0R-OMs">
                                 <rect key="frame" x="0.0" y="0.0" width="504" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -2090,7 +2056,7 @@ Gw
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="amount"/>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="signedAmountGross"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                     <tableColumn identifier="note" width="299.69921875" minWidth="10" maxWidth="3.4028234663852886e+38" id="6Pd-Dy-qhh">
@@ -2130,41 +2096,51 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="apn-2p-0DI">
+                    <rect key="frame" x="18" y="214" width="1057" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Statement items paired to computer-recorded sales and payments" id="gYv-r7-ero">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="p8F-FW-DUp" secondAttribute="centerX" id="1Gr-8W-9FM"/>
                 <constraint firstItem="Nx2-Cu-zkL" firstAttribute="leading" secondItem="c8r-nA-YVA" secondAttribute="leading" constant="20" id="1lG-VL-KCd"/>
                 <constraint firstItem="X5E-Ui-r8l" firstAttribute="leading" secondItem="c8r-nA-YVA" secondAttribute="leading" constant="20" id="39S-wz-fuA"/>
                 <constraint firstAttribute="trailing" secondItem="6EM-SQ-rdv" secondAttribute="trailing" constant="20" symbolic="YES" id="4AO-6e-cXv"/>
+                <constraint firstItem="apn-2p-0DI" firstAttribute="top" secondItem="X5E-Ui-r8l" secondAttribute="bottom" constant="40" id="5Rp-O4-5Qs"/>
                 <constraint firstItem="6EM-SQ-rdv" firstAttribute="leading" secondItem="MQ6-03-sdp" secondAttribute="trailing" constant="20" id="5yG-qB-lYf"/>
                 <constraint firstItem="6EM-SQ-rdv" firstAttribute="bottom" secondItem="X5E-Ui-r8l" secondAttribute="bottom" id="6TU-4M-vQ8"/>
-                <constraint firstItem="tZj-HW-V6q" firstAttribute="top" secondItem="Nx2-Cu-zkL" secondAttribute="bottom" constant="3" id="E4E-Io-T7n"/>
-                <constraint firstItem="p8F-FW-DUp" firstAttribute="top" secondItem="X5E-Ui-r8l" secondAttribute="bottom" constant="7" id="FdK-Sx-pf0"/>
                 <constraint firstItem="MQ6-03-sdp" firstAttribute="leading" secondItem="X5E-Ui-r8l" secondAttribute="trailing" constant="20" id="M0d-Ma-AoZ"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="X5E-Ui-r8l" secondAttribute="bottom" constant="20" id="NEB-np-ghf"/>
+                <constraint firstAttribute="bottom" secondItem="Nx2-Cu-zkL" secondAttribute="bottom" constant="20" symbolic="YES" id="NFI-Xe-AUg"/>
+                <constraint firstItem="apn-2p-0DI" firstAttribute="leading" secondItem="c8r-nA-YVA" secondAttribute="leading" constant="20" symbolic="YES" id="W4G-cC-Fa5"/>
                 <constraint firstAttribute="centerX" secondItem="Nx2-Cu-zkL" secondAttribute="centerX" id="YdM-P6-9EA"/>
                 <constraint firstAttribute="centerX" secondItem="MQ6-03-sdp" secondAttribute="centerX" id="cBu-ZB-En4"/>
                 <constraint firstItem="X5E-Ui-r8l" firstAttribute="centerX" secondItem="TAh-i4-GUB" secondAttribute="centerX" id="hF7-Bu-gFE"/>
                 <constraint firstItem="6EM-SQ-rdv" firstAttribute="top" secondItem="X5E-Ui-r8l" secondAttribute="top" id="i8f-hN-Wxg"/>
                 <constraint firstItem="X5E-Ui-r8l" firstAttribute="top" secondItem="TAh-i4-GUB" secondAttribute="bottom" constant="8" id="ij8-yC-woS"/>
-                <constraint firstItem="tMv-nI-r1h" firstAttribute="leading" secondItem="c8r-nA-YVA" secondAttribute="leading" constant="19" id="iy8-3A-ECr"/>
-                <constraint firstAttribute="bottom" secondItem="tZj-HW-V6q" secondAttribute="bottom" constant="15" id="lgk-Np-1tM"/>
                 <constraint firstItem="MQ6-03-sdp" firstAttribute="top" secondItem="c8r-nA-YVA" secondAttribute="top" constant="12" symbolic="YES" id="lvJ-Ek-pD9"/>
                 <constraint firstItem="TAh-i4-GUB" firstAttribute="top" secondItem="c8r-nA-YVA" secondAttribute="top" constant="20" symbolic="YES" id="mMx-IK-UcE"/>
                 <constraint firstItem="6EM-SQ-rdv" firstAttribute="top" secondItem="FPC-Dc-VFU" secondAttribute="bottom" constant="8" id="mZn-Dn-c64"/>
-                <constraint firstItem="tMv-nI-r1h" firstAttribute="top" secondItem="p8F-FW-DUp" secondAttribute="top" id="nPr-0Q-2wQ"/>
                 <constraint firstAttribute="trailing" secondItem="Nx2-Cu-zkL" secondAttribute="trailing" constant="20" id="pf3-Zn-rVa"/>
-                <constraint firstItem="Nx2-Cu-zkL" firstAttribute="top" secondItem="p8F-FW-DUp" secondAttribute="bottom" constant="41" id="qG1-DA-Vju"/>
                 <constraint firstItem="FPC-Dc-VFU" firstAttribute="bottom" secondItem="TAh-i4-GUB" secondAttribute="bottom" id="rGP-Q3-a2e"/>
+                <constraint firstAttribute="trailing" secondItem="apn-2p-0DI" secondAttribute="trailing" constant="20" symbolic="YES" id="rbG-Fc-0Gg"/>
                 <constraint firstItem="X5E-Ui-r8l" firstAttribute="bottom" secondItem="6EM-SQ-rdv" secondAttribute="bottom" id="u2Q-av-5DI"/>
-                <constraint firstItem="tZj-HW-V6q" firstAttribute="leading" secondItem="c8r-nA-YVA" secondAttribute="leading" constant="20" id="vMU-Da-OwB"/>
+                <constraint firstItem="Nx2-Cu-zkL" firstAttribute="top" secondItem="apn-2p-0DI" secondAttribute="bottom" constant="8" id="w03-ar-rxP"/>
                 <constraint firstItem="X5E-Ui-r8l" firstAttribute="bottom" secondItem="MQ6-03-sdp" secondAttribute="bottom" id="y7p-bO-d1b"/>
                 <constraint firstItem="FPC-Dc-VFU" firstAttribute="centerX" secondItem="6EM-SQ-rdv" secondAttribute="centerX" id="zsd-wQ-aH0"/>
             </constraints>
-            <point key="canvasLocation" x="432.5" y="1605"/>
+            <point key="canvasLocation" x="414.5" y="1541"/>
         </customView>
         <menu id="B9h-8b-s25" userLabel="Statement transactions menu">
             <items>
+                <menuItem title="Pair..." id="Drh-bf-fe5">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="viewBestMatches:" target="-2" id="mWI-dv-Nva"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Unpair" id="yfg-66-ghx">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -2172,12 +2148,6 @@ Gw
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="2ZL-R0-KFI"/>
-                <menuItem title="Pair..." id="Drh-bf-fe5">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="viewBestMatches:" target="-2" id="mWI-dv-Nva"/>
-                    </connections>
-                </menuItem>
                 <menuItem title="Add paired computer record" id="mLc-3D-b7B">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -2185,31 +2155,24 @@ Gw
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="-13.5" y="1962.5"/>
+            <point key="canvasLocation" x="-23.5" y="1896.5"/>
         </menu>
         <menu id="c3D-Ga-qbA" userLabel="Computer records menu">
             <items>
-                <menuItem title="Pair" id="6Eg-19-dgz">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="pairClickedItem:" target="-2" id="hYY-bE-M1W"/>
-                    </connections>
-                </menuItem>
                 <menuItem title="Unpair" id="C7l-sN-oaC">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="unpairClickeditem:" target="-2" id="BDZ-fV-jn6"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="HTo-7Z-GUy"/>
-                <menuItem title="Void item" id="sDw-UW-Wof">
+                <menuItem title="Void payment or sale" id="sDw-UW-Wof">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="voidItem:" target="-2" id="4jp-QQ-NpL"/>
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="191.5" y="1962.5"/>
+            <point key="canvasLocation" x="247" y="1881.5"/>
         </menu>
         <menu id="U3S-S1-31n" userLabel="Paired menu">
             <items>
@@ -2220,7 +2183,7 @@ Gw
                     </connections>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="334" y="1942.5"/>
+            <point key="canvasLocation" x="495" y="1864.5"/>
         </menu>
         <viewController id="UbU-vm-lyX" customClass="AMCMatchingPaymentSelectorViewController"/>
     </objects>
