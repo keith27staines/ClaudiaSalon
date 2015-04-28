@@ -69,8 +69,7 @@
 }
 -(NSNumber*)calculateFeeForAmount:(NSNumber*)amount withFeePercentage:(NSNumber*)feePercent {
     if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
-        double fee = [self feeFromAmount:amount withPercentage:feePercent].doubleValue;
-        return @(round(fee*100.0)/100.0);
+        return [self feeFromAmount:amount withPercentage:feePercent];
     }
     return @(0);
 }
@@ -82,7 +81,13 @@
     return 0;
 }
 -(NSNumber*)feeFromAmount:(NSNumber*)amount withPercentage:(NSNumber*)feePercent {
-    return @(round(amount.doubleValue * feePercent.doubleValue*100.0)/100.0);
+    double fee = (100.0 * amount.doubleValue) * feePercent.doubleValue;
+    if (fee - floor(fee) < 0.5) {
+        fee = floor(fee);
+    } else {
+        fee = ceil(fee);
+    }
+    return @(fee/100.0);
 }
 -(NSNumber*)amountAfterFeeFrom:(NSNumber*)amount withFeePercentage:(NSNumber*)feePercent {
     NSNumber * fee = [self feeFromAmount:amount withPercentage:feePercent];

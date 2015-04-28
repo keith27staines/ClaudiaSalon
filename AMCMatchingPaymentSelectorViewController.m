@@ -93,16 +93,18 @@
     NSDate * statementDate = transactionDictionary[@"date"];
     NSNumber * statementAmount = transactionDictionary[@"amount"];
     double statementAmountValue = statementAmount.doubleValue;
-    NSNumber * amount = @(fabs(amount.doubleValue));
+    NSNumber * absoluteAmount = @(fabs(statementAmountValue));
     NSNumber * fee = transactionDictionary[@"fee"];
+    NSNumber * absoluteFee = (fee != nil)?@(fabs(fee.doubleValue)):@0;
     payment.direction = (statementAmountValue>=0)?kAMCPaymentDirectionIn:kAMCPaymentDirectionOut;
     payment.createdDate = statementDate;
     payment.paymentDate = statementDate;
     payment.bankStatementTransactionDate = statementDate;
-    [payment recalculateNetAmountWithFee:fee];
+    payment.amount = absoluteAmount;
+    [payment recalculateNetAmountWithFee:absoluteFee];
     if (payment.sale) {
         payment.sale.createdDate = statementDate;
-        payment.sale.actualCharge = amount;
+        payment.sale.actualCharge = absoluteAmount;
     }
 }
 - (IBAction)cancelButtonClicked:(id)sender {

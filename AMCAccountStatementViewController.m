@@ -289,7 +289,13 @@
     for (Account * account in [Account allObjectsWithMoc:self.documentMoc]) {
         if (account == self.salonDocument.salon.cardPaymentAccount) {
             account.transactionFeePercentageIncoming = @(2.75/100.0);
+            for (Payment * payment in account.payments) {
+                if (!payment.transactionFeeIncoming || payment.transactionFeeIncoming.doubleValue < 0.01) {
+                    [payment recalculateNetAmountWithFeePercentage:account.transactionFeePercentageIncoming];
+                }
+            }
         }
+        
         for (Sale * sale in account.sales) {
             if (!sale.isQuote.boolValue) {
                 [sale makePaymentInFull];
@@ -297,6 +303,14 @@
         }
         for (Payment * payment in account.payments) {
             [payment recalculateNetAmountWithFee:payment.transactionFeeIncoming];
+        }
+        if (account == self.salonDocument.salon.cardPaymentAccount) {
+            for (Payment * payment in account.payments) {
+                if (![payment.direction isEqualToString:kAMCPaymentDirectionIn]) {continue;}
+                if (!payment.transactionFeeIncoming || payment.transactionFeeIncoming.doubleValue < 0.01) {
+                    NSLog(@"Problem");
+                };
+            }
         }
     }
 }

@@ -114,6 +114,9 @@
     }
     payment.amount = @(amountOutstanding);
     NSNumber * feePercentage = self.account.transactionFeePercentageIncoming;
+    if (amountOutstanding == (double)46) {
+        NSLog(@"£46.0");
+    }
     [payment recalculateNetAmountWithFeePercentage:feePercentage];
     [self addPaymentsObject:payment];
     return payment;
