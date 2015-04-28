@@ -66,9 +66,6 @@
 }
 -(double)expectedBalanceFromReconciliation:(AccountReconciliation*)reconciliation toDate:(NSDate*)date {
     NSDate * fromDate = reconciliation.reconciliationDate;
-    if ([self.friendlyName isEqualTo:@"PayPal"]) {
-        ;
-    }
     if (!fromDate) fromDate = [NSDate distantPast];
     double balance = reconciliation.actualBalance.doubleValue;
     for (Payment * payment in self.payments) {
@@ -80,36 +77,13 @@
         if ([payment.direction isEqualToString:kAMCPaymentDirectionOut]) {
             balance -= payment.amount.doubleValue;
         } else {
-            if ([self.friendlyName isEqualToString:@"PayPal"]) {
-                balance += [self amountAfterPayPalFee:payment.amount.doubleValue];
-            } else {
-                balance += payment.amount.doubleValue;
-            }
-        }
-    }
-    for (Sale * sale in self.sales) {
-        if (sale.voided.boolValue) continue;
-        if (sale.isQuote.boolValue) continue;
-        if ([sale.createdDate isLessThan:fromDate]) continue;
-        if ([sale.createdDate isGreaterThan:date]) continue;
-        if ([self.friendlyName isEqualToString:@"PayPal"]) {
-            balance += [self amountAfterPayPalFee:sale.actualCharge.doubleValue];
-        } else {
-            balance += sale.actualCharge.doubleValue;
+            balance += payment.amountNet.doubleValue;
         }
     }
     return balance;
 }
--(double)amountAfterPayPalFee:(double)amount {
-    double fee = round(amount *100 * 2.75/100.0);
-    double after = amount * 100  - fee;
-    return round(after)/100.0;
-}
 -(double)expectedBalanceFromReconciliation:(AccountReconciliation*)reconciliation {
     NSDate * fromDate = reconciliation.reconciliationDate;
-    if ([self.friendlyName isEqualTo:@"PayPal"]) {
-        ;
-    }
     if (!fromDate) fromDate = [NSDate distantPast];
     double balance = reconciliation.actualBalance.doubleValue;
     for (Payment * payment in self.payments) {
@@ -122,12 +96,6 @@
         } else {
             balance += payment.amount.doubleValue;
         }
-    }
-    for (Sale * sale in self.sales) {
-        if (sale.voided.boolValue) continue;
-        if (sale.isQuote.boolValue) continue;
-        if ([sale.lastUpdatedDate isLessThan:fromDate]) continue;
-        balance += sale.actualCharge.doubleValue;
     }
     return balance;
 }

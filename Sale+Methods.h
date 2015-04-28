@@ -17,4 +17,9 @@
 +(NSArray*)salesBetweenStartDate:(NSDate*)startDate endDate:(NSDate*)endDate withMoc:(NSManagedObjectContext*)moc;
 +(Sale*)firstEverSaleWithMoc:(NSManagedObjectContext*)moc;
 -(void)updatePriceFromSaleItems;
+-(Payment*)makePaymentInFull;
+-(Payment*)makePaymentOfAmount:(double)amount;
+-(double)amountPaid;
+-(double)amountPaidNet;
+-(double)amountOutstanding;
 @end

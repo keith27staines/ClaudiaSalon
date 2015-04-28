@@ -8,10 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const kAMCTillAccountName;
-extern NSString * const kAMCBarclaysAccountName;
-extern NSString * const kAMCPayPalAccountName;
-
 extern NSString * const kAMCPaymentDirectionIn;
 extern NSString * const kAMCPaymentDirectionOut;
 

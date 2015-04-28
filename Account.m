@@ -17,22 +17,25 @@
 
 @dynamic accountNumber;
 @dynamic bankName;
-@dynamic csvAmountColumn;
-@dynamic csvDateColumn;
-@dynamic csvHeaderLines;
-@dynamic csvNoteColumn;
 @dynamic friendlyName;
 @dynamic sortCode;
-@dynamic csvFeeColumn;
-@dynamic csvNetAmountColumn;
-@dynamic csvStatusColumn;
-@dynamic csvStatusInclude;
-@dynamic csvStatusExclude;
 @dynamic cardPaymentAccountForSalon;
 @dynamic payments;
 @dynamic primaryBankAccountForSalon;
 @dynamic reconciliations;
 @dynamic sales;
 @dynamic tillAccountForSalon;
+@dynamic transactionFeePercentageIncoming;
+@dynamic transactionFeePercentageOutgoing;
+
+@dynamic csvFeeColumn;
+@dynamic csvAmountColumn;
+@dynamic csvDateColumn;
+@dynamic csvHeaderLines;
+@dynamic csvNoteColumn;
+@dynamic csvNetAmountColumn;
+@dynamic csvStatusColumn;
+@dynamic csvStatusInclude;
+@dynamic csvStatusExclude;
 
 @end

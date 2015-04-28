@@ -27,6 +27,12 @@
     }
     return fetchedObjects;
 }
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc
+{
+    PaymentCategory * paymentCategory = [NSEntityDescription insertNewObjectForEntityForName:@"PaymentCategory" inManagedObjectContext:moc];
+    paymentCategory.createdDate = [NSDate date];
+    return paymentCategory;
+}
 +(PaymentCategory*)paymentCategoryForSalaryWithMoc:(NSManagedObjectContext*)moc {
     PaymentCategory * salaryCategory = nil;
     NSArray * categories = [self allObjectsWithMoc:moc];

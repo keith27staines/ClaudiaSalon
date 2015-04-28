@@ -12,6 +12,7 @@
 #import "Account+Methods.h"
 #import "AMCDiscountCalculator.h"
 #import "Salon+Methods.h"
+#import "Customer+Methods.h"
 
 
 @implementation Sale (Methods)
@@ -81,6 +82,55 @@
     } else {
         return @"Sale";
     }
+}
+
+-(Payment*)makePaymentInFull {
+    return [self makePaymentOfAmount:[self amountOutstanding]];
+}
+-(Payment*)makePaymentOfAmount:(double)amount {
+    NSAssert(self.account, @"account must not be nill");
+    double amountOutstanding = [self amountOutstanding];
+    Payment * payment = nil;
+    NSAssert(round(amountOutstanding*100) >= round(amount*100), @"amount is more than the amount outstanding");
+    payment = [Payment newObjectWithMoc:self.managedObjectContext];
+    payment.account = self.account;
+    payment.direction = kAMCPaymentDirectionIn;
+    payment.createdDate = self.createdDate;
+    payment.paymentDate = self.createdDate;
+    payment.reason = @"Sale";
+    payment.payeeName = self.customer.fullName;
+    payment.voided = self.voided;
+    Salon * salon = [Salon salonWithMoc:self.managedObjectContext];
+    payment.paymentCategory = salon.defaultPaymentCategoryForSales;
+    if (!payment.payeeName || payment.payeeName.length == 0) {
+        payment.payeeName = @"Customer";
+    }
+    payment.amount = @(amountOutstanding);
+    NSNumber * feePercentage = self.account.transactionFeePercentageIncoming;
+    [payment recalculateNetAmountWithFeePercentage:feePercentage];
+    [self addPaymentsObject:payment];
+    return payment;
+}
+-(double)amountPaidNet {
+    double amount = 0.0;
+    for (Payment * payment in self.payments) {
+        if (!payment.voided.boolValue) {
+            amount += payment.amountNet.doubleValue;
+        }
+    }
+    return amount;
+}
+-(double)amountPaid {
+    double amount = 0.0;
+    for (Payment * payment in self.payments) {
+        if (!payment.voided.boolValue) {
+            amount += payment.amount.doubleValue;
+        }
+    }
+    return amount;
+}
+-(double)amountOutstanding {
+    return self.actualCharge.doubleValue - [self amountPaid];
 }
 -(NSString*)refundStatus
 {

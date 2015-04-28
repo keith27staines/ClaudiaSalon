@@ -24,7 +24,6 @@
 @interface AMCAccountStatementViewController () <NSTableViewDataSource, NSTableViewDelegate>
 {
     NSArray * _payments;
-    NSArray * _sales;
     NSMutableArray * _statementItems;
 }
 @property (weak) IBOutlet NSPopUpButton *accountPopup;
@@ -37,7 +36,6 @@
 @property (weak) IBOutlet NSButton *viewTransactionButton;
 @property Account * account;
 @property (copy,readonly) NSArray * payments;
-@property (copy,readonly) NSArray * sales;
 @property NSMutableArray * statementItems;
 
 @property (strong) IBOutlet NSArrayController *arrayController;
@@ -76,7 +74,6 @@
     }
 }
 -(void)reloadData {
-    _sales = nil;
     _payments = nil;
     self.statementItems = [NSMutableArray array];
     [self loadAccount];
@@ -119,25 +116,6 @@
     
     return [_payments copy];
 }
--(NSArray *)sales {
-    if (!_sales) {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Sale" inManagedObjectContext:self.documentMoc];
-        [fetchRequest setEntity:entity];
-        // Specify criteria for filtering which objects to fetch
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account == %@ && isQuote == %@ && voided == %@ && createdDate >= %@ && createdDate <= %@", self.account,@NO,@NO,self.startDate,self.endDate];
-        [fetchRequest setPredicate:predicate];
-        // Specify how the fetched objects should be sorted
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdDate"
-                                                                       ascending:YES];
-        [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
-        
-        NSError *error = nil;
-        _sales = [self.documentMoc executeFetchRequest:fetchRequest error:&error];
-
-    }
-    return [_sales copy];
-}
 - (IBAction)accountChanged:(NSPopUpButton *)sender {
     [self reloadData];
 }
@@ -146,7 +124,6 @@
     if (!self.account) {return;}
     self.statementItems = [NSMutableArray array];
     NSArray * transactions = [self.payments copy];
-    transactions = [transactions arrayByAddingObjectsFromArray:self.sales];
     for (id object in transactions) {
         AMCAccountStatementItem * statementItem = [[AMCAccountStatementItem alloc] initWithFinancialTransaction:object];
         [self.statementItems addObject:statementItem];
@@ -310,6 +287,21 @@
     self.bankStatementReconciliationViewController.computerRecords = [self.statementItems mutableCopy];
     [self.bankStatementReconciliationViewController prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewControllerAsSheet:self.bankStatementReconciliationViewController];
+}
+- (IBAction)recalculateFees:(id)sender {
+    for (Account * account in [Account allObjectsWithMoc:self.documentMoc]) {
+        if (account == self.salonDocument.salon.cardPaymentAccount) {
+            account.transactionFeePercentageIncoming = @(2.75/100.0);
+        }
+        for (Sale * sale in account.sales) {
+            if (!sale.isQuote.boolValue) {
+                Payment * payment = [sale makePaymentInFull];
+            }
+        }
+        for (Payment * payment in account.payments) {
+            [payment recalculateNetAmountWithFee:payment.transactionFeeIncoming];
+        }
+    }
 }
 
 @end

@@ -146,7 +146,7 @@
                                        @"sales"        :@0 ,
                                        @"salesTarget"  :@0
                                       } mutableCopy];
-    NSArray * paymentsArray = [Payment paymentsBetweenStartDate:starting endDate:ending withMoc:self.documentMoc];
+    NSArray * paymentsArray = [Payment nonSalepaymentsBetweenStartDate:starting endDate:ending withMoc:self.documentMoc];
     NSArray * salesArray = [Sale salesBetweenStartDate:starting endDate:ending withMoc:self.documentMoc];
     double totalSpend = 0;
     double billsSpend = 0;
@@ -164,7 +164,8 @@
                 paymentAmount = -payment.amount.doubleValue;
             }
         }
-        if (!payment.voided.boolValue) {
+        // Add to payment totals (we have to exclude payments that are connected to sales because sales are dealt with seperately)
+        if (!payment.sale) {
             totalSpend += paymentAmount;
             if ([self isPaymentInManagersBudget:payment]) {
                 managersSpend += paymentAmount;
@@ -173,7 +174,7 @@
             }
         }
     }
-
+    // As promised, sales are dealt with seperately
     for (Sale * sale in salesArray) {
         if (!sale.voided.boolValue && !sale.isQuote.boolValue) {
             sales += sale.actualCharge.doubleValue;
@@ -309,7 +310,7 @@
         NSDate * endDate = weekDataDictionary[@"endDate"];
         NSString * begins = [NSString stringWithFormat:@"%@ %@",[startDate stringNamingDayOfWeek],[startDate dayAndMonthString]] ;
         self.spendingThisWeekLabel.stringValue = [NSString stringWithFormat:@"Summary of spending for week starting %@",begins] ;
-        self.weeksData = [[Payment paymentsBetweenStartDate:startDate endDate:endDate withMoc:self.documentMoc] mutableCopy];
+        self.weeksData = [[Payment nonSalepaymentsBetweenStartDate:startDate endDate:endDate withMoc:self.documentMoc] mutableCopy];
         self.spendThisWeekLabel.doubleValue = ((NSNumber*)(weekDataDictionary[@"totalSpend"])).doubleValue;
         self.rentAndBillsThisWeekLabel.doubleValue =  ((NSNumber*)(weekDataDictionary[@"billsSpend"])).doubleValue;
         self.managersSpendThisWeekLabel.doubleValue =  ((NSNumber*)(weekDataDictionary[@"managersSpend"])).doubleValue;

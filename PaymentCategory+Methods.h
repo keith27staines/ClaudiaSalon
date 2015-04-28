@@ -12,4 +12,5 @@
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(PaymentCategory*)paymentCategoryForSalaryWithMoc:(NSManagedObjectContext*)moc;
 +(PaymentCategory*)transferCategoryWithMoc:(NSManagedObjectContext*)moc;
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
 @end

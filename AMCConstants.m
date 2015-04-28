@@ -7,9 +7,6 @@
 //
 
 #import "AMCConstants.h"
-NSString * const kAMCTillAccountName = @"Till";
-NSString * const kAMCBarclaysAccountName = @"Barclays";
-NSString * const kAMCPayPalAccountName = @"PayPal";
 NSString * const kAMCPaymentDirectionIn = @"IN";
 NSString * const kAMCPaymentDirectionOut = @"OUT";
 

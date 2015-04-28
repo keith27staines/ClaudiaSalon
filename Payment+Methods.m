@@ -9,6 +9,7 @@
 #import "Payment+Methods.h"
 #import "AMCConstants.h"
 #import "Salon+Methods.h"
+#import "Account+Methods.h"
 
 @implementation Payment (Methods)
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc
@@ -22,7 +23,7 @@
     payment.reason = @"";
     payment.amount = @(0);
     payment.direction = kAMCPaymentDirectionOut;
-    payment.paymentCategory = [Salon salonWithMoc:moc].defaultPaymentCategory;
+    payment.paymentCategory = [Salon salonWithMoc:moc].defaultPaymentCategoryForPayments;
     return payment;
 }
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc {
@@ -30,6 +31,9 @@
     NSFetchRequest * fetch = [NSFetchRequest fetchRequestWithEntityName:@"Payment"];
     array = [moc executeFetchRequest:fetch error:nil];
     return array;
+}
++(NSArray*)nonSalepaymentsBetweenStartDate:(NSDate*)startDate endDate:(NSDate*)endDate withMoc:(NSManagedObjectContext*)moc {
+    return [[self paymentsBetweenStartDate:startDate endDate:endDate withMoc:moc] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"sale = nil"]];
 }
 +(NSArray*)paymentsBetweenStartDate:(NSDate*)startDate endDate:(NSDate*)endDate withMoc:(NSManagedObjectContext*)moc {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -62,5 +66,57 @@
         }
     }
     return nonAuditNotes;
+}
+-(NSNumber*)calculateFeeForAmount:(NSNumber*)amount withFeePercentage:(NSNumber*)feePercent {
+    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        double fee = [self feeFromAmount:amount withPercentage:feePercent].doubleValue;
+        return @(round(fee*100.0)/100.0);
+    }
+    return @(0);
+}
+-(NSNumber*)calculateFeeForAmount:(NSNumber*)amount {
+    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        NSNumber * feePercent = self.account.transactionFeePercentageIncoming;
+        return [self calculateFeeForAmount:amount withFeePercentage:feePercent];
+    }
+    return 0;
+}
+-(NSNumber*)feeFromAmount:(NSNumber*)amount withPercentage:(NSNumber*)feePercent {
+    return @(round(amount.doubleValue * feePercent.doubleValue*100.0)/100.0);
+}
+-(NSNumber*)amountAfterFeeFrom:(NSNumber*)amount withFeePercentage:(NSNumber*)feePercent {
+    NSNumber * fee = [self feeFromAmount:amount withPercentage:feePercent];
+    return [self amountAfterFeeFrom:amount fee:fee];
+}
+-(NSNumber*)amountAfterFeeFrom:(NSNumber*)amount fee:(NSNumber*)fee {
+    double after = amount.doubleValue - fee.doubleValue;
+    return @(round(after*100)/100.0);
+}
+-(void)recalculateNetAmountWithFeePercentage:(NSNumber*)feePercent {
+    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        self.transactionFeeIncoming = [self calculateFeeForAmount:self.amount withFeePercentage:feePercent];
+        self.amountNet = [self amountAfterFeeFrom:self.amount withFeePercentage:feePercent];
+    }
+}
+-(void)recalculateWithAmount:(NSNumber *)amount {
+    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        [self recalculateWithAmount:amount feePercent:self.account.transactionFeePercentageIncoming];
+    }
+}
+-(void)recalculateNetAmountWithFee:(NSNumber *)fee {
+    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        self.transactionFeeIncoming = fee;
+        self.amountNet = [self amountAfterFeeFrom:self.amount fee:fee];
+    }
+}
+-(void)recalculateWithAmount:(NSNumber *)amount fee:(NSNumber *)fee {
+    self.amount = amount;
+    [self recalculateNetAmountWithFee:fee];
+}
+-(void)recalculateWithAmount:(NSNumber *)amount feePercent:(NSNumber*)fee {
+    self.amount = amount;
+    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        [self recalculateNetAmountWithFeePercentage:fee];
+    }
 }
 @end

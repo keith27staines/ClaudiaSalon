@@ -2,14 +2,14 @@
 //  Sale.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
+//  Created by Keith Staines on 26/04/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Account, Appointment, Customer, Note, SaleItem;
+@class Account, Appointment, Customer, Note, Payment, SaleItem;
 
 @interface Sale : NSManagedObject
 
@@ -29,6 +29,7 @@
 @property (nonatomic, retain) Customer *customer;
 @property (nonatomic, retain) Appointment *fromAppointment;
 @property (nonatomic, retain) NSSet *notes;
+@property (nonatomic, retain) NSSet *payments;
 @property (nonatomic, retain) NSSet *saleItem;
 @end
 
@@ -38,6 +39,11 @@
 - (void)removeNotesObject:(Note *)value;
 - (void)addNotes:(NSSet *)values;
 - (void)removeNotes:(NSSet *)values;
+
+- (void)addPaymentsObject:(Payment *)value;
+- (void)removePaymentsObject:(Payment *)value;
+- (void)addPayments:(NSSet *)values;
+- (void)removePayments:(NSSet *)values;
 
 - (void)addSaleItemObject:(SaleItem *)value;
 - (void)removeSaleItemObject:(SaleItem *)value;

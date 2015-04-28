@@ -94,7 +94,7 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
             }
         }
         for (Payment * payment in payments) {
-            if (payment.voided.boolValue) continue;
+            if (payment.voided.boolValue || payment.sale) continue;
             if ([payment.direction isEqualToString:kAMCPaymentDirectionOut]) {
                 paymentsTotal += payment.amount.doubleValue;
             } else {

@@ -2,7 +2,7 @@
 //  Salon.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 15/04/2015.
+//  Created by Keith Staines on 26/04/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -25,10 +25,11 @@
 @property (nonatomic, retain) NSString * serviceEmail;
 @property (nonatomic, retain) NSDate * startOfAccountingYear;
 @property (nonatomic, retain) Account *cardPaymentAccount;
+@property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForPayments;
 @property (nonatomic, retain) Employee *manager;
 @property (nonatomic, retain) OpeningHoursWeekTemplate *openingHoursWeekTemplate;
 @property (nonatomic, retain) Account *primaryBankAccount;
 @property (nonatomic, retain) Account *tillAccount;
-@property (nonatomic, retain) PaymentCategory *defaultPaymentCategory;
+@property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForSales;
 
 @end

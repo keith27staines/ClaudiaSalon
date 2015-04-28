@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14E7f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
     </dependencies>
@@ -394,6 +394,16 @@
                         </binding>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yb5-9X-cKt">
+                    <rect key="frame" x="1346" y="13" width="142" height="32"/>
+                    <buttonCell key="cell" type="push" title="Recalculate fees" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mHf-gA-cJw">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="recalculateFees:" target="-2" id="ef8-4F-6Pw"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="yLh-YS-jHM" firstAttribute="top" secondItem="MjY-R5-AIH" secondAttribute="top" constant="-1" id="37F-aL-Ura"/>
@@ -413,10 +423,12 @@
                 <constraint firstItem="0nD-FP-uhI" firstAttribute="top" secondItem="f3Y-Kk-DWc" secondAttribute="bottom" constant="20" id="T5R-NF-rFU"/>
                 <constraint firstItem="dVC-IV-zPx" firstAttribute="top" secondItem="MjY-R5-AIH" secondAttribute="top" id="TsO-jC-Woh"/>
                 <constraint firstItem="LMe-di-zMb" firstAttribute="baseline" secondItem="f3Y-Kk-DWc" secondAttribute="baseline" id="XvI-3k-Bnx"/>
+                <constraint firstAttribute="bottom" secondItem="yb5-9X-cKt" secondAttribute="bottom" constant="20" id="Y3f-p7-BZ8"/>
                 <constraint firstItem="dVC-IV-zPx" firstAttribute="width" secondItem="j8i-ag-3OZ" secondAttribute="width" id="Zp8-YK-koa"/>
                 <constraint firstItem="2mm-7M-RfB" firstAttribute="bottom" secondItem="M7L-Ys-f9E" secondAttribute="bottom" id="aQt-xt-vao"/>
                 <constraint firstItem="2mm-7M-RfB" firstAttribute="height" secondItem="iwK-Mk-oga" secondAttribute="height" id="adk-2H-Vcy"/>
                 <constraint firstItem="3Xi-gR-gLF" firstAttribute="leading" secondItem="bMj-o3-vCx" secondAttribute="trailing" constant="20" id="b9h-yn-DGu"/>
+                <constraint firstAttribute="trailing" secondItem="yb5-9X-cKt" secondAttribute="trailing" constant="20" id="bJX-Mb-6QO"/>
                 <constraint firstAttribute="centerX" secondItem="f3Y-Kk-DWc" secondAttribute="centerX" id="c7N-n6-edC"/>
                 <constraint firstItem="2mm-7M-RfB" firstAttribute="top" secondItem="0nD-FP-uhI" secondAttribute="bottom" constant="5" id="fJh-zv-y3z"/>
                 <constraint firstItem="2mm-7M-RfB" firstAttribute="bottom" secondItem="iwK-Mk-oga" secondAttribute="bottom" id="gNl-ZY-Ohx"/>

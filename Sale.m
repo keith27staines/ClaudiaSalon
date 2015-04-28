@@ -2,7 +2,7 @@
 //  Sale.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
+//  Created by Keith Staines on 26/04/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -11,6 +11,7 @@
 #import "Appointment.h"
 #import "Customer.h"
 #import "Note.h"
+#import "Payment.h"
 #import "SaleItem.h"
 
 
@@ -32,6 +33,7 @@
 @dynamic customer;
 @dynamic fromAppointment;
 @dynamic notes;
+@dynamic payments;
 @dynamic saleItem;
 
 @end

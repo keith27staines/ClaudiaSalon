@@ -14,6 +14,7 @@
 #import "IntervalDuringDay.h"
 #import "NSDate+AMCDate.h"
 #import "Account+Methods.h"
+#import "PaymentCategory+Methods.h"
 
 @implementation Salon (Methods)
 +(Salon*)salonWithMoc:(NSManagedObjectContext*)moc {
@@ -37,6 +38,13 @@
         if (salon.firstDayOfWeek.integerValue == 0) {
             salon.firstDayOfWeek = @(1);// I, developer, messed up - days of week are 1-based!
         }
+    }
+    if (!salon.defaultPaymentCategoryForSales) {
+        salon.defaultPaymentCategoryForSales = [PaymentCategory newObjectWithMoc:moc];
+        salon.defaultPaymentCategoryForSales.categoryName = @"Sales";
+        salon.defaultPaymentCategoryForSales.isManagersBudgetItem = @NO;
+        salon.defaultPaymentCategoryForSales.isSale = @YES;
+        salon.defaultPaymentCategoryForSales.fullDescription = @"System-generated default category for sales";
     }
     return salon;
 }

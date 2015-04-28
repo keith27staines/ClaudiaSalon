@@ -351,7 +351,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Payment" inManagedObjectContext:moc];
     [fetchRequest setEntity:entity];
     // Specify criteria for filtering which objects to fetch
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"paymentCategory == %@ AND voided == %@ and paymentDate > %@ and paymentDate <%@",category,@(NO),self.fromDate,self.toDate];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"sale = nil AND paymentCategory == %@ AND voided == %@ and paymentDate > %@ and paymentDate <%@",category,@(NO),self.fromDate,self.toDate];
     [fetchRequest setPredicate:predicate];
     // Specify how the fetched objects should be sorted
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"paymentDate"

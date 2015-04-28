@@ -14,7 +14,12 @@
 @interface AMCAccountManagementViewController () <NSTableViewDelegate>
 @property (strong) IBOutlet NSArrayController *accountArrayController;
 @property (weak) IBOutlet NSTableView *accountsTable;
+@property (weak) IBOutlet NSTextField *feePercentageIncomingField;
+@property (weak) IBOutlet NSTextField *feePercentageOutgoingField;
 
+@property (weak) IBOutlet NSButton *isPrimaryAccountCheckbox;
+@property (weak) IBOutlet NSButton *isTillAccountCheckbox;
+@property (weak) IBOutlet NSButton *isCardPaymentAccountCheckbox;
 @end
 
 @implementation AMCAccountManagementViewController
@@ -51,6 +56,10 @@
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
     NSTableView * table = notification.object;
     NSInteger row = table.selectedRow;
+    self.feePercentageIncomingField.enabled = NO;
+    self.feePercentageOutgoingField.enabled = NO;
+    self.feePercentageIncomingField.doubleValue = 0;
+    self.feePercentageOutgoingField.doubleValue = 0;
     self.isCardPaymentAccountCheckbox.state = NSOffState;
     self.isPrimaryAccountCheckbox.state = NSOffState;
     self.isCardPaymentAccountCheckbox.enabled = NO;
@@ -59,10 +68,14 @@
     self.isTillAccountCheckbox.state = NSOffState;
     if (row >= 0) {
         // A row is selected
+        self.feePercentageIncomingField.enabled = YES;
+        self.feePercentageOutgoingField.enabled = YES;
         self.isCardPaymentAccountCheckbox.enabled = YES;
         self.isTillAccountCheckbox.enabled = YES;
         self.isPrimaryAccountCheckbox.enabled = YES;
         Account * account = self.accountArrayController.arrangedObjects[row];
+        self.feePercentageIncomingField.objectValue = account.transactionFeePercentageIncoming;
+        self.feePercentageOutgoingField.objectValue = account.transactionFeePercentageOutgoing;
         if (account.primaryBankAccountForSalon) {
             self.isPrimaryAccountCheckbox.state = NSOnState;
         }
@@ -111,6 +124,13 @@
     Salon * salon = (self.isCardPaymentAccountCheckbox.state)?self.salonDocument.salon:nil;
     [self selectedAccount].cardPaymentAccountForSalon = salon;
 }
+- (IBAction)feeIncomingChanged:(id)sender {
+    [self selectedAccount].transactionFeePercentageIncoming = self.feePercentageIncomingField.objectValue;
+}
+- (IBAction)feeOutgoingChanged:(id)sender {
+    [self selectedAccount].transactionFeePercentageOutgoing = self.feePercentageOutgoingField.objectValue;
+}
+
 -(Account*)selectedAccount {
     Account * account = self.accountArrayController.selectedObjects[0];
     return account;

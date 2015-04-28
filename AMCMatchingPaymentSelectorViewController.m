@@ -78,26 +78,14 @@
             [alert addButtonWithTitle:@"Cancel"];
             switch ([alert runModal]) {
                 case NSAlertFirstButtonReturn: {
+                    Payment * payment = nil;
                     if (self.computerRecord.isPayment) {
-                        Payment * payment = self.computerRecord.financialTransaction;
-                        payment.createdDate = statementDate;
-                        payment.paymentDate = statementDate;
-                        payment.bankStatementTransactionDate = statementDate;
-                        if (statementAmount.doubleValue > 0) {
-                            payment.direction = kAMCPaymentDirectionIn;
-                            payment.amount = @(fabs(statementAmount.doubleValue));
-                        } else {
-                            payment.direction = kAMCPaymentDirectionOut;
-                            payment.amount = @(statementAmount.doubleValue);
-                        }
-                        if (statementFee) {
-                            payment.transactionFeeIncoming = statementFee;
-                        }
+                        payment = self.computerRecord.financialTransaction;
                     } else {
                         Sale * sale = self.computerRecord.financialTransaction;
-                        sale.createdDate = statementDate;
-                        sale.actualCharge = @(statementAmount.doubleValue);
+                        payment = [sale.payments anyObject];
                     }
+                    [self adjustPayment:payment toMatchStatement:self.transactionDictionary];
                     [self dismissController:self];
                     break;
                 }
@@ -105,6 +93,22 @@
                     break;
             }
         }
+    }
+}
+-(void)adjustPayment:(Payment*)payment toMatchStatement:(NSMutableDictionary*)transactionDictionary {
+    NSDate * statementDate = transactionDictionary[@"date"];
+    NSNumber * statementAmount = transactionDictionary[@"amount"];
+    double statementAmountValue = statementAmount.doubleValue;
+    NSNumber * amount = @(fabs(amount.doubleValue));
+    NSNumber * fee = transactionDictionary[@"fee"];
+    payment.direction = (statementAmountValue>=0)?kAMCPaymentDirectionIn:kAMCPaymentDirectionOut;
+    payment.createdDate = statementDate;
+    payment.paymentDate = statementDate;
+    payment.bankStatementTransactionDate = statementDate;
+    [payment recalculateNetAmountWithFee:fee];
+    if (payment.sale) {
+        payment.sale.createdDate = statementDate;
+        payment.sale.actualCharge = amount;
     }
 }
 - (IBAction)cancelButtonClicked:(id)sender {

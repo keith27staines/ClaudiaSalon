@@ -14,5 +14,9 @@
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)paymentsBetweenStartDate:(NSDate*)startDate endDate:(NSDate*)endDate withMoc:(NSManagedObjectContext*)moc;
++(NSArray*)nonSalepaymentsBetweenStartDate:(NSDate*)startDate endDate:(NSDate*)endDate withMoc:(NSManagedObjectContext*)moc;
 -(NSString*)refundYNString;
+-(NSNumber*)calculateFeeForAmount:(NSNumber*)amount withFeePercentage:(NSNumber*)feePercent;
+-(void)recalculateNetAmountWithFee:(NSNumber *)fee;
+-(void)recalculateNetAmountWithFeePercentage:(NSNumber*)feePercent;
 @end

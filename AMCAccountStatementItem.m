@@ -83,6 +83,8 @@
     if (self.payment) {
         if (self.payment.bankStatementTransactionDate) {
             return self.payment.bankStatementTransactionDate;
+        } else if (self.payment.paymentDate) {
+            return self.payment.paymentDate;
         } else {
             return self.payment.createdDate;
         }
@@ -130,21 +132,13 @@
 -(double)amountNet {
     if (self.payment) {
         if ([self.payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
-            if ([self.payment.account.friendlyName isEqualToString:@"PayPal"]) {
-                return [self amountAfterFeeFrom:self.payment.amount.doubleValue withFeePercentage:2.75];
-            } else {
-                return self.payment.amount.doubleValue;
-            }
+            return self.payment.amountNet.doubleValue;
         } else {
             return -self.payment.amount.doubleValue;
         }
     }
     if (self.sale) {
-        if ([self.sale.account.friendlyName isEqualToString:@"PayPal"]) {
-            return [self amountAfterFeeFrom:self.sale.actualCharge.doubleValue withFeePercentage:2.75];
-        } else {
-            return self.sale.actualCharge.doubleValue;
-        }
+        return [self.sale amountPaidNet];
     }
     return 0;
 }

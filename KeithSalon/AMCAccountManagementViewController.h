@@ -10,9 +10,7 @@
 
 @interface AMCAccountManagementViewController : AMCViewController
 
-@property (weak) IBOutlet NSButton *isPrimaryAccountCheckbox;
-@property (weak) IBOutlet NSButton *isTillAccountCheckbox;
-@property (weak) IBOutlet NSButton *isCardPaymentAccountCheckbox;
+
 
 
 @end

@@ -33,13 +33,13 @@
         if (category.isDefault.boolValue) {
             if (!defaultCategorySet) {
                 defaultCategorySet = YES;
-                category.defaultCategoryForSalon = self.salonDocument.salon;
+                self.salonDocument.salon.defaultPaymentCategoryForPayments = category;
             } else {
                 category.isDefault = @(NO);
             }
         }
     }
-    self.salonDocument.salon.defaultPaymentCategory.isDefault = @(YES);
+    self.salonDocument.salon.defaultPaymentCategoryForPayments.isDefault = @(YES);
     [super dismissController:sender];
 }
 @end
