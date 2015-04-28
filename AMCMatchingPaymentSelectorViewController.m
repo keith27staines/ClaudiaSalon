@@ -78,13 +78,7 @@
             [alert addButtonWithTitle:@"Cancel"];
             switch ([alert runModal]) {
                 case NSAlertFirstButtonReturn: {
-                    Payment * payment = nil;
-                    if (self.computerRecord.isPayment) {
-                        payment = self.computerRecord.financialTransaction;
-                    } else {
-                        Sale * sale = self.computerRecord.financialTransaction;
-                        payment = [sale.payments anyObject];
-                    }
+                    Payment * payment = self.computerRecord.payment;
                     [self adjustPayment:payment toMatchStatement:self.transactionDictionary];
                     [self dismissController:self];
                     break;

@@ -123,9 +123,9 @@
     self.account = self.accountPopup.selectedItem.representedObject;
     if (!self.account) {return;}
     self.statementItems = [NSMutableArray array];
-    NSArray * transactions = [self.payments copy];
-    for (id object in transactions) {
-        AMCAccountStatementItem * statementItem = [[AMCAccountStatementItem alloc] initWithFinancialTransaction:object];
+    NSArray * payments = [self.payments copy];
+    for (Payment * payment in payments) {
+        AMCAccountStatementItem * statementItem = [[AMCAccountStatementItem alloc] initWithPayment:payment];
         [self.statementItems addObject:statementItem];
     }
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
@@ -160,7 +160,7 @@
     AMCAccountStatementItem * item = self.arrayController.arrangedObjects[row];
     self.editSaleViewController.editMode = EditModeView;
     self.editSaleViewController.allowUserToChangeAccount = NO;
-    self.editSaleViewController.transaction = item.financialTransaction;
+    self.editSaleViewController.transaction = item.payment;
     [self.editSaleViewController prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewControllerAsSheet:self.editSaleViewController];
 }
@@ -177,7 +177,14 @@
             if (self.editSaleViewController.cancelled) {
                 [self.documentMoc deleteObject:self.editSaleViewController.transaction];
             } else {
-                AMCAccountStatementItem * item = [[AMCAccountStatementItem alloc] initWithFinancialTransaction:self.editSaleViewController.transaction];
+                Payment * payment = nil;
+                if ([self.editSaleViewController.transaction isKindOfClass:[Sale class]]) {
+                    Sale * sale = self.editSaleViewController.transaction;
+                    payment = [sale makePaymentInFull];
+                } else {
+                    payment = self.editSaleViewController.transaction;
+                }
+                AMCAccountStatementItem * item = [[AMCAccountStatementItem alloc] initWithPayment:payment];
                 [self.arrayController addObject:item];
             }
         }
@@ -193,7 +200,6 @@
     [alert addButtonWithTitle:@"Sale"];
     [alert addButtonWithTitle:@"Cancel"];
     [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
-        id transaction;
         switch (returnCode) {
             case NSAlertFirstButtonReturn:
             {
@@ -201,7 +207,7 @@
                 
                 Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
                 payment.account = self.account;
-                transaction = payment;
+                [self editNewTransaction:payment];
                 break;
             }
             case NSAlertSecondButtonReturn:
@@ -209,14 +215,11 @@
                 // Create sale
                 Sale * sale = [Sale newObjectWithMoc:self.documentMoc];
                 sale.account = self.account;
-                transaction = sale;
+                [self editNewTransaction:sale];
                 break;
             }
             default:
                 break;
-        }
-        if (transaction) {
-            [self editNewTransaction:transaction];
         }
      }];
 }
@@ -226,13 +229,7 @@
         return;
     }
     AMCAccountStatementItem * item = self.arrayController.arrangedObjects[row];
-    if ([item.financialTransaction isKindOfClass:[Sale class]]) {
-        Sale * sale = item.financialTransaction;
-        sale.voided = @YES;
-    } else {
-        Payment * payment = item.financialTransaction;
-        payment.voided = @YES;
-    }
+    item.payment.voided = @YES;
     [self.arrayController removeObjectAtArrangedObjectIndex:row];
 }
 -(void)dismissController:(id)sender {
@@ -295,7 +292,7 @@
         }
         for (Sale * sale in account.sales) {
             if (!sale.isQuote.boolValue) {
-                Payment * payment = [sale makePaymentInFull];
+                [sale makePaymentInFull];
             }
         }
         for (Payment * payment in account.payments) {

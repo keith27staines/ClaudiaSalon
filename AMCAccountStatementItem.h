@@ -9,10 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface AMCAccountStatementItem : NSObject
-@property (readonly) id financialTransaction;
--(instancetype)initWithFinancialTransaction:(id)object;
--(instancetype)initWithSale:(Sale*)sale;
+
 -(instancetype)initWithPayment:(Payment*)payment;
+@property (weak,readonly) Payment * payment;
 @property (copy,readonly) NSDate * date;
 @property (readonly) double signedAmountGross;
 @property (readonly) double amountGross;

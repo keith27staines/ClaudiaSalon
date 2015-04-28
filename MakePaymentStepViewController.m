@@ -236,6 +236,7 @@
         sale.amountGivenByCustomer = @(self.amountGivenByCustomer.doubleValue);
         sale.changeGiven = @([self calculateChange]);
         sale.isQuote = @(NO);
+        [sale makePaymentInFull];
         sale.lastUpdatedDate = [NSDate date];
         [self.salonDocument commitAndSave:nil];
         if (controller.printReceiptCheckbox.state == NSOnState) {

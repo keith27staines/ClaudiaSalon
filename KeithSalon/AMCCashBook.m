@@ -186,7 +186,7 @@
                                           @"Fee":[nf stringFromNumber:@(fabs(item.transactionFee))]} mutableCopy];
     NSString * heading = [self headingFromStatementItem:item];
     if ([heading isEqualToString:@"Other" ] && item.isPayment) {
-        Payment * payment = item.financialTransaction;
+        Payment * payment = item.payment;
         NSString * details = @"";
         if (payment.paymentCategory) {
             details = [payment.paymentCategory.categoryName stringByAppendingString:@": "];
@@ -203,7 +203,7 @@
     AMCTreeNode * directionNode;
     if (item.isPayment) {
         // item is a payment
-        Payment * payment = item.financialTransaction;
+        Payment * payment = item.payment;
         // Payments can be either income or expenditure, depending on direction
         if ([payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
             // payment is income

@@ -16,68 +16,21 @@
 
 @interface AMCAccountStatementItem()
 {
-    id _financialTransaction;
-    __weak Sale * _sale;
     __weak Payment * _payment;
 }
-@property (readwrite) id financialTransaction;
-@property (weak) Sale * sale;
-@property (weak) Payment * payment;
 @end
 
 @implementation AMCAccountStatementItem
 
--(instancetype)initWithFinancialTransaction:(id)object {
+-(instancetype)initWithPayment:(Payment *)payment {
     self = [super init];
-    if ([object isKindOfClass:[Sale class]]) {
-        self.financialTransaction = object;
-        return self;
-    }
-    if ([object isKindOfClass:[Payment class]]) {
-        self.financialTransaction = object;
+    if (self) {
+        _payment = payment;
     }
     return self;
 }
--(instancetype)initWithPayment:(Payment *)payment {
-    return [self initWithFinancialTransaction:payment];
-}
-
--(instancetype)initWithSale:(Sale *)sale {
-    return [self initWithFinancialTransaction:sale];
-}
--(id)financialTransaction {
-    return _financialTransaction;
-}
--(void)setFinancialTransaction:(id)financialTransaction {
-    _financialTransaction = financialTransaction;
-    if ([financialTransaction isKindOfClass:[Payment class]]) {
-        self.payment = (Payment*)financialTransaction;
-    }
-    if ([financialTransaction isKindOfClass:[Sale class]]) {
-        self.sale = (Sale*)financialTransaction;
-    }
-    if (!financialTransaction) {
-        self.sale = nil;
-        self.payment = nil;
-    }
-}
 -(Payment *)payment {
     return _payment;
-}
--(void)setPayment:(Payment *)payment {
-    _payment = payment;
-    if (payment) {
-        self.sale = nil;
-    }
-}
--(Sale *)sale {
-    return _sale;
-}
--(void)setSale:(Sale *)sale {
-    _sale = sale;
-    if (sale) {
-        self.payment = nil;
-    }
 }
 -(NSDate *)date {
     if (self.payment) {
@@ -89,9 +42,6 @@
             return self.payment.createdDate;
         }
     }
-    if (self.sale) {
-        return self.sale.createdDate;
-    }
     return nil;
 }
 -(double)amountGross {
@@ -102,9 +52,6 @@
             return -self.payment.amount.doubleValue;
         }
     }
-    if (self.sale) {
-        return self.sale.actualCharge.doubleValue;
-    }
     return 0;
 }
 -(double)signedAmountGross {
@@ -114,9 +61,8 @@
         } else {
             return -fabs(self.amountGross);
         }
-    } else {
-        return self.amountGross;
     }
+    return 0;
 }
 -(double)signedAmountNet {
     if (self.payment) {
@@ -125,9 +71,8 @@
         } else {
             return -fabs(self.amountNet);
         }
-    } else {
-        return self.amountNet;
     }
+    return 0;
 }
 -(double)amountNet {
     if (self.payment) {
@@ -137,25 +82,21 @@
             return -self.payment.amount.doubleValue;
         }
     }
-    if (self.sale) {
-        return [self.sale amountPaidNet];
-    }
     return 0;
 }
 -(double)transactionFee {
-    return fabs(fabs([self amountGross]) - fabs([self amountNet]));
-}
--(double)amountAfterFeeFrom:(double)amount withFeePercentage:(double)feePercent {
-    double fee = round(amount *100 * feePercent/100.0);
-    double after = amount * 100  - fee;
-    return round(after)/100.0;
+    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        return self.payment.transactionFeeIncoming.doubleValue;
+    }
+    return 0;
 }
 -(NSString *)payeeName {
-    if (self.payment) {
+    if (self.payment.payeeName) {
         return self.payment.payeeName;
-    }
-    if (self.sale) {
-        return @"Customer";
+    } else {
+        if (self.payment.sale) {
+            return @"Customer";
+        }
     }
     return @"";
 }
@@ -163,17 +104,12 @@
     if (self.payment) {
         return self.payment.paymentCategory.categoryName;
     }
-    if (self.sale) {
-        return @"Sale";
-    }
+
     return @"";
 }
 -(NSString *)note {
     if (self.payment) {
         return self.payment.reason;
-    }
-    if (self.sale) {
-        return @"";
     }
     return @"";
 }
@@ -181,29 +117,23 @@
     if (self.payment) {
         return self.payment.reconciledWithBankStatement.boolValue;
     }
-    if (self.sale) {
-        return NO;
-    }
     return NO;
 }
 -(NSString *)direction {
     if (self.payment) {
-        // Payments can be incoming or outgoing
         return self.payment.direction;
-    } else {
-        // Sales are always "IN"
-        return kAMCPaymentDirectionIn;
     }
+    return nil;
 }
 -(BOOL)isPayment {
-    return (self.payment != nil);
+    return (self.payment.sale == nil);
 }
 -(void)voidTransaction {
     if (self.payment) {
         self.payment.voided = @(YES);
-    }
-    if (self.sale) {
-        self.sale.voided = @(YES);
+        if (self.payment.sale) {
+            self.payment.sale.voided = @(YES);
+        }
     }
 }
 -(BOOL)paired {

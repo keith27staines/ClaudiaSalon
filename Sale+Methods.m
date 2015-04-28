@@ -83,7 +83,14 @@
         return @"Sale";
     }
 }
-
+-(void)setVoided:(NSNumber *)voided {
+    for (Payment * payment in self.payments) {
+        payment.voided = @(YES);
+    }
+    [self willChangeValueForKey:@"voided"];
+    [self setPrimitiveValue:voided forKey:@"voided"];
+    [self didChangeValueForKey:@"voided"];
+}
 -(Payment*)makePaymentInFull {
     return [self makePaymentOfAmount:[self amountOutstanding]];
 }

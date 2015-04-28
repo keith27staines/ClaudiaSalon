@@ -101,7 +101,7 @@
         self.amountTextField.doubleValue = self.payment.amount.doubleValue;
     } else {
         [self selectItemWithRepresentedObject:self.sale.account inPopup:self.accountSelector];
-        [self selectItemWithRepresentedObject:nil inPopup:self.categorySelector];
+        [self selectItemWithRepresentedObject:self.salonDocument.salon.defaultPaymentCategoryForSales inPopup:self.categorySelector];
         [self.directionSelector selectSegmentWithTag:0];
         self.reconciledCheckbox.state = NSOffState;
         self.directionSelector.selectedSegment = 1;
