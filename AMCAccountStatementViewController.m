@@ -132,7 +132,7 @@
     self.statementItems = [[self.statementItems sortedArrayUsingDescriptors:@[sort]] mutableCopy];
     self.balance = 0;
     for (AMCAccountStatementItem * item in self.statementItems) {
-        self.balance += item.amountNet;
+        self.balance = round((self.balance + item.amountNet)*100)/100.0;
         item.balance = self.balance;
     }
     self.finalBalance.doubleValue = self.balance;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7531" systemVersion="14E7f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E7f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7531"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCAccountStatementViewController">
@@ -339,8 +339,8 @@
                         </binding>
                     </connections>
                 </button>
-                <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XK7-H0-Bwb">
-                    <rect key="frame" x="0.0" y="0.0" width="95" height="27"/>
+                <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XK7-H0-Bwb">
+                    <rect key="frame" x="60" y="753" width="95" height="27"/>
                     <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="h0s-3M-nbY">
                         <font key="font" metaFont="system"/>
                         <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
@@ -351,34 +351,22 @@
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                     </datePickerCell>
                 </datePicker>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vdj-df-orT">
-                    <rect key="frame" x="-2" y="0.0" width="36" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vdj-df-orT">
+                    <rect key="frame" x="18" y="756" width="36" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="From" id="iC7-He-zxm">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2cz-XN-OKx">
-                    <rect key="frame" x="-2" y="0.0" width="19" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2cz-XN-OKx">
+                    <rect key="frame" x="188" y="756" width="19" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="To" id="Wbf-Bb-too">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3AE-7R-s5i">
-                    <rect key="frame" x="0.0" y="0.0" width="95" height="27"/>
-                    <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="ygG-8L-wlX">
-                        <font key="font" metaFont="system"/>
-                        <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
-                            <!--1982-02-12 16:00:00 +0000-->
-                            <timeZone key="timeZone" name="US/Pacific"/>
-                        </calendarDate>
-                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                    </datePickerCell>
-                </datePicker>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yLh-YS-jHM">
                     <rect key="frame" x="1227" y="746" width="166" height="32"/>
                     <buttonCell key="cell" type="push" title="Reconcile statement" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VwX-Re-AQZ">
@@ -404,11 +392,24 @@
                         <action selector="recalculateFees:" target="-2" id="ef8-4F-6Pw"/>
                     </connections>
                 </button>
+                <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3AE-7R-s5i">
+                    <rect key="frame" x="213" y="753" width="95" height="27"/>
+                    <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="ygG-8L-wlX">
+                        <font key="font" metaFont="system"/>
+                        <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
+                            <!--1982-02-12 16:00:00 +0000-->
+                            <timeZone key="timeZone" name="US/Pacific"/>
+                        </calendarDate>
+                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                    </datePickerCell>
+                </datePicker>
             </subviews>
             <constraints>
                 <constraint firstItem="yLh-YS-jHM" firstAttribute="top" secondItem="MjY-R5-AIH" secondAttribute="top" constant="-1" id="37F-aL-Ura"/>
                 <constraint firstItem="j8i-ag-3OZ" firstAttribute="top" secondItem="0nD-FP-uhI" secondAttribute="bottom" constant="20" id="4yJ-5L-MEl"/>
                 <constraint firstItem="0nD-FP-uhI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="6et-LB-3nl"/>
+                <constraint firstItem="2cz-XN-OKx" firstAttribute="baseline" secondItem="XK7-H0-Bwb" secondAttribute="baseline" id="8Ne-7f-T8r"/>
                 <constraint firstItem="MjY-R5-AIH" firstAttribute="leading" secondItem="dVC-IV-zPx" secondAttribute="trailing" constant="38" id="8zd-r7-ZYc"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="j8i-ag-3OZ" secondAttribute="trailing" constant="40" id="Da7-Km-tL0"/>
                 <constraint firstItem="f3Y-Kk-DWc" firstAttribute="leading" secondItem="LMe-di-zMb" secondAttribute="trailing" constant="18" id="EjM-H0-d69"/>
@@ -420,7 +421,11 @@
                 <constraint firstItem="bMj-o3-vCx" firstAttribute="leading" secondItem="M7L-Ys-f9E" secondAttribute="trailing" constant="17" id="Lxg-DV-wD5"/>
                 <constraint firstItem="2mm-7M-RfB" firstAttribute="width" secondItem="iwK-Mk-oga" secondAttribute="width" id="MiR-xq-tTw"/>
                 <constraint firstItem="LMe-di-zMb" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="Peg-td-Dwy"/>
+                <constraint firstItem="2cz-XN-OKx" firstAttribute="leading" secondItem="XK7-H0-Bwb" secondAttribute="trailing" constant="38" id="Q64-dy-kvx"/>
+                <constraint firstItem="vdj-df-orT" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="RrC-HI-YWi"/>
                 <constraint firstItem="0nD-FP-uhI" firstAttribute="top" secondItem="f3Y-Kk-DWc" secondAttribute="bottom" constant="20" id="T5R-NF-rFU"/>
+                <constraint firstItem="XK7-H0-Bwb" firstAttribute="leading" secondItem="vdj-df-orT" secondAttribute="trailing" constant="8" id="TZA-Km-iAr"/>
+                <constraint firstItem="2cz-XN-OKx" firstAttribute="baseline" secondItem="vdj-df-orT" secondAttribute="baseline" id="Tn3-EA-eyX"/>
                 <constraint firstItem="dVC-IV-zPx" firstAttribute="top" secondItem="MjY-R5-AIH" secondAttribute="top" id="TsO-jC-Woh"/>
                 <constraint firstItem="LMe-di-zMb" firstAttribute="baseline" secondItem="f3Y-Kk-DWc" secondAttribute="baseline" id="XvI-3k-Bnx"/>
                 <constraint firstAttribute="bottom" secondItem="yb5-9X-cKt" secondAttribute="bottom" constant="20" id="Y3f-p7-BZ8"/>
@@ -438,15 +443,18 @@
                 <constraint firstItem="j8i-ag-3OZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="jgF-NC-p4E"/>
                 <constraint firstAttribute="bottom" secondItem="j8i-ag-3OZ" secondAttribute="bottom" constant="20" id="kBF-Xs-bfy"/>
                 <constraint firstItem="M7L-Ys-f9E" firstAttribute="leading" secondItem="4hA-Dc-dJm" secondAttribute="trailing" constant="212" id="lDh-9V-WkJ"/>
+                <constraint firstItem="vdj-df-orT" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="mJY-P7-aKF"/>
                 <constraint firstItem="f3Y-Kk-DWc" firstAttribute="top" secondItem="dVC-IV-zPx" secondAttribute="top" constant="-1" id="mKV-vm-NyC"/>
                 <constraint firstItem="bMj-o3-vCx" firstAttribute="centerY" secondItem="M7L-Ys-f9E" secondAttribute="centerY" id="pxq-83-QqJ"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yLh-YS-jHM" secondAttribute="trailing" constant="20" id="qEL-bq-IvM"/>
+                <constraint firstItem="2cz-XN-OKx" firstAttribute="baseline" secondItem="3AE-7R-s5i" secondAttribute="baseline" id="sny-26-gRV"/>
                 <constraint firstItem="iwK-Mk-oga" firstAttribute="leading" secondItem="2mm-7M-RfB" secondAttribute="trailing" id="u7C-FN-8VW"/>
                 <constraint firstAttribute="trailing" secondItem="0nD-FP-uhI" secondAttribute="trailing" constant="20" id="vke-dO-uPC"/>
                 <constraint firstItem="bMj-o3-vCx" firstAttribute="centerY" secondItem="3Xi-gR-gLF" secondAttribute="centerY" id="whj-Gd-8bt"/>
                 <constraint firstItem="2mm-7M-RfB" firstAttribute="width" secondItem="M7L-Ys-f9E" secondAttribute="width" id="xj7-wu-fde"/>
                 <constraint firstItem="4hA-Dc-dJm" firstAttribute="leading" secondItem="iwK-Mk-oga" secondAttribute="trailing" constant="20" id="z5K-rJ-uAC"/>
                 <constraint firstItem="2mm-7M-RfB" firstAttribute="leading" secondItem="0nD-FP-uhI" secondAttribute="leading" id="zPQ-eq-mps"/>
+                <constraint firstItem="3AE-7R-s5i" firstAttribute="leading" secondItem="2cz-XN-OKx" secondAttribute="trailing" constant="8" id="zo3-0d-NEx"/>
             </constraints>
             <point key="canvasLocation" x="-276" y="-490.5"/>
         </customView>
