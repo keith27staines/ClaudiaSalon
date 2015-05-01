@@ -26,7 +26,6 @@
 - (IBAction)editBrandListClicked:(id)sender;
 - (IBAction)addNewProductClicked:(id)sender;
 
-@property (weak) IBOutlet NSSearchField *searchField;
 - (IBAction)searchFieldChanged:(id)sender;
 
 @property (weak) IBOutlet NSTextField *currentStockTextField;

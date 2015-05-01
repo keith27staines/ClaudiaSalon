@@ -22,7 +22,6 @@
     BOOL _allowingLowerPayment;
 }
 
-@property (nonatomic,copy) NSString * title;
 @property (nonatomic,copy) NSString * payee;
 @property (nonatomic,copy) NSString * paymentReason;
 @property (nonatomic) PaymentCategory * paymentCategory;

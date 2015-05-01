@@ -20,6 +20,7 @@
 #import "NSDate+AMCDate.h"
 #import "AMCCashBookViewController.h"
 #import "AMCBankStatementReconciliationViewController.h"
+#import "AccountReconciliation+Methods.h"
 
 @interface AMCAccountStatementViewController () <NSTableViewDataSource, NSTableViewDelegate>
 {
@@ -34,6 +35,9 @@
 @property (weak) IBOutlet NSButton *addTransactionButton;
 @property (weak) IBOutlet NSButton *removeTransactionButton;
 @property (weak) IBOutlet NSButton *viewTransactionButton;
+@property (weak) IBOutlet NSTextField *broughtForward;
+
+
 @property Account * account;
 @property (copy,readonly) NSArray * payments;
 @property NSMutableArray * statementItems;
@@ -48,6 +52,7 @@
 @property (readonly) NSDate * startDate;
 @property (readonly) NSDate * endDate;
 @property double balance;
+@property double amountBroughtForward;
 @property (strong) IBOutlet AMCBankStatementReconciliationViewController *bankStatementReconciliationViewController;
 @end
 
@@ -64,8 +69,8 @@
     [super prepareForDisplayWithSalon:salonDocument];
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
     self.dataTable.sortDescriptors = @[sort];
-    self.fromDatePicker.dateValue = self.fromDatePicker.minDate;
-    self.toDatePicker.dateValue = [[NSDate date] endOfDay];
+    self.fromDatePicker.dateValue = [[self.fromDatePicker.minDate beginningOfDay] dateByAddingTimeInterval:12*3600]; // Midday long ago
+    self.toDatePicker.dateValue = [[[NSDate date] beginningOfDay] dateByAddingTimeInterval:12*3600]; // Midday today
     [self populateAccounts];
     [self reloadData];
     if (!self.accountPopup.selectedItem.representedObject) {
@@ -99,21 +104,8 @@
 }
 -(NSArray *)payments {
     if (!_payments) {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Payment" inManagedObjectContext:self.documentMoc];
-        [fetchRequest setEntity:entity];
-        // Specify criteria for filtering which objects to fetch
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account == %@ && voided == %@ && paymentDate >= %@ && paymentDate <= %@", self.account,@NO,self.startDate, self.endDate];
-        [fetchRequest setPredicate:predicate];
-        // Specify how the fetched objects should be sorted
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdDate"
-                                                                       ascending:YES];
-        [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
-        
-        NSError *error = nil;
-        _payments = [self.documentMoc executeFetchRequest:fetchRequest error:&error];
+        _payments = [self.account paymentsBetween:self.startDate endDate:self.endDate];
     }
-    
     return [_payments copy];
 }
 - (IBAction)accountChanged:(NSPopUpButton *)sender {
@@ -123,18 +115,20 @@
     self.account = self.accountPopup.selectedItem.representedObject;
     if (!self.account) {return;}
     self.statementItems = [NSMutableArray array];
-    NSArray * payments = [self.payments copy];
-    for (Payment * payment in payments) {
+    for (Payment * payment in self.payments) {
         AMCAccountStatementItem * statementItem = [[AMCAccountStatementItem alloc] initWithPayment:payment];
         [self.statementItems addObject:statementItem];
     }
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
     self.statementItems = [[self.statementItems sortedArrayUsingDescriptors:@[sort]] mutableCopy];
-    self.balance = 0;
+    self.balance = [self.account amountBroughtForward:self.startDate].doubleValue;
     for (AMCAccountStatementItem * item in self.statementItems) {
-        self.balance = round((self.balance + item.amountNet)*100)/100.0;
+        self.balance = ( round(self.balance*100.0) + round(item.amountNet * 100.0) )/100.0;
         item.balance = self.balance;
     }
+    self.amountBroughtForward = [self.account amountBroughtForward:self.startDate].doubleValue;
+    self.broughtForward.objectValue = @(self.amountBroughtForward);
+    NSAssert(self.balance == [self.account amountBroughtForward:self.endDate].doubleValue, @"balances don't match");
     self.finalBalance.doubleValue = self.balance;
     self.addTransactionButton.enabled = YES;
     self.viewTransactionButton.enabled = YES;
@@ -273,7 +267,7 @@
     self.cashBookViewController.account = self.account;
     self.cashBookViewController.firstDay = self.fromDatePicker.dateValue;
     self.cashBookViewController.lastDay = self.toDatePicker.dateValue;
-    self.cashBookViewController.balanceBroughtForward = 0;
+    self.cashBookViewController.balanceBroughtForward = self.amountBroughtForward;
     self.cashBookViewController.balancePerBank = self.balance;
     self.cashBookViewController.account = self.account;
     [self.cashBookViewController prepareForDisplayWithSalon:self.salonDocument];
@@ -303,6 +297,8 @@
         }
         for (Payment * payment in account.payments) {
             [payment recalculateNetAmountWithFee:payment.transactionFeeIncoming];
+            payment.reconciledWithBankStatement = @NO;
+            payment.bankStatementTransactionDate = nil;
         }
         if (account == self.salonDocument.salon.cardPaymentAccount) {
             for (Payment * payment in account.payments) {
@@ -313,6 +309,13 @@
             }
         }
     }
+}
+- (IBAction)addReconciliationPoint:(id)sender {
+    AccountReconciliation * reconciliation = [AccountReconciliation newObjectWithMoc:self.documentMoc];
+    reconciliation.actualBalance = @(self.balance);
+    reconciliation.reconciliationDate = self.endDate;
+    [self.account addReconciliationsObject:reconciliation];
+    [self reloadData];
 }
 
 @end

@@ -16,8 +16,6 @@
 
 @property id<EditObjectViewControllerDelegate>delegate;
 
-@property (weak) AMCSalonDocument * salonDocument;
-
 #pragma mark - Outlets for controls common to all windows
 @property (weak) IBOutlet NSTextField * panelTitle;
 @property (weak) IBOutlet NSButton * editButton;

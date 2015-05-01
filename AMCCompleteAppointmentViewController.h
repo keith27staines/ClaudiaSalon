@@ -22,5 +22,5 @@
 - (IBAction)yesButtonClicked:(id)sender;
 
 @property Appointment * appointment;
-@property BOOL cancelled;
+
 @end

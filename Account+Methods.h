@@ -14,8 +14,12 @@
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
 +accountWithFriendlyName:(NSString*)friendlyName withMoc:(NSManagedObjectContext*)moc;
 -(AccountReconciliation*)latestAccountReconcilliation;
--(AccountReconciliation*)lastAccountReconcilliationBeforeDate:(NSDate*)date;
--(double)expectedBalanceFromReconciliation:(AccountReconciliation*)reconciliation;
--(double)expectedBalanceFromReconciliation:(AccountReconciliation*)reconciliation toDate:(NSDate*)date;
+-(AccountReconciliation*)lastAccountReconcilliationOnOrBeforeDate:(NSDate*)date;
+-(NSNumber*)expectedBalanceFromReconciliation:(AccountReconciliation*)reconciliation;
+-(NSNumber*)expectedBalanceFromReconciliation:(AccountReconciliation*)reconciliation toDate:(NSDate*)date;
+-(NSArray*)paymentsBetween:(NSDate*)startDate endDate:(NSDate*)endDate;
+-(NSArray*)paymentsAfter:(NSDate*)date;
+-(NSArray*)paymentsBefore:(NSDate*)date;
+-(NSNumber*)amountBroughtForward:(NSDate*)date;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 @end

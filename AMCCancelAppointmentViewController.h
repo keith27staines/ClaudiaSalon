@@ -23,6 +23,5 @@
 
 @property Appointment * appointment;
 @property (weak) IBOutlet NSTextField *titleField;
-@property BOOL cancelled;
 -(void)reloadData;
 @end

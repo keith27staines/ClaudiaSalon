@@ -21,8 +21,6 @@
 
 @property (weak) SaleItem * saleItem;
 
-@property BOOL cancelled;
-
 @property (weak) IBOutlet NSButton *cancelButtonClicked;
 
 - (IBAction)refundButtonClicked:(id)sender;

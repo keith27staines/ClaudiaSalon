@@ -40,6 +40,4 @@
 - (IBAction)cancelButtonClicked:(id)sender;
 - (IBAction)doneButtonClicked:(id)sender;
 
-@property BOOL cancelled;
-
 @end

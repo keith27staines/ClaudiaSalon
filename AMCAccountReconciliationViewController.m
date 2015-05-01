@@ -59,8 +59,8 @@
     }
 }
 -(void)displayBalance:(Account*)account {
-    AccountReconciliation * latest = [account lastAccountReconcilliationBeforeDate:self.dateForBalance.dateValue];
-    self.expectedBalance.stringValue = [NSString stringWithFormat:@"Closing balance should be: £%1.2f",[account expectedBalanceFromReconciliation:latest toDate:self.dateForBalance.dateValue]];
+    AccountReconciliation * latest = [account lastAccountReconcilliationOnOrBeforeDate:self.dateForBalance.dateValue];
+    self.expectedBalance.stringValue = [NSString stringWithFormat:@"Closing balance should be: £%1.2f",[account expectedBalanceFromReconciliation:latest toDate:self.dateForBalance.dateValue].doubleValue];
 }
 - (IBAction)addReconciliationButtonClicked:(id)sender {
     [self.reconciliationsTable.window endEditingFor:self.reconciliationsTable];

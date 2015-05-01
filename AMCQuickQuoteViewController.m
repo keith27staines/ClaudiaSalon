@@ -21,7 +21,6 @@
 {
     Sale * _sale;
 }
-@property (readwrite) BOOL cancelled;
 @property NSArray * saleItemsArray;
 @end
 

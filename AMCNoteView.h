@@ -10,6 +10,5 @@
 #import "AMCSalonDocument.h"
 @interface AMCNoteView : NSTableCellView
 @property (weak) IBOutlet NSTextField *titleField;
-@property (weak) IBOutlet NSTextField *textField;
 
 @end

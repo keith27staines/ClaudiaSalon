@@ -112,6 +112,9 @@
     if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
         self.transactionFeeIncoming = fee;
         self.amountNet = [self amountAfterFeeFrom:self.amount fee:fee];
+    } else {
+        self.transactionFeeIncoming = 0;
+        self.amountNet = self.amount;
     }
 }
 -(void)recalculateWithAmount:(NSNumber *)amount fee:(NSNumber *)fee {
