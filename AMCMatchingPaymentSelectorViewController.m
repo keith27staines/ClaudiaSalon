@@ -99,7 +99,6 @@
     payment.direction = (statementAmountValue>=0)?kAMCPaymentDirectionIn:kAMCPaymentDirectionOut;
     payment.createdDate = statementDate;
     payment.paymentDate = statementDate;
-    payment.bankStatementTransactionDate = statementDate;
     payment.amount = absoluteAmount;
     [payment recalculateNetAmountWithFee:absoluteFee];
     if (payment.sale) {

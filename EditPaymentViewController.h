@@ -14,6 +14,8 @@
 
 @property (weak) IBOutlet NSTextField *amountField;
 
+@property (weak) IBOutlet NSTextField * feeField;
+
 @property (weak) IBOutlet NSTextField *payeeField;
 
 @property (weak) IBOutlet NSTextField *paymentReasonField;
@@ -33,7 +35,6 @@
 @property (weak) IBOutlet NSButton *reconciledWithBankStatementCheckbox;
 
 - (IBAction)reconciledWithBankStatementChanged:(id)sender;
-@property (weak) IBOutlet NSDatePicker *bankStatementTransactionDate;
-- (IBAction)bankStatementTransactionDateChanged:(id)sender;
+
 
 @end

@@ -8,6 +8,7 @@
 
 #import "RecurringItem+Methods.h"
 #import "Payment+Methods.h"
+#import "Account+Methods.h"
 
 @implementation RecurringItem (Methods)
 
@@ -55,15 +56,13 @@
     if (!item.isActive.boolValue) return;
     if ([item.nextActionDate isGreaterThan:[NSDate date]]) return;
     Payment * paymentTemplate = item.paymentTemplate;
-    Payment * newPayment = [Payment newObjectWithMoc:item.managedObjectContext];
-    newPayment.createdDate = item.nextActionDate;
-    newPayment.paymentDate = item.nextActionDate;
-    newPayment.account = paymentTemplate.account;
-    newPayment.paymentCategory = paymentTemplate.paymentCategory;
-    newPayment.direction = paymentTemplate.direction;
-    newPayment.payeeName = paymentTemplate.payeeName;
-    newPayment.reason = paymentTemplate.reason;
-    newPayment.amount = [paymentTemplate.amount copy];
+    Account * account = paymentTemplate.account;
+    [account makePaymentWithAmount:paymentTemplate.amount
+                              date:item.nextActionDate
+                          category:paymentTemplate.paymentCategory
+                         direction:paymentTemplate.direction
+                         payeeName:paymentTemplate.payeeName
+                            reason:paymentTemplate.reason];
 }
 +(NSArray*)outstandingItemsInMoc:(NSManagedObjectContext*)moc {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];

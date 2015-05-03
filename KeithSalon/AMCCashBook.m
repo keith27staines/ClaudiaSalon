@@ -9,7 +9,7 @@
 #import "AMCCashBook.h"
 #import "NSDate+AMCDate.h"
 #import "AMCAccountStatementItem.h"
-#import "Payment.h"
+#import "Payment+Methods.h"
 #import "PaymentCategory+Methods.h"
 #import "AMCCategoriesRootNode.h"
 #import "AMCCashBookNode.h"
@@ -205,7 +205,7 @@
         // item is a payment
         Payment * payment = item.payment;
         // Payments can be either income or expenditure, depending on direction
-        if ([payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        if (payment.isIncoming) {
             // payment is income
             directionNode = self.cashbookNode.incomeNode;
         } else {

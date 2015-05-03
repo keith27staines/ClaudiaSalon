@@ -22,4 +22,10 @@
 -(NSArray*)paymentsBefore:(NSDate*)date;
 -(NSNumber*)amountBroughtForward:(NSDate*)date;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
+-(Payment*)makePaymentWithAmount:(NSNumber*)amount
+                            date:(NSDate*)date
+                        category:(PaymentCategory*)category
+                       direction:(NSString*)direction
+                       payeeName:(NSString*)name
+                          reason:(NSString*)reason;
 @end

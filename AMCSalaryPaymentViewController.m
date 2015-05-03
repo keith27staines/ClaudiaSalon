@@ -296,17 +296,21 @@
     [self displayEmployee];
 }
 -(void)makePaymentOfAmount:(double)amount fromAccount:(Account*)account forEmployee:(Employee*)employee bonusDate:(NSDate*)bonusDate {
-    Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
-    payment.account = self.salonDocument.salon.tillAccount;
-    payment.amount = @(amount);
-    payment.payeeName = self.employee.fullName;
-    payment.isManagersBudgetItem = self.employee.paidFromManagersBudget;
+    NSString * reason;
     if (bonusDate) {
-        payment.reason = [NSString stringWithFormat:@"Bonus for %@ %@",[bonusDate stringNamingDayOfWeek], [bonusDate dayAndMonthString]];
+        reason = [NSString stringWithFormat:@"Bonus for %@ %@",[bonusDate stringNamingDayOfWeek], [bonusDate dayAndMonthString]];
     } else {
-        payment.reason = [NSString stringWithFormat:@"Remuneraton for week ending %@ %@",[self.lastDayOfWeek stringNamingDayOfWeek], [self.lastDayOfWeek dayAndMonthString]];
+        reason = [NSString stringWithFormat:@"Remuneraton for week ending %@ %@",[self.lastDayOfWeek stringNamingDayOfWeek], [self.lastDayOfWeek dayAndMonthString]];
     }
-    payment.paymentCategory = [PaymentCategory paymentCategoryForSalaryWithMoc:self.documentMoc];
+    Payment * payment = [account makePaymentWithAmount:@(amount)
+                                                  date:[NSDate date]
+                                              category:[PaymentCategory paymentCategoryForSalaryWithMoc:self.documentMoc]
+                                             direction:kAMCPaymentDirectionOut
+                                             payeeName:self.employee.fullName
+                                                reason:reason];
+
+
+    payment.isManagersBudgetItem = self.employee.paidFromManagersBudget;
     [self.workRecord addWagesObject:payment];
     NSAlert * alert = [[NSAlert alloc] init];
     alert.messageText = @"Payment has been recorded";

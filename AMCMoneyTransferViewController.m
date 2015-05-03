@@ -72,27 +72,25 @@
     return self.toAccountPopupButton.selectedItem.representedObject;
 }
 - (IBAction)okButonClicked:(id)sender {
-    if (![self.view.window makeFirstResponder:self.view.window]) {
-        return;
-    }
-    Payment * outPayment = [Payment newObjectWithMoc:self.documentMoc];
-    Payment * inPayment = [Payment newObjectWithMoc:self.documentMoc];
-    PaymentCategory * transferCategory = [PaymentCategory transferCategoryWithMoc:self.documentMoc];
-    outPayment.paymentCategory = transferCategory;
-    inPayment.paymentCategory = transferCategory;
-    outPayment.account = self.fromAccountPopupButton.selectedItem.representedObject;
-    inPayment.account = self.toAccountPopupButton.selectedItem.representedObject;
-    outPayment.direction = kAMCPaymentDirectionOut;
-    inPayment.direction = kAMCPaymentDirectionIn;
-    outPayment.amount = @(self.amountToTransfer.doubleValue);
-    inPayment.amount = @(self.amountToTransfer.doubleValue);
-    outPayment.reason = [NSString stringWithFormat:@"Transfer to %@",self.inAccount.friendlyName];
-    inPayment.reason = [NSString stringWithFormat:@"Transfer from %@",self.outAccount.friendlyName];
+    if (![self.view.window makeFirstResponder:self.view.window]) {return;}
+
     NSDate * date = [NSDate date];
-    outPayment.paymentDate = date;
-    inPayment.paymentDate = [date dateByAddingTimeInterval:1]; // 1 second later!
-    outPayment.payeeName = [self.inAccount.friendlyName stringByAppendingString:@" acct"];
-    inPayment.payeeName = [self.outAccount.friendlyName stringByAppendingString:@" acct"];
+    PaymentCategory * transferCategory = [PaymentCategory transferCategoryWithMoc:self.documentMoc];
+    
+    [self.outAccount makePaymentWithAmount:@(self.amountToTransfer.doubleValue)
+                                      date:date
+                                  category:transferCategory
+                                 direction:kAMCPaymentDirectionOut
+                                 payeeName:[self.inAccount.friendlyName stringByAppendingString:@" acct"]
+                                    reason:[NSString stringWithFormat:@"Transfer to %@",self.inAccount.friendlyName]];
+    
+    [self.inAccount makePaymentWithAmount:@(self.amountToTransfer.doubleValue)
+                                     date:date
+                                 category:transferCategory
+                                direction:kAMCPaymentDirectionIn
+                                payeeName:[self.outAccount.friendlyName stringByAppendingString:@" acct"]
+                                   reason:[NSString stringWithFormat:@"Transfer from %@",self.outAccount.friendlyName]];
+    
     [self.salonDocument commitAndSave:nil];
     [self dismissController:self];
 }

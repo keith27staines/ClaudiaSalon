@@ -83,14 +83,7 @@
 }
 - (IBAction)dismissController:(id)sender {
     if ([self.view.window makeFirstResponder:self.view.window] && self.amountToPay > 0) {
-        self.payment = [Payment newObjectWithMoc:self.documentMoc];
-        self.payment.reason = self.paymentReason;
-        self.payment.paymentCategory = self.paymentCategory;
-        self.payment.payeeName = self.payee;
-        self.payment.direction = kAMCPaymentDirectionOut;
-        self.payment.paymentDate = [NSDate date];
-        self.payment.account = self.account;
-        self.payment.amount = @(self.amountToPay);
+        [self.account makePaymentWithAmount:@(self.amountToPay) date:[NSDate date] category:self.paymentCategory direction:kAMCPaymentDirectionOut payeeName:self.payee reason:self.paymentReason];
         [super dismissController:self];
     }
 }

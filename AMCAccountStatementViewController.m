@@ -284,9 +284,7 @@
         if (account == self.salonDocument.salon.cardPaymentAccount) {
             account.transactionFeePercentageIncoming = @(2.75/100.0);
             for (Payment * payment in account.payments) {
-                if (!payment.transactionFeeIncoming || payment.transactionFeeIncoming.doubleValue < 0.01) {
-                    [payment recalculateNetAmountWithFeePercentage:account.transactionFeePercentageIncoming];
-                }
+                [payment recalculateNetAmountWithFeePercentage:account.transactionFeePercentageIncoming];
             }
         }
         
@@ -296,16 +294,16 @@
             }
         }
         for (Payment * payment in account.payments) {
-            [payment recalculateNetAmountWithFee:payment.transactionFeeIncoming];
+            [payment recalculateNetAmountWithFee:payment.transactionFee];
             payment.reconciledWithBankStatement = @NO;
-            payment.bankStatementTransactionDate = nil;
         }
         if (account == self.salonDocument.salon.cardPaymentAccount) {
             for (Payment * payment in account.payments) {
-                if (![payment.direction isEqualToString:kAMCPaymentDirectionIn]) {continue;}
-                if (!payment.transactionFeeIncoming || payment.transactionFeeIncoming.doubleValue < 0.01) {
-                    NSLog(@"Problem");
-                };
+                if (payment.isIncoming) {
+                    if (!payment.transactionFee || payment.transactionFee.doubleValue < 0) {
+                        NSLog(@"Problem");
+                    }
+                }
             }
         }
     }

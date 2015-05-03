@@ -99,25 +99,18 @@
     double amountOutstanding = [self amountOutstanding];
     Payment * payment = nil;
     NSAssert(round(amountOutstanding*100) >= round(amount*100), @"amount is more than the amount outstanding");
-    payment = [Payment newObjectWithMoc:self.managedObjectContext];
-    payment.account = self.account;
-    payment.direction = kAMCPaymentDirectionIn;
-    payment.createdDate = self.createdDate;
-    payment.paymentDate = self.createdDate;
-    payment.reason = @"Sale";
-    payment.payeeName = self.customer.fullName;
-    payment.voided = self.voided;
+    NSString * customerName = self.customer.fullName;
+    if (!customerName || customerName.length == 0) {
+        customerName = @"Customer";
+    }
     Salon * salon = [Salon salonWithMoc:self.managedObjectContext];
-    payment.paymentCategory = salon.defaultPaymentCategoryForSales;
-    if (!payment.payeeName || payment.payeeName.length == 0) {
-        payment.payeeName = @"Customer";
-    }
-    payment.amount = @(amountOutstanding);
-    NSNumber * feePercentage = self.account.transactionFeePercentageIncoming;
-    if (amountOutstanding == (double)46) {
-        NSLog(@"£46.0");
-    }
-    [payment recalculateNetAmountWithFeePercentage:feePercentage];
+    payment = [self.account makePaymentWithAmount:@(amountOutstanding)
+                                             date:self.createdDate
+                                         category:salon.defaultPaymentCategoryForSales
+                                        direction:kAMCPaymentDirectionIn
+                                        payeeName:customerName
+                                           reason:@"Sale"];
+    payment.voided = self.voided;
     [self addPaymentsObject:payment];
     return payment;
 }

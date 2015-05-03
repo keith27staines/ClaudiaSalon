@@ -34,9 +34,7 @@
 }
 -(NSDate *)date {
     if (self.payment) {
-        if (self.payment.bankStatementTransactionDate) {
-            return self.payment.bankStatementTransactionDate;
-        } else if (self.payment.paymentDate) {
+        if (self.payment.paymentDate) {
             return self.payment.paymentDate;
         } else {
             return self.payment.createdDate;
@@ -46,7 +44,7 @@
 }
 -(double)amountGross {
     if (self.payment) {
-        if ([self.payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        if (self.payment.isIncoming) {
             return self.payment.amount.doubleValue;
         } else {
             return -self.payment.amount.doubleValue;
@@ -56,7 +54,7 @@
 }
 -(double)signedAmountGross {
     if (self.payment) {
-        if ([self.payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        if (self.payment.isIncoming) {
             return fabs(self.amountGross);
         } else {
             return -fabs(self.amountGross);
@@ -66,7 +64,7 @@
 }
 -(double)signedAmountNet {
     if (self.payment) {
-        if ([self.payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        if (self.payment.isIncoming) {
             return fabs(self.amountNet);
         } else {
             return -fabs(self.amountNet);
@@ -76,7 +74,7 @@
 }
 -(double)amountNet {
     if (self.payment) {
-        if ([self.payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        if (self.payment.isIncoming) {
             return self.payment.amountNet.doubleValue;
         } else {
             return -self.payment.amount.doubleValue;
@@ -86,7 +84,7 @@
 }
 -(double)transactionFee {
     if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
-        return self.payment.transactionFeeIncoming.doubleValue;
+        return self.payment.transactionFee.doubleValue;
     }
     return 0;
 }

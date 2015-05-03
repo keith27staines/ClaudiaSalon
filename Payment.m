@@ -21,7 +21,6 @@
 
 @dynamic amount;
 @dynamic amountNet;
-@dynamic bankStatementTransactionDate;
 @dynamic createdDate;
 @dynamic direction;
 @dynamic hidden;
@@ -34,7 +33,7 @@
 @dynamic reason;
 @dynamic reconciledWithBankStatement;
 @dynamic sourceAccount;
-@dynamic transactionFeeIncoming;
+@dynamic transactionFee;
 @dynamic voided;
 @dynamic account;
 @dynamic bonusForWorkRecord;

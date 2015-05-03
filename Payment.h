@@ -15,7 +15,6 @@
 
 @property (nonatomic, retain) NSNumber * amount;
 @property (nonatomic, retain) NSNumber * amountNet;
-@property (nonatomic, retain) NSDate * bankStatementTransactionDate;
 @property (nonatomic, retain) NSDate * createdDate;
 @property (nonatomic, retain) NSString * direction;
 @property (nonatomic, retain) NSNumber * hidden;
@@ -28,7 +27,7 @@
 @property (nonatomic, retain) NSString * reason;
 @property (nonatomic, retain) NSNumber * reconciledWithBankStatement;
 @property (nonatomic, retain) NSString * sourceAccount;
-@property (nonatomic, retain) NSNumber * transactionFeeIncoming;
+@property (nonatomic, retain) NSNumber * transactionFee;
 @property (nonatomic, retain) NSNumber * voided;
 @property (nonatomic, retain) Account *account;
 @property (nonatomic, retain) WorkRecord *bonusForWorkRecord;

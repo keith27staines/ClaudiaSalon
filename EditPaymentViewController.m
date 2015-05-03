@@ -71,6 +71,7 @@
     self.payeeField.stringValue = @"";
     [self.paymentDatePicker setDateValue:[NSDate date]];
     self.amountField.stringValue = @"";
+    self.feeField.stringValue = @"";
     [self.isRefundCheckbox setState:NSOffState];
     [self.categoryPopup selectItemAtIndex:0];
 }
@@ -86,6 +87,7 @@
     self.paymentReasonField.stringValue = (payment.reason)?payment.reason:@"";
     self.payeeField.stringValue = (payment.payeeName)?payment.payeeName:@"";
     self.amountField.doubleValue = (payment.amount)?payment.amount.doubleValue:0;
+    self.feeField.objectValue = payment.transactionFee;
     [self selectCategoryInPopup:payment.paymentCategory];
     if (payment.paymentDate) {
         self.paymentDatePicker.dateValue = payment.paymentDate;
@@ -93,7 +95,7 @@
         self.paymentDatePicker.dateValue = [NSDate date];
     }
     self.isRefundCheckbox.state = (payment.refunding)?NSOnState:NSOffState;
-    if ([payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+    if (payment.isIncoming) {
         [self.paymentDirection selectSegmentWithTag:1];
     } else {
         [self.paymentDirection selectSegmentWithTag:0];
@@ -131,7 +133,6 @@
             [self.paymentDirection setEnabled:NO forSegment:0];
             [self.paymentDirection setEnabled:NO forSegment:1];
             [self.reconciledWithBankStatementCheckbox setEnabled:NO];
-            [self.bankStatementTransactionDate setEnabled:NO];
             break;
         }
         case EditModeCreate:
@@ -142,9 +143,8 @@
             [self.paymentReasonField setEnabled:YES];
             [self.paymentDirection setEnabled:YES forSegment:0];
             [self.paymentDirection setEnabled:YES forSegment:1];
-            [self.reconciledWithBankStatementCheckbox setEnabled:YES];
+            [self.reconciledWithBankStatementCheckbox setEnabled:NO];
             [self.reconciledWithBankStatementCheckbox setState:NSOffState];
-            [self.bankStatementTransactionDate setEnabled:NO];
             [self selectCategoryInPopup:self.defaultCategory];
             // refund status should not be set by user. It is set automatically if the payment was created as a refund from the sales tab
             [self.isRefundCheckbox setEnabled:NO];
@@ -159,7 +159,7 @@
             [self.paymentDirection setEnabled:YES forSegment:0];
             [self.paymentDirection setEnabled:YES forSegment:1];
             [self.isRefundCheckbox setEnabled:NO];
-            [self.reconciledWithBankStatementCheckbox setEnabled:YES];
+            [self.reconciledWithBankStatementCheckbox setEnabled:NO];
             break;
         }
     }
@@ -174,8 +174,8 @@
     return  @[self.paymentReasonField,
               self.payeeField,
               self.amountField,
-              self.categoryPopup,
-              self.reconciledWithBankStatementCheckbox];
+              self.feeField,
+              self.categoryPopup];
 }
 #pragma mark - NSControlTextEditingDelegate
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
@@ -185,6 +185,9 @@
     
     if (control == self.amountField) {
         controlIsValid = self.amountField.doubleValue > 0;
+    }
+    if (control == self.feeField) {
+        controlIsValid = self.feeField.doubleValue >= 0;
     }
     if (control == self.payeeField) {
         controlIsValid = [self validateName:fieldEditor.string];
@@ -213,6 +216,11 @@
     payment.reason = self.paymentReasonField.stringValue;
     payment.payeeName = self.payeeField.stringValue;
     payment.amount = @(self.amountField.doubleValue);
+    NSNumber * transactionFee = self.feeField.objectValue;
+    if (![transactionFee isEqualToNumber:payment.transactionFee]) {
+        payment.transactionFee = self.feeField.objectValue;
+        [payment recalculateNetAmountWithFee:payment.transactionFee];
+    }
     payment.paymentDate = self.paymentDatePicker.dateValue;
     payment.paymentCategory = self.categoryPopup.selectedItem.representedObject;
     if (self.paymentDirection.selectedSegment == 0) {
@@ -231,7 +239,6 @@
 - (IBAction)reconciledWithBankStatementChanged:(id)sender {
     if (self.reconciledWithBankStatementCheckbox.state == NSOnState) {
         self.payment.reconciledWithBankStatement = @(YES);
-        self.payment.bankStatementTransactionDate = self.payment.paymentDate;
     } else {
         self.payment.reconciledWithBankStatement = @(NO);
     }
@@ -240,20 +247,8 @@
 -(void)configureBankStatementReconciliationWithPayment {
     if (self.payment.reconciledWithBankStatement.boolValue) {
         [self.reconciledWithBankStatementCheckbox setState:NSOnState];
-        [self.bankStatementTransactionDate setHidden:NO];
-        [self.bankStatementTransactionDate setEnabled:YES];
-        if (self.payment.bankStatementTransactionDate) {
-            [self.bankStatementTransactionDate setDateValue:self.payment.bankStatementTransactionDate];
-        } else {
-            [self.bankStatementTransactionDate setDateValue:self.payment.paymentDate];
-        }
     } else {
         [self.reconciledWithBankStatementCheckbox setState:NSOffState];
-        [self.bankStatementTransactionDate setHidden:YES];
-        [self.bankStatementTransactionDate setEnabled:NO];
     }
-}
-- (IBAction)bankStatementTransactionDateChanged:(id)sender {
-    self.payment.bankStatementTransactionDate = self.bankStatementTransactionDate.dateValue;
 }
 @end

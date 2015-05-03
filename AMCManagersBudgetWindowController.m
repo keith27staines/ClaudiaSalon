@@ -158,7 +158,7 @@
         if (payment.voided.boolValue) {
             paymentAmount = 0;
         } else {
-            if ([payment.direction isEqualToString:kAMCPaymentDirectionOut]) {
+            if (payment.isOutgoing) {
                 paymentAmount = payment.amount.doubleValue;
             } else {
                 paymentAmount = -payment.amount.doubleValue;
@@ -251,7 +251,7 @@
             return payment.account.friendlyName;
         }
         if ([identifier isEqualToString:@"amount"]) {
-            if ([payment.direction isEqualToString:kAMCPaymentDirectionOut]) {
+            if (payment.isOutgoing) {
                 return payment.amount;
             } else {
                 return @(-(payment.amount.doubleValue));

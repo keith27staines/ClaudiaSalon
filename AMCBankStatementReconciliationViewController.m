@@ -461,18 +461,31 @@
     [self reloadPairingData];
 }
 - (IBAction)addMatchingComputerRecord:(id)sender {
+    NSAlert * alert = [[NSAlert alloc] init];
+    alert.messageText = @"Add payment to match statement item";
+    alert.informativeText = @"A payment will be added to exactly match the statement item";
+    [alert addButtonWithTitle:@"Add payment"];
+    [alert addButtonWithTitle:@"Cancel"];
+    
+    if ([alert runModal] == NSModalResponseCancel) {return;}
+    
     NSInteger statementTransactionIndex = self.statementTransactionsTable.selectedRow;
     NSMutableDictionary * transactionDictionary = self.parser.transactionDictionaries[statementTransactionIndex];
     [self unpairStatementTransaction:transactionDictionary];
     Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
     payment.paymentDate = transactionDictionary[@"date"];
     double amount = ((NSNumber*)transactionDictionary[@"amount"]).doubleValue;
+    double fee = ((NSNumber*)transactionDictionary[@"fee"]).doubleValue;
+    double netAmount = ((NSNumber*)transactionDictionary[@"amountNet"]).doubleValue;
     if (amount > 0) {
         payment.direction = kAMCPaymentDirectionIn;
     } else {
         payment.direction = kAMCPaymentDirectionOut;
     }
+    payment.paymentCategory = self.salonDocument.salon.defaultPaymentCategoryForPayments;
     payment.amount = @(fabs(amount));
+    payment.transactionFee = @(fabs(fee));
+    payment.amountNet = @(fabs(netAmount));
     payment.account = self.account;
     payment.paymentCategory = nil;
     AMCAccountStatementItem * item = [[AMCAccountStatementItem alloc] initWithPayment:payment];

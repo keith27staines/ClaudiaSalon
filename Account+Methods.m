@@ -41,6 +41,39 @@
     array = [moc executeFetchRequest:fetch error:nil];
     return array;
 }
+-(Payment*)makePaymentWithAmount:(NSNumber*)amount
+                            date:(NSDate*)date
+                        category:(PaymentCategory*)category
+                       direction:(NSString*)direction
+                       payeeName:(NSString*)name
+                          reason:(NSString*)reason {
+    Payment * newPayment = [Payment newObjectWithMoc:self.managedObjectContext];
+    newPayment.createdDate = date;
+    newPayment.paymentDate = date;
+    newPayment.payeeName = [name copy];
+    newPayment.reason = [reason copy];
+    newPayment.amount = amount;
+    if ([direction isEqualToString:kAMCPaymentDirectionIn]) {
+        newPayment.direction = kAMCPaymentDirectionIn;
+        [newPayment calculateFeeForAmount:amount withFeePercentage:self.transactionFeePercentageIncoming];
+    } else {
+        newPayment.direction = kAMCPaymentDirectionOut;
+        [newPayment calculateFeeForAmount:amount withFeePercentage:self.transactionFeePercentageOutgoing];
+    }
+    if (category) {
+        newPayment.paymentCategory = category;
+    } else {
+        if (newPayment.isIncoming) {
+            newPayment.paymentCategory = [Salon salonWithMoc:self.managedObjectContext].defaultPaymentCategoryForSales;
+        } else {
+            newPayment.paymentCategory = [Salon salonWithMoc:self.managedObjectContext].defaultPaymentCategoryForPayments;
+        }
+    }
+    NSNumber * feePercentage = self.transactionFeePercentageIncoming;
+    [newPayment recalculateNetAmountWithFeePercentage:feePercentage];
+    [self addPaymentsObject:newPayment];
+    return newPayment;
+}
 -(AccountReconciliation*)lastAccountReconcilliationOnOrBeforeDate:(NSDate*)date {
     NSArray * array = [self.reconciliations allObjects];
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"reconciliationDate" ascending:YES];
@@ -91,7 +124,7 @@
     double sum = 0.0;
     for (Payment * payment in payments) {
         double amount = 0;
-        if ([payment.direction isEqualToString:kAMCPaymentDirectionOut]) {
+        if (payment.isOutgoing) {
             amount = -payment.amount.doubleValue;
         } else {
             amount = payment.amountNet.doubleValue;

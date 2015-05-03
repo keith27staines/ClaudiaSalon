@@ -7,6 +7,7 @@
 //
 
 #import "AMCRefundViewController.h"
+#import "Account+Methods.h"
 #import "Sale+Methods.h"
 #import "SaleItem+Methods.h"
 #import "Customer+Methods.h"
@@ -35,10 +36,14 @@
 
 - (IBAction)refundButtonClicked:(id)sender {
     Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
-    payment.amount = @(self.actualSumToRefund.doubleValue);
+    Account * account = self.saleItem.sale.account;
+    payment = [account makePaymentWithAmount:@(self.actualSumToRefund.doubleValue)
+                                        date:[NSDate date]
+                                    category:nil
+                                   direction:kAMCPaymentDirectionOut
+                                   payeeName:self.saleItem.sale.customer.fullName
+                                      reason:self.refundReason.stringValue];
     payment.refunding = self.saleItem;
-    payment.payeeName = self.saleItem.sale.customer.fullName;
-    payment.reason = self.refundReason.stringValue;
     [self.salonDocument commitAndSave:nil];
     [self.presentingViewController dismissViewController:self];
 }

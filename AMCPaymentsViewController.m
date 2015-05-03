@@ -151,18 +151,6 @@
         view.textField.stringValue = payment.refundYNString;
         return view;
     }
-    if ([columnID isEqualToString:@"bankStatementDate"]) {
-        if (payment.reconciledWithBankStatement.boolValue) {
-            if (payment.bankStatementTransactionDate) {
-                view.textField.stringValue = [payment.bankStatementTransactionDate dateStringWithMediumDateFormat];
-            } else {
-                view.textField.stringValue = @"???";
-            }
-        } else {
-            view.textField.stringValue = @"";
-        }
-        return view;
-    }
     if ([columnID isEqualToString:@"explanation"]) {
         if (payment.paymentCategory) {
             view.textField.stringValue = payment.paymentCategory.categoryName;
@@ -176,12 +164,6 @@
 #pragma mark - private implementation
 -(Payment*)selectedPayment {
     return self.displayedObjects[self.dataTable.selectedRow];
-}
--(Payment*)createNewPayment
-{
-    Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
-    [self reloadData];
-    return payment;
 }
 -(void)populatePaymentCategoryPopup {
     NSManagedObjectContext * moc = self.documentMoc;
@@ -239,16 +221,16 @@
 }
 - (IBAction)tillPaymentClicked:(id)sender {
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
-    Payment * payment = [self createNewPayment];
     Account * account = self.salonDocument.salon.tillAccount;
-    payment.account = account;
+    Payment * payment = [account makePaymentWithAmount:@(0) date:[NSDate date] category:nil direction:kAMCPaymentDirectionOut payeeName:@"" reason:@""];
+    [self reloadData];
     [self editObject:payment forSalon:self.salonDocument inMode:EditModeCreate withViewController:self.editObjectViewController];
 }
 - (IBAction)bankPaymentClicked:(id)sender {
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
-    Payment * payment = [self createNewPayment];
     Account * account = self.salonDocument.salon.primaryBankAccount;
-    payment.account = account;
+    Payment * payment = [account makePaymentWithAmount:@(0) date:[NSDate date] category:nil direction:kAMCPaymentDirectionOut payeeName:@"" reason:@""];
+    [self reloadData];
     [self editObject:payment forSalon:self.salonDocument inMode:EditModeCreate withViewController:self.editObjectViewController];
 }
 - (IBAction)transferMoneyClicked:(id)sender {

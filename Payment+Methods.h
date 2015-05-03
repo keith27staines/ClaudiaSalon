@@ -19,4 +19,6 @@
 -(NSNumber*)calculateFeeForAmount:(NSNumber*)amount withFeePercentage:(NSNumber*)feePercent;
 -(void)recalculateNetAmountWithFee:(NSNumber *)fee;
 -(void)recalculateNetAmountWithFeePercentage:(NSNumber*)feePercent;
+@property (readonly) BOOL isIncoming;
+@property (readonly) BOOL isOutgoing;
 @end

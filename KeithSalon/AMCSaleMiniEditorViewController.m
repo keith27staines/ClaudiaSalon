@@ -91,7 +91,6 @@
         self.reconciledCheckbox.state = (self.payment.reconciledWithBankStatement.boolValue==YES)?NSOnState:NSOffState;
         if (self.payment.reconciledWithBankStatement.boolValue) {
             self.reconciledCheckbox.state = NSOnState;
-            self.transactionDate.dateValue = self.payment.bankStatementTransactionDate;
         } else {
             self.reconciledCheckbox.state = NSOffState;
             self.transactionDate.dateValue = self.payment.createdDate;
@@ -199,11 +198,6 @@
         self.payment.createdDate = self.transactionDate.dateValue;
         self.payment.paymentDate = self.transactionDate.dateValue;
         self.payment.reconciledWithBankStatement = @((self.reconciledCheckbox.state==NSOnState)?YES:NO);
-        if (self.payment.reconciledWithBankStatement.boolValue) {
-            self.payment.bankStatementTransactionDate = self.transactionDate.dateValue;
-        } else {
-            self.payment.bankStatementTransactionDate = nil;
-        }
     } else {
         self.sale.actualCharge = @(self.amountTextField.doubleValue);
         self.sale.account = self.accountSelector.selectedItem.representedObject;

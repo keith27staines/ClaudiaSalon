@@ -117,7 +117,7 @@
         return;
     }
     if ([tableColumn.identifier isEqualToString:@"in"]) {
-        if ([payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        if (payment.isIncoming) {
             view.textField.stringValue = [NSString stringWithFormat:@"£%1.2f",payment.amount.doubleValue];
         } else {
             view.textField.stringValue = @"";
@@ -125,7 +125,7 @@
         return;
     }
     if ([tableColumn.identifier isEqualToString:@"out"]) {
-        if ([payment.direction isEqualToString:kAMCPaymentDirectionOut]) {
+        if (payment.isOutgoing) {
             view.textField.stringValue = [NSString stringWithFormat:@"£%1.2f",payment.amount.doubleValue];
         } else {
             view.textField.stringValue = @"";
@@ -210,7 +210,7 @@
     double startupCost = 0.0;
     for (Payment * payment in payments) {
         if (payment.paymentCategory.isStartupCost.boolValue == YES && payment.voided.boolValue == NO) {
-            if ([payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+            if (payment.isIncoming) {
                 startupCost -= payment.amount.doubleValue;
             } else {
                 startupCost += payment.amount.doubleValue;
@@ -224,7 +224,7 @@
     double loan = 0.0;
     for (Payment * payment in payments) {
         if (payment.paymentCategory.isDirectorsLoan.boolValue == YES && payment.voided.boolValue == NO) {
-            if ([payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+            if (payment.isIncoming) {
                 loan += payment.amount.doubleValue;
             } else {
                 loan -= payment.amount.doubleValue;
@@ -332,7 +332,7 @@
     double paymentsOut = 0;
     for (Payment * payment in self.data) {
         double amount = payment.amount.doubleValue;
-        if ([payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        if (payment.isIncoming) {
             paymentsIn += amount;
             balance += amount;
         } else {
@@ -368,7 +368,7 @@
     double paymentsOut = 0;
     for (Payment * payment in payments) {
         double amount = payment.amount.doubleValue;
-        if ([payment.direction isEqualToString:kAMCPaymentDirectionIn]) {
+        if (payment.isIncoming) {
             paymentsIn += amount;
             balance += amount;
         } else {

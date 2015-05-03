@@ -54,6 +54,12 @@
     }
     return fetchedObjects;
 }
+-(BOOL)isIncoming {
+    return [self.direction isEqualToString:kAMCPaymentDirectionIn];
+}
+-(BOOL)isOutgoing {
+    return !self.isIncoming;
+}
 -(NSString*)refundYNString
 {
     return (self.refunding)?@"Yes":@"No";
@@ -74,7 +80,7 @@
     return @(0);
 }
 -(NSNumber*)calculateFeeForAmount:(NSNumber*)amount {
-    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
+    if (self.isIncoming) {
         NSNumber * feePercent = self.account.transactionFeePercentageIncoming;
         return [self calculateFeeForAmount:amount withFeePercentage:feePercent];
     }
@@ -98,22 +104,22 @@
     return @(round(after*100)/100.0);
 }
 -(void)recalculateNetAmountWithFeePercentage:(NSNumber*)feePercent {
-    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
-        self.transactionFeeIncoming = [self calculateFeeForAmount:self.amount withFeePercentage:feePercent];
+    if (self.isIncoming) {
+        self.transactionFee = [self calculateFeeForAmount:self.amount withFeePercentage:feePercent];
         self.amountNet = [self amountAfterFeeFrom:self.amount withFeePercentage:feePercent];
     }
 }
 -(void)recalculateWithAmount:(NSNumber *)amount {
-    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
+    if (self.isIncoming) {
         [self recalculateWithAmount:amount feePercent:self.account.transactionFeePercentageIncoming];
     }
 }
 -(void)recalculateNetAmountWithFee:(NSNumber *)fee {
-    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
-        self.transactionFeeIncoming = fee;
+    if (self.isIncoming) {
+        self.transactionFee = fee;
         self.amountNet = [self amountAfterFeeFrom:self.amount fee:fee];
     } else {
-        self.transactionFeeIncoming = 0;
+        self.transactionFee = @0;
         self.amountNet = self.amount;
     }
 }
@@ -123,7 +129,7 @@
 }
 -(void)recalculateWithAmount:(NSNumber *)amount feePercent:(NSNumber*)fee {
     self.amount = amount;
-    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
+    if (self.isIncoming) {
         [self recalculateNetAmountWithFeePercentage:fee];
     }
 }
