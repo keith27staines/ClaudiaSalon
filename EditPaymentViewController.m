@@ -152,14 +152,26 @@
         }
         case EditModeEdit:
         {
-            [self.categoryPopup setEnabled:YES];
-            [self.paymentDatePicker setEnabled:YES];
-            [self.payeeField setEnabled:YES];
-            [self.paymentReasonField setEnabled:YES];
-            [self.paymentDirection setEnabled:YES forSegment:0];
-            [self.paymentDirection setEnabled:YES forSegment:1];
-            [self.isRefundCheckbox setEnabled:NO];
-            [self.reconciledWithBankStatementCheckbox setEnabled:NO];
+            if (self.payment.isReconciled) {
+                [self.categoryPopup setEnabled:NO];
+                [self.paymentDatePicker setEnabled:NO];
+                [self.payeeField setEnabled:NO];
+                [self.paymentReasonField setEnabled:NO];
+                [self.paymentDirection setEnabled:NO forSegment:0];
+                [self.paymentDirection setEnabled:NO forSegment:1];
+                [self.isRefundCheckbox setEnabled:NO];
+                [self.reconciledWithBankStatementCheckbox setEnabled:NO];
+
+            } else {
+                [self.categoryPopup setEnabled:YES];
+                [self.paymentDatePicker setEnabled:YES];
+                [self.payeeField setEnabled:YES];
+                [self.paymentReasonField setEnabled:YES];
+                [self.paymentDirection setEnabled:YES forSegment:0];
+                [self.paymentDirection setEnabled:YES forSegment:1];
+                [self.isRefundCheckbox setEnabled:NO];
+                [self.reconciledWithBankStatementCheckbox setEnabled:NO];
+            }
             break;
         }
     }
@@ -236,16 +248,8 @@
 - (IBAction)accountPopupButtonChanged:(NSPopUpButton *)sender {
     self.payment.account = sender.selectedItem.representedObject;
 }
-- (IBAction)reconciledWithBankStatementChanged:(id)sender {
-    if (self.reconciledWithBankStatementCheckbox.state == NSOnState) {
-        self.payment.reconciledWithBankStatement = @(YES);
-    } else {
-        self.payment.reconciledWithBankStatement = @(NO);
-    }
-    [self configureBankStatementReconciliationWithPayment];
-}
 -(void)configureBankStatementReconciliationWithPayment {
-    if (self.payment.reconciledWithBankStatement.boolValue) {
+    if (self.payment.isReconciled) {
         [self.reconciledWithBankStatementCheckbox setState:NSOnState];
     } else {
         [self.reconciledWithBankStatementCheckbox setState:NSOffState];

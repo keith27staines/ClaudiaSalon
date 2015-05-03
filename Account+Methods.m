@@ -97,6 +97,14 @@
     }
     return nil;
 }
+-(BOOL)isReconciledToDate:(NSDate*)date {
+    for (AccountReconciliation * reconciliation in self.reconciliations) {
+        if ([reconciliation.reconciliationDate isGreaterThanOrEqualTo:date]) {
+            return YES;
+        }
+    }
+    return NO;
+}
 -(NSNumber*)expectedBalanceFromReconciliation:(AccountReconciliation *)reconciliation {
     return [self expectedBalanceFromReconciliation:reconciliation toDate:[NSDate date]];
 }

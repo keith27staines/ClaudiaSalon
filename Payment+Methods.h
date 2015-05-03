@@ -19,6 +19,9 @@
 -(NSNumber*)calculateFeeForAmount:(NSNumber*)amount withFeePercentage:(NSNumber*)feePercent;
 -(void)recalculateNetAmountWithFee:(NSNumber *)fee;
 -(void)recalculateNetAmountWithFeePercentage:(NSNumber*)feePercent;
+@property (readonly) BOOL isReconciled;
 @property (readonly) BOOL isIncoming;
 @property (readonly) BOOL isOutgoing;
+@property (readonly) NSNumber * signedAmount;
+@property (readonly) NSNumber * signedAmountNet;
 @end

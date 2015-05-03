@@ -222,9 +222,6 @@
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
-                    <connections>
-                        <action selector="reconciledWithBankStatementChanged:" target="-2" id="g5z-eb-Cr9"/>
-                    </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d4n-EV-18R">
                     <rect key="frame" x="30" y="548" width="449" height="22"/>

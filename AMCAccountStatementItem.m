@@ -33,60 +33,22 @@
     return _payment;
 }
 -(NSDate *)date {
-    if (self.payment) {
-        if (self.payment.paymentDate) {
-            return self.payment.paymentDate;
-        } else {
-            return self.payment.createdDate;
-        }
-    }
-    return nil;
+    return self.payment.paymentDate;
 }
 -(double)amountGross {
-    if (self.payment) {
-        if (self.payment.isIncoming) {
-            return self.payment.amount.doubleValue;
-        } else {
-            return -self.payment.amount.doubleValue;
-        }
-    }
-    return 0;
+    return self.payment.amount.doubleValue;
 }
 -(double)signedAmountGross {
-    if (self.payment) {
-        if (self.payment.isIncoming) {
-            return fabs(self.amountGross);
-        } else {
-            return -fabs(self.amountGross);
-        }
-    }
-    return 0;
+    return self.payment.signedAmount.doubleValue;
 }
 -(double)signedAmountNet {
-    if (self.payment) {
-        if (self.payment.isIncoming) {
-            return fabs(self.amountNet);
-        } else {
-            return -fabs(self.amountNet);
-        }
-    }
-    return 0;
+    return self.payment.signedAmountNet.doubleValue;
 }
 -(double)amountNet {
-    if (self.payment) {
-        if (self.payment.isIncoming) {
-            return self.payment.amountNet.doubleValue;
-        } else {
-            return -self.payment.amount.doubleValue;
-        }
-    }
-    return 0;
+    return self.payment.amountNet.doubleValue;
 }
 -(double)transactionFee {
-    if ([self.direction isEqualToString:kAMCPaymentDirectionIn]) {
-        return self.payment.transactionFee.doubleValue;
-    }
-    return 0;
+    return self.payment.transactionFee.doubleValue;
 }
 -(NSString *)payeeName {
     if (self.payment.payeeName) {
@@ -99,40 +61,19 @@
     return @"";
 }
 -(NSString *)categoryName {
-    if (self.payment) {
-        return self.payment.paymentCategory.categoryName;
-    }
-
-    return @"";
+    return self.payment.paymentCategory.categoryName;
 }
 -(NSString *)note {
-    if (self.payment) {
-        return self.payment.reason;
-    }
-    return @"";
-}
--(BOOL)isReconciled {
-    if (self.payment) {
-        return self.payment.reconciledWithBankStatement.boolValue;
-    }
-    return NO;
+    return self.payment.reason;
 }
 -(NSString *)direction {
-    if (self.payment) {
-        return self.payment.direction;
-    }
-    return nil;
+    return self.payment.direction;
 }
 -(BOOL)isPayment {
     return (self.payment.sale == nil);
 }
 -(void)voidTransaction {
-    if (self.payment) {
-        self.payment.voided = @(YES);
-        if (self.payment.sale) {
-            self.payment.sale.voided = @(YES);
-        }
-    }
+    self.payment.voided = @(YES);
 }
 -(BOOL)paired {
     return (self.pairingRecord)?YES:NO;

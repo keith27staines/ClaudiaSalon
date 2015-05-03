@@ -15,6 +15,7 @@
 +accountWithFriendlyName:(NSString*)friendlyName withMoc:(NSManagedObjectContext*)moc;
 -(AccountReconciliation*)latestAccountReconcilliation;
 -(AccountReconciliation*)lastAccountReconcilliationOnOrBeforeDate:(NSDate*)date;
+-(BOOL)isReconciledToDate:(NSDate*)date;
 -(NSNumber*)expectedBalanceFromReconciliation:(AccountReconciliation*)reconciliation;
 -(NSNumber*)expectedBalanceFromReconciliation:(AccountReconciliation*)reconciliation toDate:(NSDate*)date;
 -(NSArray*)paymentsBetween:(NSDate*)startDate endDate:(NSDate*)endDate;

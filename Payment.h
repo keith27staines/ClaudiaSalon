@@ -25,7 +25,6 @@
 @property (nonatomic, retain) NSString * payeeUID;
 @property (nonatomic, retain) NSDate * paymentDate;
 @property (nonatomic, retain) NSString * reason;
-@property (nonatomic, retain) NSNumber * reconciledWithBankStatement;
 @property (nonatomic, retain) NSString * sourceAccount;
 @property (nonatomic, retain) NSNumber * transactionFee;
 @property (nonatomic, retain) NSNumber * voided;

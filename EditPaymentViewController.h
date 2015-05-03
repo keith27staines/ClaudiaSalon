@@ -34,7 +34,4 @@
 
 @property (weak) IBOutlet NSButton *reconciledWithBankStatementCheckbox;
 
-- (IBAction)reconciledWithBankStatementChanged:(id)sender;
-
-
 @end

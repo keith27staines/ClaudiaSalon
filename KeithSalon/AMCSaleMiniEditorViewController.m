@@ -56,7 +56,6 @@
     return @"AMCSaleMiniEditorViewController";
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
-    NSAssert(self.transaction,@"The transaction must be a valid sale or payment");
     [super prepareForDisplayWithSalon:salonDocument];
     self.changesMade = NO;
     if ([self.transaction isKindOfClass:[Payment class]]) {
@@ -88,13 +87,8 @@
         [self selectItemWithRepresentedObject:self.payment.account inPopup:self.accountSelector];
         [self selectItemWithRepresentedObject:self.payment.paymentCategory inPopup:self.categorySelector];
         [self.directionSelector selectSegmentWithTag:([self.payment.direction isEqualToString:kAMCPaymentDirectionIn])?0:1];
-        self.reconciledCheckbox.state = (self.payment.reconciledWithBankStatement.boolValue==YES)?NSOnState:NSOffState;
-        if (self.payment.reconciledWithBankStatement.boolValue) {
-            self.reconciledCheckbox.state = NSOnState;
-        } else {
-            self.reconciledCheckbox.state = NSOffState;
-            self.transactionDate.dateValue = self.payment.createdDate;
-        }
+        self.reconciledCheckbox.state = (self.payment.isReconciled)?NSOnState:NSOffState;
+        self.transactionDate.dateValue = self.payment.paymentDate;
         self.name.stringValue = self.payment.payeeName;
         self.note.stringValue = self.payment.reason;
         self.amountTextField.doubleValue = self.payment.amount.doubleValue;
@@ -197,7 +191,6 @@
         self.payment.direction = (self.directionSelector.selectedSegment==0)?kAMCPaymentDirectionIn:kAMCPaymentDirectionOut;
         self.payment.createdDate = self.transactionDate.dateValue;
         self.payment.paymentDate = self.transactionDate.dateValue;
-        self.payment.reconciledWithBankStatement = @((self.reconciledCheckbox.state==NSOnState)?YES:NO);
     } else {
         self.sale.actualCharge = @(self.amountTextField.doubleValue);
         self.sale.account = self.accountSelector.selectedItem.representedObject;
@@ -281,6 +274,9 @@
     [self dismissController:self];
 }
 - (IBAction)doneClicked:(id)sender {
+    if (self.editMode == EditModeCreate && self.sale) {
+        [self.sale makePaymentInFull];
+    }
     self.cancelled = NO;
     [self.view.window makeFirstResponder:self.view.window];
     [self.salonDocument commitAndSave:nil];

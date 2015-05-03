@@ -31,7 +31,6 @@
 @dynamic payeeUID;
 @dynamic paymentDate;
 @dynamic reason;
-@dynamic reconciledWithBankStatement;
 @dynamic sourceAccount;
 @dynamic transactionFee;
 @dynamic voided;

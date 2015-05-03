@@ -49,9 +49,9 @@
         NSNumber * statementAmountNet = self.transactionDictionary[@"amountNet"];
         
         NSDate * itemDate = self.computerRecord.date;
-        NSNumber * itemAmount = @(self.computerRecord.amountGross);
+        NSNumber * itemAmount = @(self.computerRecord.signedAmountGross);
         NSNumber * itemFee = @(self.computerRecord.transactionFee);
-        NSNumber * itemAmountNet = @(self.computerRecord.amountNet);
+        NSNumber * itemAmountNet = @(self.computerRecord.signedAmountNet);
         NSDateFormatter * df = [[NSDateFormatter alloc] init];
         df.dateStyle = NSDateFormatterShortStyle;
         df.timeStyle = NSDateFormatterNoStyle;

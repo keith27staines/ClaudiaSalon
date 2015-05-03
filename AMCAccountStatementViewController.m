@@ -123,7 +123,7 @@
     self.statementItems = [[self.statementItems sortedArrayUsingDescriptors:@[sort]] mutableCopy];
     self.balance = [self.account amountBroughtForward:self.startDate].doubleValue;
     for (AMCAccountStatementItem * item in self.statementItems) {
-        self.balance = ( round(self.balance*100.0) + round(item.amountNet * 100.0) )/100.0;
+        self.balance = ( round(self.balance*100.0) + round(item.signedAmountNet * 100.0) )/100.0;
         item.balance = self.balance;
     }
     self.amountBroughtForward = [self.account amountBroughtForward:self.startDate].doubleValue;
@@ -252,9 +252,9 @@
     for (AMCAccountStatementItem * item in self.statementItems) {
         NSString * date = [df stringFromDate:item.date];
         NSString * account = self.account.friendlyName;
-        NSString * grossAmount = [nf stringFromNumber:@(item.amountGross)];
+        NSString * grossAmount = [nf stringFromNumber:@(item.signedAmountGross)];
         NSString * fee = [nf stringFromNumber:@(item.transactionFee)];
-        NSString * netAmount = [nf stringFromNumber:@(item.amountNet)];
+        NSString * netAmount = [nf stringFromNumber:@(item.signedAmountNet)];
         NSString * category = item.categoryName;
         NSString * note = [item.note stringByReplacingOccurrencesOfString:@"," withString:@" "];
         NSString * balance = [nf stringFromNumber:@(item.balance)];
@@ -295,7 +295,6 @@
         }
         for (Payment * payment in account.payments) {
             [payment recalculateNetAmountWithFee:payment.transactionFee];
-            payment.reconciledWithBankStatement = @NO;
         }
         if (account == self.salonDocument.salon.cardPaymentAccount) {
             for (Payment * payment in account.payments) {
@@ -304,6 +303,25 @@
                         NSLog(@"Problem");
                     }
                 }
+            }
+        }
+        
+        // diagnosis
+        for (Payment * payment in account.payments) {
+            if (!payment.transactionFee) {
+                NSLog(@"No transaction fee");
+            }
+            NSInteger iAmount = round(payment.amount.doubleValue * 100);
+            NSInteger ifee = round(payment.transactionFee.doubleValue*100);
+            NSInteger iNet = round(payment.amountNet.doubleValue*100);
+            if (iAmount != ifee + iNet) {
+                NSLog(@"mismatch");
+            }
+            if (!payment.paymentDate) {
+                payment.paymentDate = payment.createdDate;
+            }
+            if (!payment.payeeName) {
+                payment.payeeName = @"";
             }
         }
     }

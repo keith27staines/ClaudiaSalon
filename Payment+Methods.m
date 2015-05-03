@@ -54,11 +54,28 @@
     }
     return fetchedObjects;
 }
+-(BOOL)isReconciled {
+    return [self.account isReconciledToDate:self.paymentDate];
+}
 -(BOOL)isIncoming {
     return [self.direction isEqualToString:kAMCPaymentDirectionIn];
 }
 -(BOOL)isOutgoing {
     return !self.isIncoming;
+}
+-(NSNumber *)signedAmount {
+    if (self.isIncoming) {
+        return self.amount;
+    } else {
+        return @(-self.amount.doubleValue);
+    }
+}
+-(NSNumber *)signedAmountNet {
+    if (self.isIncoming) {
+        return self.amountNet;
+    } else {
+        return @(-self.amountNet.doubleValue);
+    }
 }
 -(NSString*)refundYNString
 {
