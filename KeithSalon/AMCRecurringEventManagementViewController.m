@@ -48,20 +48,23 @@
     [self tableViewSelectionDidChange:nil];
 }
 - (IBAction)addRecurringItem:(id)sender {
-    RecurringItem * item = [NSEntityDescription insertNewObjectForEntityForName:@"RecurringItem" inManagedObjectContext:self.documentMoc];
-    item.createdDate = [NSDate date];
-    item.period = @(AMCRecurrencePeriodMonthly);
-    item.nextActionDate = [NSDate date];
-    item.isActive = @(NO);
-    item.paymentTemplate = [Payment newObjectWithMoc:self.documentMoc];
-    item.paymentTemplate.voided = @(YES);
-    item.paymentTemplate.payeeName = item.name;
-    item.paymentTemplate.amount = @(0);
-    item.paymentTemplate.direction = kAMCPaymentDirectionOut;
-    item.paymentTemplate.reason = item.explanation;
-    item.paymentTemplate.paymentDate = item.nextActionDate;
-    item.paymentTemplate.account = self.salonDocument.salon.primaryBankAccount;
-    [self.arrayController addObject:item];
+    RecurringItem * recurringItem = [NSEntityDescription insertNewObjectForEntityForName:@"RecurringItem" inManagedObjectContext:self.documentMoc];
+    recurringItem.isActive = @(NO);
+    recurringItem.createdDate = [NSDate date];
+    recurringItem.nextActionDate = recurringItem.createdDate;
+    recurringItem.period = @(AMCRecurrencePeriodMonthly);
+
+    // We make a voided payment as a template for future payments of this recurring item
+    recurringItem.paymentTemplate = [Payment newObjectWithMoc:self.documentMoc];
+    recurringItem.paymentTemplate.voided = @(YES);
+    recurringItem.paymentTemplate.payeeName = recurringItem.name;
+    recurringItem.paymentTemplate.amount = @(0);
+    recurringItem.paymentTemplate.direction = kAMCPaymentDirectionOut;
+    recurringItem.paymentTemplate.reason = recurringItem.explanation;
+    recurringItem.paymentTemplate.paymentDate = recurringItem.nextActionDate;
+    recurringItem.paymentTemplate.account = self.salonDocument.salon.primaryBankAccount;
+
+    [self.arrayController addObject:recurringItem];
 }
 -(void)loadPeriodPopup {
     [self.periodPopupButton removeAllItems];
