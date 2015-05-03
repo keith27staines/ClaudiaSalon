@@ -460,16 +460,16 @@
                         <action selector="directionSelected:" target="-2" id="vdo-u0-NOm"/>
                     </connections>
                 </segmentedControl>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qEW-uA-V0b">
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qEW-uA-V0b" userLabel="Account">
                     <rect key="frame" x="18" y="605" width="112" height="26"/>
-                    <popUpButtonCell key="cell" type="push" title="PayPal" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="65F-nJ-YBp" id="nhx-dC-weN">
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="nhx-dC-weN" userLabel="Account">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" id="2VP-dL-QcT">
                             <items>
                                 <menuItem title="All Accounts" id="lgU-2x-DXR"/>
-                                <menuItem title="Barclays" id="uAB-lf-gpJ"/>
-                                <menuItem title="PayPal" state="on" id="65F-nJ-YBp"/>
+                                <menuItem title="Account 1" id="uAB-lf-gpJ" userLabel="Account 1"/>
+                                <menuItem title="Account 2" id="65F-nJ-YBp" userLabel="Account 2"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
