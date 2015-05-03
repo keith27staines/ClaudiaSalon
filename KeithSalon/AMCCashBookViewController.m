@@ -82,7 +82,8 @@
     savePanel.title = @"Export cashbook";
     savePanel.extensionHidden = YES;
     savePanel.prompt = @"Export cashbook as CSV file";
-    savePanel.nameFieldStringValue = [NSString stringWithFormat:@"Claudia's Salon %@ cashbook.csv",self.account.friendlyName];
+    NSString * appName = [[NSRunningApplication currentApplication] localizedName];
+    savePanel.nameFieldStringValue = [NSString stringWithFormat:@"%@ %@ cashbook.csv",appName,self.account.friendlyName];
     savePanel.allowedFileTypes = @[@"csv"];
     savePanel.allowsOtherFileTypes = NO;
     [savePanel beginWithCompletionHandler:^(NSInteger result) {

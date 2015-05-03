@@ -138,7 +138,8 @@
     savePanel.title = @"Export";
     savePanel.extensionHidden = YES;
     savePanel.prompt = @"Export account data";
-    savePanel.nameFieldStringValue = [NSString stringWithFormat:@"Claudia's Salon %@ account transactions.csv",self.account.friendlyName];
+    NSString * appName = [[NSRunningApplication currentApplication] localizedName];
+    savePanel.nameFieldStringValue = [NSString stringWithFormat:@"%@ %@ account transactions.csv",appName, self.account.friendlyName];
     savePanel.allowedFileTypes = @[@"csv"];
     savePanel.allowsOtherFileTypes = NO;
     [savePanel beginWithCompletionHandler:^(NSInteger result) {
