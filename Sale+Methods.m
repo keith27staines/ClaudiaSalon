@@ -83,7 +83,19 @@
         return @"Sale";
     }
 }
+-(BOOL)isVoidable {
+    for (Payment * payment in self.payments) {
+        if (payment.isReconciled) {
+            return NO;
+        }
+    }
+    return YES;
+}
 -(void)setVoided:(NSNumber *)voided {
+    if (![self isVoidable]) {
+        return;
+    }
+    
     for (Payment * payment in self.payments) {
         payment.voided = @(YES);
     }

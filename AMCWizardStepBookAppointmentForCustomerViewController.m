@@ -550,14 +550,17 @@
             } else {
                 messageText = [NSString stringWithFormat:@"Be careful! %@ possibly conflicting appointments already exist",@(conflictingAppointments.count)];
             }
-            NSAlert * alert = [NSAlert alertWithError:nil];
+            NSAlert * alert = [[NSAlert alloc] init];
             alert.messageText = messageText;
             alert.informativeText = @"Are you sure staff will be available to fulfil this appointment?";
+            [alert addButtonWithTitle:@"Yes"];
             [alert addButtonWithTitle:@"Cancel"];
-            if ([alert runModal] == NSAlertSecondButtonReturn) {
-                self.appointment.appointmentDate = [NSDate distantPast];
-                self.appointment.bookedDuration = @(0);
-            }
+            [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+                if (returnCode == NSAlertSecondButtonReturn) {
+                    self.appointment.appointmentDate = [NSDate distantPast];
+                    self.appointment.bookedDuration = @(0);
+                }
+            }];
         }
     }
     [self.appointmentSlotsTable reloadData];

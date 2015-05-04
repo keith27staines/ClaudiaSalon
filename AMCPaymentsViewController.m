@@ -243,19 +243,28 @@
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
     Payment * payment = [self selectedPayment];
     if (!payment) return;
-    NSString * info = [NSString stringWithFormat:@"Once voided, this Payment of £%@ to %@ will no longer be visible on the Payments tab and will not appear in reports or Sales totals.\n\nPlease note that you can't undo this action.",payment.amount,payment.payeeName];
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:@"Void this Payment?"];
-    [alert setInformativeText:info];
-    [alert addButtonWithTitle:@"Void the Payment"];
-    [alert addButtonWithTitle:@"Cancel"];
-    [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse response) {
-        if (response == NSAlertFirstButtonReturn) {
-            payment.voided = @(YES);
-            [self.salonDocument commitAndSave:nil];
-            [self reloadData];
-        }
-    }];
+    if (payment.isReconciled) {
+        NSAlert * alert = [[NSAlert alloc] init];
+        alert.messageText = @"Payment cannot be edited or voided";
+        alert.informativeText = @"The date of the last account reconciliation point for the payment's account is later than the payment date. The details of this payment are now fixed in order to protect the validity of the accounts";
+        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+            
+        }];
+    } else {
+        NSString * info = [NSString stringWithFormat:@"Once voided, this Payment of £%@ to %@ will no longer be visible on the Payments tab and will not appear in reports or Sales totals.\n\nPlease note that you can't undo this action.",payment.amount,payment.payeeName];
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:@"Void this Payment?"];
+        [alert setInformativeText:info];
+        [alert addButtonWithTitle:@"Void the Payment"];
+        [alert addButtonWithTitle:@"Cancel"];
+        [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse response) {
+            if (response == NSAlertFirstButtonReturn) {
+                payment.voided = @(YES);
+                [self.salonDocument commitAndSave:nil];
+                [self reloadData];
+            }
+        }];
+    }
 }
 - (IBAction)paymentCategoryChanged:(id)sender {
     [self reloadData];

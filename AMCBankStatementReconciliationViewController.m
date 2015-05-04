@@ -182,44 +182,45 @@
 - (IBAction)loadCSV:(id)sender {
     NSOpenPanel * openPanel = [NSOpenPanel openPanel];
     openPanel.allowedFileTypes = @[@"csv"];
-    NSInteger result = [openPanel runModal];
-    if (result == NSFileHandlingPanelOKButton) {
-        NSURL * fileURL = openPanel.URL;
-        NSError * error;
-        NSString * csv = [NSString stringWithContentsOfURL:fileURL usedEncoding:nil error:&error];
-        if (!csv && error) {
-            error = nil;
-            csv = [NSString stringWithContentsOfURL:fileURL encoding:NSASCIIStringEncoding error:&error];
+    [openPanel beginSheetModalForWindow:self.view.window completionHandler:^(NSInteger result) {
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL * fileURL = openPanel.URL;
+            NSError * error;
+            NSString * csv = [NSString stringWithContentsOfURL:fileURL usedEncoding:nil error:&error];
             if (!csv && error) {
-                [NSApp presentError:error];
+                error = nil;
+                csv = [NSString stringWithContentsOfURL:fileURL encoding:NSASCIIStringEncoding error:&error];
+                if (!csv && error) {
+                    [NSApp presentError:error];
+                }
+            }
+            
+            if (csv) {
+                self.parser = [[AMCStatementParser alloc] initWithCSVString:csv account:self.account];
+                self.headerLinesCountField.integerValue = self.parser.headerRows;
+                self.dateColumnField.integerValue = self.parser.dateCol;
+                self.grossAmountColumnField.integerValue = self.parser.grossAmountColumn;
+                self.noteColumnField.integerValue = self.parser.noteColumn;
+                self.feeColumnField.integerValue = self.parser.feeColumn;
+                self.netAmountColumnField.integerValue = self.parser.netAmountColumn;
+                self.statusColumnField.integerValue = self.parser.statusColumn;
+                self.includeStatesField.stringValue = self.parser.statusInclude;
+                self.excludeStatesField.stringValue = self.parser.statusExclude;
+                self.pathLabel.stringValue = fileURL.path;
+            } else {
+                self.headerLinesCountField.integerValue = 0;
+                self.dateColumnField.integerValue = -1;
+                self.grossAmountColumnField.integerValue = -1;
+                self.feeColumnField.integerValue = -1;
+                self.netAmountColumnField.integerValue = -1;
+                self.statusColumnField.integerValue = -1;
+                self.includeStatesField.stringValue = @"";
+                self.excludeStatesField.stringValue = @"";
+                self.pathLabel.stringValue = fileURL.path;
             }
         }
-        
-        if (csv) {
-            self.parser = [[AMCStatementParser alloc] initWithCSVString:csv account:self.account];
-            self.headerLinesCountField.integerValue = self.parser.headerRows;
-            self.dateColumnField.integerValue = self.parser.dateCol;
-            self.grossAmountColumnField.integerValue = self.parser.grossAmountColumn;
-            self.noteColumnField.integerValue = self.parser.noteColumn;
-            self.feeColumnField.integerValue = self.parser.feeColumn;
-            self.netAmountColumnField.integerValue = self.parser.netAmountColumn;
-            self.statusColumnField.integerValue = self.parser.statusColumn;
-            self.includeStatesField.stringValue = self.parser.statusInclude;
-            self.excludeStatesField.stringValue = self.parser.statusExclude;
-            self.pathLabel.stringValue = fileURL.path;
-        } else {
-            self.headerLinesCountField.integerValue = 0;
-            self.dateColumnField.integerValue = -1;
-            self.grossAmountColumnField.integerValue = -1;
-            self.feeColumnField.integerValue = -1;
-            self.netAmountColumnField.integerValue = -1;
-            self.statusColumnField.integerValue = -1;
-            self.includeStatesField.stringValue = @"";
-            self.excludeStatesField.stringValue = @"";
-            self.pathLabel.stringValue = fileURL.path;
-        }
-    }
-    [self reloadData];
+        [self reloadData];
+    }];
 }
 
 #pragma mark - Pairing operations
@@ -483,32 +484,34 @@
     alert.informativeText = @"A payment will be added to exactly match the statement item";
     [alert addButtonWithTitle:@"Add payment"];
     [alert addButtonWithTitle:@"Cancel"];
-    
-    if ([alert runModal] == NSModalResponseCancel) {return;}
-    
-    NSInteger statementTransactionIndex = self.statementTransactionsTable.selectedRow;
-    NSMutableDictionary * transactionDictionary = self.parser.transactionDictionaries[statementTransactionIndex];
-    [self unpairStatementTransaction:transactionDictionary];
-    Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
-    payment.paymentDate = transactionDictionary[@"date"];
-    double amount = ((NSNumber*)transactionDictionary[@"amount"]).doubleValue;
-    double fee = ((NSNumber*)transactionDictionary[@"fee"]).doubleValue;
-    double netAmount = ((NSNumber*)transactionDictionary[@"amountNet"]).doubleValue;
-    if (amount > 0) {
-        payment.direction = kAMCPaymentDirectionIn;
-    } else {
-        payment.direction = kAMCPaymentDirectionOut;
-    }
-    payment.paymentCategory = self.salonDocument.salon.defaultPaymentCategoryForPayments;
-    payment.amount = @(fabs(amount));
-    payment.transactionFee = @(fabs(fee));
-    payment.amountNet = @(fabs(netAmount));
-    payment.account = self.account;
-    payment.paymentCategory = nil;
-    AMCAccountStatementItem * item = [[AMCAccountStatementItem alloc] initWithPayment:payment];
-    [self.computerRecords addObject:item];
-    [self pairStatementTransaction:transactionDictionary withComputerRecord:item];
-    [self reloadPairingData];
+    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSAlertFirstButtonReturn) {
+            NSInteger statementTransactionIndex = self.statementTransactionsTable.selectedRow;
+            NSMutableDictionary * transactionDictionary = self.parser.transactionDictionaries[statementTransactionIndex];
+            [self unpairStatementTransaction:transactionDictionary];
+            Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
+            payment.paymentDate = transactionDictionary[@"date"];
+            double amount = ((NSNumber*)transactionDictionary[@"amount"]).doubleValue;
+            double fee = ((NSNumber*)transactionDictionary[@"fee"]).doubleValue;
+            double netAmount = ((NSNumber*)transactionDictionary[@"amountNet"]).doubleValue;
+            if (amount > 0) {
+                payment.direction = kAMCPaymentDirectionIn;
+            } else {
+                payment.direction = kAMCPaymentDirectionOut;
+            }
+            payment.paymentCategory = self.salonDocument.salon.defaultPaymentCategoryForPayments;
+            payment.amount = @(fabs(amount));
+            payment.transactionFee = @(fabs(fee));
+            payment.amountNet = @(fabs(netAmount));
+            payment.account = self.account;
+            payment.paymentCategory = nil;
+            AMCAccountStatementItem * item = [[AMCAccountStatementItem alloc] initWithPayment:payment];
+            [self.computerRecords addObject:item];
+            [self pairStatementTransaction:transactionDictionary withComputerRecord:item];
+            [self reloadPairingData];
+        }
+
+    }];
 }
 - (IBAction)voidItem:(id)sender {
     AMCAccountStatementItem * item = [self actionItemsForTable:self.documentTransactionsTable];

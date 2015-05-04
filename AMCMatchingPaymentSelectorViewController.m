@@ -76,16 +76,18 @@
             alert.informativeText = [alert.informativeText stringByAppendingFormat:@"\n\n"];
             [alert addButtonWithTitle:@"Adjust computer record and pair with statement"];
             [alert addButtonWithTitle:@"Cancel"];
-            switch ([alert runModal]) {
-                case NSAlertFirstButtonReturn: {
-                    Payment * payment = self.computerRecord.payment;
-                    [self adjustPayment:payment toMatchStatement:self.transactionDictionary];
-                    [self dismissController:self];
-                    break;
+            [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+                switch (returnCode) {
+                    case NSAlertFirstButtonReturn: {
+                        Payment * payment = self.computerRecord.payment;
+                        [self adjustPayment:payment toMatchStatement:self.transactionDictionary];
+                        [self dismissController:self];
+                        break;
+                    }
+                    default:
+                        break;
                 }
-                default:
-                    break;
-            }
+            }];
         }
     }
 }

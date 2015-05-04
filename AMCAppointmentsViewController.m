@@ -516,7 +516,9 @@ NSAnimationDelegate>
         NSAlert * alert = [[NSAlert alloc] init];
         alert.messageText = @"Sale generated!";
         alert.informativeText = @"The sale has been created as a quote on the Sales tab. You must edit the quote to finalize prices and complete the sale. You will need to switch to the Sales tab to do this.";
-        [alert beginSheetModalForWindow:self.view.window completionHandler:nil];
+        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+            
+        }];
     };
 }
 -(NSRect)rectOfCellForRow:(NSUInteger)row column:(NSUInteger)col {

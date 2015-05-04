@@ -46,7 +46,9 @@
             NSAlert * alert = [[NSAlert alloc] init];
             alert.messageText = @"Account cannot be deleted";
             alert.informativeText = @"This account has at least one sale or payment recorded against it";
-            [alert runModal];
+            [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+                
+            }];
         } else {
             [self.accountArrayController remove:self];
         }
@@ -104,10 +106,11 @@
         alert.informativeText = missingAccounts;
         [alert addButtonWithTitle:@"Configure accounts now"];
         [alert addButtonWithTitle:@"Leave until later"];
-        NSModalResponse response = [alert runModal];
-        if (response == NSAlertSecondButtonReturn) {
-            [self dismissController:self];
-        }
+        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+            if (returnCode == NSAlertSecondButtonReturn) {
+                [self dismissController:self];
+            }
+        }];
     } else {
         [self dismissController:self];
     }

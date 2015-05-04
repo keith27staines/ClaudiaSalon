@@ -315,7 +315,9 @@
     NSAlert * alert = [[NSAlert alloc] init];
     alert.messageText = @"Payment has been recorded";
     alert.informativeText = [NSString stringWithFormat:@"A new salary payment has been recorded for %@ and is now visible in the Payments tab",self.employee.fullName];
-    [alert beginSheetModalForWindow:self.view.window completionHandler:nil];
+    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+
+    }];
 }
 - (IBAction)addBonus:(id)sender {
     NSButton*button = (NSButton*)sender;
@@ -363,13 +365,13 @@
         return bonus.account.friendlyName;
     }
     if ([tableColumn.identifier isEqualToString:@"reconciledWithBankStatement"]) {
-        return bonus.reconciledWithBankStatement;
+        return (bonus.isReconciled)?@YES:@NO;
     }
     return nil;
 }
 -(BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     Payment * bonus = self.bonuses[row];
-    if (bonus.reconciledWithBankStatement.boolValue) {
+    if (bonus.isReconciled) {
         return NO;
     }
     return YES;
@@ -378,7 +380,7 @@
     NSInteger row = [self.bonusTable selectedRow];
     if (row>=0) {
         Payment * bonus = self.bonuses[row];
-        self.deleteBonusButton.enabled = (bonus.reconciledWithBankStatement.boolValue)? NO:YES;
+        self.deleteBonusButton.enabled = (bonus.isReconciled)? NO:YES;
     }
 }
 -(void)dismissViewController:(NSViewController *)viewController {

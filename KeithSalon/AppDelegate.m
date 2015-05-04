@@ -148,16 +148,20 @@
     if (!currentSalon) {
         alert.informativeText = @"You must open a Salon before you can set it as the default.";
         [alert addButtonWithTitle:@"OK"];
-        [alert runModal];
+        [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse returnCode) {
+
+        }];
     } else {
         alert.messageText = @"Make this Salon the default";
         alert.informativeText = [NSString stringWithFormat:@"If it is made default, %@ will be opened automatically whenever the application is opened",currentSalon.fileURL.path];
         [alert addButtonWithTitle:@"Make default"];
         [alert addButtonWithTitle:@"Cancel"];
         alert.delegate = self;
-        if ([alert runModal] == NSAlertFirstButtonReturn) {
-            self.pathOfDefaultSalon = currentSalon.fileURL.path;
-        }
+        [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse returnCode) {
+            if (returnCode == NSAlertFirstButtonReturn) {
+                self.pathOfDefaultSalon = currentSalon.fileURL.path;
+            }
+        }];
     }
 }
 -(IBAction)presentWelcomeScreen:(id)sender {

@@ -22,4 +22,5 @@
 -(double)amountPaid;
 -(double)amountPaidNet;
 -(double)amountOutstanding;
+-(BOOL)isVoidable;
 @end

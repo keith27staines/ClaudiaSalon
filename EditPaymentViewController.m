@@ -102,6 +102,18 @@
     }
     [self configureBankStatementReconciliationWithPayment];
 }
+-(void)enterEditMode:(NSButton *)sender {
+    if (self.payment.isReconciled) {
+        NSAlert * alert = [[NSAlert alloc] init];
+        alert.messageText = @"Payment cannot be edited or voided";
+        alert.informativeText = @"The date of the last account reconciliation point for the payment's account is later than the payment date. The details of this payment are now fixed in order to protect the validity of the accounts";
+        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+            
+        }];
+    } else {
+        [super enterEditMode:sender];
+    }
+}
 -(void)loadAccountsPopup {
     [self.accountPopupButton removeAllItems];
     self.accounts = [Account allObjectsWithMoc:self.documentMoc];
@@ -117,64 +129,13 @@
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
 {
+    [self setObjectToEdit:self.objectToEdit];
     [super prepareForDisplayWithSalon:salonDocument];
     [self clear];
     [self loadAccountsPopup];
     [self populatePaymentCategoryPopup];
-    [self setObjectToEdit:self.objectToEdit];
-    switch (self.editMode) {
-        case EditModeView:
-        {
-            [self.categoryPopup setEnabled:NO];
-            [self.paymentDatePicker setEnabled:NO];
-            [self.payeeField setEnabled:NO];
-            [self.paymentReasonField setEnabled:NO];
-            [self.isRefundCheckbox setEnabled:NO];
-            [self.paymentDirection setEnabled:NO forSegment:0];
-            [self.paymentDirection setEnabled:NO forSegment:1];
-            [self.reconciledWithBankStatementCheckbox setEnabled:NO];
-            break;
-        }
-        case EditModeCreate:
-        {
-            [self.categoryPopup setEnabled:YES];
-            [self.paymentDatePicker setEnabled:YES];
-            [self.payeeField setEnabled:YES];
-            [self.paymentReasonField setEnabled:YES];
-            [self.paymentDirection setEnabled:YES forSegment:0];
-            [self.paymentDirection setEnabled:YES forSegment:1];
-            [self.reconciledWithBankStatementCheckbox setEnabled:NO];
-            [self.reconciledWithBankStatementCheckbox setState:NSOffState];
-            [self selectCategoryInPopup:self.defaultCategory];
-            // refund status should not be set by user. It is set automatically if the payment was created as a refund from the sales tab
-            [self.isRefundCheckbox setEnabled:NO];
-            break;
-        }
-        case EditModeEdit:
-        {
-            if (self.payment.isReconciled) {
-                [self.categoryPopup setEnabled:NO];
-                [self.paymentDatePicker setEnabled:NO];
-                [self.payeeField setEnabled:NO];
-                [self.paymentReasonField setEnabled:NO];
-                [self.paymentDirection setEnabled:NO forSegment:0];
-                [self.paymentDirection setEnabled:NO forSegment:1];
-                [self.isRefundCheckbox setEnabled:NO];
-                [self.reconciledWithBankStatementCheckbox setEnabled:NO];
-
-            } else {
-                [self.categoryPopup setEnabled:YES];
-                [self.paymentDatePicker setEnabled:YES];
-                [self.payeeField setEnabled:YES];
-                [self.paymentReasonField setEnabled:YES];
-                [self.paymentDirection setEnabled:YES forSegment:0];
-                [self.paymentDirection setEnabled:YES forSegment:1];
-                [self.isRefundCheckbox setEnabled:NO];
-                [self.reconciledWithBankStatementCheckbox setEnabled:NO];
-            }
-            break;
-        }
-    }
+    [self.isRefundCheckbox setEnabled:NO];  // read only
+    [self.reconciledWithBankStatementCheckbox setEnabled:NO];
     [self editObject];
 }
 -(Payment*)payment
@@ -187,7 +148,10 @@
               self.payeeField,
               self.amountField,
               self.feeField,
-              self.categoryPopup];
+              self.paymentDirection,
+              self.paymentDatePicker,
+              self.categoryPopup,
+              self.accountPopupButton];
 }
 #pragma mark - NSControlTextEditingDelegate
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
