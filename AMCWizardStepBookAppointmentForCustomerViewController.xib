@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E11f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCWizardStepBookAppointmentForCustomerViewController">
             <connections>
                 <outlet property="addServiceButton" destination="gXj-NB-qaD" id="bEE-3B-A6z"/>
+                <outlet property="advancePaymentButton" destination="W66-uE-zYn" id="Kgp-Sd-P10"/>
+                <outlet property="advancePaymentLabel" destination="bTk-8s-hFS" id="wAu-Mv-KUv"/>
+                <outlet property="advancePaymentViewController" destination="LzK-jX-GrI" id="Lbw-eQ-gFp"/>
                 <outlet property="appointmentSlotsTable" destination="XS0-tk-lvv" id="bET-Ar-SVu"/>
                 <outlet property="chosenServicesTable" destination="O5V-7V-ti8" id="nPD-gJ-4cM"/>
                 <outlet property="dateLabel" destination="qDm-GF-I9q" id="s5C-Md-Udn"/>
@@ -19,6 +22,7 @@
                 <outlet property="servicesAvailableTable" destination="rjM-fv-waV" id="uY6-3Y-wba"/>
                 <outlet property="setAppointmentTimeButton" destination="3mJ-LT-5HN" id="jyw-9g-6dI"/>
                 <outlet property="setDateTimeButton" destination="8yO-Zx-jY0" id="GU6-pu-OoQ"/>
+                <outlet property="showBusyView" destination="uAh-v0-VDW" id="ACO-c8-bgX"/>
                 <outlet property="showNotesButton" destination="wsC-Cv-mi2" id="R6X-OG-ZCj"/>
                 <outlet property="timeNowLabel" destination="YSZ-0d-lI1" id="xDm-wW-wjv"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -46,15 +50,16 @@
                     </connections>
                 </datePicker>
                 <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HRS-9i-WlQ">
-                    <rect key="frame" x="618" y="55" width="429" height="382"/>
+                    <rect key="frame" x="618" y="131" width="429" height="306"/>
                     <clipView key="contentView" misplaced="YES" id="1Ee-vK-iwU">
                         <rect key="frame" x="1" y="1" width="427" height="380"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" autosaveColumns="NO" viewBased="YES" id="XS0-tk-lvv">
+                                <rect key="frame" x="0.0" y="0.0" width="427" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
                                     <tableColumn width="424" minWidth="40" maxWidth="1000" id="32q-TS-dae">
@@ -143,9 +148,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" id="rjM-fv-waV">
+                                <rect key="frame" x="0.0" y="0.0" width="534" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
                                     <tableColumn identifier="serviceName" width="531.29296875" minWidth="40" maxWidth="1000" id="JCQ-B4-Qp0">
@@ -203,9 +209,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="O5V-7V-ti8">
+                                <rect key="frame" x="0.0" y="0.0" width="544" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
                                     <tableColumn identifier="serviceName" width="369" minWidth="40" maxWidth="1000" id="pAL-7d-KRr">
@@ -374,7 +381,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3mJ-LT-5HN">
-                    <rect key="frame" x="812" y="17" width="176" height="32"/>
+                    <rect key="frame" x="810" y="95" width="176" height="32"/>
                     <buttonCell key="cell" type="push" title="Set appointment time" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BC3-Ru-xiJ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -391,16 +398,6 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wsC-Cv-mi2">
-                    <rect key="frame" x="999" y="6" width="48" height="48"/>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="e8Y-Bm-Irp">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="showNotesButtonClicked:" target="-2" id="NsV-uS-tfG"/>
-                    </connections>
-                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BMQ-Bq-ewi">
                     <rect key="frame" x="422" y="27" width="112" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="RPb-H0-e7x">
@@ -436,7 +433,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqk-lY-9AD">
-                    <rect key="frame" x="612" y="18" width="198" height="32"/>
+                    <rect key="frame" x="612" y="95" width="198" height="32"/>
                     <buttonCell key="cell" type="push" title="View other appointments" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aWF-Rx-3Km">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -455,9 +452,49 @@
                         <action selector="showBusyButtonClicked:" target="-2" id="TEU-pu-GbV"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vEz-z8-9M0">
+                    <rect key="frame" x="618" y="27" width="119" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Advance payment:" id="nxf-eS-C5F">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bTk-8s-hFS">
+                    <rect key="frame" x="750" y="27" width="43" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="¤ 0.00" id="EHJ-si-2Ae">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="wrx-7h-DJ8">
+                            <real key="minimum" value="0.0"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W66-uE-zYn">
+                    <rect key="frame" x="813" y="18" width="163" height="32"/>
+                    <buttonCell key="cell" type="push" title="Advance payment..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UDT-gb-OyE">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="advancePaymentButtonClicked:" target="-2" id="f6C-My-GNc"/>
+                    </connections>
+                </button>
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wsC-Cv-mi2">
+                    <rect key="frame" x="988" y="102" width="22" height="21"/>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="e8Y-Bm-Irp">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showNotesButtonClicked:" target="-2" id="NsV-uS-tfG"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="163.5" y="13.5"/>
         </customView>
+        <viewController id="LzK-jX-GrI" customClass="AMCAdvancePayment"/>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

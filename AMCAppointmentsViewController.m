@@ -533,6 +533,8 @@ NSAnimationDelegate>
     if (self.currentWizard.cancelled) {
         NSManagedObjectContext * moc = self.documentMoc;
         if (self.currentWizard.editMode == EditModeCreate) {
+            Appointment * app = self.currentWizard.objectToManage;
+            app.sale.voided = @(YES);
             [moc deleteObject:self.currentWizard.objectToManage];
         } else {
             [moc rollback];

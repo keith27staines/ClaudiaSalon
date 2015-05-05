@@ -22,6 +22,8 @@
 #import "AMCBookingViewController.h"
 #import "AMCStaffBusyViewController.h"
 #import "AMCEmployeeForServiceSelector.h"
+#import "AMCAdvancePayment.h"
+#import "Payment+Methods.h"
 
 @interface AMCWizardStepBookAppointmentForCustomerViewController () <NSTableViewDataSource, NSTableViewDelegate, AMCJobsColumnViewDelegate>
 {
@@ -39,6 +41,8 @@
 @property NSArray * appointmentsOnSelectedDay;
 @property (readonly) AMCEmployeeForServiceSelector * staffForServiceViewController;
 @property (readonly) AMCQuickQuoteViewController * quickQuoteViewController;
+@property (strong) IBOutlet AMCAdvancePayment *advancePaymentViewController;
+
 @end
 
 @implementation AMCWizardStepBookAppointmentForCustomerViewController
@@ -82,6 +86,11 @@
         }
         [self datePickerChanged:self];
         [self.appointmentSlotsTable reloadData];
+        if (appointment.sale.advancePayment) {
+            self.advancePaymentLabel.objectValue = appointment.sale.advancePayment.amount;
+        } else {
+            self.advancePaymentLabel.objectValue = @(0);
+        }
     }
     [self updateTotal];
 }
@@ -525,6 +534,13 @@
         [self.chosenServicesTable reloadData];
         [self updateTotal];
     }
+    if (viewController == self.advancePaymentViewController) {
+        if (self.appointment.sale.advancePayment) {
+            self.advancePaymentLabel.objectValue = self.appointment.sale.advancePayment.amount;
+        } else {
+            self.advancePaymentLabel.objectValue = @(0);
+        }
+    }
     [super dismissViewController:viewController];
 }
 - (IBAction)removeServiceButtonClicked:(id)sender {
@@ -614,6 +630,14 @@
         _staffForServiceViewController = [AMCEmployeeForServiceSelector new];
     }
     return _staffForServiceViewController;
+}
+- (IBAction)advancePaymentButtonClicked:(id)sender {
+    Sale * sale = self.appointment.sale;
+    if (sale) {
+        self.advancePaymentViewController.appointment = self.appointment;
+        [self.advancePaymentViewController prepareForDisplayWithSalon:self.salonDocument];
+        [self presentViewControllerAsSheet:self.advancePaymentViewController];
+    }
 }
 
 @end

@@ -2,7 +2,7 @@
 //  Payment.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/04/2015.
+//  Created by Keith Staines on 05/05/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -37,6 +37,7 @@
 @property (nonatomic, retain) ShoppingList *shoppingList;
 @property (nonatomic, retain) RecurringItem *templateForRecurringItem;
 @property (nonatomic, retain) WorkRecord *workRecord;
+@property (nonatomic, retain) Sale *saleAdvancePayment;
 @end
 
 @interface Payment (CoreDataGeneratedAccessors)

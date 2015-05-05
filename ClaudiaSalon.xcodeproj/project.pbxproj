@@ -43,6 +43,10 @@
 		532377DE1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 532377DC1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.xib */; };
 		5330544B1AE4DA37007B1264 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330544A1AE4DA37007B1264 /* Account.m */; };
 		533054521AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */; };
+		5330E2391AF8A8F40062FD93 /* AMCAdvancePayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330E2371AF8A8F40062FD93 /* AMCAdvancePayment.m */; };
+		5330E23A1AF8A8F40062FD93 /* AMCAdvancePayment.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5330E2381AF8A8F40062FD93 /* AMCAdvancePayment.xib */; };
+		5330E23E1AF8B2400062FD93 /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330E23D1AF8B2400062FD93 /* Sale.m */; };
+		5330E2411AF8B2400062FD93 /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330E2401AF8B2400062FD93 /* Payment.m */; };
 		5346C58D1ABB074C005D4540 /* AMCPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C58B1ABB074C005D4540 /* AMCPreferencesWindowController.m */; };
 		5346C58E1ABB074C005D4540 /* AMCPreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5346C58C1ABB074C005D4540 /* AMCPreferencesWindowController.xib */; };
 		5346C5931ABB2265005D4540 /* AMCCategoryManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5911ABB2265005D4540 /* AMCCategoryManagerViewController.m */; };
@@ -62,8 +66,6 @@
 		536E57D01AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57CE1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m */; };
 		536E57D11AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 536E57CF1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib */; };
 		536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57D31AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m */; };
-		536E57D81AED25B700A60D36 /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57D71AED25B700A60D36 /* Sale.m */; };
-		536E57DB1AED25B800A60D36 /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57DA1AED25B800A60D36 /* Payment.m */; };
 		536E57DE1AED33FC00A60D36 /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57DD1AED33FC00A60D36 /* Salon.m */; };
 		536E57E11AED33FD00A60D36 /* PaymentCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57E01AED33FD00A60D36 /* PaymentCategory.m */; };
 		5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */; };
@@ -331,6 +333,14 @@
 		533054511AE4EA49007B1264 /* ClaudiasSalon.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ClaudiasSalon.xcdatamodel; sourceTree = "<group>"; };
 		5330E2331AF4AAE80062FD93 /* ClaudiasSalon 7.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 7.xcdatamodel"; sourceTree = "<group>"; };
 		5330E2341AF66EB70062FD93 /* ClaudiasSalon 8.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 8.xcdatamodel"; sourceTree = "<group>"; };
+		5330E2361AF8A8F40062FD93 /* AMCAdvancePayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCAdvancePayment.h; sourceTree = "<group>"; };
+		5330E2371AF8A8F40062FD93 /* AMCAdvancePayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAdvancePayment.m; sourceTree = "<group>"; };
+		5330E2381AF8A8F40062FD93 /* AMCAdvancePayment.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAdvancePayment.xib; sourceTree = "<group>"; };
+		5330E23B1AF8B1720062FD93 /* ClaudiasSalon 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 9.xcdatamodel"; sourceTree = "<group>"; };
+		5330E23C1AF8B2400062FD93 /* Sale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sale.h; sourceTree = "<group>"; };
+		5330E23D1AF8B2400062FD93 /* Sale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sale.m; sourceTree = "<group>"; };
+		5330E23F1AF8B2400062FD93 /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
+		5330E2401AF8B2400062FD93 /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
 		5346C58A1ABB074C005D4540 /* AMCPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPreferencesWindowController.h; sourceTree = "<group>"; };
 		5346C58B1ABB074C005D4540 /* AMCPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPreferencesWindowController.m; sourceTree = "<group>"; };
 		5346C58C1ABB074C005D4540 /* AMCPreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPreferencesWindowController.xib; sourceTree = "<group>"; };
@@ -364,10 +374,6 @@
 		536E57D21AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCStatementItemComputerRecordMismatchCalculator.h; sourceTree = "<group>"; };
 		536E57D31AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCStatementItemComputerRecordMismatchCalculator.m; sourceTree = "<group>"; };
 		536E57D51AEBC39100A60D36 /* ClaudiasSalon 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 6.xcdatamodel"; sourceTree = "<group>"; };
-		536E57D61AED25B700A60D36 /* Sale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sale.h; sourceTree = "<group>"; };
-		536E57D71AED25B700A60D36 /* Sale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sale.m; sourceTree = "<group>"; };
-		536E57D91AED25B800A60D36 /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
-		536E57DA1AED25B800A60D36 /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
 		536E57DC1AED33FC00A60D36 /* Salon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salon.h; sourceTree = "<group>"; };
 		536E57DD1AED33FC00A60D36 /* Salon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salon.m; sourceTree = "<group>"; };
 		536E57DF1AED33FD00A60D36 /* PaymentCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentCategory.h; sourceTree = "<group>"; };
@@ -740,6 +746,16 @@
 			name = AMCMiniSaleEditor;
 			sourceTree = "<group>";
 		};
+		5330E2351AF8A8B40062FD93 /* AdvancePaymentView */ = {
+			isa = PBXGroup;
+			children = (
+				5330E2361AF8A8F40062FD93 /* AMCAdvancePayment.h */,
+				5330E2371AF8A8F40062FD93 /* AMCAdvancePayment.m */,
+				5330E2381AF8A8F40062FD93 /* AMCAdvancePayment.xib */,
+			);
+			name = AdvancePaymentView;
+			sourceTree = "<group>";
+		};
 		5346C5891ABB0717005D4540 /* Preferences Window */ = {
 			isa = PBXGroup;
 			children = (
@@ -1106,6 +1122,7 @@
 		53AE26E41AA3066200A1B3E4 /* Select Services and Time Slot */ = {
 			isa = PBXGroup;
 			children = (
+				5330E2351AF8A8B40062FD93 /* AdvancePaymentView */,
 				53D69BF41A9B23B60004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.xib */,
 				53D69D881A9B243B0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.h */,
 				53D69C791A9B240B0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.m */,
@@ -1698,14 +1715,14 @@
 		53D69E031A9B6BE70004CE10 /* Data model objects */ = {
 			isa = PBXGroup;
 			children = (
+				5330E23F1AF8B2400062FD93 /* Payment.h */,
+				5330E2401AF8B2400062FD93 /* Payment.m */,
+				5330E23C1AF8B2400062FD93 /* Sale.h */,
+				5330E23D1AF8B2400062FD93 /* Sale.m */,
 				536E57DF1AED33FD00A60D36 /* PaymentCategory.h */,
 				536E57E01AED33FD00A60D36 /* PaymentCategory.m */,
 				536E57DC1AED33FC00A60D36 /* Salon.h */,
 				536E57DD1AED33FC00A60D36 /* Salon.m */,
-				536E57D91AED25B800A60D36 /* Payment.h */,
-				536E57DA1AED25B800A60D36 /* Payment.m */,
-				536E57D61AED25B700A60D36 /* Sale.h */,
-				536E57D71AED25B700A60D36 /* Sale.m */,
 				533054491AE4DA37007B1264 /* Account.h */,
 				5330544A1AE4DA37007B1264 /* Account.m */,
 				531D67271ACC1C62000472BD /* RecurringItem.h */,
@@ -1928,6 +1945,7 @@
 				53D69C291A9B23B60004CE10 /* AMCAssociatedNotesViewController.xib in Resources */,
 				5346C5941ABB2265005D4540 /* AMCCategoryManagerViewController.xib in Resources */,
 				53D69C351A9B23B70004CE10 /* AMCSaleItemViewController.xib in Resources */,
+				5330E23A1AF8A8F40062FD93 /* AMCAdvancePayment.xib in Resources */,
 				53D69C411A9B23B70004CE10 /* AMCPaymentCategoryListViewController.xib in Resources */,
 				53D69C251A9B23B60004CE10 /* AMCServiceSelectorViewController.xib in Resources */,
 				53D69C1E1A9B23B60004CE10 /* AMCPaymentAmountViewController.xib in Resources */,
@@ -2011,7 +2029,6 @@
 				53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */,
 				530171601ACB15EA0047116D /* StockedCategory.m in Sources */,
 				53D69CFD1A9B240C0004CE10 /* AMCWizardStepSelectCustomerViewController.m in Sources */,
-				536E57DB1AED25B800A60D36 /* Payment.m in Sources */,
 				53D69CFB1A9B240C0004CE10 /* AMCWizardStepViewController.m in Sources */,
 				53D69D391A9B240C0004CE10 /* Employee+Methods.m in Sources */,
 				53D69D561A9B240C0004CE10 /* AMCReceiptView.m in Sources */,
@@ -2036,6 +2053,7 @@
 				53D69D0A1A9B240C0004CE10 /* AMCManagersBudgetWindowController.m in Sources */,
 				5301714E1ACB15C10047116D /* IntervalDuringDay.m in Sources */,
 				5301716C1ACB15EB0047116D /* SaleItem.m in Sources */,
+				5330E2391AF8A8F40062FD93 /* AMCAdvancePayment.m in Sources */,
 				53D69CE61A9B240C0004CE10 /* AMCPaymentAmountViewController.m in Sources */,
 				53D69D441A9B240C0004CE10 /* Salon+Methods.m in Sources */,
 				53D69D4E1A9B240C0004CE10 /* EditStockProductViewController.m in Sources */,
@@ -2084,6 +2102,7 @@
 				53D69D5D1A9B240C0004CE10 /* EditPaymentViewController.m in Sources */,
 				5346C58D1ABB074C005D4540 /* AMCPreferencesWindowController.m in Sources */,
 				53D69D591A9B240C0004CE10 /* MakePaymentStepViewController.m in Sources */,
+				5330E23E1AF8B2400062FD93 /* Sale.m in Sources */,
 				5301714B1ACB15C10047116D /* Note.m in Sources */,
 				5346C5A31AC00341005D4540 /* AMCCategoriesRootNode.m in Sources */,
 				5301712D1ACB15C10047116D /* AccountReconciliation.m in Sources */,
@@ -2100,7 +2119,6 @@
 				53D69D4D1A9B240C0004CE10 /* EditObjectViewController.m in Sources */,
 				53D69BB81A9B22830004CE10 /* main.m in Sources */,
 				5346C5971ABB2887005D4540 /* AMCTreeNode.m in Sources */,
-				536E57D81AED25B700A60D36 /* Sale.m in Sources */,
 				5346C5931ABB2265005D4540 /* AMCCategoryManagerViewController.m in Sources */,
 				53D69D061A9B240C0004CE10 /* AMCDateRangeSelectorViewController.m in Sources */,
 				53D69CFA1A9B240C0004CE10 /* AMCWizardForNewAppointmentWindowController.m in Sources */,
@@ -2136,6 +2154,7 @@
 				5346C5A71AC06D15005D4540 /* AMCServiceCategoriesNode.m in Sources */,
 				53D69D141A9B240C0004CE10 /* AMCReportsView.m in Sources */,
 				53D69D3B1A9B240C0004CE10 /* SaleItem+Methods.m in Sources */,
+				5330E2411AF8B2400062FD93 /* Payment.m in Sources */,
 				53D69D071A9B240C0004CE10 /* AMCSalaryCalculator.m in Sources */,
 				53D69D111A9B240C0004CE10 /* AMCStockedCategoryMaintenanceWindowController.m in Sources */,
 				530171331ACB15C10047116D /* Holiday.m in Sources */,
@@ -2369,6 +2388,7 @@
 		5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				5330E23B1AF8B1720062FD93 /* ClaudiasSalon 9.xcdatamodel */,
 				5330E2341AF66EB70062FD93 /* ClaudiasSalon 8.xcdatamodel */,
 				5330E2331AF4AAE80062FD93 /* ClaudiasSalon 7.xcdatamodel */,
 				536E57D51AEBC39100A60D36 /* ClaudiasSalon 6.xcdatamodel */,
@@ -2378,7 +2398,7 @@
 				533054501AE4EA49007B1264 /* ClaudiasSalon 5.xcdatamodel */,
 				533054511AE4EA49007B1264 /* ClaudiasSalon.xcdatamodel */,
 			);
-			currentVersion = 5330E2341AF66EB70062FD93 /* ClaudiasSalon 8.xcdatamodel */;
+			currentVersion = 5330E23B1AF8B1720062FD93 /* ClaudiasSalon 9.xcdatamodel */;
 			path = ClaudiasSalon.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

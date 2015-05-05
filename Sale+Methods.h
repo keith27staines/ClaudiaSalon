@@ -19,8 +19,10 @@
 -(void)updatePriceFromSaleItems;
 -(Payment*)makePaymentInFull;
 -(Payment*)makePaymentOfAmount:(double)amount;
+-(void)makeAdvancePayment:(double)amount inAccount:(Account*)account;
 -(double)amountPaid;
 -(double)amountPaidNet;
 -(double)amountOutstanding;
+-(double)amountAdvanced;
 -(BOOL)isVoidable;
 @end

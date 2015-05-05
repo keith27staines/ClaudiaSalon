@@ -106,25 +106,35 @@
 -(Payment*)makePaymentInFull {
     return [self makePaymentOfAmount:[self amountOutstanding]];
 }
--(Payment*)makePaymentOfAmount:(double)amount {
-    NSAssert(self.account, @"account must not be nill");
-    double amountOutstanding = [self amountOutstanding];
+-(void)makeAdvancePayment:(double)amount inAccount:(Account*)account {
+    if (self.advancePayment) {
+        self.advancePayment.voided = @(YES);
+    }
+    self.advancePayment = [self makePaymentOfAmount:amount inAccount:account];
+    self.advancePayment.reason = @"Sale - advance payment";
+}
+-(Payment*)makePaymentOfAmount:(double)amount inAccount:(Account*)account {
+    NSAssert(account, @"account must not be nill");
     Payment * payment = nil;
-    NSAssert(round(amountOutstanding*100) >= round(amount*100), @"amount is more than the amount outstanding");
     NSString * customerName = self.customer.fullName;
     if (!customerName || customerName.length == 0) {
         customerName = @"Customer";
     }
     Salon * salon = [Salon salonWithMoc:self.managedObjectContext];
-    payment = [self.account makePaymentWithAmount:@(amountOutstanding)
-                                             date:self.createdDate
-                                         category:salon.defaultPaymentCategoryForSales
-                                        direction:kAMCPaymentDirectionIn
-                                        payeeName:customerName
-                                           reason:@"Sale"];
+    payment = [account makePaymentWithAmount:@(amount)
+                                        date:self.createdDate
+                                    category:salon.defaultPaymentCategoryForSales
+                                   direction:kAMCPaymentDirectionIn
+                                   payeeName:customerName
+                                      reason:@"Sale"];
     payment.voided = self.voided;
     [self addPaymentsObject:payment];
     return payment;
+    
+}
+-(Payment*)makePaymentOfAmount:(double)amount {
+    NSAssert(self.account, @"account must not be nil");
+    return [self makePaymentOfAmount:amount inAccount:self.account];
 }
 -(double)amountPaidNet {
     double amount = 0.0;
@@ -143,6 +153,13 @@
         }
     }
     return amount;
+}
+-(double)amountAdvanced {
+    if (!self.advancePayment || self.advancePayment.voided.boolValue) {
+        return 0;
+    } else {
+        return self.advancePayment.amount.doubleValue;
+    }
 }
 -(double)amountOutstanding {
     return self.actualCharge.doubleValue - [self amountPaid];

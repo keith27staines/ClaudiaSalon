@@ -2,7 +2,7 @@
 //  Sale.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/04/2015.
+//  Created by Keith Staines on 05/05/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -35,5 +35,6 @@
 @dynamic notes;
 @dynamic payments;
 @dynamic saleItem;
+@dynamic advancePayment;
 
 @end

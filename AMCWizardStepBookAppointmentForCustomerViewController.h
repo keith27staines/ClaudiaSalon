@@ -48,4 +48,8 @@
 @property (weak) IBOutlet NSButton *showBusyView;
 - (IBAction)showBusyButtonClicked:(id)sender;
 
+@property (weak) IBOutlet NSTextField *advancePaymentLabel;
+@property (weak) IBOutlet NSButton *advancePaymentButton;
+
+
 @end

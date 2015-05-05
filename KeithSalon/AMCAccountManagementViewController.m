@@ -20,6 +20,9 @@
 @property (weak) IBOutlet NSButton *isPrimaryAccountCheckbox;
 @property (weak) IBOutlet NSButton *isTillAccountCheckbox;
 @property (weak) IBOutlet NSButton *isCardPaymentAccountCheckbox;
+@property (weak) IBOutlet NSNumberFormatter *incomingFeeFormatter;
+@property (weak) IBOutlet NSNumberFormatter *outgoingFeeFormatter;
+
 @end
 
 @implementation AMCAccountManagementViewController
@@ -29,6 +32,8 @@
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
+    self.incomingFeeFormatter.minimumFractionDigits = 2;
+    self.outgoingFeeFormatter.minimumFractionDigits = 2;
     self.accountsTable.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"friendlyName" ascending:YES]];
 }
 
