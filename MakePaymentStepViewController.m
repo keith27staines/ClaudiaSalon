@@ -79,7 +79,6 @@
 }
 -(void)applyEditMode:(EditMode)editMode {
     [super applyEditMode:editMode];
-    //[self.amountGivenByCustomer.window setNextResponder:self.amountGivenByCustomer];
 }
 -(void)applySale
 {
@@ -108,7 +107,7 @@
         undiscountedCharge = sale.nominalCharge.doubleValue;
         chargeAfterIndividualDiscounts = sale.chargeAfterIndividualDiscounts.doubleValue;
         totalDiscount = sale.discountAmount.doubleValue;
-        totalToPay = sale.actualCharge.doubleValue;
+        totalToPay = sale.amountOutstanding;
         self.costOfAllWithoutAdditionalDiscount.stringValue = [NSString stringWithFormat:@"£%1.2f",undiscountedCharge];
         self.costAfterIndividualDiscounts.stringValue = [NSString stringWithFormat:@"£%1.2f",chargeAfterIndividualDiscounts];
         self.totalDiscount.stringValue = [NSString stringWithFormat:@"£%1.2f",totalDiscount];
@@ -135,7 +134,7 @@
 {
     Sale * sale = [self sale];
     double amountGiven = self.amountGivenByCustomer.doubleValue;
-    return amountGiven - sale.actualCharge.doubleValue;
+    return amountGiven - sale.amountOutstanding;
 }
 -(AMCDiscount)extraDiscountType {
     AMCDiscount discountType = self.additionalDiscountPopup.indexOfSelectedItem;
@@ -192,7 +191,8 @@
     Sale * sale = [self sale];
     [self.paymentCompleteButton setEnabled:NO];
     double d = self.amountGivenByCustomer.doubleValue;
-    if (d >= sale.actualCharge.doubleValue) {
+    
+    if (round(d*100.0) >= round(sale.amountOutstanding*100.0)) {
         [self.paymentCompleteButton setEnabled:YES];
         [self.paymentCompleteButton.window setDefaultButtonCell:self.paymentCompleteButton.cell];
     } else {
@@ -202,17 +202,7 @@
     [self applySale];
 }
 -(void)cashEntryDidEndEditing:(AMCCashEntryField *)cashEntryField {
-    Sale * sale = [self sale];
-    [self.paymentCompleteButton setEnabled:NO];
-    double d = self.amountGivenByCustomer.doubleValue;
-    if (d >= sale.actualCharge.doubleValue) {
-        [self.paymentCompleteButton setEnabled:YES];
-        [self.paymentCompleteButton.window setDefaultButtonCell:self.paymentCompleteButton.cell];
-    } else {
-        [self.paymentCompleteButton setEnabled:NO];
-    }
-    sale.amountGivenByCustomer = @(d);
-    [self applySale];
+    [self cashEntryDidChange:cashEntryField];
 }
 -(void)controlTextDidBeginEditing:(NSNotification *)obj
 {

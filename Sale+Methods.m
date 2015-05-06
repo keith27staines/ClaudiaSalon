@@ -92,16 +92,22 @@
     return YES;
 }
 -(void)setVoided:(NSNumber *)voided {
+    NSString * voidedKey = @"voided";
+    if ([voided isEqualToNumber:[self primitiveValueForKey:voidedKey]]) {
+        return;
+    }
     if (![self isVoidable]) {
         return;
     }
-    
-    for (Payment * payment in self.payments) {
-        payment.voided = @(YES);
+    if (voided) {
+        for (Payment * payment in self.payments) {
+            payment.voided = @(YES);
+        }
+        self.advancePayment = nil;
     }
-    [self willChangeValueForKey:@"voided"];
-    [self setPrimitiveValue:voided forKey:@"voided"];
-    [self didChangeValueForKey:@"voided"];
+    [self willChangeValueForKey:voidedKey];
+    [self setPrimitiveValue:voided forKey:voidedKey];
+    [self didChangeValueForKey:voidedKey];
 }
 -(Payment*)makePaymentInFull {
     return [self makePaymentOfAmount:[self amountOutstanding]];

@@ -171,7 +171,6 @@ static NSString * const kAMCExplanationText = @"kAMCExplanationText";
     note.title = @"Appointment was completed";
     note.text = self.explanationText.stringValue;
     [self.appointment addNotesObject:note];
-    self.appointment.cancelled = @(NO);
     self.appointment.cancellationNote = @"";
     self.appointment.cancellationType = AMCancellationTypeNotCancelled;
     [self.salonDocument commitAndSave:nil];

@@ -68,6 +68,15 @@
     return [self conflictsWithInterval:otherAppointment.appointmentDate endOfInterval:otherAppointment.appointmentEndDate];
     return YES;
 }
+-(void)setCancelled:(NSNumber *)cancelled {
+    if (self.sale) {
+        self.sale.voided = cancelled;
+    }
+    NSString * key = @"cancelled";
+    [self willChangeValueForKey:key];
+    [self setPrimitiveValue:cancelled forKey:key];
+    [self didChangeValueForKey:key];
+}
 -(BOOL)conflictsWithInterval:(NSDate*)startDate endOfInterval:(NSDate*)endDate {
     if (self.cancelled.boolValue == YES) {
         return NO;

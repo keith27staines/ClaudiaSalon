@@ -490,7 +490,7 @@ NSAnimationDelegate>
     return _searchFilteredAppointments;
 }
 -(void)showBookingWizardInMode:(EditMode)editMode {
-    [self.salonDocument commitAndSave:nil];
+    [self.salonDocument saveDocument:self];
     self.currentWizard = [[AMCWizardForNewAppointmentWindowController alloc] init];
     self.currentWizard.delegate = self;
     self.currentWizard.editMode = editMode;
@@ -530,8 +530,8 @@ NSAnimationDelegate>
 -(void)wizardWindowControllerDidFinish:(AMCWizardWindowController *)controller
 {
     [NSApp endSheet:self.currentWizard.window];
+    NSManagedObjectContext * moc = self.documentMoc;
     if (self.currentWizard.cancelled) {
-        NSManagedObjectContext * moc = self.documentMoc;
         if (self.currentWizard.editMode == EditModeCreate) {
             Appointment * app = self.currentWizard.objectToManage;
             app.sale.voided = @(YES);
@@ -540,6 +540,7 @@ NSAnimationDelegate>
             [moc rollback];
         }
     } else {
+        [self.salonDocument saveDocument:self];
         self.previouslySelectedAppointment = (Appointment*)self.currentWizard.objectToManage;
     }
     [self.salonDocument commitAndSave:nil];
