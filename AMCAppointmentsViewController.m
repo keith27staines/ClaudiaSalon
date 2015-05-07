@@ -22,6 +22,7 @@
 #import "SaleItem+Methods.h"
 #import "AMCQuickQuoteViewController.h"
 #import "AMCSalonDocument.h"
+#import "Payment+Methods.h"
 
 typedef NS_ENUM(NSInteger, AMCPeriod) {
     AMCperiodNone = -1,
@@ -120,6 +121,12 @@ NSAnimationDelegate>
             } else {
                 return[self stringDescribingTimeSpecifiedInMinutes:time];
             }
+        }
+        if ([tableColumn.identifier isEqualToString:@"amount"]) {
+            return appointment.sale.actualCharge;
+        }
+        if ([tableColumn.identifier isEqualToString:@"advance"]) {
+            return appointment.sale.advancePayment.amount;
         }
         if ([tableColumn.identifier isEqualToString:@"status"]) {
             if (appointment.cancelled.boolValue) {
