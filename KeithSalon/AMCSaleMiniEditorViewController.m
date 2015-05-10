@@ -26,6 +26,9 @@
 @property (weak) IBOutlet NSTextField *categoryLabel;
 
 @property (weak) IBOutlet NSTextField *amountTextField;
+
+@property (weak) IBOutlet NSTextField *feeTextField;
+
 @property (weak) IBOutlet NSTextField *amountLabel;
 
 @property (weak) IBOutlet NSSegmentedControl *directionSelector;
@@ -40,8 +43,6 @@
 @property (weak) IBOutlet NSButton *cancelButton;
 @property (weak) IBOutlet NSButton *doneButton;
 @property (weak) IBOutlet NSButton * reconciledCheckbox;
-@property Sale * sale;
-@property Payment * payment;
 
 @property BOOL changesMade;
 @end
@@ -58,145 +59,70 @@
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     self.changesMade = NO;
-    if ([self.transaction isKindOfClass:[Payment class]]) {
-        self.payment = self.transaction;
-        self.sale = nil;
-    } else {
-        self.payment = nil;
-        self.sale = self.transaction;
-    }
-    NSString * header = @"";
     if (self.editMode == EditModeCreate) {
-        header = @"Create ";
+        self.header.stringValue = @"Create a new payment";
     } else {
-        header = @"Edit ";
+        if (self.payment.isReconciled) {
+            self.header.stringValue = @"This payment is reconciled";
+        } else {
+            self.header.stringValue = @"Edit payment";
+        }
     }
-    if (self.payment) {
-        header = [header stringByAppendingString:@"Payment"];
-    } else {
-        header = [header stringByAppendingString:@"Sale"];
-    }
-    self.header.stringValue = header;
     [self loadCategoryPopup];
     [self loadAccountPopup];
     [self resetToObject];
     [self enableControls];
 }
 -(void)resetToObject {
-    if (self.payment) {
-        [self selectItemWithRepresentedObject:self.payment.account inPopup:self.accountSelector];
-        [self selectItemWithRepresentedObject:self.payment.paymentCategory inPopup:self.categorySelector];
-        [self.directionSelector selectSegmentWithTag:([self.payment.direction isEqualToString:kAMCPaymentDirectionIn])?0:1];
-        self.reconciledCheckbox.state = (self.payment.isReconciled)?NSOnState:NSOffState;
-        self.transactionDate.dateValue = self.payment.paymentDate;
-        self.name.stringValue = self.payment.payeeName;
-        self.note.stringValue = self.payment.reason;
-        self.amountTextField.doubleValue = self.payment.amount.doubleValue;
-    } else {
-        [self selectItemWithRepresentedObject:self.sale.account inPopup:self.accountSelector];
-        [self selectItemWithRepresentedObject:self.salonDocument.salon.defaultPaymentCategoryForSales inPopup:self.categorySelector];
-        [self.directionSelector selectSegmentWithTag:0];
-        self.reconciledCheckbox.state = NSOffState;
-        self.directionSelector.selectedSegment = 1;
-        if (self.sale.customer) {
-            self.name.stringValue = self.sale.customer.fullName;
-        } else {
-            self.name.stringValue = @"Unrecorded customer";
-        }
-        self.note.stringValue = @"";
-        self.amountTextField.doubleValue = self.sale.actualCharge.doubleValue;
-        self.transactionDate.dateValue = self.sale.createdDate;
-    }
+    [self selectItemWithRepresentedObject:self.payment.account inPopup:self.accountSelector];
+    [self selectItemWithRepresentedObject:self.payment.paymentCategory inPopup:self.categorySelector];
+    [self.directionSelector selectSegmentWithTag:([self.payment.direction isEqualToString:kAMCPaymentDirectionIn])?0:1];
+    self.reconciledCheckbox.state = (self.payment.isReconciled)?NSOnState:NSOffState;
+    self.transactionDate.dateValue = self.payment.paymentDate;
+    self.name.stringValue = self.payment.payeeName;
+    self.note.stringValue = self.payment.reason;
+    self.amountTextField.doubleValue = self.payment.amount.doubleValue;
+    self.feeTextField.doubleValue = self.payment.transactionFee.doubleValue;
     [self enableControls];
 }
 -(void)enableControls {
-    if (self.payment) {
-        if (self.editMode == EditModeCreate) {
-            self.accountSelector.enabled = self.allowUserToChangeAccount;
-            self.accountLabel.enabled = YES;
-            self.categorySelector.enabled = YES;
-            self.categoryLabel.enabled = YES;
-            self.transactionDate.enabled = YES;
-            self.transactionDateLabel.enabled = YES;
-            self.directionSelector.enabled = YES;
-            self.amountTextField.enabled = YES;
-            self.amountLabel.enabled = YES;
-            self.name.enabled = YES;
-            self.nameLabel.enabled = YES;
-            self.note.enabled = YES;
-            self.noteLabel.enabled = YES;
-            self.reconciledCheckbox.enabled = YES;
-        } else {
-            self.accountSelector.enabled = self.allowUserToChangeAccount;
-            self.accountLabel.enabled = YES;
-            self.categorySelector.enabled = YES;
-            self.categoryLabel.enabled = YES;
-            self.transactionDate.enabled = YES;
-            self.transactionDateLabel.enabled = YES;
-            self.directionSelector.enabled = YES;
-            self.amountTextField.enabled = YES;
-            self.amountLabel.enabled = YES;
-            self.name.enabled = YES;
-            self.nameLabel.enabled = YES;
-            self.note.enabled = YES;
-            self.noteLabel.enabled = YES;
-            self.reconciledCheckbox.enabled = YES;
-        }
-    } else {
-        if (self.editMode == EditModeCreate) {
-            self.accountSelector.enabled = self.allowUserToChangeAccount;
-            self.accountLabel.enabled = YES;
-            self.categorySelector.enabled = NO;
-            self.categoryLabel.enabled = NO;
-            self.transactionDate.enabled = YES;
-            self.transactionDateLabel.enabled = YES;
-            self.directionSelector.enabled = NO;
-            self.amountTextField.enabled = YES;
-            self.amountLabel.enabled = YES;
-            self.name.enabled = NO;
-            self.nameLabel.enabled = NO;
-            self.note.enabled = NO;
-            self.noteLabel.enabled = NO;
-            self.reconciledCheckbox.enabled = NO;
-        } else {
-            self.accountSelector.enabled = YES;
-            self.accountLabel.enabled = YES;
-            self.categorySelector.enabled = NO;
-            self.categoryLabel.enabled = NO;
-            self.transactionDate.enabled = YES;
-            self.transactionDateLabel.enabled = YES;
-            self.directionSelector.enabled = NO;
-            self.amountTextField.enabled = YES;
-            self.amountLabel.enabled = YES;
-            self.name.enabled = NO;
-            self.nameLabel.enabled = NO;
-            self.note.enabled = NO;
-            self.noteLabel.enabled = NO;
-            self.reconciledCheckbox.enabled = NO;
-        }
-    }
+    BOOL enabled = !self.payment.isReconciled;
+    self.accountSelector.enabled = self.allowUserToChangeAccount & enabled;
+    self.accountLabel.enabled = enabled;
+    self.categorySelector.enabled = enabled;
+    self.categoryLabel.enabled = enabled;
+    self.transactionDate.enabled = enabled;
+    self.transactionDateLabel.enabled = enabled;
+    self.directionSelector.enabled = enabled;
+    self.amountTextField.enabled = enabled;
+    self.feeTextField.enabled = enabled;
+    self.amountLabel.enabled = enabled;
+    self.name.enabled = enabled;
+    self.nameLabel.enabled = enabled;
+    self.note.enabled = enabled;
+    self.noteLabel.enabled = enabled;
     if ([self isValid] && self.changesMade) {
         self.doneButton.enabled = YES;
     } else {
         self.doneButton.enabled = NO;
     }
+    // The reconciled state is computed and cannot be manually set
+    self.reconciledCheckbox.enabled = NO;
 }
 -(void)updateObject {
-    if (self.payment) {
-        self.payment.account = self.accountSelector.selectedItem.representedObject;
-        self.payment.paymentCategory = self.categorySelector.selectedItem.representedObject;
-        self.payment.amount = @(self.amountTextField.doubleValue);
-        self.payment.reason = self.note.stringValue;
-        self.payment.payeeName = self.name.stringValue;
-        self.payment.direction = (self.directionSelector.selectedSegment==0)?kAMCPaymentDirectionIn:kAMCPaymentDirectionOut;
-        self.payment.createdDate = self.transactionDate.dateValue;
-        self.payment.paymentDate = self.transactionDate.dateValue;
-    } else {
-        self.sale.actualCharge = @(self.amountTextField.doubleValue);
-        self.sale.account = self.accountSelector.selectedItem.representedObject;
-        self.sale.createdDate = self.transactionDate.dateValue;
-        self.sale.lastUpdatedDate = self.transactionDate.dateValue;
-    }
+    Account * account = self.accountSelector.selectedItem.representedObject;
+
+    self.payment.account = account;
+    self.payment.paymentCategory = self.categorySelector.selectedItem.representedObject;
+    self.payment.amount = @(self.amountTextField.doubleValue);
+    [self.payment recalculateNetAmountWithFee:@(self.feeTextField.doubleValue)];
+    self.payment.transactionFee = self.feeTextField.objectValue;
+    self.payment.reason = self.note.stringValue;
+    self.payment.payeeName = self.name.stringValue;
+    self.payment.direction = (self.directionSelector.selectedSegment==0)?kAMCPaymentDirectionIn:kAMCPaymentDirectionOut;
+    self.payment.createdDate = self.transactionDate.dateValue;
+    self.payment.paymentDate = self.transactionDate.dateValue;
+
     self.changesMade = YES;
     [self enableControls];
 }
@@ -274,9 +200,6 @@
     [self dismissController:self];
 }
 - (IBAction)doneClicked:(id)sender {
-    if (self.editMode == EditModeCreate && self.sale) {
-        [self.sale makePaymentInFull];
-    }
     self.cancelled = NO;
     [self.view.window makeFirstResponder:self.view.window];
     [self.salonDocument commitAndSave:nil];

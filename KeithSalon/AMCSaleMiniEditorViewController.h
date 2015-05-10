@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
-@class Sale;
+@class Payment;
 
 #import "AMCViewController.h"
 #import "AMCConstants.h"
@@ -14,5 +14,5 @@
 @interface AMCSaleMiniEditorViewController : AMCViewController
 @property EditMode editMode;
 @property BOOL allowUserToChangeAccount;
-@property id transaction;
+@property Payment * payment;
 @end

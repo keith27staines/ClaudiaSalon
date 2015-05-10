@@ -128,7 +128,9 @@
     }
     self.amountBroughtForward = [self.account amountBroughtForward:self.startDate].doubleValue;
     self.broughtForward.objectValue = @(self.amountBroughtForward);
-    NSAssert(self.balance == [self.account amountBroughtForward:self.endDate].doubleValue, @"balances don't match");
+    if (self.balance != [self.account amountBroughtForward:self.endDate].doubleValue) {
+        NSLog(@"Balances don't match");
+    }
     self.finalBalance.doubleValue = self.balance;
     self.addTransactionButton.enabled = YES;
     self.viewTransactionButton.enabled = YES;
@@ -151,34 +153,22 @@
     }];
 }
 - (IBAction)viewPaymentDetails:(id)sender {
+    // View the selectd payment
     NSInteger row = self.dataTable.selectedRow;
     AMCAccountStatementItem * item = self.arrayController.arrangedObjects[row];
     self.editSaleViewController.editMode = EditModeView;
     self.editSaleViewController.allowUserToChangeAccount = NO;
-    self.editSaleViewController.transaction = item.payment;
-    [self.editSaleViewController prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewControllerAsSheet:self.editSaleViewController];
-}
--(void)editNewTransaction:(id)transaction {
-    self.editSaleViewController.editMode = EditModeCreate;
-    self.editSaleViewController.allowUserToChangeAccount = YES;
-    self.editSaleViewController.transaction = transaction;
+    self.editSaleViewController.payment = item.payment;
     [self.editSaleViewController prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewControllerAsSheet:self.editSaleViewController];
 }
 -(void)dismissViewController:(NSViewController *)viewController {
     if (viewController == self.editSaleViewController) {
+        Payment * payment = self.editSaleViewController.payment;
         if (self.editSaleViewController.editMode == EditModeCreate) {
             if (self.editSaleViewController.cancelled) {
-                [self.documentMoc deleteObject:self.editSaleViewController.transaction];
+                [self.documentMoc deleteObject:payment];
             } else {
-                Payment * payment = nil;
-                if ([self.editSaleViewController.transaction isKindOfClass:[Sale class]]) {
-                    Sale * sale = self.editSaleViewController.transaction;
-                    payment = [sale makePaymentInFull];
-                } else {
-                    payment = self.editSaleViewController.transaction;
-                }
                 AMCAccountStatementItem * item = [[AMCAccountStatementItem alloc] initWithPayment:payment];
                 [self.arrayController addObject:item];
             }
@@ -188,35 +178,14 @@
     [super dismissViewController:viewController];
 }
 - (IBAction)addItem:(id)sender {
-    NSAlert * alert = [[NSAlert alloc] init];
-    alert.messageText = @"Create a new sale or payment?";
-    alert.informativeText = @"Choose whether to create a new payment, sale, or just cancel the operation";
-    [alert addButtonWithTitle:@"Payment"];
-    [alert addButtonWithTitle:@"Sale"];
-    [alert addButtonWithTitle:@"Cancel"];
-    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
-        switch (returnCode) {
-            case NSAlertFirstButtonReturn:
-            {
-                // Create payment
-                
-                Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
-                payment.account = self.account;
-                [self editNewTransaction:payment];
-                break;
-            }
-            case NSAlertSecondButtonReturn:
-            {
-                // Create sale
-                Sale * sale = [Sale newObjectWithMoc:self.documentMoc];
-                sale.account = self.account;
-                [self editNewTransaction:sale];
-                break;
-            }
-            default:
-                break;
-        }
-     }];
+    // Create a new payment
+    Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
+    payment.account = self.account;
+    self.editSaleViewController.editMode = EditModeCreate;
+    self.editSaleViewController.allowUserToChangeAccount = YES;
+    self.editSaleViewController.payment = payment;
+    [self.editSaleViewController prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewControllerAsSheet:self.editSaleViewController];
 }
 - (IBAction)removeItem:(id)sender {
     NSInteger row = self.dataTable.selectedRow;
@@ -282,31 +251,6 @@
 }
 - (IBAction)recalculateFees:(id)sender {
     for (Account * account in [Account allObjectsWithMoc:self.documentMoc]) {
-        if (account == self.salonDocument.salon.cardPaymentAccount) {
-            account.transactionFeePercentageIncoming = @(2.75/100.0);
-            for (Payment * payment in account.payments) {
-                [payment recalculateNetAmountWithFeePercentage:account.transactionFeePercentageIncoming];
-            }
-        }
-        
-        for (Sale * sale in account.sales) {
-            if (!sale.isQuote.boolValue) {
-                [sale makePaymentInFull];
-            }
-        }
-        for (Payment * payment in account.payments) {
-            [payment recalculateNetAmountWithFee:payment.transactionFee];
-        }
-        if (account == self.salonDocument.salon.cardPaymentAccount) {
-            for (Payment * payment in account.payments) {
-                if (payment.isIncoming) {
-                    if (!payment.transactionFee || payment.transactionFee.doubleValue < 0) {
-                        NSLog(@"Problem");
-                    }
-                }
-            }
-        }
-        
         // diagnosis
         for (Payment * payment in account.payments) {
             if (!payment.transactionFee) {
@@ -316,12 +260,15 @@
             NSInteger ifee = round(payment.transactionFee.doubleValue*100);
             NSInteger iNet = round(payment.amountNet.doubleValue*100);
             if (iAmount != ifee + iNet) {
-                NSLog(@"mismatch");
+                NSLog(@"Mismatch! Account:%@ date:%@ Amount:%@ fee:%@ net:%@",account.friendlyName,payment.paymentDate,@(iAmount),@(ifee),@(iNet));
+                payment.amountNet = @((iAmount - ifee)/100.0);
             }
             if (!payment.paymentDate) {
+                NSLog(@"Correcting payment date");
                 payment.paymentDate = payment.createdDate;
             }
             if (!payment.payeeName) {
+                NSLog(@"Correcting payee name");
                 payment.payeeName = @"";
             }
         }

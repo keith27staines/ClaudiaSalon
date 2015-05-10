@@ -316,8 +316,8 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yb5-9X-cKt">
-                    <rect key="frame" x="1187" y="696" width="142" height="32"/>
-                    <buttonCell key="cell" type="push" title="Recalculate fees" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mHf-gA-cJw">
+                    <rect key="frame" x="1216" y="696" width="113" height="32"/>
+                    <buttonCell key="cell" type="push" title="Check Fees" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mHf-gA-cJw">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
