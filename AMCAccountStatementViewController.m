@@ -129,7 +129,7 @@
     self.amountBroughtForward = [self.account amountBroughtForward:self.startDate].doubleValue;
     self.broughtForward.objectValue = @(self.amountBroughtForward);
     if (self.balance != [self.account amountBroughtForward:self.endDate].doubleValue) {
-        NSLog(@"Balances don't match");
+        NSLog(@"Brought forward: %@ doesn't match balance: %@",[self.account amountBroughtForward:self.endDate],@(self.balance));
     }
     self.finalBalance.doubleValue = self.balance;
     self.addTransactionButton.enabled = YES;

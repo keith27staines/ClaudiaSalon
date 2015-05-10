@@ -55,10 +55,10 @@
     newPayment.amount = amount;
     if ([direction isEqualToString:kAMCPaymentDirectionIn]) {
         newPayment.direction = kAMCPaymentDirectionIn;
-        [newPayment calculateFeeForAmount:amount withFeePercentage:self.transactionFeePercentageIncoming];
+        [newPayment recalculateNetAmountWithFeePercentage:self.transactionFeePercentageIncoming];
     } else {
         newPayment.direction = kAMCPaymentDirectionOut;
-        [newPayment calculateFeeForAmount:amount withFeePercentage:self.transactionFeePercentageOutgoing];
+        [newPayment recalculateNetAmountWithFeePercentage:self.transactionFeePercentageOutgoing];
     }
     if (category) {
         newPayment.paymentCategory = category;
@@ -69,8 +69,6 @@
             newPayment.paymentCategory = [Salon salonWithMoc:self.managedObjectContext].defaultPaymentCategoryForPayments;
         }
     }
-    NSNumber * feePercentage = self.transactionFeePercentageIncoming;
-    [newPayment recalculateNetAmountWithFeePercentage:feePercentage];
     [self addPaymentsObject:newPayment];
     return newPayment;
 }

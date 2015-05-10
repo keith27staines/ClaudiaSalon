@@ -113,15 +113,15 @@
     Account * account = self.accountSelector.selectedItem.representedObject;
 
     self.payment.account = account;
+    self.payment.direction = (self.directionSelector.selectedSegment==0)?kAMCPaymentDirectionIn:kAMCPaymentDirectionOut;
     self.payment.paymentCategory = self.categorySelector.selectedItem.representedObject;
     self.payment.amount = @(self.amountTextField.doubleValue);
-    [self.payment recalculateNetAmountWithFee:@(self.feeTextField.doubleValue)];
     self.payment.transactionFee = self.feeTextField.objectValue;
     self.payment.reason = self.note.stringValue;
     self.payment.payeeName = self.name.stringValue;
-    self.payment.direction = (self.directionSelector.selectedSegment==0)?kAMCPaymentDirectionIn:kAMCPaymentDirectionOut;
     self.payment.createdDate = self.transactionDate.dateValue;
     self.payment.paymentDate = self.transactionDate.dateValue;
+    [self.payment recalculateNetAmountWithFee:@(self.feeTextField.doubleValue)];
 
     self.changesMade = YES;
     [self enableControls];

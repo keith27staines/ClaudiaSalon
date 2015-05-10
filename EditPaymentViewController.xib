@@ -276,6 +276,9 @@
                             <segment label="Pay IN" tag="1"/>
                         </segments>
                     </segmentedCell>
+                    <connections>
+                        <action selector="directionSelectorChanged:" target="-2" id="b1X-Nj-YAt"/>
+                    </connections>
                 </segmentedControl>
             </subviews>
             <constraints>

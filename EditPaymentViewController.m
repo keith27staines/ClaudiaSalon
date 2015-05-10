@@ -174,8 +174,22 @@
     [self.doneButton setEnabled:[self isValid]];
     return controlIsValid;
 }
+-(void)autoUpdateFee {
+    double amount = self.amountField.doubleValue;
+    Account * account = self.accountPopupButton.selectedItem.representedObject;
+    if (account) {
+        if (self.paymentDirection.selectedSegment == 0) {
+            self.feeField.doubleValue = 0;
+        } else {
+            self.feeField.doubleValue = round(account.transactionFeePercentageIncoming.doubleValue * amount*100.0)/100.0;
+        }
+    }
+}
 -(void)controlTextDidEndEditing:(NSNotification *)obj
 {
+    if (obj.object == self.amountField && self.editMode == EditModeCreate) {
+        [self autoUpdateFee];
+    }
     [self.doneButton setEnabled:[self isValid]];
 }
 -(BOOL)isValid
@@ -189,6 +203,7 @@
 -(void)updateObject
 {
     Payment * payment = self.payment;
+    payment.account = self.accountPopupButton.selectedItem.representedObject;
     payment.reason = self.paymentReasonField.stringValue;
     payment.payeeName = self.payeeField.stringValue;
     payment.amount = @(self.amountField.doubleValue);
@@ -210,13 +225,26 @@
     [self.doneButton setEnabled:[self isValid]];
 }
 - (IBAction)accountPopupButtonChanged:(NSPopUpButton *)sender {
-    self.payment.account = sender.selectedItem.representedObject;
+    if (self.editMode == EditModeCreate) {
+        [self autoUpdateFee];
+    }
 }
+- (IBAction)directionSelectorChanged:(id)sender {
+    if (self.editMode == EditModeCreate) {
+        [self autoUpdateFee];
+    }
+}
+
 -(void)configureBankStatementReconciliationWithPayment {
     if (self.payment.isReconciled) {
         [self.reconciledWithBankStatementCheckbox setState:NSOnState];
     } else {
         [self.reconciledWithBankStatementCheckbox setState:NSOffState];
     }
+}
+-(void)doneButton:(NSButton *)sender {
+    [self updateObject];
+    [self.payment recalculateNetAmountWithFee:self.payment.transactionFee];
+    [super doneButton:sender];
 }
 @end

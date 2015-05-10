@@ -121,14 +121,14 @@
     return @(round(after*100)/100.0);
 }
 -(void)recalculateNetAmountWithFeePercentage:(NSNumber*)feePercent {
-    if (self.isIncoming) {
-        self.transactionFee = [self calculateFeeForAmount:self.amount withFeePercentage:feePercent];
-        self.amountNet = [self amountAfterFeeFrom:self.amount withFeePercentage:feePercent];
-    }
+    NSNumber * fee = [self calculateFeeForAmount:self.amount withFeePercentage:feePercent];
+    [self recalculateNetAmountWithFee:fee];
 }
 -(void)recalculateWithAmount:(NSNumber *)amount {
     if (self.isIncoming) {
         [self recalculateWithAmount:amount feePercent:self.account.transactionFeePercentageIncoming];
+    } else {
+        [self recalculateWithAmount:amount feePercent:self.account.transactionFeePercentageOutgoing];
     }
 }
 -(void)recalculateNetAmountWithFee:(NSNumber *)fee {
@@ -146,8 +146,6 @@
 }
 -(void)recalculateWithAmount:(NSNumber *)amount feePercent:(NSNumber*)fee {
     self.amount = amount;
-    if (self.isIncoming) {
-        [self recalculateNetAmountWithFeePercentage:fee];
-    }
+    [self recalculateNetAmountWithFeePercentage:fee];
 }
 @end

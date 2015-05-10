@@ -221,18 +221,18 @@
     }
     double percentToEmployee = self.employee.currentSalary.percentage.doubleValue;
     self.percentageToEmployeeLabel.stringValue = [NSString stringWithFormat:@"%@%% to employee:",@(percentToEmployee)];
-    double amount = [self creditForEmployee];
-    double creditForEmployee = percentToEmployee * amount/100;;
+    double amount = [self creditForPercentageEmployee];
+    double creditForEmployee = percentToEmployee * amount/100.0;
     self.valueOfServices.doubleValue = amount;
     self.amountToEmployeeLabel.doubleValue = creditForEmployee;
     double amountAlreadyPaid = [self.calculator amountPaidForWorkRecord:self.workRecord];
     self.amountAlreadyPaid2.doubleValue = amountAlreadyPaid;
-    self.amountLeftToPay2.doubleValue = creditForEmployee - amountAlreadyPaid;
+    self.amountLeftToPay2.doubleValue = [self amountOfPayOutstanding];
 }
 -(void)configureSalaryPaymentButtons {
     self.paySalaryFromTillButton.enabled = YES;
     self.paySalaryFromBankButton.enabled = YES;
-    if ([self.calculator amountOfPayOutstandingForWorkRecord:self.workRecord] <= 0) {
+    if ([self amountOfPayOutstanding] <=0) {
         self.paySalaryFromTillButton.enabled = NO;
         self.paySalaryFromBankButton.enabled = NO;
     }
@@ -241,12 +241,10 @@
     self.lastDayOfWeek = [self.lastDayOfWeek dateByAddingTimeInterval:7*24*3600];
     [self displayEmployee];
 }
-
 - (IBAction)previousPeriod:(id)sender {
     self.lastDayOfWeek = [self.lastDayOfWeek dateByAddingTimeInterval:-7*24*3600];
     [self displayEmployee];
 }
-
 - (IBAction)nextEmployee:(id)sender {
     self.employeeIndex += 1;
     [self displayEmployee];
@@ -280,20 +278,32 @@
     }
     return _employees;
 }
-
 - (IBAction)payFromTill:(id)sender {
-    [self makePaymentOfAmount:[self.calculator amountOfPayOutstandingForWorkRecord:self.workRecord]
+    [self makePaymentOfAmount:[self amountOfPayOutstanding]
                   fromAccount:self.salonDocument.salon.tillAccount
                   forEmployee:self.employee
                     bonusDate:nil];
     [self displayEmployee];
 }
 - (IBAction)payFromBank:(id)sender {
-    [self makePaymentOfAmount:[self.calculator amountOfPayOutstandingForWorkRecord:self.workRecord]
+    [self makePaymentOfAmount:[self amountOfPayOutstanding ]
                   fromAccount:self.salonDocument.salon.primaryBankAccount
                   forEmployee:self.employee
                     bonusDate:nil];
     [self displayEmployee];
+}
+-(double)amountOfPayOutstanding {
+    double amount = 0;
+    if (self.employee.currentSalary.payByHour.boolValue) {
+        amount = [self.calculator amountOfPayOutstandingForWorkRecord:self.workRecord];
+    } else {
+        double incomeFromWork = [self creditForPercentageEmployee];
+        double percentToEmployee = self.employee.currentSalary.percentage.doubleValue;
+        double creditForEmployee = percentToEmployee * incomeFromWork/100.0;
+        double amountAlreadyPaid = [self.calculator amountPaidForWorkRecord:self.workRecord];
+        amount = (round(creditForEmployee*100.0) - round(amountAlreadyPaid*100))/100.0;
+    }
+    return amount;
 }
 -(void)makePaymentOfAmount:(double)amount fromAccount:(Account*)account forEmployee:(Employee*)employee bonusDate:(NSDate*)bonusDate {
     NSString * reason;
@@ -395,17 +405,17 @@
     }
     [super dismissViewController:viewController];
 }
--(double)creditForEmployee {
+-(double)creditForPercentageEmployee {
     NSDate * endDate = [self.lastDayOfWeek endOfDay];
     NSDate * startDate = [endDate dateByAddingTimeInterval:-7*24*3600];
     NSArray * sales = [self salesInvolvingEmployee:self.employee inPeriodStarting:startDate ending:endDate];
     if (self.creditBeforeDiscountCheckbox.state == NSOnState) {
-        return [self creditForEmployee:self.employee fromSales:sales];
+        return [self creditForPercentageEmployee:self.employee fromSales:sales];
     } else {
-        return [self creditAfterFullDiscountForEmployee:self.employee fromSales:sales];
+        return [self creditAfterFullDiscountForPercentageEmployee:self.employee fromSales:sales];
     }
 }
--(double)creditForEmployee:(Employee*)employee fromSales:(NSArray*)sales {
+-(double)creditForPercentageEmployee:(Employee*)employee fromSales:(NSArray*)sales {
     double credit = 0;
     for (Sale * sale in sales) {
         if (sale.isQuote.boolValue || sale.voided.boolValue) continue;
@@ -417,7 +427,7 @@
     }
     return credit;
 }
--(double)creditAfterFullDiscountForEmployee:(Employee*)employee fromSales:(NSArray*)sales {
+-(double)creditAfterFullDiscountForPercentageEmployee:(Employee*)employee fromSales:(NSArray*)sales {
     double credit = 0;
     for (Sale * sale in sales) {
         if (sale.isQuote.boolValue || sale.voided.boolValue) continue;
