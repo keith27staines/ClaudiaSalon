@@ -95,6 +95,14 @@
     self.addressLine2.stringValue = @"";
     [self.dayAndMonthContoller selectMonthNumber:0 dayNumber:0];
     [self.view.window makeFirstResponder:self.firstName];
+    [self filtersUpdated];
+    if (![self.view.window makeFirstResponder:nil]) {
+        [self.view.window endEditingFor:nil];
+    }
+}
+-(void)reloadData {
+    _customers = nil;
+    [self.customersTable reloadData];
 }
 -(void)applyEditMode:(EditMode)editMode
 {
@@ -156,14 +164,13 @@
         NSPredicate *predicate = [self predicate];
         if (predicate) {
             [request setPredicate:predicate];
-            NSError *error = nil;
-            _customers = [[moc executeFetchRequest:request error:&error] mutableCopy];
         }
+        NSError *error = nil;
+        _customers = [[moc executeFetchRequest:request error:&error] mutableCopy];
         if (!_customers) {
             _customers = [@[] mutableCopy];
         }
         [self.customersTable deselectAll:self];
-        //[self setLabelText];
     }
     return _customers;
 }
@@ -212,7 +219,7 @@
         case 1:
         {
             Customer * customer = [self selectedCustomer];
-            info = @"Customer found!";
+            info = @"One matching Customer found";
             info = [info stringByAppendingFormat:@"\nNumber of previous visits: %@",@(customer.sales.count)];
             info = [info stringByAppendingFormat:@"\nTotal money spent: £%1.2f",customer.totalMoneySpent.doubleValue];
             info = [info stringByAppendingFormat:@"\nTotal money refunded: £%1.2f",customer.totalMoneyRefunded.doubleValue];
@@ -224,12 +231,16 @@
         default:
         {
             if (self.customersTable.selectedRowIndexes.count == 1) {
+                Customer * customer = [self selectedCustomer];
                 info = @"Matching customer selected.";
+                info = [info stringByAppendingFormat:@"\nNumber of previous visits: %@",@(customer.sales.count)];
+                info = [info stringByAppendingFormat:@"\nTotal money spent: £%1.2f",customer.totalMoneySpent.doubleValue];
+                info = [info stringByAppendingFormat:@"\nTotal money refunded: £%1.2f",customer.totalMoneyRefunded.doubleValue];
                 customerSelected = YES;
                 canCreateCustomer = NO;
             } else {
-                NSString * infoPart1 = [NSString stringWithFormat:@"There are %@ matching customers.",@(_customers.count)];
-                info = [NSString stringWithFormat:@"%@\n\n%@", infoPart1,@"Try adding more details or select the correct customer from the list."];
+                NSString * infoPart1 = [NSString stringWithFormat:@"There are %@ matching customers",@(_customers.count)];
+                info = [NSString stringWithFormat:@"%@\n\n%@", infoPart1,@"Add more details or select a customer from the list"];
                 customerSelected = NO;
                 canCreateCustomer = NO;
             }

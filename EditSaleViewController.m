@@ -161,6 +161,7 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
     NSView * viewToDisplay = self.viewToDisplay;
     viewToDisplay = viewController.view;
     [viewController viewRevisited:nil];
+    [viewToDisplay setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.wizardStepContainerView addSubview:viewToDisplay];
     NSDictionary * views = NSDictionaryOfVariableBindings(viewToDisplay);
     NSArray * constraints;

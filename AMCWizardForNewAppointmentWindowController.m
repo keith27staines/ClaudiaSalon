@@ -44,9 +44,9 @@ typedef NS_ENUM(NSUInteger, AMCWizardStepsMakeAppointment) {
     AMCWizardStepsMakeAppointment step = index;
     switch (step) {
         case AMCWizardStepsMakeAppointmentSelectCustomer:
-            return @"Book appointment for customer";
+            return @"Book appointment - Select customer";
         case AMCWizardStepsMakeAppointmentBookTime:
-            return @"Book date, time and services";
+            return @"Book appointment - Select services, date and time";
     }
 }
 #pragma mark - methods designed to be (optionally!) overriden

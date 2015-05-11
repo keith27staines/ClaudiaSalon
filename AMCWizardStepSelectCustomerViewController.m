@@ -29,6 +29,7 @@
 -(void)reloadData {
     _customers = nil;
     [self customers];
+    [self.customersTable deselectAll:self];
     [self.customersTable reloadData];
     [self setLabelText];
 }
@@ -97,37 +98,37 @@
     [self.customersTable reloadData];
     [self setLabelText];
 }
--(void)updateCustomer:(Customer*)customer
-{
-    if (customer.firstName.length == 0) {
-        customer.firstName = [self trimmedStringFromString:self.firstName.stringValue];
-    }
-    if (customer.lastName.length == 0) {
-        customer.lastName = [self trimmedStringFromString:self.lastName.stringValue];
-    }
-    if (customer.email.length == 0) {
-        customer.email = [self trimmedStringFromString:self.email.stringValue];
-    }
-    if (customer.phone.length == 0) {
-        customer.phone = [self trimmedStringFromString:self.phone.stringValue];
-    }
-    if (customer.postcode.length == 0) {
-        customer.postcode = [self trimmedStringFromString:self.postcode.stringValue];
-    }
-    if (customer.addressLine1.length == 0) {
-        customer.addressLine1 = [self trimmedStringFromString:self.addressLine1.stringValue];
-    }
-    if (customer.addressLine2.length == 0) {
-        customer.addressLine2 = [self trimmedStringFromString:self.addressLine2.stringValue];
-    }
-    if (customer.monthOfBirth.integerValue == 0) {
-        customer.monthOfBirth = @(self.dayAndMonthContoller.monthNumber);
-    }
-    if (customer.dayOfBirth.integerValue == 0) {
-        customer.dayOfBirth = @(self.dayAndMonthContoller.dayNumber);
-    }
-    [self.delegate wizardStepControllerDidChangeState:self];
-}
+//-(void)updateCustomer:(Customer*)customer
+//{
+//    if (customer.firstName.length == 0) {
+//        customer.firstName = [self trimmedStringFromString:self.firstName.stringValue];
+//    }
+//    if (customer.lastName.length == 0) {
+//        customer.lastName = [self trimmedStringFromString:self.lastName.stringValue];
+//    }
+//    if (customer.email.length == 0) {
+//        customer.email = [self trimmedStringFromString:self.email.stringValue];
+//    }
+//    if (customer.phone.length == 0) {
+//        customer.phone = [self trimmedStringFromString:self.phone.stringValue];
+//    }
+//    if (customer.postcode.length == 0) {
+//        customer.postcode = [self trimmedStringFromString:self.postcode.stringValue];
+//    }
+//    if (customer.addressLine1.length == 0) {
+//        customer.addressLine1 = [self trimmedStringFromString:self.addressLine1.stringValue];
+//    }
+//    if (customer.addressLine2.length == 0) {
+//        customer.addressLine2 = [self trimmedStringFromString:self.addressLine2.stringValue];
+//    }
+//    if (customer.monthOfBirth.integerValue == 0) {
+//        customer.monthOfBirth = @(self.dayAndMonthContoller.monthNumber);
+//    }
+//    if (customer.dayOfBirth.integerValue == 0) {
+//        customer.dayOfBirth = @(self.dayAndMonthContoller.dayNumber);
+//    }
+//    [self.delegate wizardStepControllerDidChangeState:self];
+//}
 -(void)clear
 {
     _customers = nil;
@@ -141,6 +142,10 @@
     [self.dayAndMonthContoller selectMonthNumber:0 dayNumber:0];
     [self reloadData];
     [self.view.window makeFirstResponder:self.firstName];
+    [self filtersUpdated];
+    if (![self.view.window makeFirstResponder:nil]) {
+        [self.view.window endEditingFor:nil];
+    }
 }
 -(void)applyEditMode:(EditMode)editMode
 {
@@ -247,12 +252,16 @@
         default:
         {
             if (self.customersTable.selectedRowIndexes.count == 1) {
-                info = @"Matching customer selected.";
+                Customer * customer = self.customers[self.customersTable.selectedRow];
+                info = @"Matching customer selected";
+                info = [info stringByAppendingFormat:@"\nNumber of previous visits: %@",@(customer.sales.count)];
+                info = [info stringByAppendingFormat:@"\nTotal money spent: %1.2f",customer.totalMoneySpent.doubleValue];
+                info = [info stringByAppendingFormat:@"\nTotal money refunded: %1.2f",customer.totalMoneyRefunded.doubleValue];
                 customerSelected = YES;
                 canCreateCustomer = NO;
             } else {
-                NSString * infoPart1 = [NSString stringWithFormat:@"There are %@ matching customers.",@(_customers.count)];
-                info = [NSString stringWithFormat:@"%@\n\n%@", infoPart1,@"Try adding more details or select the correct customer from the list."];
+                NSString * infoPart1 = [NSString stringWithFormat:@"There are %@ matching customers",@(_customers.count)];
+                info = [NSString stringWithFormat:@"%@\n\n%@", infoPart1,@"Add more details or select a customer from the list"];
                 customerSelected = NO;
                 canCreateCustomer = NO;
             }
