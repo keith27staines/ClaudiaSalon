@@ -277,6 +277,8 @@
 }
 -(void)loadEmployeePopup:(NSPopUpButton*)popup forSaleItem:(SaleItem*)saleItem {
     [popup removeAllItems];
+    [popup addItemWithTitle:@"Unassigned"];
+    [popup selectItemAtIndex:0];
     NSArray * stylists = [saleItem.service.canBeDoneBy allObjects];
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES];
     stylists = [stylists sortedArrayUsingDescriptors:@[sort]];
@@ -286,23 +288,22 @@
         [popup addItemWithTitle:stylist.firstName];
         NSMenuItem * item = [popup.itemArray lastObject];
         item.representedObject = stylist;
-    }
-    Employee * stylist = saleItem.performedBy;
-    if (popup.itemArray.count) {
-        if (!stylist) {
-            stylist = stylists[0];
-            saleItem.performedBy = stylist;
-        }
-        if ([stylist.canDo containsObject:saleItem.service]) {
-            NSMenu * menu = popup.menu;
-            NSUInteger index = [menu indexOfItemWithRepresentedObject:stylist];
-            NSMenuItem * menuItem = [menu itemAtIndex:index];
-            [popup selectItem:menuItem];
-        } else {
-            [popup selectItemAtIndex:0];
-            saleItem.performedBy = stylists[0];
+        if (stylist == saleItem.performedBy) {
+            [popup selectItem:item];
         }
     }
+    
+//    Employee * stylist = saleItem.performedBy;
+//    if (popup.itemArray.count) {
+//        if ([stylist.canDo containsObject:saleItem.service]) {
+//            NSMenu * menu = popup.menu;
+//            NSUInteger index = [menu indexOfItemWithRepresentedObject:stylist];
+//            NSMenuItem * menuItem = [menu itemAtIndex:index];
+//            [popup selectItem:menuItem];
+//        } else {
+//            [popup selectItemAtIndex:0];
+//        }
+//    }
 }
 -(void)updateTotal {
     Sale * sale = self.appointment.sale;
