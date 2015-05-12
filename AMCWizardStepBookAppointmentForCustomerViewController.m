@@ -398,6 +398,7 @@
         NSDate * slotEnd = [self slotEndDateFromRow:row];
         NSMutableArray * appointmentsInSlot = [NSMutableArray array];
         for (Appointment * app in self.appointmentsOnSelectedDay) {
+            if (app.cancelled.boolValue) continue;
             if ([app conflictsWithInterval:slotStart endOfInterval:slotEnd]) {
                 [appointmentsInSlot addObject:app];
             }

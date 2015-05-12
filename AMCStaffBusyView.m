@@ -181,6 +181,7 @@ static const NSInteger space = 20;
     }
     
     for (Appointment * appointment in self.appointmentsOnDay) {
+        if (appointment.cancelled.boolValue) continue;
         if ([self appointment:appointment overlapsStart:startDate endDate:endDate]) {
             AMCEmployeeUtilisation appointmentUtilisation = [self employee:employee utilisationForAppointment:appointment];
             utilisation = appointmentUtilisation;

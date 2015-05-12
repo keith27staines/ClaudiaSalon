@@ -27,6 +27,7 @@
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     self.appointments = [Appointment appointmentsOnDayOfDate:self.date withMoc:self.documentMoc];
+    self.appointments = [self.appointments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"cancelled = NO"]];
     NSString * dateString = [NSString stringWithFormat:@"Appointments on %@ %@",[self.date stringNamingDayOfWeek], [self.date dayAndMonthString]];
     self.appontmentsForDateLabel.stringValue = dateString;
 }

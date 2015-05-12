@@ -47,41 +47,6 @@
     [self.customersTable reloadData];
     [self setLabelText];
 }
--(void)updateCustomer:(Customer*)customer
-{
-    if (customer.firstName.length == 0) {
-        customer.firstName = [self trimmedStringFromString:self.firstName.stringValue];
-    }
-    if (customer.lastName.length == 0) {
-        customer.lastName = [self trimmedStringFromString:self.lastName.stringValue];
-    }
-    if (customer.email.length == 0) {
-        customer.email = [self trimmedStringFromString:self.email.stringValue];
-    }
-    if (customer.phone.length == 0) {
-        customer.phone = [self trimmedStringFromString:self.phone.stringValue];
-    }
-    if (customer.postcode.length == 0) {
-        customer.postcode = [self trimmedStringFromString:self.postcode.stringValue];
-    }
-    if (customer.addressLine1.length == 0) {
-        customer.addressLine1 = [self trimmedStringFromString:self.addressLine1.stringValue];
-    }
-    if (customer.addressLine2.length == 0) {
-        customer.addressLine2 = [self trimmedStringFromString:self.addressLine2.stringValue];
-    }
-    if (customer.monthOfBirth.integerValue == 0) {
-        customer.monthOfBirth = @(self.dayAndMonthContoller.monthNumber);
-    }
-    if (customer.dayOfBirth.integerValue == 0) {
-        customer.dayOfBirth = @(self.dayAndMonthContoller.dayNumber);
-    }
-    [self.salonDocument commitAndSave:nil];
-}
--(void)configureForRevisitInSameSession
-{
-    
-}
 -(void)clear
 {
     [super clear];
@@ -177,7 +142,6 @@
 -(id)objectForWizardStep
 {
     Customer * customer = [self selectedCustomer];
-    [self updateCustomer:customer];
     return customer;
 }
 -(Customer *)selectedCustomer
