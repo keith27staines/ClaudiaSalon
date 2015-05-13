@@ -73,7 +73,12 @@
     BOOL isEditable = !saleItem.sale.voided.boolValue && saleItem.sale.isQuote.boolValue & !saleItem.sale.voided.boolValue;
     [self.discountPopup setEnabled:isEditable];
     [self.priceSlider setEnabled:isEditable];
+    [self setNeedsLayout:YES];
+    [self setNeedsDisplay:YES];
 }
-
+-(void)viewDidMoveToSuperview {
+    [self setNeedsLayout:YES];
+    [self setNeedsDisplay:YES];
+}
 
 @end

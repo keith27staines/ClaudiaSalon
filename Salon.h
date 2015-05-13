@@ -31,5 +31,6 @@
 @property (nonatomic, retain) Account *primaryBankAccount;
 @property (nonatomic, retain) Account *tillAccount;
 @property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForSales;
-
+@property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForWages;
+@property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForMoneyTransfers;
 @end

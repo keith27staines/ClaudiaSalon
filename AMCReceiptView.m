@@ -169,12 +169,10 @@
         NSRect col0;
         NSRect col1;
         NSRect col2;
-        NSString * string0 = @"";
-        NSString * string1 = @"";
-        NSString * string2 = @"";
         col0 = [self writeString:dateString atY:y inColumn:0];
-        col1 = [self writeString:titleString2 atY:y inColumn:1];
-        double rowHeight;
+        col1 = [self writeString:titleString1 atY:y inColumn:1];
+        col2 = [self writeString:titleString2 atY:y inColumn:2];
+        double rowHeight = 0;
         rowHeight = fmax(col0.size.height, col1.size.height);
         rowHeight = fmax(rowHeight, col2.size.height);
         y += rowHeight + 30;
@@ -186,6 +184,9 @@
         NSUInteger individualDiscounts = 0;
         NSUInteger totalUndiscounted = 0;
         NSUInteger chargeAfterIndividualDiscounts = 0;
+        NSString * string0 = @"";
+        NSString * string1 = @"";
+        NSString * string2 = @"";
         for (SaleItem * item in sale.saleItem) {
             saleItemActualCharge = floor(item.actualCharge.doubleValue * 100);
             saleItemNominalCharge = floor(item.nominalCharge.doubleValue * 100);

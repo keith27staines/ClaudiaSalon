@@ -26,5 +26,7 @@
 @dynamic defaultCategoryForPayments;
 @dynamic payments;
 @dynamic defaultCategoryForSales;
+@dynamic defaultCategoryForWages;
+@dynamic defaultCategoryForMoneyTransfers;
 
 @end

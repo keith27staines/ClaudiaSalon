@@ -52,6 +52,9 @@
     } else {
         self.printButton.title = @"Print receipt";
     }
+    [self.saleItemsTable setNeedsUpdateConstraints:YES];
+    [self.saleItemsTable setNeedsLayout:YES];
+    [self.saleItemsTable setNeedsDisplay:YES];
 }
 -(void)updateFromSale {
     Sale * sale = self.sale;
@@ -112,6 +115,9 @@
     [self loadDiscountPopup:view.discountPopup];
     view.delegate = self;
     view.saleItem = saleItem;
+    [view setNeedsUpdateConstraints:YES];
+    [view setNeedsDisplay:YES];
+    [tableView setRowHeight:view.frame.size.height];
     return view;
 }
 #pragma mark - AMCSaleItemPriceSetterfViewController

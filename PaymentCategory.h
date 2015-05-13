@@ -26,6 +26,8 @@
 @property (nonatomic, retain) Salon *defaultCategoryForPayments;
 @property (nonatomic, retain) NSSet *payments;
 @property (nonatomic, retain) Salon *defaultCategoryForSales;
+@property (nonatomic, retain) Salon *defaultCategoryForWages;
+@property (nonatomic, retain) Salon *defaultCategoryForMoneyTransfers;
 @end
 
 @interface PaymentCategory (CoreDataGeneratedAccessors)

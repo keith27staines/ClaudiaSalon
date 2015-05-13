@@ -10,7 +10,6 @@
 #import "AMCSalonDocument.h"
 @interface PaymentCategory (Methods)
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
-+(PaymentCategory*)paymentCategoryForSalaryWithMoc:(NSManagedObjectContext*)moc;
-+(PaymentCategory*)transferCategoryWithMoc:(NSManagedObjectContext*)moc;
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(PaymentCategory*)paymentWithName:(NSString*)name inMoc:(NSManagedObjectContext*)moc;
 @end

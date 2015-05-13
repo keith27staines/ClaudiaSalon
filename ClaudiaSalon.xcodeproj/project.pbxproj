@@ -378,6 +378,7 @@
 		536E57DD1AED33FC00A60D36 /* Salon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salon.m; sourceTree = "<group>"; };
 		536E57DF1AED33FD00A60D36 /* PaymentCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentCategory.h; sourceTree = "<group>"; };
 		536E57E01AED33FD00A60D36 /* PaymentCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentCategory.m; sourceTree = "<group>"; };
+		5382E8DD1B033F5E00B65C75 /* ClaudiasSalon 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 10.xcdatamodel"; sourceTree = "<group>"; };
 		5393EA2E1AD26100009B336C /* AMCBankStatementReconciliationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCBankStatementReconciliationViewController.h; sourceTree = "<group>"; };
 		5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCBankStatementReconciliationViewController.m; sourceTree = "<group>"; };
 		5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCBankStatementReconciliationViewController.xib; sourceTree = "<group>"; };
@@ -2395,6 +2396,7 @@
 		5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				5382E8DD1B033F5E00B65C75 /* ClaudiasSalon 10.xcdatamodel */,
 				5330E23B1AF8B1720062FD93 /* ClaudiasSalon 9.xcdatamodel */,
 				5330E2341AF66EB70062FD93 /* ClaudiasSalon 8.xcdatamodel */,
 				5330E2331AF4AAE80062FD93 /* ClaudiasSalon 7.xcdatamodel */,
@@ -2405,7 +2407,7 @@
 				533054501AE4EA49007B1264 /* ClaudiasSalon 5.xcdatamodel */,
 				533054511AE4EA49007B1264 /* ClaudiasSalon.xcdatamodel */,
 			);
-			currentVersion = 5330E23B1AF8B1720062FD93 /* ClaudiasSalon 9.xcdatamodel */;
+			currentVersion = 5382E8DD1B033F5E00B65C75 /* ClaudiasSalon 10.xcdatamodel */;
 			path = ClaudiasSalon.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

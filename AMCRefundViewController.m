@@ -35,14 +35,13 @@
 }
 
 - (IBAction)refundButtonClicked:(id)sender {
-    Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
     Account * account = self.saleItem.sale.account;
-    payment = [account makePaymentWithAmount:@(self.actualSumToRefund.doubleValue)
-                                        date:[NSDate date]
-                                    category:nil
-                                   direction:kAMCPaymentDirectionOut
-                                   payeeName:self.saleItem.sale.customer.fullName
-                                      reason:self.refundReason.stringValue];
+    Payment * payment = [account makePaymentWithAmount:@(self.actualSumToRefund.doubleValue)
+                                                  date:[NSDate date]
+                                              category:nil
+                                             direction:kAMCPaymentDirectionOut
+                                             payeeName:self.saleItem.sale.customer.fullName
+                                                reason:self.refundReason.stringValue];
     payment.refunding = self.saleItem;
     [self.salonDocument commitAndSave:nil];
     [self.presentingViewController dismissViewController:self];

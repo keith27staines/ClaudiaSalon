@@ -39,13 +39,7 @@
             salon.firstDayOfWeek = @(1);// I, developer, messed up - days of week are 1-based!
         }
     }
-    if (!salon.defaultPaymentCategoryForSales) {
-        salon.defaultPaymentCategoryForSales = [PaymentCategory newObjectWithMoc:moc];
-        salon.defaultPaymentCategoryForSales.categoryName = @"Sales";
-        salon.defaultPaymentCategoryForSales.isManagersBudgetItem = @NO;
-        salon.defaultPaymentCategoryForSales.isSale = @YES;
-        salon.defaultPaymentCategoryForSales.fullDescription = @"System-generated default category for sales";
-    }
+    [salon addDefaultPaymentCategories];
     return salon;
 }
 -(void)addOpeningHoursWeekTemplate {
@@ -71,6 +65,56 @@
         self.tillAccount.friendlyName = @"Till Account";
         self.cardPaymentAccount.friendlyName = @"Card Payment Account";
         self.primaryBankAccount.friendlyName = @"Primary bank account";
+    }
+}
+-(void)addDefaultPaymentCategories {
+    if (!self.defaultPaymentCategoryForSales) {
+        PaymentCategory * paymentCategory = [PaymentCategory paymentWithName:@"Sales" inMoc:self.managedObjectContext];
+        if (paymentCategory) {
+            self.defaultPaymentCategoryForSales = paymentCategory;
+        } else {
+            self.defaultPaymentCategoryForSales = [PaymentCategory newObjectWithMoc:self.managedObjectContext];
+        }
+        self.defaultPaymentCategoryForSales.categoryName = @"Sales";
+        self.defaultPaymentCategoryForSales.isManagersBudgetItem = @NO;
+        self.defaultPaymentCategoryForSales.isSale = @YES;
+        self.defaultPaymentCategoryForSales.fullDescription = @"Payments from sales";
+    }
+    if (!self.defaultPaymentCategoryForPayments) {
+        PaymentCategory * paymentCategory = [PaymentCategory paymentWithName:@"Awaiting categorisation" inMoc:self.managedObjectContext];
+        if (paymentCategory) {
+            self.defaultPaymentCategoryForPayments = paymentCategory;
+        } else {
+            self.defaultPaymentCategoryForPayments = [PaymentCategory newObjectWithMoc:self.managedObjectContext];
+        }
+        self.defaultPaymentCategoryForPayments.categoryName = @"Awaiting categorisation";
+        self.defaultPaymentCategoryForPayments.isManagersBudgetItem = @NO;
+        self.defaultPaymentCategoryForPayments.isDefault = @YES;
+        self.defaultPaymentCategoryForPayments.fullDescription = @"These payments are waiting to be assigned to the correct category";
+    }
+    if (!self.defaultPaymentCategoryForMoneyTransfers) {
+        PaymentCategory * paymentCategory = [PaymentCategory paymentWithName:@"Money transfer" inMoc:self.managedObjectContext];
+        if (paymentCategory) {
+            self.defaultPaymentCategoryForMoneyTransfers = paymentCategory;
+        } else {
+            self.defaultPaymentCategoryForMoneyTransfers = [PaymentCategory newObjectWithMoc:self.managedObjectContext];
+        }
+        self.defaultPaymentCategoryForMoneyTransfers.categoryName = @"Money transfer";
+        self.defaultPaymentCategoryForMoneyTransfers.isManagersBudgetItem = @NO;
+        self.defaultPaymentCategoryForMoneyTransfers.isSale = @YES;
+        self.defaultPaymentCategoryForMoneyTransfers.fullDescription = @"Transfer money between salon accounts";
+    }
+    if (!self.defaultPaymentCategoryForWages) {
+        PaymentCategory * paymentCategory = [PaymentCategory paymentWithName:@"Salary for self-employed staff" inMoc:self.managedObjectContext];
+        if (paymentCategory) {
+            self.defaultPaymentCategoryForWages = paymentCategory;
+        } else {
+            self.defaultPaymentCategoryForWages = [PaymentCategory newObjectWithMoc:self.managedObjectContext];
+        }
+        self.defaultPaymentCategoryForWages.categoryName = @"Wages";
+        self.defaultPaymentCategoryForWages.isManagersBudgetItem = @NO;
+        self.defaultPaymentCategoryForWages.isSalary = @YES;
+        self.defaultPaymentCategoryForWages.fullDescription = @"Remuneration for work or services provided by staff";
     }
 }
 @end

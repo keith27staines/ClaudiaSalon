@@ -94,9 +94,9 @@
         }
     }];
 }
--(void)writeCashbookToFile:(NSString*)filename error:(NSError**)error {
+-(BOOL)writeCashbookToFile:(NSString*)filename error:(NSError**)error {
     AMCCashBook * cashBook = [[AMCCashBook alloc] initWithManagedObjectContext:self.documentMoc account:self.account statementItems:self.statementItems firstDay:self.firstDay lastDay:self.lastDay balanceBroughtForward:self.balanceBroughtForward balancePerBank:self.balancePerBank];
-    [cashBook writeToFile:filename error:error];
+    return [cashBook writeToFile:filename error:error];
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     NSInteger rows = 0;

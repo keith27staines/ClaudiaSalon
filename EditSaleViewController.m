@@ -158,8 +158,7 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
         [view removeFromSuperview];
     }
     viewController.delegate = self;
-    NSView * viewToDisplay = self.viewToDisplay;
-    viewToDisplay = viewController.view;
+    NSView * viewToDisplay = viewController.view;
     [viewController viewRevisited:nil];
     [viewToDisplay setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.wizardStepContainerView addSubview:viewToDisplay];

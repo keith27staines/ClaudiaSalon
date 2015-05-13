@@ -75,20 +75,20 @@
     if (![self.view.window makeFirstResponder:self.view.window]) {return;}
 
     NSDate * date = [NSDate date];
-    PaymentCategory * transferCategory = [PaymentCategory transferCategoryWithMoc:self.documentMoc];
-    
+    PaymentCategory * transferCategory = self.salonDocument.salon.defaultPaymentCategoryForMoneyTransfers; //[PaymentCategory transferCategoryWithMoc:self.documentMoc];
+    // Create outgoing payment datestamped "now"
     [self.outAccount makePaymentWithAmount:@(self.amountToTransfer.doubleValue)
                                       date:date
                                   category:transferCategory
                                  direction:kAMCPaymentDirectionOut
-                                 payeeName:[self.inAccount.friendlyName stringByAppendingString:@" acct"]
+                                 payeeName:[self.inAccount.friendlyName stringByAppendingString:@" account"]
                                     reason:[NSString stringWithFormat:@"Transfer to %@",self.inAccount.friendlyName]];
-    
+    // Create incoming payment datestamped 1 second later
     [self.inAccount makePaymentWithAmount:@(self.amountToTransfer.doubleValue)
-                                     date:date
+                                     date:[date dateByAddingTimeInterval:1]
                                  category:transferCategory
                                 direction:kAMCPaymentDirectionIn
-                                payeeName:[self.outAccount.friendlyName stringByAppendingString:@" acct"]
+                                payeeName:[self.outAccount.friendlyName stringByAppendingString:@" account"]
                                    reason:[NSString stringWithFormat:@"Transfer from %@",self.outAccount.friendlyName]];
     
     [self.salonDocument commitAndSave:nil];

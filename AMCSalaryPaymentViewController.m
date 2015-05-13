@@ -314,7 +314,7 @@
     }
     Payment * payment = [account makePaymentWithAmount:@(amount)
                                                   date:[NSDate date]
-                                              category:[PaymentCategory paymentCategoryForSalaryWithMoc:self.documentMoc]
+                                              category:self.salonDocument.salon.defaultPaymentCategoryForWages
                                              direction:kAMCPaymentDirectionOut
                                              payeeName:self.employee.fullName
                                                 reason:reason];
@@ -333,7 +333,7 @@
     NSButton*button = (NSButton*)sender;
     AMCPaymentAmountViewController * vc = [AMCPaymentAmountViewController new];
     vc.salonDocument = self.salonDocument;
-    PaymentCategory * category = [PaymentCategory paymentCategoryForSalaryWithMoc:self.documentMoc];
+    PaymentCategory * category = self.salonDocument.salon.defaultPaymentCategoryForWages;//[PaymentCategory paymentCategoryForSalaryWithMoc:self.documentMoc];
     Account * account = self.salonDocument.salon.tillAccount;
     [vc makePaymentWithTitle:[NSString stringWithFormat:@"Pay bonus to %@",self.employee.fullName] amount:5 allowingLowerPayment:YES inCategory:category fromAccount:account toPayee:self.employee.fullName withReason:@"Bonus for selling services"];
     [self presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorTransient];

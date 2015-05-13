@@ -7,6 +7,7 @@
 //
 
 #import "PaymentCategory+Methods.h"
+#import "Salon+Methods.h"
 
 @implementation PaymentCategory (Methods)
 
@@ -33,37 +34,14 @@
     paymentCategory.createdDate = [NSDate date];
     return paymentCategory;
 }
-+(PaymentCategory*)paymentCategoryForSalaryWithMoc:(NSManagedObjectContext*)moc {
-    PaymentCategory * salaryCategory = nil;
-    NSArray * categories = [self allObjectsWithMoc:moc];
-    for (PaymentCategory * category in categories) {
-        if ([category.categoryName isEqualToString:@"Salary for self-employed staff"]) {
-            category.isSalary = @YES;
-        } else {
-            category.isSalary = @NO;
-        }
-        if (category.isSalary.boolValue) {
-            salaryCategory = category;
-        }
-    }
-    NSAssert(salaryCategory, @"There is no payment category with the isSalary attribute set");
-    return salaryCategory;
++(PaymentCategory*)paymentWithName:(NSString*)name inMoc:(NSManagedObjectContext*)moc {
+    NSArray * allPayments = [PaymentCategory allObjectsWithMoc:moc];
+    NSArray * matches = [allPayments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"categoryName = %@",name]];
+    NSAssert(matches.count <= 1, @"Unexpected number of matches");
+    return matches.firstObject;
 }
-+(PaymentCategory*)transferCategoryWithMoc:(NSManagedObjectContext*)moc {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PaymentCategory" inManagedObjectContext:moc];
-    [fetchRequest setEntity:entity];
-    // Specify criteria for filtering which objects to fetch
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isTransferBetweenAccounts == %@", @YES];
-    [fetchRequest setPredicate:predicate];
-    NSError *error = nil;
-    NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
-    if (fetchedObjects == nil) {
-        [NSApp presentError:error];
-    }
-    if (fetchedObjects.count > 0) {
-        return fetchedObjects[0];
-    }
-    return nil;
+
+-(Salon*)salon {
+    return [Salon salonWithMoc:self.managedObjectContext];
 }
 @end

@@ -33,5 +33,6 @@
 @dynamic primaryBankAccount;
 @dynamic tillAccount;
 @dynamic defaultPaymentCategoryForSales;
-
+@dynamic defaultPaymentCategoryForWages;
+@dynamic defaultPaymentCategoryForMoneyTransfers;
 @end
