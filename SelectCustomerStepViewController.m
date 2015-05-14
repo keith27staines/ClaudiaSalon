@@ -26,11 +26,16 @@
 {
     return @"SelectCustomerStepViewController";
 }
+-(void)reloadData {
+    _customers = nil;
+    [self.customersTable reloadData];
+}
 -(IBAction)clearButton:(id)sender
 {
     [self clear];
     [self customers];
 }
+
 -(IBAction)createCustomer:(id)sender {
     Customer *customer = [Customer newObjectWithMoc:self.documentMoc];
     customer.firstName = [self.firstName.stringValue capitalizedString];
@@ -65,10 +70,7 @@
         [self.view.window endEditingFor:nil];
     }
 }
--(void)reloadData {
-    _customers = nil;
-    [self.customersTable reloadData];
-}
+
 -(void)applyEditMode:(EditMode)editMode
 {
     BOOL enableEditing = (editMode == EditModeCreate);
@@ -466,10 +468,10 @@
         [predicates addObject:[NSPredicate predicateWithFormat:@"addressLine2 BEGINSWITH[cd] %@ || addressLine2 = %@",addressLine2,@""]];
     }
     if (monthOfBirth.integerValue > 0) {
-        [predicates addObject:[NSPredicate predicateWithFormat:@"monthOfBirth = 0 OR monthOfBirth = %@",monthOfBirth]];
+        [predicates addObject:[NSPredicate predicateWithFormat:@"monthOfBirth = %@",monthOfBirth]];
     }
     if (dayOfBirth.integerValue > 0) {
-        [predicates addObject:[NSPredicate predicateWithFormat:@"dayOfBirth = 0 OR dayOfBirth = %@",dayOfBirth]];
+        [predicates addObject:[NSPredicate predicateWithFormat:@"dayOfBirth = %@",dayOfBirth]];
     }
     if (predicates.count > 0) {
         predicate = [NSCompoundPredicate andPredicateWithSubpredicates:predicates];

@@ -114,10 +114,12 @@
     if (currentStep.isValid) {
         if (isLastStep) {
             [self.nextButton setEnabled:NO];
-            [self.doneButton setEnabled:currentStep.isValid];
+            [self.doneButton setEnabled:YES];
+            [self.window setDefaultButtonCell:[self.doneButton cell]];
         } else {
-            [self.nextButton setEnabled:currentStep.isValid];
+            [self.nextButton setEnabled:YES];
             [self.doneButton setEnabled:NO];
+            [self.window setDefaultButtonCell:[self.nextButton cell]];
         }
     } else {
         if (isLastStep) {

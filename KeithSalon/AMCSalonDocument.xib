@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E11f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
@@ -177,7 +177,11 @@
                                             </connections>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="IVM-ak-nss">
-                                            <rect key="frame" x="1275" y="28" width="48" height="48"/>
+                                            <rect key="frame" x="1299" y="40" width="24" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="24" id="bAq-IH-903"/>
+                                                <constraint firstAttribute="height" constant="24" id="dCi-Rt-FSX"/>
+                                            </constraints>
                                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="fDs-HY-3A2">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -186,8 +190,8 @@
                                                 <action selector="showSaleNotesButtonClicked:" target="-2" id="11q-U9-duf"/>
                                             </connections>
                                         </button>
-                                        <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p43-7W-sEp">
-                                            <rect key="frame" x="977" y="39" width="26" height="26"/>
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="p43-7W-sEp">
+                                            <rect key="frame" x="975" y="37" width="32" height="31"/>
                                             <buttonCell key="cell" type="bevel" bezelStyle="circular" image="NSInfo" imagePosition="above" alignment="left" imageScaling="proportionallyDown" id="ni5-zR-9tS">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="label"/>
@@ -196,8 +200,8 @@
                                                 <action selector="showQuickQuoteButtonClicked:" target="-2" id="Euy-2K-pDn"/>
                                             </connections>
                                         </button>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WV3-hP-lCf">
-                                            <rect key="frame" x="923" y="44" width="36" height="17"/>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WV3-hP-lCf">
+                                            <rect key="frame" x="923" y="44" width="34" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Total" id="JLa-XS-PJy">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -205,7 +209,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-jG-q1s">
-                                            <rect key="frame" x="20" y="95" width="1303" height="603"/>
+                                            <rect key="frame" x="20" y="95" width="1303" height="643"/>
                                             <clipView key="contentView" id="DK5-Uv-ACg">
                                                 <rect key="frame" x="1" y="17" width="1301" height="570"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -428,10 +432,11 @@
                                         </scrollView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="IVM-ak-nss" firstAttribute="centerY" secondItem="p43-7W-sEp" secondAttribute="centerY" id="0bd-3W-wjX"/>
                                         <constraint firstItem="js7-rV-Jro" firstAttribute="leading" secondItem="HXx-g7-A5Y" secondAttribute="trailing" constant="20" id="6UY-Li-Qtz"/>
                                         <constraint firstItem="hce-3Y-Yzl" firstAttribute="height" secondItem="bVF-Q0-BIf" secondAttribute="height" id="7lb-rj-6Mh"/>
                                         <constraint firstItem="HXx-g7-A5Y" firstAttribute="height" secondItem="js7-rV-Jro" secondAttribute="height" id="99Q-e5-pR2"/>
-                                        <constraint firstItem="eHR-jG-q1s" firstAttribute="top" secondItem="BdB-2l-gtV" secondAttribute="top" constant="60" id="BEn-2d-aRn"/>
+                                        <constraint firstItem="eHR-jG-q1s" firstAttribute="top" secondItem="BdB-2l-gtV" secondAttribute="top" constant="20" id="BEn-2d-aRn"/>
                                         <constraint firstItem="WV3-hP-lCf" firstAttribute="leading" secondItem="1zT-s0-1kj" secondAttribute="trailing" constant="68" id="CxU-th-wlJ"/>
                                         <constraint firstItem="hce-3Y-Yzl" firstAttribute="top" secondItem="bVF-Q0-BIf" secondAttribute="top" id="Hew-B8-VtJ"/>
                                         <constraint firstItem="1zT-s0-1kj" firstAttribute="centerY" secondItem="WV3-hP-lCf" secondAttribute="centerY" id="NQt-Qx-YGQ"/>
@@ -454,7 +459,6 @@
                                         <constraint firstItem="hce-3Y-Yzl" firstAttribute="top" secondItem="HXx-g7-A5Y" secondAttribute="top" id="pJs-a2-iJS"/>
                                         <constraint firstItem="p43-7W-sEp" firstAttribute="leading" secondItem="WV3-hP-lCf" secondAttribute="trailing" constant="20" id="qfZ-Bt-I6D"/>
                                         <constraint firstAttribute="trailing" secondItem="eHR-jG-q1s" secondAttribute="trailing" constant="20" symbolic="YES" id="qs3-0V-92Q"/>
-                                        <constraint firstItem="bVF-Q0-BIf" firstAttribute="centerY" secondItem="IVM-ak-nss" secondAttribute="centerY" id="rru-J1-BEZ"/>
                                         <constraint firstItem="hce-3Y-Yzl" firstAttribute="height" secondItem="HXx-g7-A5Y" secondAttribute="height" id="sJ0-Se-4Uk"/>
                                     </constraints>
                                 </view>
@@ -1616,7 +1620,7 @@
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="A9DB348E-8D8F-43AB-88C8-1C9138A53A27" label="Busy timeline" paletteLabel="Busy timeline" image="TimeLineIcon" id="amc-Kh-hfA">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="48" height="48"/>
+                        <size key="minSize" width="32" height="32"/>
                         <size key="maxSize" width="48" height="48"/>
                         <button key="view" id="hBb-ps-OFU">
                             <rect key="frame" x="15" y="14" width="48" height="48"/>
@@ -1632,7 +1636,7 @@
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="4C335925-A940-4914-AD5E-6432FB5DA5D3" label="Accounts" paletteLabel="Accounts" image="CoinsIcon" id="IZp-bX-nji">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="48" height="48"/>
+                        <size key="minSize" width="32" height="32"/>
                         <size key="maxSize" width="48" height="48"/>
                         <button key="view" id="vTq-FA-tXz">
                             <rect key="frame" x="4" y="14" width="48" height="48"/>

@@ -992,20 +992,20 @@
 				53D69BF01A9B23B60004CE10 /* AMCWizardForNewAppointmentWindowController.xib */,
 				53D69D831A9B243B0004CE10 /* AMCWizardForNewAppointmentWindowController.h */,
 				53D69C741A9B240B0004CE10 /* AMCWizardForNewAppointmentWindowController.m */,
-				53AE26D91AA300DB00A1B3E4 /* Select Customer */,
-				53AE26E41AA3066200A1B3E4 /* Select Services and Time Slot */,
+				53AE26D91AA300DB00A1B3E4 /* Appointment- Select Customer */,
+				53AE26E41AA3066200A1B3E4 /* Appointment Select Services and Time Slot */,
 			);
 			name = "Book new appointment";
 			sourceTree = "<group>";
 		};
-		53AE26D91AA300DB00A1B3E4 /* Select Customer */ = {
+		53AE26D91AA300DB00A1B3E4 /* Appointment- Select Customer */ = {
 			isa = PBXGroup;
 			children = (
 				53D69BF21A9B23B60004CE10 /* AMCWizardStepSelectCustomerViewController.xib */,
 				53D69D861A9B243B0004CE10 /* AMCWizardStepSelectCustomerViewController.h */,
 				53D69C771A9B240B0004CE10 /* AMCWizardStepSelectCustomerViewController.m */,
 			);
-			name = "Select Customer";
+			name = "Appointment- Select Customer";
 			sourceTree = "<group>";
 		};
 		53AE26DA1AA301FD00A1B3E4 /* Base Wizard machinery */ = {
@@ -1120,7 +1120,7 @@
 			name = "Base Wizard Macninery";
 			sourceTree = "<group>";
 		};
-		53AE26E41AA3066200A1B3E4 /* Select Services and Time Slot */ = {
+		53AE26E41AA3066200A1B3E4 /* Appointment Select Services and Time Slot */ = {
 			isa = PBXGroup;
 			children = (
 				5330E2351AF8A8B40062FD93 /* AdvancePaymentView */,
@@ -1128,7 +1128,7 @@
 				53D69D881A9B243B0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.h */,
 				53D69C791A9B240B0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.m */,
 			);
-			name = "Select Services and Time Slot";
+			name = "Appointment Select Services and Time Slot";
 			sourceTree = "<group>";
 		};
 		53AE26E51AA3070900A1B3E4 /* Appointment tab view */ = {

@@ -527,6 +527,7 @@
     NSUInteger index = [self.chosenServices indexOfObject:saleItem];
     [self.chosenServicesTable selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:YES];
     [self updateTotal];
+    [self.delegate wizardStepControllerDidChangeState:self];
 }
 -(void)dismissViewController:(NSViewController *)viewController {
     if (viewController == self.staffForServiceViewController && !self.staffForServiceViewController.cancelled) {
@@ -552,6 +553,7 @@
     [self.chosenServices removeObject:saleItem];
     [self.chosenServicesTable reloadData];
     [self updateTotal];
+    [self.delegate wizardStepControllerDidChangeState:self];
 }
 - (IBAction)setAppointmentTimeButtonClicked:(id)sender {
     NSError * error;

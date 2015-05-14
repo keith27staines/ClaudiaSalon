@@ -33,12 +33,12 @@
     [self.customersTable reloadData];
     [self setLabelText];
 }
--(void)setObjectToManage:(id)objectToManage {
-    if (objectToManage != [super objectToManage]) {
-        [super setObjectToManage:objectToManage];
-        [self resetToObject];
-    }
-}
+//-(void)setObjectToManage:(id)objectToManage {
+//    if (objectToManage != [super objectToManage]) {
+//        [super setObjectToManage:objectToManage];
+//        [self resetToObject];
+//    }
+//}
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     [self resetToObject];
@@ -46,9 +46,11 @@
     NSInteger row = [self.customers indexOfObject:self.customer];
     if (row >= 0 && row != NSNotFound && row != self.customersTable.selectedRow) {
         [self.customersTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+        [self.view.window makeFirstResponder:self.customersTable];
     } else {
         [self.customersTable deselectAll:self];
     }
+    [self.delegate wizardStepControllerDidChangeState:self];
 }
 -(BOOL)isValid {
     return (self.customersTable.selectedRow >=0);
