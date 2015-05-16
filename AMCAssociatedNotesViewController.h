@@ -23,8 +23,6 @@
 @property id<AMCObjectWithNotesProtocol>objectWithNotes;
 
 @property (weak) IBOutlet NSTextField *viewTitle;
-@property (weak) IBOutlet NSTextField *titleForNewNote;
-@property (weak) IBOutlet NSTextField *textForNewNote;
 @property (weak) IBOutlet NSTextField *existingNotesTitle;
 
 

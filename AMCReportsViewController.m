@@ -95,13 +95,14 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
         }
         for (Payment * payment in payments) {
             if (payment.voided.boolValue || payment.sale) continue;
-            if (payment.isOutgoing) {
-                paymentsTotal += payment.amount.doubleValue;
-            } else {
-                paymentsTotal -= payment.amount.doubleValue;
+            if (payment.paymentCategory != self.salonDocument.salon.defaultPaymentCategoryForSales) {
+                if (payment.isOutgoing) {
+                    paymentsTotal += payment.amount.doubleValue;
+                } else {
+                    paymentsTotal -= payment.amount.doubleValue;
+                }
             }
         }
-        
         NSDictionary * data = @{@"date": startDate,@"hairCategories":@(hairTotal), @"beautyCategories":@(beautyTotal) ,@"allCategories":@(salesTotal), @"payments": @(paymentsTotal), @"profits":@(salesTotal - paymentsTotal)};
         [_reportData addObject:data];
         startDate = [self previousStartDate:startDate];

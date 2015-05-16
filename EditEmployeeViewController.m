@@ -166,6 +166,7 @@
     
 }
 - (IBAction)viewSalaryButtonClicked:(id)sender {
+    [self.salaryEditorViewController prepareForDisplayWithSalon:self.salonDocument];
     [self.salaryEditorViewController updateWithEmployee:self.objectToEdit forDate:[NSDate date]];
     [self presentViewControllerAsSheet:self.salaryEditorViewController];
 }

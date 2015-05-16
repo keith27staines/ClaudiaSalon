@@ -10,6 +10,7 @@
 
 @interface AMCNoteViewController ()
 
+
 @end
 
 @implementation AMCNoteViewController

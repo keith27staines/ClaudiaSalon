@@ -56,6 +56,7 @@
 		5346C59D1ABFFA8A005D4540 /* AMCSystemTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C59C1ABFFA8A005D4540 /* AMCSystemTreeNode.m */; };
 		5346C5A31AC00341005D4540 /* AMCCategoriesRootNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5A21AC00341005D4540 /* AMCCategoriesRootNode.m */; };
 		5346C5A71AC06D15005D4540 /* AMCServiceCategoriesNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5A61AC06D15005D4540 /* AMCServiceCategoriesNode.m */; };
+		534DFF681B0736970077F124 /* AMCRolloverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 534DFF671B0736970077F124 /* AMCRolloverButton.m */; };
 		535F0DEC1AB232CB0035CFD8 /* AMCAccountStatementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */; };
 		535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */; };
 		535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */; };
@@ -357,6 +358,8 @@
 		5346C5A21AC00341005D4540 /* AMCCategoriesRootNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCategoriesRootNode.m; sourceTree = "<group>"; };
 		5346C5A51AC06D15005D4540 /* AMCServiceCategoriesNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCServiceCategoriesNode.h; sourceTree = "<group>"; };
 		5346C5A61AC06D15005D4540 /* AMCServiceCategoriesNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCServiceCategoriesNode.m; sourceTree = "<group>"; };
+		534DFF661B0736970077F124 /* AMCRolloverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCRolloverButton.h; sourceTree = "<group>"; };
+		534DFF671B0736970077F124 /* AMCRolloverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCRolloverButton.m; sourceTree = "<group>"; };
 		535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAccountStatementViewController.xib; sourceTree = "<group>"; };
 		535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementItem.m; sourceTree = "<group>"; };
 		535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementViewController.m; sourceTree = "<group>"; };
@@ -1582,6 +1585,8 @@
 				53ADE6271AA0A85400E0ACC8 /* AMCQuickQuoteViewController */,
 				53AE26CC1AA1D4DF00A1B3E4 /* Select Staff to perform Service */,
 				53D3256B1A9C6D4600AFCDE4 /* Salary */,
+				534DFF661B0736970077F124 /* AMCRolloverButton.h */,
+				534DFF671B0736970077F124 /* AMCRolloverButton.m */,
 			);
 			name = "Helper view controllers";
 			sourceTree = "<group>";
@@ -2110,6 +2115,7 @@
 				5301712D1ACB15C10047116D /* AccountReconciliation.m in Sources */,
 				530171541ACB15C20047116D /* Product.m in Sources */,
 				53D69D161A9B240C0004CE10 /* AMCFinancialAnalysisViewController.m in Sources */,
+				534DFF681B0736970077F124 /* AMCRolloverButton.m in Sources */,
 				530171511ACB15C10047116D /* LastUpdatedBy.m in Sources */,
 				531D67291ACC1C62000472BD /* RecurringItem.m in Sources */,
 				530171631ACB15EA0047116D /* StockedProduct.m in Sources */,

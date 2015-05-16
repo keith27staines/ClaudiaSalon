@@ -15,7 +15,7 @@
 {
     id<AMCObjectWithNotesProtocol> _objectWithNotes;
 }
-@property NSArray * notesArray;
+@property NSMutableArray * notesArray;
 @end
 
 @implementation AMCAssociatedNotesViewController
@@ -35,21 +35,51 @@
 }
 - (IBAction)addNoteButtonClicked:(id)sender {
     Note * newNote = [Note newObjectWithMoc:self.documentMoc];
-    newNote.title = self.titleForNewNote.stringValue;
-    newNote.text = self.textForNewNote.stringValue;
     newNote.isAuditNote = @(NO);
-    self.titleForNewNote.stringValue = @"";
-    self.textForNewNote.stringValue = @"";
-    [self.objectWithNotes addNotesObject:newNote];
-    [self reloadData];
+    newNote.title = nil;
+    newNote.text = nil;
+    [self addNote:newNote atRow:0];
+    [self setFocusOnTitleFieldForNote:newNote];
+}
+-(void)setFocusOnTitleFieldForNote:(Note*)note {
+    NSInteger row = [self.notesArray indexOfObject:note];
+    AMCNoteView * view = [self.notesTable viewAtColumn:0 row:row makeIfNecessary:NO];
+    if (view) {
+        [self.view.window makeFirstResponder:view.titleField];
+    }
 }
 - (IBAction)removeNoteButtonClicked:(id)sender {
     NSInteger row = self.notesTable.selectedRow;
-    if (row>=0) {
+    [self removeNoteAtRow:row];
+}
+-(void)removeNoteView:(id)sender {
+    AMCNoteView * noteView = sender;
+    NSInteger row = [self.notesTable rowForView:noteView];
+    [self removeNoteAtRow:row];
+}
+-(void)removeNoteAtRow:(NSInteger)row {
+    if (row>=0 && row < self.notesArray.count) {
         Note * note = self.notesArray[row];
+        [[self.undoManager prepareWithInvocationTarget:self] addNote:note atRow:row];
+        if (![self.undoManager isUndoing]) {
+            [self.undoManager setActionName:NSLocalizedString(@"Remove Note", @"Remove Note")];
+        }
         [self.objectWithNotes removeNotesObject:note];
-        [self reloadData];
+        [self.notesArray removeObject:note];
+        [self.notesTable removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:row] withAnimation:NSTableViewAnimationSlideUp];
+        [self.notesTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
     }
+}
+-(void)addNote:(Note*)note atRow:(NSInteger)row {
+    [[self.undoManager prepareWithInvocationTarget:self] removeNoteAtRow:row];
+    if (![self.undoManager isUndoing]) {
+        [self.undoManager setActionName:NSLocalizedString(@"Add Note", @"Add Note")];
+    }
+    [self.notesTable scrollRowToVisible:row];
+    [self.objectWithNotes addNotesObject:note];
+    [self.notesArray insertObject:note atIndex:row];
+    [self.notesTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:row] withAnimation:NSTableViewAnimationSlideDown];
+    [self.notesTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
 }
 -(void)reloadData {
     if (!self.objectWithNotes) return;
@@ -60,7 +90,7 @@
         notes = [[self.objectWithNotes notes] allObjects];
     }
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:NO];
-    self.notesArray = [notes sortedArrayUsingDescriptors:@[sort]];
+    self.notesArray = [[notes sortedArrayUsingDescriptors:@[sort]] mutableCopy];
     [self.notesTable reloadData];
     if (self.notesArray.count == 1) {
         self.existingNotesTitle.stringValue = [NSString stringWithFormat:@"There is 1 existing note for this %@",[self.objectWithNotes class]];
@@ -76,15 +106,19 @@
 -(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     AMCNoteViewController * vc = [[AMCNoteViewController alloc] init];
     AMCNoteView * noteView = (AMCNoteView*)vc.view;
-    Note * note = self.notesArray[row];
-    noteView.titleField.stringValue = note.title;
-    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    NSString * text = [dateFormatter stringFromDate:note.createdDate];
-    text = [text stringByAppendingString:@" "];
-    text = [text stringByAppendingString:note.text];
-    noteView.textField.stringValue = text;
+    noteView.note = self.notesArray[row];
+    noteView.target = self;
+    noteView.removeAction = @selector(removeNoteView:);
     return noteView;
+}
+-(void)tableViewSelectionDidChange:(NSNotification *)notification {
+    for (NSInteger index = 0; index < self.notesArray.count; index++) {
+        AMCNoteView * view = [self.notesTable viewAtColumn:0 row:index makeIfNecessary:YES];
+        if ([self.notesTable.selectedRowIndexes containsIndex:index]) {
+            view.isSelected = YES;
+        } else {
+            view.isSelected = NO;
+        }
+    }
 }
 @end
