@@ -157,7 +157,11 @@
         if (workRecord.isTemplate.boolValue) continue;
         if (!workRecord.wages.count > 0) continue;
         if ([AMCSalaryCalculator doesIntervalOfWorkRecord:workRecord overlapSalary:salary]) {
-            return NO;
+            for (Payment * paidWage in workRecord.wages) {
+                if (!paidWage.voided.boolValue) {
+                    return NO;
+                }
+            }
         }
     }
     return YES;

@@ -112,11 +112,11 @@
 }
 
 -(Salary*)salaryFollowingSalary:(Salary*)salary {
-    NSDate * date = [salary.validToDate dateByAddingTimeInterval:10];
+    NSDate * date = [salary.validToDate dateByAddingTimeInterval:24*3600];
     return [self salaryForDate:date];
 }
 -(Salary*)salaryPreceedingSalary:(Salary*)salary {
-    NSDate * date = [salary.validFromDate dateByAddingTimeInterval:-10];
+    NSDate * date = [salary.validFromDate dateByAddingTimeInterval:-24*3600];
     return [self salaryForDate:date];
 }
 

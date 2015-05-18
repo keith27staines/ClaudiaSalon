@@ -72,6 +72,7 @@
 
 -(IBAction)percentageChanged:(id)sender;
 
+@property (weak) IBOutlet NSButton *fixSalaries;
 
 @property (weak) Employee * employee;
 @property (copy) NSDate * salaryDate;
@@ -111,6 +112,37 @@
     _salaryDate = [salaryDate copy];
     [self reloadData];
 }
+- (IBAction)fixSalaries:(id)sender {
+    
+    NSArray * salaries = [[self.employee.salaries allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"validFromDate" ascending:YES]]];
+    for (Salary * salary in salaries) {
+        if ([salary.validFromDate isGreaterThanOrEqualTo:[NSDate date]]) {
+            [salary.managedObjectContext deleteObject:salary];
+        }
+    }
+    salaries = [[self.employee.salaries allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"validFromDate" ascending:YES]]];
+    Salary * previousSalary = nil;
+    Salary * thisSalary = nil;
+    Salary * nextSalary = nil;
+    for (NSInteger i = 0; i < salaries.count; i++) {
+        thisSalary = salaries[i];
+        if (i > 0) {
+            previousSalary = salaries[i-1];
+        }
+        if (i < salaries.count - 1) {
+            nextSalary = salaries[i+1];
+        }
+        if (previousSalary) {
+            thisSalary.validFromDate = [previousSalary.validToDate dateByAddingTimeInterval:1];
+            if ([thisSalary.validToDate isLessThanOrEqualTo:thisSalary.validFromDate]) {
+                thisSalary.validToDate = [thisSalary.validFromDate dateByAddingTimeInterval:24*3600];
+            }
+        }
+    }
+    thisSalary = [salaries lastObject];
+    thisSalary.validToDate = [NSDate distantFuture];
+}
+
 -(void)updateWithEmployee:(Employee*)employee forDate:(NSDate*)date {
     _employee = employee;
     _salaryDate = date;
@@ -128,13 +160,27 @@
     if (self.salary) {
         self.validFromDate.dateValue = self.salary.validFromDate;
         self.validToDate.dateValue = self.salary.validToDate;
-        self.validToDate.minDate = [self.salary.validFromDate dateByAddingTimeInterval:24*3600];
         self.paidFromManagersBudgetCheckbox.state = (self.employee.paidFromManagersBudget.boolValue)?NSOnState:NSOffState;
+
+        // set allowed date ranges
         Salary * nextSalary = [self.employee salaryFollowingSalary:self.salary];
-        self.validToDate.maxDate = [nextSalary.validToDate dateByAddingTimeInterval:-24*3600];
+        Salary * previousSalary = [self.employee salaryPreceedingSalary:self.salary];
+        if (nextSalary) {
+            self.validToDate.maxDate = [nextSalary.validToDate dateByAddingTimeInterval:-2*24*3600];
+        } else {
+            self.validToDate.maxDate = [NSDate distantFuture];
+        }
+        if (previousSalary) {
+            self.validFromDate.minDate = [previousSalary.validFromDate dateByAddingTimeInterval:2*24*3600];
+        } else {
+            self.validFromDate.minDate = [NSDate distantPast];
+        }
+        self.validToDate.minDate = [self.salary.validFromDate dateByAddingTimeInterval:24*3600];
+        self.validFromDate.maxDate = [self.salary.validToDate dateByAddingTimeInterval:-24*3600];
+        
         if ([self isCurrentSalary:self.salary]) {
             // Looking at current salary
-            self.validToDate.minDate = [[[NSDate date] endOfDay] dateByAddingTimeInterval:-1];
+            self.validToDate.minDate = [self.salary.validFromDate dateByAddingTimeInterval:1];;
             self.currentSalaryLabel.hidden = NO;
             self.currentSalaryButton.enabled = NO; // Already on current salary
             if ([self.salary.validToDate isEqual:[NSDate distantFuture]]) {
@@ -302,22 +348,28 @@
 }
 
 - (IBAction)createNewSalary:(id)sender {
-    Salary * salary = [self.employee endCurrentSalaryAndCreateNextOnDate:[NSDate date]];
+    Salary * salary = [self.employee endCurrentSalaryAndCreateNextOnDate:[[NSDate date] dateByAddingTimeInterval:-24*3600]];
     self.salaryDate = salary.validFromDate;
     [self reloadData];
-}
-- (IBAction)fromDateChanged:(id)sender {
 }
 - (IBAction)paidFromManagersBudgetChanged:(id)sender {
     self.employee.paidFromManagersBudget = (self.paidFromManagersBudgetCheckbox.state==NSOnState)?@YES:@NO;
 }
-
+- (IBAction)fromDateChanged:(id)sender {
+    self.salary.validFromDate = [[self.validFromDate.dateValue dateByAddingTimeInterval:10] beginningOfDay];
+    _salaryDate = self.salary.validFromDate;
+    Salary * previousSalary = [self.employee salaryPreceedingSalary:self.salary];
+    if (previousSalary) {
+        previousSalary.validToDate = [[self.salary.validFromDate dateByAddingTimeInterval:-10] endOfDay];
+    }
+}
 - (IBAction)toDateChanged:(id)sender {
-    Salary * nextSalary = [self.employee salaryFollowingSalary:self.salary];
     self.salary.validToDate = [[self.validToDate.dateValue endOfDay] dateByAddingTimeInterval:-1];
-    nextSalary.validFromDate = [[self.salary.validToDate dateByAddingTimeInterval:10] beginningOfDay];
-    self.salaryDate = self.salary.validFromDate;
-    [self reloadData];
+    _salaryDate = self.salary.validFromDate;
+    Salary * nextSalary = [self.employee salaryFollowingSalary:self.salary];
+    if (nextSalary) {
+        nextSalary.validFromDate = [[self.salary.validToDate dateByAddingTimeInterval:10] beginningOfDay];
+    }
 }
 -(void)hoursWorkedOnDayChangedNotification:(NSNotification*)notification {
     [self.hoursPerWeekViewController updateWorkRecordTemplateToMatchActual];

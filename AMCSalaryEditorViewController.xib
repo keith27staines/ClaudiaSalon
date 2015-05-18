@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCSalaryEditorViewController">
@@ -11,6 +11,7 @@
                 <outlet property="currentSalaryLabel" destination="XOp-sL-X8h" id="PBg-VC-LLC"/>
                 <outlet property="dailyRateField" destination="0Lv-6y-w2u" id="tRR-cw-byC"/>
                 <outlet property="extraHoursRate" destination="uhx-RT-ayr" id="n5X-g6-awU"/>
+                <outlet property="fixSalaries" destination="Gzz-6Z-ibd" id="Zf4-dU-xZ8"/>
                 <outlet property="hourlyRateField" destination="g4o-p2-Lap" id="7k6-10-uBR"/>
                 <outlet property="hoursPerWeekViewController" destination="4bJ-b2-h0A" id="Zle-m5-W3g"/>
                 <outlet property="hoursWorkedPerWeekContainer" destination="XZR-kG-Sgb" id="FYE-bG-0UN"/>
@@ -464,6 +465,16 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gzz-6Z-ibd">
+                    <rect key="frame" x="14" y="590" width="109" height="32"/>
+                    <buttonCell key="cell" type="push" title="Fix salaries" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aqn-O8-fXS">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="fixSalaries:" target="-2" id="64e-gR-Mfp"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="CPJ-5F-bkG" secondAttribute="centerX" id="0re-Ad-fwC"/>
