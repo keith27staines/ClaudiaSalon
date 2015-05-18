@@ -63,7 +63,7 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
     [self displayWizardStep];
     [self.doneButton setHidden:YES];
 }
--(NSString *)objectName
+-(NSString *)objectTypeAndName
 {
     return @"Sale";
 }

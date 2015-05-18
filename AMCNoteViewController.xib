@@ -15,13 +15,13 @@
             <rect key="frame" x="0.0" y="0.0" width="474" height="125"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="249" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="0Vm-Xz-uXS">
+                <textField verticalHuggingPriority="249" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Vm-Xz-uXS">
                     <rect key="frame" x="8" y="20" width="446" height="38"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="KrP-30-lIT"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="26" id="Zeg-83-1ye"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Text" drawsBackground="YES" id="FIe-sL-ZJS">
+                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Text" drawsBackground="YES" id="FIe-sL-ZJS">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -60,9 +60,9 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44m-9n-4s6">
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44m-9n-4s6">
                     <rect key="frame" x="8" y="68" width="388" height="22"/>
-                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Title for new note" id="FXB-uS-gvW">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Title for new note" id="FXB-uS-gvW">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -75,14 +75,8 @@
                         </binding>
                     </connections>
                 </textField>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="42G-V2-hSw">
-                    <rect key="frame" x="0.0" y="2" width="454" height="5"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
-                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UFE-gU-rqF" customClass="AMCRolloverButton">
-                    <rect key="frame" x="422" y="87" width="39" height="38"/>
+                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UFE-gU-rqF" customClass="AMCRolloverButton">
+                    <rect key="frame" x="438" y="90" width="39" height="38"/>
                     <buttonCell key="cell" type="round" bezelStyle="circular" image="NSStopProgressTemplate" imagePosition="only" alignment="left" borderStyle="border" imageScaling="proportionallyDown" id="Gmg-a3-VA4">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="label"/>
@@ -93,12 +87,9 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="42G-V2-hSw" secondAttribute="trailing" constant="20" id="2tH-N2-WIi"/>
                 <constraint firstItem="0Vm-Xz-uXS" firstAttribute="top" secondItem="44m-9n-4s6" secondAttribute="bottom" constant="8" symbolic="YES" id="6Kc-0f-hzW"/>
                 <constraint firstAttribute="trailing" secondItem="0Vm-Xz-uXS" secondAttribute="trailing" constant="20" id="9KD-gm-mmD"/>
-                <constraint firstAttribute="bottom" secondItem="42G-V2-hSw" secondAttribute="bottom" constant="4" id="CdI-cf-xdo"/>
                 <constraint firstItem="44m-9n-4s6" firstAttribute="top" secondItem="hey-Ph-1nV" secondAttribute="bottom" constant="8" symbolic="YES" id="Ghx-9K-iVd"/>
-                <constraint firstItem="42G-V2-hSw" firstAttribute="leading" secondItem="1cM-Va-XUv" secondAttribute="leading" id="Lan-aF-Onb"/>
                 <constraint firstItem="44m-9n-4s6" firstAttribute="leading" secondItem="1cM-Va-XUv" secondAttribute="leading" constant="8" id="Lde-6B-shM"/>
                 <constraint firstItem="mmt-mC-m6W" firstAttribute="top" secondItem="1cM-Va-XUv" secondAttribute="top" constant="8" id="Mck-cj-Jlv"/>
                 <constraint firstItem="0Vm-Xz-uXS" firstAttribute="leading" secondItem="1cM-Va-XUv" secondAttribute="leading" constant="8" id="OUg-hM-ec8"/>
@@ -109,15 +100,16 @@
                 <constraint firstItem="hey-Ph-1nV" firstAttribute="height" secondItem="mmt-mC-m6W" secondAttribute="height" id="tG7-28-e02"/>
                 <constraint firstItem="hey-Ph-1nV" firstAttribute="top" secondItem="mmt-mC-m6W" secondAttribute="top" id="tS2-mu-VfM"/>
                 <constraint firstAttribute="trailing" secondItem="44m-9n-4s6" secondAttribute="trailing" constant="78" id="ueH-ET-DhJ"/>
-                <constraint firstAttribute="trailing" secondItem="UFE-gU-rqF" secondAttribute="trailing" constant="20" id="y1O-NO-gh0"/>
+                <constraint firstAttribute="trailing" secondItem="UFE-gU-rqF" secondAttribute="trailing" constant="4" id="y1O-NO-gh0"/>
                 <constraint firstAttribute="bottom" secondItem="0Vm-Xz-uXS" secondAttribute="bottom" constant="20" symbolic="YES" id="ytK-uF-g0l"/>
             </constraints>
             <connections>
+                <outlet property="closeButton" destination="UFE-gU-rqF" id="ngm-cw-ZYW"/>
                 <outlet property="dateField" destination="hey-Ph-1nV" id="6XR-tp-jbn"/>
                 <outlet property="textField" destination="0Vm-Xz-uXS" id="5YU-Qc-b85"/>
                 <outlet property="titleField" destination="44m-9n-4s6" id="9z4-d1-j0Z"/>
             </connections>
-            <point key="canvasLocation" x="322" y="240.5"/>
+            <point key="canvasLocation" x="-42" y="-367.5"/>
         </tableCellView>
     </objects>
     <resources>

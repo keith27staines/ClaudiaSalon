@@ -339,21 +339,6 @@
 -(BOOL)isValid
 {
     if (!self.saleItemsArray || self.saleItemsArray.count == 0) return NO;
-    for (SaleItem * saleItem in self.saleItemsArray) {
-        Service * service = saleItem.service;
-        double min = service.minimumCharge.doubleValue;
-        double max = service.maximumCharge.doubleValue;
-        double price = service.nominalCharge.doubleValue;
-        if (min > price || max < price) {
-            return NO;
-        }
-        if (saleItem == [self selectedSaleItem]) {
-            price = self.chargePriceBeforeDiscount.doubleValue;
-            if (min > price || max < price) {
-                return NO;
-            }
-        }
-    }
     return YES;
 }
 - (IBAction)showProductsInfo:(id)sender {

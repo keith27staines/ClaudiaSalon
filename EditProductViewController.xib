@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="EditProductViewController">
             <connections>
                 <outlet property="brandName" destination="FLC-D3-3sf" id="9br-oJ-4j4"/>
-                <outlet property="cancelButton" destination="ubO-0U-xFh" id="pO7-Yu-hVi"/>
-                <outlet property="doneButton" destination="btV-LE-59L" id="P8a-qE-6Gu"/>
-                <outlet property="editButton" destination="x3y-XR-LKY" id="BhX-tC-bx4"/>
+                <outlet property="cancelButton" destination="C6N-hn-U0n" id="wis-3k-h5Y"/>
+                <outlet property="doneButton" destination="aN6-7R-y4N" id="nsB-rt-9jF"/>
+                <outlet property="editButton" destination="9Zu-4j-Eoh" id="Fur-UU-12x"/>
                 <outlet property="panelTitle" destination="Zyl-ai-bw7" id="xzL-Xk-z0n"/>
                 <outlet property="productType" destination="Eel-uy-ZbT" id="g2A-8V-Yp7"/>
                 <outlet property="view" destination="w2H-Ov-xVJ" id="4kQ-Fm-bzV"/>
@@ -80,36 +79,37 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x3y-XR-LKY">
-                    <rect key="frame" x="492" y="336" width="74" height="28"/>
-                    <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rtx-Pa-KYy">
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C6N-hn-U0n">
+                    <rect key="frame" x="204" y="16" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tga-5Q-iSE">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
-                        <string key="keyEquivalent">e</string>
-                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
                     </buttonCell>
                     <connections>
-                        <action selector="enterEditMode:" target="-2" id="6FR-Rg-aFw"/>
+                        <action selector="cancelButton:" target="-2" id="UdG-9b-kf1"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="btV-LE-59L">
-                    <rect key="frame" x="492" y="19" width="74" height="28"/>
-                    <buttonCell key="cell" type="smallSquare" title="Done" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VgP-o7-2B6">
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aN6-7R-y4N">
+                    <rect key="frame" x="307" y="16" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wne-Qn-YTO">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
+                        <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="doneButton:" target="-2" id="tdg-bt-bUn"/>
+                        <action selector="doneButton:" target="-2" id="mxn-Ej-N6F"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ubO-0U-xFh">
-                    <rect key="frame" x="20" y="19" width="100" height="28"/>
-                    <buttonCell key="cell" type="smallSquare" title="Cancel" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="I8l-Ea-9ug">
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Zu-4j-Eoh">
+                    <rect key="frame" x="490" y="331" width="82" height="32"/>
+                    <buttonCell key="cell" type="push" title="Edit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nrp-Ql-bD0">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
+                        <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="cancelButton:" target="-2" id="tid-Mi-dpk"/>
+                        <action selector="enterEditMode:" target="-2" id="Uy9-zm-YA8"/>
                     </connections>
                 </button>
             </subviews>

@@ -26,9 +26,18 @@
     return @"EditEmployeeViewController";
 }
 #pragma mark - editObjectViewController overrides
--(NSString*)objectName
+-(NSString*)objectTypeAndName
 {
-    return @"Staff Member";
+    NSMutableString * objectTypeAndName = [@"Employee" mutableCopy];
+    if (self.objectToEdit) {
+        Employee * object = (Employee*)self.objectToEdit;
+        NSString * objectName = object.fullName;
+        if (objectName) {
+            [objectTypeAndName appendString:@": "];
+            [objectTypeAndName appendString:objectName];
+        }
+    }
+    return objectTypeAndName;
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
 {
@@ -41,8 +50,6 @@
     self.postcode.stringValue = employee.postcode;
     self.addressLine1.stringValue = employee.addressLine1;
     self.addressLine2.stringValue = employee.addressLine2;
-    self.startingDate.dateValue = employee.startingDate;
-    self.leavingDate.dateValue  = employee.leavingDate;
     self.activeMemberOfStaffCheckbox.state = (employee.isActive.boolValue)?NSOnState:NSOffState;
     NSUInteger monthOfBirth = employee.monthOfBirth.integerValue;
     NSUInteger dayOfBirth = employee.dayOfBirth.integerValue;
@@ -52,22 +59,16 @@
         case EditModeView:
         {
             [self.dayAndMonthPopupController setEnabled:NO];
-            [self.leavingDate setHidden:NO];
-            [self.leavingDate setEnabled:NO];
             break;
         }
         case EditModeCreate:
         {
             [self.dayAndMonthPopupController setEnabled:YES];
-            [self.leavingDate setHidden:YES];
-            [self.leavingDate setEnabled:NO];
             break;
         }
         case EditModeEdit:
         {
             [self.dayAndMonthPopupController setEnabled:YES];
-            [self.leavingDate setHidden:NO];
-            [self.leavingDate setEnabled:YES];
             break;
         }
     }
@@ -79,11 +80,10 @@
            self.lastName,
            self.email,
            self.mobile,
-           self.startingDate,
-           self.leavingDate,
            self.postcode,
            self.addressLine1,
-           self.addressLine2];
+           self.addressLine2,
+           self.activeMemberOfStaffCheckbox];
 }
 -(BOOL)isValid
 {
@@ -103,8 +103,6 @@
     employee.postcode = self.postcode.stringValue;
     employee.addressLine1 = self.addressLine1.stringValue;
     employee.addressLine2 = self.addressLine2.stringValue;
-    employee.startingDate = self.startingDate.dateValue;
-    employee.leavingDate = self.leavingDate.dateValue;
     employee.monthOfBirth = @(self.dayAndMonthPopupController.monthNumber);
     employee.dayOfBirth = @(self.dayAndMonthPopupController.dayNumber);
     employee.isActive = @(self.activeMemberOfStaffCheckbox.state == NSOnState);

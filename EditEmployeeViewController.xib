@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D98g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="EditEmployeeViewController">
@@ -9,19 +9,17 @@
                 <outlet property="activeMemberOfStaffCheckbox" destination="KLo-hZ-Osv" id="cMM-II-LRM"/>
                 <outlet property="addressLine1" destination="Bf9-y2-qx0" id="x72-Mt-MCd"/>
                 <outlet property="addressLine2" destination="suZ-zb-A1Z" id="21G-Jh-dL2"/>
-                <outlet property="cancelButton" destination="NHB-VE-4o1" id="N2R-Nx-EQp"/>
+                <outlet property="cancelButton" destination="TVQ-jE-c6G" id="dJP-O3-TJV"/>
                 <outlet property="dayAndMonthPopupController" destination="PW4-5A-MbO" id="8Kw-Ad-iYu"/>
-                <outlet property="doneButton" destination="3BX-xP-Z78" id="ydo-wb-ycC"/>
-                <outlet property="editButton" destination="u5b-DX-p4c" id="b8a-6E-EGU"/>
+                <outlet property="doneButton" destination="lzg-Ub-QJ6" id="icw-wS-9eZ"/>
+                <outlet property="editButton" destination="96q-0v-pEN" id="dbj-1Q-kSe"/>
                 <outlet property="email" destination="BGK-sn-t8s" id="iSp-4V-lcg"/>
                 <outlet property="firstName" destination="47i-39-xLa" id="8mQ-kG-JzY"/>
                 <outlet property="lastName" destination="tVb-EV-4qf" id="zWp-3b-Syb"/>
-                <outlet property="leavingDate" destination="kqA-hT-Y2n" id="5al-19-2FF"/>
                 <outlet property="mobile" destination="AjD-CJ-ahO" id="MeU-Al-pnQ"/>
                 <outlet property="panelTitle" destination="xru-Vg-y66" id="fJF-xh-wI6"/>
                 <outlet property="postcode" destination="7A5-79-3cp" id="Vb7-fT-fgJ"/>
                 <outlet property="salaryEditorViewController" destination="QHd-b7-L7v" id="HkG-EK-ERk"/>
-                <outlet property="startingDate" destination="QSd-ce-PHW" id="TNT-cF-kxM"/>
                 <outlet property="view" destination="fge-p5-esD" id="MCX-HY-lWb"/>
             </connections>
         </customObject>
@@ -29,11 +27,11 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="QHd-b7-L7v" customClass="AMCSalaryEditorViewController"/>
         <customView id="fge-p5-esD">
-            <rect key="frame" x="0.0" y="0.0" width="603" height="780"/>
+            <rect key="frame" x="0.0" y="6" width="603" height="589"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DAk-rS-3DO">
-                    <rect key="frame" x="37" y="629" width="119" height="24"/>
+                    <rect key="frame" x="37" y="443" width="119" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="First Name:" id="ZUE-DF-OQK">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -41,39 +39,15 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A8R-W8-hYh">
-                    <rect key="frame" x="18" y="594" width="138" height="24"/>
+                    <rect key="frame" x="18" y="408" width="138" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Last Name:" id="k8W-6J-GX8">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I0T-vB-Rlb">
-                    <rect key="frame" x="88" y="118" width="135" height="22"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Starting Date:" id="Aca-FN-5hG">
-                        <font key="font" metaFont="system" size="16"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QIV-9L-Ouj">
-                    <rect key="frame" x="25" y="164" width="218" height="22"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Starting and leaving dates" id="Z0g-gv-68T">
-                        <font key="font" metaFont="system" size="16"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MFN-p5-UHG">
-                    <rect key="frame" x="370" y="118" width="135" height="23"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Leaving Date:" id="5VO-hp-W3n">
-                        <font key="font" metaFont="system" size="16"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="47i-39-xLa">
-                    <rect key="frame" x="162" y="631" width="411" height="29"/>
+                    <rect key="frame" x="162" y="445" width="411" height="29"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="First Name" drawsBackground="YES" id="eJC-93-Ysq">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
@@ -84,7 +58,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tVb-EV-4qf">
-                    <rect key="frame" x="162" y="592" width="411" height="29"/>
+                    <rect key="frame" x="162" y="406" width="411" height="29"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Last Name" drawsBackground="YES" id="Ok7-ar-oRF">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
@@ -95,7 +69,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iez-tF-oVu">
-                    <rect key="frame" x="92" y="554" width="64" height="24"/>
+                    <rect key="frame" x="92" y="368" width="64" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Email:" id="gf1-cE-Ve1">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -103,7 +77,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BGK-sn-t8s">
-                    <rect key="frame" x="162" y="552" width="411" height="29"/>
+                    <rect key="frame" x="162" y="366" width="411" height="29"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="somebody@gmail.com" drawsBackground="YES" id="XkA-CJ-jZf">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
@@ -114,8 +88,8 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bf9-y2-qx0">
-                    <rect key="frame" x="162" y="268" width="411" height="29"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="somebody@gmail.com" drawsBackground="YES" id="aXU-Ho-r8S">
+                    <rect key="frame" x="162" y="129" width="411" height="29"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="First line of address" drawsBackground="YES" id="aXU-Ho-r8S">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -125,39 +99,23 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qei-gg-9u6">
-                    <rect key="frame" x="71" y="515" width="85" height="24"/>
+                    <rect key="frame" x="71" y="329" width="85" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Mobile:" id="Jms-w9-W4t">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Qu-ti-bVa">
-                    <rect key="frame" x="160" y="428" width="141" height="24"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Month:" id="c6V-69-5He">
-                        <font key="font" metaFont="system" size="16"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k3p-I9-3yo">
-                    <rect key="frame" x="25" y="348" width="135" height="24"/>
+                    <rect key="frame" x="25" y="209" width="135" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Address" id="PXm-od-yN4">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TKi-PE-Jwd">
-                    <rect key="frame" x="341" y="428" width="143" height="24"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Day:" id="8t2-er-dnm">
-                        <font key="font" metaFont="system" size="16"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AjD-CJ-ahO">
-                    <rect key="frame" x="162" y="513" width="284" height="29"/>
+                    <rect key="frame" x="162" y="327" width="284" height="29"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="mobile number" drawsBackground="YES" id="oly-ST-9dc">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
@@ -168,7 +126,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7A5-79-3cp">
-                    <rect key="frame" x="162" y="311" width="201" height="29"/>
+                    <rect key="frame" x="162" y="172" width="201" height="29"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="mobile number" drawsBackground="YES" id="w6G-gx-BZX">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
@@ -178,75 +136,19 @@
                         <outlet property="delegate" destination="-2" id="wjZ-p2-eAO"/>
                     </connections>
                 </textField>
-                <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QSd-ce-PHW">
-                    <rect key="frame" x="90" y="86" width="153" height="27"/>
-                    <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="HF7-s5-S61">
-                        <font key="font" metaFont="system" size="18"/>
-                        <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
-                            <!--1982-02-12 16:00:00 +0000-->
-                            <timeZone key="timeZone" name="US/Pacific"/>
-                        </calendarDate>
-                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
-                    </datePickerCell>
-                </datePicker>
-                <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kqA-hT-Y2n">
-                    <rect key="frame" x="372" y="86" width="153" height="27"/>
-                    <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="kFo-my-Fcv">
-                        <font key="font" metaFont="system" size="18"/>
-                        <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
-                            <!--1982-02-12 16:00:00 +0000-->
-                            <timeZone key="timeZone" name="US/Pacific"/>
-                        </calendarDate>
-                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
-                    </datePickerCell>
-                </datePicker>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xru-Vg-y66">
-                    <rect key="frame" x="25" y="735" width="454" height="22"/>
+                    <rect key="frame" x="25" y="544" width="454" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Panel Title" id="b8J-ly-lQD">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u5b-DX-p4c">
-                    <rect key="frame" x="499" y="733" width="74" height="28"/>
-                    <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="e14-qP-xwH">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
-                        <string key="keyEquivalent">e</string>
-                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="enterEditMode:" target="-2" id="MR4-2M-x4p"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3BX-xP-Z78">
-                    <rect key="frame" x="499" y="19" width="74" height="28"/>
-                    <buttonCell key="cell" type="smallSquare" title="Done" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HK4-QI-0MJ">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="doneButton:" target="-2" id="0Qp-wA-7jJ"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NHB-VE-4o1">
-                    <rect key="frame" x="27" y="19" width="100" height="28"/>
-                    <buttonCell key="cell" type="smallSquare" title="Cancel" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WYp-WL-CGK">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="cancelButton:" target="-2" id="UCz-Ks-mwS"/>
-                    </connections>
-                </button>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vdu-bc-fdg">
-                    <rect key="frame" x="341" y="402" width="161" height="26"/>
+                    <rect key="frame" x="341" y="263" width="161" height="26"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Wme-jQ-Ra4">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="d7P-5d-7oG">
                             <items>
                                 <menuItem title="Unknown" id="GKd-Ni-lNh" userLabel="Menu Item - Unknown"/>
@@ -260,10 +162,10 @@
                     </connections>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vb8-lZ-MvL">
-                    <rect key="frame" x="160" y="402" width="160" height="26"/>
+                    <rect key="frame" x="160" y="263" width="160" height="26"/>
                     <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Qco-RU-WEy">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="cYg-9J-CEW">
                             <items>
                                 <menuItem title="Item 1" id="5Ps-pO-KOb"/>
@@ -277,7 +179,7 @@
                     </connections>
                 </popUpButton>
                 <box appearanceType="aqua" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="u5u-yh-5eV">
-                    <rect key="frame" x="32" y="714" width="541" height="5"/>
+                    <rect key="frame" x="32" y="523" width="541" height="5"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
@@ -288,26 +190,20 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <box appearanceType="aqua" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jZm-CA-6MM">
-                    <rect key="frame" x="27" y="209" width="546" height="5"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
                 <box appearanceType="aqua" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="vBN-uN-SC0">
-                    <rect key="frame" x="27" y="383" width="546" height="5"/>
+                    <rect key="frame" x="27" y="244" width="546" height="5"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box appearanceType="aqua" verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="ATy-D9-ZaQ">
-                    <rect key="frame" x="27" y="492" width="556" height="5"/>
+                    <rect key="frame" x="27" y="302" width="556" height="5"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z5O-wE-8T0">
-                    <rect key="frame" x="19" y="270" width="137" height="24"/>
+                    <rect key="frame" x="19" y="131" width="137" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Address  Line 1:" id="oeD-6o-e9o">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -315,16 +211,75 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nhm-fY-7LR">
-                    <rect key="frame" x="19" y="227" width="137" height="24"/>
+                    <rect key="frame" x="19" y="88" width="137" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Address  Line 2:" id="5yW-n4-IXf">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2s1-d5-oP8">
+                    <rect key="frame" x="49" y="174" width="107" height="24"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Postcode:" id="jgf-rc-ZLb">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h2w-YU-cu4">
+                    <rect key="frame" x="25" y="264" width="135" height="24"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Birthday" id="cFU-mI-fY4">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zBu-e2-o6t">
+                    <rect key="frame" x="467" y="324" width="90" height="32"/>
+                    <buttonCell key="cell" type="push" title="Salary..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gOx-qO-qGY">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="viewSalaryButtonClicked:" target="-2" id="OWo-x3-bqi"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TVQ-jE-c6G">
+                    <rect key="frame" x="211" y="13" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IAR-tX-PdH">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cancelButton:" target="-2" id="Wne-vo-dZ1"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lzg-Ub-QJ6">
+                    <rect key="frame" x="305" y="13" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FU6-DK-bNg">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="doneButton:" target="-2" id="2iZ-z2-H2e"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="96q-0v-pEN">
+                    <rect key="frame" x="496" y="538" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Edit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="93B-39-t8N">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="enterEditMode:" target="-2" id="SrX-hL-Fj4"/>
+                    </connections>
+                </button>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="suZ-zb-A1Z">
-                    <rect key="frame" x="162" y="227" width="411" height="29"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="somebody@gmail.com" drawsBackground="YES" id="j6d-E5-Atv">
+                    <rect key="frame" x="162" y="88" width="411" height="29"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="second line of address" drawsBackground="YES" id="j6d-E5-Atv">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -333,40 +288,15 @@
                         <outlet property="delegate" destination="-2" id="JD5-gj-DB7"/>
                     </connections>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2s1-d5-oP8">
-                    <rect key="frame" x="49" y="313" width="107" height="24"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Postcode:" id="jgf-rc-ZLb">
-                        <font key="font" metaFont="system" size="16"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KLo-hZ-Osv">
-                    <rect key="frame" x="162" y="671" width="161" height="18"/>
+                    <rect key="frame" x="221" y="492" width="161" height="18"/>
                     <buttonCell key="cell" type="check" title="Active member of staff" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wGt-mg-1HJ">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h2w-YU-cu4">
-                    <rect key="frame" x="25" y="458" width="135" height="24"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Birthday" id="cFU-mI-fY4">
-                        <font key="font" metaFont="system" size="16"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zBu-e2-o6t">
-                    <rect key="frame" x="467" y="510" width="112" height="32"/>
-                    <buttonCell key="cell" type="push" title="Set salary..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gOx-qO-qGY">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="viewSalaryButtonClicked:" target="-2" id="OWo-x3-bqi"/>
-                    </connections>
-                </button>
             </subviews>
+            <point key="canvasLocation" x="369.5" y="330.5"/>
         </customView>
         <customObject id="PW4-5A-MbO" customClass="AMCDayAndMonthPopupViewController">
             <connections>

@@ -18,7 +18,7 @@
 @implementation EditObjectViewController
 
 
--(NSString *)objectName
+-(NSString *)objectTypeAndName
 {
     [NSException raise:@"Subclasses must override this method" format:@"Subclasses are expected to return the name of the object type they are responsible for editing"];
     return nil;
@@ -36,7 +36,7 @@
     switch (self.editMode) {
         case EditModeView:
         {
-            self.panelTitle.stringValue = [NSString stringWithFormat:@"View the details of the current %@",self.objectName];
+            self.panelTitle.stringValue = [NSString stringWithFormat:@"View %@",self.objectTypeAndName];
             [self enableEditableControls:NO];
             [self.editButton setHidden:NO];
             [self.cancelButton setHidden:NO];
@@ -45,7 +45,7 @@
         }
         case EditModeCreate:
         {
-            self.panelTitle.stringValue = [NSString stringWithFormat:@"Create a new %@",self.objectName];
+            self.panelTitle.stringValue = [NSString stringWithFormat:@"New %@",self.objectTypeAndName];
             [self enableEditableControls:YES];
             [self.editButton setHidden:YES];
             [self.cancelButton setHidden:NO];
@@ -55,13 +55,16 @@
         }
         case EditModeEdit:
         {
-            self.panelTitle.stringValue = [NSString stringWithFormat:@"Edit the details of the current %@",self.objectName];
+            self.panelTitle.stringValue = [NSString stringWithFormat:@"Edit %@",self.objectTypeAndName];
             [self enableEditableControls:YES];
             [self.editButton setHidden:YES];
             [self.cancelButton setHidden:NO];
             [self.doneButton setHidden:NO];
             break;
         }
+    }
+    if (self.doneButton.enabled && !self.doneButton.hidden) {
+        [self.view.window setDefaultButtonCell:self.doneButton.cell];
     }
 }
 -(NSArray*)editableControls
@@ -102,6 +105,9 @@
 }
 -(IBAction)doneButton:(NSButton*)sender
 {
+    if (![self.view.window makeFirstResponder:nil]) {
+        [self.view.window endEditingFor:nil];
+    }
     if (self.editMode == EditModeCreate || self.editMode == EditModeEdit) {
         [self updateObject];
     }

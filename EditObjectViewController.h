@@ -33,7 +33,7 @@
 
 #pragma mark - other properties common to all object editors
 @property (weak) id objectToEdit;
-@property (copy,readonly) NSString * objectName;
+@property (copy,readonly) NSString * objectTypeAndName;
 @property EditMode editMode;
 
 #pragma mark - validation

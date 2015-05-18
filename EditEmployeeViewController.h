@@ -17,8 +17,7 @@
 @property (weak) IBOutlet NSTextField * lastName;
 @property (weak) IBOutlet NSTextField * email;
 @property (weak) IBOutlet NSTextField * mobile;
-@property (weak) IBOutlet NSDatePicker * startingDate;
-@property (weak) IBOutlet NSDatePicker * leavingDate;
+
 @property (weak) IBOutlet AMCDayAndMonthPopupViewController * dayAndMonthPopupController;
 
 @property (weak) IBOutlet NSTextField *postcode;

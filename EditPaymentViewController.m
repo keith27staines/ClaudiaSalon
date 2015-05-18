@@ -61,9 +61,18 @@
 {
     return @"EditPaymentViewController";
 }
--(NSString *)objectName
+-(NSString *)objectTypeAndName
 {
-    return @"Payment - account:";
+    NSMutableString * objectTypeAndName = [@"Payment" mutableCopy];
+    if (self.objectToEdit) {
+        Payment * object = (Payment*)self.objectToEdit;
+        NSString * objectName = @"";
+        if (objectName) {
+            [objectTypeAndName appendString:@": "];
+            [objectTypeAndName appendString:objectName];
+        }
+    }
+    return objectTypeAndName;
 }
 -(void)clear
 {

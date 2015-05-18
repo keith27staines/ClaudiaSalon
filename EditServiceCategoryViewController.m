@@ -21,9 +21,18 @@
 {
     return @"EditServiceCategoryViewController";
 }
--(NSString *)objectName
+-(NSString *)objectTypeAndName
 {
-    return @"ServiceCategory";
+    NSMutableString * objectTypeAndName = [@"Service Category" mutableCopy];
+    if (self.objectToEdit) {
+        ServiceCategory * object = (ServiceCategory*)self.objectToEdit;
+        NSString * objectName = object.name;
+        if (objectName) {
+            [objectTypeAndName appendString:@": "];
+            [objectTypeAndName appendString:objectName];
+        }
+    }
+    return objectTypeAndName;
 }
 -(void)clear
 {

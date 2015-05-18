@@ -30,9 +30,18 @@
 {
     return @"EditServiceViewController";
 }
--(NSString *)objectName
+-(NSString *)objectTypeAndName
 {
-    return @"Service";
+    NSMutableString * objectTypeAndName = [@"Service" mutableCopy];
+    if (self.objectToEdit) {
+        Service * object = (Service*)self.objectToEdit;
+        NSString * objectName = object.name;
+        if (objectName) {
+            [objectTypeAndName appendString:@": "];
+            [objectTypeAndName appendString:objectName];
+        }
+    }
+    return objectTypeAndName;
 }
 -(void)viewDidLoad
 {
@@ -52,14 +61,12 @@
     [super setObjectToEdit:objectToEdit];
     Service * service = objectToEdit;
     self.products = [[service.product allObjects] mutableCopy];
-    [self.productsTable reloadData];
     [self deluxeChanged:self.deluxeCheckbox];
     [self.view.window makeFirstResponder:nil];
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
 {
     [super prepareForDisplayWithSalon:salonDocument];
-    [self loadProductTable];
     Service * service = self.service;
     self.nameField.stringValue = (service.name)?service.name : @"";
     self.timeRequired.stringValue = (service.expectedTimeRequired.stringValue)?service.expectedTimeRequired.stringValue:@"";
@@ -96,7 +103,6 @@
         }
     }
     [self setPriceControls];
-    [self enableProductTableButtons];
     [self deluxeChanged:self];
 }
 -(void)setPriceControls
@@ -111,20 +117,6 @@
     self.minimumPrice.stringValue = [NSString stringWithFormat:@"£%@",service.minimumCharge];
     self.maximumPrice.stringValue = [NSString stringWithFormat:@"£%@",service.maximumCharge];
     self.nominalPrice.stringValue = [NSString stringWithFormat:@"£%@",service.nominalCharge];
-}
--(void)enableProductTableButtons
-{
-    if (self.editMode == EditModeView) {
-        [self.addProduct setEnabled:NO];
-        [self.removeProduct setEnabled:NO];
-        return;
-    }
-    [self.addProduct setEnabled:YES];
-    if (self.productsTable.selectedRow >=0 ) {
-        [self.removeProduct setEnabled:YES];
-    } else {
-        [self.removeProduct setEnabled:NO];
-    }
 }
 -(NSArray *)editableControls
 {
@@ -191,16 +183,6 @@
     [self.salonDocument commitAndSave:nil];
 }
 
-- (IBAction)addProduct:(id)sender {
-    ObjectSelectorViewController * vc = [ObjectSelectorViewController new];
-    [self presentViewController:vc asPopoverRelativeToRect:self.addProduct.bounds ofView:self.addProduct preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorTransient];
-}
-
-- (IBAction)removeProduct:(id)sender {
-    [self.products removeObjectAtIndex:self.productsTable.selectedRow];
-    [self.productsTable reloadData];
-}
-
 -(void)loadHairLengthPopup
 {
     [self.hairLengthPopup removeAllItems];
@@ -238,56 +220,7 @@
     }
     [self categoryChanged:self.categoryPopup];
 }
--(void)loadProductTable
-{
-    [self.productsTable reloadData];
-    if (self.editMode == EditModeView) {
-        [self.removeProduct setEnabled:NO];
-        [self.addProduct setEnabled:NO];
-        return;
-    }
-    [self.productsTable deselectAll:nil];
-    [self.removeProduct setEnabled:NO];
-    [self.addProduct setEnabled:YES];
-}
 
-#pragma mark - NSTableViewDelegate/Datasource
--(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
-{
-    if (tableView == self.productsTable) {
-        return self.products.count;
-    }
-    return 0;
-}
--(id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
-{
-    if (tableView == self.productsTable) {
-        Product * product = self.products[row];
-        if ([tableColumn.identifier isEqualToString:@"brandName"]) {
-            return product.brandName;
-        } else {
-            return product.productType;
-        }
-    }
-    return nil;
-}
--(void)tableViewSelectionDidChange:(NSNotification *)notification
-{
-    [self enableProductTableButtons];
-}
-
-#pragma mark - NSPopoverDelegate
--(void)popoverDidClose:(NSNotification *)notification
-{
-//    if (notification.object == self.productSelectorPopover) {
-//        ObjectSelectorViewController * vc = (ObjectSelectorViewController*)self.productSelectorPopover.contentViewController;
-//        if (!vc.isCancelled) {
-//            Product * selectedProduct = vc.selectedObject;
-//            [self.products addObject:selectedProduct];
-//            [self.productsTable reloadData];
-//        }
-//    }
-}
 - (IBAction)minimumPriceChanged:(id)sender {
     double minPrice = self.minimumPrice.doubleValue;
     double maxPrice = self.maximumPrice.doubleValue;
@@ -329,6 +262,7 @@
     self.service.maximumCharge = @(maxPrice);
     self.service.nominalCharge = @(nominalPrice);
     [self setPriceControls];
+    [self.doneButton setEnabled:[self isValid]];
 }
 
 - (IBAction)nominalPriceChanged:(id)sender {
@@ -337,15 +271,16 @@
     double nominalPrice = ((NSControl*)(sender)).doubleValue;
     nominalPrice = round(nominalPrice);
     if (nominalPrice < minPrice) {
-        nominalPrice = minPrice;
+        minPrice = nominalPrice;
     }
     if (nominalPrice > maxPrice) {
-        nominalPrice = maxPrice;
+        maxPrice = nominalPrice;
     }
     self.service.minimumCharge = @(minPrice);
     self.service.maximumCharge = @(maxPrice);
     self.service.nominalCharge = @(nominalPrice);
     [self setPriceControls];
+    [self.doneButton setEnabled:[self isValid]];
 }
 
 - (IBAction)deluxeChanged:(id)sender {
@@ -357,4 +292,5 @@
 }
 - (IBAction)categoryChanged:(id)sender {
 }
+
 @end

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="EditCustomerViewController">
             <connections>
                 <outlet property="addressLine1" destination="uJB-7k-lRO" id="t7Q-Qt-P8z"/>
                 <outlet property="addressLine2" destination="YdQ-6k-hpb" id="0di-76-hDt"/>
-                <outlet property="cancelButton" destination="LB3-jL-Fkq" id="Icn-MO-S5q"/>
+                <outlet property="cancelButton" destination="rze-fC-1nc" id="xR5-gV-kds"/>
                 <outlet property="dayAndMonthPopupButtonsController" destination="eee-oO-b6V" id="Rg7-qT-5Ah"/>
-                <outlet property="doneButton" destination="gKQ-Mb-X0V" id="Ytk-rF-mb9"/>
-                <outlet property="editButton" destination="o1n-OY-3NF" id="FfS-Gt-1yz"/>
+                <outlet property="doneButton" destination="I0M-RQ-qBj" id="YGz-q7-YhA"/>
+                <outlet property="editButton" destination="7Td-TT-0rt" id="XpN-Rh-gcb"/>
                 <outlet property="email" destination="CPR-uV-vt6" id="CQl-wF-ul0"/>
                 <outlet property="firstName" destination="oMI-wp-ghN" id="FjX-Jq-8wy"/>
                 <outlet property="lastName" destination="hTx-4o-5FL" id="ViF-zF-VJk"/>
@@ -208,38 +207,6 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o1n-OY-3NF">
-                    <rect key="frame" x="861" y="679" width="79" height="28"/>
-                    <buttonCell key="cell" type="smallSquare" title="Edit" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="g51-vC-jzl">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
-                        <string key="keyEquivalent">e</string>
-                        <modifierMask key="keyEquivalentModifierMask" command="YES"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="enterEditMode:" target="-2" id="xca-sS-hFb"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gKQ-Mb-X0V">
-                    <rect key="frame" x="866" y="19" width="74" height="28"/>
-                    <buttonCell key="cell" type="smallSquare" title="Done" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qnk-ia-YQR">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="doneButton:" target="-2" id="ugD-Uf-4pI"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LB3-jL-Fkq">
-                    <rect key="frame" x="50" y="19" width="100" height="28"/>
-                    <buttonCell key="cell" type="smallSquare" title="Cancel" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="w4B-Hs-GqS">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="cancelButton:" target="-2" id="NcL-Zt-fe7"/>
-                    </connections>
-                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YuQ-lA-Ejp">
                     <rect key="frame" x="48" y="458" width="90" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Birthday" id="NEb-v6-VRN">
@@ -324,7 +291,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="888" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
                                     <tableColumn identifier="dateAndTime" width="157.875" minWidth="40" maxWidth="1000" id="faW-Pb-GJl">
@@ -408,6 +375,39 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rze-fC-1nc">
+                    <rect key="frame" x="377" y="14" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="R9L-WL-tOc">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="cancelButton:" target="-2" id="bFT-SJ-jz3"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Td-TT-0rt">
+                    <rect key="frame" x="881" y="677" width="65" height="32"/>
+                    <buttonCell key="cell" type="push" title="Edit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9t6-M0-Shl">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="enterEditMode:" target="-2" id="GUM-4s-q3A"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I0M-RQ-qBj">
+                    <rect key="frame" x="493" y="14" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bQv-gt-HQ1">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="doneButton:" target="-2" id="bLO-Vf-k3h"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="142" y="-196"/>
         </customView>

@@ -5,7 +5,7 @@
 //  Created by Keith Staines on 29/08/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
-
+#import "AMCRolloverButton.h"
 #import "AMCNoteView.h"
 #import "Note.h"
 
@@ -15,10 +15,15 @@
     BOOL _isSelected;
 }
 @property NSColor * backgroundColor;
+@property (weak) IBOutlet AMCRolloverButton *closeButton;
+
 @end
 
 @implementation AMCNoteView
 
+-(void)viewDidMoveToWindow {
+
+}
 -(NSColor *)backgroundColor {
     if (!_backgroundColor) {
         _backgroundColor = [NSColor whiteColor];
@@ -28,7 +33,7 @@
 -(void)setIsSelected:(BOOL)isSelected {
     _isSelected = isSelected;
     if (isSelected) {
-        self.backgroundColor = [NSColor colorWithCalibratedRed:0.6 green:0.8 blue:1 alpha:1];
+        self.backgroundColor = [NSColor colorWithCalibratedRed:86./255. green:191.0/255.0 blue:1 alpha:1];
     } else {
         self.backgroundColor = [NSColor whiteColor];
     }
@@ -43,6 +48,8 @@
 -(void)drawRect:(NSRect)dirtyRect {
     [self.backgroundColor set];
     NSRectFill(dirtyRect);
+    [[NSColor lightGrayColor] set];
+    [NSBezierPath strokeRect:NSInsetRect(self.bounds, 1, 1)];
 }
 - (IBAction)removeButtonClicked:(id)sender {
     if (self.target && self.removeAction) {
@@ -51,4 +58,5 @@
                                  afterDelay:0.0];
     }
 }
+
 @end

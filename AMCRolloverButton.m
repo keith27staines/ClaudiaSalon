@@ -10,6 +10,7 @@
 
 @implementation AMCRolloverButton
 
+
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     
@@ -22,18 +23,24 @@
                                     owner:self userInfo:nil];
     [self addTrackingArea:trackingArea];
     [self updateTrackingAreas];
-    self.alphaValue = 0.5;
+    self.alphaValue = 0.0;
 }
 -(void)mouseEntered:(NSEvent *)theEvent {
     [[self animator]setAlphaValue:1.0];
-    [self.cell setBackgroundColor:[NSColor blueColor]];
+    
 }
 -(void)mouseExited:(NSEvent *)theEvent {
-    [[self animator]setAlphaValue:0.5];
+    [[self animator]setAlphaValue:0.0];
     [self.cell setBackgroundColor:[NSColor whiteColor]];
+    
 }
 -(void)updateTrackingAreas {
     [super updateTrackingAreas];
 }
-
+-(BOOL)sendAction:(SEL)theAction to:(id)theTarget {
+    if (self.alphaValue > 0.9) {
+        return [super sendAction:theAction to:theTarget];
+    }
+    return NO;
+}
 @end

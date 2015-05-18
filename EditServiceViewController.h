@@ -8,8 +8,7 @@
 
 #import "EditObjectViewController.h"
 #import "AMCSalonDocument.h"
-@interface EditServiceViewController : EditObjectViewController <NSTableViewDelegate, NSTableViewDataSource>
-@property (weak) IBOutlet NSTableView *productsTable;
+@interface EditServiceViewController : EditObjectViewController
 @property (weak) IBOutlet NSTextField *nameField;
 @property (weak) IBOutlet NSPopUpButton *hairLengthPopup;
 @property (weak) IBOutlet NSTextField *timeRequired;
@@ -20,16 +19,9 @@
 @property (weak) IBOutlet NSPopUpButton *categoryPopup;
 - (IBAction)categoryChanged:(id)sender;
 
-
 @property (weak) IBOutlet NSTextField *minimumPrice;
 @property (weak) IBOutlet NSTextField *maximumPrice;
 @property (weak) IBOutlet NSSlider *priceSlider;
-
-@property (weak) IBOutlet NSButton *removeProduct;
-@property (weak) IBOutlet NSButton *addProduct;
-
-- (IBAction)addProduct:(id)sender;
-- (IBAction)removeProduct:(id)sender;
 
 - (IBAction)minimumPriceChanged:(id)sender;
 
