@@ -112,35 +112,34 @@
     _salaryDate = [salaryDate copy];
     [self reloadData];
 }
-- (IBAction)fixSalaries:(id)sender {
-    
-    NSArray * salaries = [[self.employee.salaries allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"validFromDate" ascending:YES]]];
-    for (Salary * salary in salaries) {
-        if ([salary.validFromDate isGreaterThanOrEqualTo:[NSDate date]]) {
-            [salary.managedObjectContext deleteObject:salary];
-        }
-    }
-    salaries = [[self.employee.salaries allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"validFromDate" ascending:YES]]];
-    Salary * previousSalary = nil;
-    Salary * thisSalary = nil;
-    Salary * nextSalary = nil;
-    for (NSInteger i = 0; i < salaries.count; i++) {
-        thisSalary = salaries[i];
-        if (i > 0) {
-            previousSalary = salaries[i-1];
-        }
-        if (i < salaries.count - 1) {
-            nextSalary = salaries[i+1];
-        }
-        if (previousSalary) {
-            thisSalary.validFromDate = [previousSalary.validToDate dateByAddingTimeInterval:1];
-            if ([thisSalary.validToDate isLessThanOrEqualTo:thisSalary.validFromDate]) {
-                thisSalary.validToDate = [thisSalary.validFromDate dateByAddingTimeInterval:24*3600];
-            }
-        }
-    }
-    thisSalary = [salaries lastObject];
-    thisSalary.validToDate = [NSDate distantFuture];
+- (IBAction)fixSalaries:(id)sender {   
+//    NSArray * salaries = [[self.employee.salaries allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"validFromDate" ascending:YES]]];
+//    for (Salary * salary in salaries) {
+//        if ([salary.validFromDate isGreaterThanOrEqualTo:[NSDate date]]) {
+//            [salary.managedObjectContext deleteObject:salary];
+//        }
+//    }
+//    salaries = [[self.employee.salaries allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"validFromDate" ascending:YES]]];
+//    Salary * previousSalary = nil;
+//    Salary * thisSalary = nil;
+//    Salary * nextSalary = nil;
+//    for (NSInteger i = 0; i < salaries.count; i++) {
+//        thisSalary = salaries[i];
+//        if (i > 0) {
+//            previousSalary = salaries[i-1];
+//        }
+//        if (i < salaries.count - 1) {
+//            nextSalary = salaries[i+1];
+//        }
+//        if (previousSalary) {
+//            thisSalary.validFromDate = [previousSalary.validToDate dateByAddingTimeInterval:1];
+//            if ([thisSalary.validToDate isLessThanOrEqualTo:thisSalary.validFromDate]) {
+//                thisSalary.validToDate = [thisSalary.validFromDate dateByAddingTimeInterval:24*3600];
+//            }
+//        }
+//    }
+//    thisSalary = [salaries lastObject];
+//    thisSalary.validToDate = [NSDate distantFuture];
 }
 
 -(void)updateWithEmployee:(Employee*)employee forDate:(NSDate*)date {
