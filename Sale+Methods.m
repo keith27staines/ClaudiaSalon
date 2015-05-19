@@ -117,6 +117,7 @@
         self.advancePayment.voided = @(YES);
     }
     self.advancePayment = [self makePaymentOfAmount:amount inAccount:account];
+    self.advancePayment.paymentDate = [NSDate date];
     self.advancePayment.reason = @"Sale - advance payment";
 }
 -(Payment*)makePaymentOfAmount:(double)amount inAccount:(Account*)account {

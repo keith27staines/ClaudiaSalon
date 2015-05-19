@@ -594,7 +594,7 @@
                 <constraint firstItem="QQY-8U-Lwx" firstAttribute="centerY" secondItem="bTk-8s-hFS" secondAttribute="centerY" id="vSN-KI-B7J"/>
                 <constraint firstItem="xCW-or-vl5" firstAttribute="baseline" secondItem="Xqb-ZC-wiI" secondAttribute="baseline" id="yZA-xn-mU5"/>
             </constraints>
-            <point key="canvasLocation" x="163.5" y="13.5"/>
+            <point key="canvasLocation" x="213.5" y="-228.5"/>
         </customView>
         <viewController id="LzK-jX-GrI" customClass="AMCAdvancePayment"/>
     </objects>

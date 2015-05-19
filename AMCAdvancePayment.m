@@ -105,8 +105,8 @@
     return NO;
 }
 -(BOOL)isValid {
+    if (self.amountAdvancedField.doubleValue < 1) return NO;
     if (!self.accountPopup.selectedItem.representedObject) return NO;
-    if (self.amountAdvancedField.doubleValue < 0) return NO;
     return YES;
 }
 -(Account *)account {
@@ -119,8 +119,29 @@
     return self.sale.advancePayment;
 }
 -(void)dismissController:(id)sender {
-    if (![self isReadOnly] && [self isValid]) {
-        [self.sale makeAdvancePayment:self.amountAdvancedField.doubleValue inAccount:self.accountPopup.selectedItem.representedObject];
+    if (![self.view.window makeFirstResponder:nil]) {
+        [self.view.window endEditingFor:nil];
+    }
+    if (sender == self.okButton && ![self isReadOnly]) {
+        if ([self isValid]) {
+            [self.sale makeAdvancePayment:self.amountAdvancedField.doubleValue inAccount:self.accountPopup.selectedItem.representedObject];
+        } else {
+            double amount = self.amountAdvancedField.doubleValue;
+            if (amount < 1) {
+                NSAlert * alert = [[NSAlert alloc] init];
+                alert.messageText = @"The amount being advanced is too small";
+                alert.informativeText = @"Increase the amount being advanced";
+                [alert runModal];
+                return;
+            }
+            if (!self.accountPopup.selectedItem.representedObject) {
+                NSAlert * alert = [[NSAlert alloc] init];
+                alert.messageText = @"An account is required in order to take advance payment";
+                alert.informativeText = @"Please select an account";
+                [alert runModal];
+                return;
+            }
+        }
     }
     [super dismissController:sender];
 }

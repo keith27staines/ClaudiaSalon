@@ -512,7 +512,7 @@
                 <constraint firstItem="Hle-26-kCi" firstAttribute="top" secondItem="464-y0-LFS" secondAttribute="top" constant="20" id="x5e-EC-alF"/>
                 <constraint firstItem="Pxx-D5-1xq" firstAttribute="top" secondItem="jJE-pX-eNN" secondAttribute="bottom" constant="8" symbolic="YES" id="xm7-NT-GIs"/>
             </constraints>
-            <point key="canvasLocation" x="45" y="-1084"/>
+            <point key="canvasLocation" x="-202" y="-1538"/>
         </customView>
     </objects>
 </document>

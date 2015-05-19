@@ -18,11 +18,13 @@
 #import "Account+Methods.h"
 #import "AMCSalonDocument.h"
 #import "Salon+Methods.h"
+#import "Payment+Methods.h"
 
 @interface MakePaymentStepViewController ()
 {
 
 }
+
 @end
 
 @implementation MakePaymentStepViewController
@@ -69,6 +71,7 @@
     self.costOfAllWithoutAdditionalDiscount.stringValue = @"";
     self.totalDiscount.stringValue = @"";
     self.totalToPay.stringValue = @"";
+    self.alreadyPaid.doubleValue = 0;
     self.amountGivenByCustomer.doubleValue = 0;
     self.changeToReturn.stringValue = @"";
     [self.view.window makeFirstResponder:self.amountGivenByCustomer];
@@ -112,6 +115,7 @@
         self.costAfterIndividualDiscounts.stringValue = [NSString stringWithFormat:@"£%1.2f",chargeAfterIndividualDiscounts];
         self.totalDiscount.stringValue = [NSString stringWithFormat:@"£%1.2f",totalDiscount];
         self.totalToPay.stringValue = [NSString stringWithFormat:@"£%1.2f",totalToPay];
+        self.alreadyPaid.doubleValue = sale.amountAdvanced;
         self.amountGivenByCustomer.doubleValue = sale.amountGivenByCustomer.doubleValue;
         [self.additionalDiscountPopup selectItemAtIndex:sale.discountType.integerValue];
         if (change >=0) {

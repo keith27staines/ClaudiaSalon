@@ -116,7 +116,7 @@
                                         <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="amount"/>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <connections>
-                                            <binding destination="A62-pe-scW" name="value" keyPath="arrangedObjects.amountGross" id="8db-yY-dwG"/>
+                                            <binding destination="A62-pe-scW" name="value" keyPath="arrangedObjects.signedAmountGross" id="jwN-tz-eMM"/>
                                         </connections>
                                     </tableColumn>
                                     <tableColumn width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="tWz-FV-sKr">
@@ -150,7 +150,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <connections>
-                                            <binding destination="A62-pe-scW" name="value" keyPath="arrangedObjects.amountNet" id="1Jy-U5-TAs"/>
+                                            <binding destination="A62-pe-scW" name="value" keyPath="arrangedObjects.signedAmountNet" id="o6s-Oj-76J"/>
                                         </connections>
                                     </tableColumn>
                                     <tableColumn identifier="payee" width="145.13671875" minWidth="10" maxWidth="3.4028234663852886e+38" id="3ED-TL-JRt">

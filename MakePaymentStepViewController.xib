@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MakePaymentStepViewController">
             <connections>
                 <outlet property="additionalDiscountPopup" destination="kgV-if-JCE" id="eK9-xQ-bcE"/>
+                <outlet property="alreadyPaid" destination="1VU-2x-JDf" id="r8g-bG-ohH"/>
                 <outlet property="amountGivenByCustomer" destination="fBy-0L-Io1" id="AiE-9h-ayQ"/>
                 <outlet property="cardCashSegmentedControl" destination="uCG-Sn-09s" id="sei-rQ-dvN"/>
                 <outlet property="changeToReturn" destination="Jja-Vf-uHa" id="0KZ-2i-oAf"/>
@@ -60,7 +60,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ipo-aC-XGm">
-                    <rect key="frame" x="656" y="547" width="425" height="38"/>
+                    <rect key="frame" x="639" y="547" width="425" height="38"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Price after individual discounts:" id="xtI-Ih-bo3">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -76,7 +76,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jJv-MA-thh">
-                    <rect key="frame" x="611" y="373" width="167" height="38"/>
+                    <rect key="frame" x="475" y="373" width="167" height="38"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="1lE-Ma-Ea7">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -109,7 +109,7 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jja-Vf-uHa">
                     <rect key="frame" x="612" y="29" width="167" height="38"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="8Lc-Ys-4Ep">
-                        <font key="font" metaFont="systemBold" size="27"/>
+                        <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -128,8 +128,16 @@ DQ
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rt7-2h-wGO">
-                    <rect key="frame" x="138" y="373" width="461" height="38"/>
+                    <rect key="frame" x="67" y="373" width="360" height="38"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Total discount for customer:" id="9QB-Sb-VnC">
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ppQ-ex-mP2">
+                    <rect key="frame" x="709" y="373" width="360" height="38"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Advance payment:" id="jhY-fO-oPg">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -150,14 +158,14 @@ DQ
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WT3-3c-6lN">
                                 <rect key="frame" x="615" y="50" width="163" height="38"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" drawsBackground="YES" id="4LI-SA-T7e">
-                                    <font key="font" metaFont="systemBold" size="27"/>
+                                    <font key="font" metaFont="system" size="27"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="14y-F8-wTs">
                                 <rect key="frame" x="121" y="50" width="495" height="38"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Total customer must pay:         " drawsBackground="YES" id="tVb-6C-oxW">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Amount outstanding:" drawsBackground="YES" id="tVb-6C-oxW">
                                     <font key="font" metaFont="system" size="27"/>
                                     <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -202,7 +210,17 @@ DQ
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fBy-0L-Io1" customClass="AMCCashEntryField">
                     <rect key="frame" x="614" y="110" width="184" height="46"/>
                 </customView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1VU-2x-JDf">
+                    <rect key="frame" x="1080" y="373" width="145" height="38"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="Csu-kE-Qxx">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="ovK-5P-jUX"/>
+                        <font key="font" metaFont="system" size="27"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
+            <point key="canvasLocation" x="22.5" y="517.5"/>
         </customView>
         <customObject id="OqP-uT-VRh" customClass="AMCPaymentCompleteWindowController">
             <connections>

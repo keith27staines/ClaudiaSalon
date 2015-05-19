@@ -35,6 +35,7 @@
 - (IBAction)extraDiscountChanged:(id)sender;
 
 - (IBAction)amountGivenByCustomerFieldChanged:(id)sender;
+@property (weak) IBOutlet NSTextField *alreadyPaid;
 
 - (IBAction)paymentComplete:(id)sender;
 

@@ -88,6 +88,7 @@
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hoursWorkedOnDayChangedNotification:) name:@"hours worked on day changed" object:nil];
+    _salaryDate = [NSDate date];
 }
 -(void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"hours worked on day changed" object:nil];
@@ -157,8 +158,8 @@
     self.salary = [self.employee salaryForDate:self.salaryDate];
     [self reloadHoursPerWeekView];
     if (self.salary) {
-        self.validFromDate.dateValue = self.salary.validFromDate;
-        self.validToDate.dateValue = self.salary.validToDate;
+        self.validFromDate.dateValue = [self.salary.validFromDate dateByAddingTimeInterval:3600];
+        self.validToDate.dateValue = [self.salary.validToDate dateByAddingTimeInterval:-3600];
         self.paidFromManagersBudgetCheckbox.state = (self.employee.paidFromManagersBudget.boolValue)?NSOnState:NSOffState;
 
         // set allowed date ranges
@@ -179,7 +180,6 @@
         
         if ([self isCurrentSalary:self.salary]) {
             // Looking at current salary
-            self.validToDate.minDate = [self.salary.validFromDate dateByAddingTimeInterval:1];;
             self.currentSalaryLabel.hidden = NO;
             self.currentSalaryButton.enabled = NO; // Already on current salary
             if ([self.salary.validToDate isEqual:[NSDate distantFuture]]) {
@@ -355,19 +355,17 @@
     self.employee.paidFromManagersBudget = (self.paidFromManagersBudgetCheckbox.state==NSOnState)?@YES:@NO;
 }
 - (IBAction)fromDateChanged:(id)sender {
-    self.salary.validFromDate = [[self.validFromDate.dateValue dateByAddingTimeInterval:10] beginningOfDay];
-    _salaryDate = self.salary.validFromDate;
+    self.salary.validFromDate = [self.validFromDate.dateValue beginningOfDay];
     Salary * previousSalary = [self.employee salaryPreceedingSalary:self.salary];
     if (previousSalary) {
-        previousSalary.validToDate = [[self.salary.validFromDate dateByAddingTimeInterval:-10] endOfDay];
+        previousSalary.validToDate = [[self.salary.validFromDate dateByAddingTimeInterval:-3600] endOfDay];
     }
 }
 - (IBAction)toDateChanged:(id)sender {
-    self.salary.validToDate = [[self.validToDate.dateValue endOfDay] dateByAddingTimeInterval:-1];
-    _salaryDate = self.salary.validFromDate;
+    self.salary.validToDate = [self.validToDate.dateValue endOfDay];
     Salary * nextSalary = [self.employee salaryFollowingSalary:self.salary];
     if (nextSalary) {
-        nextSalary.validFromDate = [[self.salary.validToDate dateByAddingTimeInterval:10] beginningOfDay];
+        nextSalary.validFromDate = [[self.salary.validToDate dateByAddingTimeInterval:3600] beginningOfDay];
     }
 }
 -(void)hoursWorkedOnDayChangedNotification:(NSNotification*)notification {
