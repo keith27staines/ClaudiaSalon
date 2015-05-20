@@ -117,8 +117,10 @@
         self.advancePayment.voided = @(YES);
     }
     self.advancePayment = [self makePaymentOfAmount:amount inAccount:account];
-    self.advancePayment.paymentDate = [NSDate date];
+    self.advancePayment.createdDate = [NSDate date];
+    self.advancePayment.paymentDate = self.advancePayment.createdDate;
     self.advancePayment.reason = @"Sale - advance payment";
+    self.advancePayment.paymentCategory = [Salon salonWithMoc:self.managedObjectContext].defaultPaymentCategoryForSales;
 }
 -(Payment*)makePaymentOfAmount:(double)amount inAccount:(Account*)account {
     NSAssert(account, @"account must not be nill");

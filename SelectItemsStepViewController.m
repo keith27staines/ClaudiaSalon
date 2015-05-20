@@ -18,6 +18,7 @@
 #import "AMCEmployeeForServiceSelector.h"
 #import "AMCJobsColumnViewController.h"
 #import "AMCJobsColumnView.h"
+#import "AMCQuickQuoteViewController.h"
 
 @interface SelectItemsStepViewController() <AMCJobsColumnViewDelegate>
 {
@@ -217,6 +218,7 @@
         isLoaded = YES;
         [self clear];
         [self.saleItemsTable reloadData];
+        [self updateTotal];
     }
     return view;
 }
@@ -250,6 +252,7 @@
     if (!self.enabled) {
         [self.delegate wizardStep:self isValid:self.isValid];
     }
+    [self updateTotal];
 }
 -(id)objectForWizardStep
 {
@@ -266,6 +269,7 @@
         [self.deluxeImage setHidden:!service.deluxe.boolValue];
     }
     [self.delegate wizardStep:self isValid:self.isValid];
+    [self updateTotal];
 }
 #pragma mark - Actions
 - (IBAction)categoryChanged:(id)sender {
@@ -299,6 +303,7 @@
     [self setPriceBeforeDiscountFromSaleItem:saleItem];
     [self applyDiscount];
     [self.delegate wizardStep:self isValid:self.isValid];
+    [self updateTotal];
 }
 - (IBAction)priceSliderChanged:(id)sender {
     SaleItem * saleItem = [self selectedSaleItem];
@@ -306,6 +311,7 @@
     [self setPriceBeforeDiscountFromSaleItem:saleItem];
     [self applyDiscount];
     [self.delegate wizardStep:self isValid:self.isValid];
+    [self updateTotal];
 }
 - (IBAction)addSaleItemFromSelectedService:(id)sender {
     NSInteger row = self.servicesListTable.selectedRow;
@@ -321,6 +327,11 @@
     if (viewController == self.employeeForServiceViewController && ! self.employeeForServiceViewController.cancelled) {
         [self addSaleItemForService:self.employeeForServiceViewController.service performedBy:self.employeeForServiceViewController.employee];
     }
+    if (viewController == self.quickQuoteViewController) {
+        _saleItemsArray = nil;
+        [self.saleItemsTable reloadData];
+        self.totalLabel.objectValue = self.sale.actualCharge;
+    }
     [super dismissViewController:viewController];
 }
 -(void)addSaleItemForService:(Service*)service performedBy:(Employee*)employee {
@@ -335,6 +346,7 @@
     NSInteger index = [self.saleItemsArray indexOfObject:saleItem];
     [self.saleItemsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
     [self saleItemWasSelected];
+    [self updateTotal];
 }
 -(BOOL)isValid
 {
@@ -347,6 +359,11 @@
 }
 - (IBAction)discountChanged:(id)sender {
     [self applyDiscount];
+    [self updateTotal];
+}
+-(void)updateTotal {
+    [self.sale updatePriceFromSaleItems];
+    self.totalLabel.objectValue = self.sale.actualCharge;
 }
 -(void)removeSaleItem:(id)sender
 {
@@ -362,6 +379,7 @@
             [self.delegate wizardStep:self isValid:self.isValid];
             [self clearPriceAndDiscount];
         }
+        [self updateTotal];
     }
 }
 #pragma mark - Helpers
@@ -379,7 +397,7 @@
     if (!_saleItemsArray) {
         Sale * sale = self.sale;
         NSSet * saleItems = sale.saleItem;
-        _saleItemsArray = [[saleItems allObjects] mutableCopy];
+        _saleItemsArray = [[[saleItems allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:YES]]] mutableCopy];
         if (!_saleItemsArray) {
             _saleItemsArray = [NSMutableArray array];
         }
@@ -564,6 +582,13 @@
     self.selectedSaleItem.actualCharge = @(discountedPrice);
     self.chargePriceAfterDiscount.stringValue = [NSString stringWithFormat:@"£%1.2f",discountedPrice];
 }
+- (IBAction)totalInfoButtonClicked:(id)sender {
+    Sale * sale = self.sale;
+    AMCQuickQuoteViewController * vc = self.quickQuoteViewController;
+    vc.sale = sale;
+    [vc prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewController:vc asPopoverRelativeToRect:self.quickQuoteButton.bounds ofView:self.quickQuoteButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+}
 
 - (IBAction)refundButtonClicked:(id)sender {
     AMCRefundViewController * vc = [AMCRefundViewController new];
@@ -574,4 +599,5 @@
 {
     [self saleItemWasSelected];
 }
+
 @end

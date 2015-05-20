@@ -6,11 +6,15 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class Sale;
+@class Sale, AMCQuickQuoteViewController;
 
 #import "WizardStepViewController.h"
 #import "AMCSalonDocument.h"
 @interface SelectItemsStepViewController : WizardStepViewController <NSTableViewDataSource, NSTableViewDelegate, NSControlTextEditingDelegate,NSTextFieldDelegate>
+
+@property (strong) IBOutlet AMCQuickQuoteViewController *quickQuoteViewController;
+
+@property (weak) IBOutlet NSButton *quickQuoteButton;
 
 @property (weak) IBOutlet NSPopUpButton *categoryPopup;
 
@@ -57,6 +61,7 @@
 @property (weak) IBOutlet NSButton *refundButton;
 - (IBAction)refundButtonClicked:(id)sender;
 @property (weak) IBOutlet NSBox *selectServiceBox;
+@property (weak) IBOutlet NSTextField *totalLabel;
 
 @property (weak) IBOutlet NSNumberFormatter *numberFormatterForSelectedItemPriceBeforeDiscount;
 @end

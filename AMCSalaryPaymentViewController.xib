@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14D98g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCSalaryPaymentViewController">
@@ -137,9 +137,12 @@
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qhg-Se-cau">
                     <rect key="frame" x="401" y="13" width="130" height="32"/>
-                    <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OUd-BC-tNf">
+                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OUd-BC-tNf">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
                     </buttonCell>
                     <connections>
                         <action selector="dismissController:" target="-2" id="WdS-JH-ViC"/>
@@ -241,7 +244,7 @@
                     </connections>
                 </button>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMy-Nj-WlI">
-                    <rect key="frame" x="20" y="101" width="402" height="166"/>
+                    <rect key="frame" x="20" y="101" width="402" height="155"/>
                     <clipView key="contentView" id="JiC-DK-1Ha">
                         <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -250,10 +253,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="400" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="paymentDate" width="59" minWidth="40" maxWidth="1000" id="UmZ-ho-KPk">
+                                    <tableColumn identifier="paymentDate" width="104" minWidth="40" maxWidth="1000" id="UmZ-ho-KPk">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Date paid">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -267,7 +270,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
-                                    <tableColumn identifier="amount" width="49" minWidth="40" maxWidth="1000" id="aA9-ki-kNr">
+                                    <tableColumn identifier="amount" width="119" minWidth="40" maxWidth="1000" id="aA9-ki-kNr">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Amount">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -292,18 +295,6 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                    </tableColumn>
-                                    <tableColumn identifier="reconciledWithBankStatement" width="199" minWidth="10" maxWidth="3.4028234663852886e+38" id="zu3-su-TlH">
-                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Reconciled?">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                        </tableHeaderCell>
-                                        <buttonCell key="dataCell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="2mJ-1k-TJX">
-                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                     </tableColumn>
                                 </tableColumns>
@@ -364,10 +355,9 @@
                         <action selector="previousEmployee:" target="-2" id="c6E-2O-2ak"/>
                     </connections>
                 </button>
-                <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CFu-l6-xog">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="CFu-l6-xog">
                     <rect key="frame" x="505" y="102" width="406" height="200"/>
                     <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="406" id="JHw-Qs-ZZ1"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="d83-5j-nwV"/>
                     </constraints>
                 </customView>
@@ -400,6 +390,7 @@
                 <constraint firstItem="NW2-re-9wY" firstAttribute="leading" secondItem="JME-2X-0pa" secondAttribute="leading" constant="20" id="9mV-zQ-uCm"/>
                 <constraint firstItem="HXH-eg-E8m" firstAttribute="baseline" secondItem="pqh-VP-0Ih" secondAttribute="baseline" id="CmU-IG-duI"/>
                 <constraint firstItem="LNz-Jk-lat" firstAttribute="leading" secondItem="CFu-l6-xog" secondAttribute="leading" id="CrZ-xi-4Mn"/>
+                <constraint firstAttribute="trailing" secondItem="CFu-l6-xog" secondAttribute="trailing" constant="20" id="EBP-gn-BeV"/>
                 <constraint firstItem="Z1e-3q-477" firstAttribute="bottom" secondItem="15N-ht-Gd0" secondAttribute="bottom" id="Ez3-y5-G3R"/>
                 <constraint firstItem="15N-ht-Gd0" firstAttribute="top" secondItem="nXx-QZ-wv0" secondAttribute="bottom" constant="21" id="F2j-ku-7sT"/>
                 <constraint firstItem="R4c-5h-xwH" firstAttribute="leading" secondItem="Lzt-sW-GYx" secondAttribute="trailing" constant="51" id="F4Q-4y-fAG"/>
@@ -407,7 +398,7 @@
                 <constraint firstAttribute="trailing" secondItem="NW2-re-9wY" secondAttribute="trailing" constant="20" id="HT2-Ew-tej"/>
                 <constraint firstItem="Lzt-sW-GYx" firstAttribute="height" secondItem="efw-LH-Qr1" secondAttribute="height" id="HVJ-87-Whg"/>
                 <constraint firstAttribute="centerX" secondItem="17a-RR-WMe" secondAttribute="centerX" id="Hyz-Il-xAT"/>
-                <constraint firstItem="wMy-Nj-WlI" firstAttribute="top" secondItem="aPk-G3-BCX" secondAttribute="bottom" constant="1" id="JQP-LZ-oHm"/>
+                <constraint firstItem="wMy-Nj-WlI" firstAttribute="top" secondItem="aPk-G3-BCX" secondAttribute="bottom" constant="12" id="JQP-LZ-oHm"/>
                 <constraint firstItem="pqh-VP-0Ih" firstAttribute="leading" secondItem="FFM-Lg-8am" secondAttribute="trailing" constant="76" id="JbC-Yh-pVi"/>
                 <constraint firstAttribute="bottom" secondItem="Qhg-Se-cau" secondAttribute="bottom" constant="20" id="KTH-4g-lmY"/>
                 <constraint firstItem="FD7-bp-am0" firstAttribute="leading" secondItem="JME-2X-0pa" secondAttribute="leading" constant="20" id="LE2-7t-LHp"/>
@@ -479,8 +470,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogl-aD-FlF">
-                    <rect key="frame" x="63" y="221" width="277" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ogl-aD-FlF">
+                    <rect key="frame" x="18" y="221" width="277" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Pay by Percentage of Services Performed" id="wEj-lU-aGt">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -543,7 +534,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Upo-Fy-jLu">
-                    <rect key="frame" x="256" y="51" width="27" height="17"/>
+                    <rect key="frame" x="256" y="56" width="27" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="100" id="Jhe-mv-SnS">
                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="azQ-3M-k2G"/>
                         <font key="font" metaFont="system"/>
@@ -552,7 +543,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eCN-Cr-Xim">
-                    <rect key="frame" x="271" y="15" width="12" height="17"/>
+                    <rect key="frame" x="271" y="20" width="12" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="7Ze-w6-tPn">
                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="oS0-xd-7ef"/>
                         <font key="font" metaFont="system"/>
@@ -566,9 +557,9 @@
                 <constraint firstAttribute="trailing" secondItem="Yvj-eA-nO7" secondAttribute="trailing" constant="120" id="0dE-v1-e50"/>
                 <constraint firstItem="Rpb-oX-hVK" firstAttribute="leading" secondItem="bfz-3d-mNH" secondAttribute="leading" constant="20" id="15N-7v-eu7"/>
                 <constraint firstItem="eCN-Cr-Xim" firstAttribute="trailing" secondItem="Upo-Fy-jLu" secondAttribute="trailing" id="1hz-tG-Mu2"/>
-                <constraint firstItem="Upo-Fy-jLu" firstAttribute="top" secondItem="8W1-0s-7vW" secondAttribute="bottom" constant="20" id="3eS-7l-RSN"/>
                 <constraint firstItem="ogl-aD-FlF" firstAttribute="top" secondItem="bfz-3d-mNH" secondAttribute="top" constant="20" symbolic="YES" id="9z1-Gk-nKe"/>
                 <constraint firstItem="ZY7-YT-fvr" firstAttribute="baseline" secondItem="8W1-0s-7vW" secondAttribute="baseline" id="A17-RV-MZz"/>
+                <constraint firstItem="Upo-Fy-jLu" firstAttribute="baseline" secondItem="jU0-EB-Oxg" secondAttribute="baseline" id="CPy-Td-rxu"/>
                 <constraint firstItem="bah-yL-bH9" firstAttribute="leading" secondItem="bfz-3d-mNH" secondAttribute="leading" constant="20" symbolic="YES" id="FMQ-Ru-EZ0"/>
                 <constraint firstItem="jU0-EB-Oxg" firstAttribute="trailing" secondItem="ZY7-YT-fvr" secondAttribute="trailing" id="GOO-en-xMQ"/>
                 <constraint firstItem="bah-yL-bH9" firstAttribute="top" secondItem="Rpb-oX-hVK" secondAttribute="bottom" constant="22" id="KfX-XH-36E"/>
@@ -577,13 +568,12 @@
                 <constraint firstItem="8W1-0s-7vW" firstAttribute="trailing" secondItem="Upo-Fy-jLu" secondAttribute="trailing" constant="2" id="W2b-G2-U44"/>
                 <constraint firstItem="jU0-EB-Oxg" firstAttribute="top" secondItem="ZY7-YT-fvr" secondAttribute="bottom" constant="15" id="auo-Gs-wJW"/>
                 <constraint firstItem="bMc-DQ-VTD" firstAttribute="trailing" secondItem="jU0-EB-Oxg" secondAttribute="trailing" id="c6g-lP-Zb4"/>
-                <constraint firstAttribute="trailing" secondItem="8W1-0s-7vW" secondAttribute="trailing" constant="120" id="cfc-jl-3t3"/>
-                <constraint firstItem="eCN-Cr-Xim" firstAttribute="top" secondItem="Upo-Fy-jLu" secondAttribute="bottom" constant="19" id="d1n-rn-vsZ"/>
                 <constraint firstItem="Yvj-eA-nO7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bah-yL-bH9" secondAttribute="trailing" constant="8" symbolic="YES" id="dcA-lG-QCr"/>
                 <constraint firstItem="ZY7-YT-fvr" firstAttribute="trailing" secondItem="bah-yL-bH9" secondAttribute="trailing" id="gth-Jm-Rj8"/>
                 <constraint firstItem="Rpb-oX-hVK" firstAttribute="top" secondItem="ogl-aD-FlF" secondAttribute="bottom" constant="24" id="hp2-MJ-3N4"/>
                 <constraint firstItem="ogl-aD-FlF" firstAttribute="leading" secondItem="bfz-3d-mNH" secondAttribute="leading" constant="20" id="jz7-es-4Rv"/>
                 <constraint firstItem="8W1-0s-7vW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZY7-YT-fvr" secondAttribute="trailing" constant="8" symbolic="YES" id="mwr-Oo-SZP"/>
+                <constraint firstItem="bMc-DQ-VTD" firstAttribute="baseline" secondItem="eCN-Cr-Xim" secondAttribute="baseline" id="oJu-DY-yPK"/>
                 <constraint firstItem="Yvj-eA-nO7" firstAttribute="baseline" secondItem="bah-yL-bH9" secondAttribute="baseline" id="pMS-Gx-x7b"/>
                 <constraint firstItem="ZY7-YT-fvr" firstAttribute="top" secondItem="bah-yL-bH9" secondAttribute="bottom" constant="26" id="u51-C6-OPX"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Rpb-oX-hVK" secondAttribute="trailing" constant="20" id="vpw-dn-BZm"/>

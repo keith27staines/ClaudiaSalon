@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCAccountStatementViewController">
@@ -326,7 +326,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k9b-Xf-CSA">
-                    <rect key="frame" x="716" y="688" width="187" height="32"/>
+                    <rect key="frame" x="716" y="680" width="187" height="32"/>
                     <buttonCell key="cell" type="push" title="Add reconciliation point" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vya-uY-U81">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -492,7 +492,7 @@
                 <constraint firstItem="0nD-FP-uhI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="6et-LB-3nl"/>
                 <constraint firstItem="2mm-7M-RfB" firstAttribute="height" secondItem="lWe-sg-tfJ" secondAttribute="height" id="82M-pC-MYC"/>
                 <constraint firstItem="j8i-ag-3OZ" firstAttribute="top" secondItem="0nD-FP-uhI" secondAttribute="bottom" constant="20" id="9Vq-wZ-cmu"/>
-                <constraint firstItem="k9b-Xf-CSA" firstAttribute="top" secondItem="yLh-YS-jHM" secondAttribute="bottom" constant="12" id="9cq-wr-y7x"/>
+                <constraint firstItem="k9b-Xf-CSA" firstAttribute="top" secondItem="yLh-YS-jHM" secondAttribute="bottom" constant="20" id="9cq-wr-y7x"/>
                 <constraint firstItem="f3Y-Kk-DWc" firstAttribute="top" secondItem="LMe-di-zMb" secondAttribute="bottom" constant="14" id="AR3-je-f2j"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yLh-YS-jHM" secondAttribute="trailing" constant="40" id="Ctg-NX-Uih"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="j8i-ag-3OZ" secondAttribute="trailing" constant="40" id="Da7-Km-tL0"/>

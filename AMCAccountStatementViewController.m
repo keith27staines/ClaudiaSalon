@@ -275,11 +275,29 @@
     }
 }
 - (IBAction)addReconciliationPoint:(id)sender {
-    AccountReconciliation * reconciliation = [AccountReconciliation newObjectWithMoc:self.documentMoc];
-    reconciliation.actualBalance = @(self.balance);
-    reconciliation.reconciliationDate = self.endDate;
-    [self.account addReconciliationsObject:reconciliation];
-    [self reloadData];
+    NSDateFormatter * df = [[NSDateFormatter alloc] init];
+    df.dateStyle = NSDateFormatterLongStyle;
+    df.timeStyle = NSDateFormatterShortStyle;
+    NSAlert * alert = [[NSAlert alloc] init];
+    alert.messageText = @"Add a reconciliation point?";
+    NSMutableString * info = [NSMutableString stringWithString:@""];
+    [info appendString:@"The reconciliation point will have the following properties...\n\n"];
+    [info appendFormat:@"Account: %@ \n\n",self.account.friendlyName];
+    [info appendFormat:@"Date: %@ \n\n",[df stringFromDate:self.endDate]];
+    [info appendFormat:@"Balance: £%1.2f\n\n",self.balance];
+    [info appendFormat:@"All payments recorded against the %@ account prior to %@ will become uneditable\n\n",self.account.friendlyName,[df stringFromDate:self.endDate]];
+    alert.informativeText = info;
+    [alert addButtonWithTitle:@"Add reconciliation point"];
+    [alert addButtonWithTitle:@"Cancel"];
+    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSAlertFirstButtonReturn) {
+            AccountReconciliation * reconciliation = [AccountReconciliation newObjectWithMoc:self.documentMoc];
+            reconciliation.actualBalance = @(self.balance);
+            reconciliation.reconciliationDate = self.endDate;
+            [self.account addReconciliationsObject:reconciliation];
+            [self reloadData];
+        }
+    }];
 }
 
 @end

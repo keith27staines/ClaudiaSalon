@@ -638,9 +638,18 @@
 - (IBAction)advancePaymentButtonClicked:(id)sender {
     Sale * sale = self.appointment.sale;
     if (sale) {
-        self.advancePaymentViewController.appointment = self.appointment;
-        [self.advancePaymentViewController prepareForDisplayWithSalon:self.salonDocument];
-        [self presentViewControllerAsSheet:self.advancePaymentViewController];
+        if (sale.advancePayment && [sale.advancePayment isReconciled]) {
+            NSAlert * alert = [[NSAlert alloc] init];
+            alert.messageText = @"Cannot change the advance payment";
+            alert.informativeText = @"The advance payment has already been reconciled with a bank statement and therefore cannot be changed.";
+            [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+                
+            }];
+        } else {
+            self.advancePaymentViewController.appointment = self.appointment;
+            [self.advancePaymentViewController prepareForDisplayWithSalon:self.salonDocument];
+            [self presentViewControllerAsSheet:self.advancePaymentViewController];
+        }
     }
 }
 
