@@ -239,7 +239,7 @@
                 <constraint firstItem="UN7-D4-8Id" firstAttribute="baseline" secondItem="jPK-YO-bXe" secondAttribute="baseline" id="yFo-4g-rkU"/>
                 <constraint firstItem="jPK-YO-bXe" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="znH-0b-DkE"/>
             </constraints>
-            <point key="canvasLocation" x="139.5" y="194"/>
+            <point key="canvasLocation" x="139.5" y="193.5"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="QXb-g2-Lte"/>
     </objects>

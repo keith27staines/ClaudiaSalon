@@ -65,7 +65,6 @@
 {
     NSMutableString * objectTypeAndName = [@"Payment" mutableCopy];
     if (self.objectToEdit) {
-        Payment * object = (Payment*)self.objectToEdit;
         NSString * objectName = @"";
         if (objectName) {
             [objectTypeAndName appendString:@": "];

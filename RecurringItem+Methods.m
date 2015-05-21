@@ -12,11 +12,11 @@
 
 @implementation RecurringItem (Methods)
 
-+(void)processOutstandingItemsFor:(NSManagedObjectContext*)moc error:(NSError**)error {
++(BOOL)processOutstandingItemsFor:(NSManagedObjectContext*)moc error:(NSError**)error {
     for (RecurringItem * item in [self outstandingItemsInMoc:moc]) {
         [self processRecurringItem:item];
     }
-    return;
+    return YES;
 }
 +(void)processRecurringItem:(RecurringItem*)item {
     if ([item.nextActionDate isGreaterThan:[NSDate date]]) return;

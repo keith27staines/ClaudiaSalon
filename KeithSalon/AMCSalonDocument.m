@@ -39,7 +39,6 @@
 #import "Employee+Methods.h"
 #import "Payment+Methods.h"
 #import "NSDate+AMCDate.h"
-#import "Product+Methods.h"
 #import "Service+Methods.h"
 #import "ServiceCategory+Methods.h"
 #import "Salary+Methods.h"
@@ -65,7 +64,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property (weak) IBOutlet AMCStaffBusyViewController *staffBusyViewController;
 @property (weak) IBOutlet AMCStaffCanDoViewController *staffCanDoViewController;
 @property (weak) IBOutlet AMCQuickQuoteViewController *quickQuoteViewController;
-@property (weak) IBOutlet AMCAccountStatementViewController * accountStatementViewController;
+@property (weak) IBOutlet AMCAccountStatementViewController *accountStatementViewController;
 @property (strong) IBOutlet AMCCategoryManagerViewController *accountGroupingsViewController;
 
 @property (strong) IBOutlet AMCSalonDetailsViewController *salonDetailsViewController;
@@ -73,7 +72,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property (strong) IBOutlet AMCViewController *recurringEventManagementViewController;
 
 @property (strong) IBOutlet AMCViewController *accountManagementViewController;
-
 
 @property (weak) IBOutlet NSButton *showPaySalary;
 
@@ -139,7 +137,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.saleArrayController setFetchPredicate:fetch];
     [self.salesTable setSortDescriptors:[self initialSortDescriptorsForSalesTable]];
     [self.customerTable setSortDescriptors:[self initialSortDescriptorsForCustomersTable]];
-    [self.productsTable setSortDescriptors:[self initialSortDescriptorsForProductsTable]];
     [self.employeesTable setSortDescriptors:[self initialSortDescriptorsForEmployeesTable]];
     [self.serviceCategoryTable setSortDescriptors:[self initialSortDescriptorsForServicesTable]];
     [self.servicesTable setSortDescriptors:[self initialSortDescriptorsForServicesTable]];
@@ -171,11 +168,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 {
     return @[[NSSortDescriptor sortDescriptorWithKey:@"categoryName" ascending:YES]];
 }
--(NSArray*)initialSortDescriptorsForProductsTable
-{
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"brandName" ascending:YES],
-                 [NSSortDescriptor sortDescriptorWithKey:@"productType" ascending:YES]];
-}
 -(NSArray*)initialSortDescriptorsForCustomersTable
 {
     return @[[NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES] ,
@@ -197,15 +189,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     customer.lastName = self.lastNameFilter.stringValue;
     customer.email = self.emailAddressFilter.stringValue;
     customer.phone = self.phoneFilter.stringValue;
-    customer.addressLine1 = self.addressLine1Filter.stringValue;
-    customer.addressLine2 = self.addressLine2Filter.stringValue;
-    customer.postcode = self.postcodeFilter.stringValue;
     [self editObject:customer inMode:EditModeCreate withViewController:self.editCustomerViewController];
-}
--(IBAction)createProductButtonClicked:(id)sender
-{
-    Product * product = [self newProduct];
-    [self editObject:product inMode:EditModeCreate withViewController:self.editProductViewController];
 }
 -(IBAction)createServiceButtonClicked:(id)sender
 {
@@ -239,16 +223,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self selectCustomer:customer];
     return customer;
 }
--(Product*)newProduct
-{
-    Product * product = [Product newObjectWithMoc:self.managedObjectContext];
-    product.brandName = @"Brand";
-    product.productType = @"Type";
-    [self.productArrayController addObject:product];
-    [self.productArrayController rearrangeObjects];
-    [self selectProduct:product];
-    return product;
-}
 -(Service*)newService
 {
     Service * service = [Service newObjectWithMoc:self.managedObjectContext];
@@ -276,15 +250,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     NSArray * array = self.saleArrayController.arrangedObjects;
     NSUInteger index = self.salesTable.selectedRowIndexes.firstIndex;
     if (index == NSNotFound || array.count == 0) {
-        return nil;
-    }
-    return array[index];
-}
--(Product*)selectedProduct
-{
-    NSArray * array = self.productArrayController.arrangedObjects;
-    NSUInteger index = self.productsTable.selectedRowIndexes.firstIndex;
-    if (index == NSNotFound) {
         return nil;
     }
     return array[index];
@@ -341,13 +306,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.customerTable selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
     [self animateNotesButtonIfNecessaryForSelectedTab];
 }
--(void)selectProduct:(Product*)product
-{
-    NSArray * array = [self.productArrayController arrangedObjects];
-    NSUInteger index = [array indexOfObject:product];
-    [self.productsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-    [self animateNotesButtonIfNecessaryForSelectedTab];
-}
 -(void)selectService:(Service*)service
 {
     NSArray * array = [self.serviceArrayController arrangedObjects];
@@ -396,11 +354,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 {
     Customer * customer = [self selectedCustomer];
     [self editObject:customer inMode:EditModeView withViewController:self.editCustomerViewController];
-}
--(IBAction)viewProductButtonClicked:(id)sender
-{
-    Product * product = [self selectedProduct];
-    [self editObject:product inMode:EditModeView withViewController:self.editProductViewController];
 }
 -(IBAction)viewServiceButtonClicked:(id)sender
 {
@@ -519,30 +472,11 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 #pragma mark - NSControlTextEditingDelegate
 -(void)controlTextDidChange:(NSNotification *)notification
 {
-    NSControl * control = notification.object;
-    NSSet * controls = [self customersFilterSet];
-    if ([controls containsObject:control]) {
-        if (control == self.postcodeFilter) {
-            NSString * string = self.postcodeFilter.stringValue;
-            string = [string uppercaseString];
-            string = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
-            self.postcodeFilter.stringValue = string;
-        }
-    }
     if (notification.object == self.firstNameFilter) {
         self.firstNameFilter.stringValue = [self.firstNameFilter.stringValue capitalizedString];
     }
     if (notification.object == self.lastNameFilter) {
         self.lastNameFilter.stringValue = [self.lastNameFilter.stringValue capitalizedString];
-    }
-    if (notification.object == self.addressLine1Filter) {
-        self.addressLine1Filter.stringValue = [self.addressLine1Filter.stringValue capitalizedString];
-    }
-    if (notification.object == self.addressLine2Filter) {
-        self.addressLine2Filter.stringValue = [self.addressLine2Filter.stringValue capitalizedString];
-    }
-    if (notification.object == self.postcodeFilter) {
-        self.postcodeFilter.stringValue = [self.postcodeFilter.stringValue uppercaseString];
     }
     [self reloadCustomersTable];
 }
@@ -564,9 +498,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
             self.lastNameFilter,
             self.phoneFilter,
             self.emailAddressFilter,
-            self.postcodeFilter,
-            self.addressLine1Filter,
-            self.addressLine2Filter,
             self.birthdayPopupFilter ,nil];
 }
 -(void)clearCustomersFilterSet
@@ -575,9 +506,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     self.lastNameFilter.stringValue = @"";
     self.phoneFilter.stringValue = @"";
     self.emailAddressFilter.stringValue = @"";
-    self.postcodeFilter.stringValue = @"";
-    self.addressLine1Filter.stringValue = @"";
-    self.addressLine2Filter.stringValue = @"";
     [self.birthdayPopupFilter selectMonthNumber:0 dayNumber:0];
 }
 -(NSPredicate*)buildPredicateFromCustomerFilters
@@ -598,18 +526,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     // phone
     if (self.phoneFilter.stringValue.length > 0) {
         [predicateArray addObject:[NSPredicate predicateWithFormat:@"phone beginswith[cd] %@",self.phoneFilter.stringValue]];
-    }
-    // postcode
-    if (self.postcodeFilter.stringValue.length > 0) {
-        [predicateArray addObject:[NSPredicate predicateWithFormat:@"postcode beginswith[cd] %@",self.postcodeFilter.stringValue]];
-    }
-    // addressLine1
-    if (self.addressLine1Filter.stringValue.length > 0) {
-        [predicateArray addObject:[NSPredicate predicateWithFormat:@"addressLine1 beginswith[cd] %@",self.addressLine1Filter.stringValue]];
-    }
-    // addressLine2
-    if (self.addressLine2Filter.stringValue.length > 0) {
-        [predicateArray addObject:[NSPredicate predicateWithFormat:@"addressLine2 beginswith[cd] %@",self.addressLine2Filter.stringValue]];
     }
     // day of birth
     if (self.birthdayPopupFilter.dayNumber > 0) {
@@ -632,10 +548,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     }
     if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"customers"]) {
         [self animateNotesButton:self.showCustomerNotesButton ifNecessaryForObject:[self selectedCustomer]];
-        return;
-    }
-    if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"products"]) {
-        [self animateNotesButton:self.showProductNotesButton ifNecessaryForObject:[self selectedProduct]];
         return;
     }
     if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"services"]) {
@@ -747,7 +659,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.viewSaleButton setEnabled:(self.salesTable.selectedRow >= 0)?YES:NO];
     [self.viewReceiptButton setEnabled:(self.salesTable.selectedRow >=0)?YES:NO];
     [self.viewCustomerFromSaleButton setEnabled:(self.salesTable.selectedRow >=0)?YES:NO];
-    [self.viewProductButton setEnabled:(self.productsTable.selectedRow >= 0)?YES:NO];
     [self.viewServiceButton setEnabled:(self.servicesTable.selectedRow >= 0)?YES:NO];
     [self.viewEmployeeButton setEnabled:(self.employeesTable.selectedRow >= 0)?YES:NO];
     [self.viewServiceCategoryButton setEnabled:(self.serviceCategoryTable.selectedRow>=0)?YES:NO];
@@ -763,10 +674,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 - (IBAction)showCustomerNotesButtonClicked:(id)sender {
     Customer * customer = [self selectedCustomer];
     [self showNotesPopoverForObject:customer forButton:sender];
-}
-- (IBAction)showProductNotesButtonClicked:(id)sender {
-    Product * product = [self selectedProduct];
-    [self showNotesPopoverForObject:product forButton:sender];
 }
 -(IBAction)showEmployeeNotesButtonClicked:(id)sender {
     Employee * employee = [self selectedEmployee];

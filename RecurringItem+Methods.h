@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, AMCRecurrenceActionType) {
 };
 @interface RecurringItem (Methods)
 
-+(void)processOutstandingItemsFor:(NSManagedObjectContext*)moc error:(NSError**)error;
++(BOOL)processOutstandingItemsFor:(NSManagedObjectContext*)moc error:(NSError**)error;
 +(NSString*)nameOfReccurencePeriod:(AMCRecurrencePeriod)period;
 +(NSString*)nameOfReccurenceAction:(AMCRecurrenceActionType)action;
 

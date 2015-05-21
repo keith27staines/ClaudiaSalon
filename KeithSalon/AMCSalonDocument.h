@@ -25,6 +25,12 @@
 @interface AMCSalonDocument : NSPersistentDocument 
 @property (readonly) Salon * salon;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+-(void)enableViewItemButtonForTableViews;
+@property BOOL storeNeedsInitializing;
+
+// Toolbar actions
+- (IBAction)salonToolbarButton:(id)sender;
+- (IBAction)showMoneyInTill:(id)sender;
 
 // Top tab view
 @property (weak) IBOutlet NSTabView *topTabView;
@@ -58,23 +64,9 @@
 @property (weak) IBOutlet EditObjectViewController * editSaleViewController;
 @property (weak) IBOutlet NSButton *showSaleNotesButton;
 - (IBAction)showSaleNotesButtonClicked:(id)sender;
-
-@property (weak) IBOutlet NSButton *showCustomerNotesButton;
-- (IBAction)showCustomerNotesButtonClicked:(id)sender;
-
-@property (weak) IBOutlet NSButton *showServiceNotesButton;
-- (IBAction)showServiceNotesButtonClicked:(id)sender;
-
-@property (weak) IBOutlet NSButton *showProductNotesButton;
-- (IBAction)showProductNotesButtonClicked:(id)sender;
-
-@property (weak) IBOutlet NSButton *showServiceCategoryNotesButton;
-- (IBAction)showServiceCategoryNotesButtonClicked:(id)sender;
-@property (weak) IBOutlet NSButton *showEmployeeNotesButton;
-- (IBAction)showEmployeeNotesButtonClicked:(id)sender;
-
+@property (weak) IBOutlet NSButton *voidSaleButton;
+- (IBAction)voidSaleButtonClicked:(id)sender;
 @property (weak) IBOutlet NSButton *showQuickQuoteButton;
-
 - (IBAction)showQuickQuoteButtonClicked:(id)sender;
 
 // Services tab
@@ -86,16 +78,10 @@
 @property (weak) IBOutlet NSButton *createServiceButton;
 @property (weak) IBOutlet NSButton *viewServiceButton;
 @property (weak) IBOutlet EditObjectViewController * editServiceViewController;
-
-// Products tab
-@property (weak) IBOutlet NSView *productsView;
-@property (weak) IBOutlet NSArrayController *productArrayController;
-@property (weak) IBOutlet NSTableView *productsTable;
--(IBAction)createProductButtonClicked:(id)sender;
--(IBAction)viewProductButtonClicked:(id)sender;
-@property (weak) IBOutlet NSButton *createProductButton;
-@property (weak) IBOutlet NSButton *viewProductButton;
-@property (weak) IBOutlet EditObjectViewController *editProductViewController;
+@property (weak) IBOutlet NSButton *showServiceNotesButton;
+- (IBAction)showServiceNotesButtonClicked:(id)sender;
+@property (weak) IBOutlet NSButton *showServiceCategoryNotesButton;
+- (IBAction)showServiceCategoryNotesButtonClicked:(id)sender;
 
 // Employee tab
 @property (weak) IBOutlet NSView *employeesView;
@@ -106,7 +92,8 @@
 @property (weak) IBOutlet NSButton *createEmployeeButton;
 @property (weak) IBOutlet NSButton *viewEmployeeButton;
 @property (weak) IBOutlet EditObjectViewController * editEmployeeViewController;
-
+@property (weak) IBOutlet NSButton *showEmployeeNotesButton;
+- (IBAction)showEmployeeNotesButtonClicked:(id)sender;
 - (IBAction)showCanDoListButtonClicked:(id)sender;
 
 // Service category tab
@@ -128,57 +115,15 @@
 @property (weak) IBOutlet NSButton * createCustomerButton;
 @property (weak) IBOutlet NSButton * viewCustomerButton;
 @property (weak) IBOutlet EditObjectViewController * editCustomerViewController;
-
--(void)enableViewItemButtonForTableViews;
-
-
-@property BOOL storeNeedsInitializing;
-
-// Filters for customer
-@property (weak) IBOutlet NSTextField *firstNameFilter;
-
-@property (weak) IBOutlet NSTextField *lastNameFilter;
-
-@property (weak) IBOutlet NSTextField *emailAddressFilter;
-
-@property (weak) IBOutlet NSTextField *phoneFilter;
-
-@property (weak) IBOutlet NSTextField *postcodeFilter;
-
-@property (weak) IBOutlet NSTextField *addressLine1Filter;
-
-@property (weak) IBOutlet NSTextField *addressLine2Filter;
-
-@property (weak) IBOutlet AMCDayAndMonthPopupViewController *birthdayPopupFilter;
-
-
-@property (weak) IBOutlet NSButton *clearFiltersButton;
-
-
+@property (weak) IBOutlet NSButton *showCustomerNotesButton;
+- (IBAction)showCustomerNotesButtonClicked:(id)sender;
 - (IBAction)clearCustomerFilters:(id)sender;
-
-//
-
-@property (weak) IBOutlet NSButton *voidSaleButton;
-
-- (IBAction)voidSaleButtonClicked:(id)sender;
-
-- (IBAction)salonToolbarButton:(id)sender;
-
-- (IBAction)showMoneyInTill:(id)sender;
-
-
-
-
-
-
-
-
-
-
-
-
-
+@property (weak) IBOutlet NSButton *clearFiltersButton;
+@property (weak) IBOutlet NSTextField *firstNameFilter;
+@property (weak) IBOutlet NSTextField *lastNameFilter;
+@property (weak) IBOutlet NSTextField *emailAddressFilter;
+@property (weak) IBOutlet NSTextField *phoneFilter;
+@property (weak) IBOutlet AMCDayAndMonthPopupViewController *birthdayPopupFilter;
 
 
 @end
