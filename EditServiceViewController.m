@@ -180,7 +180,6 @@
     } else {
         service.serviceCategory = self.categories[i-1];
     }
-    [self.salonDocument commitAndSave:nil];
 }
 
 -(void)loadHairLengthPopup

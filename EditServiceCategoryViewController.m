@@ -88,7 +88,6 @@
 {
     ServiceCategory * category = self.objectToEdit;
     category.name = self.nameOfService.stringValue;
-    [self.salonDocument commitAndSave:nil];
 }
 
 

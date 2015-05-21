@@ -196,10 +196,6 @@
     item.payment.voided = @YES;
     [self.arrayController removeObjectAtArrangedObjectIndex:row];
 }
--(void)dismissController:(id)sender {
-    [self.salonDocument commitAndSave:nil];
-    [super dismissController:sender];
-}
 - (IBAction)recalculate:(id)sender {
     [self reloadData];
 }

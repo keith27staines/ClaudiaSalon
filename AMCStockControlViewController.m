@@ -138,30 +138,32 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
     return self.selectedStockedProduct.numberToBuy.integerValue;
 }
 -(void)setSelectedItemNumberToBuy:(NSInteger)selectedItemNumberToBuy {
-    self.selectedStockedProduct.numberToBuy = @(selectedItemNumberToBuy);
     StockedProduct * stockedProduct = self.selectedStockedProduct;
-    NSInteger row = self.dataTable.selectedRow;
-    if (row >= 0) {
-        NSTableCellView * view = [self.dataTable viewAtColumn:5 row:row makeIfNecessary:NO];
-        NSTextField * textField = view.textField;
-        textField.stringValue = stockedProduct.numberToBuy.stringValue;
-        [self updateLastUpdatedDate:stockedProduct row:row];
-        [self.salonDocument commitAndSave:nil];
+    if (stockedProduct.numberToBuy.integerValue != selectedItemNumberToBuy) {
+        stockedProduct.numberToBuy = @(selectedItemNumberToBuy);
+        NSInteger row = self.dataTable.selectedRow;
+        if (row >= 0) {
+            NSTableCellView * view = [self.dataTable viewAtColumn:5 row:row makeIfNecessary:NO];
+            NSTextField * textField = view.textField;
+            textField.stringValue = stockedProduct.numberToBuy.stringValue;
+            [self updateLastUpdatedDate:stockedProduct row:row];
+        }
     }
 }
 -(NSInteger)selectedItemStockLevel {
     return self.selectedStockedProduct.currentStockLevel.integerValue;
 }
 -(void)setSelectedItemStockLevel:(NSInteger)selectedItemStockLevel {
-    self.selectedStockedProduct.currentStockLevel = @(selectedItemStockLevel);
     StockedProduct * stockedProduct = self.selectedStockedProduct;
-    NSInteger row = self.dataTable.selectedRow;
-    if (row >= 0) {
-        NSTableCellView * view = [self.dataTable viewAtColumn:4 row:row makeIfNecessary:NO];
-        NSTextField * textField = view.textField;
-        textField.stringValue = stockedProduct.currentStockLevel.stringValue;
-        [self updateLastUpdatedDate:stockedProduct row:row];
-        [self.salonDocument commitAndSave:nil];
+    if (stockedProduct.currentStockLevel.integerValue != selectedItemStockLevel) {
+        stockedProduct.currentStockLevel = @(selectedItemStockLevel);
+        NSInteger row = self.dataTable.selectedRow;
+        if (row >= 0) {
+            NSTableCellView * view = [self.dataTable viewAtColumn:4 row:row makeIfNecessary:NO];
+            NSTextField * textField = view.textField;
+            textField.stringValue = stockedProduct.currentStockLevel.stringValue;
+            [self updateLastUpdatedDate:stockedProduct row:row];
+        }
     }
 }
 -(void)updateLastUpdatedDate:(StockedProduct*)stockedProduct row:(NSInteger)row {
@@ -265,7 +267,6 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
     [self createDefaultStockedCategories];
     [self createDefaultStockedBrands];
     [self createDefaultStockedProducts];
-    [self.salonDocument commitAndSave:nil];
 }
 -(void)createDefaultStockedCategories {
     NSArray * categories = [StockedCategory allObjectsWithMoc:self.documentMoc];
@@ -322,7 +323,7 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
     brand.shortBrandName = @"TrueZone";
 }
 -(void)createDefaultStockedProducts {
-    [self.salonDocument commitAndSave:nil];
+
 }
 
 -(StockedProduct*)makeProductWithName:(NSString*)name
@@ -397,12 +398,10 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
     }];
 }
 -(void)clearShoppingList {
-    [self.salonDocument commitAndSave:nil];
     NSArray * allItems = [StockedProduct allObjectsWithMoc:self.documentMoc];
     for (StockedProduct * product in allItems) {
         product.numberToBuy = @(0);
     }
-    [self.salonDocument commitAndSave:nil];
     [self reloadData];
 }
 
@@ -436,7 +435,6 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
     }];
 }
 -(void)completeShopping {
-    [self.salonDocument commitAndSave:nil];
     NSArray * allItems = [StockedProduct allObjectsWithMoc:self.documentMoc];
     for (StockedProduct * product in allItems) {
         NSInteger bought = product.numberToBuy.integerValue;
@@ -444,11 +442,9 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
         product.currentStockLevel = @(updatedStock);
         product.numberToBuy = @(0);
     }
-    [self.salonDocument commitAndSave:nil];
     [self reloadData];
 }
 -(void)makeQuickShoppingList {
-    [self.salonDocument commitAndSave:nil];
     NSArray * allItems = [StockedProduct allObjectsWithMoc:self.documentMoc];
     for (StockedProduct * product in allItems) {
         NSInteger stock = product.currentStockLevel.integerValue;
@@ -457,7 +453,6 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
         if (updatedBuy < 0) updatedBuy = 0;
         product.numberToBuy = @(updatedBuy);
     }
-    [self.salonDocument commitAndSave:nil];
     [self reloadData];
 }
 - (IBAction)enterBarcodeScanningMode:(id)sender {
@@ -467,7 +462,6 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
 }
 -(void)dismissViewController:(NSViewController *)viewController {
     if (viewController == self.barcodeScanningViewController) {
-        [self.salonDocument commitAndSave:nil];
         [self.enterBarcodeModeButton setState:NSOffState];
     }
     [super dismissViewController:viewController];

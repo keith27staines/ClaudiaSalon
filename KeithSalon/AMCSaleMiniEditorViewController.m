@@ -202,7 +202,6 @@
 - (IBAction)doneClicked:(id)sender {
     self.cancelled = NO;
     [self.view.window makeFirstResponder:self.view.window];
-    [self.salonDocument commitAndSave:nil];
     [self dismissController:self];
 }
 @end

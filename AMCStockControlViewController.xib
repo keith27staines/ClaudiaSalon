@@ -29,7 +29,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uxf-jL-7Rc">
-                    <rect key="frame" x="355" y="779" width="354" height="26"/>
+                    <rect key="frame" x="387" y="779" width="354" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3x8-x2-MqU" id="gLQ-LJ-Uhp">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -46,7 +46,7 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yOC-4J-n11">
-                    <rect key="frame" x="355" y="811" width="94" height="17"/>
+                    <rect key="frame" x="387" y="811" width="94" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Filter by brand" id="adT-G3-jgI">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -54,7 +54,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ADZ-RN-Gyy">
-                    <rect key="frame" x="4" y="811" width="112" height="17"/>
+                    <rect key="frame" x="-2" y="811" width="112" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Filter by category" id="URk-5F-vOv">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -62,7 +62,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MmW-db-R2D">
-                    <rect key="frame" x="712" y="779" width="73" height="26"/>
+                    <rect key="frame" x="776" y="779" width="73" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2IG-Tf-FG7" id="asd-L5-fSa">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -137,7 +137,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YPy-3t-fol">
-                    <rect key="frame" x="712" y="811" width="124" height="17"/>
+                    <rect key="frame" x="776" y="811" width="124" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Filter by stock level" id="XAW-wL-c50">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -247,7 +247,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pyL-QR-9fx">
-                    <rect key="frame" x="138" y="800" width="156" height="32"/>
+                    <rect key="frame" x="132" y="800" width="156" height="32"/>
                     <buttonCell key="cell" type="push" title="Edit category list..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NJz-MP-cJ5">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -257,7 +257,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Mt-i5-U6a">
-                    <rect key="frame" x="500" y="801" width="138" height="32"/>
+                    <rect key="frame" x="503" y="800" width="138" height="32"/>
                     <buttonCell key="cell" type="push" title="Edit brand list..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mQn-tk-eMq">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -547,12 +547,12 @@
                 <constraint firstAttribute="trailing" secondItem="a41-Vg-D3j" secondAttribute="trailing" id="1TT-qf-A8A"/>
                 <constraint firstItem="pyL-QR-9fx" firstAttribute="leading" secondItem="ADZ-RN-Gyy" secondAttribute="trailing" constant="30" id="2ss-LP-W4Q"/>
                 <constraint firstItem="sf7-gX-AuP" firstAttribute="centerY" secondItem="bXv-7S-zsC" secondAttribute="centerY" id="3Gf-I0-tjL"/>
-                <constraint firstItem="ADZ-RN-Gyy" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="6" id="4W9-c6-zXO"/>
+                <constraint firstItem="ADZ-RN-Gyy" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="4W9-c6-zXO"/>
                 <constraint firstItem="a41-Vg-D3j" firstAttribute="leading" secondItem="Yhd-hE-cR2" secondAttribute="leading" id="5ek-Ew-MRc"/>
                 <constraint firstAttribute="bottom" secondItem="bXv-7S-zsC" secondAttribute="bottom" constant="3" id="5pd-Z9-hGm"/>
                 <constraint firstItem="bXv-7S-zsC" firstAttribute="top" secondItem="BJR-pm-DRZ" secondAttribute="bottom" constant="3" id="6wB-t3-t1C"/>
                 <constraint firstItem="Ybg-c8-rLw" firstAttribute="top" secondItem="Yhd-hE-cR2" secondAttribute="bottom" constant="40" id="7SC-Cz-HNb"/>
-                <constraint firstItem="Uxf-jL-7Rc" firstAttribute="leading" secondItem="g1e-FK-ttP" secondAttribute="trailing" constant="8" symbolic="YES" id="9e1-x5-9wm"/>
+                <constraint firstItem="Uxf-jL-7Rc" firstAttribute="leading" secondItem="g1e-FK-ttP" secondAttribute="trailing" constant="40" id="9e1-x5-9wm"/>
                 <constraint firstItem="bXv-7S-zsC" firstAttribute="centerY" secondItem="YvU-HH-aDj" secondAttribute="centerY" id="AeK-ik-C0P"/>
                 <constraint firstItem="9MI-nF-g4H" firstAttribute="leading" secondItem="OAM-D2-Yyx" secondAttribute="trailing" constant="8" id="B0x-n2-rCb"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YPy-3t-fol" secondAttribute="trailing" constant="40" id="DGt-sb-zAK"/>
@@ -579,7 +579,6 @@
                 <constraint firstItem="a41-Vg-D3j" firstAttribute="leading" secondItem="e3m-XL-9oE" secondAttribute="leading" id="eGm-Rv-xIE"/>
                 <constraint firstItem="RW3-8S-hWC" firstAttribute="top" secondItem="a41-Vg-D3j" secondAttribute="bottom" constant="20" id="eP0-4P-jfp"/>
                 <constraint firstItem="Yhd-hE-cR2" firstAttribute="top" secondItem="e3m-XL-9oE" secondAttribute="bottom" constant="20" id="eXU-mw-qQq"/>
-                <constraint firstItem="8Mt-i5-U6a" firstAttribute="centerY" secondItem="yOC-4J-n11" secondAttribute="centerY" constant="1" id="eb1-hz-dCh"/>
                 <constraint firstItem="bRA-sl-2xg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BJR-pm-DRZ" secondAttribute="trailing" constant="20" id="f46-wf-iSP"/>
                 <constraint firstItem="Uxf-jL-7Rc" firstAttribute="top" secondItem="g1e-FK-ttP" secondAttribute="top" id="f6w-So-1G1"/>
                 <constraint firstItem="w6d-yr-AnI" firstAttribute="centerY" secondItem="bRA-sl-2xg" secondAttribute="centerY" id="fNA-mj-hhu"/>
@@ -593,8 +592,9 @@
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ybg-c8-rLw" secondAttribute="bottom" constant="20" id="pwS-0N-CPi"/>
                 <constraint firstItem="a41-Vg-D3j" firstAttribute="width" secondItem="Yhd-hE-cR2" secondAttribute="width" id="r0f-pg-jhX"/>
                 <constraint firstItem="e3m-XL-9oE" firstAttribute="top" secondItem="RW3-8S-hWC" secondAttribute="bottom" constant="20" id="rCt-at-bUB"/>
-                <constraint firstItem="MmW-db-R2D" firstAttribute="leading" secondItem="Uxf-jL-7Rc" secondAttribute="trailing" constant="8" id="rZy-JR-ORg"/>
-                <constraint firstItem="8Mt-i5-U6a" firstAttribute="leading" secondItem="yOC-4J-n11" secondAttribute="trailing" constant="59" id="svq-To-eyp"/>
+                <constraint firstItem="MmW-db-R2D" firstAttribute="leading" secondItem="Uxf-jL-7Rc" secondAttribute="trailing" constant="40" id="rZy-JR-ORg"/>
+                <constraint firstItem="pyL-QR-9fx" firstAttribute="top" secondItem="8Mt-i5-U6a" secondAttribute="top" id="sYH-5j-NRV"/>
+                <constraint firstItem="8Mt-i5-U6a" firstAttribute="leading" secondItem="yOC-4J-n11" secondAttribute="trailing" constant="30" id="svq-To-eyp"/>
                 <constraint firstItem="OAM-D2-Yyx" firstAttribute="width" secondItem="bRA-sl-2xg" secondAttribute="width" id="tgy-3o-OrA"/>
                 <constraint firstItem="Uxf-jL-7Rc" firstAttribute="width" secondItem="g1e-FK-ttP" secondAttribute="width" id="v1I-jS-Jjz"/>
                 <constraint firstItem="pyL-QR-9fx" firstAttribute="centerY" secondItem="ADZ-RN-Gyy" secondAttribute="centerY" constant="2" id="vNj-AJ-9cs"/>

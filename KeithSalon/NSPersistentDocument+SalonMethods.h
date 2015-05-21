@@ -10,6 +10,4 @@
 
 @interface NSPersistentDocument (SalonMethods)
 -(void)deleteObject:(NSManagedObject*)object;
--(BOOL)commitAndSave:(NSError**)error;
--(BOOL)islastUpdateByCurrentUserOnCurrentComputer;
 @end

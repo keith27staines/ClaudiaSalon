@@ -91,7 +91,6 @@
                                 payeeName:[self.outAccount.friendlyName stringByAppendingString:@" account"]
                                    reason:[NSString stringWithFormat:@"Transfer from %@",self.outAccount.friendlyName]];
     
-    [self.salonDocument commitAndSave:nil];
     [self dismissController:self];
 }
 - (IBAction)cancelButtonClicked:(id)sender {

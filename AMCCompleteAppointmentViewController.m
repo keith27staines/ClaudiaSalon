@@ -173,7 +173,6 @@ static NSString * const kAMCExplanationText = @"kAMCExplanationText";
     [self.appointment addNotesObject:note];
     self.appointment.cancellationNote = @"";
     self.appointment.cancellationType = AMCancellationTypeNotCancelled;
-    [self.salonDocument commitAndSave:nil];
     [self dismissController:self];
 }
 @end

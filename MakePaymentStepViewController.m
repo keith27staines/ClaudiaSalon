@@ -171,7 +171,6 @@
     sale.changeGiven = @(0);
     sale.isQuote = @(YES);
     sale.account = nil;
-    [self.salonDocument commitAndSave:nil];
     [self.delegate wizardStep:self isValid:YES];
 }
 -(void)controlTextDidChange:(NSNotification *)obj
@@ -232,7 +231,6 @@
         sale.isQuote = @(NO);
         [sale makePaymentInFull];
         sale.lastUpdatedDate = [NSDate date];
-        [self.salonDocument commitAndSave:nil];
         if (controller.printReceiptCheckbox.state == NSOnState) {
             self.receiptRequired = YES;
         }

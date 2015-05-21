@@ -227,7 +227,6 @@
     } else {
         payment.direction = kAMCPaymentDirectionIn;
     }
-    [self.salonDocument commitAndSave:nil];
 }
 - (IBAction)standardSelection:(id)sender {
     [self.doneButton setEnabled:[self isValid]];

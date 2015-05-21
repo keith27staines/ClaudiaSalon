@@ -27,6 +27,7 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 -(void)enableViewItemButtonForTableViews;
 @property BOOL storeNeedsInitializing;
+@property (readonly) Customer * anonymousCustomer;
 
 // Toolbar actions
 - (IBAction)salonToolbarButton:(id)sender;

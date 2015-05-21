@@ -93,7 +93,6 @@
     Product * product = self.objectToEdit;
     product.brandName = self.brandName.stringValue;
     product.productType = self.productType.stringValue;
-    [self.salonDocument commitAndSave:nil];
 }
 
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E11f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCWizardStepSelectCustomerViewController">
             <connections>
                 <outlet property="clearAllFields" destination="y4a-gI-unf" id="EYc-wK-0w0"/>
-                <outlet property="createCustomerButton" destination="joW-91-Gf8" id="6qy-uc-Ktg"/>
+                <outlet property="createCustomerButton" destination="0jW-0J-Weu" id="ZLp-M0-3HY"/>
                 <outlet property="customersTable" destination="MYY-p9-CCg" id="74V-RD-Afd"/>
                 <outlet property="dayAndMonthContoller" destination="HKA-ij-5ho" id="gyz-AF-fNI"/>
                 <outlet property="email" destination="gn7-TG-NnX" id="XTr-bv-3Jk"/>
@@ -15,6 +15,7 @@
                 <outlet property="instructionLabel" destination="NgM-M1-ImI" id="7gc-Hn-lLE"/>
                 <outlet property="lastName" destination="uCc-Yp-Bjp" id="Bdo-vS-eTj"/>
                 <outlet property="phone" destination="IVo-ck-SZC" id="nLW-S0-eIR"/>
+                <outlet property="selectAnonymousCustomer" destination="b1f-Q4-89v" id="WVV-YK-7R0"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -166,7 +167,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="zrB-zV-1PI" id="MYY-p9-CCg">
-                                <rect key="frame" x="0.0" y="0.0" width="1193" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1227" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -286,22 +287,8 @@
                         <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="joW-91-Gf8">
-                    <rect key="frame" x="629" y="329" width="234" height="38"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="234" id="2hJ-xb-rjL"/>
-                        <constraint firstAttribute="height" constant="36" id="EOl-cv-ag4"/>
-                    </constraints>
-                    <buttonCell key="cell" type="smallSquare" title="Create Customer" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yed-3M-h5d">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="19"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="createCustomer:" target="-2" id="vW5-Ka-KgR"/>
-                    </connections>
-                </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="y4a-gI-unf">
-                    <rect key="frame" x="722" y="427" width="110" height="32"/>
+                    <rect key="frame" x="933" y="488" width="110" height="32"/>
                     <buttonCell key="cell" type="push" title="Clear filters" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6K9-QJ-YGE">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -310,14 +297,34 @@
                         <action selector="clearAllFields:" target="-2" id="qK8-VK-KTX"/>
                     </connections>
                 </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="b1f-Q4-89v">
+                    <rect key="frame" x="623" y="407" width="220" height="32"/>
+                    <buttonCell key="cell" type="push" title="Select Anonymous Customer" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HVR-Ol-raI">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="selectAnonymousCustomer:" target="-2" id="rR5-zY-v7b"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0jW-0J-Weu">
+                    <rect key="frame" x="623" y="331" width="145" height="32"/>
+                    <buttonCell key="cell" type="push" title="Create Customer" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="twM-xW-JjN">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="createCustomer:" target="-2" id="clU-Vw-Jja"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="bgW-Db-yhS" firstAttribute="baseline" secondItem="aas-24-RuX" secondAttribute="baseline" id="0Pm-jf-r8L"/>
+                <constraint firstItem="y4a-gI-unf" firstAttribute="centerY" secondItem="tfn-tC-Lcu" secondAttribute="centerY" id="1Ng-gI-Njm"/>
                 <constraint firstItem="DaY-gy-vne" firstAttribute="trailing" secondItem="76P-hE-9tR" secondAttribute="trailing" id="794-w7-yhQ"/>
                 <constraint firstItem="DaY-gy-vne" firstAttribute="trailing" secondItem="Cci-qX-FG1" secondAttribute="trailing" id="7lB-ex-6Sx"/>
                 <constraint firstItem="gn7-TG-NnX" firstAttribute="baseline" secondItem="DaY-gy-vne" secondAttribute="baseline" id="9K9-ta-ZaD"/>
                 <constraint firstItem="NgM-M1-ImI" firstAttribute="trailing" secondItem="gn7-TG-NnX" secondAttribute="trailing" id="AFV-aZ-wsI"/>
-                <constraint firstItem="y4a-gI-unf" firstAttribute="top" secondItem="qbz-7x-LfG" secondAttribute="bottom" constant="40" id="Az4-6D-LkG"/>
                 <constraint firstAttribute="trailing" secondItem="0hV-Fw-rfN" secondAttribute="trailing" id="Bat-WV-sz0"/>
                 <constraint firstItem="Cci-qX-FG1" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="EKe-at-LVh"/>
                 <constraint firstItem="Cci-qX-FG1" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="GKC-a5-aab"/>
@@ -326,37 +333,42 @@
                 <constraint firstItem="qbz-7x-LfG" firstAttribute="top" secondItem="bgW-Db-yhS" secondAttribute="bottom" constant="8" id="JJT-Q8-Pwo"/>
                 <constraint firstItem="Cci-qX-FG1" firstAttribute="baseline" secondItem="vXB-ld-0Va" secondAttribute="baseline" id="Jg0-2W-vL6"/>
                 <constraint firstItem="qbz-7x-LfG" firstAttribute="baseline" secondItem="tfn-tC-Lcu" secondAttribute="baseline" id="KXv-MQ-KGG"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="joW-91-Gf8" secondAttribute="trailing" id="LA9-Tm-CUv"/>
-                <constraint firstItem="y4a-gI-unf" firstAttribute="leading" secondItem="IVo-ck-SZC" secondAttribute="trailing" constant="145" id="MXo-pZ-HL7"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="b1f-Q4-89v" secondAttribute="trailing" id="MxG-Te-JwJ"/>
+                <constraint firstItem="b1f-Q4-89v" firstAttribute="leading" secondItem="qbz-7x-LfG" secondAttribute="leading" id="Nqv-0y-WyN"/>
                 <constraint firstItem="0hV-Fw-rfN" firstAttribute="top" secondItem="NgM-M1-ImI" secondAttribute="bottom" constant="9" id="QFf-xE-Owi"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0jW-0J-Weu" secondAttribute="trailing" id="Qdb-YT-ZEQ"/>
                 <constraint firstItem="bgW-Db-yhS" firstAttribute="leading" secondItem="vXB-ld-0Va" secondAttribute="trailing" constant="46" id="R3z-DM-Km0"/>
                 <constraint firstItem="DaY-gy-vne" firstAttribute="trailing" secondItem="WBB-WB-TaC" secondAttribute="trailing" id="Rmf-m5-l96"/>
+                <constraint firstItem="y4a-gI-unf" firstAttribute="leading" secondItem="tfn-tC-Lcu" secondAttribute="trailing" constant="43" id="U4H-R6-HTH"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="height" secondItem="uCc-Yp-Bjp" secondAttribute="height" id="UQS-vm-EkF"/>
                 <constraint firstItem="NgM-M1-ImI" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="VLw-Iw-tpK"/>
+                <constraint firstItem="0jW-0J-Weu" firstAttribute="leading" secondItem="qbz-7x-LfG" secondAttribute="leading" id="XcW-EV-Ijb"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="leading" secondItem="uCc-Yp-Bjp" secondAttribute="leading" id="Xrj-Nd-HaK"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="width" secondItem="uCc-Yp-Bjp" secondAttribute="width" id="ZjB-vc-p74"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tfn-tC-Lcu" secondAttribute="trailing" id="bad-9j-W8F"/>
                 <constraint firstItem="uCc-Yp-Bjp" firstAttribute="top" secondItem="vXB-ld-0Va" secondAttribute="bottom" constant="10" symbolic="YES" id="buC-55-tEP"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="width" secondItem="gn7-TG-NnX" secondAttribute="width" id="e0i-Cb-rns"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="height" secondItem="gn7-TG-NnX" secondAttribute="height" id="eJs-IF-yFv"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="leading" secondItem="Cci-qX-FG1" secondAttribute="trailing" constant="31" id="fKW-xh-fel"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="height" secondItem="IVo-ck-SZC" secondAttribute="height" id="fKe-Ms-zWv"/>
                 <constraint firstItem="DaY-gy-vne" firstAttribute="width" secondItem="76P-hE-9tR" secondAttribute="width" id="gUM-Hn-KQr"/>
+                <constraint firstItem="b1f-Q4-89v" firstAttribute="centerY" secondItem="gn7-TG-NnX" secondAttribute="centerY" id="j1h-hJ-xID"/>
                 <constraint firstItem="0hV-Fw-rfN" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="jEu-zF-J5S"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="leading" secondItem="IVo-ck-SZC" secondAttribute="leading" id="jGw-sT-D3l"/>
-                <constraint firstItem="joW-91-Gf8" firstAttribute="centerY" secondItem="NgM-M1-ImI" secondAttribute="centerY" id="jYH-f4-10r"/>
                 <constraint firstItem="bgW-Db-yhS" firstAttribute="baseline" secondItem="Cci-qX-FG1" secondAttribute="baseline" id="jm4-tj-gjy"/>
                 <constraint firstItem="NgM-M1-ImI" firstAttribute="top" secondItem="gn7-TG-NnX" secondAttribute="bottom" constant="13" id="kt3-p8-nar"/>
                 <constraint firstAttribute="bottom" secondItem="0hV-Fw-rfN" secondAttribute="bottom" id="m6g-Rf-i1Z"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="width" secondItem="IVo-ck-SZC" secondAttribute="width" id="nB2-s7-bOw"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="y4a-gI-unf" secondAttribute="trailing" id="neH-9L-iDT"/>
                 <constraint firstItem="IVo-ck-SZC" firstAttribute="top" secondItem="uCc-Yp-Bjp" secondAttribute="bottom" constant="10" symbolic="YES" id="nle-LK-HlR"/>
                 <constraint firstItem="DaY-gy-vne" firstAttribute="width" secondItem="WBB-WB-TaC" secondAttribute="width" id="pJT-NP-6fu"/>
                 <constraint firstItem="76P-hE-9tR" firstAttribute="baseline" secondItem="IVo-ck-SZC" secondAttribute="baseline" id="r06-ta-Mwk"/>
                 <constraint firstItem="DaY-gy-vne" firstAttribute="width" secondItem="Cci-qX-FG1" secondAttribute="width" id="uOy-7w-L5Z"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="leading" secondItem="gn7-TG-NnX" secondAttribute="leading" id="ul6-HA-jX9"/>
                 <constraint firstItem="vXB-ld-0Va" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="uqa-Xk-FLc"/>
-                <constraint firstItem="joW-91-Gf8" firstAttribute="leading" secondItem="NgM-M1-ImI" secondAttribute="trailing" constant="46" id="vGl-Aa-VSd"/>
                 <constraint firstItem="bgW-Db-yhS" firstAttribute="leading" secondItem="qbz-7x-LfG" secondAttribute="leading" id="vKo-G3-c9f"/>
                 <constraint firstItem="bgW-Db-yhS" firstAttribute="width" secondItem="aas-24-RuX" secondAttribute="width" id="veW-uB-l6s"/>
+                <constraint firstItem="0jW-0J-Weu" firstAttribute="centerY" secondItem="NgM-M1-ImI" secondAttribute="centerY" priority="999" id="xIe-a3-5Zg"/>
                 <constraint firstItem="uCc-Yp-Bjp" firstAttribute="baseline" secondItem="WBB-WB-TaC" secondAttribute="baseline" id="yPw-dR-wez"/>
                 <constraint firstItem="tfn-tC-Lcu" firstAttribute="leading" secondItem="qbz-7x-LfG" secondAttribute="trailing" constant="22" id="zk7-gY-qeV"/>
             </constraints>

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Account, Employee, OpeningHoursWeekTemplate, PaymentCategory;
+@class Account, Customer, Employee, OpeningHoursWeekTemplate, PaymentCategory;
 
 @interface Salon : NSManagedObject
 
@@ -27,6 +27,7 @@
 @property (nonatomic, retain) Account *cardPaymentAccount;
 @property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForPayments;
 @property (nonatomic, retain) Employee *manager;
+@property (nonatomic, retain) Customer *anonymousCustomer;
 @property (nonatomic, retain) OpeningHoursWeekTemplate *openingHoursWeekTemplate;
 @property (nonatomic, retain) Account *primaryBankAccount;
 @property (nonatomic, retain) Account *tillAccount;

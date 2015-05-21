@@ -37,10 +37,6 @@
 -(NSString *)windowNibName {
     return @"AMCFinancialAnalysisViewController";
 }
--(void)dismissController:(id)sender {
-    [self.salonDocument commitAndSave:nil];
-    [super dismissController:sender];
-}
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     [self viewSelectorChanged:self];

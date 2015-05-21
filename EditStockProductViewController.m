@@ -200,7 +200,6 @@
     product.currentStockLevel = @(self.stockLevelTextField.stringValue.integerValue);
     product.minimumStockTrigger = @(self.lowStockWarningLevel.stringValue.integerValue);
     product.barcode = self.barcode.stringValue;
-    [self.salonDocument commitAndSave:nil];
 }
 -(void)populateCategoryPopup {
     [self.categoryPopupButton removeAllItems];

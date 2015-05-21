@@ -29,6 +29,7 @@
 @dynamic cardPaymentAccount;
 @dynamic defaultPaymentCategoryForPayments;
 @dynamic manager;
+@dynamic anonymousCustomer;
 @dynamic openingHoursWeekTemplate;
 @dynamic primaryBankAccount;
 @dynamic tillAccount;

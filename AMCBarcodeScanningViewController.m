@@ -137,17 +137,14 @@
     if (object) {
         if (object == self.product) {
             [self.documentMoc deleteObject:object];
-            [self.salonDocument commitAndSave:nil];
         }
     }
     [self prepareForScan];
 }
 -(void)editObjectViewController:(EditObjectViewController *)controller didCompleteCreationOfObject:(id)object {
-    [self.salonDocument commitAndSave:nil];
     [self prepareForScan];
 }
 -(void)editObjectViewController:(EditObjectViewController *)controller didEditObject:(id)object {
-    [self.salonDocument commitAndSave:nil];
     [self prepareForScan];
 }
 

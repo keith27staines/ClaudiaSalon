@@ -122,7 +122,6 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
     if (oldCustomer != newCustomer && newCustomer) {
         self.sale.customer = [self.selectCustomerViewController objectForWizardStep];
         self.paymentMade = NO;
-        [self.salonDocument commitAndSave:nil];
     }
     [self configureWizardButtons];
 }

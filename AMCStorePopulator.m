@@ -180,7 +180,6 @@ NSDate * amcsAutoLoadDate;
         object.createdDate = amcsAutoLoadDate;
         object.lastUpdatedDate = amcsAutoLoadDate;
     }
-    [document commitAndSave:nil];
     return YES;
 }
 +(BOOL)populateProducts:(AMCSalonDocument*)document error:(NSError**)error{
@@ -219,7 +218,6 @@ NSDate * amcsAutoLoadDate;
         object.createdDate = amcsAutoLoadDate;
         object.lastUpdatedDate = amcsAutoLoadDate;
     }
-    [document commitAndSave:nil];
     return YES;
 }
 +(BOOL)populateServices:(AMCSalonDocument*)document error:(NSError**)error{
@@ -951,7 +949,6 @@ NSDate * amcsAutoLoadDate;
         object.createdDate = amcsAutoLoadDate;
         object.lastUpdatedDate = amcsAutoLoadDate;
     }
-    [document commitAndSave:nil];
     return YES;
 }
 +(BOOL)populateStaff:(AMCSalonDocument*)document error:(NSError**)error{
@@ -960,7 +957,6 @@ NSDate * amcsAutoLoadDate;
     if (employees.count > 0) {
         return NO;
     }
-    [document commitAndSave:nil];
     return YES;
 }
 @end

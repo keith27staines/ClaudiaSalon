@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Appointment, Note, Sale;
+@class Appointment, Note, Sale, Salon;
 
 @interface Customer : NSManagedObject
 
@@ -34,6 +34,7 @@
 @property (nonatomic, retain) NSSet *appointments;
 @property (nonatomic, retain) NSSet *notes;
 @property (nonatomic, retain) NSSet *sales;
+@property (nonatomic, retain) Salon *anonymousCustomerForSalon;
 @end
 
 @interface Customer (CoreDataGeneratedAccessors)

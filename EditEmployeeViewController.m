@@ -107,7 +107,6 @@
     employee.dayOfBirth = @(self.dayAndMonthPopupController.dayNumber);
     employee.isActive = @(self.activeMemberOfStaffCheckbox.state == NSOnState);
     employee.lastUpdatedDate = [NSDate date];
-    [self.salonDocument commitAndSave:nil];
 }
 #pragma mark - NSControlTextEditingDelegate
 -(void)controlTextDidChange:(NSNotification *)notification

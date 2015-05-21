@@ -35,5 +35,6 @@
 @dynamic appointments;
 @dynamic notes;
 @dynamic sales;
+@dynamic anonymousCustomerForSalon;
 
 @end

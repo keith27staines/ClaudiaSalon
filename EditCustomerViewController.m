@@ -252,7 +252,6 @@
     }
     customer.dayOfBirth = @(self.dayAndMonthPopupButtonsController.dayNumber);
     customer.monthOfBirth = @(self.dayAndMonthPopupButtonsController.monthNumber);
-    [self.salonDocument commitAndSave:nil];
 }
 
 -(void)dayAndMonthControllerDidUpdate:(AMCDayAndMonthPopupViewController *)dayAndMonthController

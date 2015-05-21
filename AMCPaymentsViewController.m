@@ -260,7 +260,6 @@
         [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse response) {
             if (response == NSAlertFirstButtonReturn) {
                 payment.voided = @(YES);
-                [self.salonDocument commitAndSave:nil];
                 [self reloadData];
             }
         }];

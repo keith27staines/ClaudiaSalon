@@ -114,17 +114,14 @@
     if (cancelledObject) {
         [moc deleteObject:cancelledObject];
     }
-    [self.salonDocument commitAndSave:nil];
     [self reloadData];
 }
 #pragma mark - EditObjectViewControllerDelegate
 -(void)editObjectViewController:(EditObjectViewController *)controller didEditObject:(id)object {
-    [self.salonDocument commitAndSave:nil];
     [self reloadData];
 }
 -(void)editObjectViewController:(EditObjectViewController *)controller didCompleteCreationOfObject:(id)createdObject {
     self.objectSelectedBeforeEditorInvoked = createdObject;
-    [self.salonDocument commitAndSave:nil];
     [self reloadData];
 }
 @end

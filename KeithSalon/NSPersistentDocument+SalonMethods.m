@@ -13,32 +13,6 @@
 -(void)deleteObject:(NSManagedObject*)object {
     [[self managedObjectContext] deleteObject:object];
 }
--(BOOL)commitAndSave:(NSError**)error  {
-    NSManagedObjectContext * moc = [self managedObjectContext];
-    if (![moc hasChanges]) {
-        return YES;
-    }
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"LastUpdatedBy" inManagedObjectContext:moc];
-    [fetchRequest setEntity:entity];
-    NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:error];
-    if (fetchedObjects == nil) {
-        return NO;
-    }
-    LastUpdatedBy * lastUpdate = [self lastUpdate];
-    NSString * fullUserName = NSFullUserName();
-    lastUpdate.date = [NSDate date];
-    lastUpdate.computerIdentity = [self computerName];
-    lastUpdate.userIdentity = fullUserName;
-    
-    BOOL result = YES;// = [moc commitEditing];
-    NSAssert(result, @"%@:%@ unable to commit editing before saving", [self class], NSStringFromSelector(_cmd));
-    if (result) {
-        //result = [moc save:error];
-    }
-    [self updateChangeCount:NSChangeDone];
-    return YES;
-}
 -(LastUpdatedBy*)lastUpdate {
     NSManagedObjectContext * moc = [self managedObjectContext];
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];

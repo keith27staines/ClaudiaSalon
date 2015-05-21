@@ -516,17 +516,12 @@ NSAnimationDelegate>
     sale.hidden = @(NO);
     sale.createdDate = [NSDate date];
     sale.lastUpdatedDate = [NSDate date];
-    NSError * error;
-    if (![self.salonDocument commitAndSave:&error] && error) {
-        [NSApp presentError:error];
-    } else {
-        NSAlert * alert = [[NSAlert alloc] init];
-        alert.messageText = @"Sale generated!";
-        alert.informativeText = @"The sale has been created as a quote on the Sales tab. You must edit the quote to finalize prices and complete the sale. You will need to switch to the Sales tab to do this.";
-        [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
-            
-        }];
-    };
+    NSAlert * alert = [[NSAlert alloc] init];
+    alert.messageText = @"Sale generated!";
+    alert.informativeText = @"The sale has been created as a quote on the Sales tab. You must edit the quote to finalize prices and complete the sale. You will need to switch to the Sales tab to do this.";
+    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+        
+    }];
 }
 -(NSRect)rectOfCellForRow:(NSUInteger)row column:(NSUInteger)col {
     NSRect rowBounds = [self.appointmentsTable rectOfRow:row];
@@ -550,7 +545,6 @@ NSAnimationDelegate>
         [self.salonDocument saveDocument:self];
         self.previouslySelectedAppointment = (Appointment*)self.currentWizard.objectToManage;
     }
-    [self.salonDocument commitAndSave:nil];
     [self reloadData];
     [self selectAppointment:self.previouslySelectedAppointment];
     [self.view.window makeFirstResponder:self.appointmentsTable];

@@ -101,9 +101,17 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         _salon = [Salon salonWithMoc:self.managedObjectContext];
         [self processRecurringEvents:self];
         [NSTimer scheduledTimerWithTimeInterval:3600 target:self selector:@selector(processRecurringEvents:) userInfo:nil repeats:YES];
-        [self commitAndSave:nil];
     }
     return _salon;
+}
+-(Customer *)anonymousCustomer {
+    if (!self.salon.anonymousCustomer) {
+        self.salon.anonymousCustomer = [Customer newObjectWithMoc:self.managedObjectContext];
+        self.salon.anonymousCustomer.firstName = @"Anonymous";
+        self.salon.anonymousCustomer.lastName = @"Customer";
+        self.salon.anonymousCustomer.phone = @"00000000000";
+    }
+    return self.salon.anonymousCustomer;
 }
 - (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)url ofType:(NSString *)fileType modelConfiguration:(NSString *)configuration storeOptions:(NSDictionary *)storeOptions error:(NSError **)error
 {
@@ -210,6 +218,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 -(Sale*)newSale
 {
     Sale * sale = [Sale newObjectWithMoc:self.managedObjectContext];
+    sale.isQuote = @YES;
     [self.saleArrayController addObject:sale];
     [self.saleArrayController rearrangeObjects];
     [self selectSale:sale];
@@ -443,13 +452,11 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 -(void)editObjectViewController:(EditObjectViewController *)controller didCancelCreationOfObject:(id)object {
     [self ensureDeletionAfterCancellationOfCreatedObject:object];
     if (controller == self.editSaleViewController) {
-        [self commitAndSave:nil];
         [self saleEditOperationComplete];
     }
 }
 -(void)editObjectViewController:(EditObjectViewController *)controller didCompleteCreationOfObject:(id)object {
     if (controller == self.editSaleViewController) {
-        [self commitAndSave:nil];
         self.previouslySelectedSale = object;
         [self saleEditOperationComplete];
     }
@@ -461,7 +468,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     if (object) {
         [self.managedObjectContext deleteObject:object];
     }
-    [self commitAndSave:nil];
 }
 -(void)saleEditOperationComplete {
     [self.saleArrayController rearrangeObjects];
@@ -718,12 +724,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
             sale.fromAppointment.completed = @(NO);
             sale.fromAppointment.completionNote = @"";
             sale.fromAppointment.completionType = AMCompletionTypeNotCompleted;
-            [self commitAndSave:nil];
             [self.salesTable reloadData];
         }
         if (response == NSAlertSecondButtonReturn) {
             sale.voided = @(YES);
-            [self commitAndSave:nil];
             [self.salesTable reloadData];
         }
     }];
@@ -737,7 +741,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse response) {
         if (response == NSAlertFirstButtonReturn) {
             sale.voided = @(YES);
-            [self commitAndSave:nil];
             [self.salesTable reloadData];
         }
     }];

@@ -18,6 +18,8 @@
 }
 @property (readonly) NSMutableArray * customers;
 @property (readonly) Sale * sale;
+@property (weak) IBOutlet NSButton *selectAnonymousCustomerButton;
+
 @end
 
 @implementation SelectCustomerStepViewController
@@ -47,7 +49,6 @@
     customer.addressLine2 = [self.addressLine2.stringValue capitalizedString];
     customer.monthOfBirth = @(self.dayAndMonthContoller.monthNumber);
     customer.dayOfBirth = @(self.dayAndMonthContoller.dayNumber);
-    [self.salonDocument commitAndSave:nil];
     _customers = nil;
     [self.customersTable reloadData];
     [self setLabelText];
@@ -70,6 +71,10 @@
         [self.view.window endEditingFor:nil];
     }
 }
+- (IBAction)selectAnonymousCustomer:(id)sender {
+    self.sale.customer = self.salonDocument.anonymousCustomer;
+    [self applyEditMode:self.editMode];
+}
 
 -(void)applyEditMode:(EditMode)editMode
 {
@@ -84,6 +89,7 @@
     [self.addressLine2 setEditable:enableEditing];
     [self.createCustomerButton setEnabled:enableEditing];
     [self.dayAndMonthContoller setEnabled:enableEditing];
+    [self.selectAnonymousCustomerButton setEnabled:enableEditing];
     [self populate];
 }
 -(void)populate

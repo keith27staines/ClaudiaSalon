@@ -342,6 +342,7 @@
 		5330E23D1AF8B2400062FD93 /* Sale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sale.m; sourceTree = "<group>"; };
 		5330E23F1AF8B2400062FD93 /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
 		5330E2401AF8B2400062FD93 /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
+		533439001B0E1B3200E271D5 /* ClaudiasSalon 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 11.xcdatamodel"; sourceTree = "<group>"; };
 		5346C58A1ABB074C005D4540 /* AMCPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPreferencesWindowController.h; sourceTree = "<group>"; };
 		5346C58B1ABB074C005D4540 /* AMCPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPreferencesWindowController.m; sourceTree = "<group>"; };
 		5346C58C1ABB074C005D4540 /* AMCPreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPreferencesWindowController.xib; sourceTree = "<group>"; };
@@ -2402,6 +2403,7 @@
 		5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				533439001B0E1B3200E271D5 /* ClaudiasSalon 11.xcdatamodel */,
 				5382E8DD1B033F5E00B65C75 /* ClaudiasSalon 10.xcdatamodel */,
 				5330E23B1AF8B1720062FD93 /* ClaudiasSalon 9.xcdatamodel */,
 				5330E2341AF66EB70062FD93 /* ClaudiasSalon 8.xcdatamodel */,
@@ -2413,7 +2415,7 @@
 				533054501AE4EA49007B1264 /* ClaudiasSalon 5.xcdatamodel */,
 				533054511AE4EA49007B1264 /* ClaudiasSalon.xcdatamodel */,
 			);
-			currentVersion = 5382E8DD1B033F5E00B65C75 /* ClaudiasSalon 10.xcdatamodel */;
+			currentVersion = 533439001B0E1B3200E271D5 /* ClaudiasSalon 11.xcdatamodel */;
 			path = ClaudiasSalon.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -276,12 +276,6 @@
 }
 -(void)reloadData {
     NSAssert(self.document,@"The document has not been set");
-    [self.document commitAndSave:nil];
-    NSError * error;
-    BOOL success = [self.document commitAndSave:&error];
-    if (!success) {
-        [NSApp presentError:error];
-    }
     self.productsByCategory = [NSMutableDictionary dictionary];
     self.categories = [StockedCategory allObjectsWithMoc:self.document.managedObjectContext];
     for (StockedCategory * category in self.categories) {

@@ -288,7 +288,6 @@ static NSString * const kAMCExplanationText = @"kAMCExplanationText";
     self.appointment.completionNote = @"";
     self.appointment.completionType = AMCompletionTypeNotCompleted;
     [self.appointment.customer addNotesObject:note];
-    [self.salonDocument commitAndSave:nil];
     [self dismissController:self];
 }
 

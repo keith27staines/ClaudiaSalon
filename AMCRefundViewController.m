@@ -43,7 +43,6 @@
                                              payeeName:self.saleItem.sale.customer.fullName
                                                 reason:self.refundReason.stringValue];
     payment.refunding = self.saleItem;
-    [self.salonDocument commitAndSave:nil];
     [self.presentingViewController dismissViewController:self];
 }
 

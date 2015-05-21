@@ -88,7 +88,6 @@
 {
     if (self.editMode == EditModeCreate) {
         [self.salonDocument deleteObject:self.objectToEdit];
-        [self.salonDocument commitAndSave:nil];
         self.objectToEdit = nil;
         id delegate = self.delegate;
         if ([delegate respondsToSelector:@selector(editObjectViewController:didCancelObjectCreation:)]) {
@@ -113,7 +112,6 @@
     }
     [self dismissController:sender];
     [self.salonDocument enableViewItemButtonForTableViews];
-    [self.salonDocument commitAndSave:nil];
     if (self.editMode == EditModeCreate) {
         [self.delegate editObjectViewController:self didCompleteCreationOfObject:self.objectToEdit];
     }
