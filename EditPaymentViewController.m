@@ -162,10 +162,12 @@
               self.accountPopupButton];
 }
 #pragma mark - NSControlTextEditingDelegate
+-(void)controlTextDidChange:(NSNotification *)obj {
+    [self enableDoneButton];
+}
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
     BOOL controlIsValid = NO;
-    [self.doneButton setEnabled:NO];
     
     if (control == self.amountField) {
         controlIsValid = self.amountField.doubleValue > 0;
@@ -179,7 +181,6 @@
     if (control == self.paymentReasonField) {
         controlIsValid = [self validateName:fieldEditor.string];
     }
-    [self.doneButton setEnabled:[self isValid]];
     return controlIsValid;
 }
 -(void)autoUpdateFee {
@@ -198,7 +199,6 @@
     if (obj.object == self.amountField && self.editMode == EditModeCreate) {
         [self autoUpdateFee];
     }
-    [self.doneButton setEnabled:[self isValid]];
 }
 -(BOOL)isValid
 {
@@ -250,8 +250,11 @@
     }
 }
 -(void)doneButton:(NSButton *)sender {
-    [self updateObject];
-    [self.payment recalculateNetAmountWithFee:self.payment.transactionFee];
-    [super doneButton:sender];
+    if ([self isValid]) {
+        [self updateObject];
+        [self.payment recalculateNetAmountWithFee:self.payment.transactionFee];
+        [super doneButton:sender];
+    }
+    
 }
 @end

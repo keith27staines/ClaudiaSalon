@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6205" systemVersion="14A314h" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6205"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCReceiptWindowController">
@@ -24,8 +24,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LEL-hX-ahV">
-                        <rect key="frame" x="405" y="13" width="115" height="32"/>
-                        <buttonCell key="cell" type="push" title="Print receipt" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YcC-fb-fZN">
+                        <rect key="frame" x="371" y="13" width="83" height="32"/>
+                        <buttonCell key="cell" type="push" title="Print" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="YcC-fb-fZN">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -41,8 +41,8 @@
                         </constraints>
                     </customView>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pZf-f8-koY">
-                        <rect key="frame" x="221" y="13" width="152" height="32"/>
-                        <buttonCell key="cell" type="push" title="Don't print receipt" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LZz-6A-nHQ">
+                        <rect key="frame" x="256" y="13" width="83" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LZz-6A-nHQ">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                             <string key="keyEquivalent" base64-UTF8="YES">
@@ -55,6 +55,7 @@ Gw
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="pZf-f8-koY" firstAttribute="width" secondItem="LEL-hX-ahV" secondAttribute="width" id="5Ym-nq-3TN"/>
                     <constraint firstItem="pZf-f8-koY" firstAttribute="top" secondItem="ZKy-JL-hpw" secondAttribute="bottom" constant="40" id="7j4-Rq-kBr"/>
                     <constraint firstItem="pZf-f8-koY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="G1M-IR-EQf"/>
                     <constraint firstAttribute="centerX" secondItem="pZf-f8-koY" secondAttribute="centerX" id="Ilb-mn-Iq4"/>

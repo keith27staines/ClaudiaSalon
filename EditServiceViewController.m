@@ -129,14 +129,12 @@
 }
 
 #pragma mark - NSControlTextEditingDelegate
--(void)controlTextDidBeginEditing:(NSNotification *)obj
-{
-    [self.doneButton setEnabled:NO];
+-(void)controlTextDidChange:(NSNotification *)obj {
+    [self enableDoneButton];
 }
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
     BOOL controlIsValid = NO;
-    [self.doneButton setEnabled:NO];
     
     if (control == self.nameField) {
         controlIsValid = [self validateName:fieldEditor.string];
@@ -147,16 +145,19 @@
     if (control == self.nominalPrice || control == self.minimumPrice || control == self.maximumPrice) {
         controlIsValid = YES;
     }
-    [self.doneButton setEnabled:[self isValid]];
+    [self enableDoneButton];
     return controlIsValid;
 }
 -(void)controlTextDidEndEditing:(NSNotification *)obj
 {
-    [self.doneButton setEnabled:[self isValid]];
+    [self enableDoneButton];
 }
 -(BOOL)isValid
 {
     if (![self validateName:self.nameField.stringValue]) return NO;
+    if (![self selectedCategory]) {
+        return NO;
+    }
     double nominal = self.nominalPrice.doubleValue;
     double minimum = self.minimumPrice.doubleValue;
     double maximum = self.maximumPrice.doubleValue;
@@ -181,7 +182,14 @@
         service.serviceCategory = self.categories[i-1];
     }
 }
-
+-(ServiceCategory*)selectedCategory {
+    NSInteger i = self.categoryPopup.indexOfSelectedItem;
+    if (i==0) {
+        return nil;
+    } else {
+        return self.categories[i-1];
+    }
+}
 -(void)loadHairLengthPopup
 {
     [self.hairLengthPopup removeAllItems];
@@ -239,9 +247,8 @@
     self.service.maximumCharge = @(maxPrice);
     self.service.nominalCharge = @(nominalPrice);
     [self setPriceControls];
-    [self.doneButton setEnabled:[self isValid]];
+    [self enableDoneButton];
 }
-
 - (IBAction)maximumPriceChanged:(id)sender {
     double minPrice = self.minimumPrice.doubleValue;
     double maxPrice = self.maximumPrice.doubleValue;
@@ -261,7 +268,7 @@
     self.service.maximumCharge = @(maxPrice);
     self.service.nominalCharge = @(nominalPrice);
     [self setPriceControls];
-    [self.doneButton setEnabled:[self isValid]];
+    [self enableDoneButton];
 }
 
 - (IBAction)nominalPriceChanged:(id)sender {
@@ -279,7 +286,7 @@
     self.service.maximumCharge = @(maxPrice);
     self.service.nominalCharge = @(nominalPrice);
     [self setPriceControls];
-    [self.doneButton setEnabled:[self isValid]];
+    [self enableDoneButton];
 }
 
 - (IBAction)deluxeChanged:(id)sender {
@@ -290,6 +297,7 @@
     }
 }
 - (IBAction)categoryChanged:(id)sender {
+    [self enableDoneButton];
 }
 
 @end

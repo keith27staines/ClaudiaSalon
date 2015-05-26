@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class Sale, AMCQuickQuoteViewController, AMCReceiptWindowController;
+@class Sale, AMCQuickQuoteViewController;
 
 #import <Cocoa/Cocoa.h>
 #import "AMCSaleItemPriceSetterView.h"
@@ -30,14 +30,9 @@
 
 @property (weak) IBOutlet NSTextField *totalSavingForCustomerLabel;
 @property (weak) IBOutlet NSPopUpButton *additionalDiscountPopupButton;
-@property (strong) IBOutlet AMCReceiptWindowController *receiptPrinterWindowController;
-@property (weak) IBOutlet NSButton *printButton;
 
 - (IBAction)okButtonClicked:(id)sender;
-- (IBAction)printQuoteButtonClicked:(id)sender;
 - (IBAction)cancelButtonClicked:(id)sender;
-- (IBAction)addSaleItemButtonClicked:(id)sender;
-- (IBAction)removeSaleItemButtonClicked:(id)sender;
 - (IBAction)additionalDiscountChanged:(id)sender;
 @property BOOL hideCancelButton;
 @property (weak) IBOutlet NSButton *cancelButton;

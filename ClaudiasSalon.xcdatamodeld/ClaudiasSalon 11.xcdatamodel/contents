@@ -90,7 +90,7 @@
         <attribute name="paidFromManagersBudget" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="453898800" defaultValueString="&quot;now&quot;" syncable="YES"/>
+        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="454244400" defaultValueString="&quot;now&quot;" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="canDo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="canBeDoneBy" inverseEntity="Service" syncable="YES"/>
         <relationship name="holidays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Holiday" inverseName="employee" inverseEntity="Holiday" syncable="YES"/>
@@ -296,7 +296,7 @@
         <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="maximumCharge" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="minimumCharge" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="name" attributeType="String" minValueString="3" syncable="YES"/>
+        <attribute name="name" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="nominalCharge" attributeType="Double" minValueString="0" maxValueString="200" defaultValueString="0.0" syncable="YES"/>
         <attribute name="priceNegotiable" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="selectable" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>

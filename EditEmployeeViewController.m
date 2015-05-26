@@ -126,11 +126,11 @@
     if (notification.object == self.postcode) {
         self.postcode.stringValue = [self.postcode.stringValue uppercaseString];
     }
+    [self enableDoneButton];
 }
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
     BOOL controlIsValid = NO;
-    [self.doneButton setEnabled:NO];
     if (control == self.firstName) {
         controlIsValid = [self validateName:fieldEditor.string];
     }
@@ -146,7 +146,6 @@
     if (control == self.postcode) {
         controlIsValid = YES;
     }
-    [self.doneButton setEnabled:[self isValid]];
     return controlIsValid;
 }
 -(void)controlTextDidEndEditing:(NSNotification *)obj

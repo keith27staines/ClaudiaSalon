@@ -11,7 +11,6 @@
                 <outlet property="chargePriceAfterDiscount" destination="PSZ-DC-gRd" id="Ksb-LF-dAg"/>
                 <outlet property="chargePriceBeforeDiscount" destination="gWm-Fi-Nc1" id="lyX-CJ-PkM"/>
                 <outlet property="deluxeImage" destination="xde-Na-92T" id="L4u-92-udz"/>
-                <outlet property="discountInfoButton" destination="YRk-PQ-Mkz" id="NLg-hK-qmC"/>
                 <outlet property="discountPopup" destination="Rfy-Ok-kSY" id="jAL-DS-RN9"/>
                 <outlet property="hairLength" destination="w9Q-iO-xQR" id="oJA-ot-B0q"/>
                 <outlet property="maximumPrice" destination="lWZ-bW-PnT" id="s0c-fE-Ewk"/>
@@ -125,16 +124,6 @@
                                 <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <font key="titleFont" metaFont="system"/>
                             </box>
-                            <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YRk-PQ-Mkz">
-                                <rect key="frame" x="481" y="92" width="39" height="38"/>
-                                <buttonCell key="cell" type="round" bezelStyle="circular" image="NSInfo" imagePosition="above" alignment="left" borderStyle="border" imageScaling="proportionallyDown" id="XKT-rU-qol">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="showDiscountInfo:" target="-2" id="gkT-D0-gaA"/>
-                                </connections>
-                            </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mrF-xn-guv">
                                 <rect key="frame" x="19" y="30" width="266" height="19"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Price after individual-item discount:" id="fuV-Du-TC5">
@@ -220,10 +209,8 @@
                         <constraint firstItem="1io-cy-GRU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tmh-Wz-j3r" secondAttribute="leading" constant="40" id="egd-aX-Xqh"/>
                         <constraint firstItem="nGf-Jl-PkG" firstAttribute="trailing" secondItem="zbZ-67-g0x" secondAttribute="trailing" id="fWD-Pc-kKd"/>
                         <constraint firstItem="Rfy-Ok-kSY" firstAttribute="centerY" secondItem="Xgd-US-UnU" secondAttribute="centerY" id="fni-eU-k9W"/>
-                        <constraint firstItem="YRk-PQ-Mkz" firstAttribute="centerY" secondItem="Rfy-Ok-kSY" secondAttribute="centerY" id="h6w-v3-cC5"/>
                         <constraint firstItem="nGf-Jl-PkG" firstAttribute="top" secondItem="Tmh-Wz-j3r" secondAttribute="top" constant="35" id="j5v-Dr-SJT"/>
                         <constraint firstItem="Xgd-US-UnU" firstAttribute="trailing" secondItem="mrF-xn-guv" secondAttribute="trailing" id="jdK-Xg-Uf4"/>
-                        <constraint firstItem="YRk-PQ-Mkz" firstAttribute="leading" secondItem="Rfy-Ok-kSY" secondAttribute="trailing" constant="38" id="lkK-4y-VAJ"/>
                         <constraint firstItem="gWm-Fi-Nc1" firstAttribute="top" secondItem="k33-iC-uPf" secondAttribute="bottom" constant="18" id="m33-0D-uDU"/>
                         <constraint firstItem="zbZ-67-g0x" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tmh-Wz-j3r" secondAttribute="leading" constant="15" id="mSs-LD-ukw"/>
                         <constraint firstItem="PSZ-DC-gRd" firstAttribute="centerY" secondItem="Yfb-PF-ycH" secondAttribute="centerY" id="pPO-ep-IBr"/>

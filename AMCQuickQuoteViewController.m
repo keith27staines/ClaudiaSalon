@@ -15,7 +15,7 @@
 #import "AMCSaleItemPriceSetterView.h"
 #import "AMCSaleItemPriceSetterViewController.h"
 #import "AMCDiscountCalculator.h"
-#import "AMCReceiptWindowController.h"
+
 
 @interface AMCQuickQuoteViewController()
 {
@@ -46,12 +46,6 @@
     [self loadDiscountPopup:self.additionalDiscountPopupButton];
     [self updateFromSale];
     [self.cancelButton setHidden:self.hideCancelButton];
-    BOOL isQuote = self.sale.isQuote.boolValue;
-    if (isQuote) {
-        self.printButton.title = @"Print quote";
-    } else {
-        self.printButton.title = @"Print receipt";
-    }
     [self.saleItemsTable setNeedsUpdateConstraints:YES];
     [self.saleItemsTable setNeedsLayout:YES];
     [self.saleItemsTable setNeedsDisplay:YES];
@@ -87,22 +81,10 @@
     [self.delegate quickQuoteViewControllerDidFinish:self];
     [self dismissController:sender];
 }
-
-- (IBAction)printQuoteButtonClicked:(id)sender {
-    self.receiptPrinterWindowController.sale = self.sale;
-    [self.receiptPrinterWindowController showWindow:self];
-}
-
 - (IBAction)cancelButtonClicked:(id)sender {
     self.cancelled = YES;
     [self.delegate quickQuoteViewControllerDidFinish:self];
     [self dismissController:sender];
-}
-
-- (IBAction)addSaleItemButtonClicked:(id)sender {
-}
-
-- (IBAction)removeSaleItemButtonClicked:(id)sender {
 }
 #pragma mark - NSTableViewDataSource and delegate
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {

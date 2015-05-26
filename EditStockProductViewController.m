@@ -108,9 +108,7 @@
 }
 
 #pragma mark - NSControlTextEditingDelegate
--(void)controlTextDidBeginEditing:(NSNotification *)obj {
-    [self.doneButton setEnabled:NO];
-}
+
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
     BOOL controlIsValid = NO;
@@ -121,12 +119,14 @@
     } else {
         controlIsValid = YES;
     }
-    [self.doneButton setEnabled:[self isValid]];
     return controlIsValid;
 }
 -(void)controlTextDidEndEditing:(NSNotification *)obj
 {
     [self.doneButton setEnabled:[self isValid]];
+}
+-(void)controlTextDidChange:(NSNotification *)obj {
+    [self enableDoneButton];
 }
 -(BOOL)isValid
 {

@@ -30,7 +30,7 @@
 #pragma mark - methods subclasses must override and call base class
 -(void)updateObject;
 -(NSArray*)editableControls;
-
+-(void)enableDoneButton;
 #pragma mark - other properties common to all object editors
 @property (weak) id objectToEdit;
 @property (copy,readonly) NSString * objectTypeAndName;
@@ -41,6 +41,7 @@
 -(BOOL)validateName:(NSString*)name;
 -(BOOL)validatePhoneNumber:(NSString*)possibleNumber;
 -(BOOL)validateEmailAddress:(NSString*)possibleAddress;
+-(BOOL)isValid;
 
 #pragma mark - helpers not designed to be overriden
 -(void)enableEditableControls:(BOOL)yn;

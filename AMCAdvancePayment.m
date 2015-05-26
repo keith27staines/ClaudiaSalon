@@ -80,7 +80,13 @@
     }
 }
 -(void)enableOKButton {
-    self.okButton.enabled = [self isValid];
+    if ([self isValid]) {
+        self.okButton.enabled = YES;
+        [self.okButton.window setDefaultButtonCell:self.okButton.cell];
+    } else {
+        self.okButton.enabled = NO;
+    }
+    
 }
 - (IBAction)accountChanged:(id)sender {
     [self enableOKButton];

@@ -209,7 +209,9 @@
     if (notification.object == self.postcode) {
         self.postcode.stringValue = [self.postcode.stringValue uppercaseString];
     }
+    [self enableDoneButton];
 }
+
 #pragma mark - Validation
 -(BOOL)isValid
 {

@@ -66,18 +66,18 @@
 -(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
 {
     BOOL controlIsValid = NO;
-    [self.doneButton setEnabled:NO];
     
     if (control == self.nameOfService) {
         controlIsValid = [self validateName:fieldEditor.string];
     }
-    
-    [self.doneButton setEnabled:[self isValid]];
     return controlIsValid;
 }
 -(void)controlTextDidEndEditing:(NSNotification *)obj
 {
     [self.doneButton setEnabled:[self isValid]];
+}
+-(void)controlTextDidChange:(NSNotification *)obj {
+    [self enableDoneButton];
 }
 -(BOOL)isValid
 {

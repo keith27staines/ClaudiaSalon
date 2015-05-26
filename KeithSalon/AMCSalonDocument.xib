@@ -101,11 +101,11 @@
                             </tabViewItem>
                             <tabViewItem label="Sales" identifier="sales" id="IfO-eF-IDq">
                                 <view key="view" id="BdB-2l-gtV">
-                                    <rect key="frame" x="10" y="33" width="1343" height="758"/>
+                                    <rect key="frame" x="10" y="33" width="1383" height="778"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hce-3Y-Yzl">
-                                            <rect key="frame" x="17" y="16" width="150" height="72"/>
+                                            <rect key="frame" x="17" y="36" width="150" height="72"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="150" id="Dh6-pY-EzG"/>
                                                 <constraint firstAttribute="height" constant="70" id="ILK-NM-HCN"/>
@@ -119,7 +119,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HXx-g7-A5Y">
-                                            <rect key="frame" x="187" y="16" width="150" height="72"/>
+                                            <rect key="frame" x="187" y="36" width="150" height="72"/>
                                             <buttonCell key="cell" type="smallSquare" title="View Sale" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WgO-jK-3qz">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system" size="18"/>
@@ -129,7 +129,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="js7-rV-Jro">
-                                            <rect key="frame" x="357" y="16" width="150" height="72"/>
+                                            <rect key="frame" x="357" y="36" width="150" height="72"/>
                                             <buttonCell key="cell" type="smallSquare" title="View Receipt" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KkF-w4-9UX">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system" size="18"/>
@@ -139,7 +139,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bVF-Q0-BIf">
-                                            <rect key="frame" x="531" y="16" width="150" height="72"/>
+                                            <rect key="frame" x="531" y="36" width="150" height="72"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="70" id="d96-Xn-n9D"/>
                                                 <constraint firstAttribute="width" constant="150" id="r6G-tC-bqH"/>
@@ -153,7 +153,7 @@
                                             </connections>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1zT-s0-1kj">
-                                            <rect key="frame" x="707" y="16" width="150" height="72"/>
+                                            <rect key="frame" x="707" y="36" width="150" height="72"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="150" id="Iiq-iB-xss"/>
                                                 <constraint firstAttribute="height" constant="70" id="whI-Z7-exG"/>
@@ -167,7 +167,7 @@
                                             </connections>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="IVM-ak-nss">
-                                            <rect key="frame" x="1299" y="40" width="24" height="24"/>
+                                            <rect key="frame" x="1299" y="60" width="24" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="24" id="bAq-IH-903"/>
                                                 <constraint firstAttribute="height" constant="24" id="dCi-Rt-FSX"/>
@@ -181,7 +181,7 @@
                                             </connections>
                                         </button>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="p43-7W-sEp">
-                                            <rect key="frame" x="975" y="37" width="32" height="31"/>
+                                            <rect key="frame" x="975" y="57" width="32" height="31"/>
                                             <buttonCell key="cell" type="bevel" bezelStyle="circular" image="NSInfo" imagePosition="above" alignment="left" imageScaling="proportionallyDown" id="ni5-zR-9tS">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="label"/>
@@ -191,7 +191,7 @@
                                             </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WV3-hP-lCf">
-                                            <rect key="frame" x="923" y="44" width="34" height="17"/>
+                                            <rect key="frame" x="923" y="64" width="34" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Total" id="JLa-XS-PJy">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -199,7 +199,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-jG-q1s">
-                                            <rect key="frame" x="20" y="95" width="1303" height="643"/>
+                                            <rect key="frame" x="20" y="115" width="1303" height="643"/>
                                             <clipView key="contentView" id="DK5-Uv-ACg">
                                                 <rect key="frame" x="1" y="17" width="1301" height="570"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

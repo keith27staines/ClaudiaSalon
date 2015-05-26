@@ -657,10 +657,8 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     
     if (sale.isQuote.boolValue) {
         self.viewSaleButton.title = @"Quote to Sale";
-        self.viewReceiptButton.title = @"Print Quote";
     } else {
         self.viewSaleButton.title = @"View sale";
-        self.viewReceiptButton.title = @"View receipt";
     }
     [self.viewSaleButton setEnabled:(self.salesTable.selectedRow >= 0)?YES:NO];
     [self.viewReceiptButton setEnabled:(self.salesTable.selectedRow >=0)?YES:NO];

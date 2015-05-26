@@ -122,7 +122,6 @@
 }
 -(void)printReceipt
 {
-    //[self setBoundsSize:[self paperSize]];
     NSPrintOperation * op = [NSPrintOperation printOperationWithView:self printInfo:[NSPrintInfo sharedPrintInfo]];
 
     NSPrintInfo * info = op.printInfo;
@@ -154,17 +153,17 @@
         df.dateStyle = NSDateFormatterMediumStyle;
         df.timeStyle = NSDateFormatterShortStyle;
         NSString * dateString = [df stringFromDate:sale.createdDate];
-        NSString * titleString1;
+        NSString * titleString1 = @"";
         NSString * titleString2 = @"";
         if (sale.customer.fullName && sale.customer.fullName.length > 0) {
             titleString2 = [NSString stringWithFormat:@"For: %@",sale.customer.fullName];
         }
         if (sale.isQuote.boolValue) {
-            titleString1 = [NSString stringWithFormat:@"  Quote for services"];
+            dateString = [dateString stringByAppendingString:titleString1];
+            titleString1 = [NSString stringWithFormat:@"  Quote for Services"];
         } else {
-            titleString1 = [NSString stringWithFormat:@"  Payment receipt"];
+            dateString = [dateString stringByAppendingString:@"  Payment Receipt"];
         }
-        dateString = [dateString stringByAppendingString:titleString1];
         double y = self.bodyRect.origin.y;
         NSRect col0;
         NSRect col1;
@@ -223,26 +222,34 @@
             rowHeight = fmax(col0.size.height, col1.size.height);
             rowHeight = fmax(rowHeight, col2.size.height);
             i++;
-            y += rowHeight + 10;
+            y += rowHeight + 6;
         }
+        [[NSColor blackColor] set];
+        [NSBezierPath strokeLineFromPoint:NSMakePoint(sideMargin, y) toPoint:NSMakePoint(pWidth, y)];
+        y += 8;
+        string0 = @"";
+        string1 = @"Sub total:";
+        string2 = [NSString stringWithFormat:@"£%1.2f",sale.chargeAfterIndividualDiscounts.doubleValue];
+        col0 = [self writeString:string0 atY:y inColumn:0];
+        col1 = [self writeString:string1 atY:y inColumn:1];
+        col2 = [self writeString:string2 atY:y inColumn:2];
+        rowHeight = fmax(col0.size.height, col1.size.height);
+        rowHeight = fmax(rowHeight, col2.size.height);
+        y += rowHeight + 6;
+        [[NSColor blackColor] set];
+        [NSBezierPath strokeLineFromPoint:NSMakePoint(sideMargin, y) toPoint:NSMakePoint(pWidth, y)];
+        y += 8;
+        BOOL subtractionsMade = NO;
         NSUInteger extraDiscount = chargeAfterIndividualDiscounts - saleActualCharge;
         if (sale.discountType.doubleValue > AMCDiscountNone && extraDiscount > 0.005) {
-            string0 = @"";
-            string1 = @"Sub total:";
-            string2 = [NSString stringWithFormat:@"£%1.2f",sale.chargeAfterIndividualDiscounts.doubleValue];
-            col0 = [self writeString:string0 atY:y inColumn:0];
-            col1 = [self writeString:string1 atY:y inColumn:1];
-            col2 = [self writeString:string2 atY:y inColumn:2];
-            rowHeight = fmax(col0.size.height, col1.size.height);
-            rowHeight = fmax(rowHeight, col2.size.height);
-            y += rowHeight + 10;
+            subtractionsMade = YES;
             string0 = @"";
             if (individualDiscounts == 0) {
-                string1 = [NSString stringWithFormat:@"Discount %@",[AMCDiscountCalculator discountDescriptionforDiscount:sale.discountType.integerValue]];
+                string1 = @"Less discount";
             } else {
-                string1 = [NSString stringWithFormat:@"Additional %@ discount",[AMCDiscountCalculator discountDescriptionforDiscount:sale.discountType.integerValue]];
+                string1 = @"Less additional discount";
             }
-            string2 = [NSString stringWithFormat:@"-£%1.2f",extraDiscount/100.0];
+            string2 = [NSString stringWithFormat:@"£%1.2f",extraDiscount/100.0];
             col0 = [self writeString:string0 atY:y inColumn:0];
             col1 = [self writeString:string1 atY:y inColumn:1];
             col2 = [self writeString:string2 atY:y inColumn:2];
@@ -250,12 +257,34 @@
             rowHeight = fmax(rowHeight, col2.size.height);
             y += rowHeight + 6;
         }
-        [[NSColor blackColor] set];
-        [NSBezierPath strokeLineFromPoint:NSMakePoint(sideMargin, y) toPoint:NSMakePoint(pWidth, y)];
-        y += 16;
+        if (sale.amountAdvanced > 0) {
+            if (!subtractionsMade) {
+                subtractionsMade = YES;
+                y += 6;
+            }
+            string0 = @"";
+            string1 = @"Less advance payment:";
+            string2 = [NSString stringWithFormat:@"£%1.2f",sale.amountAdvanced];
+            col0 = [self writeString:string0 atY:y inColumn:0];
+            col1 = [self writeString:string1 atY:y inColumn:1];
+            col2 = [self writeString:string2 atY:y inColumn:2];
+            rowHeight = fmax(col0.size.height, col1.size.height);
+            rowHeight = fmax(rowHeight, col2.size.height);
+            y += rowHeight + 6;
+        }
+        if (subtractionsMade) {
+            y += 8;
+            [[NSColor blackColor] set];
+            [NSBezierPath strokeLineFromPoint:NSMakePoint(sideMargin, y) toPoint:NSMakePoint(pWidth, y)];
+            y += 8;
+        }
         string0 = @"";
         string1 = @"Total:";
-        string2 = [NSString stringWithFormat:@"£%1.2f",saleActualCharge/100.0];
+        if (self.sale.isQuote.boolValue) {
+            string2 = [NSString stringWithFormat:@"£%1.2f",sale.amountOutstanding];
+        } else {
+            string2 = [NSString stringWithFormat:@"£%1.2f",sale.actualCharge.doubleValue - self.sale.amountAdvanced];
+        }
         col0 = [self writeString:string0 atY:y inColumn:0];
         col1 = [self writeString:string1 atY:y inColumn:1];
         col2 = [self writeString:string2 atY:y inColumn:2];
@@ -279,7 +308,7 @@
         }
         case 2:
         {
-            return self.bodyRect.size.width / 12.0;
+            return self.bodyRect.size.width / 6.0;
             break;
         }
     }

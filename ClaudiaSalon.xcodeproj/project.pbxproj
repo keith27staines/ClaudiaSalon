@@ -1231,6 +1231,7 @@
 				53D69C0F1A9B23B60004CE10 /* AMCReceiptWindowController.xib */,
 				53D69DE01A9B243C0004CE10 /* AMCReceiptView.h */,
 				53D69CD01A9B240C0004CE10 /* AMCReceiptView.m */,
+				53D69DE11A9B243C0004CE10 /* AMCReceiptWindowController.h */,
 				53D69CD11A9B240C0004CE10 /* AMCReceiptWindowController.m */,
 			);
 			name = Receipt;
@@ -1572,7 +1573,6 @@
 		53D3256C1A9C6E5A00AFCDE4 /* Helper view controllers */ = {
 			isa = PBXGroup;
 			children = (
-				53D69DE11A9B243C0004CE10 /* AMCReceiptWindowController.h */,
 				53AE27051AA3159A00A1B3E4 /* Sale Item Price Setter */,
 				53AE26FD1AA312EE00A1B3E4 /* Salon static data Initialiser */,
 				53AE26FC1AA3128C00A1B3E4 /* Accounts */,

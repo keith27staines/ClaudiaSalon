@@ -275,7 +275,7 @@
     df.dateStyle = NSDateFormatterLongStyle;
     df.timeStyle = NSDateFormatterShortStyle;
     NSAlert * alert = [[NSAlert alloc] init];
-    alert.messageText = @"Add a reconciliation point?";
+    alert.messageText = @"Create a reconciliation point?";
     NSMutableString * info = [NSMutableString stringWithString:@""];
     [info appendString:@"The reconciliation point will have the following properties...\n\n"];
     [info appendFormat:@"Account: %@ \n\n",self.account.friendlyName];
@@ -283,7 +283,7 @@
     [info appendFormat:@"Balance: £%1.2f\n\n",self.balance];
     [info appendFormat:@"All payments recorded against the %@ account prior to %@ will become uneditable\n\n",self.account.friendlyName,[df stringFromDate:self.endDate]];
     alert.informativeText = info;
-    [alert addButtonWithTitle:@"Add reconciliation point"];
+    [alert addButtonWithTitle:@"OK"];
     [alert addButtonWithTitle:@"Cancel"];
     [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSAlertFirstButtonReturn) {

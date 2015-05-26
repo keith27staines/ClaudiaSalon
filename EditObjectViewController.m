@@ -120,6 +120,17 @@
     }
 }
 #pragma mark - validation
+-(void)enableDoneButton {
+    if ([self isValid]) {
+        self.doneButton.enabled = YES;
+        [self.doneButton.window setDefaultButtonCell:self.doneButton.cell];
+    } else {
+        self.doneButton.enabled = NO;
+    }
+}
+-(BOOL)isValid {
+    return NO;
+}
 -(NSString*)extractPhoneNumber:(NSString*)string
 {
     NSError *error = nil;
