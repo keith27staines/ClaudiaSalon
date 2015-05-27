@@ -47,7 +47,7 @@
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
 {
-    [super prepareForDisplayWithSalon:self.salonDocument];
+    [super prepareForDisplayWithSalon:salonDocument];
     Customer * customer = (Customer*)self.objectToEdit;
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:NO];
     self.salesArray = [self.salesArray sortedArrayUsingDescriptors:@[sort]];

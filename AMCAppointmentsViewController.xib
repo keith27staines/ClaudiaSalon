@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCAppointmentsViewController">
             <connections>
+                <outlet property="actionButton" destination="JGT-uh-29d" id="F0j-MD-e8Y"/>
                 <outlet property="appointmentStateSelectorButton" destination="Tce-nE-0p0" id="RzQ-W2-x6x"/>
                 <outlet property="appointmentsTable" destination="yol-SD-GjD" id="17T-Pd-Wjj"/>
-                <outlet property="cancelAppointmentButton" destination="YFl-sK-pEh" id="Dxf-2K-7tY"/>
                 <outlet property="completeAppointmentButton" destination="vKJ-HN-7eo" id="dzi-D8-z9h"/>
                 <outlet property="createAppointmentButton" destination="bgs-Pr-bo2" id="koO-ao-dgb"/>
                 <outlet property="editAppointmentButton" destination="bEf-cU-70k" id="BsM-wi-7F9"/>
                 <outlet property="editCustomerViewController" destination="Wai-8g-R3X" id="hLG-CP-eDk"/>
                 <outlet property="intervalPickerSegmentedControl" destination="Hx0-Eh-yBj" id="Kek-Hj-zX4"/>
+                <outlet property="rightClickCancelMenuItem" destination="hPr-lz-o2d" id="JHV-IY-BzU"/>
+                <outlet property="rightClickCompleteMenuItem" destination="PZ7-Fd-36X" id="gYt-fB-7W5"/>
+                <outlet property="rightClickEditMenuItem" destination="29G-3m-bIS" id="Ibe-a0-onZ"/>
+                <outlet property="rightClickMenu" destination="5Zz-o5-5a7" id="2ie-Gw-5BH"/>
+                <outlet property="rightClickViewCustomerMenuItem" destination="22z-Pp-XlL" id="89e-HL-Rwe"/>
                 <outlet property="saleItemsTable" destination="gs8-Wb-vBx" id="x5d-G6-Nd4"/>
                 <outlet property="searchField" destination="YGa-hk-UjA" id="Skz-KI-Btk"/>
                 <outlet property="showNotesButton" destination="stf-Pp-D1T" id="FvI-rA-fAv"/>
                 <outlet property="showQuickQuoteButton" destination="xjC-Xq-hgW" id="ts1-ov-bxM"/>
                 <outlet property="totalLabel" destination="FLS-Ps-M3U" id="ArB-qX-VbQ"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
-                <outlet property="viewCustomerButton" destination="T95-LB-V2t" id="EjT-cM-b3i"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -46,27 +50,7 @@
                         <font key="font" metaFont="system" size="18"/>
                     </buttonCell>
                     <connections>
-                        <action selector="editAppointment:" target="-2" id="xdJ-Db-bS7"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YFl-sK-pEh">
-                    <rect key="frame" x="600" y="-1" width="182" height="72"/>
-                    <buttonCell key="cell" type="smallSquare" title="Cancel booking" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="d0l-Qz-Xaq">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="cancelAppointment:" target="-2" id="J5W-N2-U31"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T95-LB-V2t">
-                    <rect key="frame" x="800" y="-1" width="182" height="72"/>
-                    <buttonCell key="cell" type="smallSquare" title="View Customer" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IpY-bC-sz5">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system" size="18"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="viewCustomer:" target="-2" id="TJ6-io-WTa"/>
+                        <action selector="editSelectedAppointment:" target="-2" id="WXx-tU-Fm9"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vKJ-HN-7eo">
@@ -80,7 +64,7 @@
                         <font key="font" metaFont="system" size="18"/>
                     </buttonCell>
                     <connections>
-                        <action selector="completeAppointment:" target="-2" id="iWv-0A-eSN"/>
+                        <action selector="completeSelectedAppointment:" target="-2" id="xg1-IH-j5o"/>
                     </connections>
                 </button>
                 <scrollView verticalHuggingPriority="1000" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bsn-eD-i1Z">
@@ -179,22 +163,8 @@
                         <action selector="intervalChanged:" target="-2" id="MZP-5h-Qw5"/>
                     </connections>
                 </segmentedControl>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="stf-Pp-D1T">
-                    <rect key="frame" x="1263" y="23" width="24" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="24" id="a1U-tK-16W"/>
-                        <constraint firstAttribute="width" constant="24" id="e13-S4-ps5"/>
-                    </constraints>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="d8O-VD-38t">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="showNotesButtonClicked:" target="-2" id="YhV-po-Id2"/>
-                    </connections>
-                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FLS-Ps-M3U">
-                    <rect key="frame" x="1011" y="27" width="34" height="17"/>
+                    <rect key="frame" x="743" y="27" width="34" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Total" id="zsH-CC-Apf">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -386,6 +356,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="-2" id="o2H-Ll-JdS"/>
                                     <outlet property="delegate" destination="-2" id="M6u-91-o1u"/>
+                                    <outlet property="menu" destination="5Zz-o5-5a7" id="ijh-AF-p1q"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -408,7 +379,7 @@
                     </tableHeaderView>
                 </scrollView>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="xjC-Xq-hgW">
-                    <rect key="frame" x="1056" y="23" width="24" height="24"/>
+                    <rect key="frame" x="788" y="23" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="75g-QX-ouy"/>
                         <constraint firstAttribute="width" constant="24" id="OjT-yj-H6i"/>
@@ -421,57 +392,172 @@
                         <action selector="showQuickQuoteButtonClicked:" target="-2" id="nUD-Jk-hNu"/>
                     </connections>
                 </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="JGT-uh-29d">
+                    <rect key="frame" x="622" y="23" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="V7j-k6-cbX"/>
+                        <constraint firstAttribute="height" constant="24" id="a2a-mf-Arr"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="fur-8p-8WY">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showActionMenu:" target="-2" id="sLq-as-ONg"/>
+                        <outlet property="menu" destination="IZ6-C0-jow" id="sEH-Xz-RII"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="stf-Pp-D1T">
+                    <rect key="frame" x="1257" y="20" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="a1U-tK-16W"/>
+                        <constraint firstAttribute="width" constant="30" id="e13-S4-ps5"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="d8O-VD-38t">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showNotesButtonClicked:" target="-2" id="YhV-po-Id2"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="stf-Pp-D1T" secondAttribute="trailing" constant="20" id="3Gm-Hc-jXX"/>
                 <constraint firstItem="xjC-Xq-hgW" firstAttribute="leading" secondItem="FLS-Ps-M3U" secondAttribute="trailing" constant="13" id="6pa-ee-rKO"/>
+                <constraint firstItem="FLS-Ps-M3U" firstAttribute="centerY" secondItem="xjC-Xq-hgW" secondAttribute="centerY" id="6ui-GX-86s"/>
                 <constraint firstItem="bEf-cU-70k" firstAttribute="leading" secondItem="bgs-Pr-bo2" secondAttribute="trailing" constant="18" id="9RA-XP-e52"/>
-                <constraint firstItem="FLS-Ps-M3U" firstAttribute="leading" secondItem="T95-LB-V2t" secondAttribute="trailing" constant="31" id="9Rm-bI-cX7"/>
-                <constraint firstItem="YFl-sK-pEh" firstAttribute="leading" secondItem="vKJ-HN-7eo" secondAttribute="trailing" constant="18" id="CFr-dU-hdl"/>
                 <constraint firstItem="vKJ-HN-7eo" firstAttribute="leading" secondItem="bEf-cU-70k" secondAttribute="trailing" constant="18" id="EKC-nw-oGP"/>
-                <constraint firstItem="vKJ-HN-7eo" firstAttribute="top" secondItem="YFl-sK-pEh" secondAttribute="top" id="GQZ-iI-Wp7"/>
+                <constraint firstItem="vKJ-HN-7eo" firstAttribute="centerY" secondItem="JGT-uh-29d" secondAttribute="centerY" id="JIB-6m-cux"/>
                 <constraint firstItem="Hx0-Eh-yBj" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Lox-83-bXC"/>
                 <constraint firstItem="EHV-9L-yaS" firstAttribute="top" secondItem="Hx0-Eh-yBj" secondAttribute="bottom" constant="8" symbolic="YES" id="Oe5-HZ-e2f"/>
+                <constraint firstItem="xjC-Xq-hgW" firstAttribute="leading" secondItem="JGT-uh-29d" secondAttribute="trailing" constant="142" id="P9T-mZ-wWn"/>
                 <constraint firstItem="vKJ-HN-7eo" firstAttribute="top" secondItem="bgs-Pr-bo2" secondAttribute="top" id="QD0-jW-YrA"/>
+                <constraint firstItem="FLS-Ps-M3U" firstAttribute="centerY" secondItem="JGT-uh-29d" secondAttribute="centerY" id="Qhq-mb-cqT"/>
                 <constraint firstAttribute="trailing" secondItem="Bsn-eD-i1Z" secondAttribute="trailing" id="RZX-1w-UpY"/>
-                <constraint firstItem="T95-LB-V2t" firstAttribute="width" secondItem="YFl-sK-pEh" secondAttribute="width" id="Tbb-Xm-HZa"/>
                 <constraint firstItem="YGa-hk-UjA" firstAttribute="top" secondItem="EHV-9L-yaS" secondAttribute="bottom" constant="2" id="TeF-ZV-coC"/>
-                <constraint firstItem="T95-LB-V2t" firstAttribute="height" secondItem="YFl-sK-pEh" secondAttribute="height" id="Tzo-kN-qvd"/>
-                <constraint firstItem="T95-LB-V2t" firstAttribute="centerY" secondItem="xjC-Xq-hgW" secondAttribute="centerY" id="Z77-pS-P48"/>
-                <constraint firstItem="vKJ-HN-7eo" firstAttribute="height" secondItem="YFl-sK-pEh" secondAttribute="height" id="ZqN-Ud-yql"/>
                 <constraint firstItem="vKJ-HN-7eo" firstAttribute="height" secondItem="bgs-Pr-bo2" secondAttribute="height" id="a30-mK-I0k"/>
                 <constraint firstAttribute="trailing" secondItem="EHV-9L-yaS" secondAttribute="trailing" id="aAq-qH-mrs"/>
-                <constraint firstItem="stf-Pp-D1T" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xjC-Xq-hgW" secondAttribute="trailing" constant="42" id="as4-5Q-zHc"/>
+                <constraint firstItem="stf-Pp-D1T" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xjC-Xq-hgW" secondAttribute="trailing" constant="40" id="as4-5Q-zHc"/>
                 <constraint firstItem="Tce-nE-0p0" firstAttribute="centerY" secondItem="Hx0-Eh-yBj" secondAttribute="centerY" id="azu-s2-b4o"/>
                 <constraint firstItem="bgs-Pr-bo2" firstAttribute="top" secondItem="Bsn-eD-i1Z" secondAttribute="bottom" constant="20" id="cqp-ac-Uaf"/>
-                <constraint firstItem="T95-LB-V2t" firstAttribute="leading" secondItem="YFl-sK-pEh" secondAttribute="trailing" constant="18" id="d6u-Zb-Tos"/>
-                <constraint firstItem="vKJ-HN-7eo" firstAttribute="width" secondItem="YFl-sK-pEh" secondAttribute="width" id="dQS-tP-2m0"/>
                 <constraint firstItem="vKJ-HN-7eo" firstAttribute="top" secondItem="bEf-cU-70k" secondAttribute="top" id="dns-GA-fRG"/>
                 <constraint firstItem="Bsn-eD-i1Z" firstAttribute="top" secondItem="YGa-hk-UjA" secondAttribute="bottom" constant="16" id="eZx-Wv-NoF"/>
                 <constraint firstItem="Tce-nE-0p0" firstAttribute="leading" secondItem="Hx0-Eh-yBj" secondAttribute="trailing" constant="24" id="enh-3M-EbA"/>
                 <constraint firstItem="bgs-Pr-bo2" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="fDZ-ld-0n0"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Tce-nE-0p0" secondAttribute="trailing" id="fyC-KC-2n3"/>
-                <constraint firstItem="stf-Pp-D1T" firstAttribute="centerY" secondItem="YFl-sK-pEh" secondAttribute="centerY" id="gwB-fa-1Ps"/>
-                <constraint firstItem="T95-LB-V2t" firstAttribute="centerY" secondItem="YFl-sK-pEh" secondAttribute="centerY" id="hco-65-YSz"/>
                 <constraint firstItem="Bsn-eD-i1Z" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="jRF-OY-7zl"/>
-                <constraint firstItem="T95-LB-V2t" firstAttribute="centerY" secondItem="FLS-Ps-M3U" secondAttribute="centerY" id="knI-Hp-SHc"/>
                 <constraint firstItem="EHV-9L-yaS" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="mye-8L-1Gs"/>
                 <constraint firstItem="vKJ-HN-7eo" firstAttribute="width" secondItem="bEf-cU-70k" secondAttribute="width" id="orS-nY-HzR"/>
                 <constraint firstItem="EHV-9L-yaS" firstAttribute="leading" secondItem="YGa-hk-UjA" secondAttribute="leading" id="qlX-Mj-W9d"/>
                 <constraint firstItem="vKJ-HN-7eo" firstAttribute="height" secondItem="bEf-cU-70k" secondAttribute="height" id="s76-5H-qrX"/>
                 <constraint firstAttribute="bottom" secondItem="bgs-Pr-bo2" secondAttribute="bottom" id="ucx-3u-2qc"/>
+                <constraint firstItem="JGT-uh-29d" firstAttribute="leading" secondItem="vKJ-HN-7eo" secondAttribute="trailing" constant="40" id="vHc-JG-a4i"/>
                 <constraint firstItem="vKJ-HN-7eo" firstAttribute="width" secondItem="bgs-Pr-bo2" secondAttribute="width" id="yXc-sZ-xt4"/>
+                <constraint firstItem="stf-Pp-D1T" firstAttribute="centerY" secondItem="xjC-Xq-hgW" secondAttribute="centerY" id="ytU-uf-GZ4"/>
                 <constraint firstItem="Hx0-Eh-yBj" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="zMV-y8-r5H"/>
             </constraints>
             <connections>
                 <outlet property="delegate" destination="-2" id="ZuR-MX-7bX"/>
                 <outlet property="intervalPickerSegmentedControl" destination="Hx0-Eh-yBj" id="Acp-Yc-tHU"/>
             </connections>
-            <point key="canvasLocation" x="244.5" y="-61"/>
+            <point key="canvasLocation" x="-79.5" y="-307"/>
         </customView>
         <customObject id="Wai-8g-R3X" customClass="EditCustomerViewController"/>
+        <menu id="IZ6-C0-jow">
+            <items>
+                <menuItem title="New Booking..." id="p9w-EQ-Eqb">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="createNewAppointment:" target="-2" id="vGD-eo-SWc"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Edit Booking..." id="4YZ-ls-AZH">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="editSelectedAppointment:" target="-2" id="zJZ-ab-7f3"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedAppointment" id="yPU-1K-pR5">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+                <menuItem title="Complete Booking..." id="smS-Io-A1G">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="completeSelectedAppointment:" target="-2" id="1aK-6l-aE2"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedAppointment" id="nMk-OI-IMo">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="dbr-Np-Wai"/>
+                <menuItem title="Cancel Booking..." id="dWt-TQ-thA">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="cancelSelectedAppointment:" target="-2" id="xtm-kT-b45"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedAppointment" id="UBd-bO-ZzG">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="I1C-mE-S2T"/>
+                <menuItem title="View Customer..." id="ns4-PN-LJo">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="viewSelectedCustomer:" target="-2" id="FEY-vQ-5EE"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedSaleItem" id="nB2-5U-SkS">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-264.5" y="208.5"/>
+        </menu>
+        <menu id="5Zz-o5-5a7">
+            <items>
+                <menuItem title="Edit Booking..." id="29G-3m-bIS">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickEditAction:" target="-2" id="1t5-RF-KmG"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Complete Booking..." id="PZ7-Fd-36X">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickCompleteAction:" target="-2" id="vdj-v1-mfc"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Cancel Booking..." id="hPr-lz-o2d">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickCancelAction:" target="-2" id="DbV-ev-5aN"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="fFI-ya-aC5"/>
+                <menuItem title="View Customer..." id="22z-Pp-XlL">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickViewCustomerAction:" target="-2" id="WCb-hF-o79"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="-2" id="Hn6-md-msX"/>
+            </connections>
+            <point key="canvasLocation" x="-23.5" y="193.5"/>
+        </menu>
+        <userDefaultsController representsSharedInstance="YES" id="qOD-0D-dA0"/>
     </objects>
     <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSInfo" width="32" height="32"/>
         <image name="NoteIcon" width="48" height="48"/>
     </resources>

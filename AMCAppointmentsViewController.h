@@ -26,10 +26,10 @@
 @property (weak) IBOutlet NSButton *viewCustomerButton;
 
 - (IBAction)createNewAppointment:(id)sender;
-- (IBAction)editAppointment:(id)sender;
-- (IBAction)cancelAppointment:(id)sender;
-- (IBAction)completeAppointment:(id)sender;
-- (IBAction)viewCustomer:(id)sender;
+- (IBAction)editSelectedAppointment:(id)sender;
+- (IBAction)cancelSelectedAppointment:(id)sender;
+- (IBAction)completeSelectedAppointment:(id)sender;
+- (IBAction)viewSelectedCustomer:(id)sender;
 
 @property (strong) IBOutlet EditObjectViewController *editCustomerViewController;
 - (IBAction)showNotesButtonClicked:(id)sender;
