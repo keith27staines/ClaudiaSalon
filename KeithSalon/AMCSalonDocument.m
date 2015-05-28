@@ -6,16 +6,19 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
+//#import "AMCQuickQuoteViewController.h"
+//#import "AMCReceiptWindowController.h"
+
 #import "AMCSalonDocument.h"
 #import "AMCStorePopulator.h"
 #import "AMCReportsViewController.h"
 #import "AMCAppointmentsViewController.h"
+#import "AMCSalesViewController.h"
 #import "AMCPaymentsViewController.h"
 #import "AMCStockControlViewController.h"
 #import "AMCAssociatedNotesViewController.h"
 #import "AMCMoneyTransferViewController.h"
 #import "AMCAccountReconciliationViewController.h"
-#import "AMCQuickQuoteViewController.h"
 #import "AMCStaffBusyViewController.h"
 #import "AMCStaffCanDoViewController.h"
 #import "AMCRequestPasswordWindowController.h"
@@ -23,47 +26,46 @@
 #import "AMCManagersBudgetWindowController.h"
 #import "AMCDayAndMonthPopupViewController.h"
 #import "AMCStaffCanDoViewController.h"
-#import "AMCReceiptWindowController.h"
 #import "AMCAccountStatementViewController.h"
 #import "AMCCategoryManagerViewController.h"
 
 #import "EditObjectViewController.h"
 
 // Data models
+//#import "Appointment+Methods.h"
+//#import "Sale+Methods.h"
+//#import "SaleItem+Methods.h"
 #import "Salon+Methods.h"
 #import "Account+Methods.h"
 #import "AccountReconciliation+Methods.h"
-#import "Appointment+Methods.h"
 #import "Customer+Methods.h"
 #import "EditObjectViewController.h"
+#import "EditObjectViewControllerDelegate.h"
 #import "Employee+Methods.h"
 #import "Payment+Methods.h"
 #import "NSDate+AMCDate.h"
 #import "Service+Methods.h"
 #import "ServiceCategory+Methods.h"
 #import "Salary+Methods.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
 #import "WorkRecord+Methods.h"
 #import "AMCSalonDetailsViewController.h"
 #import "RecurringItem+Methods.h"
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 
-@interface AMCSalonDocument() <NSTabViewDelegate, NSTableViewDelegate,AMCDayAndMonthPopupViewControllerDelegate, NSControlTextEditingDelegate, NSAnimationDelegate, AMCReceiptPrinterWindowControllerDelegate, EditObjectViewControllerDelegate, AMCQuickQuoteViewControllerDelegate>
+@interface AMCSalonDocument() <NSTabViewDelegate, NSTableViewDelegate,AMCDayAndMonthPopupViewControllerDelegate, NSControlTextEditingDelegate, NSAnimationDelegate, EditObjectViewControllerDelegate>
 {
     BOOL _storeNeedsInitializing;
     Salon * _salon;
     OpeningHoursWeekTemplate * _openingHoursWeekTemplate;
 }
 
-@property (weak) IBOutlet AMCReceiptWindowController * receiptWindowController;
 @property (weak) IBOutlet AMCRequestPasswordWindowController *requestPasswordWindowController;
 @property (weak) IBOutlet AMCManagersBudgetWindowController *managersBudgetWindowController;
 @property (weak) IBOutlet AMCSalaryPaymentViewController *salaryPaymentViewController;
 @property (weak) IBOutlet AMCStaffBusyViewController *staffBusyViewController;
 @property (weak) IBOutlet AMCStaffCanDoViewController *staffCanDoViewController;
-@property (weak) IBOutlet AMCQuickQuoteViewController *quickQuoteViewController;
+
 @property (weak) IBOutlet AMCAccountStatementViewController *accountStatementViewController;
 @property (strong) IBOutlet AMCCategoryManagerViewController *accountGroupingsViewController;
 
@@ -77,7 +79,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 
 @property AMCViewController * mainViewController;
 
-@property Sale * previouslySelectedSale;
+
 @property NSViewAnimation * notesUpAnimation;
 @property NSViewAnimation * notesDownAnimation;
 @property NSRect notesButtonInitialRect;
@@ -136,14 +138,9 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];
     self.requestPasswordWindowController.document = self;
-    self.receiptWindowController.document = self;
     self.managersBudgetWindowController.document = self;
     self.mainViewController = [AMCViewController new];
     self.mainViewController.view = self.windowForSheet.contentView;
-
-    NSPredicate * fetch = [NSPredicate predicateWithFormat:@"hidden == %@ and voided == %@",@(NO),@(NO)];
-    [self.saleArrayController setFetchPredicate:fetch];
-    [self.salesTable setSortDescriptors:[self initialSortDescriptorsForSalesTable]];
     [self.customerTable setSortDescriptors:[self initialSortDescriptorsForCustomersTable]];
     [self.employeesTable setSortDescriptors:[self initialSortDescriptorsForEmployeesTable]];
     [self.serviceCategoryTable setSortDescriptors:[self initialSortDescriptorsForServicesTable]];
@@ -184,12 +181,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
              [NSSortDescriptor sortDescriptorWithKey:@"lastVisitDate" ascending:NO]];
 }
 #pragma mark - Actions to create new objects
--(IBAction)createSaleButtonClicked:(id)sender
-{
-    self.previouslySelectedSale = [self selectedSale];
-    Sale * sale = [self newSale];
-    [self editObject:sale inMode:EditModeCreate withViewController:self.editSaleViewController];
-}
 -(IBAction)createCustomerButtonClicked:(id)sender
 {
     Customer * customer = [self newCustomer];
@@ -215,15 +206,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self editObject:category inMode:EditModeCreate withViewController:self.editServiceCategoryViewController];
 }
 #pragma mark - Object creation methods
--(Sale*)newSale
-{
-    Sale * sale = [Sale newObjectWithMoc:self.managedObjectContext];
-    sale.isQuote = @YES;
-    [self.saleArrayController addObject:sale];
-    [self.saleArrayController rearrangeObjects];
-    [self selectSale:sale];
-    return sale;
-}
 -(Customer*)newCustomer
 {
     Customer * customer = [Customer newObjectWithMoc:self.managedObjectContext];
@@ -254,15 +236,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     return category;
 }
 #pragma mark - Obtain selected object methods
--(Sale*)selectedSale
-{
-    NSArray * array = self.saleArrayController.arrangedObjects;
-    NSUInteger index = self.salesTable.selectedRowIndexes.firstIndex;
-    if (index == NSNotFound || array.count == 0) {
-        return nil;
-    }
-    return array[index];
-}
 -(Service*)selectedService
 {
     NSArray * array = self.serviceArrayController.arrangedObjects;
@@ -300,14 +273,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     return array[index];
 }
 #pragma mark - Select specified object methods
--(void)selectSale:(Sale*)sale
-{
-    if (!sale) return;
-    NSArray * array = [self.saleArrayController arrangedObjects];
-    NSUInteger index = [array indexOfObject:sale];
-    [self.salesTable selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-    [self animateNotesButtonIfNecessaryForSelectedTab];
-}
 -(void)selectCustomer:(Customer*)customer
 {
     NSArray * array = [self.customerArrayController arrangedObjects];
@@ -331,34 +296,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 }
 
 #pragma mark - View selected object detail methods
--(IBAction)viewSaleButtonClicked:(id)sender
-{
-    Sale * sale = [self selectedSale];
-    EditMode editMode;
-    if (sale.isQuote.boolValue) {
-        editMode = EditModeEdit;
-    } else {
-        editMode = EditModeView;
-    }
-    [self editObject:sale inMode:editMode withViewController:self.editSaleViewController];
-}
--(IBAction)viewReceiptButtonClicked:(id)sender
-{
-    Sale * sale = [self selectedSale];
-    self.receiptWindowController.sale = sale;
-    self.receiptWindowController.delegate = self;
-    NSWindow * sheet = [self.receiptWindowController window];
-    
-    [NSApp beginSheet:sheet modalForWindow:[NSApp mainWindow]
-        modalDelegate:[NSApp mainWindow] didEndSelector:NULL contextInfo:nil];
-}
--(void)viewCustomerFromSaleButtonClicked:(id)sender
-{
-    Sale * sale = [self selectedSale];
-    if (sale.customer) {
-        [self editObject:sale.customer inMode:EditModeView withViewController:self.editCustomerViewController];
-    }
-}
 -(IBAction)viewCustomerButtonClicked:(id)sender
 {
     Customer * customer = [self selectedCustomer];
@@ -379,19 +316,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     ServiceCategory * category = [self selectedServiceCategory];
     [self editObject:category inMode:EditModeView withViewController:self.editServiceCategoryViewController];
 }
-#pragma mark - Edit object detail methods
--(void)editObject:(id)object inMode:(EditMode)editMode withViewController:(EditObjectViewController*)viewController
-{
-    NSAssert(object, @"No object to edit");
-    if (object) {
-        viewController.delegate = self;
-        viewController.editMode = editMode;
-        [viewController clear];
-        viewController.objectToEdit = object;
-        [viewController prepareForDisplayWithSalon:self];
-        [self.mainViewController presentViewControllerAsSheet:viewController];
-    }
-}
+
 #pragma mark - NSTabViewDelegate
 
 -(void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
@@ -407,12 +332,14 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         // Payments tab
         [self safelyAddContentFromViewController:self.paymentsViewController toContainerView:container];
     } else if ([tabViewItem.identifier isEqualToString:@"stock"]) {
-        // Stock tab
+        // Sales tab
         [self safelyAddContentFromViewController:self.stockViewController toContainerView:container];
+    } else if ([tabViewItem.identifier isEqualToString:@"sales"]) {
+        // Stock tab
+        [self safelyAddContentFromViewController:self.salesViewController toContainerView:container];
     } else {
         // All other tabs are already loaded
         [self enableViewItemButtonForTableViews];
-        [self.salesTable scrollRowToVisible:self.salesTable.selectedRow];
     }
 }
 -(void)safelyAddContentFromViewController:(AMCViewController*)viewController toContainerView:(NSView*)container  {
@@ -431,16 +358,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         [viewController prepareForDisplayWithSalon:self];
     }
 }
-#pragma mark - NSTableViewDelegate
--(void)tableViewSelectionDidChange:(NSNotification *)notification
-{
-    [self enableViewItemButtonForTableViews];
-    [self animateNotesButtonIfNecessaryForSelectedTab];
-}
--(BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
-{
-    return NO;
-}
+
 #pragma mark - AMCDayAndMonthPopupControllerDelegate
 -(void)dayAndMonthControllerDidUpdate:(AMCDayAndMonthPopupViewController *)dayAndMonthController
 {
@@ -451,15 +369,8 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 #pragma mark - editObjectViewControllerDelegate
 -(void)editObjectViewController:(EditObjectViewController *)controller didCancelCreationOfObject:(id)object {
     [self ensureDeletionAfterCancellationOfCreatedObject:object];
-    if (controller == self.editSaleViewController) {
-        [self saleEditOperationComplete];
-    }
 }
 -(void)editObjectViewController:(EditObjectViewController *)controller didCompleteCreationOfObject:(id)object {
-    if (controller == self.editSaleViewController) {
-        self.previouslySelectedSale = object;
-        [self saleEditOperationComplete];
-    }
     [self enableViewItemButtonForTableViews];
 }
 -(void)editObjectViewController:(EditObjectViewController *)controller didEditObject:(id)object {
@@ -468,12 +379,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     if (object) {
         [self.managedObjectContext deleteObject:object];
     }
-}
--(void)saleEditOperationComplete {
-    [self.saleArrayController rearrangeObjects];
-    [self.salesTable reloadData];
-    [self selectSale:self.previouslySelectedSale];
-    [self enableViewItemButtonForTableViews];
 }
 #pragma mark - NSControlTextEditingDelegate
 -(void)controlTextDidChange:(NSNotification *)notification
@@ -486,7 +391,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     }
     [self reloadCustomersTable];
 }
-
 #pragma mark - Customer tab filters
 - (IBAction)clearCustomerFilters:(id)sender {
     [self clearCustomersFilterSet];
@@ -543,13 +447,39 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     }
     return [NSCompoundPredicate andPredicateWithSubpredicates:predicateArray];
 }
-#pragma mark - Notes button bounce animation
+#pragma mark - Helpers
+-(void)enableViewItemButtonForTableViews
+{
+    [self.viewServiceButton setEnabled:(self.servicesTable.selectedRow >= 0)?YES:NO];
+    [self.viewEmployeeButton setEnabled:(self.employeesTable.selectedRow >= 0)?YES:NO];
+    [self.viewServiceCategoryButton setEnabled:(self.serviceCategoryTable.selectedRow>=0)?YES:NO];
+    [self.viewCustomerButton setEnabled:(self.customerTable.selectedRow>=0)?YES:NO];
+}
+
+- (IBAction)showCustomerNotesButtonClicked:(id)sender {
+    Customer * customer = [self selectedCustomer];
+    [self showNotesPopoverForObject:customer forButton:sender];
+}
+-(IBAction)showEmployeeNotesButtonClicked:(id)sender {
+    Employee * employee = [self selectedEmployee];
+    [self showNotesPopoverForObject:employee forButton:sender];
+}
+-(IBAction)showServiceCategoryNotesButtonClicked:(id)sender {
+    ServiceCategory * category = [self selectedServiceCategory];
+    [self showNotesPopoverForObject:category forButton:sender];
+}
+-(IBAction)showServiceNotesButtonClicked:(id)sender {
+    Service * service = [self selectedService];
+    [self showNotesPopoverForObject:service forButton:sender];
+}
+-(IBAction)showNotesPopoverForObject:(id)objectWithNotes forButton:(NSButton*)button {
+    AMCAssociatedNotesViewController*vc = [AMCAssociatedNotesViewController new];
+    vc.objectWithNotes = objectWithNotes;
+    [vc prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+}
 -(void)animateNotesButtonIfNecessaryForSelectedTab {
     if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"appointments"]) {
-        return;
-    }
-    if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"sales"]) {
-        [self animateNotesButton:self.showSaleNotesButton ifNecessaryForObject:[self selectedSale].customer];
         return;
     }
     if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"customers"]) {
@@ -633,115 +563,27 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         [self.notesDownAnimation startAnimation];
     }
 }
-#pragma mark - AMCReceiptPrinterWindowControllerDelegate
--(void)receiptPrinter:(AMCReceiptWindowController *)receiptPrinter didFinishWithPrint:(BOOL)yn
+-(void)editObject:(id)object inMode:(EditMode)editMode withViewController:(EditObjectViewController*)viewController
 {
-    [self.receiptWindowController close];
-    [NSApp endSheet:receiptPrinter.window];
+    NSAssert(object, @"No object to edit");
+    if (object) {
+        viewController.delegate = self;
+        viewController.editMode = editMode;
+        [viewController clear];
+        viewController.objectToEdit = object;
+        [viewController prepareForDisplayWithSalon:self];
+        [self.mainViewController presentViewControllerAsSheet:viewController];
+    }
 }
-
--(void)quickQuoteViewControllerDidFinish:(AMCQuickQuoteViewController *)quickQuoteViewController {
+#pragma mark - NSTableViewDelegate
+-(void)tableViewSelectionDidChange:(NSNotification *)notification
+{
     [self enableViewItemButtonForTableViews];
+    [self animateNotesButtonIfNecessaryForSelectedTab];
 }
-#pragma mark - Helpers
--(void)enableViewItemButtonForTableViews
+-(BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
-    Sale * sale = [self selectedSale];
-    if (sale) {
-        [self.showQuickQuoteButton setEnabled:YES];
-        self.totalsLabel.stringValue = [NSString stringWithFormat:@"Total = £%1.2f",sale.actualCharge.doubleValue];
-    } else {
-        [self.showQuickQuoteButton setEnabled:NO];
-        self.totalsLabel.stringValue = @"";
-    }
-    
-    if (sale.isQuote.boolValue) {
-        self.viewSaleButton.title = @"Quote to Sale";
-    } else {
-        self.viewSaleButton.title = @"View sale";
-    }
-    [self.viewSaleButton setEnabled:(self.salesTable.selectedRow >= 0)?YES:NO];
-    [self.viewReceiptButton setEnabled:(self.salesTable.selectedRow >=0)?YES:NO];
-    [self.viewCustomerFromSaleButton setEnabled:(self.salesTable.selectedRow >=0)?YES:NO];
-    [self.viewServiceButton setEnabled:(self.servicesTable.selectedRow >= 0)?YES:NO];
-    [self.viewEmployeeButton setEnabled:(self.employeesTable.selectedRow >= 0)?YES:NO];
-    [self.viewServiceCategoryButton setEnabled:(self.serviceCategoryTable.selectedRow>=0)?YES:NO];
-    [self.viewCustomerButton setEnabled:(self.customerTable.selectedRow>=0)?YES:NO];
-    [self.voidSaleButton setEnabled:(self.salesTable.selectedRow>=0)?YES:NO];
-    [self.voidSaleButton setEnabled:(self.salesTable.selectedRow>=0)?YES:NO];
-}
-- (IBAction)showSaleNotesButtonClicked:(id)sender {
-    Sale * sale = [self selectedSale];
-    Customer * customer = sale.customer;
-    [self showNotesPopoverForObject:customer forButton:sender];
-}
-- (IBAction)showCustomerNotesButtonClicked:(id)sender {
-    Customer * customer = [self selectedCustomer];
-    [self showNotesPopoverForObject:customer forButton:sender];
-}
--(IBAction)showEmployeeNotesButtonClicked:(id)sender {
-    Employee * employee = [self selectedEmployee];
-    [self showNotesPopoverForObject:employee forButton:sender];
-}
--(IBAction)showServiceCategoryNotesButtonClicked:(id)sender {
-    ServiceCategory * category = [self selectedServiceCategory];
-    [self showNotesPopoverForObject:category forButton:sender];
-}
--(IBAction)showServiceNotesButtonClicked:(id)sender {
-    Service * service = [self selectedService];
-    [self showNotesPopoverForObject:service forButton:sender];
-}
--(IBAction)showNotesPopoverForObject:(id)objectWithNotes forButton:(NSButton*)button {
-    AMCAssociatedNotesViewController*vc = [AMCAssociatedNotesViewController new];
-    vc.objectWithNotes = objectWithNotes;
-    [vc prepareForDisplayWithSalon:self];
-    [self.mainViewController presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
-}
-- (IBAction)voidSaleButtonClicked:(id)sender {
-    Sale * sale = [self selectedSale];
-    if (!sale) return;
-    if (sale.fromAppointment) {
-        [self voidSaleGeneratedFromAppointment:sale];
-    } else {
-        [self voidStandaloneSale:sale];
-    }
-}
--(void)voidSaleGeneratedFromAppointment:(Sale*)sale {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:@"Re-open Appointment and/or void Sale"];
-    [alert setInformativeText:@"This sale was generated from an Appointment that is currently marked as complete. \n\nWhat would you like to do?\n\nRe-open the appointment and void this sale\n\nVoid the sale and leave the appointment as it is\n"];
-    [alert addButtonWithTitle:@"Re-open Appointment"];
-    [alert addButtonWithTitle:@"Just void the Sale"];
-    [alert addButtonWithTitle:@"Cancel"];
-    [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse response) {
-        if (response == NSAlertFirstButtonReturn) {
-            sale.hidden = @(YES);
-            sale.isQuote = @(YES);
-            sale.amountGivenByCustomer = @(0);
-            sale.changeGiven = @(0);
-            sale.fromAppointment.completed = @(NO);
-            sale.fromAppointment.completionNote = @"";
-            sale.fromAppointment.completionType = AMCompletionTypeNotCompleted;
-            [self.salesTable reloadData];
-        }
-        if (response == NSAlertSecondButtonReturn) {
-            sale.voided = @(YES);
-            [self.salesTable reloadData];
-        }
-    }];
-}
--(void)voidStandaloneSale:(Sale*)sale {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:@"Void this Sale?"];
-    [alert setInformativeText:@"Once voided, this Sale will no longer be visible on the Sales tab and will not appear in reports or Sales totals.\n\nPlease note that you can't undo this action."];
-    [alert addButtonWithTitle:@"Void the Sale"];
-    [alert addButtonWithTitle:@"Cancel"];
-    [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse response) {
-        if (response == NSAlertFirstButtonReturn) {
-            sale.voided = @(YES);
-            [self.salesTable reloadData];
-        }
-    }];
+    return NO;
 }
 - (IBAction)salonToolbarButton:(id)sender {
     NSButton * button = sender;
@@ -764,13 +606,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
             [self.mainViewController presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMaxYEdge behavior:NSPopoverBehaviorTransient];
         }
     }];
-}
-- (IBAction)showQuickQuoteButtonClicked:(id)sender {
-    NSButton * button = sender;
-    self.quickQuoteViewController.delegate = self;
-    self.quickQuoteViewController.sale = [self selectedSale];
-    [self.quickQuoteViewController prepareForDisplayWithSalon:self];
-    [self.mainViewController presentViewController:self.quickQuoteViewController asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorApplicationDefined];
 }
 - (IBAction)showCanDoListButtonClicked:(id)sender {
     NSButton * button = sender;

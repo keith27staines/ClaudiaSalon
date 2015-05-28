@@ -49,6 +49,7 @@
     [self.saleItemsTable setNeedsUpdateConstraints:YES];
     [self.saleItemsTable setNeedsLayout:YES];
     [self.saleItemsTable setNeedsDisplay:YES];
+    self.cancelled = NO;
 }
 -(void)updateFromSale {
     Sale * sale = self.sale;
@@ -78,13 +79,15 @@
 }
 - (IBAction)okButtonClicked:(id)sender {
     self.cancelled = NO;
-    [self.delegate quickQuoteViewControllerDidFinish:self];
     [self dismissController:sender];
 }
 - (IBAction)cancelButtonClicked:(id)sender {
     self.cancelled = YES;
-    [self.delegate quickQuoteViewControllerDidFinish:self];
     [self dismissController:sender];
+}
+-(void)dismissController:(id)sender {
+    [self.delegate quickQuoteViewControllerDidFinish:self];
+    [super dismissController:sender];
 }
 #pragma mark - NSTableViewDataSource and delegate
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {

@@ -87,8 +87,8 @@
 -(IBAction)cancelButton:(NSButton*)sender
 {
     if (self.editMode == EditModeCreate) {
-        [self.salonDocument deleteObject:self.objectToEdit];
-        self.objectToEdit = nil;
+//        [self.salonDocument deleteObject:self.objectToEdit];
+//        self.objectToEdit = nil;
         id delegate = self.delegate;
         if ([delegate respondsToSelector:@selector(editObjectViewController:didCancelObjectCreation:)]) {
             [delegate editObjectViewController:self didCancelObjectCreation:YES];
@@ -96,6 +96,7 @@
         if ([delegate respondsToSelector:@selector(editObjectViewController:didCancelCreationOfObject:)]) {
             [delegate editObjectViewController:self didCancelCreationOfObject:self.objectToEdit];
         }
+        self.objectToEdit = nil;
     }
     [self dismissController:sender];
 }

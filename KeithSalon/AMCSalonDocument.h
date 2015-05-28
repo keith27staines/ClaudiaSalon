@@ -8,6 +8,7 @@
 
 @class Salon,AMCReportsViewController;
 @class AMCAppointmentsViewController;
+@class AMCSalesViewController;
 @class AMCPaymentsViewController;
 @class AMCStockControlViewController;
 @class AMCRequestPasswordWindowController;
@@ -42,33 +43,14 @@
 // Appointments tab
 @property (weak) IBOutlet AMCAppointmentsViewController * appointmentsViewController;
 
+// Sales tab
+@property (weak) IBOutlet AMCSalesViewController * salesViewController;
 
 // Payments tab
 @property (weak) IBOutlet AMCPaymentsViewController *paymentsViewController;
 
 // Stock tab
 @property (weak) IBOutlet AMCStockControlViewController * stockViewController;// Sales tab
-
-// Sales tab
-@property (weak) IBOutlet NSTextField * totalsLabel;
-@property (weak) IBOutlet NSView *salesView;
-@property (weak) IBOutlet NSArrayController *saleArrayController;
-@property (weak) IBOutlet NSTableView *salesTable;
--(IBAction)createSaleButtonClicked:(id)sender;
--(IBAction)viewSaleButtonClicked:(id)sender;
--(IBAction)viewReceiptButtonClicked:(id)sender;
--(IBAction)viewCustomerFromSaleButtonClicked:(id)sender;
-@property (weak) IBOutlet NSButton *createSaleButton;
-@property (weak) IBOutlet NSButton *viewSaleButton;
-@property (weak) IBOutlet NSButton *viewReceiptButton;
-@property (weak) IBOutlet NSButton * viewCustomerFromSaleButton;
-@property (weak) IBOutlet EditObjectViewController * editSaleViewController;
-@property (weak) IBOutlet NSButton *showSaleNotesButton;
-- (IBAction)showSaleNotesButtonClicked:(id)sender;
-@property (weak) IBOutlet NSButton *voidSaleButton;
-- (IBAction)voidSaleButtonClicked:(id)sender;
-@property (weak) IBOutlet NSButton *showQuickQuoteButton;
-- (IBAction)showQuickQuoteButtonClicked:(id)sender;
 
 // Services tab
 @property (weak) IBOutlet NSView *servicesView;

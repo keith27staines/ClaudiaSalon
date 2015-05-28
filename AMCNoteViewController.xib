@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCNoteViewController">
@@ -15,13 +15,13 @@
             <rect key="frame" x="0.0" y="0.0" width="474" height="125"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField verticalHuggingPriority="249" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Vm-Xz-uXS">
+                <textField verticalHuggingPriority="249" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Vm-Xz-uXS">
                     <rect key="frame" x="8" y="20" width="446" height="38"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="KrP-30-lIT"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="26" id="Zeg-83-1ye"/>
                     </constraints>
-                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Text" drawsBackground="YES" id="FIe-sL-ZJS">
+                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Text" drawsBackground="YES" id="FIe-sL-ZJS">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -60,9 +60,19 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44m-9n-4s6">
-                    <rect key="frame" x="8" y="68" width="388" height="22"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Title for new note" id="FXB-uS-gvW">
+                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UFE-gU-rqF" customClass="AMCRolloverButton">
+                    <rect key="frame" x="438" y="90" width="39" height="38"/>
+                    <buttonCell key="cell" type="round" bezelStyle="circular" image="NSStopProgressTemplate" imagePosition="only" alignment="left" borderStyle="border" imageScaling="proportionallyDown" id="Gmg-a3-VA4">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="label"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="removeButtonClicked:" target="1cM-Va-XUv" id="VtZ-Et-bXz"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44m-9n-4s6">
+                    <rect key="frame" x="8" y="70" width="388" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" placeholderString="Title for new note" drawsBackground="YES" id="FXB-uS-gvW">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -75,16 +85,6 @@
                         </binding>
                     </connections>
                 </textField>
-                <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UFE-gU-rqF" customClass="AMCRolloverButton">
-                    <rect key="frame" x="438" y="90" width="39" height="38"/>
-                    <buttonCell key="cell" type="round" bezelStyle="circular" image="NSStopProgressTemplate" imagePosition="only" alignment="left" borderStyle="border" imageScaling="proportionallyDown" id="Gmg-a3-VA4">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="label"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="removeButtonClicked:" target="1cM-Va-XUv" id="VtZ-Et-bXz"/>
-                    </connections>
-                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="0Vm-Xz-uXS" firstAttribute="top" secondItem="44m-9n-4s6" secondAttribute="bottom" constant="8" symbolic="YES" id="6Kc-0f-hzW"/>

@@ -32,11 +32,11 @@
 }
 -(void)setIsSelected:(BOOL)isSelected {
     _isSelected = isSelected;
-    if (isSelected) {
-        self.backgroundColor = [NSColor colorWithCalibratedRed:86./255. green:191.0/255.0 blue:1 alpha:1];
-    } else {
-        self.backgroundColor = [NSColor whiteColor];
-    }
+//    if (isSelected) {
+//        self.backgroundColor = [NSColor colorWithCalibratedRed:86./255. green:191.0/255.0 blue:1 alpha:1];
+//    } else {
+//        self.backgroundColor = [NSColor whiteColor];
+//    }
     [self setNeedsDisplay:YES];
 }
 -(BOOL)isSelected {

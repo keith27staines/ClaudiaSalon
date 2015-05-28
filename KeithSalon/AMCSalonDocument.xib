@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
@@ -10,11 +10,9 @@
                 <outlet property="accountManagementViewController" destination="Rhe-aG-xw3" id="VY5-te-bhS"/>
                 <outlet property="accountStatementViewController" destination="1Jk-n8-g41" id="cxc-b7-2KS"/>
                 <outlet property="appointmentsViewController" destination="ep0-5P-lze" id="8g5-vB-Axp"/>
-                <outlet property="birthdayPopupFilter" destination="ZRK-Du-9kV" id="Fjn-2n-ZVI"/>
                 <outlet property="clearFiltersButton" destination="LaV-iJ-2sR" id="BGy-nB-1YS"/>
                 <outlet property="createCustomerButton" destination="Dkx-q9-SBK" id="JDK-Y2-oA6"/>
                 <outlet property="createEmployeeButton" destination="scd-x8-V4Z" id="nw0-3T-GdW"/>
-                <outlet property="createSaleButton" destination="hce-3Y-Yzl" id="hVX-7m-UXf"/>
                 <outlet property="createServiceButton" destination="zUs-9c-CGN" id="uuK-cn-eKR"/>
                 <outlet property="createServiceCategoryButton" destination="RRc-06-mW7" id="aRg-IC-rCE"/>
                 <outlet property="customerArrayController" destination="Mdn-7J-9yu" id="WmO-zY-4Xg"/>
@@ -22,7 +20,6 @@
                 <outlet property="customerView" destination="fXf-Yl-eDX" id="dwP-ZE-3x8"/>
                 <outlet property="editCustomerViewController" destination="bxj-dh-EMT" id="AnT-m9-WaU"/>
                 <outlet property="editEmployeeViewController" destination="spe-vk-0Qd" id="Rdd-ko-gG3"/>
-                <outlet property="editSaleViewController" destination="3ZN-rk-8Kd" id="I3t-9d-rPJ"/>
                 <outlet property="editServiceCategoryViewController" destination="TL4-fA-VId" id="PJq-wH-NpX"/>
                 <outlet property="editServiceViewController" destination="iKb-KQ-CN0" id="v4I-NA-ogT"/>
                 <outlet property="emailAddressFilter" destination="9iE-eA-K2Z" id="aSH-hk-ilG"/>
@@ -34,15 +31,11 @@
                 <outlet property="managersBudgetWindowController" destination="lY1-5d-xCC" id="R3G-mk-aJR"/>
                 <outlet property="paymentsViewController" destination="T1c-WN-oS2" id="LsJ-uR-FPC"/>
                 <outlet property="phoneFilter" destination="JTZ-d9-pgD" id="xi4-Wx-LVP"/>
-                <outlet property="quickQuoteViewController" destination="Zjg-iR-Mm5" id="AYa-Kt-DKZ"/>
-                <outlet property="receiptWindowController" destination="tFr-Ud-Tfw" id="if5-PM-4Gi"/>
                 <outlet property="recurringEventManagementViewController" destination="aEQ-Oc-c3b" id="YhB-f1-4uN"/>
                 <outlet property="reportsViewController" destination="Idc-1W-TmU" id="lhn-FL-j6R"/>
                 <outlet property="requestPasswordWindowController" destination="1nv-NK-Vvr" id="1bD-ce-UKV"/>
                 <outlet property="salaryPaymentViewController" destination="BIc-nr-cPO" id="Q57-Zz-wqm"/>
-                <outlet property="saleArrayController" destination="dTb-Cy-kbI" id="I4V-e9-EHz"/>
-                <outlet property="salesTable" destination="4AW-pB-Kgv" id="kh5-T4-tTn"/>
-                <outlet property="salesView" destination="BdB-2l-gtV" id="h4l-b8-fFv"/>
+                <outlet property="salesViewController" destination="68x-i2-Z7H" id="H4C-DT-k2b"/>
                 <outlet property="salonDetailsViewController" destination="Tv1-mr-T9C" id="vkS-eD-c6c"/>
                 <outlet property="serviceArrayController" destination="VxO-sN-dJO" id="cN9-I9-GbV"/>
                 <outlet property="serviceCategoryArrayController" destination="5oy-do-uA9" id="xbA-eM-dRX"/>
@@ -53,23 +46,16 @@
                 <outlet property="showCustomerNotesButton" destination="9zu-ld-OYj" id="feZ-6T-EVM"/>
                 <outlet property="showEmployeeNotesButton" destination="84g-Zd-v0A" id="ZbP-e5-0tT"/>
                 <outlet property="showPaySalary" destination="AMH-O3-exX" id="QCz-KD-Cuc"/>
-                <outlet property="showQuickQuoteButton" destination="p43-7W-sEp" id="IKB-6Y-XV2"/>
-                <outlet property="showSaleNotesButton" destination="IVM-ak-nss" id="Hxh-hn-wma"/>
                 <outlet property="showServiceCategoryNotesButton" destination="yGN-u6-PIh" id="CPp-mY-rQe"/>
                 <outlet property="showServiceNotesButton" destination="vue-Fl-e6j" id="PCC-pv-U0N"/>
                 <outlet property="staffBusyViewController" destination="OsB-JJ-cdB" id="VT4-PX-bu8"/>
                 <outlet property="staffCanDoViewController" destination="hnE-af-XOM" id="mMH-uy-6Q6"/>
                 <outlet property="stockViewController" destination="VmQ-wC-qjz" id="ikv-tn-blT"/>
                 <outlet property="topTabView" destination="dts-cm-2bm" id="9vb-gi-AN2"/>
-                <outlet property="totalsLabel" destination="WV3-hP-lCf" id="pgl-hf-6j6"/>
                 <outlet property="viewCustomerButton" destination="h8d-jl-Jo2" id="7Ee-e0-B81"/>
-                <outlet property="viewCustomerFromSaleButton" destination="bVF-Q0-BIf" id="v8f-sX-hrg"/>
                 <outlet property="viewEmployeeButton" destination="2vI-Ix-eB7" id="rCj-rO-oMq"/>
-                <outlet property="viewReceiptButton" destination="js7-rV-Jro" id="8FT-iH-42F"/>
-                <outlet property="viewSaleButton" destination="HXx-g7-A5Y" id="40W-do-Wc5"/>
                 <outlet property="viewServiceButton" destination="wXg-4Q-XsD" id="0Fc-1y-Taw"/>
                 <outlet property="viewServiceCategoryButton" destination="EBI-Tl-kik" id="8HF-Xp-tdb"/>
-                <outlet property="voidSaleButton" destination="1zT-s0-1kj" id="sjr-ot-1br"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="FNs-Ml-NUV"/>
             </connections>
         </customObject>
@@ -103,354 +89,6 @@
                                 <view key="view" id="BdB-2l-gtV">
                                     <rect key="frame" x="10" y="33" width="1383" height="778"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hce-3Y-Yzl">
-                                            <rect key="frame" x="17" y="36" width="150" height="72"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="150" id="Dh6-pY-EzG"/>
-                                                <constraint firstAttribute="height" constant="70" id="ILK-NM-HCN"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="smallSquare" title="New Sale" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ob2-fv-G7i">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system" size="18"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="createSaleButtonClicked:" target="-2" id="afh-Vw-GdO"/>
-                                            </connections>
-                                        </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HXx-g7-A5Y">
-                                            <rect key="frame" x="187" y="36" width="150" height="72"/>
-                                            <buttonCell key="cell" type="smallSquare" title="View Sale" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WgO-jK-3qz">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system" size="18"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="viewSaleButtonClicked:" target="-2" id="9jh-wg-4fK"/>
-                                            </connections>
-                                        </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="js7-rV-Jro">
-                                            <rect key="frame" x="357" y="36" width="150" height="72"/>
-                                            <buttonCell key="cell" type="smallSquare" title="View Receipt" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KkF-w4-9UX">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system" size="18"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="viewReceiptButtonClicked:" target="-2" id="NVH-3l-9Zm"/>
-                                            </connections>
-                                        </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bVF-Q0-BIf">
-                                            <rect key="frame" x="531" y="36" width="150" height="72"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="70" id="d96-Xn-n9D"/>
-                                                <constraint firstAttribute="width" constant="150" id="r6G-tC-bqH"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="smallSquare" title="View Customer" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5SP-hS-dBA">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system" size="18"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="viewCustomerFromSaleButtonClicked:" target="-2" id="QaX-cM-CwI"/>
-                                            </connections>
-                                        </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1zT-s0-1kj">
-                                            <rect key="frame" x="707" y="36" width="150" height="72"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="150" id="Iiq-iB-xss"/>
-                                                <constraint firstAttribute="height" constant="70" id="whI-Z7-exG"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="smallSquare" title="Void Sale" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JuG-ZN-UuB">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system" size="18"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="voidSaleButtonClicked:" target="-2" id="agS-aE-9su"/>
-                                            </connections>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="IVM-ak-nss">
-                                            <rect key="frame" x="1299" y="60" width="24" height="24"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="24" id="bAq-IH-903"/>
-                                                <constraint firstAttribute="height" constant="24" id="dCi-Rt-FSX"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="fDs-HY-3A2">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="showSaleNotesButtonClicked:" target="-2" id="11q-U9-duf"/>
-                                            </connections>
-                                        </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="p43-7W-sEp">
-                                            <rect key="frame" x="975" y="57" width="32" height="31"/>
-                                            <buttonCell key="cell" type="bevel" bezelStyle="circular" image="NSInfo" imagePosition="above" alignment="left" imageScaling="proportionallyDown" id="ni5-zR-9tS">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="label"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="showQuickQuoteButtonClicked:" target="-2" id="Euy-2K-pDn"/>
-                                            </connections>
-                                        </button>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WV3-hP-lCf">
-                                            <rect key="frame" x="923" y="64" width="34" height="17"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Total" id="JLa-XS-PJy">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHR-jG-q1s">
-                                            <rect key="frame" x="20" y="115" width="1303" height="643"/>
-                                            <clipView key="contentView" id="DK5-Uv-ACg">
-                                                <rect key="frame" x="1" y="17" width="1301" height="570"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <subviews>
-                                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="1KF-mt-eaa" id="4AW-pB-Kgv">
-                                                        <rect key="frame" x="0.0" y="0.0" width="1295" height="19"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                        <size key="intercellSpacing" width="3" height="2"/>
-                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        <tableViewGridLines key="gridStyleMask" vertical="YES" horizontal="YES"/>
-                                                        <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                                        <tableColumns>
-                                                            <tableColumn editable="NO" width="147.70703125" minWidth="40" maxWidth="1000" id="jJo-2l-QjP">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Date and time">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="rfQ-Jz-ulA">
-                                                                    <dateFormatter key="formatter" dateStyle="medium" timeStyle="short" id="wLx-2k-NH5"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                                <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="createdDate" ascending="NO"/>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                <connections>
-                                                                    <binding destination="dTb-Cy-kbI" name="value" keyPath="arrangedObjects.createdDate" id="fzd-LT-FBx">
-                                                                        <dictionary key="options">
-                                                                            <bool key="NSConditionallySetsEditable" value="YES"/>
-                                                                        </dictionary>
-                                                                    </binding>
-                                                                </connections>
-                                                            </tableColumn>
-                                                            <tableColumn identifier="isQuote" width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="XSm-BA-ZJ6">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Type">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="qGZ-0G-wsM">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                <connections>
-                                                                    <binding destination="dTb-Cy-kbI" name="value" keyPath="arrangedObjects.saleType" id="hze-8J-cbQ">
-                                                                        <dictionary key="options">
-                                                                            <string key="NSNullPlaceholder">Sale</string>
-                                                                        </dictionary>
-                                                                    </binding>
-                                                                </connections>
-                                                            </tableColumn>
-                                                            <tableColumn identifier="account" width="116.9921875" minWidth="10" maxWidth="3.4028234663852886e+38" id="71w-gD-ycB">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Account">
-                                                                    <font key="font" metaFont="smallSystem"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="JKP-8S-RZC">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                                <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="account.friendlyName"/>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                <connections>
-                                                                    <binding destination="dTb-Cy-kbI" name="value" keyPath="arrangedObjects.account.friendlyName" id="DFX-p8-pKo"/>
-                                                                </connections>
-                                                            </tableColumn>
-                                                            <tableColumn width="235.84375" minWidth="10" maxWidth="3.4028234663852886e+38" id="nkL-AR-MVs">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Customer">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="MxC-sf-ArG">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                                <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="customer.firstName"/>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                <connections>
-                                                                    <binding destination="dTb-Cy-kbI" name="value" keyPath="arrangedObjects.customer.fullName" id="htd-8w-YTi"/>
-                                                                </connections>
-                                                            </tableColumn>
-                                                            <tableColumn width="140.39453125" minWidth="10" maxWidth="3.4028234663852886e+38" id="ZgL-vn-d5y">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Nominal Charge">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="nhZ-WK-Ft6">
-                                                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="XFe-sZ-w8V"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    <connections>
-                                                                        <binding destination="dTb-Cy-kbI" name="value" keyPath="selection.nominalCharge" id="YuZ-A5-W02"/>
-                                                                    </connections>
-                                                                </textFieldCell>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                <connections>
-                                                                    <binding destination="dTb-Cy-kbI" name="value" keyPath="arrangedObjects.nominalCharge" id="aHG-u3-drl"/>
-                                                                </connections>
-                                                            </tableColumn>
-                                                            <tableColumn width="124.51171875" minWidth="10" maxWidth="3.4028234663852886e+38" id="Pwk-PH-ohK">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Actual Charge">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="Bxy-Jo-t1u">
-                                                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="SRn-wr-Mbx"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    <connections>
-                                                                        <binding destination="dTb-Cy-kbI" name="value" keyPath="selection.actualCharge" id="wls-4f-GWr"/>
-                                                                    </connections>
-                                                                </textFieldCell>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                <connections>
-                                                                    <binding destination="dTb-Cy-kbI" name="value" keyPath="arrangedObjects.actualCharge" id="lRg-iN-aRh"/>
-                                                                </connections>
-                                                            </tableColumn>
-                                                            <tableColumn width="121.734375" minWidth="10" maxWidth="3.4028234663852886e+38" id="2dA-vl-tvd">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Discount">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="HXq-rr-MAf">
-                                                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" id="Dhg-5w-S2U"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                <connections>
-                                                                    <binding destination="dTb-Cy-kbI" name="value" keyPath="arrangedObjects.discountAmount" id="2e6-xr-FNX"/>
-                                                                </connections>
-                                                            </tableColumn>
-                                                            <tableColumn width="100" minWidth="10" maxWidth="3.4028234663852886e+38" id="cOs-ZK-tA7">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Outstanding">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="BrK-4b-aeI">
-                                                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="Xmb-IF-BFB"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                <connections>
-                                                                    <binding destination="dTb-Cy-kbI" name="value" keyPath="arrangedObjects.amountOutstanding" id="WkS-d3-3ik"/>
-                                                                </connections>
-                                                            </tableColumn>
-                                                            <tableColumn width="92" minWidth="10" maxWidth="3.4028234663852886e+38" id="zQa-Tp-D3F">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Advance">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="CJJ-Qp-YCN">
-                                                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="3kL-40-Frd"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                <connections>
-                                                                    <binding destination="dTb-Cy-kbI" name="value" keyPath="arrangedObjects.amountAdvanced" id="qs2-WB-iR1"/>
-                                                                </connections>
-                                                            </tableColumn>
-                                                            <tableColumn width="121" minWidth="10" maxWidth="3.4028234663852886e+38" id="N99-4o-dN6">
-                                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Refund status">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
-                                                                </tableHeaderCell>
-                                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="center" title="Text Cell" id="OME-0A-q6O">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                                                <connections>
-                                                                    <binding destination="dTb-Cy-kbI" name="value" keyPath="arrangedObjects.refundStatus" id="kFD-l1-chg"/>
-                                                                </connections>
-                                                            </tableColumn>
-                                                        </tableColumns>
-                                                        <connections>
-                                                            <binding destination="dTb-Cy-kbI" name="content" keyPath="arrangedObjects" id="fEs-Kf-zka"/>
-                                                            <outlet property="delegate" destination="-2" id="DXH-Ox-mFd"/>
-                                                        </connections>
-                                                    </tableView>
-                                                </subviews>
-                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </clipView>
-                                            <constraints>
-                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="698" id="NfP-oq-hWo"/>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="512" id="sbY-ep-52t"/>
-                                            </constraints>
-                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="be3-g4-kwE">
-                                                <rect key="frame" x="1" y="587" width="1301" height="15"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </scroller>
-                                            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="pzd-fJ-QuL">
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </scroller>
-                                            <tableHeaderView key="headerView" id="1KF-mt-eaa">
-                                                <rect key="frame" x="0.0" y="0.0" width="3709" height="17"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </tableHeaderView>
-                                        </scrollView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="IVM-ak-nss" firstAttribute="centerY" secondItem="p43-7W-sEp" secondAttribute="centerY" id="0bd-3W-wjX"/>
-                                        <constraint firstItem="js7-rV-Jro" firstAttribute="leading" secondItem="HXx-g7-A5Y" secondAttribute="trailing" constant="20" id="6UY-Li-Qtz"/>
-                                        <constraint firstItem="hce-3Y-Yzl" firstAttribute="height" secondItem="bVF-Q0-BIf" secondAttribute="height" id="7lb-rj-6Mh"/>
-                                        <constraint firstItem="HXx-g7-A5Y" firstAttribute="height" secondItem="js7-rV-Jro" secondAttribute="height" id="99Q-e5-pR2"/>
-                                        <constraint firstItem="eHR-jG-q1s" firstAttribute="top" secondItem="BdB-2l-gtV" secondAttribute="top" constant="20" id="BEn-2d-aRn"/>
-                                        <constraint firstItem="WV3-hP-lCf" firstAttribute="leading" secondItem="1zT-s0-1kj" secondAttribute="trailing" constant="68" id="CxU-th-wlJ"/>
-                                        <constraint firstItem="hce-3Y-Yzl" firstAttribute="top" secondItem="bVF-Q0-BIf" secondAttribute="top" id="Hew-B8-VtJ"/>
-                                        <constraint firstItem="1zT-s0-1kj" firstAttribute="centerY" secondItem="WV3-hP-lCf" secondAttribute="centerY" id="NQt-Qx-YGQ"/>
-                                        <constraint firstItem="eHR-jG-q1s" firstAttribute="leading" secondItem="BdB-2l-gtV" secondAttribute="leading" constant="20" symbolic="YES" id="Otp-DJ-zFT"/>
-                                        <constraint firstItem="IVM-ak-nss" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="p43-7W-sEp" secondAttribute="trailing" constant="40" id="QOl-mq-DEs"/>
-                                        <constraint firstAttribute="bottom" secondItem="hce-3Y-Yzl" secondAttribute="bottom" constant="17" id="V0X-Mt-21z"/>
-                                        <constraint firstItem="hce-3Y-Yzl" firstAttribute="leading" secondItem="BdB-2l-gtV" secondAttribute="leading" constant="17" id="YwL-7S-rBc"/>
-                                        <constraint firstItem="HXx-g7-A5Y" firstAttribute="top" secondItem="js7-rV-Jro" secondAttribute="top" id="fCk-eD-TNO"/>
-                                        <constraint firstItem="1zT-s0-1kj" firstAttribute="centerY" secondItem="p43-7W-sEp" secondAttribute="centerY" id="gn7-fq-KFF"/>
-                                        <constraint firstItem="hce-3Y-Yzl" firstAttribute="width" secondItem="bVF-Q0-BIf" secondAttribute="width" id="gqo-43-ZGF"/>
-                                        <constraint firstItem="IVM-ak-nss" firstAttribute="trailing" secondItem="eHR-jG-q1s" secondAttribute="trailing" id="hCS-cx-ZnP"/>
-                                        <constraint firstItem="1zT-s0-1kj" firstAttribute="leading" secondItem="bVF-Q0-BIf" secondAttribute="trailing" constant="26" id="hcC-Of-9US"/>
-                                        <constraint firstItem="hce-3Y-Yzl" firstAttribute="width" secondItem="HXx-g7-A5Y" secondAttribute="width" id="ikK-6s-PXN"/>
-                                        <constraint firstItem="hce-3Y-Yzl" firstAttribute="top" secondItem="HXx-g7-A5Y" secondAttribute="top" id="jh1-Vl-EAB"/>
-                                        <constraint firstItem="HXx-g7-A5Y" firstAttribute="leading" secondItem="hce-3Y-Yzl" secondAttribute="trailing" constant="20" id="mb4-ZI-3TM"/>
-                                        <constraint firstItem="bVF-Q0-BIf" firstAttribute="leading" secondItem="js7-rV-Jro" secondAttribute="trailing" constant="24" id="nD8-Zk-0V6"/>
-                                        <constraint firstItem="HXx-g7-A5Y" firstAttribute="width" secondItem="js7-rV-Jro" secondAttribute="width" id="nG1-ul-Ctn"/>
-                                        <constraint firstItem="1zT-s0-1kj" firstAttribute="centerY" secondItem="bVF-Q0-BIf" secondAttribute="centerY" id="nZd-OZ-SK6"/>
-                                        <constraint firstItem="HXx-g7-A5Y" firstAttribute="top" secondItem="eHR-jG-q1s" secondAttribute="bottom" constant="8" symbolic="YES" id="oY2-yX-B2b"/>
-                                        <constraint firstItem="hce-3Y-Yzl" firstAttribute="top" secondItem="HXx-g7-A5Y" secondAttribute="top" id="pJs-a2-iJS"/>
-                                        <constraint firstItem="p43-7W-sEp" firstAttribute="leading" secondItem="WV3-hP-lCf" secondAttribute="trailing" constant="20" id="qfZ-Bt-I6D"/>
-                                        <constraint firstAttribute="trailing" secondItem="eHR-jG-q1s" secondAttribute="trailing" constant="20" symbolic="YES" id="qs3-0V-92Q"/>
-                                        <constraint firstItem="hce-3Y-Yzl" firstAttribute="height" secondItem="HXx-g7-A5Y" secondAttribute="height" id="sJ0-Se-4Uk"/>
-                                    </constraints>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Customers" identifier="customers" id="AJY-U6-oGY">
@@ -465,7 +103,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="Bw5-4Q-bOJ" id="eR7-Q6-5Ns">
-                                                        <rect key="frame" x="0.0" y="0.0" width="1301" height="19"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="1341" height="19"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <size key="intercellSpacing" width="3" height="2"/>
                                                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -709,7 +347,6 @@
                                                             </menu>
                                                         </popUpButtonCell>
                                                         <connections>
-                                                            <action selector="monthChanged:" target="ZRK-Du-9kV" id="ZNp-gK-55M"/>
                                                             <outlet property="nextKeyView" destination="9jW-oL-G1y" id="8kU-tk-m6y"/>
                                                         </connections>
                                                     </popUpButton>
@@ -726,9 +363,6 @@
                                                                 </items>
                                                             </menu>
                                                         </popUpButtonCell>
-                                                        <connections>
-                                                            <action selector="dayChanged:" target="ZRK-Du-9kV" id="JlU-gQ-vMJ"/>
-                                                        </connections>
                                                     </popUpButton>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OWk-hV-YY9">
                                                         <rect key="frame" x="356" y="107" width="60" height="17"/>
@@ -866,7 +500,7 @@
                             </tabViewItem>
                             <tabViewItem label="Payments" identifier="payments" id="ta8-xx-ZSH">
                                 <view key="view" id="80a-VP-bRj">
-                                    <rect key="frame" x="10" y="33" width="1343" height="758"/>
+                                    <rect key="frame" x="10" y="33" width="1383" height="778"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
@@ -1202,12 +836,12 @@
                             </tabViewItem>
                             <tabViewItem label="Staff" identifier="staff" id="QoJ-WY-A3L">
                                 <view key="view" id="Ovh-g5-GlB">
-                                    <rect key="frame" x="10" y="33" width="1343" height="758"/>
+                                    <rect key="frame" x="10" y="33" width="1383" height="778"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYk-LY-loR">
-                                            <rect key="frame" x="20" y="98" width="1303" height="640"/>
-                                            <clipView key="contentView" id="Bnb-gs-BuU">
+                                        <scrollView appearanceType="aqua" misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYk-LY-loR">
+                                            <rect key="frame" x="20" y="118" width="1303" height="640"/>
+                                            <clipView key="contentView" misplaced="YES" id="Bnb-gs-BuU">
                                                 <rect key="frame" x="1" y="17" width="1301" height="622"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
@@ -1307,8 +941,8 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </tableHeaderView>
                                         </scrollView>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="scd-x8-V4Z">
-                                            <rect key="frame" x="20" y="19" width="176" height="72"/>
+                                        <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="scd-x8-V4Z">
+                                            <rect key="frame" x="20" y="39" width="176" height="72"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="176" id="TWD-wn-wNN"/>
                                                 <constraint firstAttribute="height" constant="70" id="a1C-qC-Dlj"/>
@@ -1321,8 +955,8 @@
                                                 <action selector="createEmployeeButtonClicked:" target="-2" id="d9R-kU-dbg"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2vI-Ix-eB7">
-                                            <rect key="frame" x="216" y="19" width="150" height="72"/>
+                                        <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2vI-Ix-eB7">
+                                            <rect key="frame" x="216" y="39" width="150" height="72"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="150" id="ELg-fh-yUd"/>
                                                 <constraint firstAttribute="height" constant="70" id="x4Q-1L-sBa"/>
@@ -1335,8 +969,8 @@
                                                 <action selector="viewEmployeeButtonClicked:" target="-2" id="D7h-wV-wjW"/>
                                             </connections>
                                         </button>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="84g-Zd-v0A">
-                                            <rect key="frame" x="1275" y="31" width="48" height="48"/>
+                                        <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="84g-Zd-v0A">
+                                            <rect key="frame" x="1275" y="51" width="48" height="48"/>
                                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="u7M-3O-WfG">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1345,8 +979,8 @@
                                                 <action selector="showEmployeeNotesButtonClicked:" target="-2" id="Icy-9C-DaL"/>
                                             </connections>
                                         </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BBm-Gn-SS0">
-                                            <rect key="frame" x="385" y="19" width="173" height="72"/>
+                                        <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BBm-Gn-SS0">
+                                            <rect key="frame" x="385" y="39" width="173" height="72"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="173" id="kSv-Wv-kW0"/>
                                             </constraints>
@@ -1381,13 +1015,13 @@
                             </tabViewItem>
                             <tabViewItem label="Reports" identifier="reports" id="sfJ-Fo-hlQ">
                                 <view key="view" id="NiH-Da-nsb">
-                                    <rect key="frame" x="10" y="33" width="1343" height="758"/>
+                                    <rect key="frame" x="10" y="33" width="1383" height="778"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Stock" identifier="stock" id="YLH-W3-AH0">
                                 <view key="view" id="78t-Br-PtX">
-                                    <rect key="frame" x="10" y="33" width="1343" height="758"/>
+                                    <rect key="frame" x="10" y="33" width="1383" height="778"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
@@ -1480,14 +1114,8 @@
                     <toolbarItem reference="8st-gg-pmT"/>
                 </defaultToolbarItems>
             </toolbar>
-            <point key="canvasLocation" x="-322.5" y="-1805"/>
+            <point key="canvasLocation" x="-566.5" y="-2112"/>
         </window>
-        <arrayController mode="entity" entityName="Sale" editable="NO" automaticallyPreparesContent="YES" id="dTb-Cy-kbI" userLabel="Sale Array Controller">
-            <connections>
-                <binding destination="-2" name="managedObjectContext" keyPath="self.managedObjectContext" id="fNp-5F-5lC"/>
-                <binding destination="-2" name="sortDescriptors" keyPath="self.salesTable.sortDescriptors" id="UjT-la-PXU"/>
-            </connections>
-        </arrayController>
         <arrayController mode="entity" entityName="Customer" automaticallyPreparesContent="YES" automaticallyRearrangesObjects="YES" id="Mdn-7J-9yu" userLabel="Customer Array Controller">
             <connections>
                 <binding destination="-2" name="sortDescriptors" keyPath="self.customerTable.sortDescriptors" id="xqv-0A-V4Y"/>
@@ -1512,11 +1140,6 @@
                 <binding destination="-2" name="managedObjectContext" keyPath="self.managedObjectContext" id="zfh-CQ-FaD"/>
             </connections>
         </arrayController>
-        <customObject id="3ZN-rk-8Kd" customClass="EditSaleViewController">
-            <connections>
-                <outlet property="salonDocument" destination="-2" id="WLg-iN-TMd"/>
-            </connections>
-        </customObject>
         <customObject id="bxj-dh-EMT" customClass="EditCustomerViewController">
             <connections>
                 <outlet property="salonDocument" destination="-2" id="fV4-1W-7jO"/>
@@ -1537,13 +1160,6 @@
                 <outlet property="salonDocument" destination="-2" id="A3K-KF-3ea"/>
             </connections>
         </customObject>
-        <customObject id="ZRK-Du-9kV" customClass="AMCDayAndMonthPopupViewController">
-            <connections>
-                <outlet property="dayPopupButton" destination="9jW-oL-G1y" id="PzR-Vc-w1A"/>
-                <outlet property="monthPopupButton" destination="ypg-bW-ISt" id="nId-CM-Bkj"/>
-            </connections>
-        </customObject>
-        <customObject id="tFr-Ud-Tfw" customClass="AMCReceiptWindowController"/>
         <customObject id="Idc-1W-TmU" customClass="AMCReportsViewController">
             <connections>
                 <outlet property="salonDocument" destination="-2" id="kEj-8i-E9p"/>
@@ -1554,6 +1170,7 @@
                 <outlet property="salonDocument" destination="-2" id="OLK-V0-GeE"/>
             </connections>
         </customObject>
+        <customObject id="68x-i2-Z7H" userLabel="Sale View Controller" customClass="AMCSalesViewController"/>
         <customObject id="T1c-WN-oS2" customClass="AMCPaymentsViewController">
             <connections>
                 <outlet property="salonDocument" destination="-2" id="Scr-ac-AuK"/>
@@ -1571,7 +1188,6 @@
             </connections>
         </customObject>
         <customObject id="OsB-JJ-cdB" customClass="AMCStaffBusyViewController"/>
-        <customObject id="Zjg-iR-Mm5" customClass="AMCQuickQuoteViewController"/>
         <customObject id="1Jk-n8-g41" customClass="AMCAccountStatementViewController"/>
         <customObject id="hnE-af-XOM" customClass="AMCStaffCanDoViewController"/>
         <customObject id="NHf-SU-kAv" customClass="AMCCategoryManagerViewController"/>
@@ -1583,7 +1199,6 @@
         <image name="BarChart" width="32" height="32"/>
         <image name="CoinsIcon" width="48" height="48"/>
         <image name="NSFolder" width="32" height="32"/>
-        <image name="NSInfo" width="32" height="32"/>
         <image name="NoteIcon" width="48" height="48"/>
         <image name="PaySalary" width="128" height="128"/>
         <image name="TimeLineIcon" width="48" height="48"/>

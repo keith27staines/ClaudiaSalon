@@ -22,8 +22,6 @@
 @property (weak) IBOutlet NSButton *createAppointmentButton;
 @property (weak) IBOutlet NSButton *editAppointmentButton;
 @property (weak) IBOutlet NSButton *completeAppointmentButton;
-@property (weak) IBOutlet NSButton *cancelAppointmentButton;
-@property (weak) IBOutlet NSButton *viewCustomerButton;
 
 - (IBAction)createNewAppointment:(id)sender;
 - (IBAction)editSelectedAppointment:(id)sender;
@@ -36,7 +34,6 @@
 @property (weak) IBOutlet NSButton *showNotesButton;
 @property (weak) IBOutlet NSTextField *totalLabel;
 @property (weak) IBOutlet NSButton *showQuickQuoteButton;
-- (IBAction)showQuickQuoteButtonClicked:(id)sender;
 
 @property (weak) IBOutlet NSPopUpButton *appointmentStateSelectorButton;
 

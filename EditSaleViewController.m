@@ -207,14 +207,12 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
         case CreateSaleStepSelectCustomer:
         {
             [self.previousStep setEnabled:NO];
-            [self.nextStep setEnabled:YES];
-            [self.nextStep.window setDefaultButtonCell:self.nextStep.cell];
             if (self.customerSelected) {
-                [self.nextStep setTitle:@"Next ➡"];
+                [self.nextStep setEnabled:YES];
+                [self.nextStep.window setDefaultButtonCell:self.nextStep.cell];
             } else {
-                [self.nextStep setTitle:@"Skip ➡"];
+                [self.nextStep setEnabled:NO];
             }
-            [self.nextStep setNeedsDisplay:YES];
             [self.selectCustomerLabel setBackgroundColor:blueBackground];
             [self.selectCustomerLabel setTextColor:[NSColor whiteColor]];
             break;
@@ -222,7 +220,6 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
         case CreateSaleStepSelectItems:
         {
             [self.previousStep setEnabled:YES];
-            [self.nextStep setTitle:@"Next ➡"];
             if (self.itemsSelected) {
                 [self.nextStep setEnabled:YES];
                 [self.nextStep.window setDefaultButtonCell:self.nextStep.cell];
@@ -239,7 +236,6 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
         {
             [self.previousStep setEnabled:YES];
             [self.nextStep setEnabled:NO];
-            [self.nextStep setTitle:@"Next ➡"];
             [self.takePaymentLabel setBackgroundColor:blueBackground];
             [self.takePaymentLabel setTextColor:[NSColor whiteColor]];
             if (self.paymentMade) {
@@ -247,7 +243,6 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
             } else {
                 [self.doneButton.window setDefaultButtonCell:nil];
             }
-            
             break;
         }
     }

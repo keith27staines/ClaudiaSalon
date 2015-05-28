@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCSalesViewController">
+            <connections>
+                <outlet property="actionButton" destination="Mhc-bo-jJN" id="v5C-9I-A0y"/>
+                <outlet property="actionMenu" destination="ZsT-gL-XmD" id="TjQ-Ix-pAi"/>
+                <outlet property="cancelSaleViewController" destination="8hr-8M-Wvd" id="v3i-tz-PAW"/>
+                <outlet property="editCustomerViewController" destination="KhB-l2-qhj" id="WtY-ed-ddP"/>
+                <outlet property="editSaleActionMenuItem" destination="ERb-dP-8jb" id="eFy-h6-Jo8"/>
+                <outlet property="editSaleRightClickMenuItem" destination="Oec-zm-841" id="hRA-G6-wgX"/>
+                <outlet property="editSaleViewController" destination="ymC-UZ-SIl" id="aeK-4n-JFp"/>
+                <outlet property="notesButton" destination="Nl1-Dy-WFf" id="4i5-bm-Jm7"/>
+                <outlet property="notesViewController" destination="ZBg-ij-Zau" id="YRw-Vx-5We"/>
+                <outlet property="quickQuoteButton" destination="xQu-4q-r00" id="BI4-Mn-wx7"/>
+                <outlet property="quickQuoteViewController" destination="ovx-K0-OgG" id="Bda-Zd-BPH"/>
+                <outlet property="receiptWindowController" destination="daB-dc-ILa" id="wD8-9F-iju"/>
+                <outlet property="rightClickMenu" destination="mAe-1q-YdS" id="4iJ-Hh-6P2"/>
+                <outlet property="saleArrayController" destination="boQ-FL-y9r" id="cwl-KG-TWo"/>
+                <outlet property="salesTable" destination="3Rc-9h-KIN" id="KvF-FW-GtB"/>
+                <outlet property="totalLabel" destination="7zX-Tf-Zyl" id="gfB-EM-CBB"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+                <outlet property="viewSaleButton" destination="dM1-Mj-Hbr" id="ocE-Hf-ZYj"/>
+                <outlet property="voidSaleActionMenuItem" destination="lMY-xm-r0A" id="Q16-mD-zeu"/>
+                <outlet property="voidSaleRightClickMenuItem" destination="u1E-ZT-TGV" id="qSA-Zt-OBH"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="1166" height="640"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="Nl1-Dy-WFf">
+                    <rect key="frame" x="624" y="20" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Kg4-z8-ICU"/>
+                        <constraint firstAttribute="width" constant="30" id="i5D-ul-93F"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="z4Z-xM-gYP">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showSelectedCustomerNotes:" target="-2" id="svY-8n-1NV"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="3Pv-89-iiY">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="xQu-4q-r00">
+                    <rect key="frame" x="552" y="20" width="32" height="31"/>
+                    <buttonCell key="cell" type="bevel" bezelStyle="circular" image="NSInfo" imagePosition="above" alignment="left" imageScaling="proportionallyDown" id="s6U-aN-Ekm">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="label"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showSelectedPriceDetails:" target="-2" id="bdu-AC-0v5"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="pRR-0V-aK6">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7zX-Tf-Zyl">
+                    <rect key="frame" x="496" y="24" width="45" height="23"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Total" id="73m-W7-ntf">
+                        <font key="font" metaFont="system" size="19"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QUR-8q-l2l">
+                    <rect key="frame" x="0.0" y="90" width="1166" height="550"/>
+                    <clipView key="contentView" id="fpm-hu-6nb">
+                        <rect key="frame" x="1" y="17" width="1301" height="570"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="L6b-ms-RRB" id="3Rc-9h-KIN">
+                                <rect key="frame" x="0.0" y="0.0" width="1141" height="19"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <tableViewGridLines key="gridStyleMask" vertical="YES" horizontal="YES"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn editable="NO" width="147.70703125" minWidth="40" maxWidth="1000" id="h81-XH-yWl">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Date and time">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="gVn-7b-ug5">
+                                            <dateFormatter key="formatter" dateStyle="medium" timeStyle="short" id="i0P-fD-zMM"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="createdDate" ascending="NO"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="boQ-FL-y9r" name="value" keyPath="arrangedObjects.createdDate" id="9Zi-3P-UYi">
+                                                <dictionary key="options">
+                                                    <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                </dictionary>
+                                            </binding>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn identifier="isQuote" width="64" minWidth="10" maxWidth="3.4028234663852886e+38" id="bZh-fm-ZhD">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Type">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="yg1-Qi-7cV">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="saleType"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="boQ-FL-y9r" name="value" keyPath="arrangedObjects.saleType" id="Cte-ai-5io"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn identifier="account" width="116.9921875" minWidth="10" maxWidth="3.4028234663852886e+38" id="KPK-o5-oeb">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Account">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="P2d-et-deH">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="account.friendlyName"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="boQ-FL-y9r" name="value" keyPath="arrangedObjects.account.friendlyName" id="IlB-Ai-vtq">
+                                                <dictionary key="options">
+                                                    <string key="NSNullPlaceholder" base64-UTF8="YES">
+IA
+</string>
+                                                </dictionary>
+                                            </binding>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="150.84375" minWidth="10" maxWidth="3.4028234663852886e+38" id="UI8-9y-0lV">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Customer">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="qTs-yh-EDI">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="caseInsensitiveCompare:" sortKey="customer.fullName"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="boQ-FL-y9r" name="value" keyPath="arrangedObjects.customer.fullName" id="5AH-tr-RK4"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="121.39453125" minWidth="10" maxWidth="3.4028234663852886e+38" id="Iq0-lq-dmF">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Nominal Charge">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="KVv-G1-H6Y">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="p48-HF-rC8"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="nominalCharge"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="boQ-FL-y9r" name="value" keyPath="arrangedObjects.nominalCharge" id="opx-Hi-BP0"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="112.51171875" minWidth="10" maxWidth="3.4028234663852886e+38" id="oRp-J5-V1E">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Actual Charge">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="Ybb-Id-Pl4">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="QzX-8M-mah"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="actualCharge"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="boQ-FL-y9r" name="value" keyPath="arrangedObjects.actualCharge" id="NNu-jt-uSa"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="83.734375" minWidth="10" maxWidth="3.4028234663852886e+38" id="WTo-9Z-FaR">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Discount">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="Ky8-5a-I3L">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="309" minimumFractionDigits="2" maximumFractionDigits="2" id="mwL-r7-jnw"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="discountAmount"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="boQ-FL-y9r" name="value" keyPath="arrangedObjects.discountAmount" id="WoL-3z-aAx"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="100" minWidth="10" maxWidth="3.4028234663852886e+38" id="te8-x0-LcS">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Outstanding">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="En3-kw-Ich">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="ywn-Vs-P5g"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="amountOutstanding"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="boQ-FL-y9r" name="value" keyPath="arrangedObjects.amountOutstanding" id="B74-j2-Oeq"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="92" minWidth="10" maxWidth="3.4028234663852886e+38" id="lL0-yL-BVW">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="right" title="Advance">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="right" title="Text Cell" id="Dia-8A-nSy">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="5Ac-n9-1hx"/>
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="amountAdvanced"/>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="boQ-FL-y9r" name="value" keyPath="arrangedObjects.amountAdvanced" id="1xE-6L-sUI"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="121" minWidth="10" maxWidth="3.4028234663852886e+38" id="qz6-NG-cMz">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Refund status">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="center" title="Text Cell" id="WiH-rx-Dua">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="boQ-FL-y9r" name="value" keyPath="arrangedObjects.refundStatus" id="RkL-BC-1ZH"/>
+                                        </connections>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <binding destination="boQ-FL-y9r" name="content" keyPath="arrangedObjects" id="CC6-7d-nrj"/>
+                                    <outlet property="delegate" destination="-2" id="bCh-vH-tjf"/>
+                                    <outlet property="menu" destination="mAe-1q-YdS" id="L88-tM-4Ps"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </clipView>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="550" id="V2h-Bo-AOk"/>
+                    </constraints>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="xsd-Od-dno">
+                        <rect key="frame" x="1" y="587" width="1301" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="TIo-A9-fz4">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <tableHeaderView key="headerView" id="L6b-ms-RRB">
+                        <rect key="frame" x="0.0" y="0.0" width="3709" height="17"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableHeaderView>
+                </scrollView>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="Mhc-bo-jJN">
+                    <rect key="frame" x="362" y="20" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="A7e-nF-Rxl"/>
+                        <constraint firstAttribute="width" constant="30" id="L26-Td-TPg"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="R8K-De-EQP">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showActionMenu:" target="-2" id="3Pg-w5-n9A"/>
+                        <outlet property="menu" destination="ZsT-gL-XmD" id="1Fd-or-7QP"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dM1-Mj-Hbr">
+                    <rect key="frame" x="170" y="-1" width="150" height="72"/>
+                    <buttonCell key="cell" type="smallSquare" title="View Sale" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NNW-3H-eXY">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="viewSelectedSale:" target="-2" id="quL-iS-ZxP"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wk5-h6-mGq">
+                    <rect key="frame" x="0.0" y="-1" width="150" height="72"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="4hX-Hi-Dob"/>
+                        <constraint firstAttribute="height" constant="70" id="R2C-dd-NGV"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" title="New Sale" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xYl-sV-tH8">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system" size="18"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="newSale:" target="-2" id="sjV-j0-8kU"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="7zX-Tf-Zyl" firstAttribute="centerY" secondItem="dM1-Mj-Hbr" secondAttribute="centerY" id="0kX-Dk-nfF"/>
+                <constraint firstItem="wk5-h6-mGq" firstAttribute="width" secondItem="dM1-Mj-Hbr" secondAttribute="width" id="EKX-Rn-TXH"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Nl1-Dy-WFf" secondAttribute="trailing" constant="40" id="F5I-ou-JfR"/>
+                <constraint firstAttribute="trailing" secondItem="QUR-8q-l2l" secondAttribute="trailing" id="Gjh-9X-ELA"/>
+                <constraint firstItem="wk5-h6-mGq" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Hx8-82-bW7"/>
+                <constraint firstItem="dM1-Mj-Hbr" firstAttribute="top" secondItem="QUR-8q-l2l" secondAttribute="bottom" constant="20" id="IUa-VM-Hcp"/>
+                <constraint firstItem="xQu-4q-r00" firstAttribute="leading" secondItem="Mhc-bo-jJN" secondAttribute="trailing" constant="160" id="JK3-aW-RMM"/>
+                <constraint firstItem="7zX-Tf-Zyl" firstAttribute="centerY" secondItem="xQu-4q-r00" secondAttribute="centerY" id="LUH-cv-lxI"/>
+                <constraint firstItem="7zX-Tf-Zyl" firstAttribute="centerY" secondItem="wk5-h6-mGq" secondAttribute="centerY" id="RAJ-JD-gBD"/>
+                <constraint firstItem="Mhc-bo-jJN" firstAttribute="leading" secondItem="dM1-Mj-Hbr" secondAttribute="trailing" constant="42" id="RUu-33-Vb3"/>
+                <constraint firstItem="QUR-8q-l2l" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="RZn-BH-9HK"/>
+                <constraint firstItem="wk5-h6-mGq" firstAttribute="height" secondItem="dM1-Mj-Hbr" secondAttribute="height" id="UB9-3J-lq6"/>
+                <constraint firstItem="7zX-Tf-Zyl" firstAttribute="centerY" secondItem="Nl1-Dy-WFf" secondAttribute="centerY" id="Y18-lk-qEY"/>
+                <constraint firstItem="dM1-Mj-Hbr" firstAttribute="leading" secondItem="wk5-h6-mGq" secondAttribute="trailing" constant="20" id="g2K-WC-yeB"/>
+                <constraint firstItem="xQu-4q-r00" firstAttribute="leading" secondItem="7zX-Tf-Zyl" secondAttribute="trailing" constant="13" id="kUd-x9-DXc"/>
+                <constraint firstItem="Nl1-Dy-WFf" firstAttribute="leading" secondItem="xQu-4q-r00" secondAttribute="trailing" constant="40" id="mqR-A9-9xm"/>
+                <constraint firstItem="7zX-Tf-Zyl" firstAttribute="centerY" secondItem="Mhc-bo-jJN" secondAttribute="centerY" id="nb2-B3-Rkj"/>
+                <constraint firstItem="QUR-8q-l2l" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="quN-Dh-66k"/>
+                <constraint firstAttribute="bottom" secondItem="wk5-h6-mGq" secondAttribute="bottom" id="wBw-c0-4l1"/>
+            </constraints>
+            <point key="canvasLocation" x="-391" y="-1123"/>
+        </customView>
+        <menu id="ZsT-gL-XmD">
+            <items>
+                <menuItem title="New Sale..." id="WJH-pd-LR8">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="newSale:" target="-2" id="Rjv-0P-Lia"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="QRl-3B-dTC"/>
+                <menuItem title="Edit Sale..." id="ERb-dP-8jb">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="viewSelectedSale:" target="-2" id="bie-bD-8n8"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="Teo-ac-l5R">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+                <menuItem title="Void Sale..." id="lMY-xm-r0A">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="voidSelectedSale:" target="-2" id="1o4-0D-khp"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="6I2-0q-Rd8">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="tcU-4n-joi"/>
+                <menuItem title="View Receipt..." id="SSD-Fk-bGh">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="viewSelectedSaleReceipt:" target="-2" id="rvY-Xp-8eG"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="W69-78-mbj">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="aJI-7u-wlE"/>
+                <menuItem title="Show Customer Details..." id="Ss4-w5-49a">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showSelectedCustomerDetails:" target="-2" id="FSo-K9-TwS"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="gAy-qZ-8WT">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+                <menuItem title="Show Customer Notes..." id="WSp-wz-lFY">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showSelectedCustomerNotes:" target="-2" id="H1F-4M-UJo"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="v9e-oG-3NL">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
+                </menuItem>
+                <menuItem title="Show Services and Prices..." id="VE4-AE-54r">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showSelectedPriceDetails:" target="-2" id="NqH-0V-WRf"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="-2" id="TRD-U6-O9J"/>
+            </connections>
+            <point key="canvasLocation" x="-842.5" y="-679.5"/>
+        </menu>
+        <arrayController mode="entity" entityName="Sale" fetchPredicateFormat="voided = NO and hidden = NO" automaticallyPreparesContent="YES" id="boQ-FL-y9r" userLabel="SaleArrayController">
+            <connections>
+                <binding destination="-2" name="managedObjectContext" keyPath="self.documentMoc" id="h2m-FI-Bgw"/>
+                <binding destination="-2" name="sortDescriptors" keyPath="salesTable.sortDescriptors" id="CdZ-gk-BLq"/>
+            </connections>
+        </arrayController>
+        <userDefaultsController representsSharedInstance="YES" id="49i-EC-XXY"/>
+        <customObject id="8hr-8M-Wvd" userLabel="Cancel Sale View Controller" customClass="AMCCancelAppointmentViewController"/>
+        <customObject id="ZBg-ij-Zau" userLabel="Notes View Controller" customClass="AMCAssociatedNotesViewController"/>
+        <customObject id="ymC-UZ-SIl" customClass="EditSaleViewController"/>
+        <customObject id="ovx-K0-OgG" customClass="AMCQuickQuoteViewController"/>
+        <customObject id="daB-dc-ILa" customClass="AMCReceiptWindowController"/>
+        <customObject id="KhB-l2-qhj" customClass="EditCustomerViewController"/>
+        <menu id="mAe-1q-YdS">
+            <items>
+                <menuItem title="Edit Sale..." id="Oec-zm-841">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickViewSale:" target="-2" id="ff5-fj-Bnd"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Void Sale..." id="u1E-ZT-TGV">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickVoidSale:" target="-2" id="jjt-xm-zWi"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="xaD-FC-XCh"/>
+                <menuItem title="View Receipt..." id="UZ8-K3-abi">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickViewSaleReceipt:" target="-2" id="fkW-J0-ZPg"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="XVI-Fg-ZZ5"/>
+                <menuItem title="Show Customer Details..." id="7hc-Fh-M8r">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickShowCustomerDetails:" target="-2" id="LDf-hS-eqs"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Show Customer Notes..." id="vhp-ZN-WFN">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickShowCustomerNotes:" target="-2" id="KcG-qr-vZt"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Show Services and Prices..." id="egq-j8-b4S">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickShowPriceDetails:" target="-2" id="x5K-x3-EHh"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="-2" id="uzw-p9-cxs"/>
+            </connections>
+            <point key="canvasLocation" x="-580.5" y="-679.5"/>
+        </menu>
+    </objects>
+    <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSInfo" width="32" height="32"/>
+        <image name="NoteIcon" width="48" height="48"/>
+    </resources>
+</document>

@@ -69,11 +69,18 @@ NSAnimationDelegate>
 @property (readonly) AMCAssociatedNotesViewController * associatedNotesViewController;
 @property Appointment * previouslySelectedAppointment;
 @property (weak) IBOutlet NSButton *actionButton;
+
+@property (strong) IBOutlet NSMenu *rightClickMenu;
 @property (weak) IBOutlet NSMenuItem *rightClickEditMenuItem;
 @property (weak) IBOutlet NSMenuItem *rightClickCompleteMenuItem;
 @property (weak) IBOutlet NSMenuItem *rightClickCancelMenuItem;
 @property (weak) IBOutlet NSMenuItem *rightClickViewCustomerMenuItem;
-@property (strong) IBOutlet NSMenu *rightClickMenu;
+
+@property (strong) IBOutlet NSMenu *actionMenu;
+@property (weak) IBOutlet NSMenuItem *actionCancelMenuItem;
+@property (weak) IBOutlet NSMenuItem *actionCompleteMenuItem;
+@property (weak) IBOutlet NSMenuItem *actionEditMenuItem;
+@property (weak) IBOutlet NSMenuItem *actionViewCustomerMenuItem;
 
 @end
 
@@ -197,11 +204,36 @@ NSAnimationDelegate>
 }
 #pragma mark - NSMenuDelegate
 -(void)menuNeedsUpdate:(NSMenu *)menu {
+    Appointment * appointment = nil;
+    menu.autoenablesItems = NO;
     if (menu == self.rightClickMenu) {
-        menu.autoenablesItems = NO;
+        appointment = [self appointmentForRightClick];
         for (NSMenuItem * item in menu.itemArray) {
             item.enabled = (self.appointmentsTable.clickedRow>=0)?YES:NO;
         }
+    } else if (menu == self.actionMenu) {
+        appointment = self.selectedAppointment;
+        for (NSMenuItem * item in menu.itemArray) {
+            item.enabled = (appointment!=nil);
+        }
+    }
+    if (appointment) {
+        if (appointment.cancelled.boolValue) {
+            self.actionCompleteMenuItem.enabled = NO;
+            self.rightClickCompleteMenuItem.enabled = NO;
+            self.actionCancelMenuItem.title = @"Reinstate Booking";
+            self.actionEditMenuItem.enabled = NO;
+            self.rightClickEditMenuItem.enabled = NO;
+        } else {
+            self.actionCompleteMenuItem.enabled = !appointment.completed.boolValue;
+            self.rightClickCompleteMenuItem.enabled = !appointment.completed.boolValue;
+            self.actionCancelMenuItem.title = @"Cancel Booking";
+            self.actionCancelMenuItem.enabled = !appointment.completed.boolValue;
+            self.rightClickCancelMenuItem.enabled = !appointment.completed.boolValue;
+            self.actionEditMenuItem.enabled = !appointment.completed.boolValue;
+            self.rightClickEditMenuItem.enabled = !appointment.completed.boolValue;
+        }
+        self.rightClickCancelMenuItem.title = self.actionCancelMenuItem.title;
     }
 }
 #pragma mark - NSTableViewDelegate
@@ -314,8 +346,6 @@ NSAnimationDelegate>
     Appointment * appointment = [self selectedAppointment];
     BOOL appointmentSelected = (appointment!=nil)?YES:NO;
     [self.editAppointmentButton setEnabled:appointmentSelected];
-    [self.viewCustomerButton setEnabled:appointmentSelected];
-    [self.cancelAppointmentButton setEnabled:appointmentSelected];
     [self.showNotesButton setEnabled:appointmentSelected];
     [self.completeAppointmentButton setEnabled:appointmentSelected];
     [self.showQuickQuoteButton setEnabled:appointmentSelected];
@@ -323,22 +353,17 @@ NSAnimationDelegate>
         self.totalLabel.stringValue = [NSString stringWithFormat:@"Total: £%1.2f",appointment.sale.actualCharge.doubleValue];
         if (appointment.cancelled.boolValue) {
             // appointment is currently cancelled
-            self.cancelAppointmentButton.title = @"Reinstate booking";
             [self.completeAppointmentButton setEnabled:NO];
             [self.editAppointmentButton setEnabled:NO];
         } else {
-            self.cancelAppointmentButton.title = @"Cancel booking";
+
         }
         if (appointment.completed.boolValue) {
             // appointment is currently completed
-            self.cancelAppointmentButton.title = @"Cancel booking";
-            [self.cancelAppointmentButton setEnabled:NO];
             [self.completeAppointmentButton setEnabled:NO];
             [self.editAppointmentButton setEnabled:NO];
         }
         if (!appointment.completed.boolValue && !appointment.cancelled.boolValue) {
-            self.cancelAppointmentButton.title = @"Cancel booking";
-            [self.cancelAppointmentButton setEnabled:YES];
             [self.completeAppointmentButton setEnabled:YES];
             [self.editAppointmentButton setEnabled:YES];
         }
@@ -572,33 +597,28 @@ NSAnimationDelegate>
 }
 #pragma mark - Actions
 -(IBAction)rightClickEditAction:(id)sender {
-    [self.appointmentsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:self.appointmentsTable.clickedRow] byExtendingSelection:NO];
-    [self.view.window makeFirstResponder:self.appointmentsTable];
-    NSInteger clickedRow = self.appointmentsTable.clickedRow;
-    Appointment * appointment = self.appointments[clickedRow];
-    [self editAppointment:appointment];
+    [self editAppointment:[self appointmentForRightClick]];
+}
+- (IBAction)rightClickShowCustomerNotes:(id)sender {
+    [self showCustomerNotesForAppointment:[self appointmentForRightClick]];
 }
 -(IBAction)rightClickCompleteAction:(id)sender {
-    [self.appointmentsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:self.appointmentsTable.clickedRow] byExtendingSelection:NO];
-    [self.view.window makeFirstResponder:self.appointmentsTable];
-    NSInteger clickedRow = self.appointmentsTable.clickedRow;
-    Appointment * appointment = self.appointments[clickedRow];
-    [self completeAppointment:appointment];
+    [self completeAppointment:[self appointmentForRightClick]];
 }
 -(IBAction)rightClickCancelAction:(id)sender {
-    [self.appointmentsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:self.appointmentsTable.clickedRow] byExtendingSelection:NO];
-    [self.view.window makeFirstResponder:self.appointmentsTable];
-    NSInteger clickedRow = self.appointmentsTable.clickedRow;
-    Appointment * appointment = self.appointments[clickedRow];
-    [self cancelAppointment:appointment];
+    [self cancelAppointment:[self appointmentForRightClick]];
 }
 -(IBAction)rightClickViewCustomerAction:(id)sender {
+    [self viewCustomerForAppointment:[self appointmentForRightClick]];
+}
+-(Appointment*)appointmentForRightClick {
     [self.appointmentsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:self.appointmentsTable.clickedRow] byExtendingSelection:NO];
     [self.view.window makeFirstResponder:self.appointmentsTable];
     NSInteger clickedRow = self.appointmentsTable.clickedRow;
     Appointment * appointment = self.appointments[clickedRow];
-    [self viewSelectedCustomer:appointment.customer];
+    return appointment;
 }
+
 - (IBAction)showActionMenu:(id)sender {
     [self.actionButton.menu popUpMenuPositioningItem:nil atLocation:NSMakePoint(NSMaxX(self.actionButton.bounds), 0) inView:self.actionButton];
 }
@@ -630,10 +650,8 @@ NSAnimationDelegate>
     if (!appointment) return;
     AMCCancelAppointmentViewController * vc = self.cancelAppointmentViewController;
     vc.appointment = appointment;
-    NSInteger row = [self.appointments indexOfObject:appointment];
-    NSRect rect = [self.appointmentsTable rectOfRow:row];
-    rect = NSIntersectionRect(rect, [self.appointmentsTable rectOfColumn:1]);
-    [self presentViewController:vc asPopoverRelativeToRect:rect ofView:self.appointmentsTable preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+    NSRect rect = [self rectForAppointment:appointment column:1];
+    [self presentViewController:vc asPopoverRelativeToRect:rect ofView:self.appointmentsTable preferredEdge:NSMaxYEdge behavior:NSPopoverBehaviorTransient];
 }
 -(IBAction)completeSelectedAppointment:(id)sender {
     [self completeAppointment:self.selectedAppointment];
@@ -641,15 +659,15 @@ NSAnimationDelegate>
 -(void)completeAppointment:(Appointment*)appointment {
     AMCCompleteAppointmentViewController * vc = [self completeAppointmentViewController];
     vc.appointment = appointment;
-    NSInteger row = [self.appointments indexOfObject:appointment];
-    NSRect rect = [self.appointmentsTable rectOfRow:row];
-    rect = NSIntersectionRect(rect, [self.appointmentsTable rectOfColumn:1]);
+    NSRect rect = [self rectForAppointment:appointment column:1];
     [self presentViewController:vc asPopoverRelativeToRect:rect ofView:self.appointmentsTable preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
 }
 - (IBAction)viewSelectedCustomer:(id)sender {
-    [self viewCustomer:self.selectedAppointment.customer];
+    [self viewCustomerForAppointment:self.selectedAppointment];
 }
--(void)viewCustomer:(Customer*)customer {
+-(void)viewCustomerForAppointment:(Appointment*)appointment {
+    if (!appointment) return;
+    Customer * customer = appointment.customer;
     if (!customer) return;
     EditObjectViewController * viewController = self.editCustomerViewController;
     viewController.editMode = EditModeView;
@@ -663,18 +681,34 @@ NSAnimationDelegate>
 }
 
 - (IBAction)showNotesButtonClicked:(id)sender {
-    AMCAssociatedNotesViewController * vc = self.associatedNotesViewController;
-    vc.objectWithNotes = self.selectedAppointment.customer;
-    [vc prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewController:vc asPopoverRelativeToRect:self.showNotesButton.bounds ofView:self.showNotesButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+    [self showCustomerNotesForAppointment:self.selectedAppointment];
 }
-- (IBAction)showQuickQuoteButtonClicked:(id)sender {
-    NSButton * button = (NSButton*)sender;
-    self.previouslySelectedAppointment = self.selectedAppointment;
-    AMCQuickQuoteViewController* vc = self.quickQuoteViewController;
-    vc.sale = self.selectedAppointment.sale;
+-(void)showCustomerNotesForAppointment:(Appointment*)appointment {
+    if (!appointment) return;
+    AMCAssociatedNotesViewController * vc = self.associatedNotesViewController;
+    vc.objectWithNotes = appointment.customer;
     [vc prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+    NSRect rect = [self rectForAppointment:appointment column:2];
+    [self presentViewController:vc asPopoverRelativeToRect:rect ofView:self.appointmentsTable preferredEdge:NSMaxYEdge behavior:NSPopoverBehaviorTransient];
+}
+- (IBAction)rightClickShowQuickQuote:(id)sender {
+    [self showQuickQuoteForAppointment:[self appointmentForRightClick]];
+}
+- (IBAction)showQuickQuoteForSelectedAppointment:(id)sender {
+    [self showQuickQuoteForAppointment:self.selectedAppointment];
+}
+-(void)showQuickQuoteForAppointment:(Appointment*)appointment {
+    AMCQuickQuoteViewController* vc = self.quickQuoteViewController;
+    vc.sale = appointment.sale;
+    [vc prepareForDisplayWithSalon:self.salonDocument];
+    NSRect rect = [self rectForAppointment:appointment column:8];
+    [self presentViewController:vc asPopoverRelativeToRect:rect ofView:self.appointmentsTable preferredEdge:NSMaxYEdge behavior:NSPopoverBehaviorTransient];
+}
+-(NSRect)rectForAppointment:(Appointment*)appointment column:(NSInteger)column {
+    NSInteger row = [self.appointments indexOfObject:appointment];
+    NSRect rect = [self.appointmentsTable rectOfRow:row];
+    rect = NSIntersectionRect(rect, [self.appointmentsTable rectOfColumn:column]);
+    return rect;
 }
 - (IBAction)appointmentStateSelectorChanged:(id)sender {
     [self reloadData];
