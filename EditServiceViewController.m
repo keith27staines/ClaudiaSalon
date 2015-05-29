@@ -26,6 +26,9 @@
 
 @implementation EditServiceViewController
 
+-(void)cancelButton:(NSButton *)sender {
+    [super cancelButton:sender];
+}
 -(NSString *)nibName
 {
     return @"EditServiceViewController";
@@ -62,7 +65,6 @@
     Service * service = objectToEdit;
     self.products = [[service.product allObjects] mutableCopy];
     [self deluxeChanged:self.deluxeCheckbox];
-    [self.view.window makeFirstResponder:nil];
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
 {

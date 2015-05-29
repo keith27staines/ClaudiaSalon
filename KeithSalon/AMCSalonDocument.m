@@ -6,9 +6,6 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-//#import "AMCQuickQuoteViewController.h"
-//#import "AMCReceiptWindowController.h"
-
 #import "AMCSalonDocument.h"
 #import "AMCStorePopulator.h"
 #import "AMCReportsViewController.h"
@@ -28,13 +25,15 @@
 #import "AMCStaffCanDoViewController.h"
 #import "AMCAccountStatementViewController.h"
 #import "AMCCategoryManagerViewController.h"
+#import "AMCCustomersViewController.h"
+#import "AMCServicesViewController.h"
+#import "AMCServiceCategoriesViewController.h"
+#import "AMCServiceCategoriesNode.h"
+#import "AMCEmployeesViewController.h"
 
 #import "EditObjectViewController.h"
 
 // Data models
-//#import "Appointment+Methods.h"
-//#import "Sale+Methods.h"
-//#import "SaleItem+Methods.h"
 #import "Salon+Methods.h"
 #import "Account+Methods.h"
 #import "AccountReconciliation+Methods.h"
@@ -143,8 +142,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     self.mainViewController.view = self.windowForSheet.contentView;
     [self.customerTable setSortDescriptors:[self initialSortDescriptorsForCustomersTable]];
     [self.employeesTable setSortDescriptors:[self initialSortDescriptorsForEmployeesTable]];
-    [self.serviceCategoryTable setSortDescriptors:[self initialSortDescriptorsForServicesTable]];
-    [self.servicesTable setSortDescriptors:[self initialSortDescriptorsForServicesTable]];
     [self.topTabView selectFirstTabViewItem:self];
     [self tabView:self.topTabView didSelectTabViewItem:self.topTabView.selectedTabViewItem];
 }
@@ -155,10 +152,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     // Override returning the nib file name of the document
     // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"AMCSalonDocument";
-}
--(NSArray*)initialSortDescriptorsForServicesTable
-{
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
 }
 -(NSArray*)initialSortDescriptorsForSalesTable
 {
@@ -190,20 +183,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     customer.phone = self.phoneFilter.stringValue;
     [self editObject:customer inMode:EditModeCreate withViewController:self.editCustomerViewController];
 }
--(IBAction)createServiceButtonClicked:(id)sender
-{
-    Service * service = [self newService];
-    [self editObject:service inMode:EditModeCreate withViewController:self.editServiceViewController];
-}
 -(IBAction)createEmployeeButtonClicked:(id)sender
 {
     Employee * employee = [self newEmployee];
     [self editObject:employee inMode:EditModeCreate withViewController:self.editEmployeeViewController];
-}
--(void)createServiceCategoryButtonClicked:(id)sender
-{
-    ServiceCategory * category = [self newServiceCategory];
-    [self editObject:category inMode:EditModeCreate withViewController:self.editServiceCategoryViewController];
 }
 #pragma mark - Object creation methods
 -(Customer*)newCustomer
@@ -214,14 +197,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self selectCustomer:customer];
     return customer;
 }
--(Service*)newService
-{
-    Service * service = [Service newObjectWithMoc:self.managedObjectContext];
-    [self.serviceArrayController addObject:service];
-    [self.serviceArrayController rearrangeObjects];
-    [self selectService:service];
-    return service;
-}
 -(Employee*)newEmployee
 {
     Employee * employee = [Employee newObjectWithMoc:self.managedObjectContext];
@@ -230,21 +205,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self selectEmployee:employee];
     return employee;
 }
--(ServiceCategory*)newServiceCategory
-{
-    ServiceCategory * category = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
-    return category;
-}
 #pragma mark - Obtain selected object methods
--(Service*)selectedService
-{
-    NSArray * array = self.serviceArrayController.arrangedObjects;
-    NSUInteger index = self.servicesTable.selectedRowIndexes.firstIndex;
-    if (index == NSNotFound) {
-        return nil;
-    }
-    return array[index];
-}
 -(Employee*)selectedEmployee
 {
     NSArray * array = self.employeeArrayController.arrangedObjects;
@@ -263,28 +224,12 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     }
     return array[index];
 }
--(ServiceCategory*)selectedServiceCategory
-{
-    NSArray * array = self.serviceCategoryArrayController.arrangedObjects;
-    NSUInteger index = self.serviceCategoryTable.selectedRowIndexes.firstIndex;
-    if (index == NSNotFound) {
-        return nil;
-    }
-    return array[index];
-}
 #pragma mark - Select specified object methods
 -(void)selectCustomer:(Customer*)customer
 {
     NSArray * array = [self.customerArrayController arrangedObjects];
     NSUInteger index = [array indexOfObject:customer];
     [self.customerTable selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-    [self animateNotesButtonIfNecessaryForSelectedTab];
-}
--(void)selectService:(Service*)service
-{
-    NSArray * array = [self.serviceArrayController arrangedObjects];
-    NSUInteger index = [array indexOfObject:service];
-    [self.servicesTable selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
     [self animateNotesButtonIfNecessaryForSelectedTab];
 }
 -(void)selectEmployee:(Employee*)employee
@@ -301,24 +246,12 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     Customer * customer = [self selectedCustomer];
     [self editObject:customer inMode:EditModeView withViewController:self.editCustomerViewController];
 }
--(IBAction)viewServiceButtonClicked:(id)sender
-{
-    Service * service = [self selectedService];
-    [self editObject:service inMode:EditModeView withViewController:self.editServiceViewController];
-}
 -(IBAction)viewEmployeeButtonClicked:(id)sender
 {
     Employee * employee = [self selectedEmployee];
     [self editObject:employee inMode:EditModeView withViewController:self.editEmployeeViewController];
 }
--(IBAction)viewServiceCategoryButtonClicked:(id)sender
-{
-    ServiceCategory * category = [self selectedServiceCategory];
-    [self editObject:category inMode:EditModeView withViewController:self.editServiceCategoryViewController];
-}
-
 #pragma mark - NSTabViewDelegate
-
 -(void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {
     NSView * container = tabViewItem.view;
@@ -332,11 +265,23 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         // Payments tab
         [self safelyAddContentFromViewController:self.paymentsViewController toContainerView:container];
     } else if ([tabViewItem.identifier isEqualToString:@"stock"]) {
-        // Sales tab
+        // Stock tab
         [self safelyAddContentFromViewController:self.stockViewController toContainerView:container];
     } else if ([tabViewItem.identifier isEqualToString:@"sales"]) {
-        // Stock tab
+        // Sales tab
         [self safelyAddContentFromViewController:self.salesViewController toContainerView:container];
+    } else if ([tabViewItem.identifier isEqualToString:@"staff2"]) {
+        // Staff2
+        [self safelyAddContentFromViewController:self.employeesViewController toContainerView:container];
+    } else if ([tabViewItem.identifier isEqualToString:@"customers2"]) {
+        // Customers2
+        [self safelyAddContentFromViewController:self.customersViewController toContainerView:container];
+    } else if ([tabViewItem.identifier isEqualToString:@"services"]) {
+        // Services tab
+        [self safelyAddContentFromViewController:self.servicesViewController toContainerView:container];
+    } else if ([tabViewItem.identifier isEqualToString:@"serviceCategories"]) {
+        // Service categories tab
+        [self safelyAddContentFromViewController:self.serviceCategoriesViewController toContainerView:container];
     } else {
         // All other tabs are already loaded
         [self enableViewItemButtonForTableViews];
@@ -450,9 +395,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 #pragma mark - Helpers
 -(void)enableViewItemButtonForTableViews
 {
-    [self.viewServiceButton setEnabled:(self.servicesTable.selectedRow >= 0)?YES:NO];
     [self.viewEmployeeButton setEnabled:(self.employeesTable.selectedRow >= 0)?YES:NO];
-    [self.viewServiceCategoryButton setEnabled:(self.serviceCategoryTable.selectedRow>=0)?YES:NO];
     [self.viewCustomerButton setEnabled:(self.customerTable.selectedRow>=0)?YES:NO];
 }
 
@@ -464,34 +407,19 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     Employee * employee = [self selectedEmployee];
     [self showNotesPopoverForObject:employee forButton:sender];
 }
--(IBAction)showServiceCategoryNotesButtonClicked:(id)sender {
-    ServiceCategory * category = [self selectedServiceCategory];
-    [self showNotesPopoverForObject:category forButton:sender];
-}
--(IBAction)showServiceNotesButtonClicked:(id)sender {
-    Service * service = [self selectedService];
-    [self showNotesPopoverForObject:service forButton:sender];
-}
 -(IBAction)showNotesPopoverForObject:(id)objectWithNotes forButton:(NSButton*)button {
     AMCAssociatedNotesViewController*vc = [AMCAssociatedNotesViewController new];
     vc.objectWithNotes = objectWithNotes;
     [vc prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
 }
+
 -(void)animateNotesButtonIfNecessaryForSelectedTab {
     if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"appointments"]) {
         return;
     }
     if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"customers"]) {
         [self animateNotesButton:self.showCustomerNotesButton ifNecessaryForObject:[self selectedCustomer]];
-        return;
-    }
-    if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"services"]) {
-        [self animateNotesButton:self.showServiceNotesButton ifNecessaryForObject:[self selectedService]];
-        return;
-    }
-    if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"serviceCategories"]) {
-        [self animateNotesButton:self.showServiceCategoryNotesButton ifNecessaryForObject:[self selectedServiceCategory]];
         return;
     }
     if ([self.topTabView.selectedTabViewItem.identifier isEqualToString:@"staff"]) {
@@ -625,20 +553,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
        // Nothing to do yet
     }];
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Hooks for debugging saving...
-
--(void)autosaveDocumentWithDelegate:(id)delegate didAutosaveSelector:(SEL)didAutosaveSelector contextInfo:(void *)contextInfo {
-    [super autosaveDocumentWithDelegate:delegate didAutosaveSelector:didAutosaveSelector contextInfo:contextInfo];
-}
--(void)saveDocumentWithDelegate:(id)delegate didSaveSelector:(SEL)didSaveSelector contextInfo:(void *)contextInfo {
-    [super saveDocumentWithDelegate:delegate didSaveSelector:didSaveSelector contextInfo:contextInfo];
-}
--(BOOL)writeSafelyToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation error:(NSError *__autoreleasing *)outError {
-    return [super writeSafelyToURL:url ofType:typeName forSaveOperation:saveOperation error:outError];
-}
-
-
 - (IBAction)showBankStatements:(id)sender {
     [self.accountStatementViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.accountStatementViewController];
@@ -661,4 +575,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.accountManagementViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.accountManagementViewController];
 }
+
+
 @end

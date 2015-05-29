@@ -74,6 +74,14 @@
 		5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA341AD2CBE7009B336C /* AMCStatementParser.m */; };
 		539D2DDD1B15FC9A00761711 /* AMCSalesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DDB1B15FC9A00761711 /* AMCSalesViewController.m */; };
 		539D2DDE1B15FC9A00761711 /* AMCSalesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539D2DDC1B15FC9A00761711 /* AMCSalesViewController.xib */; };
+		539D2DE51B18425900761711 /* AMCCustomersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DE31B18425900761711 /* AMCCustomersViewController.m */; };
+		539D2DE61B18425900761711 /* AMCCustomersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539D2DE41B18425900761711 /* AMCCustomersViewController.xib */; };
+		539D2DEB1B1842D400761711 /* AMCServicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DE91B1842D400761711 /* AMCServicesViewController.m */; };
+		539D2DEC1B1842D400761711 /* AMCServicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539D2DEA1B1842D400761711 /* AMCServicesViewController.xib */; };
+		539D2DF11B18430400761711 /* AMCServiceCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DEF1B18430400761711 /* AMCServiceCategoriesViewController.m */; };
+		539D2DF21B18430400761711 /* AMCServiceCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */; };
+		539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DF51B18434400761711 /* AMCEmployeesViewController.m */; };
+		539D2DF81B18434400761711 /* AMCEmployeesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539D2DF61B18434400761711 /* AMCEmployeesViewController.xib */; };
 		53AE26D11AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */; };
 		53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */; };
 		53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE270A1AA317B200A1B3E4 /* AMCJobsColumnViewController.m */; };
@@ -393,6 +401,18 @@
 		539D2DDA1B15FC9A00761711 /* AMCSalesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSalesViewController.h; sourceTree = "<group>"; };
 		539D2DDB1B15FC9A00761711 /* AMCSalesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSalesViewController.m; sourceTree = "<group>"; };
 		539D2DDC1B15FC9A00761711 /* AMCSalesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCSalesViewController.xib; sourceTree = "<group>"; };
+		539D2DE21B18425900761711 /* AMCCustomersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCustomersViewController.h; sourceTree = "<group>"; };
+		539D2DE31B18425900761711 /* AMCCustomersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCustomersViewController.m; sourceTree = "<group>"; };
+		539D2DE41B18425900761711 /* AMCCustomersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCCustomersViewController.xib; sourceTree = "<group>"; };
+		539D2DE81B1842D400761711 /* AMCServicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCServicesViewController.h; sourceTree = "<group>"; };
+		539D2DE91B1842D400761711 /* AMCServicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCServicesViewController.m; sourceTree = "<group>"; };
+		539D2DEA1B1842D400761711 /* AMCServicesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCServicesViewController.xib; sourceTree = "<group>"; };
+		539D2DEE1B18430400761711 /* AMCServiceCategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCServiceCategoriesViewController.h; sourceTree = "<group>"; };
+		539D2DEF1B18430400761711 /* AMCServiceCategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCServiceCategoriesViewController.m; sourceTree = "<group>"; };
+		539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCServiceCategoriesViewController.xib; sourceTree = "<group>"; };
+		539D2DF41B18434400761711 /* AMCEmployeesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCEmployeesViewController.h; sourceTree = "<group>"; };
+		539D2DF51B18434400761711 /* AMCEmployeesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCEmployeesViewController.m; sourceTree = "<group>"; };
+		539D2DF61B18434400761711 /* AMCEmployeesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeesViewController.xib; sourceTree = "<group>"; };
 		53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeeForServiceSelector.xib; sourceTree = "<group>"; };
 		53AE27071AA317B200A1B3E4 /* AMCJobsColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCJobsColumnView.h; sourceTree = "<group>"; };
 		53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCJobsColumnView.m; sourceTree = "<group>"; };
@@ -900,6 +920,46 @@
 			name = "Sale Wizard";
 			sourceTree = "<group>";
 		};
+		539D2DE71B18425F00761711 /* Customers */ = {
+			isa = PBXGroup;
+			children = (
+				539D2DE21B18425900761711 /* AMCCustomersViewController.h */,
+				539D2DE31B18425900761711 /* AMCCustomersViewController.m */,
+				539D2DE41B18425900761711 /* AMCCustomersViewController.xib */,
+			);
+			name = Customers;
+			sourceTree = "<group>";
+		};
+		539D2DED1B1842DA00761711 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				539D2DE81B1842D400761711 /* AMCServicesViewController.h */,
+				539D2DE91B1842D400761711 /* AMCServicesViewController.m */,
+				539D2DEA1B1842D400761711 /* AMCServicesViewController.xib */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		539D2DF31B18430900761711 /* Service Categories */ = {
+			isa = PBXGroup;
+			children = (
+				539D2DEE1B18430400761711 /* AMCServiceCategoriesViewController.h */,
+				539D2DEF1B18430400761711 /* AMCServiceCategoriesViewController.m */,
+				539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */,
+			);
+			name = "Service Categories";
+			sourceTree = "<group>";
+		};
+		539D2DF91B18434900761711 /* Employees */ = {
+			isa = PBXGroup;
+			children = (
+				539D2DF41B18434400761711 /* AMCEmployeesViewController.h */,
+				539D2DF51B18434400761711 /* AMCEmployeesViewController.m */,
+				539D2DF61B18434400761711 /* AMCEmployeesViewController.xib */,
+			);
+			name = Employees;
+			sourceTree = "<group>";
+		};
 		53ADE6271AA0A85400E0ACC8 /* AMCQuickQuoteViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -937,16 +997,18 @@
 		53AE26CB1AA1B54200A1B3E4 /* Views for main tabs */ = {
 			isa = PBXGroup;
 			children = (
+				53AE26DB1AA3028D00A1B3E4 /* Editors for selected objects on main tabs */,
 				53D69DA01A9B243C0004CE10 /* AMCEntityViewController.h */,
 				53D69C911A9B240B0004CE10 /* AMCEntityViewController.m */,
 				53D325A11A9CC05A00AFCDE4 /* Appointments */,
 				53AE26D31AA2FC8A00A1B3E4 /* Sales */,
-				53AE26EC1AA30C3B00A1B3E4 /* Products */,
-				53AE26EB1AA30C3300A1B3E4 /* Staff */,
+				539D2DE71B18425F00761711 /* Customers */,
 				53AE26E81AA309E600A1B3E4 /* Payments */,
+				539D2DED1B1842DA00761711 /* Services */,
+				539D2DF31B18430900761711 /* Service Categories */,
+				539D2DF91B18434900761711 /* Employees */,
 				53AE26EA1AA30B6C00A1B3E4 /* Reports */,
 				53AE26E71AA3082100A1B3E4 /* Stock Control */,
-				53AE26DB1AA3028D00A1B3E4 /* Editors for selected objects on main tabs */,
 			);
 			name = "Views for main tabs";
 			sourceTree = "<group>";
@@ -1222,20 +1284,6 @@
 				53D69C8E1A9B240B0004CE10 /* AMCReportsView.m */,
 			);
 			name = Reports;
-			sourceTree = "<group>";
-		};
-		53AE26EB1AA30C3300A1B3E4 /* Staff */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Staff;
-			sourceTree = "<group>";
-		};
-		53AE26EC1AA30C3B00A1B3E4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		53AE26ED1AA30D2F00A1B3E4 /* Object Selectors */ = {
@@ -1959,6 +2007,7 @@
 			files = (
 				530171221ACA80170047116D /* AMCAccountManagementViewController.xib in Resources */,
 				53D69C431A9B23B70004CE10 /* AMCCancelAppointmentViewController.xib in Resources */,
+				539D2DF81B18434400761711 /* AMCEmployeesViewController.xib in Resources */,
 				53D69C451A9B23B70004CE10 /* ProductSelectorViewController.xib in Resources */,
 				53D69C371A9B23B70004CE10 /* AMCRequestPasswordWindowController.xib in Resources */,
 				53D69C461A9B23B70004CE10 /* EditStockProductViewController.xib in Resources */,
@@ -1993,6 +2042,7 @@
 				53D69C4B1A9B23B70004CE10 /* AMCReceiptWindowController.xib in Resources */,
 				53D69C331A9B23B70004CE10 /* AMCBookingRowViewController.xib in Resources */,
 				53D69C3B1A9B23B70004CE10 /* AMCStockedCategoryMaintenanceViewController.xib in Resources */,
+				539D2DEC1B1842D400761711 /* AMCServicesViewController.xib in Resources */,
 				53D69C4A1A9B23B70004CE10 /* SelectItemsStepViewController.xib in Resources */,
 				53D69C551A9B23B70004CE10 /* AMCStaffCanDoViewController.xib in Resources */,
 				535F0DF61AB2339A0035CFD8 /* AMCAutoCloseViewController.xib in Resources */,
@@ -2007,6 +2057,7 @@
 				53D69C231A9B23B60004CE10 /* AMCAccountReconciliationViewController.xib in Resources */,
 				53D69C211A9B23B60004CE10 /* AMCHoursWorkedOnDayViewController.xib in Resources */,
 				53AE270E1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib in Resources */,
+				539D2DF21B18430400761711 /* AMCServiceCategoriesViewController.xib in Resources */,
 				5393EA321AD26100009B336C /* AMCBankStatementReconciliationViewController.xib in Resources */,
 				53D69C491A9B23B70004CE10 /* AMCRefundViewController.xib in Resources */,
 				53D69C501A9B23B70004CE10 /* EditServiceViewController.xib in Resources */,
@@ -2017,6 +2068,7 @@
 				53D69C3F1A9B23B70004CE10 /* AMCPaymentsViewController.xib in Resources */,
 				53D69DFB1A9B24E60004CE10 /* png.png in Resources */,
 				535F0DEC1AB232CB0035CFD8 /* AMCAccountStatementViewController.xib in Resources */,
+				539D2DE61B18425900761711 /* AMCCustomersViewController.xib in Resources */,
 				53D69C2A1A9B23B60004CE10 /* AMCNoteViewController.xib in Resources */,
 				53D325A61A9E390B00AFCDE4 /* AMCWelcomeScreen.xib in Resources */,
 				53D69DFC1A9B24E60004CE10 /* pdf.pdf in Resources */,
@@ -2138,6 +2190,7 @@
 				5346C58D1ABB074C005D4540 /* AMCPreferencesWindowController.m in Sources */,
 				53D69D591A9B240C0004CE10 /* MakePaymentStepViewController.m in Sources */,
 				5330E23E1AF8B2400062FD93 /* Sale.m in Sources */,
+				539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */,
 				5301714B1ACB15C10047116D /* Note.m in Sources */,
 				5346C5A31AC00341005D4540 /* AMCCategoriesRootNode.m in Sources */,
 				5301712D1ACB15C10047116D /* AccountReconciliation.m in Sources */,
@@ -2170,6 +2223,7 @@
 				53D69CE71A9B240C0004CE10 /* AMCSalaryPaymentViewController.m in Sources */,
 				53D69D401A9B240C0004CE10 /* Payment+Methods.m in Sources */,
 				53D69CF61A9B240C0004CE10 /* AMCAssociatedNotesViewController.m in Sources */,
+				539D2DEB1B1842D400761711 /* AMCServicesViewController.m in Sources */,
 				5301716F1ACB15EB0047116D /* Service.m in Sources */,
 				530171261ACA80310047116D /* AMCRecurringEventManagementViewController.m in Sources */,
 				53D69D5A1A9B240C0004CE10 /* AMCDiscountCalculator.m in Sources */,
@@ -2183,6 +2237,7 @@
 				53D69D031A9B240C0004CE10 /* AMCBookingViewController.m in Sources */,
 				536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */,
 				536E57D01AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m in Sources */,
+				539D2DF11B18430400761711 /* AMCServiceCategoriesViewController.m in Sources */,
 				53D69D481A9B240C0004CE10 /* StockedCategory+Methods.m in Sources */,
 				53D69CEE1A9B240C0004CE10 /* AMCServiceSelectorViewController.m in Sources */,
 				5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */,
@@ -2206,6 +2261,7 @@
 				53D69D571A9B240C0004CE10 /* AMCReceiptWindowController.m in Sources */,
 				53D69D3A1A9B240C0004CE10 /* Sale+Methods.m in Sources */,
 				53D69CF71A9B240C0004CE10 /* AMCNoteViewController.m in Sources */,
+				539D2DE51B18425900761711 /* AMCCustomersViewController.m in Sources */,
 				53D69BB61A9B22830004CE10 /* AppDelegate.m in Sources */,
 				53D325A51A9E390B00AFCDE4 /* AMCWelcomeScreen.m in Sources */,
 				53D69D461A9B240C0004CE10 /* StockedProduct+Methods.m in Sources */,

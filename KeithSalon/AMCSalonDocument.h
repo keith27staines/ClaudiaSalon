@@ -14,6 +14,10 @@
 @class AMCRequestPasswordWindowController;
 @class AMCDayAndMonthPopupViewController;
 @class EditObjectViewController;
+@class AMCServicesViewController;
+@class AMCServiceCategoriesViewController;
+@class AMCEmployeesViewController;
+@class AMCCustomersViewController;
 
 #import <Cocoa/Cocoa.h>
 #import <AddressBook/AddressBook.h>
@@ -37,8 +41,6 @@
 // Top tab view
 @property (weak) IBOutlet NSTabView *topTabView;
 
-// Reports tab
-@property (weak) IBOutlet AMCReportsViewController *reportsViewController;
 
 // Appointments tab
 @property (weak) IBOutlet AMCAppointmentsViewController * appointmentsViewController;
@@ -49,24 +51,22 @@
 // Payments tab
 @property (weak) IBOutlet AMCPaymentsViewController *paymentsViewController;
 
-// Stock tab
-@property (weak) IBOutlet AMCStockControlViewController * stockViewController;// Sales tab
 
 // Services tab
-@property (weak) IBOutlet NSView *servicesView;
-@property (weak) IBOutlet NSArrayController *serviceArrayController;
-@property (weak) IBOutlet NSTableView *servicesTable;
-- (IBAction)createServiceButtonClicked:(id)sender;
-- (IBAction)viewServiceButtonClicked:(id)sender;
-@property (weak) IBOutlet NSButton *createServiceButton;
-@property (weak) IBOutlet NSButton *viewServiceButton;
-@property (weak) IBOutlet EditObjectViewController * editServiceViewController;
-@property (weak) IBOutlet NSButton *showServiceNotesButton;
-- (IBAction)showServiceNotesButtonClicked:(id)sender;
-@property (weak) IBOutlet NSButton *showServiceCategoryNotesButton;
-- (IBAction)showServiceCategoryNotesButtonClicked:(id)sender;
+@property (strong) IBOutlet AMCServicesViewController *servicesViewController;
+
+// Service category tab
+@property (strong) IBOutlet AMCServiceCategoriesViewController *serviceCategoriesViewController;
+
+// Stock tab
+@property (weak) IBOutlet AMCStockControlViewController * stockViewController;
+
+// Reports tab
+@property (weak) IBOutlet AMCReportsViewController *reportsViewController;
 
 // Employee tab
+@property (strong) IBOutlet AMCEmployeesViewController *employeesViewController;
+
 @property (weak) IBOutlet NSView *employeesView;
 @property (weak) IBOutlet NSTableView *employeesTable;
 @property (weak) IBOutlet NSArrayController *employeeArrayController;
@@ -79,17 +79,10 @@
 - (IBAction)showEmployeeNotesButtonClicked:(id)sender;
 - (IBAction)showCanDoListButtonClicked:(id)sender;
 
-// Service category tab
-@property (weak) IBOutlet NSView *serviceCategoryView;
-@property (weak) IBOutlet NSTableView * serviceCategoryTable;
-@property (weak) IBOutlet NSArrayController * serviceCategoryArrayController;
--(IBAction)createServiceCategoryButtonClicked:(id)sender;
--(IBAction)viewServiceCategoryButtonClicked:(id)sender;
-@property (weak) IBOutlet NSButton * createServiceCategoryButton;
-@property (weak) IBOutlet NSButton * viewServiceCategoryButton;
-@property (weak) IBOutlet EditObjectViewController * editServiceCategoryViewController;
 
 // Customer tab
+@property (strong) IBOutlet AMCCustomersViewController *customersViewController;
+
 @property (weak) IBOutlet NSView *customerView;
 @property (weak) IBOutlet NSTableView * customerTable;
 @property (weak) IBOutlet NSArrayController * customerArrayController;
