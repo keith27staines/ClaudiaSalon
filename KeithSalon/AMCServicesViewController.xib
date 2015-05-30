@@ -8,15 +8,15 @@
             <connections>
                 <outlet property="actionButton" destination="Dce-0i-LNf" id="5hP-aQ-rSl"/>
                 <outlet property="actionMenu" destination="pW9-CZ-0TJ" id="Wd8-uP-BZv"/>
-                <outlet property="addServiceButton" destination="rRN-b7-Nqp" id="z5q-Qd-GVR"/>
-                <outlet property="editServiceViewController" destination="Igd-bn-hcz" id="RNb-xE-VZb"/>
+                <outlet property="addObjectButton" destination="rRN-b7-Nqp" id="a4d-zf-jmi"/>
+                <outlet property="arrayController" destination="jul-tc-Hxd" id="mvi-hI-s5S"/>
+                <outlet property="dataTable" destination="mer-km-y7j" id="xXw-lT-p1p"/>
+                <outlet property="editObjectViewController" destination="Igd-bn-hcz" id="Bfe-1j-7R3"/>
                 <outlet property="notesButton" destination="bDS-97-cCz" id="CXx-xZ-S0P"/>
                 <outlet property="notesViewController" destination="ySf-dy-kBx" id="Yr8-oR-4fB"/>
                 <outlet property="rightClickMenu" destination="sME-IN-hPo" id="oC1-io-Wbj"/>
-                <outlet property="servicesArrayController" destination="jul-tc-Hxd" id="gap-2p-ehJ"/>
-                <outlet property="servicesTable" destination="mer-km-y7j" id="2QQ-ZP-pFC"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
-                <outlet property="viewServiceButton" destination="77D-Is-TWY" id="boZ-1p-eLf"/>
+                <outlet property="viewObjectButton" destination="77D-Is-TWY" id="WUm-3l-7eY"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -36,7 +36,7 @@
                         <font key="font" metaFont="system" size="18"/>
                     </buttonCell>
                     <connections>
-                        <action selector="addService:" target="-2" id="jVR-ix-evX"/>
+                        <action selector="addObject:" target="-2" id="lQ4-cN-uS3"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="77D-Is-TWY">
@@ -46,7 +46,7 @@
                         <font key="font" metaFont="system" size="18"/>
                     </buttonCell>
                     <connections>
-                        <action selector="showDetailsForSelectedService:" target="-2" id="oVe-fD-vT3"/>
+                        <action selector="showDetailsForSelectedObject:" target="-2" id="DrK-yn-wWY"/>
                     </connections>
                 </button>
                 <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tNh-ii-FJV">
@@ -168,13 +168,10 @@
                         <constraint firstAttribute="height" constant="30" id="aHS-yg-6TC"/>
                         <constraint firstAttribute="width" constant="30" id="eyW-AO-akG"/>
                     </constraints>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="QlY-dh-P0b">
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="QlY-dh-P0b">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
-                    <connections>
-                        <action selector="showNotesForSelectedService:" target="-2" id="Sa0-pJ-a9l"/>
-                    </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Dce-0i-LNf">
                     <rect key="frame" x="360" y="20" width="30" height="30"/>
@@ -187,7 +184,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="showActionMenu:" target="-2" id="5x3-EK-y2V"/>
+                        <action selector="showActionMenu:" target="-2" id="tjf-oy-zlZ"/>
                         <outlet property="menu" destination="pW9-CZ-0TJ" id="8b9-fd-72P"/>
                     </connections>
                 </button>
@@ -210,11 +207,11 @@
                 <constraint firstItem="tNh-ii-FJV" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="vj5-oT-dEY"/>
                 <constraint firstItem="77D-Is-TWY" firstAttribute="centerY" secondItem="rRN-b7-Nqp" secondAttribute="centerY" id="xQN-s1-jOf"/>
             </constraints>
-            <point key="canvasLocation" x="372" y="352"/>
+            <point key="canvasLocation" x="45" y="53"/>
         </customView>
         <arrayController mode="entity" entityName="Service" automaticallyPreparesContent="YES" id="jul-tc-Hxd">
             <connections>
-                <binding destination="-2" name="sortDescriptors" keyPath="self.servicesTable.sortDescriptors" id="YgM-Po-waN"/>
+                <binding destination="-2" name="sortDescriptors" keyPath="self.dataTable.sortDescriptors" id="m60-pJ-1WJ"/>
             </connections>
         </arrayController>
         <menu id="pW9-CZ-0TJ">
@@ -222,19 +219,19 @@
                 <menuItem title="New Service..." id="h8g-5i-bC5">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="addService:" target="-2" id="8nH-oJ-WPH"/>
+                        <action selector="addObject:" target="-2" id="7YK-3W-q1I"/>
                     </connections>
                 </menuItem>
                 <menuItem title="View Service" id="tz8-IX-dgy">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="showDetailsForSelectedService:" target="-2" id="gE2-SB-WOM"/>
+                        <action selector="showDetailsForSelectedObject:" target="-2" id="rxs-9O-YNA"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Show Notes..." id="fCL-kJ-mVQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="showNotesForSelectedService:" target="-2" id="flK-B4-br4"/>
+                        <action selector="showNotesForSelectedObject:" target="-2" id="XAD-Iv-cDG"/>
                     </connections>
                 </menuItem>
             </items>
@@ -248,13 +245,13 @@
                 <menuItem title="View Service" id="m99-CV-lcJ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickViewDetails:" target="-2" id="fcA-iG-cXR"/>
+                        <action selector="rightClickViewDetails:" target="-2" id="bVz-O2-loe"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Show Notes" id="aG6-3Y-wQy">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickShowNotes:" target="-2" id="FwI-7F-JnW"/>
+                        <action selector="rightClickShowNotes:" target="-2" id="KWf-8h-y8l"/>
                     </connections>
                 </menuItem>
             </items>

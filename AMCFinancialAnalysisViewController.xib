@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCFinancialAnalysisViewController">
@@ -111,14 +110,15 @@
                 </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oub-yW-zAj">
                     <rect key="frame" x="0.0" y="62" width="1065" height="299"/>
-                    <clipView key="contentView" misplaced="YES" id="X8Y-f4-Oi4">
+                    <clipView key="contentView" id="X8Y-f4-Oi4">
                         <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="vph-nX-81A" viewBased="YES" id="1ol-K8-KwP">
+                                <rect key="frame" x="0.0" y="0.0" width="1063" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
                                     <tableColumn identifier="paymentDate" width="116" minWidth="40" maxWidth="1000" id="fLd-CB-ZIO">
@@ -298,8 +298,8 @@
                                                 <rect key="frame" x="426" y="1" width="290" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3iO-Eu-IoB">
-                                                        <rect key="frame" x="0.0" y="0.0" width="183" height="17"/>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="3iO-Eu-IoB">
+                                                        <rect key="frame" x="0.0" y="0.0" width="409" height="17"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="PI0-hT-Onw">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -394,7 +394,7 @@
                 <constraint firstItem="hUx-R0-ocf" firstAttribute="baseline" secondItem="50g-uA-b5a" secondAttribute="baseline" id="yAf-DQ-jE9"/>
                 <constraint firstItem="Plu-ne-SlI" firstAttribute="baseline" secondItem="hUx-R0-ocf" secondAttribute="baseline" id="zUq-e3-a1e"/>
             </constraints>
-            <point key="canvasLocation" x="54.5" y="-262"/>
+            <point key="canvasLocation" x="80.5" y="-710"/>
         </customView>
         <viewController id="uFd-Gk-YGE" userLabel="Analysis View Controller">
             <connections>
@@ -449,7 +449,7 @@
                 </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3LM-3g-e7j">
                     <rect key="frame" x="0.0" y="40" width="761" height="200"/>
-                    <clipView key="contentView" misplaced="YES" id="bkj-eX-aeq">
+                    <clipView key="contentView" id="bkj-eX-aeq">
                         <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -457,7 +457,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="759" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
                                     <tableColumn identifier="category" width="306.01171875" minWidth="40" maxWidth="1000" id="Y3d-VR-qcV">
@@ -669,7 +669,7 @@
             <rect key="frame" x="0.0" y="0.0" width="642" height="456"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <customView ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zKo-SU-UZl">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="zKo-SU-UZl">
                     <rect key="frame" x="20" y="70" width="602" height="325"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="600" id="na1-yK-fCN"/>
@@ -730,6 +730,7 @@ DQ
                 <constraint firstAttribute="trailing" secondItem="t1W-ua-BLE" secondAttribute="trailing" constant="20" id="p57-zx-6Nr"/>
                 <constraint firstItem="NUF-YH-zud" firstAttribute="top" secondItem="qKO-fK-dXe" secondAttribute="top" constant="20" id="ulw-go-CFs"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zKo-SU-UZl" secondAttribute="trailing" constant="20" id="vbv-Ya-7lP"/>
+                <constraint firstAttribute="trailing" secondItem="zKo-SU-UZl" secondAttribute="trailing" priority="999" constant="20" id="wF3-Xj-iK2"/>
                 <constraint firstAttribute="bottom" secondItem="07r-v3-d41" secondAttribute="bottom" constant="20" id="xRn-EK-OIO"/>
             </constraints>
             <point key="canvasLocation" x="-168" y="-1236"/>

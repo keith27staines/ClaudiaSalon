@@ -17,8 +17,8 @@
 -(NSString *)nibName {
     return @"AMCEmployeesViewController";
 }
--(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
-    [super prepareForDisplayWithSalon:salonDocument];
+-(NSArray *)initialSortDescriptors {
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"isActive" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES selector:@selector(caseInsensitiveCompare:)]];
 }
 
 @end

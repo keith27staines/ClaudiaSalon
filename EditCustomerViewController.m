@@ -45,24 +45,34 @@
     self.salesArray = [customer.sales allObjects];
     [self.previousVisitsTable reloadData];
 }
--(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
-{
-    [super prepareForDisplayWithSalon:salonDocument];
+-(void)resetToObject {
     Customer * customer = (Customer*)self.objectToEdit;
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:NO];
     self.salesArray = [self.salesArray sortedArrayUsingDescriptors:@[sort]];
-    self.firstName.stringValue  = customer.firstName;
-    self.lastName.stringValue = customer.lastName;
-    self.email.stringValue = customer.email;
-    self.phone.stringValue = customer.phone;
-    [self.dayAndMonthPopupButtonsController selectMonthNumber:customer.monthOfBirth.integerValue dayNumber:customer.dayOfBirth.integerValue];
-    self.postcode.stringValue = customer.postcode;
-    self.addressLine1.stringValue = customer.addressLine1;
-    self.addressLine2.stringValue = customer.addressLine2;
+    self.firstName.stringValue  = (customer.firstName)?customer.firstName:@"";
+    self.lastName.stringValue = (customer.lastName)?customer.lastName:@"";
+    self.email.stringValue = (customer.email)?customer.email:@"";
+    self.phone.stringValue = (customer.phone)?customer.phone:@"";
+    self.postcode.stringValue = (customer.postcode)?customer.postcode:@"";
+    self.addressLine1.stringValue = (customer.addressLine1)?customer.addressLine1:@"";
+    self.addressLine2.stringValue = (customer.addressLine2)?customer.addressLine2:@"";
+    if (customer.monthOfBirth) {
+        if (customer.dayOfBirth) {
+            [self.dayAndMonthPopupButtonsController selectMonthNumber:customer.monthOfBirth.integerValue dayNumber:customer.dayOfBirth.integerValue];
+        } else {
+            [self.dayAndMonthPopupButtonsController selectMonthNumber:customer.monthOfBirth.integerValue dayNumber:0];
+        }
+    } else {
+        [self.dayAndMonthPopupButtonsController selectMonthNumber:0 dayNumber:0];
+    }
     double amountSpent = [self amountSpent];
     double amountRefunded = [self amountRefunded];
     self.previousVisitsLabel.stringValue = [NSString stringWithFormat:@"Number of previous visits: %lu.   Amount spent: £%1.2f.   Amount refunded: £%1.2f",[customer numberOfPreviousVisits].integerValue,amountSpent,amountRefunded];
-
+}
+-(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
+{
+    [super prepareForDisplayWithSalon:salonDocument];
+    [self resetToObject];
     switch (self.editMode) {
         case EditModeView:
         {

@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
-#import "AMCViewController.h"
+#import "AMCViewControllerWithArrayController.h"
 
-@interface AMCCustomersViewController : AMCViewController
+@interface AMCCustomersViewController : AMCViewControllerWithArrayController
 
 @end

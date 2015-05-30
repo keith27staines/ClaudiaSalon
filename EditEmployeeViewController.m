@@ -39,22 +39,23 @@
     }
     return objectTypeAndName;
 }
--(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
-{
-    [super prepareForDisplayWithSalon:salonDocument];
+-(void)resetToObject {
     Employee * employee = (Employee*)self.objectToEdit;
-    self.firstName.stringValue  = employee.firstName;
-    self.lastName.stringValue = employee.lastName;
-    self.email.stringValue = employee.email;
-    self.mobile.stringValue = employee.phone;
-    self.postcode.stringValue = employee.postcode;
-    self.addressLine1.stringValue = employee.addressLine1;
-    self.addressLine2.stringValue = employee.addressLine2;
+    self.firstName.stringValue  = (employee.firstName)?employee.firstName:@"";
+    self.lastName.stringValue = (employee.lastName)?employee.lastName:@"";
+    self.email.stringValue = (employee.email)?employee.email:@"";
+    self.mobile.stringValue = (employee.phone)?employee.phone:@"";
+    self.postcode.stringValue = (employee.postcode)?employee.postcode:@"";
+    self.addressLine1.stringValue = (employee.addressLine1)?employee.addressLine1:@"";
+    self.addressLine2.stringValue = (employee.addressLine2)?employee.addressLine2:@"";
     self.activeMemberOfStaffCheckbox.state = (employee.isActive.boolValue)?NSOnState:NSOffState;
     NSUInteger monthOfBirth = employee.monthOfBirth.integerValue;
     NSUInteger dayOfBirth = employee.dayOfBirth.integerValue;
     [self.dayAndMonthPopupController selectMonthNumber:monthOfBirth dayNumber:dayOfBirth];
-    
+}
+-(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
+{
+    [super prepareForDisplayWithSalon:salonDocument];
     switch (self.editMode) {
         case EditModeView:
         {

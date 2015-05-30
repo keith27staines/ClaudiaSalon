@@ -35,6 +35,8 @@
 		5301717B1ACB15EB0047116D /* ServiceCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301717A1ACB15EB0047116D /* ServiceCategory.m */; };
 		5301717E1ACB15EB0047116D /* ShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301717D1ACB15EB0047116D /* ShoppingList.m */; };
 		530171851ACBD21F0047116D /* RecurringItem+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171841ACBD21F0047116D /* RecurringItem+Methods.m */; };
+		530D546D1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D546C1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.m */; };
+		530D546F1B18D3E100F6C4FE /* AMCEmployeesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 530D546E1B18D3E100F6C4FE /* AMCEmployeesViewController.xib */; };
 		531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25521AB80E5100EB3472 /* AMCCashBook.m */; };
 		531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25561AB960F600EB3472 /* AMCCashBookViewController.m */; };
 		531B25591AB960F600EB3472 /* AMCCashBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531B25571AB960F600EB3472 /* AMCCashBookViewController.xib */; };
@@ -81,7 +83,6 @@
 		539D2DF11B18430400761711 /* AMCServiceCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DEF1B18430400761711 /* AMCServiceCategoriesViewController.m */; };
 		539D2DF21B18430400761711 /* AMCServiceCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */; };
 		539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DF51B18434400761711 /* AMCEmployeesViewController.m */; };
-		539D2DF81B18434400761711 /* AMCEmployeesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539D2DF61B18434400761711 /* AMCEmployeesViewController.xib */; };
 		53AE26D11AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */; };
 		53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */; };
 		53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE270A1AA317B200A1B3E4 /* AMCJobsColumnViewController.m */; };
@@ -92,7 +93,6 @@
 		53D69BB61A9B22830004CE10 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69BB51A9B22830004CE10 /* AppDelegate.m */; };
 		53D69BB81A9B22830004CE10 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69BB71A9B22830004CE10 /* main.m */; };
 		53D69BC61A9B22830004CE10 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D69BC41A9B22830004CE10 /* MainMenu.xib */; };
-		53D69BD21A9B22830004CE10 /* KeithSalonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69BD11A9B22830004CE10 /* KeithSalonTests.m */; };
 		53D69C1D1A9B23B60004CE10 /* AMCSalaryEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D69BE11A9B23B60004CE10 /* AMCSalaryEditorViewController.xib */; };
 		53D69C1E1A9B23B60004CE10 /* AMCPaymentAmountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D69BE21A9B23B60004CE10 /* AMCPaymentAmountViewController.xib */; };
 		53D69C1F1A9B23B60004CE10 /* AMCSalaryPaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D69BE31A9B23B60004CE10 /* AMCSalaryPaymentViewController.xib */; };
@@ -259,16 +259,6 @@
 		53FFAF911AB220470078E9CC /* AMCEmployeeForServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		53D69BCC1A9B22830004CE10 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 53D69BA71A9B22830004CE10 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 53D69BAE1A9B22830004CE10;
-			remoteInfo = KeithSalon;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		5301711E1ACA80170047116D /* AMCAccountManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCAccountManagementViewController.h; sourceTree = "<group>"; };
 		5301711F1ACA80170047116D /* AMCAccountManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountManagementViewController.m; sourceTree = "<group>"; };
@@ -324,6 +314,9 @@
 		5301717D1ACB15EB0047116D /* ShoppingList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingList.m; sourceTree = "<group>"; };
 		530171831ACBD21F0047116D /* RecurringItem+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RecurringItem+Methods.h"; sourceTree = "<group>"; };
 		530171841ACBD21F0047116D /* RecurringItem+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RecurringItem+Methods.m"; sourceTree = "<group>"; };
+		530D546B1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCViewControllerWithArrayController.h; sourceTree = "<group>"; };
+		530D546C1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCViewControllerWithArrayController.m; sourceTree = "<group>"; };
+		530D546E1B18D3E100F6C4FE /* AMCEmployeesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeesViewController.xib; sourceTree = "<group>"; };
 		53146BFC1AB225EC003B7658 /* ClaudiaSalon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ClaudiaSalon.entitlements; sourceTree = "<group>"; };
 		531B25511AB80E5100EB3472 /* AMCCashBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBook.h; sourceTree = "<group>"; };
 		531B25521AB80E5100EB3472 /* AMCCashBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBook.m; sourceTree = "<group>"; };
@@ -412,7 +405,6 @@
 		539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCServiceCategoriesViewController.xib; sourceTree = "<group>"; };
 		539D2DF41B18434400761711 /* AMCEmployeesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCEmployeesViewController.h; sourceTree = "<group>"; };
 		539D2DF51B18434400761711 /* AMCEmployeesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCEmployeesViewController.m; sourceTree = "<group>"; };
-		539D2DF61B18434400761711 /* AMCEmployeesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeesViewController.xib; sourceTree = "<group>"; };
 		53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeeForServiceSelector.xib; sourceTree = "<group>"; };
 		53AE27071AA317B200A1B3E4 /* AMCJobsColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCJobsColumnView.h; sourceTree = "<group>"; };
 		53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCJobsColumnView.m; sourceTree = "<group>"; };
@@ -432,9 +424,6 @@
 		53D69BB51A9B22830004CE10 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		53D69BB71A9B22830004CE10 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		53D69BC51A9B22830004CE10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		53D69BCB1A9B22830004CE10 /* ClaudiaSalonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClaudiaSalonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		53D69BD01A9B22830004CE10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		53D69BD11A9B22830004CE10 /* KeithSalonTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeithSalonTests.m; sourceTree = "<group>"; };
 		53D69BE11A9B23B60004CE10 /* AMCSalaryEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCSalaryEditorViewController.xib; sourceTree = "<group>"; };
 		53D69BE21A9B23B60004CE10 /* AMCPaymentAmountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPaymentAmountViewController.xib; sourceTree = "<group>"; };
 		53D69BE31A9B23B60004CE10 /* AMCSalaryPaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCSalaryPaymentViewController.xib; sourceTree = "<group>"; };
@@ -715,13 +704,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		53D69BC81A9B22830004CE10 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -743,6 +725,58 @@
 				530171251ACA80310047116D /* AMCRecurringEventManagementViewController.xib */,
 			);
 			name = RecurringEventManagement;
+			sourceTree = "<group>";
+		};
+		530D54701B19A46600F6C4FE /* AMCViewControllerWithArrayController */ = {
+			isa = PBXGroup;
+			children = (
+				530D546B1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.h */,
+				530D546C1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.m */,
+			);
+			name = AMCViewControllerWithArrayController;
+			path = KeithSalon;
+			sourceTree = "<group>";
+		};
+		530D54711B19A51300F6C4FE /* AMCEntityViewController */ = {
+			isa = PBXGroup;
+			children = (
+				53D69DA01A9B243C0004CE10 /* AMCEntityViewController.h */,
+				53D69C911A9B240B0004CE10 /* AMCEntityViewController.m */,
+			);
+			name = AMCEntityViewController;
+			path = KeithSalon;
+			sourceTree = "<group>";
+		};
+		530D54721B19A5C600F6C4FE /* Auto-close management */ = {
+			isa = PBXGroup;
+			children = (
+				535F0DEF1AB2339A0035CFD8 /* AMCAutoCloseViewController.h */,
+				535F0DF01AB2339A0035CFD8 /* AMCAutoCloseViewController.m */,
+				535F0DF11AB2339A0035CFD8 /* AMCAutoCloseViewController.xib */,
+				535F0DF21AB2339A0035CFD8 /* AMCAutoCloseWindowController.h */,
+				535F0DF31AB2339A0035CFD8 /* AMCAutoCloseWindowController.m */,
+				535F0DF41AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib */,
+			);
+			name = "Auto-close management";
+			sourceTree = "<group>";
+		};
+		530D54731B19A5E700F6C4FE /* Application objects */ = {
+			isa = PBXGroup;
+			children = (
+				53D69BB01A9B22830004CE10 /* Xcode Products */,
+				53D69D6C1A9B243B0004CE10 /* AMCConstants.h */,
+				53D69C5D1A9B240B0004CE10 /* AMCConstants.m */,
+				53D69BC41A9B22830004CE10 /* MainMenu.xib */,
+				53D69BB41A9B22830004CE10 /* AppDelegate.h */,
+				53D69BB51A9B22830004CE10 /* AppDelegate.m */,
+				53D325A71A9E391000AFCDE4 /* Welcome Screen */,
+				5346C5891ABB0717005D4540 /* Preferences Window */,
+				53AE26FB1AA3122500A1B3E4 /* Base classes */,
+				53D325691A9C623500AFCDE4 /* Protocols */,
+				53D325631A9B9CD300AFCDE4 /* Categories on Cocoa classes */,
+				53D69BB21A9B22830004CE10 /* Supporting Files */,
+			);
+			name = "Application objects";
 			sourceTree = "<group>";
 		};
 		531B25501AB80E1700EB3472 /* AMCCashBook */ = {
@@ -926,6 +960,7 @@
 				539D2DE21B18425900761711 /* AMCCustomersViewController.h */,
 				539D2DE31B18425900761711 /* AMCCustomersViewController.m */,
 				539D2DE41B18425900761711 /* AMCCustomersViewController.xib */,
+				53AE26E01AA3039000A1B3E4 /* Edit Customer */,
 			);
 			name = Customers;
 			sourceTree = "<group>";
@@ -936,6 +971,7 @@
 				539D2DE81B1842D400761711 /* AMCServicesViewController.h */,
 				539D2DE91B1842D400761711 /* AMCServicesViewController.m */,
 				539D2DEA1B1842D400761711 /* AMCServicesViewController.xib */,
+				53AE26DC1AA3035300A1B3E4 /* Edit Service */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -946,6 +982,7 @@
 				539D2DEE1B18430400761711 /* AMCServiceCategoriesViewController.h */,
 				539D2DEF1B18430400761711 /* AMCServiceCategoriesViewController.m */,
 				539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */,
+				53AE26DE1AA3037900A1B3E4 /* Edit Service Category */,
 			);
 			name = "Service Categories";
 			sourceTree = "<group>";
@@ -955,7 +992,10 @@
 			children = (
 				539D2DF41B18434400761711 /* AMCEmployeesViewController.h */,
 				539D2DF51B18434400761711 /* AMCEmployeesViewController.m */,
-				539D2DF61B18434400761711 /* AMCEmployeesViewController.xib */,
+				530D546E1B18D3E100F6C4FE /* AMCEmployeesViewController.xib */,
+				53AE26DF1AA3038700A1B3E4 /* Edit Employee */,
+				53AE26F21AA30FC000A1B3E4 /* Staff can-do  Maintenance */,
+				53D3256B1A9C6D4600AFCDE4 /* Salary */,
 			);
 			name = Employees;
 			sourceTree = "<group>";
@@ -997,15 +1037,14 @@
 		53AE26CB1AA1B54200A1B3E4 /* Views for main tabs */ = {
 			isa = PBXGroup;
 			children = (
-				53AE26DB1AA3028D00A1B3E4 /* Editors for selected objects on main tabs */,
-				53D69DA01A9B243C0004CE10 /* AMCEntityViewController.h */,
-				53D69C911A9B240B0004CE10 /* AMCEntityViewController.m */,
+				53AE26DB1AA3028D00A1B3E4 /* Base classes */,
 				53D325A11A9CC05A00AFCDE4 /* Appointments */,
 				53AE26D31AA2FC8A00A1B3E4 /* Sales */,
 				539D2DE71B18425F00761711 /* Customers */,
 				53AE26E81AA309E600A1B3E4 /* Payments */,
 				539D2DED1B1842DA00761711 /* Services */,
 				539D2DF31B18430900761711 /* Service Categories */,
+				53AE27031AA314FC00A1B3E4 /* Service Selector */,
 				539D2DF91B18434900761711 /* Employees */,
 				53AE26EA1AA30B6C00A1B3E4 /* Reports */,
 				53AE26E71AA3082100A1B3E4 /* Stock Control */,
@@ -1027,9 +1066,12 @@
 			isa = PBXGroup;
 			children = (
 				539D2DE01B17625A00761711 /* Sale tab view */,
-				53AE27061AA3163000A1B3E4 /* Sale Item View */,
 				539D2DE11B1762A100761711 /* Sale Wizard */,
+				53AE27061AA3163000A1B3E4 /* Sale Item View */,
+				53AE27051AA3159A00A1B3E4 /* Sale Item Price Setter */,
+				53ADE6271AA0A85400E0ACC8 /* AMCQuickQuoteViewController */,
 				53AE26D71AA2FD7100A1B3E4 /* Refund */,
+				53AE26EE1AA30E1300A1B3E4 /* Receipt */,
 			);
 			name = Sales;
 			path = ..;
@@ -1114,19 +1156,14 @@
 			name = "Base Wizard machinery";
 			sourceTree = "<group>";
 		};
-		53AE26DB1AA3028D00A1B3E4 /* Editors for selected objects on main tabs */ = {
+		53AE26DB1AA3028D00A1B3E4 /* Base classes */ = {
 			isa = PBXGroup;
 			children = (
+				530D54701B19A46600F6C4FE /* AMCViewControllerWithArrayController */,
+				530D54711B19A51300F6C4FE /* AMCEntityViewController */,
 				53D69E021A9B4F0F0004CE10 /* EditObjectViewController */,
-				53AE26DC1AA3035300A1B3E4 /* Edit Service */,
-				53AE26DD1AA3036D00A1B3E4 /* Edit Product */,
-				53AE26DE1AA3037900A1B3E4 /* Edit Service Category */,
-				53AE26DF1AA3038700A1B3E4 /* Edit Employee */,
-				53AE26E01AA3039000A1B3E4 /* Edit Customer */,
-				53AE26E11AA3039D00A1B3E4 /* Edit Payment */,
-				53AE26E21AA303A800A1B3E4 /* Edit Stock Product */,
 			);
-			name = "Editors for selected objects on main tabs";
+			name = "Base classes";
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -1138,6 +1175,7 @@
 				53D69CD81A9B240C0004CE10 /* EditServiceViewController.m */,
 			);
 			name = "Edit Service";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26DD1AA3036D00A1B3E4 /* Edit Product */ = {
@@ -1148,6 +1186,7 @@
 				53D69CD91A9B240C0004CE10 /* EditProductViewController.m */,
 			);
 			name = "Edit Product";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26DE1AA3037900A1B3E4 /* Edit Service Category */ = {
@@ -1158,6 +1197,7 @@
 				53D69CDA1A9B240C0004CE10 /* EditServiceCategoryViewController.m */,
 			);
 			name = "Edit Service Category";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26DF1AA3038700A1B3E4 /* Edit Employee */ = {
@@ -1168,6 +1208,7 @@
 				53D69CDB1A9B240C0004CE10 /* EditEmployeeViewController.m */,
 			);
 			name = "Edit Employee";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26E01AA3039000A1B3E4 /* Edit Customer */ = {
@@ -1178,6 +1219,7 @@
 				53D69CD61A9B240C0004CE10 /* EditCustomerViewController.m */,
 			);
 			name = "Edit Customer";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26E11AA3039D00A1B3E4 /* Edit Payment */ = {
@@ -1188,6 +1230,7 @@
 				53D69CD71A9B240C0004CE10 /* EditPaymentViewController.m */,
 			);
 			name = "Edit Payment";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26E21AA303A800A1B3E4 /* Edit Stock Product */ = {
@@ -1198,6 +1241,7 @@
 				53D69CC81A9B240C0004CE10 /* EditStockProductViewController.m */,
 			);
 			name = "Edit Stock Product";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26E31AA3058A00A1B3E4 /* Base Wizard Macninery */ = {
@@ -1214,6 +1258,7 @@
 		53AE26E41AA3066200A1B3E4 /* Appointment Select Services and Time Slot */ = {
 			isa = PBXGroup;
 			children = (
+				53AE26CC1AA1D4DF00A1B3E4 /* Select Staff to perform Service */,
 				5330E2351AF8A8B40062FD93 /* AdvancePaymentView */,
 				53D69BF41A9B23B60004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.xib */,
 				53D69D881A9B243B0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.h */,
@@ -1243,7 +1288,12 @@
 				53D69BFC1A9B23B60004CE10 /* AMCBarcodeScanningViewController.xib */,
 				53D69D951A9B243B0004CE10 /* AMCBarcodeScanningViewController.h */,
 				53D69C861A9B240B0004CE10 /* AMCBarcodeScanningViewController.m */,
+				53AE26DD1AA3036D00A1B3E4 /* Edit Product */,
+				53AE26E21AA303A800A1B3E4 /* Edit Stock Product */,
 				53AE26F61AA3107000A1B3E4 /* Shopping List */,
+				53AE26F51AA3104300A1B3E4 /* Brands Maintenance */,
+				53AE27021AA314CD00A1B3E4 /* Product Selector */,
+				53AE26F41AA30FF900A1B3E4 /* Stocked Category Maintenance */,
 			);
 			name = "Stock Control";
 			sourceTree = "<group>";
@@ -1257,7 +1307,9 @@
 				53D69C101A9B23B60004CE10 /* AMCPaymentCompleteWindowController.xib */,
 				53D69DE21A9B243C0004CE10 /* AMCPaymentCompleteWindowController.h */,
 				53D69CD21A9B240C0004CE10 /* AMCPaymentCompleteWindowController.m */,
+				53AE26E11AA3039D00A1B3E4 /* Edit Payment */,
 				53AE26F01AA30E7A00A1B3E4 /* Transfer between accounts */,
+				53AE26F31AA30FCF00A1B3E4 /* Payments Category Maintenance */,
 			);
 			name = Payments;
 			sourceTree = "<group>";
@@ -1265,10 +1317,6 @@
 		53AE26E91AA30A4C00A1B3E4 /* Static data maintenance */ = {
 			isa = PBXGroup;
 			children = (
-				53AE26F21AA30FC000A1B3E4 /* Staff can-do  Maintenance */,
-				53AE26F31AA30FCF00A1B3E4 /* Payments Category Maintenance */,
-				53AE26F41AA30FF900A1B3E4 /* Stocked Category Maintenance */,
-				53AE26F51AA3104300A1B3E4 /* Brands Maintenance */,
 			);
 			name = "Static data maintenance";
 			path = ..;
@@ -1290,8 +1338,6 @@
 			isa = PBXGroup;
 			children = (
 				53AE27011AA314A600A1B3E4 /* Date Range Selector */,
-				53AE27031AA314FC00A1B3E4 /* Service Selector */,
-				53AE27021AA314CD00A1B3E4 /* Product Selector */,
 				53D69DD51A9B243C0004CE10 /* ObjectSelectorViewController.h */,
 				53D69CC51A9B240C0004CE10 /* ObjectSelectorViewController.m */,
 			);
@@ -1323,6 +1369,7 @@
 				53D69C721A9B240B0004CE10 /* AMCNoteView.m */,
 			);
 			name = Notes;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26F01AA30E7A00A1B3E4 /* Transfer between accounts */ = {
@@ -1343,6 +1390,7 @@
 				53D69C851A9B240B0004CE10 /* AMCRequestPasswordWindowController.m */,
 			);
 			name = "Request Password";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26F21AA30FC000A1B3E4 /* Staff can-do  Maintenance */ = {
@@ -1353,6 +1401,7 @@
 				53D69CDF1A9B240C0004CE10 /* AMCStaffCanDoViewController.m */,
 			);
 			name = "Staff can-do  Maintenance";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26F31AA30FCF00A1B3E4 /* Payments Category Maintenance */ = {
@@ -1363,6 +1412,7 @@
 				53D69C921A9B240B0004CE10 /* AMCPaymentCategoryListViewController.m */,
 			);
 			name = "Payments Category Maintenance";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26F41AA30FF900A1B3E4 /* Stocked Category Maintenance */ = {
@@ -1376,6 +1426,7 @@
 				53D69C8A1A9B240B0004CE10 /* AMCStockedCategoryMaintenanceViewController.m */,
 			);
 			name = "Stocked Category Maintenance";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26F51AA3104300A1B3E4 /* Brands Maintenance */ = {
@@ -1386,6 +1437,7 @@
 				53D69C8C1A9B240B0004CE10 /* AMCStockedBrandMaintenanceWindowController.m */,
 			);
 			name = "Brands Maintenance";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26F61AA3107000A1B3E4 /* Shopping List */ = {
@@ -1460,6 +1512,7 @@
 				53AE27001AA3138000A1B3E4 /* Financial Analysis */,
 			);
 			name = Accounts;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE26FD1AA312EE00A1B3E4 /* Salon static data Initialiser */ = {
@@ -1522,6 +1575,7 @@
 				53D69CC61A9B240C0004CE10 /* ProductSelectorViewController.m */,
 			);
 			name = "Product Selector";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE27031AA314FC00A1B3E4 /* Service Selector */ = {
@@ -1532,6 +1586,7 @@
 				53D69C681A9B240B0004CE10 /* AMCServiceSelectorViewController.m */,
 			);
 			name = "Service Selector";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53AE27041AA3156000A1B3E4 /* Booking View */ = {
@@ -1641,24 +1696,16 @@
 				53D69C631A9B240B0004CE10 /* AMCHoursWorkedOnDayViewController.m */,
 			);
 			name = Salary;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53D3256C1A9C6E5A00AFCDE4 /* Helper view controllers */ = {
 			isa = PBXGroup;
 			children = (
-				53AE27051AA3159A00A1B3E4 /* Sale Item Price Setter */,
+				53AE26ED1AA30D2F00A1B3E4 /* Object Selectors */,
 				53AE26FD1AA312EE00A1B3E4 /* Salon static data Initialiser */,
-				53AE26FC1AA3128C00A1B3E4 /* Accounts */,
-				53AE26F81AA3118000A1B3E4 /* Discount Calculator */,
 				53AE26F91AA3119200A1B3E4 /* Formatters */,
-				53AE26F71AA3112400A1B3E4 /* Staff busy View */,
-				53AE26F11AA30F6700A1B3E4 /* Request Password */,
 				53AE26FA1AA311E800A1B3E4 /* Combined Day and Month Popup View Controller */,
-				53AE26EF1AA30E3A00A1B3E4 /* Notes */,
-				53AE26EE1AA30E1300A1B3E4 /* Receipt */,
-				53ADE6271AA0A85400E0ACC8 /* AMCQuickQuoteViewController */,
-				53AE26CC1AA1D4DF00A1B3E4 /* Select Staff to perform Service */,
-				53D3256B1A9C6D4600AFCDE4 /* Salary */,
 				534DFF661B0736970077F124 /* AMCRolloverButton.h */,
 				534DFF671B0736970077F124 /* AMCRolloverButton.m */,
 			);
@@ -1668,12 +1715,15 @@
 		53D325A11A9CC05A00AFCDE4 /* Appointments */ = {
 			isa = PBXGroup;
 			children = (
+				53AE270F1AA318C600A1B3E4 /* Jobs Column */,
 				53AE26E51AA3070900A1B3E4 /* Appointment tab view */,
 				53AE27041AA3156000A1B3E4 /* Booking View */,
 				53AE26DA1AA301FD00A1B3E4 /* Base Wizard machinery */,
 				53AE26D81AA3006400A1B3E4 /* Book new appointment */,
 				53AE26CA1AA1B49400A1B3E4 /* Complete Appointment */,
 				53AE26C91AA1B3AB00A1B3E4 /* Cancel Appointment */,
+				53AE26F71AA3112400A1B3E4 /* Staff busy View */,
+				53AE26F81AA3118000A1B3E4 /* Discount Calculator */,
 			);
 			name = Appointments;
 			path = ..;
@@ -1695,34 +1745,26 @@
 				5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */,
 				53146BFC1AB225EC003B7658 /* ClaudiaSalon.entitlements */,
 				53D69BB11A9B22830004CE10 /* ClaudiaSalon */,
-				53D69BCE1A9B22830004CE10 /* KeithSalonTests */,
-				53D69BB01A9B22830004CE10 /* Products */,
 				53D3256C1A9C6E5A00AFCDE4 /* Helper view controllers */,
-				53AE26ED1AA30D2F00A1B3E4 /* Object Selectors */,
-				53AE270F1AA318C600A1B3E4 /* Jobs Column */,
 			);
 			sourceTree = "<group>";
 		};
-		53D69BB01A9B22830004CE10 /* Products */ = {
+		53D69BB01A9B22830004CE10 /* Xcode Products */ = {
 			isa = PBXGroup;
 			children = (
 				53D69BAF1A9B22830004CE10 /* ClaudiaSalon.app */,
-				53D69BCB1A9B22830004CE10 /* ClaudiaSalonTests.xctest */,
 			);
-			name = Products;
+			name = "Xcode Products";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53D69BB11A9B22830004CE10 /* ClaudiaSalon */ = {
 			isa = PBXGroup;
 			children = (
-				53D69BB21A9B22830004CE10 /* Supporting Files */,
-				53D325631A9B9CD300AFCDE4 /* Categories on Cocoa classes */,
-				53D325691A9C623500AFCDE4 /* Protocols */,
-				53AE26FB1AA3122500A1B3E4 /* Base classes */,
+				530D54731B19A5E700F6C4FE /* Application objects */,
 				53AE26E91AA30A4C00A1B3E4 /* Static data maintenance */,
 				53D69E031A9B6BE70004CE10 /* Data model objects */,
-				53D69BDB1A9B23910004CE10 /* Top Level objects */,
-				53AE26CB1AA1B54200A1B3E4 /* Views for main tabs */,
+				53D69BDB1A9B23910004CE10 /* Document objects */,
 			);
 			name = ClaudiaSalon;
 			path = KeithSalon;
@@ -1738,49 +1780,24 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		53D69BCE1A9B22830004CE10 /* KeithSalonTests */ = {
+		53D69BDB1A9B23910004CE10 /* Document objects */ = {
 			isa = PBXGroup;
 			children = (
-				53D69BD11A9B22830004CE10 /* KeithSalonTests.m */,
-				53D69BCF1A9B22830004CE10 /* Supporting Files */,
-			);
-			path = KeithSalonTests;
-			sourceTree = "<group>";
-		};
-		53D69BCF1A9B22830004CE10 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				53D69BD01A9B22830004CE10 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		53D69BDB1A9B23910004CE10 /* Top Level objects */ = {
-			isa = PBXGroup;
-			children = (
+				53D69E001A9B43890004CE10 /* AMCSalonDocument.xib */,
+				53D69DFD1A9B41B60004CE10 /* AMCSalonDocument.h */,
+				53D69DFE1A9B41B60004CE10 /* AMCSalonDocument.m */,
+				53AE26FC1AA3128C00A1B3E4 /* Accounts */,
+				53AE26EF1AA30E3A00A1B3E4 /* Notes */,
+				53AE26F11AA30F6700A1B3E4 /* Request Password */,
+				53AE26CB1AA1B54200A1B3E4 /* Views for main tabs */,
 				5301711D1ACA7FF10047116D /* RecurringEventManagement */,
 				5301711C1ACA7FDF0047116D /* AccountManagement */,
 				53D934041AC71DF0001D6C64 /* Salon details */,
 				5346C58F1ABB221A005D4540 /* Accountancy Group manager */,
-				5346C5891ABB0717005D4540 /* Preferences Window */,
-				535F0DEF1AB2339A0035CFD8 /* AMCAutoCloseViewController.h */,
-				535F0DF01AB2339A0035CFD8 /* AMCAutoCloseViewController.m */,
-				535F0DF11AB2339A0035CFD8 /* AMCAutoCloseViewController.xib */,
-				535F0DF21AB2339A0035CFD8 /* AMCAutoCloseWindowController.h */,
-				535F0DF31AB2339A0035CFD8 /* AMCAutoCloseWindowController.m */,
-				535F0DF41AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib */,
 				532377D01AA8C3BF009FA91D /* Bank statements */,
-				53D325A71A9E391000AFCDE4 /* Welcome Screen */,
-				53D69D6C1A9B243B0004CE10 /* AMCConstants.h */,
-				53D69C5D1A9B240B0004CE10 /* AMCConstants.m */,
-				53D69BC41A9B22830004CE10 /* MainMenu.xib */,
-				53D69BB41A9B22830004CE10 /* AppDelegate.h */,
-				53D69BB51A9B22830004CE10 /* AppDelegate.m */,
-				53D69E001A9B43890004CE10 /* AMCSalonDocument.xib */,
-				53D69DFD1A9B41B60004CE10 /* AMCSalonDocument.h */,
-				53D69DFE1A9B41B60004CE10 /* AMCSalonDocument.m */,
+				530D54721B19A5C600F6C4FE /* Auto-close management */,
 			);
-			name = "Top Level objects";
+			name = "Document objects";
 			sourceTree = "<group>";
 		};
 		53D69E021A9B4F0F0004CE10 /* EditObjectViewController */ = {
@@ -1938,24 +1955,6 @@
 			productReference = 53D69BAF1A9B22830004CE10 /* ClaudiaSalon.app */;
 			productType = "com.apple.product-type.application";
 		};
-		53D69BCA1A9B22830004CE10 /* ClaudiaSalonTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 53D69BD81A9B22830004CE10 /* Build configuration list for PBXNativeTarget "ClaudiaSalonTests" */;
-			buildPhases = (
-				53D69BC71A9B22830004CE10 /* Sources */,
-				53D69BC81A9B22830004CE10 /* Frameworks */,
-				53D69BC91A9B22830004CE10 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				53D69BCD1A9B22830004CE10 /* PBXTargetDependency */,
-			);
-			name = ClaudiaSalonTests;
-			productName = KeithSalonTests;
-			productReference = 53D69BCB1A9B22830004CE10 /* ClaudiaSalonTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1975,10 +1974,6 @@
 							};
 						};
 					};
-					53D69BCA1A9B22830004CE10 = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 53D69BAE1A9B22830004CE10;
-					};
 				};
 			};
 			buildConfigurationList = 53D69BAA1A9B22830004CE10 /* Build configuration list for PBXProject "ClaudiaSalon" */;
@@ -1990,12 +1985,11 @@
 				Base,
 			);
 			mainGroup = 53D69BA61A9B22830004CE10;
-			productRefGroup = 53D69BB01A9B22830004CE10 /* Products */;
+			productRefGroup = 53D69BB01A9B22830004CE10 /* Xcode Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				53D69BAE1A9B22830004CE10 /* ClaudiaSalon */,
-				53D69BCA1A9B22830004CE10 /* ClaudiaSalonTests */,
 			);
 		};
 /* End PBXProject section */
@@ -2007,7 +2001,7 @@
 			files = (
 				530171221ACA80170047116D /* AMCAccountManagementViewController.xib in Resources */,
 				53D69C431A9B23B70004CE10 /* AMCCancelAppointmentViewController.xib in Resources */,
-				539D2DF81B18434400761711 /* AMCEmployeesViewController.xib in Resources */,
+				530D546F1B18D3E100F6C4FE /* AMCEmployeesViewController.xib in Resources */,
 				53D69C451A9B23B70004CE10 /* ProductSelectorViewController.xib in Resources */,
 				53D69C371A9B23B70004CE10 /* AMCRequestPasswordWindowController.xib in Resources */,
 				53D69C461A9B23B70004CE10 /* EditStockProductViewController.xib in Resources */,
@@ -2085,13 +2079,6 @@
 				53D69C421A9B23B70004CE10 /* AMCAppointmentsViewController.xib in Resources */,
 				53D69C441A9B23B70004CE10 /* AMCCompleteAppointmentViewController.xib in Resources */,
 				53D69C3A1A9B23B70004CE10 /* AMCShoppingListPrintViewController.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		53D69BC91A9B22830004CE10 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2182,6 +2169,7 @@
 				539D2DDD1B15FC9A00761711 /* AMCSalesViewController.m in Sources */,
 				53D69D381A9B240C0004CE10 /* Appointment+Methods.m in Sources */,
 				53D69D101A9B240C0004CE10 /* AMCStockedCategoryMaintenanceViewController.m in Sources */,
+				530D546D1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.m in Sources */,
 				53D69D631A9B240C0004CE10 /* AMCStaffBusyViewController.m in Sources */,
 				53D69CEF1A9B240C0004CE10 /* AMCQuickQuoteViewController.m in Sources */,
 				531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */,
@@ -2274,23 +2262,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		53D69BC71A9B22830004CE10 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				53D69BD21A9B22830004CE10 /* KeithSalonTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		53D69BCD1A9B22830004CE10 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 53D69BAE1A9B22830004CE10 /* ClaudiaSalon */;
-			targetProxy = 53D69BCC1A9B22830004CE10 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		53D69BC41A9B22830004CE10 /* MainMenu.xib */ = {
@@ -2414,42 +2386,6 @@
 			};
 			name = Release;
 		};
-		53D69BD91A9B22830004CE10 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = KeithSalonTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = ClaudiaSalonTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClaudiaSalon.app/Contents/MacOS/ClaudiaSalon";
-			};
-			name = Debug;
-		};
-		53D69BDA1A9B22830004CE10 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = KeithSalonTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_NAME = ClaudiaSalonTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClaudiaSalon.app/Contents/MacOS/ClaudiaSalon";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2467,15 +2403,6 @@
 			buildConfigurations = (
 				53D69BD61A9B22830004CE10 /* Debug */,
 				53D69BD71A9B22830004CE10 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		53D69BD81A9B22830004CE10 /* Build configuration list for PBXNativeTarget "ClaudiaSalonTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				53D69BD91A9B22830004CE10 /* Debug */,
-				53D69BDA1A9B22830004CE10 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

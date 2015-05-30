@@ -34,7 +34,7 @@
             <rect key="frame" x="0.0" y="0.0" width="1067" height="593"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <datePicker verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="29W-Hr-6zy">
+                <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="29W-Hr-6zy">
                     <rect key="frame" x="741" y="445" width="139" height="148"/>
                     <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerStyle="clockAndCalendar" id="f1j-1Y-IbR">
                         <font key="font" metaFont="system" size="16"/>
@@ -584,6 +584,7 @@
                 <constraint firstItem="QQY-8U-Lwx" firstAttribute="centerY" secondItem="uAh-v0-VDW" secondAttribute="centerY" id="mev-8H-Y8d"/>
                 <constraint firstItem="QQY-8U-Lwx" firstAttribute="centerY" secondItem="HOC-Ff-37i" secondAttribute="centerY" id="mus-tE-9jR"/>
                 <constraint firstItem="0Eh-qL-EOO" firstAttribute="trailing" secondItem="pTp-1M-5LH" secondAttribute="trailing" id="nrD-sC-A8T"/>
+                <constraint firstItem="29W-Hr-6zy" firstAttribute="leading" secondItem="xCW-or-vl5" secondAttribute="trailing" priority="999" constant="8" id="nws-fh-DPp"/>
                 <constraint firstItem="aYQ-So-0lh" firstAttribute="leading" secondItem="8yO-Zx-jY0" secondAttribute="leading" id="p6O-c1-le3"/>
                 <constraint firstItem="QQY-8U-Lwx" firstAttribute="centerY" secondItem="8TI-VM-NjE" secondAttribute="centerY" id="pGV-9i-MLx"/>
                 <constraint firstItem="ypa-9A-KdN" firstAttribute="leading" secondItem="nIq-4X-6cz" secondAttribute="trailing" constant="8" id="q0C-o8-4YC"/>

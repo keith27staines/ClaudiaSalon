@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6245"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCMoneyTransferViewController">
@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4wH-dY-TdN">
-                    <rect key="frame" x="18" y="225" width="219" height="17"/>
+                    <rect key="frame" x="18" y="225" width="216" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Transfer money between accounts" id="r0x-zI-oci">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -29,7 +29,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XDa-Fp-9QB">
-                    <rect key="frame" x="18" y="143" width="75" height="26"/>
+                    <rect key="frame" x="18" y="143" width="73" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="oWj-S4-ic4" id="RaJ-Ng-dZM">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -46,7 +46,7 @@
                     </connections>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HcI-Vp-lWF">
-                    <rect key="frame" x="288" y="143" width="75" height="26"/>
+                    <rect key="frame" x="286" y="143" width="73" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="MjF-9t-yaV" id="k0e-qO-kba">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -63,7 +63,7 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MdU-cb-JqV">
-                    <rect key="frame" x="18" y="175" width="144" height="17"/>
+                    <rect key="frame" x="18" y="175" width="142" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Transfer from account" id="dpm-IB-OwM">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -71,7 +71,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hGn-fg-dvn">
-                    <rect key="frame" x="288" y="175" width="73" height="17"/>
+                    <rect key="frame" x="286" y="175" width="72" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="To account" id="W5r-x5-rpf">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -79,28 +79,15 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FLb-ne-9Hf">
-                    <rect key="frame" x="18" y="84" width="129" height="17"/>
+                    <rect key="frame" x="18" y="84" width="124" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Amount to transfer:" id="lX9-Hw-mKR">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hcT-52-Kch">
-                    <rect key="frame" x="284" y="13" width="82" height="32"/>
-                    <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Npz-Uk-4Aa">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                        <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                    </buttonCell>
-                    <connections>
-                        <action selector="okButonClicked:" target="-2" id="odh-MI-bJB"/>
-                    </connections>
-                </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wP9-jO-Bxu">
-                    <rect key="frame" x="14" y="13" width="82" height="32"/>
+                    <rect key="frame" x="96" y="13" width="83" height="32"/>
                     <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SUT-wf-Vs1">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -113,7 +100,7 @@ Gw
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mNu-Av-LgK">
-                    <rect key="frame" x="153" y="82" width="88" height="22"/>
+                    <rect key="frame" x="148" y="82" width="88" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="88" id="LEX-Vo-gsZ"/>
                     </constraints>
@@ -129,11 +116,25 @@ Gw
                         <outlet property="delegate" destination="-2" id="ghH-KC-bqF"/>
                     </connections>
                 </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hcT-52-Kch">
+                    <rect key="frame" x="214" y="13" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Npz-Uk-4Aa">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                    <connections>
+                        <action selector="okButonClicked:" target="-2" id="odh-MI-bJB"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="XDa-Fp-9QB" firstAttribute="top" secondItem="MdU-cb-JqV" secondAttribute="bottom" constant="8" symbolic="YES" id="06I-hT-mZ6"/>
                 <constraint firstItem="hGn-fg-dvn" firstAttribute="leading" secondItem="HcI-Vp-lWF" secondAttribute="leading" id="2of-BC-3Xu"/>
                 <constraint firstItem="mNu-Av-LgK" firstAttribute="baseline" secondItem="FLb-ne-9Hf" secondAttribute="baseline" id="5JW-Ra-9QX"/>
+                <constraint firstItem="hcT-52-Kch" firstAttribute="leading" secondItem="wP9-jO-Bxu" secondAttribute="trailing" constant="47" id="8kg-cg-yo9"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hGn-fg-dvn" secondAttribute="trailing" constant="20" symbolic="YES" id="HTW-9x-GjB"/>
                 <constraint firstItem="hGn-fg-dvn" firstAttribute="baseline" secondItem="MdU-cb-JqV" secondAttribute="baseline" id="KbD-Fk-jq4"/>
                 <constraint firstItem="4wH-dY-TdN" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="Ldy-L3-Ux3"/>
@@ -145,14 +146,14 @@ Gw
                 <constraint firstAttribute="bottom" secondItem="hcT-52-Kch" secondAttribute="bottom" constant="20" id="X4h-db-vFn"/>
                 <constraint firstItem="XDa-Fp-9QB" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="aJ8-T4-uPM"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4wH-dY-TdN" secondAttribute="trailing" constant="20" symbolic="YES" id="cR4-ib-Pdl"/>
+                <constraint firstItem="hGn-fg-dvn" firstAttribute="leading" secondItem="MdU-cb-JqV" secondAttribute="trailing" priority="999" constant="130" id="dpH-Bg-yGu"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="HcI-Vp-lWF" secondAttribute="trailing" constant="20" symbolic="YES" id="dsr-ga-NQA"/>
+                <constraint firstAttribute="trailing" secondItem="hcT-52-Kch" secondAttribute="trailing" constant="89" id="gmT-Hd-y2K"/>
                 <constraint firstItem="wP9-jO-Bxu" firstAttribute="top" secondItem="FLb-ne-9Hf" secondAttribute="bottom" constant="43" id="gnH-Pf-2Co"/>
-                <constraint firstAttribute="trailing" secondItem="hcT-52-Kch" secondAttribute="trailing" constant="20" symbolic="YES" id="ldS-S2-ant"/>
                 <constraint firstItem="FLb-ne-9Hf" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="lwu-rd-82P"/>
                 <constraint firstItem="FLb-ne-9Hf" firstAttribute="top" secondItem="XDa-Fp-9QB" secondAttribute="bottom" constant="45" id="mYh-Hw-QK2"/>
                 <constraint firstItem="hcT-52-Kch" firstAttribute="width" secondItem="wP9-jO-Bxu" secondAttribute="width" id="qoX-jV-VJX"/>
                 <constraint firstAttribute="bottom" secondItem="wP9-jO-Bxu" secondAttribute="bottom" constant="20" id="tyb-Qu-wOb"/>
-                <constraint firstItem="wP9-jO-Bxu" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="vnR-Xl-1Cf"/>
                 <constraint firstItem="HcI-Vp-lWF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XDa-Fp-9QB" secondAttribute="trailing" constant="200" id="wSR-He-p9s"/>
                 <constraint firstItem="hGn-fg-dvn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MdU-cb-JqV" secondAttribute="trailing" constant="100" id="zk5-iu-Gfd"/>
             </constraints>

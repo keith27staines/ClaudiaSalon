@@ -6,17 +6,17 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCServiceCategoriesViewController">
             <connections>
-                <outlet property="actionButton" destination="kqG-zX-7gu" id="FMq-Ko-pYU"/>
-                <outlet property="actionMenu" destination="rvG-4D-XPG" id="AvK-lv-Ney"/>
-                <outlet property="addCategoryButton" destination="Osp-sg-sQs" id="KgO-gE-1gO"/>
-                <outlet property="categoryArrayController" destination="WIA-WH-vHp" id="ebX-91-w4K"/>
-                <outlet property="categoryTable" destination="cbX-td-DRd" id="6ds-W2-HJV"/>
-                <outlet property="editCategoryViewController" destination="2Bu-ok-R3t" id="SUZ-aI-uDg"/>
-                <outlet property="notesButton" destination="lHl-pL-9Kn" id="izO-d0-w3N"/>
-                <outlet property="notesViewController" destination="aM8-xn-jy0" id="s1D-Le-ggG"/>
-                <outlet property="rightClickMenu" destination="hmY-DE-e8g" id="Asn-0n-UlW"/>
+                <outlet property="actionButton" destination="kqG-zX-7gu" id="9A5-Ob-AbC"/>
+                <outlet property="actionMenu" destination="rvG-4D-XPG" id="q0w-VZ-xR9"/>
+                <outlet property="addObjectButton" destination="Osp-sg-sQs" id="1te-xa-WyA"/>
+                <outlet property="arrayController" destination="WIA-WH-vHp" id="MFy-Si-dYe"/>
+                <outlet property="dataTable" destination="cbX-td-DRd" id="Pfh-Hj-bhm"/>
+                <outlet property="editObjectViewController" destination="2Bu-ok-R3t" id="vZ3-Uf-BrZ"/>
+                <outlet property="notesButton" destination="lHl-pL-9Kn" id="TyH-tO-7wA"/>
+                <outlet property="notesViewController" destination="aM8-xn-jy0" id="rsw-6L-qhO"/>
+                <outlet property="rightClickMenu" destination="hmY-DE-e8g" id="POT-gH-c9i"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
-                <outlet property="viewCategoryButton" destination="Hx7-uH-96e" id="Hj8-RD-NRE"/>
+                <outlet property="viewObjectButton" destination="Hx7-uH-96e" id="rQP-zd-Nlb"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -36,7 +36,7 @@
                         <font key="font" metaFont="system" size="18"/>
                     </buttonCell>
                     <connections>
-                        <action selector="addCategory:" target="-2" id="sga-p9-JIu"/>
+                        <action selector="addObject:" target="-2" id="cCl-BP-39C"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hx7-uH-96e">
@@ -46,7 +46,7 @@
                         <font key="font" metaFont="system" size="18"/>
                     </buttonCell>
                     <connections>
-                        <action selector="showDetailsForSelectedCategory:" target="-2" id="TLE-Iu-fec"/>
+                        <action selector="showDetailsForSelectedObject:" target="-2" id="huy-1g-tWQ"/>
                     </connections>
                 </button>
                 <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWd-HY-Z7m">
@@ -130,13 +130,10 @@
                         <constraint firstAttribute="height" constant="30" id="3FS-gp-PC9"/>
                         <constraint firstAttribute="width" constant="30" id="TgH-Pi-Int"/>
                     </constraints>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="jgh-7h-hrZ">
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NoteIcon" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jgh-7h-hrZ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
-                    <connections>
-                        <action selector="showNotesForSelectedService:" target="-2" id="1gb-Lf-JfH"/>
-                    </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="kqG-zX-7gu">
                     <rect key="frame" x="360" y="20" width="30" height="30"/>
@@ -149,7 +146,8 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="showActionMenu:" target="-2" id="LAF-Ob-Qd3"/>
+                        <action selector="showActionMenu:" target="-2" id="7H9-qs-3F5"/>
+                        <outlet property="menu" destination="rvG-4D-XPG" id="XsF-oP-shK"/>
                     </connections>
                 </button>
             </subviews>
@@ -176,57 +174,53 @@
         </customView>
         <customObject id="aM8-xn-jy0" customClass="AMCAssociatedNotesViewController"/>
         <customObject id="2Bu-ok-R3t" customClass="EditServiceCategoryViewController"/>
-        <arrayController mode="entity" entityName="ServiceCategory" automaticallyPreparesContent="YES" id="WIA-WH-vHp">
-            <connections>
-                <binding destination="-2" name="sortDescriptors" keyPath="categoryTable.sortDescriptors" id="ka2-Rr-o9Q"/>
-            </connections>
-        </arrayController>
+        <arrayController mode="entity" entityName="ServiceCategory" automaticallyPreparesContent="YES" id="WIA-WH-vHp"/>
         <userDefaultsController representsSharedInstance="YES" id="ACE-WT-glK"/>
         <menu id="rvG-4D-XPG">
             <items>
                 <menuItem title="New Category..." id="Qas-pA-HR6">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="addCategory:" target="-2" id="GXL-n2-QUJ"/>
+                        <action selector="addObject:" target="-2" id="d0V-Xj-Vfn"/>
                     </connections>
                 </menuItem>
                 <menuItem title="View Category" id="5Pd-Gh-fQK">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="showDetailsForSelectedCategory:" target="-2" id="e8B-CK-W0q"/>
+                        <action selector="showDetailsForSelectedObject:" target="-2" id="eiH-WZ-EpU"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Show Notes..." id="mxP-fM-b0h">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="showNotesForSelectedService:" target="-2" id="CgR-k5-T7e"/>
+                        <action selector="showNotesForSelectedObject:" target="-2" id="XBg-Zs-d4J"/>
                     </connections>
                 </menuItem>
             </items>
             <connections>
                 <outlet property="delegate" destination="-2" id="9S7-d5-Dzt"/>
             </connections>
-            <point key="canvasLocation" x="169" y="767.5"/>
+            <point key="canvasLocation" x="36.5" y="577.5"/>
         </menu>
         <menu id="hmY-DE-e8g">
             <items>
                 <menuItem title="View Category..." id="cfp-L0-W6t">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickViewDetails:" target="-2" id="BCa-cu-TFl"/>
+                        <action selector="rightClickViewDetails:" target="-2" id="XHl-db-WuZ"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Show Notes..." id="0oy-I1-aL4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickShowNotes:" target="-2" id="N6C-hq-uAs"/>
+                        <action selector="rightClickShowNotes:" target="-2" id="Y5N-OI-F8H"/>
                     </connections>
                 </menuItem>
             </items>
             <connections>
                 <outlet property="delegate" destination="-2" id="jwD-fV-KA9"/>
             </connections>
-            <point key="canvasLocation" x="435" y="762.5"/>
+            <point key="canvasLocation" x="327.5" y="577.5"/>
         </menu>
     </objects>
     <resources>

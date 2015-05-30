@@ -112,7 +112,6 @@
         [self updateObject];
     }
     [self dismissController:sender];
-    [self.salonDocument enableViewItemButtonForTableViews];
     if (self.editMode == EditModeCreate) {
         [self.delegate editObjectViewController:self didCompleteCreationOfObject:self.objectToEdit];
     }
