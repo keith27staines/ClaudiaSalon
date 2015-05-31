@@ -180,7 +180,7 @@ DQ
                 <constraint firstAttribute="trailing" secondItem="AD3-sm-H4E" secondAttribute="trailing" constant="20" symbolic="YES" id="wQB-G0-tmO"/>
                 <constraint firstItem="Q5i-jy-c58" firstAttribute="top" secondItem="dmV-0o-fwV" secondAttribute="bottom" constant="34" id="x9C-ZK-eTf"/>
             </constraints>
-            <point key="canvasLocation" x="339.5" y="334"/>
+            <point key="canvasLocation" x="75.5" y="15"/>
         </customView>
     </objects>
 </document>

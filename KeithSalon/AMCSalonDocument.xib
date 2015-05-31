@@ -43,7 +43,7 @@
                 <outlet property="salonDocument" destination="-2" id="Scr-ac-AuK"/>
             </connections>
         </customObject>
-        <window title="Claudia's Salon Manager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="mainWindow" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="Claudia's Salon Manager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="mainWindow" animationBehavior="default" id="QvC-M9-y7g" customClass="AMCSalonDocumentWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES"/>
             <rect key="contentRect" x="335" y="50" width="1389" height="820"/>

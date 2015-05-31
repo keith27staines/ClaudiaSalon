@@ -9,14 +9,19 @@
                 <outlet property="actionButton" destination="Dce-0i-LNf" id="5hP-aQ-rSl"/>
                 <outlet property="actionMenu" destination="pW9-CZ-0TJ" id="Wd8-uP-BZv"/>
                 <outlet property="addObjectButton" destination="rRN-b7-Nqp" id="a4d-zf-jmi"/>
+                <outlet property="addServiceMenuItem" destination="h8g-5i-bC5" id="SRE-9W-5JB"/>
                 <outlet property="arrayController" destination="jul-tc-Hxd" id="mvi-hI-s5S"/>
                 <outlet property="dataTable" destination="mer-km-y7j" id="xXw-lT-p1p"/>
                 <outlet property="editObjectViewController" destination="Igd-bn-hcz" id="Bfe-1j-7R3"/>
                 <outlet property="notesButton" destination="bDS-97-cCz" id="CXx-xZ-S0P"/>
                 <outlet property="notesViewController" destination="ySf-dy-kBx" id="Yr8-oR-4fB"/>
                 <outlet property="rightClickMenu" destination="sME-IN-hPo" id="oC1-io-Wbj"/>
+                <outlet property="rightClickShowNotesMenuItem" destination="aG6-3Y-wQy" id="xvg-O4-ZXu"/>
+                <outlet property="rightClickViewServiceMenuItem" destination="m99-CV-lcJ" id="POe-ea-wh5"/>
+                <outlet property="showNotesMenuItem" destination="fCL-kJ-mVQ" id="U0U-zs-EHl"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
                 <outlet property="viewObjectButton" destination="77D-Is-TWY" id="WUm-3l-7eY"/>
+                <outlet property="viewServiceMenuItem" destination="tz8-IX-dgy" id="rJm-9b-HZF"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -47,6 +52,11 @@
                     </buttonCell>
                     <connections>
                         <action selector="showDetailsForSelectedObject:" target="-2" id="DrK-yn-wWY"/>
+                        <binding destination="jul-tc-Hxd" name="enabled" keyPath="selection" id="uYe-6T-o8e">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
                 <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tNh-ii-FJV">
@@ -172,6 +182,14 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="showNotesForSelectedObject:" target="-2" id="yJf-Ms-ErP"/>
+                        <binding destination="jul-tc-Hxd" name="enabled" keyPath="selection" id="UVI-a5-WDe">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Dce-0i-LNf">
                     <rect key="frame" x="360" y="20" width="30" height="30"/>
@@ -209,7 +227,7 @@
             </constraints>
             <point key="canvasLocation" x="45" y="53"/>
         </customView>
-        <arrayController mode="entity" entityName="Service" automaticallyPreparesContent="YES" id="jul-tc-Hxd">
+        <arrayController mode="entity" entityName="Service" automaticallyPreparesContent="YES" avoidsEmptySelection="NO" id="jul-tc-Hxd">
             <connections>
                 <binding destination="-2" name="sortDescriptors" keyPath="self.dataTable.sortDescriptors" id="m60-pJ-1WJ"/>
             </connections>
@@ -222,13 +240,14 @@
                         <action selector="addObject:" target="-2" id="7YK-3W-q1I"/>
                     </connections>
                 </menuItem>
-                <menuItem title="View Service" id="tz8-IX-dgy">
+                <menuItem isSeparatorItem="YES" id="JlX-28-ZbV"/>
+                <menuItem title="Edit Service..." id="tz8-IX-dgy">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showDetailsForSelectedObject:" target="-2" id="rxs-9O-YNA"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Show Notes..." id="fCL-kJ-mVQ">
+                <menuItem title="Show Service Notes..." id="fCL-kJ-mVQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNotesForSelectedObject:" target="-2" id="XAD-Iv-cDG"/>
@@ -238,17 +257,17 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="kJQ-OS-7uc"/>
             </connections>
-            <point key="canvasLocation" x="169" y="767.5"/>
+            <point key="canvasLocation" x="-221" y="504.5"/>
         </menu>
         <menu id="sME-IN-hPo">
             <items>
-                <menuItem title="View Service" id="m99-CV-lcJ">
+                <menuItem title="Edit Service..." id="m99-CV-lcJ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="rightClickViewDetails:" target="-2" id="bVz-O2-loe"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Show Notes" id="aG6-3Y-wQy">
+                <menuItem title="Show ServiceNotes..." id="aG6-3Y-wQy">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="rightClickShowNotes:" target="-2" id="KWf-8h-y8l"/>
@@ -258,7 +277,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="MZz-tc-LVM"/>
             </connections>
-            <point key="canvasLocation" x="435" y="762.5"/>
+            <point key="canvasLocation" x="80.5" y="489.5"/>
         </menu>
         <customObject id="ySf-dy-kBx" customClass="AMCAssociatedNotesViewController"/>
         <customObject id="Igd-bn-hcz" customClass="EditServiceViewController"/>

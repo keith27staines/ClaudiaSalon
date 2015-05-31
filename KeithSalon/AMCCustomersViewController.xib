@@ -8,11 +8,13 @@
             <connections>
                 <outlet property="actionButton" destination="dmW-q8-tn6" id="Sau-lw-fLA"/>
                 <outlet property="actionMenu" destination="R9m-hw-lYC" id="Xca-nY-fe5"/>
+                <outlet property="addCustomerMenuItem" destination="TSf-Ll-e4F" id="occ-5m-qGi"/>
                 <outlet property="addObjectButton" destination="oWr-lq-JbQ" id="WZS-2r-qgc"/>
                 <outlet property="arrayController" destination="q6S-LF-Yia" id="Slv-be-ZjI"/>
                 <outlet property="birthdayPopupFilter" destination="g76-9f-NCq" id="8d5-DZ-4vO"/>
                 <outlet property="clearFiltersButton" destination="0Hr-F2-eiD" id="nwi-Mb-92f"/>
                 <outlet property="dataTable" destination="iLG-qX-lWN" id="sy4-TU-v2L"/>
+                <outlet property="editCustomerMenuItem" destination="sCb-no-L6X" id="crG-EQ-2Ys"/>
                 <outlet property="editObjectViewController" destination="3UZ-fr-Cs4" id="tAM-Da-O6B"/>
                 <outlet property="emailAddressFilter" destination="ebA-Iy-8fe" id="DYq-bK-KY4"/>
                 <outlet property="firstNameFilter" destination="b9o-1g-lhW" id="LvZ-aG-rmS"/>
@@ -20,8 +22,10 @@
                 <outlet property="notesButton" destination="Ze2-ac-Lzp" id="hhT-wG-a7t"/>
                 <outlet property="notesViewController" destination="UfA-Cb-z3a" id="u2y-bE-Jg0"/>
                 <outlet property="phoneFilter" destination="Rdh-0H-Uby" id="HTt-Kw-OwX"/>
+                <outlet property="rightClickEditCustomerMenuItem" destination="6hp-Yd-aBi" id="opr-J0-GcQ"/>
                 <outlet property="rightClickMenu" destination="N1F-rD-RGU" id="F6F-uA-iIL"/>
-                <outlet property="staffCanDoViewController" destination="esY-dM-cHy" id="qkS-2V-FIr"/>
+                <outlet property="rightClickShowNotesMenuItem" destination="4gh-Hf-UkJ" id="Z7d-6f-VWY"/>
+                <outlet property="showNotesMenuItem" destination="lX6-7N-PfG" id="mso-Vn-Pah"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
                 <outlet property="viewObjectButton" destination="Tnv-II-MrQ" id="qvs-dq-49b"/>
             </connections>
@@ -38,7 +42,7 @@
                         <rect key="frame" x="1" y="17" width="1301" height="437"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="g1M-5t-rVD" id="iLG-qX-lWN">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="g1M-5t-rVD" id="iLG-qX-lWN">
                                 <rect key="frame" x="0.0" y="0.0" width="1341" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -184,6 +188,11 @@
                     </buttonCell>
                     <connections>
                         <action selector="showDetailsForSelectedObject:" target="-2" id="LyQ-PF-2io"/>
+                        <binding destination="-2" name="enabled" keyPath="selectedObject" id="vx8-hf-SkU">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
                 <box autoresizesSubviews="NO" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="ELD-pH-D51">
@@ -407,6 +416,11 @@
                     </buttonCell>
                     <connections>
                         <action selector="showNotesForSelectedObject:" target="-2" id="QJX-fb-eSc"/>
+                        <binding destination="-2" name="enabled" keyPath="selectedObject" id="LP8-wm-ZJv">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="dmW-q8-tn6">
@@ -460,7 +474,7 @@
             <point key="canvasLocation" x="128" y="256"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="4UO-eE-wd4"/>
-        <arrayController mode="entity" entityName="Customer" automaticallyPreparesContent="YES" id="q6S-LF-Yia"/>
+        <arrayController mode="entity" entityName="Customer" automaticallyPreparesContent="YES" avoidsEmptySelection="NO" id="q6S-LF-Yia"/>
         <menu id="R9m-hw-lYC">
             <items>
                 <menuItem title="New Customer..." id="TSf-Ll-e4F">
@@ -475,49 +489,37 @@
                         <action selector="showDetailsForSelectedObject:" target="-2" id="thb-8D-S4U"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Show Notes..." id="lX6-7N-PfG">
+                <menuItem title="Show Customer Notes..." id="lX6-7N-PfG">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNotesForSelectedObject:" target="-2" id="Dfb-Ur-idg"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Show can-do list..." id="bBX-9r-vea">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="showSelectedCustomerCanDo:" target="-2" id="5OZ-z9-pww"/>
                     </connections>
                 </menuItem>
             </items>
             <connections>
                 <outlet property="delegate" destination="-2" id="Bkw-Mc-ge7"/>
             </connections>
-            <point key="canvasLocation" x="-158" y="674.5"/>
+            <point key="canvasLocation" x="-300.5" y="593.5"/>
         </menu>
         <menu id="N1F-rD-RGU">
             <items>
                 <menuItem title="Edit Customer..." id="6hp-Yd-aBi">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickViewDetails:" target="-2" id="qXy-Do-0UF"/>
+                        <action selector="rightClickViewDetails:" target="-2" id="DeZ-lI-vAN"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Show Notes..." id="4gh-Hf-UkJ">
+                <menuItem title="Show Customer Notes..." id="4gh-Hf-UkJ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="rightClickShowNotes:" target="-2" id="rlz-dQ-MfA"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="Show can-do list..." id="ZsM-2x-RMU">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="rightClickShowCustomerCanDo:" target="-2" id="xyg-oH-ZtM"/>
                     </connections>
                 </menuItem>
             </items>
             <connections>
                 <outlet property="delegate" destination="-2" id="Ifj-X5-UDX"/>
             </connections>
-            <point key="canvasLocation" x="103" y="674.5"/>
+            <point key="canvasLocation" x="-90.5" y="583.5"/>
         </menu>
         <customObject id="UfA-Cb-z3a" customClass="AMCAssociatedNotesViewController"/>
         <customObject id="g76-9f-NCq" customClass="AMCDayAndMonthPopupViewController">
@@ -527,7 +529,6 @@
                 <outlet property="monthPopupButton" destination="Z51-pC-73P" id="Ycz-ER-sda"/>
             </connections>
         </customObject>
-        <customObject id="esY-dM-cHy" customClass="AMCStaffCanDoViewController"/>
         <customObject id="3UZ-fr-Cs4" customClass="EditCustomerViewController"/>
     </objects>
     <resources>

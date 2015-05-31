@@ -13,6 +13,7 @@
 #import "Payment+Methods.h"
 #import "AMCConstants.h"
 #import "AMCSalonDocument.h"
+#import "NSDate+AMCDate.h"
 
 @interface EditCustomerViewController ()
 
@@ -41,9 +42,6 @@
 -(void)setObjectToEdit:(id)objectToEdit {
     [self view];
     [super setObjectToEdit:objectToEdit];
-    Customer * customer = (Customer*)self.objectToEdit;
-    self.salesArray = [customer.sales allObjects];
-    [self.previousVisitsTable reloadData];
 }
 -(void)resetToObject {
     Customer * customer = (Customer*)self.objectToEdit;
@@ -65,9 +63,13 @@
     } else {
         [self.dayAndMonthPopupButtonsController selectMonthNumber:0 dayNumber:0];
     }
+    self.salesArray = [[customer.sales allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:NO]]];
     double amountSpent = [self amountSpent];
     double amountRefunded = [self amountRefunded];
-    self.previousVisitsLabel.stringValue = [NSString stringWithFormat:@"Number of previous visits: %lu.   Amount spent: £%1.2f.   Amount refunded: £%1.2f",[customer numberOfPreviousVisits].integerValue,amountSpent,amountRefunded];
+    NSInteger numberOfVisits = [customer numberOfPreviousVisits].integerValue;
+    self.previousVisitsLabel.stringValue = [NSString stringWithFormat:@"Number of visits: %lu.   Amount spent: £%1.2f.   Amount refunded: £%1.2f",numberOfVisits,amountSpent,amountRefunded];
+
+    [self.previousVisitsTable reloadData];
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
 {
@@ -164,6 +166,15 @@
         } else {
             return @"None";
         }
+    }
+    if ([tableColumn.identifier isEqualToString:@"status"]) {
+        if (sale.voided.boolValue) {
+            return @"Voided";
+        }
+        if (sale.isQuote.boolValue) {
+            return @"Not completed";
+        }
+        return @"Completed";
     }
     return @"";
 }

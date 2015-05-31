@@ -8,24 +8,16 @@
 
 #import "AMCViewControllerWithArrayController.h"
 #import "AMCAssociatedNotesViewController.h"
-#import "EditObjectViewController.h"
 
-@interface AMCViewControllerWithArrayController () <NSTableViewDelegate,NSMenuDelegate, NSAnimationDelegate,EditObjectViewControllerDelegate>
+
+@interface AMCViewControllerWithArrayController ()
 
 
 @property (strong) IBOutlet AMCAssociatedNotesViewController *notesViewController;
 @property (strong) IBOutlet EditObjectViewController *editObjectViewController;
-@property (weak) IBOutlet NSButton *addObjectButton;
-@property (weak) IBOutlet NSButton *viewObjectButton;
-@property (weak) IBOutlet NSButton *actionButton;
-@property (weak) IBOutlet NSButton *notesButton;
-@property (strong) IBOutlet NSMenu *actionMenu;
-@property (strong) IBOutlet NSMenu *rightClickMenu;
-@property id selectedObject;
+
 @property id previouslySelectedObject;
-@property NSRect notesButtonInitialRect;
-@property NSAnimation * notesUpAnimation;
-@property NSAnimation * notesDownAnimation;
+@property id selectedObject;
 @end
 
 @implementation AMCViewControllerWithArrayController
@@ -67,13 +59,12 @@
     [self showEditorForObject:object editMode:EditModeView];
 }
 -(void)showEditorForObject:(id)object editMode:(EditMode)editMode {
-    NSRect rect = [self cellRectForObject:object column:0];
     [self.editObjectViewController clear];
     self.editObjectViewController.delegate = self;
     self.editObjectViewController.objectToEdit = object;
     self.editObjectViewController.editMode = editMode;
     [self.editObjectViewController prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewController:self.editObjectViewController asPopoverRelativeToRect:rect ofView:self.dataTable preferredEdge:NSMaxYEdge behavior:NSPopoverBehaviorTransient];
+    [self presentViewControllerAsSheet:self.editObjectViewController];
 }
 
 #pragma mark - Action: Show notes popover
@@ -104,6 +95,7 @@
 }
 #pragma mark - NSMenuDelegate
 -(void)menuNeedsUpdate:(NSMenu *)menu {
+    menu.autoenablesItems = NO;
     id object = nil;
     if (menu == self.actionMenu) {
         object = self.selectedObject;
@@ -191,9 +183,12 @@
 #pragma mark - Helpers
 -(id)rightClickedObject {
     NSInteger row = self.dataTable.clickedRow;
-    id object = self.arrayController.arrangedObjects[row];
-    [self selectObject:object];
-    return object;
+    if (row >=0 && row != NSNotFound) {
+        id object = self.arrayController.arrangedObjects[row];
+        [self selectObject:object];
+        return object;
+    }
+    return nil;
 }
 -(void)selectObject:(id)object {
     if (!object) {
@@ -209,6 +204,7 @@
 }
 -(NSRect)cellRectForObject:(id)object column:(NSInteger)column {
     NSInteger row = [self.arrayController.arrangedObjects indexOfObject:object];
+    [self.dataTable scrollRowToVisible:row];
     NSRect columnRect = [self.dataTable rectOfColumn:column];
     NSRect rowRect = [self.dataTable rectOfRow:row];
     return NSIntersectionRect(rowRect, columnRect);

@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="actionButton" destination="kqG-zX-7gu" id="9A5-Ob-AbC"/>
                 <outlet property="actionMenu" destination="rvG-4D-XPG" id="q0w-VZ-xR9"/>
+                <outlet property="addCategoryMenuItem" destination="Qas-pA-HR6" id="Bb9-Mi-M2w"/>
                 <outlet property="addObjectButton" destination="Osp-sg-sQs" id="1te-xa-WyA"/>
                 <outlet property="arrayController" destination="WIA-WH-vHp" id="MFy-Si-dYe"/>
                 <outlet property="dataTable" destination="cbX-td-DRd" id="Pfh-Hj-bhm"/>
@@ -15,7 +16,11 @@
                 <outlet property="notesButton" destination="lHl-pL-9Kn" id="TyH-tO-7wA"/>
                 <outlet property="notesViewController" destination="aM8-xn-jy0" id="rsw-6L-qhO"/>
                 <outlet property="rightClickMenu" destination="hmY-DE-e8g" id="POT-gH-c9i"/>
+                <outlet property="rightClickShowNotesMenuItem" destination="0oy-I1-aL4" id="TuP-Y8-CGy"/>
+                <outlet property="rightClickViewCategoryMenuItem" destination="cfp-L0-W6t" id="Mmh-C0-TyB"/>
+                <outlet property="showNotesMenuItem" destination="mxP-fM-b0h" id="W5Y-F3-Sah"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+                <outlet property="viewCategoryMenuItem" destination="5Pd-Gh-fQK" id="4U8-lT-Qfk"/>
                 <outlet property="viewObjectButton" destination="Hx7-uH-96e" id="rQP-zd-Nlb"/>
             </connections>
         </customObject>
@@ -47,6 +52,11 @@
                     </buttonCell>
                     <connections>
                         <action selector="showDetailsForSelectedObject:" target="-2" id="huy-1g-tWQ"/>
+                        <binding destination="-2" name="enabled" keyPath="selectedObject" id="Ldi-Kz-mW0">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </button>
                 <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWd-HY-Z7m">
@@ -134,6 +144,14 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="showNotesForSelectedObject:" target="-2" id="nPt-Te-IPK"/>
+                        <binding destination="-2" name="enabled" keyPath="selectedObject" id="xV2-Jz-gNe">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNotNil</string>
+                            </dictionary>
+                        </binding>
+                    </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="kqG-zX-7gu">
                     <rect key="frame" x="360" y="20" width="30" height="30"/>
@@ -174,7 +192,7 @@
         </customView>
         <customObject id="aM8-xn-jy0" customClass="AMCAssociatedNotesViewController"/>
         <customObject id="2Bu-ok-R3t" customClass="EditServiceCategoryViewController"/>
-        <arrayController mode="entity" entityName="ServiceCategory" automaticallyPreparesContent="YES" id="WIA-WH-vHp"/>
+        <arrayController mode="entity" entityName="ServiceCategory" automaticallyPreparesContent="YES" avoidsEmptySelection="NO" id="WIA-WH-vHp"/>
         <userDefaultsController representsSharedInstance="YES" id="ACE-WT-glK"/>
         <menu id="rvG-4D-XPG">
             <items>
@@ -184,13 +202,14 @@
                         <action selector="addObject:" target="-2" id="d0V-Xj-Vfn"/>
                     </connections>
                 </menuItem>
-                <menuItem title="View Category" id="5Pd-Gh-fQK">
+                <menuItem isSeparatorItem="YES" id="87u-Ra-u5h"/>
+                <menuItem title="Edit Category..." id="5Pd-Gh-fQK">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showDetailsForSelectedObject:" target="-2" id="eiH-WZ-EpU"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Show Notes..." id="mxP-fM-b0h">
+                <menuItem title="Show Category Notes..." id="mxP-fM-b0h">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNotesForSelectedObject:" target="-2" id="XBg-Zs-d4J"/>
@@ -204,13 +223,13 @@
         </menu>
         <menu id="hmY-DE-e8g">
             <items>
-                <menuItem title="View Category..." id="cfp-L0-W6t">
+                <menuItem title="Edit Category..." id="cfp-L0-W6t">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="rightClickViewDetails:" target="-2" id="XHl-db-WuZ"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Show Notes..." id="0oy-I1-aL4">
+                <menuItem title="Show Category Notes..." id="0oy-I1-aL4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="rightClickShowNotes:" target="-2" id="Y5N-OI-F8H"/>

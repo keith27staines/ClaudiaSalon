@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E17e" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14E26a" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="accountNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bankName" optional="YES" attributeType="String" syncable="YES"/>
@@ -82,7 +82,7 @@
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="isActive" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="isActive" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="leavingDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -90,7 +90,7 @@
         <attribute name="paidFromManagersBudget" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="454244400" defaultValueString="&quot;now&quot;" syncable="YES"/>
+        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="454676400" defaultValueString="&quot;now&quot;" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="canDo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="canBeDoneBy" inverseEntity="Service" syncable="YES"/>
         <relationship name="holidays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Holiday" inverseName="employee" inverseEntity="Holiday" syncable="YES"/>

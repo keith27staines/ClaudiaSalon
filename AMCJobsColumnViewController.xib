@@ -33,7 +33,7 @@
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yQW-lD-cWR">
                     <rect key="frame" x="558" y="10" width="63" height="19"/>
-                    <popUpButtonCell key="cell" type="recessed" bezelStyle="recessed" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rTD-ya-nIE">
+                    <popUpButtonCell key="cell" type="recessed" bezelStyle="recessed" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyUpOrDown" inset="2" id="rTD-ya-nIE">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                         <font key="font" metaFont="systemBold" size="12"/>
                         <menu key="menu" title="OtherViews" id="PZo-dM-RzV">

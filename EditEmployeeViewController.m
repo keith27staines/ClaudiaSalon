@@ -56,6 +56,7 @@
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
 {
     [super prepareForDisplayWithSalon:salonDocument];
+    [self resetToObject];
     switch (self.editMode) {
         case EditModeView:
         {

@@ -134,6 +134,7 @@
 }
 -(NSRect)rectForSale:(Sale*)sale column:(NSInteger)column {
     NSInteger row = [self.saleArrayController.arrangedObjects indexOfObject:sale];
+    [self.salesTable scrollRowToVisible:row];
     NSRect columnRect = [self.salesTable rectOfColumn:column];
     NSRect rowRect = [self.salesTable rectOfRow:row];
     return NSIntersectionRect(rowRect, columnRect);

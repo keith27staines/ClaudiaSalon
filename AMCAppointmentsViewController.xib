@@ -6,12 +6,15 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCAppointmentsViewController">
             <connections>
+                <outlet property="actionAddMenuItem" destination="p9w-EQ-Eqb" id="v1S-X9-b26"/>
                 <outlet property="actionButton" destination="JGT-uh-29d" id="F0j-MD-e8Y"/>
                 <outlet property="actionCancelMenuItem" destination="dWt-TQ-thA" id="ppU-IM-8sR"/>
                 <outlet property="actionCompleteMenuItem" destination="smS-Io-A1G" id="WiL-h9-YRv"/>
                 <outlet property="actionEditMenuItem" destination="4YZ-ls-AZH" id="fAp-jn-4zO"/>
                 <outlet property="actionMenu" destination="IZ6-C0-jow" id="cIO-Eh-6M5"/>
                 <outlet property="actionViewCustomerMenuItem" destination="ns4-PN-LJo" id="fdw-i5-MJ6"/>
+                <outlet property="actionViewCustomerNotesMenuItem" destination="ib3-Za-Ftf" id="Lhv-VC-KCk"/>
+                <outlet property="actionViewPriceDetailsMenuItem" destination="fgT-dG-kYc" id="DRt-p6-VwA"/>
                 <outlet property="appointmentStateSelectorButton" destination="Tce-nE-0p0" id="RzQ-W2-x6x"/>
                 <outlet property="appointmentsTable" destination="yol-SD-GjD" id="17T-Pd-Wjj"/>
                 <outlet property="completeAppointmentButton" destination="vKJ-HN-7eo" id="dzi-D8-z9h"/>
@@ -24,6 +27,8 @@
                 <outlet property="rightClickEditMenuItem" destination="29G-3m-bIS" id="Ibe-a0-onZ"/>
                 <outlet property="rightClickMenu" destination="5Zz-o5-5a7" id="2ie-Gw-5BH"/>
                 <outlet property="rightClickViewCustomerMenuItem" destination="22z-Pp-XlL" id="89e-HL-Rwe"/>
+                <outlet property="rightClickViewCustomerNotesMenuItem" destination="ma0-zt-HsA" id="NZq-zZ-yjA"/>
+                <outlet property="rightClickViewPriceDetailsMenuItem" destination="aGf-8g-Mcq" id="twt-gh-b42"/>
                 <outlet property="saleItemsTable" destination="gs8-Wb-vBx" id="x5d-G6-Nd4"/>
                 <outlet property="searchField" destination="YGa-hk-UjA" id="Skz-KI-Btk"/>
                 <outlet property="showNotesButton" destination="stf-Pp-D1T" id="FvI-rA-fAv"/>
@@ -79,7 +84,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="0z9-1x-GOc" id="gs8-Wb-vBx">
-                                <rect key="frame" x="0.0" y="0.0" width="1305" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1049" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -217,7 +222,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="4Vy-kA-GOI" id="yol-SD-GjD">
-                                <rect key="frame" x="0.0" y="0.0" width="1149" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1040" height="19"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -477,26 +482,17 @@
                         <action selector="createNewAppointment:" target="-2" id="vGD-eo-SWc"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="Yjp-GI-4Sw"/>
                 <menuItem title="Edit Booking..." id="4YZ-ls-AZH">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="editSelectedAppointment:" target="-2" id="zJZ-ab-7f3"/>
-                        <binding destination="-2" name="enabled" keyPath="self.selectedAppointment" id="yPU-1K-pR5">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
                     </connections>
                 </menuItem>
                 <menuItem title="Complete Booking..." id="smS-Io-A1G">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="completeSelectedAppointment:" target="-2" id="1aK-6l-aE2"/>
-                        <binding destination="-2" name="enabled" keyPath="self.selectedAppointment" id="nMk-OI-IMo">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="dbr-Np-Wai"/>
@@ -504,11 +500,6 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="cancelSelectedAppointment:" target="-2" id="xtm-kT-b45"/>
-                        <binding destination="-2" name="enabled" keyPath="self.selectedAppointment" id="UBd-bO-ZzG">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="I1C-mE-S2T"/>
@@ -516,29 +507,16 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="viewSelectedCustomer:" target="-2" id="FEY-vQ-5EE"/>
-                        <binding destination="-2" name="enabled" keyPath="self.selectedAppointment" id="gnK-9O-1Go">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
                     </connections>
                 </menuItem>
                 <menuItem title="Show Customer Notes..." id="ib3-Za-Ftf">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNotesButtonClicked:" target="-2" id="KJH-vi-RTj"/>
-                        <binding destination="-2" name="enabled" keyPath="self.selectedAppointment" id="6ug-gs-Di3">
-                            <dictionary key="options">
-                                <string key="NSValueTransformerName">NSIsNotNil</string>
-                            </dictionary>
-                        </binding>
                     </connections>
                 </menuItem>
                 <menuItem title="Show Price Details..." id="fgT-dG-kYc">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="showQuickQuoteForSelectedAppointment:" target="-2" id="HME-CP-7FG"/>
-                    </connections>
                 </menuItem>
             </items>
             <connections>
@@ -560,6 +538,7 @@
                         <action selector="rightClickCompleteAction:" target="-2" id="vdj-v1-mfc"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="IzI-e5-sb0"/>
                 <menuItem title="Cancel Booking..." id="hPr-lz-o2d">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

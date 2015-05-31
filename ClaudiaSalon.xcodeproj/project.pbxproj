@@ -37,6 +37,7 @@
 		530171851ACBD21F0047116D /* RecurringItem+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171841ACBD21F0047116D /* RecurringItem+Methods.m */; };
 		530D546D1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D546C1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.m */; };
 		530D546F1B18D3E100F6C4FE /* AMCEmployeesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 530D546E1B18D3E100F6C4FE /* AMCEmployeesViewController.xib */; };
+		530D54771B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D54761B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m */; };
 		531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25521AB80E5100EB3472 /* AMCCashBook.m */; };
 		531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25561AB960F600EB3472 /* AMCCashBookViewController.m */; };
 		531B25591AB960F600EB3472 /* AMCCashBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531B25571AB960F600EB3472 /* AMCCashBookViewController.xib */; };
@@ -317,6 +318,8 @@
 		530D546B1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCViewControllerWithArrayController.h; sourceTree = "<group>"; };
 		530D546C1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCViewControllerWithArrayController.m; sourceTree = "<group>"; };
 		530D546E1B18D3E100F6C4FE /* AMCEmployeesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeesViewController.xib; sourceTree = "<group>"; };
+		530D54751B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSalonDocumentWindow.h; sourceTree = "<group>"; };
+		530D54761B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSalonDocumentWindow.m; sourceTree = "<group>"; };
 		53146BFC1AB225EC003B7658 /* ClaudiaSalon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ClaudiaSalon.entitlements; sourceTree = "<group>"; };
 		531B25511AB80E5100EB3472 /* AMCCashBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBook.h; sourceTree = "<group>"; };
 		531B25521AB80E5100EB3472 /* AMCCashBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBook.m; sourceTree = "<group>"; };
@@ -578,7 +581,7 @@
 		53D69CDE1A9B240C0004CE10 /* AMCStaffBusyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCStaffBusyView.m; sourceTree = "<group>"; };
 		53D69CDF1A9B240C0004CE10 /* AMCStaffCanDoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCStaffCanDoViewController.m; sourceTree = "<group>"; };
 		53D69CE01A9B240C0004CE10 /* AMCMoneyTransferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMCMoneyTransferViewController.m; path = ../AMCMoneyTransferViewController.m; sourceTree = "<group>"; };
-		53D69CE11A9B240C0004CE10 /* AMCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMCViewController.m; path = ../AMCViewController.m; sourceTree = "<group>"; };
+		53D69CE11A9B240C0004CE10 /* AMCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCViewController.m; sourceTree = "<group>"; };
 		53D69D6C1A9B243B0004CE10 /* AMCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMCConstants.h; path = ../AMCConstants.h; sourceTree = "<group>"; };
 		53D69D6E1A9B243B0004CE10 /* AMCSalaryEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSalaryEditorViewController.h; sourceTree = "<group>"; };
 		53D69D6F1A9B243B0004CE10 /* AMCPaymentAmountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPaymentAmountViewController.h; sourceTree = "<group>"; };
@@ -680,7 +683,7 @@
 		53D69DED1A9B243C0004CE10 /* AMCStaffBusyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCStaffBusyView.h; sourceTree = "<group>"; };
 		53D69DEE1A9B243C0004CE10 /* AMCStaffCanDoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCStaffCanDoViewController.h; sourceTree = "<group>"; };
 		53D69DEF1A9B243C0004CE10 /* AMCMoneyTransferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMCMoneyTransferViewController.h; path = ../AMCMoneyTransferViewController.h; sourceTree = "<group>"; };
-		53D69DF01A9B243C0004CE10 /* AMCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMCViewController.h; path = ../AMCViewController.h; sourceTree = "<group>"; };
+		53D69DF01A9B243C0004CE10 /* AMCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCViewController.h; sourceTree = "<group>"; };
 		53D69DF71A9B24980004CE10 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		53D69DF91A9B24E60004CE10 /* png.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = png.png; sourceTree = "<group>"; };
 		53D69DFA1A9B24E60004CE10 /* pdf.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = pdf.pdf; sourceTree = "<group>"; };
@@ -777,6 +780,25 @@
 				53D69BB21A9B22830004CE10 /* Supporting Files */,
 			);
 			name = "Application objects";
+			sourceTree = "<group>";
+		};
+		530D54741B1A048900F6C4FE /* AMCViewController */ = {
+			isa = PBXGroup;
+			children = (
+				53D69DF01A9B243C0004CE10 /* AMCViewController.h */,
+				53D69CE11A9B240C0004CE10 /* AMCViewController.m */,
+			);
+			name = AMCViewController;
+			sourceTree = "<group>";
+		};
+		530D54781B1AF79E00F6C4FE /* Complete Payment */ = {
+			isa = PBXGroup;
+			children = (
+				53D69C101A9B23B60004CE10 /* AMCPaymentCompleteWindowController.xib */,
+				53D69DE21A9B243C0004CE10 /* AMCPaymentCompleteWindowController.h */,
+				53D69CD21A9B240C0004CE10 /* AMCPaymentCompleteWindowController.m */,
+			);
+			name = "Complete Payment";
 			sourceTree = "<group>";
 		};
 		531B25501AB80E1700EB3472 /* AMCCashBook */ = {
@@ -1159,6 +1181,7 @@
 		53AE26DB1AA3028D00A1B3E4 /* Base classes */ = {
 			isa = PBXGroup;
 			children = (
+				530D54741B1A048900F6C4FE /* AMCViewController */,
 				530D54701B19A46600F6C4FE /* AMCViewControllerWithArrayController */,
 				530D54711B19A51300F6C4FE /* AMCEntityViewController */,
 				53D69E021A9B4F0F0004CE10 /* EditObjectViewController */,
@@ -1304,9 +1327,7 @@
 				53D69C031A9B23B60004CE10 /* AMCPaymentsViewController.xib */,
 				53D69D9E1A9B243C0004CE10 /* AMCPaymentsViewController.h */,
 				53D69C8F1A9B240B0004CE10 /* AMCPaymentsViewController.m */,
-				53D69C101A9B23B60004CE10 /* AMCPaymentCompleteWindowController.xib */,
-				53D69DE21A9B243C0004CE10 /* AMCPaymentCompleteWindowController.h */,
-				53D69CD21A9B240C0004CE10 /* AMCPaymentCompleteWindowController.m */,
+				530D54781B1AF79E00F6C4FE /* Complete Payment */,
 				53AE26E11AA3039D00A1B3E4 /* Edit Payment */,
 				53AE26F01AA30E7A00A1B3E4 /* Transfer between accounts */,
 				53AE26F31AA30FCF00A1B3E4 /* Payments Category Maintenance */,
@@ -1497,8 +1518,6 @@
 		53AE26FB1AA3122500A1B3E4 /* Base classes */ = {
 			isa = PBXGroup;
 			children = (
-				53D69DF01A9B243C0004CE10 /* AMCViewController.h */,
-				53D69CE11A9B240C0004CE10 /* AMCViewController.m */,
 			);
 			name = "Base classes";
 			sourceTree = "<group>";
@@ -1715,8 +1734,8 @@
 		53D325A11A9CC05A00AFCDE4 /* Appointments */ = {
 			isa = PBXGroup;
 			children = (
-				53AE270F1AA318C600A1B3E4 /* Jobs Column */,
 				53AE26E51AA3070900A1B3E4 /* Appointment tab view */,
+				53AE270F1AA318C600A1B3E4 /* Jobs Column */,
 				53AE27041AA3156000A1B3E4 /* Booking View */,
 				53AE26DA1AA301FD00A1B3E4 /* Base Wizard machinery */,
 				53AE26D81AA3006400A1B3E4 /* Book new appointment */,
@@ -1783,6 +1802,8 @@
 		53D69BDB1A9B23910004CE10 /* Document objects */ = {
 			isa = PBXGroup;
 			children = (
+				530D54751B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.h */,
+				530D54761B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m */,
 				53D69E001A9B43890004CE10 /* AMCSalonDocument.xib */,
 				53D69DFD1A9B41B60004CE10 /* AMCSalonDocument.h */,
 				53D69DFE1A9B41B60004CE10 /* AMCSalonDocument.m */,
@@ -2228,6 +2249,7 @@
 				539D2DF11B18430400761711 /* AMCServiceCategoriesViewController.m in Sources */,
 				53D69D481A9B240C0004CE10 /* StockedCategory+Methods.m in Sources */,
 				53D69CEE1A9B240C0004CE10 /* AMCServiceSelectorViewController.m in Sources */,
+				530D54771B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m in Sources */,
 				5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */,
 				53D69D4A1A9B240C0004CE10 /* Salary+Methods.m in Sources */,
 				5346C5A71AC06D15005D4540 /* AMCServiceCategoriesNode.m in Sources */,

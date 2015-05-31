@@ -167,32 +167,32 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fBN-rK-lN5">
-                    <rect key="frame" x="535" y="617" width="107" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fBN-rK-lN5">
+                    <rect key="frame" x="468" y="619" width="106" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Month starts on:" id="vmL-mV-NPd">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZhN-av-C1C">
-                    <rect key="frame" x="264" y="617" width="95" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZhN-av-C1C">
+                    <rect key="frame" x="243" y="619" width="93" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Year starts on:" id="3i5-8n-Wmi">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1qH-CX-ymL">
-                    <rect key="frame" x="755" y="617" width="100" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1qH-CX-ymL">
+                    <rect key="frame" x="685" y="619" width="100" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Week starts on:" id="0HR-Uy-jcK">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jRO-W9-1WA">
-                    <rect key="frame" x="646" y="614" width="75" height="26"/>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jRO-W9-1WA">
+                    <rect key="frame" x="578" y="614" width="73" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="8eV-P5-ArR" id="B7T-Ml-BBT">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -208,8 +208,8 @@
                         <action selector="monthStartChanged:" target="-2" id="v7x-Os-sbV"/>
                     </connections>
                 </popUpButton>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4X2-Lz-22q">
-                    <rect key="frame" x="859" y="614" width="143" height="26"/>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4X2-Lz-22q">
+                    <rect key="frame" x="789" y="614" width="73" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="WVW-0s-m6J" id="y6y-ai-jrS">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -225,8 +225,8 @@
                         <action selector="weekStartChanged:" target="-2" id="Vg5-kL-iVZ"/>
                     </connections>
                 </popUpButton>
-                <datePicker verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="est-eT-Nkp">
-                    <rect key="frame" x="365" y="614" width="139" height="27"/>
+                <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="est-eT-Nkp">
+                    <rect key="frame" x="342" y="616" width="95" height="27"/>
                     <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="KPd-FH-XPj">
                         <font key="font" metaFont="system"/>
                         <date key="date" timeIntervalSinceReferenceDate="-596275200">
@@ -241,17 +241,30 @@
                 </datePicker>
             </subviews>
             <constraints>
+                <constraint firstItem="est-eT-Nkp" firstAttribute="leading" secondItem="ZhN-av-C1C" secondAttribute="trailing" constant="8" id="1fh-h8-qzD"/>
+                <constraint firstItem="1qH-CX-ymL" firstAttribute="centerY" secondItem="jRO-W9-1WA" secondAttribute="centerY" id="2j8-WQ-3at"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4X2-Lz-22q" secondAttribute="trailing" constant="20" id="3D1-tG-F16"/>
+                <constraint firstItem="1qH-CX-ymL" firstAttribute="centerY" secondItem="fBN-rK-lN5" secondAttribute="centerY" id="Cau-Eo-A0w"/>
+                <constraint firstItem="1qH-CX-ymL" firstAttribute="centerY" secondItem="est-eT-Nkp" secondAttribute="centerY" id="D3y-Ey-eRH"/>
                 <constraint firstItem="8lr-86-tOt" firstAttribute="top" secondItem="Cp2-3D-k6w" secondAttribute="bottom" constant="20" id="EVG-ZE-IgR"/>
                 <constraint firstAttribute="trailing" secondItem="8lr-86-tOt" secondAttribute="trailing" constant="20" id="LZD-7j-FtX"/>
+                <constraint firstItem="1qH-CX-ymL" firstAttribute="centerY" secondItem="4X2-Lz-22q" secondAttribute="centerY" id="MR8-bv-dua"/>
+                <constraint firstItem="1qH-CX-ymL" firstAttribute="centerY" secondItem="Cp2-3D-k6w" secondAttribute="centerY" id="Mgx-UD-4e8"/>
+                <constraint firstItem="1qH-CX-ymL" firstAttribute="leading" secondItem="jRO-W9-1WA" secondAttribute="trailing" constant="39" id="RcN-yH-Acv"/>
+                <constraint firstItem="jRO-W9-1WA" firstAttribute="leading" secondItem="fBN-rK-lN5" secondAttribute="trailing" constant="8" id="Upa-dH-ivY"/>
+                <constraint firstItem="1qH-CX-ymL" firstAttribute="centerY" secondItem="ZhN-av-C1C" secondAttribute="centerY" id="WfX-hB-LT9"/>
+                <constraint firstItem="4X2-Lz-22q" firstAttribute="leading" secondItem="1qH-CX-ymL" secondAttribute="trailing" constant="8" id="apT-uF-rYI"/>
                 <constraint firstAttribute="bottom" secondItem="8lr-86-tOt" secondAttribute="bottom" constant="20" id="cb5-cq-2cj"/>
                 <constraint firstItem="8lr-86-tOt" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="fPs-JT-2Tb"/>
+                <constraint firstItem="ZhN-av-C1C" firstAttribute="leading" secondItem="Cp2-3D-k6w" secondAttribute="trailing" constant="157" id="g2j-Cj-J2K"/>
                 <constraint firstItem="Cp2-3D-k6w" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="ncT-lX-a5p"/>
                 <constraint firstItem="Cp2-3D-k6w" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="oD9-kR-vPN"/>
+                <constraint firstItem="fBN-rK-lN5" firstAttribute="leading" secondItem="est-eT-Nkp" secondAttribute="trailing" constant="36" id="ovP-sd-hqG"/>
             </constraints>
             <connections>
                 <outlet property="delegate" destination="-2" id="PtM-wS-Ato"/>
             </connections>
-            <point key="canvasLocation" x="454" y="367"/>
+            <point key="canvasLocation" x="4" y="44"/>
         </customView>
     </objects>
 </document>

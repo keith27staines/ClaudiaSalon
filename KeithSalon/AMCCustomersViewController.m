@@ -8,7 +8,6 @@
 
 #import "AMCCustomersViewController.h"
 #import "AMCDayAndMonthPopupViewController.h"
-#import "AMCStaffCanDoViewController.h"
 
 @interface AMCCustomersViewController ()
 @property (weak) IBOutlet NSButton *clearFiltersButton;
@@ -17,7 +16,14 @@
 @property (weak) IBOutlet NSTextField *emailAddressFilter;
 @property (weak) IBOutlet NSTextField *phoneFilter;
 @property (weak) IBOutlet AMCDayAndMonthPopupViewController *birthdayPopupFilter;
-@property (weak) IBOutlet AMCStaffCanDoViewController * staffCanDoViewController;
+
+@property (weak) IBOutlet NSMenuItem *addCustomerMenuItem;
+@property (weak) IBOutlet NSMenuItem *editCustomerMenuItem;
+@property (weak) IBOutlet NSMenuItem *showNotesMenuItem;
+
+@property (weak) IBOutlet NSMenuItem *rightClickEditCustomerMenuItem;
+@property (weak) IBOutlet NSMenuItem *rightClickShowNotesMenuItem;
+
 @end
 
 @implementation AMCCustomersViewController
@@ -31,23 +37,24 @@
 -(NSArray *)initialSortDescriptors {
     return @[[NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES]];
 }
-#pragma mark - Action: showCanDoList
-- (IBAction)showSelectedCustomerCanDo:(id)sender {
-    [self showCanDoListForCustomer:self.selectedObject];
-}
-
-- (IBAction)rightClickShowCustomerCanDo:(id)sender {
-    [self showCanDoListForCustomer:self.rightClickedObject];
-}
--(void)showCanDoListForCustomer:(Customer*)customer {
-    [self.staffCanDoViewController prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewController:self.staffCanDoViewController asPopoverRelativeToRect:[self cellRectForObject:customer column:0] ofView:self.dataTable preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
-}
 #pragma mark - AMCDayAndMonthPopupControllerDelegate
 -(void)dayAndMonthControllerDidUpdate:(AMCDayAndMonthPopupViewController *)dayAndMonthController
 {
     if (dayAndMonthController == self.birthdayPopupFilter) {
         self.arrayController.fetchPredicate = [self buildPredicateFromCustomerFilters];
+    }
+}
+#pragma mark - NSMenuDelegate 
+-(void)menuNeedsUpdate:(NSMenu*)menu {
+    menu.autoenablesItems = NO;
+    if (menu == self.actionMenu) {
+        self.addCustomerMenuItem.enabled = YES;
+        BOOL selectedObjectExists = (self.selectedObject)?YES:NO;
+        self.editCustomerMenuItem.enabled = selectedObjectExists;
+        self.showNotesMenuItem.enabled = selectedObjectExists;
+    } else if (menu == self.rightClickMenu) {
+        self.rightClickEditCustomerMenuItem.enabled = YES;
+        self.rightClickShowNotesMenuItem.enabled = YES;
     }
 }
 #pragma mark - NSControlTextEditingDelegate
@@ -60,11 +67,13 @@
         self.lastNameFilter.stringValue = [self.lastNameFilter.stringValue capitalizedString];
     }
     self.arrayController.fetchPredicate = [self buildPredicateFromCustomerFilters];
+    [self.dataTable deselectAll:self];
 }
 #pragma mark - Customer tab filters
 - (IBAction)clearCustomerFilters:(id)sender {
     [self clearCustomersFilterSet];
     self.arrayController.fetchPredicate = [self buildPredicateFromCustomerFilters];
+    [self.dataTable deselectAll:self];
 }
 
 -(NSSet*)customersFilterSet
@@ -113,5 +122,4 @@
     }
     return [NSCompoundPredicate andPredicateWithSubpredicates:predicateArray];
 }
-
 @end

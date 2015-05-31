@@ -71,16 +71,23 @@ NSAnimationDelegate>
 @property (weak) IBOutlet NSButton *actionButton;
 
 @property (strong) IBOutlet NSMenu *rightClickMenu;
+
 @property (weak) IBOutlet NSMenuItem *rightClickEditMenuItem;
 @property (weak) IBOutlet NSMenuItem *rightClickCompleteMenuItem;
 @property (weak) IBOutlet NSMenuItem *rightClickCancelMenuItem;
 @property (weak) IBOutlet NSMenuItem *rightClickViewCustomerMenuItem;
+@property (weak) IBOutlet NSMenuItem *rightClickViewCustomerNotesMenuItem;
+@property (weak) IBOutlet NSMenuItem *rightClickViewPriceDetailsMenuItem;
+
 
 @property (strong) IBOutlet NSMenu *actionMenu;
-@property (weak) IBOutlet NSMenuItem *actionCancelMenuItem;
-@property (weak) IBOutlet NSMenuItem *actionCompleteMenuItem;
+@property (weak) IBOutlet NSMenuItem *actionAddMenuItem;
 @property (weak) IBOutlet NSMenuItem *actionEditMenuItem;
+@property (weak) IBOutlet NSMenuItem *actionCompleteMenuItem;
+@property (weak) IBOutlet NSMenuItem *actionCancelMenuItem;
 @property (weak) IBOutlet NSMenuItem *actionViewCustomerMenuItem;
+@property (weak) IBOutlet NSMenuItem *actionViewCustomerNotesMenuItem;
+@property (weak) IBOutlet NSMenuItem *actionViewPriceDetailsMenuItem;
 
 @end
 
@@ -216,6 +223,7 @@ NSAnimationDelegate>
         for (NSMenuItem * item in menu.itemArray) {
             item.enabled = (appointment!=nil);
         }
+        self.actionAddMenuItem.enabled = YES;
     }
     if (appointment) {
         if (appointment.cancelled.boolValue) {
@@ -706,6 +714,7 @@ NSAnimationDelegate>
 }
 -(NSRect)rectForAppointment:(Appointment*)appointment column:(NSInteger)column {
     NSInteger row = [self.appointments indexOfObject:appointment];
+    [self.appointmentsTable scrollRowToVisible:row];
     NSRect rect = [self.appointmentsTable rectOfRow:row];
     rect = NSIntersectionRect(rect, [self.appointmentsTable rectOfColumn:column]);
     return rect;
