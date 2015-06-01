@@ -29,10 +29,10 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uxf-jL-7Rc">
-                    <rect key="frame" x="387" y="779" width="354" height="26"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="3x8-x2-MqU" id="gLQ-LJ-Uhp">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
+                    <rect key="frame" x="389" y="784" width="349" height="19"/>
+                    <popUpButtonCell key="cell" type="roundRect" title="Item 1" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="3x8-x2-MqU" id="gLQ-LJ-Uhp">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <menu key="menu" id="tRP-s9-tG6">
                             <items>
                                 <menuItem title="Item 1" state="on" id="3x8-x2-MqU"/>
@@ -62,10 +62,10 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MmW-db-R2D">
-                    <rect key="frame" x="776" y="779" width="73" height="26"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2IG-Tf-FG7" id="asd-L5-fSa">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
+                    <rect key="frame" x="778" y="784" width="61" height="19"/>
+                    <popUpButtonCell key="cell" type="roundRect" title="Item 1" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="2IG-Tf-FG7" id="asd-L5-fSa">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <menu key="menu" id="Gq5-92-IzC">
                             <items>
                                 <menuItem title="Item 1" state="on" id="2IG-Tf-FG7"/>
@@ -93,13 +93,13 @@
                     </connections>
                 </searchField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g1e-FK-ttP">
-                    <rect key="frame" x="-2" y="779" width="354" height="26"/>
+                    <rect key="frame" x="0.0" y="784" width="349" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="349" id="ELU-PL-xK8"/>
                     </constraints>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="7JR-Tp-1in" id="nku-RJ-SzQ">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
+                    <popUpButtonCell key="cell" type="roundRect" title="Item 1" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="7JR-Tp-1in" id="nku-RJ-SzQ">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <menu key="menu" id="MbZ-6b-7Et">
                             <items>
                                 <menuItem title="Item 1" state="on" id="7JR-Tp-1in"/>
@@ -247,20 +247,20 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pyL-QR-9fx">
-                    <rect key="frame" x="132" y="800" width="156" height="32"/>
-                    <buttonCell key="cell" type="push" title="Edit category list..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NJz-MP-cJ5">
+                    <rect key="frame" x="138" y="808" width="122" height="19"/>
+                    <buttonCell key="cell" type="roundRect" title="Edit category list..." bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="NJz-MP-cJ5">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
                     <connections>
                         <action selector="editCategoryList:" target="-2" id="Wly-cq-qiQ"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Mt-i5-U6a">
-                    <rect key="frame" x="503" y="800" width="138" height="32"/>
-                    <buttonCell key="cell" type="push" title="Edit brand list..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mQn-tk-eMq">
+                    <rect key="frame" x="509" y="808" width="105" height="19"/>
+                    <buttonCell key="cell" type="roundRect" title="Edit brand list..." bezelStyle="roundedRect" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mQn-tk-eMq">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="cellTitle"/>
                     </buttonCell>
                     <connections>
                         <action selector="editBrandListClicked:" target="-2" id="dpS-zM-Mhy"/>
@@ -281,7 +281,7 @@
                     </connections>
                 </button>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJR-pm-DRZ">
-                    <rect key="frame" x="0.0" y="36" width="1334" height="738"/>
+                    <rect key="frame" x="0.0" y="36" width="1334" height="741"/>
                     <clipView key="contentView" id="ZrK-dY-a3j">
                         <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

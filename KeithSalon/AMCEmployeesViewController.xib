@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="actionButton" destination="kqG-zX-7gu" id="9A5-Ob-AbC"/>
                 <outlet property="actionMenu" destination="rvG-4D-XPG" id="q0w-VZ-xR9"/>
+                <outlet property="activeFilter" destination="g40-Kx-CVs" id="m1V-Uv-vMt"/>
                 <outlet property="addEmployeeMenuItem" destination="Qas-pA-HR6" id="nVW-yF-zYi"/>
                 <outlet property="addObjectButton" destination="Osp-sg-sQs" id="1te-xa-WyA"/>
                 <outlet property="arrayController" destination="WIA-WH-vHp" id="MFy-Si-dYe"/>
@@ -17,6 +18,7 @@
                 <outlet property="notesButton" destination="lHl-pL-9Kn" id="TyH-tO-7wA"/>
                 <outlet property="notesViewController" destination="aM8-xn-jy0" id="rsw-6L-qhO"/>
                 <outlet property="rightClickMenu" destination="hmY-DE-e8g" id="POT-gH-c9i"/>
+                <outlet property="rightClickShowCanDoListMenuItem" destination="dIr-g5-OLt" id="ZN4-Yb-o8v"/>
                 <outlet property="rightClickShowNotesMenuItem" destination="0oy-I1-aL4" id="rVQ-EL-liM"/>
                 <outlet property="rightClickViewEmployeeMenuItem" destination="cfp-L0-W6t" id="Q1d-33-bDJ"/>
                 <outlet property="showCanDoListMenuItem" destination="dmc-q9-W1t" id="7qJ-Hp-fXv"/>
@@ -29,7 +31,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="660" height="628"/>
+            <rect key="frame" x="0.0" y="5" width="660" height="617"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Osp-sg-sQs">
@@ -96,7 +98,7 @@
                     </connections>
                 </button>
                 <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oWd-HY-Z7m">
-                    <rect key="frame" x="0.0" y="78" width="660" height="550"/>
+                    <rect key="frame" x="0.0" y="78" width="660" height="513"/>
                     <clipView key="contentView" id="bce-S6-Kwb">
                         <rect key="frame" x="1" y="17" width="1081" height="512"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -126,7 +128,7 @@
                                             <binding destination="WIA-WH-vHp" name="value" keyPath="arrangedObjects.fullName" id="DHJ-2z-Kww"/>
                                         </connections>
                                     </tableColumn>
-                                    <tableColumn width="41" minWidth="10" maxWidth="3.4028234663852886e+38" id="gD5-dQ-m89">
+                                    <tableColumn width="72" minWidth="10" maxWidth="3.4028234663852886e+38" id="gD5-dQ-m89">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Active">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -170,7 +172,7 @@
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="500" id="exp-Zg-5wH"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="493" id="exp-Zg-5wH"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="zGG-kY-lBe">
                         <rect key="frame" x="1" y="513" width="696" height="16"/>
@@ -184,13 +186,28 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
+                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g40-Kx-CVs">
+                    <rect key="frame" x="-1" y="598" width="218" height="20"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="BOb-5q-4FM">
+                        <font key="font" metaFont="cellTitle"/>
+                        <segments>
+                            <segment label="Active only" selected="YES"/>
+                            <segment label="Inactive only" tag="1"/>
+                            <segment label="All"/>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="activeFilterChanged:" target="-2" id="r2E-Ln-KRk"/>
+                    </connections>
+                </segmentedControl>
             </subviews>
             <constraints>
                 <constraint firstItem="Hx7-uH-96e" firstAttribute="height" secondItem="Osp-sg-sQs" secondAttribute="height" id="0iQ-Dk-DvM"/>
                 <constraint firstItem="Hx7-uH-96e" firstAttribute="top" secondItem="oWd-HY-Z7m" secondAttribute="bottom" constant="8" id="4EA-Oa-3sf"/>
-                <constraint firstItem="oWd-HY-Z7m" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="5kp-2F-SPH"/>
+                <constraint firstItem="oWd-HY-Z7m" firstAttribute="top" secondItem="g40-Kx-CVs" secondAttribute="bottom" constant="8" symbolic="YES" id="5Pb-ym-yo7"/>
                 <constraint firstItem="oWd-HY-Z7m" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="8hc-eb-YeQ"/>
                 <constraint firstItem="Hx7-uH-96e" firstAttribute="leading" secondItem="Osp-sg-sQs" secondAttribute="trailing" constant="20" id="8ig-l8-BbX"/>
+                <constraint firstItem="g40-Kx-CVs" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="BLC-0A-FcJ"/>
                 <constraint firstAttribute="trailing" secondItem="oWd-HY-Z7m" secondAttribute="trailing" id="CNo-z5-7ax"/>
                 <constraint firstItem="Hx7-uH-96e" firstAttribute="width" secondItem="Osp-sg-sQs" secondAttribute="width" id="I5c-nF-jDE"/>
                 <constraint firstItem="Hx7-uH-96e" firstAttribute="leading" secondItem="Osp-sg-sQs" secondAttribute="trailing" constant="20" id="JJH-9m-xoD"/>
@@ -200,11 +217,11 @@
                 <constraint firstItem="Osp-sg-sQs" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="eBD-7D-hhZ"/>
                 <constraint firstItem="Hx7-uH-96e" firstAttribute="centerY" secondItem="lHl-pL-9Kn" secondAttribute="centerY" id="nuU-Xh-8y3"/>
                 <constraint firstItem="lHl-pL-9Kn" firstAttribute="leading" secondItem="kqG-zX-7gu" secondAttribute="trailing" constant="177" id="oW8-U8-cWw"/>
-                <constraint firstItem="Hx7-uH-96e" firstAttribute="top" secondItem="oWd-HY-Z7m" secondAttribute="bottom" constant="8" id="pWV-00-ssL"/>
                 <constraint firstItem="lHl-pL-9Kn" firstAttribute="centerY" secondItem="Hx7-uH-96e" secondAttribute="centerY" id="sJ6-5y-hQ5"/>
+                <constraint firstItem="g40-Kx-CVs" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="ssX-zX-9N5"/>
                 <constraint firstAttribute="bottom" secondItem="Osp-sg-sQs" secondAttribute="bottom" id="t93-Ma-yHB"/>
             </constraints>
-            <point key="canvasLocation" x="224" y="52"/>
+            <point key="canvasLocation" x="224" y="46.5"/>
         </customView>
         <customObject id="aM8-xn-jy0" customClass="AMCAssociatedNotesViewController"/>
         <customObject id="2Bu-ok-R3t" customClass="EditEmployeeViewController"/>
@@ -219,23 +236,24 @@
                         <action selector="addObject:" target="-2" id="d0V-Xj-Vfn"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Show Can-Do List..." id="dmc-q9-W1t">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="showCanDoList:" target="-2" id="ChL-af-LlS"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="u0w-Qd-eqI"/>
+                <menuItem isSeparatorItem="YES" id="Ht8-4a-Fwj"/>
                 <menuItem title="Edit Employee..." id="5Pd-Gh-fQK">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showDetailsForSelectedObject:" target="-2" id="eiH-WZ-EpU"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="MKD-3l-HQv"/>
                 <menuItem title="Show Employee Notes..." id="mxP-fM-b0h">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="showNotesForSelectedObject:" target="-2" id="XBg-Zs-d4J"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Show Can-Do List..." id="dmc-q9-W1t">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showCanDoList:" target="-2" id="ChL-af-LlS"/>
                     </connections>
                 </menuItem>
             </items>
@@ -252,10 +270,17 @@
                         <action selector="rightClickViewDetails:" target="-2" id="XHl-db-WuZ"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="WPY-ZO-eq8"/>
                 <menuItem title="Show Employee Notes..." id="0oy-I1-aL4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="rightClickShowNotes:" target="-2" id="Y5N-OI-F8H"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Show Can-Do List..." id="dIr-g5-OLt">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="showCanDoListForRightClick:" target="-2" id="YNf-PW-oiB"/>
                     </connections>
                 </menuItem>
             </items>

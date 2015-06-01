@@ -12,5 +12,8 @@
 
 @property (weak) IBOutlet NSTableView *canDoTableView;
 - (IBAction)canDoButtonChanged:(NSButton *)sender;
-
+@property BOOL deselectOnUpdate;
+@property BOOL selectOnUpdate;
+@property Employee * employee;
+@property Employee * templateEmployee;
 @end

@@ -78,7 +78,7 @@
                     </connections>
                 </button>
                 <scrollView verticalHuggingPriority="1000" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bsn-eD-i1Z">
-                    <rect key="frame" x="0.0" y="90" width="1051" height="179"/>
+                    <rect key="frame" x="0.0" y="90" width="1051" height="182"/>
                     <clipView key="contentView" id="uHu-d5-yIJ">
                         <rect key="frame" x="1" y="17" width="1178" height="76"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -155,9 +155,9 @@
                     </tableHeaderView>
                 </scrollView>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hx0-Eh-yBj">
-                    <rect key="frame" x="-2" y="637" width="707" height="24"/>
-                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="2Dc-m2-wJy">
-                        <font key="font" metaFont="system"/>
+                    <rect key="frame" x="-1" y="641" width="669" height="20"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="2Dc-m2-wJy">
+                        <font key="font" metaFont="cellTitle"/>
                         <segments>
                             <segment label="All"/>
                             <segment label="Today" selected="YES" tag="1"/>
@@ -182,13 +182,13 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="749" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="Tce-nE-0p0">
-                    <rect key="frame" x="725" y="636" width="227" height="26"/>
+                    <rect key="frame" x="691" y="641" width="222" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="222" id="XwH-OP-68K"/>
                     </constraints>
-                    <popUpButtonCell key="cell" type="push" title="Show open appointments" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="LTW-DC-e6T" id="uEJ-HT-ppO">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
+                    <popUpButtonCell key="cell" type="roundRect" title="Show open appointments" bezelStyle="roundedRect" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="LTW-DC-e6T" id="uEJ-HT-ppO">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="cellTitle"/>
                         <menu key="menu" id="VtX-Il-LY8">
                             <items>
                                 <menuItem title="Show open appointments" state="on" id="LTW-DC-e6T"/>
@@ -202,7 +202,7 @@
                     </connections>
                 </popUpButton>
                 <searchField wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YGa-hk-UjA">
-                    <rect key="frame" x="0.0" y="285" width="300" height="22"/>
+                    <rect key="frame" x="0.0" y="288" width="300" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="aiH-vR-FGs"/>
                     </constraints>
@@ -216,7 +216,7 @@
                     </connections>
                 </searchField>
                 <scrollView verticalCompressionResistancePriority="751" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHV-9L-yaS">
-                    <rect key="frame" x="0.0" y="309" width="1051" height="322"/>
+                    <rect key="frame" x="0.0" y="312" width="1051" height="322"/>
                     <clipView key="contentView" id="XOb-dI-FW1">
                         <rect key="frame" x="1" y="17" width="1178" height="307"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
