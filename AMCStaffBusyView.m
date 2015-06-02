@@ -59,6 +59,7 @@ static const NSInteger space = 20;
     _startDate = [startDate copy];
     self.employees = [Employee allActiveEmployeesWithMoc:self.salonDocument.managedObjectContext];
     self.appointmentsOnDay = [Appointment appointmentsOnDayOfDate:startDate withMoc:self.salonDocument.managedObjectContext];
+    self.appointmentsOnDay = [self.appointmentsOnDay filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"cancelled = NO"]];
     self.chartStartHour = 8;
     self.chartStopHour = 21;
     self.chartStartDate = [[self.startDate beginningOfDay] dateByAddingTimeInterval:self.chartStartHour*3600];
@@ -92,7 +93,9 @@ static const NSInteger space = 20;
     NSGraphicsContext * context = [NSGraphicsContext currentContext];
     [context saveGraphicsState];
     [super drawRect:dirtyRect];
-    self.yStart = space+self.dateLabel.frame.origin.y+self.dateLabel.frame.size.height;
+    [[NSColor whiteColor] set];
+    NSRectFill(self.bounds);
+    self.yStart = space;//+self.dateLabel.frame.origin.y+self.dateLabel.frame.size.height;
     NSPoint point = NSMakePoint(space, self.yStart);
     NSSize size = NSZeroSize;
     for (Employee * employee in self.employees) {
@@ -228,11 +231,11 @@ static const NSInteger space = 20;
         case AMCEmployeeUtilisationHoliday:
             return [NSColor blueColor];
         case AMCEmployeeUtilisationIll:
-            return [NSColor darkGrayColor];
+            return [NSColor lightGrayColor];
         case AMCEmployeeUtilisationOnBreak:
-            return [NSColor grayColor];
+            return [NSColor lightGrayColor];
         case AMCEmployeeUtilisationOutOfHours:
-            return [NSColor grayColor];
+            return [NSColor lightGrayColor];
         case AMCEmployeeUtilisationPartiallyOccupied:
             return [NSColor yellowColor];
     }

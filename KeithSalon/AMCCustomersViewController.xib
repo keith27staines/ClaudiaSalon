@@ -404,8 +404,8 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" size="9" name=".HelveticaNeueDeskInterface-Regular"/>
                 </box>
-                <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ze2-ac-Lzp">
-                    <rect key="frame" x="672" y="16" width="30" height="30"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="Ze2-ac-Lzp">
+                    <rect key="frame" x="672" y="20" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="84D-o3-1kO"/>
                         <constraint firstAttribute="width" constant="30" id="bgz-yg-lLj"/>
@@ -423,8 +423,8 @@
                         </binding>
                     </connections>
                 </button>
-                <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dmW-q8-tn6">
-                    <rect key="frame" x="412" y="16" width="30" height="30"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="dmW-q8-tn6">
+                    <rect key="frame" x="412" y="20" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="NAW-ae-wDf"/>
                         <constraint firstAttribute="width" constant="30" id="oTZ-Xn-MjB"/>

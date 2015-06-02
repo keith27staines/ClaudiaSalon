@@ -179,13 +179,12 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     }
 }
 - (IBAction)salonToolbarButton:(id)sender {
-    NSButton * button = sender;
     NSDate * date = [NSDate date];
     AMCStaffBusyViewController*vc = self.staffBusyViewController;
     vc.startDate = [date beginningOfDay];
     [vc.endDate =date endOfDay];
     [vc prepareForDisplayWithSalon:self];
-    [self.mainViewController presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMaxYEdge behavior:NSPopoverBehaviorTransient];
+    [self.mainViewController presentViewControllerAsSheet:vc];
 }
 - (IBAction)showMoneyInTill:(id)sender {
     NSButton * button = sender;

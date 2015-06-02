@@ -23,8 +23,8 @@
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
-    AMCStaffBusyView * staffBusyView = (AMCStaffBusyView*)[self view];
-    [staffBusyView configureWithStartDate:self.startDate endDate:self.endDate salon:self.salonDocument];
+    [self.staffBusyView configureWithStartDate:self.startDate endDate:self.endDate salon:self.salonDocument];
+    [self.staffBusyView setNeedsDisplay:YES];
 }
 
 
