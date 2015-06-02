@@ -13,13 +13,21 @@
 {
     
 }
-
+@property NSLayoutConstraint * scrollViewHeight;
 @end
 
 @implementation AMCStaffBusyViewController
 
 -(NSString *)nibName {
     return @"AMCStaffBusyViewController";
+}
+-(void)updateViewConstraints {
+    [super updateViewConstraints];
+    if (self.scrollViewHeight) {
+        [self.scrollView removeConstraint:self.scrollViewHeight];
+    }
+    self.scrollViewHeight = [NSLayoutConstraint constraintWithItem:self.scrollView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.staffBusyView attribute:NSLayoutAttributeHeight multiplier:1 constant:0];
+    [self.scrollView addConstraint:self.scrollViewHeight];
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];

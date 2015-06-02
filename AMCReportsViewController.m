@@ -75,8 +75,8 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
     double hairTotal = 0;
     double beautyTotal = 0;
     while ([endDate isGreaterThan:earliestDate]) {
-        NSArray * sales = [self salesAfter:startDate before:endDate];
-        NSArray * payments = [self paymentsAfter:startDate before:endDate];
+        NSArray * sales = [self salesAtOrAfter:startDate before:endDate];
+        NSArray * payments = [self paymentsAtOrAfter:startDate before:endDate];
         salesTotal = 0;
         paymentsTotal = 0;
         hairTotal = 0;
@@ -110,26 +110,26 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
     }
     return _reportData;
 }
--(NSArray*)paymentsAfter:(NSDate*)after before:(NSDate*)before
+-(NSArray*)paymentsAtOrAfter:(NSDate*)after before:(NSDate*)before
 {
     NSManagedObjectContext * moc = self.documentMoc;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Payment" inManagedObjectContext:moc];
     [fetchRequest setEntity:entity];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"paymentDate >= %@ and paymentDate <= %@", after,before];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"paymentDate >= %@ and paymentDate < %@", after,before];
     [fetchRequest setPredicate:predicate];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"paymentDate" ascending:YES];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
     NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:nil];
     return fetchedObjects;
 }
--(NSArray*)salesAfter:(NSDate*)after before:(NSDate*)before
+-(NSArray*)salesAtOrAfter:(NSDate*)after before:(NSDate*)before
 {
     NSManagedObjectContext * moc = self.documentMoc;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Sale" inManagedObjectContext:moc];
     [fetchRequest setEntity:entity];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"createdDate >= %@ and createdDate <= %@ and isQuote == %@", after,before,@(NO)];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"createdDate >= %@ and createdDate < %@ and isQuote == %@", after,before,@(NO)];
     [fetchRequest setPredicate:predicate];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdDate" ascending:YES];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];

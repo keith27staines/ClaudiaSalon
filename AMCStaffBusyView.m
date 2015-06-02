@@ -43,6 +43,7 @@ static const NSInteger space = 20;
 @property NSInteger chartStopHour;
 @property float yStart;
 @property AMCSalonDocument * salonDocument;
+@property NSLayoutConstraint * heightConstraint;
 @end
 
 @implementation AMCStaffBusyView
@@ -95,7 +96,7 @@ static const NSInteger space = 20;
     [super drawRect:dirtyRect];
     [[NSColor whiteColor] set];
     NSRectFill(self.bounds);
-    self.yStart = space;//+self.dateLabel.frame.origin.y+self.dateLabel.frame.size.height;
+    self.yStart = space;
     NSPoint point = NSMakePoint(space, self.yStart);
     NSSize size = NSZeroSize;
     for (Employee * employee in self.employees) {
@@ -104,6 +105,22 @@ static const NSInteger space = 20;
     }
     [self drawTimeAxisFromPoint:point toPoint:NSMakePoint(point.x + size.width, point.y)];
     [context restoreGraphicsState];
+}
+-(float)calculateHeight {
+    float height = 4*space;
+    for (Employee * employee in self.employees) {
+        NSSize size = [employee.firstName sizeWithAttributes:nil];
+        height += (size.height + 4);
+    }
+    return height;
+}
+-(void)updateConstraints {
+    [super updateConstraints];
+    if (self.heightConstraint) {
+        [self removeConstraint:self.heightConstraint];
+    }
+    self.heightConstraint = [NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:0 multiplier:0 constant:[self calculateHeight]];
+    [self addConstraint:self.heightConstraint];
 }
 -(NSSize)drawEmployeeChart:(Employee*)employee fromPoint:(NSPoint)point {
     NSSize size = [employee.firstName sizeWithAttributes:nil];
@@ -223,19 +240,23 @@ static const NSInteger space = 20;
     }
 }
 -(NSColor*)colorForEmployeeUtilisation:(AMCEmployeeUtilisation)utilisation {
+    NSColor * veryLightGray = [NSColor colorWithCalibratedRed:0.9 green:0.9 blue:0.9 alpha:0.8];
+    NSColor * paleGreen = [NSColor colorWithCalibratedRed:0.5 green:1 blue:0.7 alpha:0.8];
+    NSColor * paleBlue = [NSColor colorWithCalibratedRed:0.0 green:0.6 blue:1 alpha:0.8];
+    NSColor * paleRed = [NSColor colorWithCalibratedRed:1 green:0.5 blue:0.5 alpha:0.8];
     switch (utilisation) {
         case AMCEmployeeUtilisationFree:
-            return [NSColor greenColor];
+            return paleGreen;
         case AMCEmployeeUtilisationFullyOccupied:
-            return [NSColor redColor];
+            return paleRed;
         case AMCEmployeeUtilisationHoliday:
-            return [NSColor blueColor];
+            return paleBlue;
         case AMCEmployeeUtilisationIll:
-            return [NSColor lightGrayColor];
+            return veryLightGray;
         case AMCEmployeeUtilisationOnBreak:
-            return [NSColor lightGrayColor];
+            return veryLightGray;
         case AMCEmployeeUtilisationOutOfHours:
-            return [NSColor lightGrayColor];
+            return veryLightGray;
         case AMCEmployeeUtilisationPartiallyOccupied:
             return [NSColor yellowColor];
     }

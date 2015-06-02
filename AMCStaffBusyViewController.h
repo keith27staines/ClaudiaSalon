@@ -11,6 +11,7 @@
 #import "AMCSalonDocument.h"
 @interface AMCStaffBusyViewController : AMCViewController
 @property (weak) IBOutlet AMCStaffBusyView *staffBusyView;
+@property (weak) IBOutlet NSScrollView * scrollView;
 
 @property (copy) NSDate * startDate;
 @property (copy) NSDate * endDate;
