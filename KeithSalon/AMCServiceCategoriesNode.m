@@ -15,6 +15,7 @@
 }
 @property AMCSystemTreeNode * hairNode;
 @property AMCSystemTreeNode * beautyNode;
+@property AMCSystemTreeNode * otherNode;
 @end
 
 @implementation AMCServiceCategoriesNode
@@ -24,6 +25,7 @@
     if (self) {
         self.hairNode = [aDecoder decodeObjectForKey:@"hairNode"];
         self.beautyNode = [aDecoder decodeObjectForKey:@"beautyNode"];
+        self.otherNode = [aDecoder decodeObjectForKey:@"otherNode"];
     }
     return self;
 }
@@ -35,11 +37,14 @@
     [super encodeWithCoder:aCoder];
     [aCoder encodeObject:self.hairNode forKey:@"hairNode"];
     [aCoder encodeObject:self.beautyNode forKey:@"beautyNode"];
+    [aCoder encodeObject:self.otherNode forKey:@"otherNode"];
 }
 
 -(instancetype)initWithName:(NSString *)string isLeaf:(BOOL)isLeaf {
     self = [super initWithName:@"Service Categories" isLeaf:isLeaf];
     if (self) {
+        self.otherNode = [self addChild:[[AMCSystemTreeNode alloc] initWithName:@"Other" isLeaf:NO]];
+        self.defaultChildNode = self.otherNode;
         self.hairNode = [self addChild:[[AMCTreeNode alloc] initWithName:@"Hair" isLeaf:NO]];
         self.hairNode.defaultChildNode = [self.hairNode addChild:[[AMCTreeNode alloc] initWithName:@"Other" isLeaf:NO]];
         self.beautyNode = [self addChild:[[AMCTreeNode alloc] initWithName:@"Beauty" isLeaf:NO]];
@@ -48,13 +53,14 @@
         self.beautyNode.isDeletable = NO;
         self.hairNode.defaultChildNode.isDeletable = NO;
         self.beautyNode.defaultChildNode.isDeletable = NO;
+        self.defaultChildNode.isDeletable = NO;
         
-        // Add default expenditure categories
+        // Add default hair categories
         AMCTreeNode * node = self.hairNode;
         [node addChild:[[AMCTreeNode alloc] initWithName:@"Cutting and washing" isLeaf:NO]];
         [node addChild:[[AMCTreeNode alloc] initWithName:@"Restyling" isLeaf:NO]];
         
-        // Add default income categories
+        // Add default beauty categories
         node = self.beautyNode;
         [node addChild:[[AMCTreeNode alloc] initWithName:@"Manicure" isLeaf:NO]];
         [node addChild:[[AMCTreeNode alloc] initWithName:@"Pedicure" isLeaf:NO]];
@@ -66,13 +72,11 @@
     NSAssert(self.moc, @"Managed object context must not be nil");
     NSMutableArray * allServiceCategories = [[ServiceCategory allObjectsWithMoc:self.moc] mutableCopy];
     for (ServiceCategory * serviceCategory in allServiceCategories) {
-        AMCTreeNode * node = [[AMCTreeNode alloc] initWithName:serviceCategory.name isLeaf:YES];
-        node.isDeletable = NO;
-        if (![self.hairNode containsNodeWithName:node.name]) {
-            [self.hairNode.defaultChildNode addChild:[node shallowCopy]];
-        }
-        if (![self.beautyNode containsNodeWithName:node.name]) {
-            [self.beautyNode.defaultChildNode addChild:[node shallowCopy]];
+        AMCTreeNode * node = nil;
+        if (![self containsLeafWithName:serviceCategory.name]) {
+            node = [[AMCTreeNode alloc] initWithName:serviceCategory.name isLeaf:YES];
+            [self.defaultChildNode addChild:node];
+            node.isDeletable = NO;
         }
     }
 }

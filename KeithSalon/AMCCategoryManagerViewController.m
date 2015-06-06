@@ -74,6 +74,11 @@
     self.rootNode = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     self.rootNode.moc = self.documentMoc;
 }
+- (IBAction)resetToDefaults:(id)sender {
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kAMCSystemCategories];
+    [self readFromUserDefaults];
+    [self.categoriesOutlineView reloadData];
+}
 - (IBAction)addButtonClicked:(id)sender {
     AMCTreeNode * newCategory = [[AMCTreeNode alloc] initWithName:@"New Category" isLeaf:NO];
     newCategory.isDeletable = YES;
@@ -244,11 +249,6 @@
         [pasteboard setData:data forType:rowDragAndDropType];
     }
     return YES;
-}
-- (IBAction)resetToDefaults:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kAMCSystemCategories];
-    [self readFromUserDefaults];
-    [self.categoriesOutlineView reloadData];
 }
 
 @end

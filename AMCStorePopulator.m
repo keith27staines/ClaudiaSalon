@@ -139,7 +139,6 @@ NSDate * amcsAutoLoadDate;
 {
     amcsAutoLoadDate = [NSDate date];
     [self populateCategories:document error:error];
-    [self populateProducts:document error:error];
     [self populateServices:document error:error];
     [self populateStaff:document error:error];
     return YES;
@@ -177,44 +176,6 @@ NSDate * amcsAutoLoadDate;
 
     NSArray * allObjects = [ServiceCategory allObjectsWithMoc:moc];
     for (ServiceCategory * object in allObjects) {
-        object.createdDate = amcsAutoLoadDate;
-        object.lastUpdatedDate = amcsAutoLoadDate;
-    }
-    return YES;
-}
-+(BOOL)populateProducts:(AMCSalonDocument*)document error:(NSError**)error{
-    NSManagedObjectContext * moc = document.managedObjectContext;
-    NSArray * products = [Product allObjectsWithMoc:moc];
-    if (products.count > 0) {
-        return NO;
-    }
-    amcProductOPIGel = [Product newObjectWithMoc:moc];
-    amcProductOPINailPolish    = [Product newObjectWithMoc:moc];
-    amcProductLorealNailPolish = [Product newObjectWithMoc:moc];
-    amcProductLorealColour     = [Product newObjectWithMoc:moc];
-    amcProductNXTColour        = [Product newObjectWithMoc:moc];
-    amcProductPedicureWax      = [Product newObjectWithMoc:moc];
-    
-    amcProductOPIGel.brandName             = @"OPI";
-    amcProductOPIGel.productType           = @"Nail gel";
-    
-    amcProductOPINailPolish.brandName      = @"OPI";
-    amcProductOPINailPolish.productType    = @"Nail polish";
-    
-    amcProductLorealNailPolish.brandName   = @"L'Oreal";
-    amcProductLorealNailPolish.productType = @"Nail polish";
-    
-    amcProductLorealColour.brandName       = @"L'Oreal";
-    amcProductLorealColour.productType     = @"Hair colour";
-    
-    amcProductNXTColour.brandName          = @"NXT";
-    amcProductNXTColour.productType        = @"Hair colour";
-    
-    amcProductPedicureWax.brandName          = @"Salon's choice brand";
-    amcProductPedicureWax.productType        = @"Pedicure treatment wax";
-    
-    NSArray * allObjects = [Product allObjectsWithMoc:moc];
-    for (Product * object in allObjects) {
         object.createdDate = amcsAutoLoadDate;
         object.lastUpdatedDate = amcsAutoLoadDate;
     }

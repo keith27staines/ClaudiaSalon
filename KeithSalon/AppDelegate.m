@@ -42,6 +42,8 @@
 
 +(void)initialize {
     [super initialize];
+}
+-(void)applicationWillFinishLaunching:(NSNotification *)notification {
     AMCCategoryManagerViewController * categoryManager = [[AMCCategoryManagerViewController alloc] init];
     NSDictionary * defaults = @{kDefaultSalonPath:@"",
                                 kSalonsDictionary: @{},
@@ -49,8 +51,6 @@
                                 kAMCSystemCategories: categoryManager.dataForUserDefaultsRegistration
                                 };
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-}
--(void)applicationWillFinishLaunching:(NSNotification *)notification {
     [self registerForNotifications];
     self.appStartDate = [NSDate date];
     self.autoShutdownDate = [self defaultAutoShutdownTimeForDate:self.appStartDate];
