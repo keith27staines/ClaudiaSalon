@@ -1,5 +1,5 @@
 //
-//  AMCFinancialAnalysisWindowController.m
+//  AMCFinancialAnalysisViewController.m
 //  ClaudiasSalon
 //
 //  Created by service on 18/01/2015.

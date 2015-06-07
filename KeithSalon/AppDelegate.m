@@ -39,10 +39,6 @@
 
 @implementation AppDelegate
 
-
-+(void)initialize {
-    [super initialize];
-}
 -(void)applicationWillFinishLaunching:(NSNotification *)notification {
     AMCCategoryManagerViewController * categoryManager = [[AMCCategoryManagerViewController alloc] init];
     NSDictionary * defaults = @{kDefaultSalonPath:@"",

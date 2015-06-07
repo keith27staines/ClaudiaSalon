@@ -11,7 +11,6 @@
                 <outlet property="dataTable" destination="l3s-WW-xOl" id="kzL-QH-mec"/>
                 <outlet property="directionSelector" destination="I2y-YB-zVh" id="ccp-d6-Jor"/>
                 <outlet property="editObjectViewController" destination="1lh-N9-WKa" id="QEX-ak-pcd"/>
-                <outlet property="financialAnalysisWindowController" destination="Fdh-0d-7em" id="fai-ie-woD"/>
                 <outlet property="moneyTransferViewController" destination="CNt-TN-GWL" id="BGB-YO-4Mq"/>
                 <outlet property="paymentCategoryListViewController" destination="b2X-Zz-ogt" id="3y2-yp-zVk"/>
                 <outlet property="paymentCategoryPopup" destination="Dhj-07-MBN" id="QvB-E2-t21"/>
@@ -40,7 +39,7 @@
                     </textFieldCell>
                 </textField>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLK-XL-ex7">
-                    <rect key="frame" x="0.0" y="30" width="1318" height="581"/>
+                    <rect key="frame" x="0.0" y="30" width="1318" height="579"/>
                     <clipView key="contentView" id="UNj-Q6-MAZ">
                         <rect key="frame" x="1" y="0.0" width="238" height="134"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -433,7 +432,7 @@
                     </connections>
                 </button>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I2y-YB-zVh">
-                    <rect key="frame" x="136" y="630" width="128" height="20"/>
+                    <rect key="frame" x="136" y="628" width="128" height="20"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="Z8r-VC-VLt">
                         <font key="font" metaFont="cellTitle"/>
                         <segments>
@@ -447,7 +446,7 @@
                     </connections>
                 </segmentedControl>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qEW-uA-V0b" userLabel="Account">
-                    <rect key="frame" x="0.0" y="630" width="97" height="19"/>
+                    <rect key="frame" x="0.0" y="628" width="97" height="19"/>
                     <popUpButtonCell key="cell" type="roundRect" bezelStyle="roundedRect" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nhx-dC-weN" userLabel="Account">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="cellTitle"/>
@@ -487,18 +486,8 @@
                         <action selector="editPaymentCategoryList:" target="-2" id="UYc-fX-XUH"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="41g-yy-m5s">
-                    <rect key="frame" x="908" y="623" width="149" height="32"/>
-                    <buttonCell key="cell" type="push" title="Financial analysis" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GRF-jn-0Sl">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="showFinancialAnalysisWindow:" target="-2" id="8ja-zt-LTH"/>
-                    </connections>
-                </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tKQ-NW-ko0">
-                    <rect key="frame" x="794" y="623" width="114" height="32"/>
+                    <rect key="frame" x="794" y="621" width="114" height="32"/>
                     <buttonCell key="cell" type="push" title="Pay salaries" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="beT-2M-IK1">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -508,7 +497,7 @@
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dhj-07-MBN">
-                    <rect key="frame" x="575" y="630" width="125" height="19"/>
+                    <rect key="frame" x="575" y="628" width="125" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="125" id="kK3-d1-Acv"/>
                     </constraints>
@@ -527,7 +516,7 @@
                     </connections>
                 </popUpButton>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yN5-2N-x31">
-                    <rect key="frame" x="320" y="630" width="236" height="20"/>
+                    <rect key="frame" x="320" y="628" width="236" height="20"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="hNw-PA-OPQ">
                         <font key="font" metaFont="cellTitle"/>
                         <segments>
@@ -554,24 +543,22 @@
                 <constraint firstItem="WKl-p5-JPl" firstAttribute="centerY" secondItem="nyL-yR-Qvr" secondAttribute="centerY" id="GQU-aW-9lL"/>
                 <constraint firstItem="tAe-Jy-wTl" firstAttribute="leading" secondItem="nyL-yR-Qvr" secondAttribute="trailing" constant="12" symbolic="YES" id="Hgs-hi-0dn"/>
                 <constraint firstItem="3yE-h6-JED" firstAttribute="leading" secondItem="Krs-3K-cAh" secondAttribute="trailing" constant="8" symbolic="YES" id="J0K-sw-2dp"/>
-                <constraint firstItem="qEW-uA-V0b" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="M2n-rE-xib"/>
+                <constraint firstItem="qEW-uA-V0b" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="2" id="M2n-rE-xib"/>
                 <constraint firstItem="Dhj-07-MBN" firstAttribute="leading" secondItem="yN5-2N-x31" secondAttribute="trailing" constant="20" id="NXn-IX-scE"/>
                 <constraint firstItem="cLK-XL-ex7" firstAttribute="top" secondItem="qEW-uA-V0b" secondAttribute="bottom" constant="20" id="P6P-cS-ixF"/>
                 <constraint firstAttribute="trailing" secondItem="cLK-XL-ex7" secondAttribute="trailing" id="Rkx-VW-5C0"/>
                 <constraint firstItem="yN5-2N-x31" firstAttribute="centerY" secondItem="I2y-YB-zVh" secondAttribute="centerY" id="Ru2-Qn-6ha"/>
                 <constraint firstItem="hpd-gr-HJ0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WKl-p5-JPl" secondAttribute="trailing" constant="35" id="VWu-8Q-WQ4"/>
                 <constraint firstItem="yN5-2N-x31" firstAttribute="centerY" secondItem="tKQ-NW-ko0" secondAttribute="centerY" id="W0v-iJ-fEl"/>
-                <constraint firstItem="yN5-2N-x31" firstAttribute="centerY" secondItem="41g-yy-m5s" secondAttribute="centerY" id="Xdl-Px-vjH"/>
                 <constraint firstItem="Xwb-EF-J1P" firstAttribute="leading" secondItem="tAe-Jy-wTl" secondAttribute="trailing" constant="12" symbolic="YES" id="ZI9-As-8Av"/>
                 <constraint firstItem="I2y-YB-zVh" firstAttribute="leading" secondItem="qEW-uA-V0b" secondAttribute="trailing" constant="40" id="aX3-9N-beg"/>
                 <constraint firstItem="nyL-yR-Qvr" firstAttribute="leading" secondItem="3yE-h6-JED" secondAttribute="trailing" constant="12" symbolic="YES" id="cNW-Cr-kPC"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="41g-yy-m5s" secondAttribute="trailing" constant="20" symbolic="YES" id="den-um-hEV"/>
                 <constraint firstItem="yN5-2N-x31" firstAttribute="leading" secondItem="I2y-YB-zVh" secondAttribute="trailing" constant="58" id="g5B-15-7kz"/>
                 <constraint firstItem="qEW-uA-V0b" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="gfw-rV-vcf"/>
-                <constraint firstItem="41g-yy-m5s" firstAttribute="leading" secondItem="tKQ-NW-ko0" secondAttribute="trailing" constant="12" symbolic="YES" id="iOu-iR-Vhy"/>
                 <constraint firstItem="tKQ-NW-ko0" firstAttribute="leading" secondItem="Dhj-07-MBN" secondAttribute="trailing" constant="100" id="iQm-kk-N9z"/>
                 <constraint firstItem="Krs-3K-cAh" firstAttribute="leading" secondItem="qEW-uA-V0b" secondAttribute="leading" id="irJ-QF-p57"/>
                 <constraint firstItem="WKl-p5-JPl" firstAttribute="centerY" secondItem="hpd-gr-HJ0" secondAttribute="centerY" id="pA0-dE-exI"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tKQ-NW-ko0" secondAttribute="trailing" constant="20" symbolic="YES" id="ta8-AB-Pnx"/>
                 <constraint firstItem="yN5-2N-x31" firstAttribute="centerY" secondItem="qEW-uA-V0b" secondAttribute="centerY" id="uZt-RB-Che"/>
                 <constraint firstItem="WKl-p5-JPl" firstAttribute="centerY" secondItem="Xwb-EF-J1P" secondAttribute="centerY" id="yfL-kE-yjw"/>
             </constraints>
@@ -579,7 +566,6 @@
         </customView>
         <customObject id="1lh-N9-WKa" customClass="EditPaymentViewController"/>
         <customObject id="b2X-Zz-ogt" customClass="AMCPaymentCategoryListViewController"/>
-        <customObject id="Fdh-0d-7em" customClass="AMCFinancialAnalysisViewController"/>
         <customObject id="2lN-4n-am5" customClass="AMCSalaryPaymentViewController"/>
         <customObject id="CNt-TN-GWL" customClass="AMCMoneyTransferViewController"/>
     </objects>

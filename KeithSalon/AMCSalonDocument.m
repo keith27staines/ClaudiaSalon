@@ -26,6 +26,7 @@
 #import "AMCManagersBudgetWindowController.h"
 #import "AMCAccountStatementViewController.h"
 #import "AMCCategoryManagerViewController.h"
+#import "AMCFinancialAnalysisViewController.h"
 
 #import "Salon+Methods.h"
 #import "Customer+Methods.h"
@@ -53,6 +54,8 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property (strong) IBOutlet AMCViewController *accountManagementViewController;
 @property (weak) IBOutlet NSButton *showPaySalary;
 @property AMCViewController * mainViewController;
+
+@property (strong) IBOutlet AMCFinancialAnalysisViewController *financialAnalysisViewController;
 
 @property NSViewAnimation * notesUpAnimation;
 @property NSViewAnimation * notesDownAnimation;
@@ -205,8 +208,8 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 }
 - (IBAction)showManagersBudget:(id)sender {
     NSWindow * sheet = self.managersBudgetWindowController.window;
+    self.managersBudgetWindowController.callingWindow = self.windowForSheet;
     [self.managersBudgetWindowController reloadData];
-    sheet.parentWindow = self.windowForSheet ;
     [self.windowForSheet beginSheet:sheet completionHandler:^(NSModalResponse returnCode) {
        // Nothing to do yet
     }];
@@ -215,8 +218,13 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.accountStatementViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.accountStatementViewController];
 }
-
-- (IBAction)manageAccountancyGroupings:(id)sender {
+- (IBAction)manageCashbookGroups:(id)sender {
+    self.accountGroupingsViewController.categoryType = AMCCategoryTypePayments;
+    [self.accountGroupingsViewController prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewControllerAsSheet:self.accountGroupingsViewController];
+}
+- (IBAction)manageServices:(id)sender {
+    self.accountGroupingsViewController.categoryType = AMCCategoryTypeServices;
     [self.accountGroupingsViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.accountGroupingsViewController];
 }
@@ -233,6 +241,9 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.accountManagementViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.accountManagementViewController];
 }
-
+- (IBAction)showFinancialAnalysis:(id)sender {
+    [self.financialAnalysisViewController prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewControllerAsSheet:self.financialAnalysisViewController];
+}
 
 @end

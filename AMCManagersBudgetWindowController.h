@@ -11,4 +11,5 @@
 @interface AMCManagersBudgetWindowController : NSWindowController
 -(void)reloadData;
 @property (strong) IBOutlet AMCSalonDocument * salonDocument;
+@property (weak) NSWindow * callingWindow;
 @end

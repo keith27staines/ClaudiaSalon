@@ -229,13 +229,13 @@ NSAnimationDelegate>
         if (appointment.cancelled.boolValue) {
             self.actionCompleteMenuItem.enabled = NO;
             self.rightClickCompleteMenuItem.enabled = NO;
-            self.actionCancelMenuItem.title = @"Reinstate Booking";
+            self.actionCancelMenuItem.title = @"Reinstate Appointment";
             self.actionEditMenuItem.enabled = NO;
             self.rightClickEditMenuItem.enabled = NO;
         } else {
             self.actionCompleteMenuItem.enabled = !appointment.completed.boolValue;
             self.rightClickCompleteMenuItem.enabled = !appointment.completed.boolValue;
-            self.actionCancelMenuItem.title = @"Cancel Booking";
+            self.actionCancelMenuItem.title = @"Cancel Appointment";
             self.actionCancelMenuItem.enabled = !appointment.completed.boolValue;
             self.rightClickCancelMenuItem.enabled = !appointment.completed.boolValue;
             self.actionEditMenuItem.enabled = !appointment.completed.boolValue;

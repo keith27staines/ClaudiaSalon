@@ -320,7 +320,7 @@
     [self.selectedWeekTable reloadData];
 }
 -(void)dismissController:(id)sender {
-    [self.window.parentWindow endSheet:self.window];
+    [self.callingWindow endSheet:self.window returnCode:NSModalResponseOK];
 }
 - (IBAction)fromManagersBudgetCheckbox:(NSButton *)sender {
     Payment * payment = [self selectedPayment];

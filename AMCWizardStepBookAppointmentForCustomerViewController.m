@@ -154,10 +154,10 @@
             NSString * recoverySuggestion;
             if ([endDate isLessThan:[NSDate date]]) {
                 failureReason= @"The appointment is in the past";
-                recoverySuggestion = @"Have you selected the right date in the date picker?";
+                recoverySuggestion = @"Have you selected the right date?";
             } else {
                 failureReason= @"The appointment begins in the past";
-                recoverySuggestion = @"Have you selected the right booking times?";
+                recoverySuggestion = @"Have you selected the right time?";
             }
             NSDictionary * userInfo = @{NSLocalizedDescriptionKey:description,
                                         NSLocalizedFailureReasonErrorKey: failureReason,

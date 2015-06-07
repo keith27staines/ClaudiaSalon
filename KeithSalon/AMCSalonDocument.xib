@@ -12,6 +12,7 @@
                 <outlet property="appointmentsViewController" destination="ep0-5P-lze" id="8g5-vB-Axp"/>
                 <outlet property="customersViewController" destination="oXL-VX-kuO" id="ERb-zc-jVa"/>
                 <outlet property="employeesViewController" destination="APQ-R9-ufU" id="Hv6-ZK-Efv"/>
+                <outlet property="financialAnalysisViewController" destination="ghL-zY-7eX" id="chg-VW-DtV"/>
                 <outlet property="managersBudgetWindowController" destination="lY1-5d-xCC" id="R3G-mk-aJR"/>
                 <outlet property="paymentsViewController" destination="T1c-WN-oS2" id="LsJ-uR-FPC"/>
                 <outlet property="recurringEventManagementViewController" destination="aEQ-Oc-c3b" id="YhB-f1-4uN"/>
@@ -231,6 +232,7 @@
         <customObject id="1Jk-n8-g41" customClass="AMCAccountStatementViewController"/>
         <customObject id="OsB-JJ-cdB" customClass="AMCStaffBusyViewController"/>
         <customObject id="NHf-SU-kAv" customClass="AMCCategoryManagerViewController"/>
+        <customObject id="ghL-zY-7eX" customClass="AMCFinancialAnalysisViewController"/>
     </objects>
     <resources>
         <image name="BarChart" width="32" height="32"/>

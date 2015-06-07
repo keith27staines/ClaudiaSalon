@@ -10,9 +10,6 @@
 #import "AMCCashBookNode.h"
 #import "AMCServiceCategoriesNode.h"
 @interface AMCCategoriesRootNode()
-@property AMCSystemTreeNode * cashbookNode;
-@property AMCSystemTreeNode * servicesNode;
-
 @end
 
 @implementation AMCCategoriesRootNode

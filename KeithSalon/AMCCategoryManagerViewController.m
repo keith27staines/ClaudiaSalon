@@ -21,12 +21,16 @@
 @property (weak) IBOutlet NSButton *addButton;
 @property (weak) IBOutlet NSButton *removeButton;
 @property (weak) IBOutlet NSOutlineView *categoriesOutlineView;
-@property AMCTreeNode * rootNode;
+@property AMCCategoriesRootNode * rootNode;
+@property AMCTreeNode * viewRootNode;
+@property (weak) IBOutlet NSTextField *titleLabel;
 
 @end
 
 @implementation AMCCategoryManagerViewController
-
+-(void)awakeFromNib {
+    self.categoryType = AMCCategoryTypePayments;
+}
 -(NSString *)nibName {
     return @"AMCCategoryManagerViewController";
 }
@@ -38,6 +42,17 @@
     [super prepareForDisplayWithSalon:salonDocument];
     [self readFromUserDefaults];
     [self.categoriesOutlineView reloadData];
+    switch (self.categoryType) {
+        case AMCCategoryTypeAll:
+            self.titleLabel.stringValue = @"Manage all Categories";
+            break;
+        case AMCCategoryTypeServices:
+            self.titleLabel.stringValue = @"Manage Services";
+            break;
+        case AMCCategoryTypePayments:
+            self.titleLabel.stringValue = @"Manage Payment Categories";
+            break;
+    }
 }
 -(NSMutableArray *)allServiceCategoryLeaves {
     if (!_allServiceCategoryLeaves) {
@@ -73,8 +88,29 @@
     NSData * data = [[NSUserDefaults standardUserDefaults] dataForKey:kAMCSystemCategories];
     self.rootNode = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     self.rootNode.moc = self.documentMoc;
+    switch (self.categoryType) {
+        case AMCCategoryTypeAll:
+            self.viewRootNode = self.rootNode;
+            break;
+        case AMCCategoryTypePayments:
+            self.viewRootNode = self.rootNode.cashbookNode;
+            break;
+        case AMCCategoryTypeServices:
+            self.viewRootNode = self.rootNode.servicesNode;
+            break;
+    }
 }
-- (IBAction)resetToDefaults:(id)sender {
+- (IBAction)askResetToDefaults:(id)sender {
+    NSAlert * alert = [[NSAlert alloc] init];
+    alert.messageText = @"Are you sure you want to reset to defaults?";
+    alert.informativeText = @"Warning: This cannot be undone";
+    [alert addButtonWithTitle:@"Cancel"];
+    [alert addButtonWithTitle:@"Reset"];
+    if ([alert runModal] == NSAlertSecondButtonReturn) {
+        [self resetToDefaults];
+    }
+}
+-(void)resetToDefaults {
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kAMCSystemCategories];
     [self readFromUserDefaults];
     [self.categoriesOutlineView reloadData];
@@ -173,14 +209,14 @@
 -(NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item {
     AMCTreeNode * node = item;
     if (!node) {
-        node = self.rootNode;
+        node = self.viewRootNode;
     }
     return node.count;
 }
 -outlineView:(NSOutlineView*)outlineView child:(NSInteger)index ofItem:(id)item {
     AMCTreeNode * node = item;
     if (!node) {
-        node = self.rootNode;
+        node = self.viewRootNode;
     }
     if (node.isLeaf) return nil;
 

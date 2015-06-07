@@ -9,6 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "AMCViewController.h"
 
+typedef NS_ENUM(NSInteger, AMCCategoryType) {
+    AMCCategoryTypeAll = 0,
+    AMCCategoryTypePayments = 1,
+    AMCCategoryTypeServices = 2
+};
+
 @interface AMCCategoryManagerViewController : AMCViewController
 -(NSData*)dataForUserDefaultsRegistration;
+@property AMCCategoryType categoryType;
 @end

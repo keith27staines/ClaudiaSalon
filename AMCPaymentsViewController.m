@@ -9,7 +9,6 @@
 #import "AMCPaymentsViewController.h"
 #import "AMCMoneyTransferViewController.h"
 #import "AMCPaymentCategoryListViewController.h"
-#import "AMCFinancialAnalysisViewController.h"
 #import "AMCSalaryPaymentViewController.h"
 
 #import "Payment+Methods.h"
@@ -36,7 +35,6 @@
 @property (strong) IBOutlet AMCSalaryPaymentViewController *salaryPaymentWindowController;
 @property (strong) IBOutlet AMCMoneyTransferViewController * moneyTransferViewController;
 @property (strong) IBOutlet AMCPaymentCategoryListViewController *paymentCategoryListViewController;
-@property (strong) IBOutlet AMCFinancialAnalysisViewController *financialAnalysisWindowController;
 @property (weak) IBOutlet NSPopUpButton *paymentCategoryPopup;
 
 @end
@@ -272,10 +270,6 @@
 - (IBAction)editPaymentCategoryList:(id)sender {
     [self.paymentCategoryListViewController prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewControllerAsSheet:self.paymentCategoryListViewController];
-}
-- (IBAction)showFinancialAnalysisWindow:(id)sender {
-    [self.financialAnalysisWindowController prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewControllerAsSheet:self.financialAnalysisWindowController];
 }
 - (IBAction)paySalariesButtonClicked:(id)sender {
     [self.salaryPaymentWindowController prepareForDisplayWithSalon:self.salonDocument];

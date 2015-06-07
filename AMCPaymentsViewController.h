@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-@class AMCPaymentCategoryListViewController, AMCFinancialAnalysisViewController;
+@class AMCPaymentCategoryListViewController;
 
 #import <Cocoa/Cocoa.h>
 #import "AMCSalonDocument.h"

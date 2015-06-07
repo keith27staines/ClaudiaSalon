@@ -9,6 +9,7 @@
                 <outlet property="addButton" destination="zol-qx-AvU" id="8JZ-eY-n1n"/>
                 <outlet property="categoriesOutlineView" destination="v6G-BB-HH4" id="n0Z-mV-2fq"/>
                 <outlet property="removeButton" destination="Kz5-82-jgM" id="4Qd-1f-BEO"/>
+                <outlet property="titleLabel" destination="hJl-2X-Ug1" id="OK6-CA-OmY"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -59,9 +60,9 @@ DQ
                         <action selector="removeButtonClicked:" target="-2" id="qTy-7I-MoB"/>
                     </connections>
                 </button>
-                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Bo-Cr-beH">
+                <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Bo-Cr-beH">
                     <rect key="frame" x="20" y="47" width="541" height="362"/>
-                    <clipView key="contentView" id="vVg-cQ-1VS">
+                    <clipView key="contentView" misplaced="YES" id="vVg-cQ-1VS">
                         <rect key="frame" x="1" y="17" width="238" height="117"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -156,21 +157,21 @@ DQ
                     </scroller>
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hJl-2X-Ug1">
-                    <rect key="frame" x="227" y="429" width="128" height="17"/>
+                    <rect key="frame" x="200" y="423" width="178" height="23"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manage Groupings" id="9c6-lg-25D">
-                        <font key="font" metaFont="systemBold"/>
+                        <font key="font" metaFont="systemBold" size="19"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KmS-kS-iJg">
-                    <rect key="frame" x="429" y="420" width="138" height="32"/>
-                    <buttonCell key="cell" type="push" title="Rest to defaults" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pXQ-Dc-GD6">
+                    <rect key="frame" x="410" y="417" width="157" height="32"/>
+                    <buttonCell key="cell" type="push" title="Reset to defaults..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pXQ-Dc-GD6">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="resetToDefaults:" target="-2" id="EJ5-Cp-JiM"/>
+                        <action selector="askResetToDefaults:" target="-2" id="Jlw-Gb-JkU"/>
                     </connections>
                 </button>
             </subviews>
