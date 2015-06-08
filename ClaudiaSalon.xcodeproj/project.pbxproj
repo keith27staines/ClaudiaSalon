@@ -32,12 +32,14 @@
 		5301716F1ACB15EB0047116D /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301716E1ACB15EB0047116D /* Service.m */; };
 		530171721ACB15EB0047116D /* StockedBrand.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171711ACB15EB0047116D /* StockedBrand.m */; };
 		530171781ACB15EB0047116D /* StockedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171771ACB15EB0047116D /* StockedItem.m */; };
-		5301717B1ACB15EB0047116D /* ServiceCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301717A1ACB15EB0047116D /* ServiceCategory.m */; };
 		5301717E1ACB15EB0047116D /* ShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301717D1ACB15EB0047116D /* ShoppingList.m */; };
 		530171851ACBD21F0047116D /* RecurringItem+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 530171841ACBD21F0047116D /* RecurringItem+Methods.m */; };
 		530D546D1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D546C1B18C2D600F6C4FE /* AMCViewControllerWithArrayController.m */; };
 		530D546F1B18D3E100F6C4FE /* AMCEmployeesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 530D546E1B18D3E100F6C4FE /* AMCEmployeesViewController.xib */; };
 		530D54771B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D54761B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m */; };
+		530D54881B25751300F6C4FE /* ServiceCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D54871B25751300F6C4FE /* ServiceCategory.m */; };
+		530D548B1B25751400F6C4FE /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D548A1B25751400F6C4FE /* Salon.m */; };
+		530D548E1B25929100F6C4FE /* AMCCategoriesRootNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D548D1B25929100F6C4FE /* AMCCategoriesRootNode.m */; };
 		531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25521AB80E5100EB3472 /* AMCCashBook.m */; };
 		531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25561AB960F600EB3472 /* AMCCashBookViewController.m */; };
 		531B25591AB960F600EB3472 /* AMCCashBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531B25571AB960F600EB3472 /* AMCCashBookViewController.xib */; };
@@ -57,8 +59,6 @@
 		5346C5971ABB2887005D4540 /* AMCTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5961ABB2887005D4540 /* AMCTreeNode.m */; };
 		5346C59A1ABFF6AC005D4540 /* AMCCashBookNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5991ABFF6AC005D4540 /* AMCCashBookNode.m */; };
 		5346C59D1ABFFA8A005D4540 /* AMCSystemTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C59C1ABFFA8A005D4540 /* AMCSystemTreeNode.m */; };
-		5346C5A31AC00341005D4540 /* AMCCategoriesRootNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5A21AC00341005D4540 /* AMCCategoriesRootNode.m */; };
-		5346C5A71AC06D15005D4540 /* AMCServiceCategoriesNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5A61AC06D15005D4540 /* AMCServiceCategoriesNode.m */; };
 		534DFF681B0736970077F124 /* AMCRolloverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 534DFF671B0736970077F124 /* AMCRolloverButton.m */; };
 		535F0DEC1AB232CB0035CFD8 /* AMCAccountStatementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */; };
 		535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */; };
@@ -70,7 +70,6 @@
 		536E57D01AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57CE1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m */; };
 		536E57D11AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 536E57CF1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib */; };
 		536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57D31AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m */; };
-		536E57DE1AED33FC00A60D36 /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57DD1AED33FC00A60D36 /* Salon.m */; };
 		536E57E11AED33FD00A60D36 /* PaymentCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57E01AED33FD00A60D36 /* PaymentCategory.m */; };
 		5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */; };
 		5393EA321AD26100009B336C /* AMCBankStatementReconciliationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */; };
@@ -309,8 +308,6 @@
 		530171711ACB15EB0047116D /* StockedBrand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedBrand.m; sourceTree = "<group>"; };
 		530171761ACB15EB0047116D /* StockedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedItem.h; sourceTree = "<group>"; };
 		530171771ACB15EB0047116D /* StockedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedItem.m; sourceTree = "<group>"; };
-		530171791ACB15EB0047116D /* ServiceCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceCategory.h; sourceTree = "<group>"; };
-		5301717A1ACB15EB0047116D /* ServiceCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceCategory.m; sourceTree = "<group>"; };
 		5301717C1ACB15EB0047116D /* ShoppingList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingList.h; sourceTree = "<group>"; };
 		5301717D1ACB15EB0047116D /* ShoppingList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingList.m; sourceTree = "<group>"; };
 		530171831ACBD21F0047116D /* RecurringItem+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RecurringItem+Methods.h"; sourceTree = "<group>"; };
@@ -320,6 +317,13 @@
 		530D546E1B18D3E100F6C4FE /* AMCEmployeesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeesViewController.xib; sourceTree = "<group>"; };
 		530D54751B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSalonDocumentWindow.h; sourceTree = "<group>"; };
 		530D54761B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSalonDocumentWindow.m; sourceTree = "<group>"; };
+		530D54791B25599C00F6C4FE /* ClaudiasSalon 12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 12.xcdatamodel"; sourceTree = "<group>"; };
+		530D54861B25751300F6C4FE /* ServiceCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceCategory.h; sourceTree = "<group>"; };
+		530D54871B25751300F6C4FE /* ServiceCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceCategory.m; sourceTree = "<group>"; };
+		530D54891B25751400F6C4FE /* Salon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salon.h; sourceTree = "<group>"; };
+		530D548A1B25751400F6C4FE /* Salon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salon.m; sourceTree = "<group>"; };
+		530D548C1B25929100F6C4FE /* AMCCategoriesRootNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCategoriesRootNode.h; sourceTree = "<group>"; };
+		530D548D1B25929100F6C4FE /* AMCCategoriesRootNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCategoriesRootNode.m; sourceTree = "<group>"; };
 		53146BFC1AB225EC003B7658 /* ClaudiaSalon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ClaudiaSalon.entitlements; sourceTree = "<group>"; };
 		531B25511AB80E5100EB3472 /* AMCCashBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBook.h; sourceTree = "<group>"; };
 		531B25521AB80E5100EB3472 /* AMCCashBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBook.m; sourceTree = "<group>"; };
@@ -361,10 +365,6 @@
 		5346C5991ABFF6AC005D4540 /* AMCCashBookNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBookNode.m; sourceTree = "<group>"; };
 		5346C59B1ABFFA8A005D4540 /* AMCSystemTreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSystemTreeNode.h; sourceTree = "<group>"; };
 		5346C59C1ABFFA8A005D4540 /* AMCSystemTreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSystemTreeNode.m; sourceTree = "<group>"; };
-		5346C5A11AC00341005D4540 /* AMCCategoriesRootNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCategoriesRootNode.h; sourceTree = "<group>"; };
-		5346C5A21AC00341005D4540 /* AMCCategoriesRootNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCategoriesRootNode.m; sourceTree = "<group>"; };
-		5346C5A51AC06D15005D4540 /* AMCServiceCategoriesNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCServiceCategoriesNode.h; sourceTree = "<group>"; };
-		5346C5A61AC06D15005D4540 /* AMCServiceCategoriesNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCServiceCategoriesNode.m; sourceTree = "<group>"; };
 		534DFF661B0736970077F124 /* AMCRolloverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCRolloverButton.h; sourceTree = "<group>"; };
 		534DFF671B0736970077F124 /* AMCRolloverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCRolloverButton.m; sourceTree = "<group>"; };
 		535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAccountStatementViewController.xib; sourceTree = "<group>"; };
@@ -384,8 +384,6 @@
 		536E57D21AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCStatementItemComputerRecordMismatchCalculator.h; sourceTree = "<group>"; };
 		536E57D31AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCStatementItemComputerRecordMismatchCalculator.m; sourceTree = "<group>"; };
 		536E57D51AEBC39100A60D36 /* ClaudiasSalon 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 6.xcdatamodel"; sourceTree = "<group>"; };
-		536E57DC1AED33FC00A60D36 /* Salon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salon.h; sourceTree = "<group>"; };
-		536E57DD1AED33FC00A60D36 /* Salon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salon.m; sourceTree = "<group>"; };
 		536E57DF1AED33FD00A60D36 /* PaymentCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentCategory.h; sourceTree = "<group>"; };
 		536E57E01AED33FD00A60D36 /* PaymentCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentCategory.m; sourceTree = "<group>"; };
 		5382E8DD1B033F5E00B65C75 /* ClaudiasSalon 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 10.xcdatamodel"; sourceTree = "<group>"; };
@@ -880,7 +878,6 @@
 				5346C59C1ABFFA8A005D4540 /* AMCSystemTreeNode.m */,
 				5346C5A01ABFFEEC005D4540 /* Cashbook node subclass */,
 				5346C5A41AC00348005D4540 /* Root node for entire category tree */,
-				5346C5A81AC06D1B005D4540 /* Service categories node */,
 			);
 			name = "System node subclass";
 			sourceTree = "<group>";
@@ -897,19 +894,10 @@
 		5346C5A41AC00348005D4540 /* Root node for entire category tree */ = {
 			isa = PBXGroup;
 			children = (
-				5346C5A11AC00341005D4540 /* AMCCategoriesRootNode.h */,
-				5346C5A21AC00341005D4540 /* AMCCategoriesRootNode.m */,
+				530D548C1B25929100F6C4FE /* AMCCategoriesRootNode.h */,
+				530D548D1B25929100F6C4FE /* AMCCategoriesRootNode.m */,
 			);
 			name = "Root node for entire category tree";
-			sourceTree = "<group>";
-		};
-		5346C5A81AC06D1B005D4540 /* Service categories node */ = {
-			isa = PBXGroup;
-			children = (
-				5346C5A51AC06D15005D4540 /* AMCServiceCategoriesNode.h */,
-				5346C5A61AC06D15005D4540 /* AMCServiceCategoriesNode.m */,
-			);
-			name = "Service categories node";
 			sourceTree = "<group>";
 		};
 		535F0DE61AB232B10035CFD8 /* Account Statement */ = {
@@ -1833,22 +1821,22 @@
 		53D69E031A9B6BE70004CE10 /* Data model objects */ = {
 			isa = PBXGroup;
 			children = (
+				530D54891B25751400F6C4FE /* Salon.h */,
+				530D548A1B25751400F6C4FE /* Salon.m */,
+				530D54861B25751300F6C4FE /* ServiceCategory.h */,
+				530D54871B25751300F6C4FE /* ServiceCategory.m */,
 				5330E23F1AF8B2400062FD93 /* Payment.h */,
 				5330E2401AF8B2400062FD93 /* Payment.m */,
 				5330E23C1AF8B2400062FD93 /* Sale.h */,
 				5330E23D1AF8B2400062FD93 /* Sale.m */,
 				536E57DF1AED33FD00A60D36 /* PaymentCategory.h */,
 				536E57E01AED33FD00A60D36 /* PaymentCategory.m */,
-				536E57DC1AED33FC00A60D36 /* Salon.h */,
-				536E57DD1AED33FC00A60D36 /* Salon.m */,
 				533054491AE4DA37007B1264 /* Account.h */,
 				5330544A1AE4DA37007B1264 /* Account.m */,
 				531D67271ACC1C62000472BD /* RecurringItem.h */,
 				531D67281ACC1C62000472BD /* RecurringItem.m */,
 				5301717C1ACB15EB0047116D /* ShoppingList.h */,
 				5301717D1ACB15EB0047116D /* ShoppingList.m */,
-				530171791ACB15EB0047116D /* ServiceCategory.h */,
-				5301717A1ACB15EB0047116D /* ServiceCategory.m */,
 				530171761ACB15EB0047116D /* StockedItem.h */,
 				530171771ACB15EB0047116D /* StockedItem.m */,
 				530171701ACB15EB0047116D /* StockedBrand.h */,
@@ -2117,8 +2105,6 @@
 				530171211ACA80170047116D /* AMCAccountManagementViewController.m in Sources */,
 				53D69D521A9B240C0004CE10 /* SelectCustomerStepViewController.m in Sources */,
 				530171691ACB15EB0047116D /* ShoppingListItem.m in Sources */,
-				5301717B1ACB15EB0047116D /* ServiceCategory.m in Sources */,
-				536E57DE1AED33FC00A60D36 /* Salon.m in Sources */,
 				535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */,
 				53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */,
 				530171601ACB15EA0047116D /* StockedCategory.m in Sources */,
@@ -2147,6 +2133,7 @@
 				53D69D0A1A9B240C0004CE10 /* AMCManagersBudgetWindowController.m in Sources */,
 				5301714E1ACB15C10047116D /* IntervalDuringDay.m in Sources */,
 				5301716C1ACB15EB0047116D /* SaleItem.m in Sources */,
+				530D54881B25751300F6C4FE /* ServiceCategory.m in Sources */,
 				5330E2391AF8A8F40062FD93 /* AMCAdvancePayment.m in Sources */,
 				53D69CE61A9B240C0004CE10 /* AMCPaymentAmountViewController.m in Sources */,
 				53D69D441A9B240C0004CE10 /* Salon+Methods.m in Sources */,
@@ -2201,8 +2188,8 @@
 				5330E23E1AF8B2400062FD93 /* Sale.m in Sources */,
 				539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */,
 				5301714B1ACB15C10047116D /* Note.m in Sources */,
-				5346C5A31AC00341005D4540 /* AMCCategoriesRootNode.m in Sources */,
 				5301712D1ACB15C10047116D /* AccountReconciliation.m in Sources */,
+				530D548E1B25929100F6C4FE /* AMCCategoriesRootNode.m in Sources */,
 				530171541ACB15C20047116D /* Product.m in Sources */,
 				53D69D161A9B240C0004CE10 /* AMCFinancialAnalysisViewController.m in Sources */,
 				534DFF681B0736970077F124 /* AMCRolloverButton.m in Sources */,
@@ -2246,13 +2233,13 @@
 				53D69D031A9B240C0004CE10 /* AMCBookingViewController.m in Sources */,
 				536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */,
 				536E57D01AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m in Sources */,
+				530D548B1B25751400F6C4FE /* Salon.m in Sources */,
 				539D2DF11B18430400761711 /* AMCServiceCategoriesViewController.m in Sources */,
 				53D69D481A9B240C0004CE10 /* StockedCategory+Methods.m in Sources */,
 				53D69CEE1A9B240C0004CE10 /* AMCServiceSelectorViewController.m in Sources */,
 				530D54771B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m in Sources */,
 				5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */,
 				53D69D4A1A9B240C0004CE10 /* Salary+Methods.m in Sources */,
-				5346C5A71AC06D15005D4540 /* AMCServiceCategoriesNode.m in Sources */,
 				53D69D141A9B240C0004CE10 /* AMCReportsView.m in Sources */,
 				53D69D3B1A9B240C0004CE10 /* SaleItem+Methods.m in Sources */,
 				5330E2411AF8B2400062FD93 /* Payment.m in Sources */,
@@ -2435,6 +2422,7 @@
 		5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				530D54791B25599C00F6C4FE /* ClaudiasSalon 12.xcdatamodel */,
 				533439001B0E1B3200E271D5 /* ClaudiasSalon 11.xcdatamodel */,
 				5382E8DD1B033F5E00B65C75 /* ClaudiasSalon 10.xcdatamodel */,
 				5330E23B1AF8B1720062FD93 /* ClaudiasSalon 9.xcdatamodel */,
@@ -2447,7 +2435,7 @@
 				533054501AE4EA49007B1264 /* ClaudiasSalon 5.xcdatamodel */,
 				533054511AE4EA49007B1264 /* ClaudiasSalon.xcdatamodel */,
 			);
-			currentVersion = 533439001B0E1B3200E271D5 /* ClaudiasSalon 11.xcdatamodel */;
+			currentVersion = 530D54791B25599C00F6C4FE /* ClaudiasSalon 12.xcdatamodel */;
 			path = ClaudiasSalon.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

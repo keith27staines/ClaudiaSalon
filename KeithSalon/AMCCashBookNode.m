@@ -9,7 +9,7 @@
 #import "AMCCashBookNode.h"
 #import "PaymentCategory+Methods.h"
 @interface AMCCashBookNode()
-@property AMCTreeNode * incomeNode;
+@property id<AMCTreeNode> incomeNode;
 @property AMCTreeNode * expenditureNode;
 @end
 
@@ -37,16 +37,12 @@
     self = [super initWithName:@"Cashbook" isLeaf:isLeaf];
     if (self) {
         self.incomeNode = [self addChild:[[AMCTreeNode alloc] initWithName:@"Income" isLeaf:NO]];
-        self.incomeNode.defaultChildNode = [self.incomeNode addChild:[[AMCTreeNode alloc] initWithName:@"Other" isLeaf:NO]];
         self.expenditureNode = [self addChild:[[AMCTreeNode alloc] initWithName:@"Expenditure" isLeaf:NO]];
-        self.expenditureNode.defaultChildNode = [self.expenditureNode addChild:[[AMCTreeNode alloc] initWithName:@"Other" isLeaf:NO]];
         self.incomeNode.isDeletable = NO;
         self.expenditureNode.isDeletable = NO;
-        self.incomeNode.defaultChildNode.isDeletable = NO;
-        self.expenditureNode.defaultChildNode.isDeletable = NO;
         
         // Add default expenditure categories
-        AMCTreeNode * node = self.expenditureNode;
+        id<AMCTreeNode> node = self.expenditureNode;
         [node addChild:[[AMCTreeNode alloc] initWithName:@"Accountancy" isLeaf:NO]];
         [node addChild:[[AMCTreeNode alloc] initWithName:@"Advertising" isLeaf:NO]];
         [node addChild:[[AMCTreeNode alloc] initWithName:@"Bank charges" isLeaf:NO]];
@@ -95,7 +91,7 @@
         }
     }
 }
--(AMCTreeNode*)bestParentForLeaf:(AMCTreeNode*)leaf underNode:(AMCTreeNode*)start {
+-(id<AMCTreeNode>)bestParentForLeaf:(id<AMCTreeNode>)leaf underNode:(id<AMCTreeNode>)start {
     if ([start containsNodeWithName:leaf.name]) {
         // There is a node with the right name, and this is the best place to put the new leaf
         return [start nodeWithName:leaf.name];

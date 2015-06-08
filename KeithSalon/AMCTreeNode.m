@@ -11,14 +11,35 @@
 @interface AMCTreeNode() 
 {
     __weak NSManagedObjectContext * _moc;
+    NSString * _name;
 }
-@property (readwrite) AMCTreeNode * parentNode;
 @property NSMutableArray * childNodes;
 @property NSMutableArray * childLeafs;
 @property (readwrite) BOOL isLeaf;
+@property (weak,readwrite) id<AMCTreeNode> representedObject;
+
 @end
 
 @implementation AMCTreeNode
+-(instancetype)initWithRepresentedObject:(id<AMCTreeNode>)representedObject {
+    self = [super init];
+    if (self) {
+        self.childNodes = [NSMutableArray array];
+        self.childLeafs = [NSMutableArray array];
+        self.representedObject = representedObject;
+        self.name = representedObject.name;
+        self.isLeaf = representedObject.isLeaf;
+        for (id<AMCTreeNode> node in [representedObject nodes]) {
+            AMCTreeNode * subNode = [[AMCTreeNode alloc] initWithRepresentedObject:node];
+            [self addChild:subNode];
+        }
+        for (id<AMCTreeNode> node in [representedObject leaves]) {
+            AMCTreeNode * subNode = [[AMCTreeNode alloc] initWithRepresentedObject:node];
+            [self addChild:subNode];
+        }
+    }
+    return self;
+}
 -(id)initWithCoder:(NSCoder *)aDecoder {
     self = [self init];
     if (self) {
@@ -28,7 +49,6 @@
         self.childLeafs = [aDecoder decodeObjectForKey:@"childLeafs"];
         self.childNodes = [aDecoder decodeObjectForKey:@"childNodes"];
         self.parentNode = [aDecoder decodeObjectForKey:@"parentNode"];
-        self.defaultChildNode = [aDecoder decodeObjectForKey:@"defaultChildNode"];
     }
     return self;
 }
@@ -51,7 +71,6 @@
     [aCoder encodeObject:self.childLeafs forKey:@"childLeafs"];
     [aCoder encodeObject:self.childNodes forKey:@"childNodes"];
     [aCoder encodeObject:self.parentNode forKey:@"parentNode"];
-    [aCoder encodeObject:self.defaultChildNode forKey:@"defaultChildNode"];
 }
 -(instancetype)init {
     return [self initWithName:@"New Group" isLeaf:NO];
@@ -85,6 +104,20 @@
     }
     return names;
 }
+-(NSString *)name {
+    if (self.representedObject) {
+        return self.representedObject.name;
+    } else {
+        return [_name copy];
+    }
+}
+-(void)setName:(NSString *)name {
+    if (self.representedObject) {
+        self.representedObject.name = [name copy];
+    } else {
+        _name = [name copy];
+    }
+}
 -(BOOL)shouldMoveChild:(AMCTreeNode*)child toNewParent:(AMCTreeNode*)newParent {
     if (!child) {
         return NO;  // Child doesn't exist
@@ -104,7 +137,7 @@
     if ([child hasDescendent:newParent]) {
         return NO; // Proposed parent is a descendent of the child
     }
-    for (AMCTreeNode * node in self.childNodes) {
+    for (id<AMCTreeNode> node in self.childNodes) {
         if ([node hasDescendent:child] || [node hasDescendent:newParent]) {
             if (![node shouldMoveChild:child toNewParent:newParent]) {
                 return NO;
@@ -113,15 +146,28 @@
     }
     return YES;
 }
--(instancetype)addChild:(AMCTreeNode*)child {
+-(AMCTreeNode*)addChild:(AMCTreeNode*)child {
     if (!child) return nil;
     if ([self contains:child]) return nil;
     [self.childNodes addObject:child];
+    if (self.representedObject) {
+        [self.representedObject addChild:child.representedObject];
+    }
     child.parentNode = self;
     return child;
 }
--(AMCTreeNode *)rootNode {
-    AMCTreeNode * node = self;
+-(AMCTreeNode*)removeChild:(AMCTreeNode*)child {
+    if (!child) return nil;
+    if (![self contains:child]) return nil;
+    [self.childNodes removeObject:child];
+    if (child.representedObject) {
+        [child.representedObject.parentNode removeChild:child.representedObject];
+    }
+    child.parentNode = nil;
+    return child;
+}
+-(AMCTreeNode*)rootNode {
+    AMCTreeNode* node = self;
     while (node.parentNode) {
         node = node.parentNode;
     }
@@ -176,8 +222,8 @@
     if (!self.isLeaf && [self.name isEqualToString:string]) {
         return self;
     }
-    AMCTreeNode * requiredNode;
-    for (AMCTreeNode * node in self.childNodes) {
+    AMCTreeNode* requiredNode;
+    for (AMCTreeNode* node in self.childNodes) {
         requiredNode = [node nodeWithName:string];
         if (requiredNode) {
             return requiredNode;
@@ -189,17 +235,17 @@
     if (self.isLeaf && [self.name isEqualToString:string]) {
         return self;
     }
-    AMCTreeNode * requiredLeaf;
-    for (AMCTreeNode * leaf in self.childLeafs) {
-        requiredLeaf = [leaf leafWithName:string];
-        if (requiredLeaf) {
-            return requiredLeaf;
+    AMCTreeNode* requiredNode;
+    for (AMCTreeNode* leaf in self.childLeafs) {
+        requiredNode = [leaf leafWithName:string];
+        if (requiredNode) {
+            return requiredNode;
         }
     }
     for (AMCTreeNode * node in self.childNodes) {
-        requiredLeaf = [node leafWithName:string];
-        if (requiredLeaf) {
-            return requiredLeaf;
+        requiredNode = [node leafWithName:string];
+        if (requiredNode) {
+            return requiredNode;
         }
     }
     return nil;
@@ -228,21 +274,10 @@
     if (!self.parentNode) return NO;
     return [self.parentNode hasAncestor:node];
 }
--(AMCTreeNode*)removeChild:(AMCTreeNode*)child {
-    if (!child) return nil;
-    if (![self contains:child]) return nil;
-    [self.childNodes removeObject:child];
-    child.parentNode = nil;
-    return child;
+-(AMCTreeNode *)mostRecentAncestralDefault {
+    return self.parentNode;
 }
--(AMCTreeNode*)mostRecentAncestralDefault {
-    if (self.defaultChildNode) {
-        return self.defaultChildNode;
-    } else {
-        return [self.parentNode mostRecentAncestralDefault];
-    }
-}
--(AMCTreeNode*)mostRecentCommonAncestorWith:(AMCTreeNode*)otherNode {
+-(AMCTreeNode *)mostRecentCommonAncestorWith:(AMCTreeNode*)otherNode {
     if ([self hasDescendent:otherNode]) return self;
     if ([otherNode hasDescendent:self]) return otherNode;
     return [self.parentNode mostRecentCommonAncestorWith:otherNode];

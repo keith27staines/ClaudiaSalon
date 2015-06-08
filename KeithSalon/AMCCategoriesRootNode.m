@@ -8,7 +8,6 @@
 
 #import "AMCCategoriesRootNode.h"
 #import "AMCCashBookNode.h"
-#import "AMCServiceCategoriesNode.h"
 @interface AMCCategoriesRootNode()
 @end
 
@@ -32,7 +31,6 @@
     if (self) {
         self.isDeletable = NO;
         self.cashbookNode = [self addChild:[[AMCCashBookNode alloc] init]];
-        self.servicesNode = [self addChild:[[AMCServiceCategoriesNode alloc] init]];
     }
     return self;
 }

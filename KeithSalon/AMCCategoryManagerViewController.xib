@@ -7,6 +7,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AMCCategoryManagerViewController">
             <connections>
                 <outlet property="addButton" destination="zol-qx-AvU" id="8JZ-eY-n1n"/>
+                <outlet property="addMenu" destination="GbK-WN-oj2" id="dEg-xK-uph"/>
                 <outlet property="categoriesOutlineView" destination="v6G-BB-HH4" id="n0Z-mV-2fq"/>
                 <outlet property="removeButton" destination="Kz5-82-jgM" id="4Qd-1f-BEO"/>
                 <outlet property="titleLabel" destination="hJl-2X-Ug1" id="OK6-CA-OmY"/>
@@ -197,6 +198,23 @@ DQ
             <point key="canvasLocation" x="-5.5" y="8"/>
         </customView>
         <customObject id="jXr-LJ-lme"/>
+        <menu id="GbK-WN-oj2">
+            <items>
+                <menuItem title="New Object..." id="nNR-yt-ldz">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="addObject:" target="-2" id="oaQ-um-527"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="New Category..." id="Y4C-2b-a0w">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="addCategory:" target="-2" id="Kg5-b2-QNV"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-231.5" y="336.5"/>
+        </menu>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>

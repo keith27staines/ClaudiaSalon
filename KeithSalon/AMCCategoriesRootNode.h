@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
-#import "AMCSystemTreeNode.h"
+#import "AMCTreeNode.h"
 
-@interface AMCCategoriesRootNode : AMCSystemTreeNode
-@property AMCSystemTreeNode * cashbookNode;
-@property AMCSystemTreeNode * servicesNode;
+@interface AMCCategoriesRootNode : AMCTreeNode
+@property id<AMCTreeNode> cashbookNode;
+@property id<AMCTreeNode> servicesNode;
 @end

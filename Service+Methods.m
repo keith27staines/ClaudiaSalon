@@ -7,8 +7,10 @@
 //
 
 #import "Service+Methods.h"
+#import "ServiceCategory+Methods.h"
 #import "AMCConstants.h"
 #import "Account+Methods.h"
+
 
 @implementation Service (Methods)
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc
@@ -89,5 +91,35 @@
         }
     }
     return nonAuditNotes;
+}
+#pragma mark - AMCTreeNodeProtocol
+-(AMCTreeNode *)rootNode {
+    return self.serviceCategory.rootNode;
+}
+-(AMCTreeNode *)addChild:(AMCTreeNode *)child {
+    NSAssert(NO, @"Services do not have children");
+    return nil;
+}
+-(AMCTreeNode *)removeChild:(AMCTreeNode *)child {
+    NSAssert(NO, @"Services do not have children");
+    return nil;
+}
+-(NSInteger)nodesCount {
+    return 0;
+}
+-(NSInteger)leavesCount {
+    return 0;
+}
+-(AMCTreeNode *)parentNode {
+    return (AMCTreeNode *)self.serviceCategory;
+}
+-(NSArray *)leaves {
+    return @[];
+}
+-(NSArray *)nodes {
+    return @[];
+}
+-(BOOL)isLeaf {
+    return YES;
 }
 @end

@@ -2,15 +2,17 @@
 //  Salon.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/04/2015.
+//  Created by Keith Staines on 08/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import "Salon.h"
 #import "Account.h"
+#import "Customer.h"
 #import "Employee.h"
 #import "OpeningHoursWeekTemplate.h"
 #import "PaymentCategory.h"
+#import "ServiceCategory.h"
 
 
 @implementation Salon
@@ -26,14 +28,17 @@
 @dynamic salonName;
 @dynamic serviceEmail;
 @dynamic startOfAccountingYear;
-@dynamic cardPaymentAccount;
-@dynamic defaultPaymentCategoryForPayments;
-@dynamic manager;
 @dynamic anonymousCustomer;
+@dynamic cardPaymentAccount;
+@dynamic defaultPaymentCategoryForMoneyTransfers;
+@dynamic defaultPaymentCategoryForPayments;
+@dynamic defaultPaymentCategoryForSales;
+@dynamic defaultPaymentCategoryForWages;
+@dynamic manager;
 @dynamic openingHoursWeekTemplate;
 @dynamic primaryBankAccount;
 @dynamic tillAccount;
-@dynamic defaultPaymentCategoryForSales;
-@dynamic defaultPaymentCategoryForWages;
-@dynamic defaultPaymentCategoryForMoneyTransfers;
+@dynamic rootServiceCategory;
+@dynamic serviceCategories;
+
 @end

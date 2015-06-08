@@ -7,14 +7,18 @@
 //
 
 #import "ServiceCategory+Methods.h"
+#import "Service+Methods.h"
 
 @implementation ServiceCategory (Methods)
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc
 {
-    ServiceCategory * serviceCategory = [NSEntityDescription insertNewObjectForEntityForName:@"ServiceCategory" inManagedObjectContext:moc];
+    ServiceCategory * serviceCategory = [NSEntityDescription insertNewObjectForEntityForName:@"ServiceCategory"
+                                                                      inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];
     serviceCategory.createdDate = rightNow;
     serviceCategory.lastUpdatedDate = rightNow;
+    serviceCategory.salon = [Salon salonWithMoc:moc];
+    serviceCategory.parent = serviceCategory.salon.rootServiceCategory;
     return serviceCategory;
 }
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc {
@@ -39,4 +43,56 @@
     }
     return NO;
 }
+
+#pragma mark - AMCTreeNodeProtocol
+-(AMCTreeNode *)rootNode {
+    return (AMCTreeNode *)self.salon.rootServiceCategory;
+}
+-(AMCTreeNode *)addChild:(AMCTreeNode *)child {
+    if ([child isKindOfClass:[ServiceCategory class]]) {
+        ServiceCategory * category = (ServiceCategory*)child;
+        [self addSubCategoriesObject:(ServiceCategory*)category];
+        return child;
+    }
+    if ([child isKindOfClass:[Service class]]) {
+        Service * service = (Service*)child;
+        [self addServiceObject:service];
+    }
+    return nil;
+}
+-(AMCTreeNode *)removeChild:(AMCTreeNode *)child {
+    if ([child isKindOfClass:[ServiceCategory class]]) {
+        ServiceCategory * category = (ServiceCategory*)child;
+        [self removeSubCategoriesObject:(ServiceCategory*)category];
+        return child;
+    }
+    if ([child isKindOfClass:[Service class]]) {
+        Service * service = (Service*)child;
+        [self removeServiceObject:service];
+        return child;
+    }
+    return nil;
+}
+-(NSInteger)nodesCount {
+    return self.subCategories.count;
+}
+-(NSInteger)leavesCount {
+    return self.service.count;
+}
+-(void)setParentNode:(ServiceCategory*)parentNode {
+    self.parent = parentNode;
+}
+-(ServiceCategory*)parentNode {
+    return self.parent;
+}
+-(NSArray *)leaves {
+    return [[self.service allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
+}
+-(NSArray *)nodes {
+    return [[self.subCategories allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
+}
+-(BOOL)isLeaf {
+    return NO;
+}
+
 @end

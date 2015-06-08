@@ -9,8 +9,9 @@
 #import "Service.h"
 #import "AMCSalonDocument.h"
 #import "AMCObjectWithNotesProtocol.h"
+#import "AMCTreeNode.h"
 
-@interface Service (Methods) <AMCObjectWithNotesProtocol>
+@interface Service (Methods) <AMCObjectWithNotesProtocol,AMCTreeNode>
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 

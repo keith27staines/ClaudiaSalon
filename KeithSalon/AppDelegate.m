@@ -14,7 +14,6 @@
 #import "AMCAutoCloseWindowController.h"
 #import "AMCPreferencesWindowController.h"
 #import "AMCCategoryManagerViewController.h"
-
 #define kSalonsDictionary @"kSalonsDictionary"
 #define kDefaultSalonPath @"kDefaultSalonPath"
 #define kShowWelcomeWindow @"kShowWelcomeWindow"

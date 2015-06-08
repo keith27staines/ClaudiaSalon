@@ -9,8 +9,8 @@
 #import "ServiceCategory.h"
 #import "AMCSalonDocument.h"
 #import "AMCObjectWithNotesProtocol.h"
-
-@interface ServiceCategory (Methods) <AMCObjectWithNotesProtocol>
+#import "AMCTreeNode.h"
+@interface ServiceCategory (Methods) <AMCObjectWithNotesProtocol, AMCTreeNode>
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 -(BOOL)isHairCategory;

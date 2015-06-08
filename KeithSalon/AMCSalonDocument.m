@@ -34,6 +34,10 @@
 #import "AMCSalonDetailsViewController.h"
 #import "RecurringItem+Methods.h"
 
+// Imports required for data fixes
+#import "ServiceCategory+Methods.h"
+// End fixes
+
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 
 @interface AMCSalonDocument() <NSTabViewDelegate>
@@ -78,10 +82,44 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 -(Salon *)salon {
     if (!_salon) {
         _salon = [Salon salonWithMoc:self.managedObjectContext];
+        [self dataFixes];
         [self processRecurringEvents:self];
         [NSTimer scheduledTimerWithTimeInterval:3600 target:self selector:@selector(processRecurringEvents:) userInfo:nil repeats:YES];
     }
     return _salon;
+}
+-(void)dataFixes {
+    // Begin Service category data fix
+    ServiceCategory * rootCategory = _salon.rootServiceCategory;
+    if (!rootCategory) {
+        rootCategory   = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
+        _salon.rootServiceCategory = rootCategory;
+        ServiceCategory * hairCategory = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
+        ServiceCategory * beautyCategory = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
+
+        rootCategory.name   = @"Service Categories";
+        hairCategory.name   = @"Hair";
+        beautyCategory.name = @"Beauty";
+        rootCategory.isSystemCategory = @YES;
+        hairCategory.isSystemCategory = @YES;
+        beautyCategory.isSystemCategory = @YES;
+        rootCategory.isDefaultCategory = @YES;
+        hairCategory.isDefaultCategory = @YES;
+        beautyCategory.isDefaultCategory = @YES;
+        [rootCategory addSubCategoriesObject:hairCategory];
+        [rootCategory addSubCategoriesObject:beautyCategory];
+        for (ServiceCategory * category in [ServiceCategory allObjectsWithMoc:self.managedObjectContext]) {
+            if (!category.parent && category != rootCategory) {
+                if ([category isHairCategory]) {
+                    category.parent = hairCategory;
+                } else {
+                    category.parent = beautyCategory;
+                }
+                category.salon = _salon;
+            }
+        }
+    }
+    // End Service category data fix
 }
 -(Customer *)anonymousCustomer {
     if (!self.salon.anonymousCustomer) {

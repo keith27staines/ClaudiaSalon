@@ -11,6 +11,6 @@
 #import "AMCSystemTreeNode.h"
 
 @interface AMCCashBookNode : AMCSystemTreeNode
-@property (readonly) AMCTreeNode * incomeNode;
-@property (readonly) AMCTreeNode * expenditureNode;
+@property (readonly) id<AMCTreeNode> incomeNode;
+@property (readonly) id<AMCTreeNode> expenditureNode;
 @end

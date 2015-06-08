@@ -7,9 +7,12 @@
 //
 
 #import "AMCCategoryManagerViewController.h"
+#import "AMCSalonDocument.h"
 #import "PaymentCategory+Methods.h"
+#import "Service+Methods.h"
 #import "ServiceCategory+Methods.h"
 #import "AMCCategoriesRootNode.h"
+#import "AMCTreeNode.h"
 #define rowDragAndDropType @"rowDragAndDropType"
 
 @interface AMCCategoryManagerViewController () <NSOutlineViewDataSource, NSOutlineViewDelegate>
@@ -21,16 +24,15 @@
 @property (weak) IBOutlet NSButton *addButton;
 @property (weak) IBOutlet NSButton *removeButton;
 @property (weak) IBOutlet NSOutlineView *categoriesOutlineView;
-@property AMCCategoriesRootNode * rootNode;
+@property AMCTreeNode * rootNode;
 @property AMCTreeNode * viewRootNode;
 @property (weak) IBOutlet NSTextField *titleLabel;
+@property (strong) IBOutlet NSMenu *addMenu;
 
 @end
 
 @implementation AMCCategoryManagerViewController
--(void)awakeFromNib {
-    self.categoryType = AMCCategoryTypePayments;
-}
+
 -(NSString *)nibName {
     return @"AMCCategoryManagerViewController";
 }
@@ -40,26 +42,35 @@
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
-    [self readFromUserDefaults];
-    [self.categoriesOutlineView reloadData];
     switch (self.categoryType) {
         case AMCCategoryTypeAll:
+        {
             self.titleLabel.stringValue = @"Manage all Categories";
             break;
+        }
         case AMCCategoryTypeServices:
+        {
             self.titleLabel.stringValue = @"Manage Services";
+            id<AMCTreeNode>root = (id<AMCTreeNode>)self.salonDocument.salon.rootServiceCategory;
+            self.rootNode = [[AMCTreeNode alloc] initWithRepresentedObject:root];
+            self.viewRootNode = self.rootNode;
             break;
+        }
         case AMCCategoryTypePayments:
+        {
+            [self readFromUserDefaults];
             self.titleLabel.stringValue = @"Manage Payment Categories";
             break;
+        }
     }
+    [self.categoriesOutlineView reloadData];
 }
 -(NSMutableArray *)allServiceCategoryLeaves {
     if (!_allServiceCategoryLeaves) {
         _allServiceCategoryLeaves = [NSMutableArray array];
         NSArray * allCategories = [ServiceCategory allObjectsWithMoc:self.documentMoc];
         for (ServiceCategory * category in allCategories) {
-            AMCTreeNode * leaf = [[AMCTreeNode alloc] initWithName:category.name isLeaf:YES];
+            id<AMCTreeNode> leaf = [[AMCTreeNode alloc] initWithName:category.name isLeaf:YES];
             [_allServiceCategoryLeaves addObject:leaf];
         }
     }
@@ -70,7 +81,7 @@
         _allPaymentCategoryLeaves = [NSMutableArray array];
         NSArray * allCategories = [PaymentCategory allObjectsWithMoc:self.documentMoc];
         for (PaymentCategory * category in allCategories) {
-            AMCTreeNode * leaf = [[AMCTreeNode alloc] initWithName:category.categoryName isLeaf:YES];
+            id<AMCTreeNode> leaf = [[AMCTreeNode alloc] initWithName:category.categoryName isLeaf:YES];
             [_allPaymentCategoryLeaves addObject:leaf];
         }
     }
@@ -93,10 +104,9 @@
             self.viewRootNode = self.rootNode;
             break;
         case AMCCategoryTypePayments:
-            self.viewRootNode = self.rootNode.cashbookNode;
             break;
         case AMCCategoryTypeServices:
-            self.viewRootNode = self.rootNode.servicesNode;
+            //self.viewRootNode = self.rootNode.servicesNode;
             break;
     }
 }
@@ -115,42 +125,102 @@
     [self readFromUserDefaults];
     [self.categoriesOutlineView reloadData];
 }
-- (IBAction)addButtonClicked:(id)sender {
-    AMCTreeNode * newCategory = [[AMCTreeNode alloc] initWithName:@"New Category" isLeaf:NO];
-    newCategory.isDeletable = YES;
-    NSInteger row = self.categoriesOutlineView.selectedRow;
-    AMCTreeNode * parent = nil;
-    if (row >= 0) {
-        AMCTreeNode * item = [self.categoriesOutlineView itemAtRow:row];
-        if (item.isLeaf) {
-            parent = item.parentNode;
-            if (parent) {
-                [parent addChild:newCategory];
-            } else {
-                [self.rootNode addChild:newCategory];
-            }
-        } else {
-            parent = item;
-            [parent addChild:newCategory];
-        }
-    } else {
-        [self.rootNode addChild:newCategory];
-    }
-    [self.categoriesOutlineView reloadData];
-    if (parent) {
-        [self.categoriesOutlineView expandItem:parent];
-        row = [self.categoriesOutlineView rowForItem:newCategory];
-        [self.categoriesOutlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:row]byExtendingSelection:NO];
-    }
-    [self saveToUserDefaults];
-}
-- (void)moveCategoryContentToDefault:(AMCTreeNode *)category {
+- (void)moveCategoryContentToDefault:(id<AMCTreeNode>)category {
     [self moveContentOfCategory:category toCategory:[category mostRecentAncestralDefault]];
 }
--(BOOL)shouldMoveCategory:(AMCTreeNode*)mover toCategory:(AMCTreeNode*)newParent {
-    return [self.rootNode shouldMoveChild:mover toNewParent:newParent];
+-(void)makeVisibleAndSelect:(AMCTreeNode*)node {
+    if (!node) return;
+    [self.categoriesOutlineView reloadData];
+    [self.categoriesOutlineView expandItem:node.parentNode];
+    NSInteger row = [self.categoriesOutlineView rowForItem:node];
+    [self.categoriesOutlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+    [self.categoriesOutlineView scrollRowToVisible:row];
 }
--(BOOL)moveCategory:(AMCTreeNode*)mover toCategory:(AMCTreeNode*)newParent {
+- (IBAction)addButtonClicked:(id)sender {
+    [self.addMenu popUpMenuPositioningItem:nil atLocation:NSMakePoint(0, 0) inView:self.addButton];
+}
+
+-(IBAction)addCategory:(id)sender {
+    NSInteger row = self.categoriesOutlineView.selectedRow;
+    if (row >= 0) {
+        AMCTreeNode * parentNode = [self.categoriesOutlineView itemAtRow:row];
+        [self addCategoryToNode:parentNode];
+    }
+}
+-(IBAction)addObject:(id)sender {
+    NSInteger row = self.categoriesOutlineView.selectedRow;
+    if (row >= 0) {
+        AMCTreeNode * parentNode = [self.categoriesOutlineView itemAtRow:row];
+        [self addObjectToNode:parentNode];
+    }
+}
+-(AMCTreeNode*)addObjectToNode:(AMCTreeNode*)parentNode {
+    id<AMCTreeNode> representedObject = nil;
+    AMCTreeNode * newNode = nil;
+    switch (self.categoryType) {
+        case AMCCategoryTypePayments:
+        {
+            return nil;
+            break;
+        }
+        case AMCCategoryTypeServices:
+        {
+            representedObject = [Service newObjectWithMoc:self.documentMoc];
+            representedObject.name = @"New Service";
+            newNode = [[AMCTreeNode alloc] initWithRepresentedObject:representedObject];
+
+        }
+        default:
+            return nil;
+    }
+    [parentNode addChild:newNode];
+    [self makeVisibleAndSelect:newNode];
+    return newNode;
+}
+-(AMCTreeNode*)addCategoryToNode:(AMCTreeNode*)parentNode {
+    id<AMCTreeNode> representedObject = nil;
+    AMCTreeNode * newNode = nil;
+    switch (self.categoryType) {
+        case AMCCategoryTypePayments:
+        {
+            return nil;
+            break;
+        }
+        case AMCCategoryTypeServices:
+        {
+            representedObject = [ServiceCategory newObjectWithMoc:self.documentMoc];
+            representedObject.name = @"New Service Category";
+            newNode = [[AMCTreeNode alloc] initWithRepresentedObject:representedObject];
+            break;
+        }
+        default:
+            return nil;
+    }
+    [parentNode addChild:newNode];
+    [self makeVisibleAndSelect:newNode];
+    return newNode;
+
+}
+-(AMCTreeNode*)addToTreeNode:(AMCTreeNode*)parent {
+    id<AMCTreeNode> representedObject = nil;
+    AMCTreeNode * newNode = nil;
+    if ([parent.representedObject isKindOfClass:[ServiceCategory class]]) {
+        representedObject = [ServiceCategory newObjectWithMoc:self.documentMoc];
+        newNode = [[AMCTreeNode alloc] initWithRepresentedObject:representedObject];
+    }
+    if ([parent.representedObject isKindOfClass:[Service class]]) {
+        representedObject = [Service newObjectWithMoc:self.documentMoc];
+        newNode = [[AMCTreeNode alloc] initWithRepresentedObject:representedObject];
+    }
+    if (representedObject) {
+        [parent addChild:newNode];
+    }
+    return newNode;
+}
+-(BOOL)shouldMoveCategory:(id<AMCTreeNode>)mover toCategory:(id<AMCTreeNode>)proposedParent {
+    return !proposedParent.isLeaf;
+}
+-(BOOL)moveCategory:(id<AMCTreeNode>)mover toCategory:(id<AMCTreeNode>)newParent {
     if (newParent.isLeaf) {
         newParent = newParent.parentNode;
     }
@@ -164,7 +234,7 @@
 
     return YES;
 }
--(void)moveContentOfCategory:(AMCTreeNode*)sourceCategory toCategory:(AMCTreeNode*)destinationCategory {
+-(void)moveContentOfCategory:(id<AMCTreeNode>)sourceCategory toCategory:(id<AMCTreeNode>)destinationCategory {
     if (sourceCategory == destinationCategory) {
         return;
     }
@@ -184,7 +254,6 @@
     if (item.isLeaf) return;
     [self moveContentOfCategory:item toCategory:[item mostRecentAncestralDefault]];
     [item.parentNode removeChild:item];
-    [self saveToUserDefaults];
     [self.categoriesOutlineView reloadData];
 }
 - (IBAction)doneButtonClicked:(id)sender {
@@ -195,7 +264,6 @@
     NSInteger row = [self.categoriesOutlineView rowForView:sender];
     AMCTreeNode * node = [self.categoriesOutlineView itemAtRow:row];
     node.name = textField.stringValue;
-    [self saveToUserDefaults];
 }
 -(BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item {
     if (![item isKindOfClass:[AMCTreeNode class]]) {
@@ -237,17 +305,12 @@
             view = [self.categoriesOutlineView makeViewWithIdentifier:@"nodeView" owner:self];
             view.textField.editable = YES;
         }
-        view.textField.stringValue = node.name;
+        view.textField.stringValue = (node.name)?node.name:@"New";
     }
     return view;
 }
 -(BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item {
-    AMCTreeNode * node = item;
-    if (node.isLeaf) {
-        return NO;
-    } else {
-        return YES;
-    }
+    return NO;
 }
 -(void)outlineView:(NSOutlineView *)outlineView updateDraggingItemsForDrag:(id<NSDraggingInfo>)draggingInfo {
     
@@ -264,7 +327,6 @@
         AMCTreeNode * node = [self.categoriesOutlineView itemAtRow:row];
         [self moveCategory:node toCategory:item];
     }
-    [self saveToUserDefaults];
     [self.categoriesOutlineView reloadData];
     return YES;
 }
@@ -274,10 +336,8 @@
 -(BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard {
     NSMutableIndexSet * rowIndexes = [NSMutableIndexSet indexSet];
     for (AMCTreeNode * item in items) {
-        if (item.isLeaf) {
-            NSInteger row = [self.categoriesOutlineView rowForItem:item];
-            [rowIndexes addIndex:row];
-        }
+        NSInteger row = [self.categoriesOutlineView rowForItem:item];
+        [rowIndexes addIndex:row];
     }
     if (rowIndexes.count > 0) {
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
