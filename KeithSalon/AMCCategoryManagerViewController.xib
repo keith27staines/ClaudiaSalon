@@ -7,9 +7,14 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AMCCategoryManagerViewController">
             <connections>
                 <outlet property="addButton" destination="zol-qx-AvU" id="8JZ-eY-n1n"/>
+                <outlet property="addCategoryMenuItem" destination="Y4C-2b-a0w" id="VD7-H1-Lvz"/>
                 <outlet property="addMenu" destination="GbK-WN-oj2" id="dEg-xK-uph"/>
+                <outlet property="addObjectMenuItem" destination="nNR-yt-ldz" id="t6w-dP-yoO"/>
                 <outlet property="categoriesOutlineView" destination="v6G-BB-HH4" id="n0Z-mV-2fq"/>
+                <outlet property="editServiceCategoryViewController" destination="Pby-oh-QJx" id="bBd-cc-yY3"/>
+                <outlet property="editServiceViewController" destination="u53-fA-tem" id="ELe-eb-Z7w"/>
                 <outlet property="removeButton" destination="Kz5-82-jgM" id="4Qd-1f-BEO"/>
+                <outlet property="rightClickMenu" destination="rHj-JO-LL1" id="mgy-Pd-hq0"/>
                 <outlet property="titleLabel" destination="hJl-2X-Ug1" id="OK6-CA-OmY"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -140,6 +145,7 @@ DQ
                                 <connections>
                                     <outlet property="dataSource" destination="-2" id="N1d-33-Gx8"/>
                                     <outlet property="delegate" destination="-2" id="Oor-jx-wr3"/>
+                                    <outlet property="menu" destination="rHj-JO-LL1" id="KUr-a4-yfl"/>
                                 </connections>
                             </outlineView>
                         </subviews>
@@ -204,17 +210,55 @@ DQ
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="addObject:" target="-2" id="oaQ-um-527"/>
+                        <binding destination="-2" name="title" keyPath="self.addObjectMenuTitle" id="7w8-RC-Jbd"/>
                     </connections>
                 </menuItem>
                 <menuItem title="New Category..." id="Y4C-2b-a0w">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="addCategory:" target="-2" id="Kg5-b2-QNV"/>
+                        <binding destination="-2" name="title" keyPath="self.addCategoryMenuTitle" id="HA8-ww-bph"/>
                     </connections>
                 </menuItem>
             </items>
+            <connections>
+                <outlet property="delegate" destination="-2" id="5jn-T0-mwH"/>
+            </connections>
             <point key="canvasLocation" x="-231.5" y="336.5"/>
         </menu>
+        <menu id="rHj-JO-LL1">
+            <items>
+                <menuItem title="New Object..." id="Vi5-b1-Nrm">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickAddObject:" target="-2" id="lPe-Yc-fuW"/>
+                        <binding destination="-2" name="title" keyPath="self.addObjectMenuTitle" id="GVq-9U-MwZ"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="New Category..." id="R2d-ui-Rzo">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickAddCategory:" target="-2" id="7eB-4I-Xyr"/>
+                        <binding destination="-2" name="title" keyPath="self.addCategoryMenuTitle" id="52Q-MS-w7G"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="cw1-LV-HfV"/>
+                <menuItem title="Edit..." id="Nid-FU-Q4C">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickEdit:" target="-2" id="ob3-08-Z8o"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="-2" id="SUf-z0-2sC"/>
+            </connections>
+            <point key="canvasLocation" x="27" y="340.5"/>
+        </menu>
+        <userDefaultsController representsSharedInstance="YES" id="bzs-Tl-9gy"/>
+        <customObject id="Pby-oh-QJx" customClass="EditServiceCategoryViewController"/>
+        <customObject id="u53-fA-tem" customClass="EditServiceViewController"/>
+        <customObject id="Mhz-yV-nO2"/>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>

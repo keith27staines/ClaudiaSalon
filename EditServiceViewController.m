@@ -11,17 +11,14 @@
 #import "Service+Methods.h"
 #import "Product+Methods.h"
 #import "ObjectSelectorViewController.h"
-#import "ServiceCategory+Methods.h"
 #import "AMCSalonDocument.h"
 
 @interface EditServiceViewController ()
 {
     NSMutableArray * _products;
-    NSMutableArray * _categories;
 }
 @property NSMutableArray * products;
 @property (readonly) Service * service;
-@property NSMutableArray * categories;
 @end
 
 @implementation EditServiceViewController
@@ -35,7 +32,7 @@
 }
 -(NSString *)objectTypeAndName
 {
-    NSMutableString * objectTypeAndName = [@"Service" mutableCopy];
+    NSMutableString * objectTypeAndName = [@"Service Category" mutableCopy];
     if (self.objectToEdit) {
         Service * object = (Service*)self.objectToEdit;
         NSString * objectName = object.name;
@@ -45,11 +42,6 @@
         }
     }
     return objectTypeAndName;
-}
--(void)viewDidLoad
-{
-    [self loadHairLengthPopup];
-    [self loadCategoryPopup];
 }
 -(Service*)service
 {
@@ -73,34 +65,24 @@
     self.nameField.stringValue = (service.name)?service.name : @"";
     self.timeRequired.stringValue = (service.expectedTimeRequired.stringValue)?service.expectedTimeRequired.stringValue:@"";
     self.nominalPrice.stringValue = (service.nominalCharge.stringValue)?service.nominalCharge.stringValue:@"";
-    [self.hairLengthPopup selectItemAtIndex:service.hairLength.integerValue];
-    [self.categoryPopup selectItemWithTitle:service.serviceCategory.name];
     [self.deluxeCheckbox setState:((service.deluxe.boolValue)?NSOnState:NSOffState)];
     switch (self.editMode) {
         case EditModeView:
         {
-            [self.hairLengthPopup setEnabled:NO];
-            [self.categoryPopup setEnabled:NO];
             [self.deluxeCheckbox setEnabled:NO];
             [self.priceSlider setEnabled:NO];
             break;
         }
         case EditModeCreate:
         {
-            [self.hairLengthPopup selectItemAtIndex:0];
-            [self.categoryPopup selectItemAtIndex:0];
             [self.deluxeCheckbox setEnabled:YES];
             [self.priceSlider setEnabled:YES];
-            [self.hairLengthPopup setEnabled:YES];
-            [self.categoryPopup setEnabled:YES];
             break;
         }
         case EditModeEdit:
         {
             [self.deluxeCheckbox setEnabled:YES];
             [self.priceSlider setEnabled:YES];
-            [self.hairLengthPopup setEnabled:YES];
-            [self.categoryPopup setEnabled:YES];
             break;
         }
     }
@@ -123,7 +105,6 @@
 -(NSArray *)editableControls
 {
     return  @[self.nameField,
-              self.hairLengthPopup,
               self.timeRequired,
               self.minimumPrice,
               self.nominalPrice,
@@ -157,9 +138,6 @@
 -(BOOL)isValid
 {
     if (![self validateName:self.nameField.stringValue]) return NO;
-    if (![self selectedCategory]) {
-        return NO;
-    }
     double nominal = self.nominalPrice.doubleValue;
     double minimum = self.minimumPrice.doubleValue;
     double maximum = self.maximumPrice.doubleValue;
@@ -173,63 +151,10 @@
 {
     Service * service = self.objectToEdit;
     service.name = self.nameField.stringValue;
-    service.hairLength = @([self.hairLengthPopup indexOfSelectedItem]);
     service.nominalCharge = @(self.nominalPrice.integerValue);
     service.expectedTimeRequired = @(self.timeRequired.integerValue);
     service.product = [NSSet setWithArray:self.products];
-    NSInteger i = self.categoryPopup.indexOfSelectedItem;
-    if (i==0) {
-        service.serviceCategory = nil;
-    } else {
-        service.serviceCategory = self.categories[i-1];
-    }
 }
--(ServiceCategory*)selectedCategory {
-    NSInteger i = self.categoryPopup.indexOfSelectedItem;
-    if (i==0) {
-        return nil;
-    } else {
-        return self.categories[i-1];
-    }
-}
--(void)loadHairLengthPopup
-{
-    [self.hairLengthPopup removeAllItems];
-    [self.hairLengthPopup insertItemWithTitle:@"Not applicable" atIndex:0];
-    [self.hairLengthPopup insertItemWithTitle:@"Short" atIndex:1];
-    [self.hairLengthPopup insertItemWithTitle:@"Medium" atIndex:2];
-    [self.hairLengthPopup insertItemWithTitle:@"Long" atIndex:3];
-    [self.hairLengthPopup selectItemAtIndex:0];
-}
--(void)loadCategoryPopup
-{
-    NSManagedObjectContext * moc = self.documentMoc ;
-    NSEntityDescription * entityDescription = [NSEntityDescription entityForName:@"ServiceCategory" inManagedObjectContext:moc];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:entityDescription];
-    
-    // Set predicate and sort orderings...
-    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"selectable == %@",@(YES)];
-    [request setPredicate:predicate];
-    [request setSortDescriptors:@[sort]];
-    NSError *error = nil;
-    self.categories = [[moc executeFetchRequest:request error:&error] mutableCopy];
-    
-    if (!self.categories) {
-        self.categories = [@[] mutableCopy];
-    }
-    [self.categoryPopup removeAllItems];
-    [self.categoryPopup insertItemWithTitle:@"All Categories" atIndex:0];
-    NSUInteger i = 1;
-    for (ServiceCategory * category in self.categories) {
-        NSString * title = category.name;
-        [self.categoryPopup insertItemWithTitle:title atIndex:i];
-        i++;
-    }
-    [self categoryChanged:self.categoryPopup];
-}
-
 - (IBAction)minimumPriceChanged:(id)sender {
     double minPrice = self.minimumPrice.doubleValue;
     double maxPrice = self.maximumPrice.doubleValue;
@@ -297,9 +222,6 @@
     } else {
         [self.deluxeBadge setHidden:YES];
     }
-}
-- (IBAction)categoryChanged:(id)sender {
-    [self enableDoneButton];
 }
 
 @end

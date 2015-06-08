@@ -13,9 +13,13 @@
 #import "ServiceCategory+Methods.h"
 #import "AMCCategoriesRootNode.h"
 #import "AMCTreeNode.h"
+#import "EditServiceCategoryViewController.h"
+#import "EditServiceViewController.h"
+
+
 #define rowDragAndDropType @"rowDragAndDropType"
 
-@interface AMCCategoryManagerViewController () <NSOutlineViewDataSource, NSOutlineViewDelegate>
+@interface AMCCategoryManagerViewController () <NSOutlineViewDataSource, NSOutlineViewDelegate,NSMenuDelegate>
 {
     NSMutableArray * _allPaymentCategoryLeaves;
     NSMutableArray * _allServiceCategoryLeaves;
@@ -28,7 +32,15 @@
 @property AMCTreeNode * viewRootNode;
 @property (weak) IBOutlet NSTextField *titleLabel;
 @property (strong) IBOutlet NSMenu *addMenu;
+@property (strong) IBOutlet NSMenu *rightClickMenu;
+@property NSString * addObjectMenuTitle;
+@property NSString * addCategoryMenuTitle;
+@property (weak) IBOutlet NSMenuItem *addObjectMenuItem;
+@property (weak) IBOutlet NSMenuItem *addCategoryMenuItem;
+@property (strong) IBOutlet EditServiceCategoryViewController *editServiceCategoryViewController;
 
+@property (strong) IBOutlet EditServiceViewController *editServiceViewController;
+@property (weak) EditObjectViewController * editViewController;
 @end
 
 @implementation AMCCategoryManagerViewController
@@ -39,27 +51,27 @@
 -(void)viewDidLoad {
     [self.categoriesOutlineView registerForDraggedTypes:@[rowDragAndDropType]];
     [self.categoriesOutlineView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
+    [self.categoriesOutlineView setDoubleAction:@selector(doubleClick:)];
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     switch (self.categoryType) {
-        case AMCCategoryTypeAll:
-        {
-            self.titleLabel.stringValue = @"Manage all Categories";
-            break;
-        }
         case AMCCategoryTypeServices:
         {
             self.titleLabel.stringValue = @"Manage Services";
             id<AMCTreeNode>root = (id<AMCTreeNode>)self.salonDocument.salon.rootServiceCategory;
             self.rootNode = [[AMCTreeNode alloc] initWithRepresentedObject:root];
             self.viewRootNode = self.rootNode;
+            self.addCategoryMenuTitle = @"Add Service Category";
+            self.addObjectMenuTitle = @"Add Service";
             break;
         }
         case AMCCategoryTypePayments:
         {
             [self readFromUserDefaults];
             self.titleLabel.stringValue = @"Manage Payment Categories";
+            self.addCategoryMenuTitle = @"Add Payment Category";
+            self.addObjectMenuTitle = @"Add Payment";
             break;
         }
     }
@@ -100,9 +112,6 @@
     self.rootNode = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     self.rootNode.moc = self.documentMoc;
     switch (self.categoryType) {
-        case AMCCategoryTypeAll:
-            self.viewRootNode = self.rootNode;
-            break;
         case AMCCategoryTypePayments:
             break;
         case AMCCategoryTypeServices:
@@ -137,24 +146,59 @@
     [self.categoriesOutlineView scrollRowToVisible:row];
 }
 - (IBAction)addButtonClicked:(id)sender {
-    [self.addMenu popUpMenuPositioningItem:nil atLocation:NSMakePoint(0, 0) inView:self.addButton];
+    [self.addMenu popUpMenuPositioningItem:self.addObjectMenuItem atLocation:NSMakePoint(0, NSMaxY(self.addButton.bounds)) inView:self.addButton];
 }
-
+- (IBAction)rightClickAddObject:(id)sender {
+    [self addObjectToRow:self.categoriesOutlineView.clickedRow];
+}
+- (IBAction)rightClickAddCategory:(id)sender {
+    [self addCategoryToRow:self.categoriesOutlineView.clickedRow];
+}
 -(IBAction)addCategory:(id)sender {
-    NSInteger row = self.categoriesOutlineView.selectedRow;
-    if (row >= 0) {
-        AMCTreeNode * parentNode = [self.categoriesOutlineView itemAtRow:row];
-        [self addCategoryToNode:parentNode];
-    }
+    [self addCategoryToRow:self.categoriesOutlineView.selectedRow];
 }
 -(IBAction)addObject:(id)sender {
-    NSInteger row = self.categoriesOutlineView.selectedRow;
-    if (row >= 0) {
-        AMCTreeNode * parentNode = [self.categoriesOutlineView itemAtRow:row];
-        [self addObjectToNode:parentNode];
-    }
+    [self addObjectToRow:self.categoriesOutlineView.selectedRow];
 }
--(AMCTreeNode*)addObjectToNode:(AMCTreeNode*)parentNode {
+- (IBAction)rightClickEdit:(id)sender {
+    [self editRow:self.categoriesOutlineView.clickedRow];
+}
+-(void)editRow:(NSInteger)row {
+    if (row < 0) return;
+    AMCTreeNode * nodeToEdit = [self.categoriesOutlineView itemAtRow:row];
+    switch (self.categoryType) {
+        case AMCCategoryTypePayments:
+        {
+            break;
+        }
+        case AMCCategoryTypeServices:
+        {
+            if (nodeToEdit.isLeaf) {
+                self.editViewController = self.editServiceViewController;
+            } else {
+                self.editViewController = self.editServiceCategoryViewController;
+            }
+            break;
+        }
+    }
+    self.editViewController.objectToEdit = nodeToEdit.representedObject;
+    self.editViewController.editMode = EditModeView;
+    [self.editViewController prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewControllerAsSheet:self.editViewController];
+}
+-(void)dismissViewController:(NSViewController *)viewController {
+    [super dismissViewController:viewController];
+}
+- (IBAction)doubleClick:(id)sender {
+    [self editRow:self.categoriesOutlineView.clickedRow];
+}
+
+-(AMCTreeNode*)addObjectToRow:(NSInteger)row {
+    if (row < 0) return nil;
+    AMCTreeNode * parentNode = [self.categoriesOutlineView itemAtRow:row];
+    if (parentNode.isLeaf) {
+        parentNode = parentNode.parentNode;
+    }
     id<AMCTreeNode> representedObject = nil;
     AMCTreeNode * newNode = nil;
     switch (self.categoryType) {
@@ -168,7 +212,7 @@
             representedObject = [Service newObjectWithMoc:self.documentMoc];
             representedObject.name = @"New Service";
             newNode = [[AMCTreeNode alloc] initWithRepresentedObject:representedObject];
-
+            break;
         }
         default:
             return nil;
@@ -177,7 +221,12 @@
     [self makeVisibleAndSelect:newNode];
     return newNode;
 }
--(AMCTreeNode*)addCategoryToNode:(AMCTreeNode*)parentNode {
+-(AMCTreeNode*)addCategoryToRow:(NSInteger)row {
+    if (row < 0) return nil;
+    AMCTreeNode *parentNode = [self.categoriesOutlineView itemAtRow:row];
+    if (parentNode.isLeaf) {
+        parentNode = parentNode.parentNode;
+    }
     id<AMCTreeNode> representedObject = nil;
     AMCTreeNode * newNode = nil;
     switch (self.categoryType) {
@@ -199,7 +248,6 @@
     [parentNode addChild:newNode];
     [self makeVisibleAndSelect:newNode];
     return newNode;
-
 }
 -(AMCTreeNode*)addToTreeNode:(AMCTreeNode*)parent {
     id<AMCTreeNode> representedObject = nil;
@@ -346,5 +394,13 @@
     }
     return YES;
 }
-
+#pragma mark - NSMenuDelegate
+-(void)menuNeedsUpdate:(NSMenu *)menu {
+    if (menu == self.addMenu) {
+        
+    }
+    if (menu == self.rightClickMenu) {
+        
+    }
+}
 @end

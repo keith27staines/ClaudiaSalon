@@ -42,21 +42,7 @@
 {
     [super prepareForDisplayWithSalon:salonDocument];
     ServiceCategory * category = (ServiceCategory*)self.objectToEdit;
-    switch (self.editMode) {
-        case EditModeView:
-        {
-            self.nameOfService.stringValue  = category.name;
-            break;
-        }
-        case EditModeCreate:
-        {
-            break;
-        }
-        case EditModeEdit:
-        {
-            break;
-        }
-    }
+    self.nameOfService.stringValue  = (category.name)?category.name:@"";
 }
 -(NSArray *)editableControls
 {

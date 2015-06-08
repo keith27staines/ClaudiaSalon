@@ -10,14 +10,10 @@
 #import "AMCSalonDocument.h"
 @interface EditServiceViewController : EditObjectViewController
 @property (weak) IBOutlet NSTextField *nameField;
-@property (weak) IBOutlet NSPopUpButton *hairLengthPopup;
 @property (weak) IBOutlet NSTextField *timeRequired;
 @property (weak) IBOutlet NSTextField *nominalPrice;
 @property (weak) IBOutlet NSImageView *deluxeBadge;
 @property (weak) IBOutlet NSButton *deluxeCheckbox;
-
-@property (weak) IBOutlet NSPopUpButton *categoryPopup;
-- (IBAction)categoryChanged:(id)sender;
 
 @property (weak) IBOutlet NSTextField *minimumPrice;
 @property (weak) IBOutlet NSTextField *maximumPrice;
