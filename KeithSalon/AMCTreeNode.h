@@ -21,43 +21,50 @@
 -(id<AMCTreeNode>)removeChild:(id<AMCTreeNode>)child;
 -(NSInteger)nodesCount;
 -(NSInteger)leavesCount;
-@optional
 @property (readonly,copy) NSArray * leaves;
 @property (readonly,copy) NSArray * nodes;
--(id<AMCTreeNode>)nodeAtIndex:(NSInteger)index;
--(NSString*)leafAtIndex:(NSInteger)index;
--(BOOL)contains:(id<AMCTreeNode>)node;
--(BOOL)hasDescendent:(id<AMCTreeNode>)node;
--(BOOL)hasAncestor:(id<AMCTreeNode>)node;
--(BOOL)containsNodeWithName:(NSString*)string;
--(BOOL)containsLeafWithName:(NSString*)string;
--(id<AMCTreeNode>)nodeWithName:(NSString*)string;
--(id<AMCTreeNode>)leafWithName:(NSString*)string;
--(id<AMCTreeNode>)mostRecentAncestralDefault ;
--(id<AMCTreeNode>)mostRecentCommonAncestorWith:(id<AMCTreeNode>)otherNode;
-@property (weak) NSManagedObjectContext * moc;
-@property (readonly) NSInteger count;
-@property (copy,readonly) NSArray * allChildren;
-@property BOOL isDeletable;
--(NSArray*)childNodeNames;
--(NSArray*)childLeafNames;
--(BOOL)shouldMoveChild:(id<AMCTreeNode>)child toNewParent:(id<AMCTreeNode>)proposedParent;
+@optional
+
 @end
 
 // AMCTreeNode Interface
-@interface AMCTreeNode : NSObject <AMCTreeNode,NSCoding>
-@property (readonly) AMCTreeNode* rootNode;
-@property AMCTreeNode* parentNode;
 
--(instancetype)initWithRepresentedObject:(id<AMCTreeNode>)representedObject;
-@property (weak,readonly) id<AMCTreeNode>representedObject;
-@property (copy) NSString * name;
+@interface AMCTreeNode : NSObject <NSCoding>
 -(instancetype)init ;
 -(instancetype)initWithName:(NSString*)string isLeaf:(BOOL)isLeaf;
-@property (readonly) BOOL isLeaf;
+-(instancetype)initWithRepresentedObject:(id<AMCTreeNode>)representedObject;
 -(instancetype)shallowCopy;
+@property (weak) NSManagedObjectContext * moc;
+@property (weak,readonly) id<AMCTreeNode>representedObject;
+@property (readonly) AMCTreeNode* rootNode;
+@property AMCTreeNode* parentNode;
+@property (copy) NSString * name;
+@property (readonly) BOOL isLeaf;
+@property (readonly) NSInteger count;
+-(NSInteger)nodesCount;
+-(NSInteger)leavesCount;
+-(AMCTreeNode*)addChild:(AMCTreeNode*)child;
+-(AMCTreeNode*)removeChild:(AMCTreeNode*)child;
 -(AMCTreeNode*)nodeWithName:(NSString*)string;
 -(AMCTreeNode*)leafWithName:(NSString*)string;
 -(AMCTreeNode*)mostRecentAncestralDefault ;
--(AMCTreeNode*)mostRecentCommonAncestorWith:(id<AMCTreeNode>)otherNode;
+-(AMCTreeNode*)mostRecentCommonAncestorWith:(AMCTreeNode*)otherNode;
+-(BOOL)containsNodeWithName:(NSString*)string;
+-(BOOL)containsLeafWithName:(NSString*)string;
+-(BOOL)hasDescendent:(AMCTreeNode*)node;
+-(BOOL)hasAncestor:(AMCTreeNode*)node;
+
+@property (copy,readonly) NSArray * allChildren;
+-(NSArray*)childNodeNames;
+-(NSArray*)childLeafNames;
+-(AMCTreeNode*)nodeAtIndex:(NSInteger)index;
+-(AMCTreeNode*)leafAtIndex:(NSInteger)index;
+-(BOOL)shouldMoveChild:(AMCTreeNode*)child toNewParent:(AMCTreeNode*)proposedParent;
+
+
+@property (readonly,copy) NSArray * leaves;
+@property (readonly,copy) NSArray * nodes;
+
+-(BOOL)contains:(AMCTreeNode*)node;
+
 @end

@@ -9,6 +9,6 @@
 #import "AMCTreeNode.h"
 
 @interface AMCCategoriesRootNode : AMCTreeNode
-@property id<AMCTreeNode> cashbookNode;
-@property id<AMCTreeNode> servicesNode;
+@property AMCTreeNode * cashbookNode;
+@property AMCTreeNode * servicesNode;
 @end

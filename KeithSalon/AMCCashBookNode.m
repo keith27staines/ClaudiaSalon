@@ -9,13 +9,13 @@
 #import "AMCCashBookNode.h"
 #import "PaymentCategory+Methods.h"
 @interface AMCCashBookNode()
-@property id<AMCTreeNode> incomeNode;
+@property AMCTreeNode * incomeNode;
 @property AMCTreeNode * expenditureNode;
 @end
 
 @implementation AMCCashBookNode
 
--(id)initWithCoder:(NSCoder *)aDecoder {
+-(instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
         self.incomeNode = [aDecoder decodeObjectForKey:@"incomeNode"];
@@ -36,13 +36,12 @@
 -(instancetype)initWithName:(NSString *)string isLeaf:(BOOL)isLeaf {
     self = [super initWithName:@"Cashbook" isLeaf:isLeaf];
     if (self) {
+
         self.incomeNode = [self addChild:[[AMCTreeNode alloc] initWithName:@"Income" isLeaf:NO]];
         self.expenditureNode = [self addChild:[[AMCTreeNode alloc] initWithName:@"Expenditure" isLeaf:NO]];
-        self.incomeNode.isDeletable = NO;
-        self.expenditureNode.isDeletable = NO;
         
         // Add default expenditure categories
-        id<AMCTreeNode> node = self.expenditureNode;
+        AMCTreeNode * node = self.expenditureNode;
         [node addChild:[[AMCTreeNode alloc] initWithName:@"Accountancy" isLeaf:NO]];
         [node addChild:[[AMCTreeNode alloc] initWithName:@"Advertising" isLeaf:NO]];
         [node addChild:[[AMCTreeNode alloc] initWithName:@"Bank charges" isLeaf:NO]];
@@ -80,7 +79,6 @@
     NSMutableArray * allAccountancy = [[PaymentCategory allObjectsWithMoc:self.moc] mutableCopy];
     for (PaymentCategory * paymentCategory in allAccountancy) {
         AMCTreeNode * node = [[AMCTreeNode alloc] initWithName:paymentCategory.categoryName isLeaf:YES];
-        node.isDeletable = NO;
         if (![self.incomeNode containsLeafWithName:node.name]) {
             // No leaf with the same name as the payment category exists in the tree yet, so we shall add a new appropriately named leaf. The question is, where to put this leaf?
             [[self bestParentForLeaf:node underNode:self.incomeNode] addChild:[node shallowCopy]];
@@ -91,7 +89,7 @@
         }
     }
 }
--(id<AMCTreeNode>)bestParentForLeaf:(id<AMCTreeNode>)leaf underNode:(id<AMCTreeNode>)start {
+-(AMCTreeNode*)bestParentForLeaf:(AMCTreeNode*)leaf underNode:(AMCTreeNode*)start {
     if ([start containsNodeWithName:leaf.name]) {
         // There is a node with the right name, and this is the best place to put the new leaf
         return [start nodeWithName:leaf.name];

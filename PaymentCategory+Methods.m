@@ -41,7 +41,4 @@
     return matches.firstObject;
 }
 
--(Salon*)salon {
-    return [Salon salonWithMoc:self.managedObjectContext];
-}
 @end

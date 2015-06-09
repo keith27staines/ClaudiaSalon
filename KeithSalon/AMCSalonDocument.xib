@@ -87,12 +87,6 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Service Categories" identifier="serviceCategories" id="uue-cn-IpO">
-                                <view key="view" id="oYV-lH-AOX">
-                                    <rect key="frame" x="10" y="33" width="1383" height="778"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                            </tabViewItem>
                             <tabViewItem label="Staff" identifier="staff" id="QoJ-WY-A3L">
                                 <view key="view" id="Ovh-g5-GlB">
                                     <rect key="frame" x="10" y="33" width="1383" height="778"/>

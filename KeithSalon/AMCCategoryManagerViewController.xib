@@ -66,9 +66,9 @@ DQ
                         <action selector="removeButtonClicked:" target="-2" id="qTy-7I-MoB"/>
                     </connections>
                 </button>
-                <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Bo-Cr-beH">
-                    <rect key="frame" x="20" y="47" width="541" height="362"/>
-                    <clipView key="contentView" misplaced="YES" id="vVg-cQ-1VS">
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Bo-Cr-beH">
+                    <rect key="frame" x="20" y="47" width="541" height="356"/>
+                    <clipView key="contentView" id="vVg-cQ-1VS">
                         <rect key="frame" x="1" y="17" width="238" height="117"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -164,41 +164,29 @@ DQ
                     </scroller>
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hJl-2X-Ug1">
-                    <rect key="frame" x="200" y="423" width="178" height="23"/>
+                    <rect key="frame" x="202" y="423" width="178" height="23"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manage Groupings" id="9c6-lg-25D">
                         <font key="font" metaFont="systemBold" size="19"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KmS-kS-iJg">
-                    <rect key="frame" x="410" y="417" width="157" height="32"/>
-                    <buttonCell key="cell" type="push" title="Reset to defaults..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pXQ-Dc-GD6">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="askResetToDefaults:" target="-2" id="Jlw-Gb-JkU"/>
-                    </connections>
-                </button>
             </subviews>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="LTc-ND-65B" secondAttribute="centerX" id="2wc-QR-xK8"/>
                 <constraint firstAttribute="bottom" secondItem="LTc-ND-65B" secondAttribute="bottom" constant="20" id="3NJ-k1-85H"/>
-                <constraint firstItem="hJl-2X-Ug1" firstAttribute="centerY" secondItem="KmS-kS-iJg" secondAttribute="centerY" id="D66-sG-xJg"/>
+                <constraint firstAttribute="centerX" secondItem="hJl-2X-Ug1" secondAttribute="centerX" id="OUt-9q-s11"/>
                 <constraint firstItem="zol-qx-AvU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="UCZ-pD-cA2"/>
                 <constraint firstItem="8Bo-Cr-beH" firstAttribute="top" secondItem="hJl-2X-Ug1" secondAttribute="bottom" constant="20" id="Y1I-jC-h2M"/>
                 <constraint firstItem="LTc-ND-65B" firstAttribute="centerY" secondItem="Kz5-82-jgM" secondAttribute="centerY" id="Y2L-AA-2Mf"/>
                 <constraint firstItem="8Bo-Cr-beH" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="caA-Gm-Lpi"/>
                 <constraint firstItem="Kz5-82-jgM" firstAttribute="leading" secondItem="zol-qx-AvU" secondAttribute="trailing" constant="-1" id="dHP-Bn-YnV"/>
-                <constraint firstAttribute="trailing" secondItem="KmS-kS-iJg" secondAttribute="trailing" constant="20" id="hzi-aa-IYX"/>
                 <constraint firstItem="hJl-2X-Ug1" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="jZj-sm-95G"/>
                 <constraint firstAttribute="trailing" secondItem="8Bo-Cr-beH" secondAttribute="trailing" constant="20" id="nz3-lG-Zg6"/>
                 <constraint firstItem="zol-qx-AvU" firstAttribute="top" secondItem="8Bo-Cr-beH" secondAttribute="bottom" constant="2" id="obD-2J-I8z"/>
                 <constraint firstItem="hJl-2X-Ug1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="psM-j9-Vip"/>
                 <constraint firstItem="zol-qx-AvU" firstAttribute="top" secondItem="Kz5-82-jgM" secondAttribute="top" id="qz2-7g-oCE"/>
                 <constraint firstAttribute="centerX" secondItem="hJl-2X-Ug1" secondAttribute="centerX" priority="250" id="r8F-x3-gHy"/>
-                <constraint firstItem="KmS-kS-iJg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hJl-2X-Ug1" secondAttribute="trailing" constant="40" id="ula-SS-Mk1"/>
                 <constraint firstItem="LTc-ND-65B" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Kz5-82-jgM" secondAttribute="trailing" constant="40" id="wgR-7r-o7U"/>
             </constraints>
             <point key="canvasLocation" x="-5.5" y="8"/>

@@ -29,7 +29,6 @@
 -(instancetype)initWithName:(NSString *)string isLeaf:(BOOL)isLeaf {
     self = [super initWithName:@"All Categories" isLeaf:NO];
     if (self) {
-        self.isDeletable = NO;
         self.cashbookNode = [self addChild:[[AMCCashBookNode alloc] init]];
     }
     return self;

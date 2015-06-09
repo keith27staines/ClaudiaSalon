@@ -58,7 +58,7 @@
     switch (self.categoryType) {
         case AMCCategoryTypeServices:
         {
-            self.titleLabel.stringValue = @"Manage Services";
+            self.titleLabel.stringValue = @"Manage Services and Service Categories";
             id<AMCTreeNode>root = (id<AMCTreeNode>)self.salonDocument.salon.rootServiceCategory;
             self.rootNode = [[AMCTreeNode alloc] initWithRepresentedObject:root];
             self.viewRootNode = self.rootNode;
@@ -82,7 +82,7 @@
         _allServiceCategoryLeaves = [NSMutableArray array];
         NSArray * allCategories = [ServiceCategory allObjectsWithMoc:self.documentMoc];
         for (ServiceCategory * category in allCategories) {
-            id<AMCTreeNode> leaf = [[AMCTreeNode alloc] initWithName:category.name isLeaf:YES];
+            AMCTreeNode * leaf = [[AMCTreeNode alloc] initWithName:category.name isLeaf:YES];
             [_allServiceCategoryLeaves addObject:leaf];
         }
     }
@@ -93,7 +93,7 @@
         _allPaymentCategoryLeaves = [NSMutableArray array];
         NSArray * allCategories = [PaymentCategory allObjectsWithMoc:self.documentMoc];
         for (PaymentCategory * category in allCategories) {
-            id<AMCTreeNode> leaf = [[AMCTreeNode alloc] initWithName:category.categoryName isLeaf:YES];
+            AMCTreeNode* leaf = [[AMCTreeNode alloc] initWithName:category.categoryName isLeaf:YES];
             [_allPaymentCategoryLeaves addObject:leaf];
         }
     }
@@ -134,7 +134,7 @@
     [self readFromUserDefaults];
     [self.categoriesOutlineView reloadData];
 }
-- (void)moveCategoryContentToDefault:(id<AMCTreeNode>)category {
+- (void)moveCategoryContentToDefault:(AMCTreeNode*)category {
     [self moveContentOfCategory:category toCategory:[category mostRecentAncestralDefault]];
 }
 -(void)makeVisibleAndSelect:(AMCTreeNode*)node {
@@ -265,10 +265,13 @@
     }
     return newNode;
 }
--(BOOL)shouldMoveCategory:(id<AMCTreeNode>)mover toCategory:(id<AMCTreeNode>)proposedParent {
+-(BOOL)shouldMoveCategory:(AMCTreeNode*)mover toCategory:(AMCTreeNode*)proposedParent {
+    if ([proposedParent hasAncestor:mover]) {
+        return NO;
+    }
     return !proposedParent.isLeaf;
 }
--(BOOL)moveCategory:(id<AMCTreeNode>)mover toCategory:(id<AMCTreeNode>)newParent {
+-(BOOL)moveCategory:(AMCTreeNode*)mover toCategory:(AMCTreeNode*)newParent {
     if (newParent.isLeaf) {
         newParent = newParent.parentNode;
     }
@@ -282,7 +285,7 @@
 
     return YES;
 }
--(void)moveContentOfCategory:(id<AMCTreeNode>)sourceCategory toCategory:(id<AMCTreeNode>)destinationCategory {
+-(void)moveContentOfCategory:(AMCTreeNode*)sourceCategory toCategory:(AMCTreeNode*)destinationCategory {
     if (sourceCategory == destinationCategory) {
         return;
     }
@@ -298,7 +301,6 @@
     NSInteger row = self.categoriesOutlineView.selectedRow;
     AMCTreeNode * item = [self.categoriesOutlineView itemAtRow:row];
     if (!item) return;
-    if (!item.isDeletable) return;
     if (item.isLeaf) return;
     [self moveContentOfCategory:item toCategory:[item mostRecentAncestralDefault]];
     [item.parentNode removeChild:item];
@@ -364,6 +366,16 @@
     
 }
 -(NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id<NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index {
+    if (item) {
+        NSPasteboard * pboard = [info draggingPasteboard];
+        NSData * data = [pboard dataForType:rowDragAndDropType];
+        NSIndexSet * rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        NSInteger row = [rowIndexes firstIndex];
+        AMCTreeNode * node = [self.categoriesOutlineView itemAtRow:row];
+        if (![self shouldMoveCategory:node toCategory:item]) {
+            return NSDragOperationNone;
+        }
+    }
     return NSDragOperationMove;
 }
 -(BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id<NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index {

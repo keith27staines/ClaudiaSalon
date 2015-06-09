@@ -2,7 +2,7 @@
 //  Salon.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 08/06/2015.
+//  Created by Keith Staines on 09/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -37,8 +37,8 @@
 @dynamic manager;
 @dynamic openingHoursWeekTemplate;
 @dynamic primaryBankAccount;
-@dynamic tillAccount;
 @dynamic rootServiceCategory;
 @dynamic serviceCategories;
+@dynamic tillAccount;
 
 @end

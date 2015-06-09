@@ -2,7 +2,7 @@
 //  PaymentCategory.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/04/2015.
+//  Created by Keith Staines on 09/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -23,11 +23,11 @@
 @property (nonatomic, retain) NSNumber * isSale;
 @property (nonatomic, retain) NSNumber * isStartupCost;
 @property (nonatomic, retain) NSNumber * isTransferBetweenAccounts;
+@property (nonatomic, retain) Salon *defaultCategoryForMoneyTransfers;
 @property (nonatomic, retain) Salon *defaultCategoryForPayments;
-@property (nonatomic, retain) NSSet *payments;
 @property (nonatomic, retain) Salon *defaultCategoryForSales;
 @property (nonatomic, retain) Salon *defaultCategoryForWages;
-@property (nonatomic, retain) Salon *defaultCategoryForMoneyTransfers;
+@property (nonatomic, retain) NSSet *payments;
 @end
 
 @interface PaymentCategory (CoreDataGeneratedAccessors)

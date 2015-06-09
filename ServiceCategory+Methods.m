@@ -45,10 +45,19 @@
 }
 
 #pragma mark - AMCTreeNodeProtocol
--(AMCTreeNode *)rootNode {
-    return (AMCTreeNode *)self.salon.rootServiceCategory;
+-(ServiceCategory*)rootNode {
+    return self.salon.rootServiceCategory;
 }
--(AMCTreeNode *)addChild:(AMCTreeNode *)child {
+-(void)setParentNode:(ServiceCategory*)parentNode {
+    self.parent = parentNode;
+}
+-(ServiceCategory*)parentNode {
+    return self.parent;
+}
+-(BOOL)isLeaf {
+    return NO;
+}
+-(id<AMCTreeNode>)addChild:(ServiceCategory*)child {
     if ([child isKindOfClass:[ServiceCategory class]]) {
         ServiceCategory * category = (ServiceCategory*)child;
         [self addSubCategoriesObject:(ServiceCategory*)category];
@@ -60,7 +69,7 @@
     }
     return nil;
 }
--(AMCTreeNode *)removeChild:(AMCTreeNode *)child {
+-(id<AMCTreeNode>)removeChild:(id<AMCTreeNode>)child {
     if ([child isKindOfClass:[ServiceCategory class]]) {
         ServiceCategory * category = (ServiceCategory*)child;
         [self removeSubCategoriesObject:(ServiceCategory*)category];
@@ -79,20 +88,13 @@
 -(NSInteger)leavesCount {
     return self.service.count;
 }
--(void)setParentNode:(ServiceCategory*)parentNode {
-    self.parent = parentNode;
-}
--(ServiceCategory*)parentNode {
-    return self.parent;
-}
+
 -(NSArray *)leaves {
     return [[self.service allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
 }
 -(NSArray *)nodes {
     return [[self.subCategories allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]]];
 }
--(BOOL)isLeaf {
-    return NO;
-}
+
 
 @end

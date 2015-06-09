@@ -45,7 +45,6 @@
     if (self) {
         self.name = [aDecoder decodeObjectForKey:@"name"];
         self.isLeaf = [aDecoder decodeBoolForKey:@"isLeaf"];
-        self.isDeletable = [aDecoder decodeBoolForKey:@"isDeletable"];
         self.childLeafs = [aDecoder decodeObjectForKey:@"childLeafs"];
         self.childNodes = [aDecoder decodeObjectForKey:@"childNodes"];
         self.parentNode = [aDecoder decodeObjectForKey:@"parentNode"];
@@ -67,7 +66,6 @@
 -(void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.name forKey:@"name"];
     [aCoder encodeBool:self.isLeaf forKey:@"isLeaf"];
-    [aCoder encodeBool:self.isDeletable forKey:@"isDeletable"];
     [aCoder encodeObject:self.childLeafs forKey:@"childLeafs"];
     [aCoder encodeObject:self.childNodes forKey:@"childNodes"];
     [aCoder encodeObject:self.parentNode forKey:@"parentNode"];
@@ -82,11 +80,6 @@
         self.childNodes = [NSMutableArray array];
         self.childLeafs = [NSMutableArray array];
         self.isLeaf = isLeaf;
-        if (isLeaf) {
-            self.isDeletable = NO;
-        } else {
-            self.isDeletable = YES;
-        }
     }
     return self;
 }
@@ -137,7 +130,7 @@
     if ([child hasDescendent:newParent]) {
         return NO; // Proposed parent is a descendent of the child
     }
-    for (id<AMCTreeNode> node in self.childNodes) {
+    for (AMCTreeNode * node in self.childNodes) {
         if ([node hasDescendent:child] || [node hasDescendent:newParent]) {
             if (![node shouldMoveChild:child toNewParent:newParent]) {
                 return NO;
@@ -179,7 +172,7 @@
 -(AMCTreeNode *)nodeAtIndex:(NSInteger)index {
     return self.childNodes[index];
 }
--(NSString *)leafAtIndex:(NSInteger)index {
+-(AMCTreeNode *)leafAtIndex:(NSInteger)index {
     return self.childLeafs[index];
 }
 -(NSInteger)count {
@@ -284,7 +277,6 @@
 }
 -(instancetype)shallowCopy {
     AMCTreeNode * copy = [[self.class alloc] initWithName:self.name isLeaf:self.isLeaf];
-    copy.isDeletable = self.isDeletable;
     return copy;
 }
 @end

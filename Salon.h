@@ -2,7 +2,7 @@
 //  Salon.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 08/06/2015.
+//  Created by Keith Staines on 09/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -33,8 +33,8 @@
 @property (nonatomic, retain) Employee *manager;
 @property (nonatomic, retain) OpeningHoursWeekTemplate *openingHoursWeekTemplate;
 @property (nonatomic, retain) Account *primaryBankAccount;
-@property (nonatomic, retain) Account *tillAccount;
 @property (nonatomic, retain) ServiceCategory *rootServiceCategory;
 @property (nonatomic, retain) ServiceCategory *serviceCategories;
+@property (nonatomic, retain) Account *tillAccount;
 
 @end

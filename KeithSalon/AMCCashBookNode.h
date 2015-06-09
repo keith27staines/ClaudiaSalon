@@ -8,9 +8,8 @@
 
 
 #import "AMCTreeNode.h"
-#import "AMCSystemTreeNode.h"
 
-@interface AMCCashBookNode : AMCSystemTreeNode
-@property (readonly) id<AMCTreeNode> incomeNode;
-@property (readonly) id<AMCTreeNode> expenditureNode;
+@interface AMCCashBookNode : AMCTreeNode
+@property (readonly) AMCTreeNode * incomeNode;
+@property (readonly) AMCTreeNode * expenditureNode;
 @end

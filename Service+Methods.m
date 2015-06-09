@@ -93,14 +93,20 @@
     return nonAuditNotes;
 }
 #pragma mark - AMCTreeNodeProtocol
--(AMCTreeNode *)rootNode {
+-(id<AMCTreeNode>)rootNode {
     return self.serviceCategory.rootNode;
 }
--(AMCTreeNode *)addChild:(AMCTreeNode *)child {
+-(ServiceCategory *)parentNode {
+    return self.serviceCategory;
+}
+-(void)setParentNode:(ServiceCategory *)parentNode {
+    self.serviceCategory = parentNode;
+}
+-(Service*)addChild:(Service*)child {
     NSAssert(NO, @"Services do not have children");
     return nil;
 }
--(AMCTreeNode *)removeChild:(AMCTreeNode *)child {
+-(Service*)removeChild:(Service*)child {
     NSAssert(NO, @"Services do not have children");
     return nil;
 }
@@ -109,9 +115,6 @@
 }
 -(NSInteger)leavesCount {
     return 0;
-}
--(AMCTreeNode *)parentNode {
-    return (AMCTreeNode *)self.serviceCategory;
 }
 -(NSArray *)leaves {
     return @[];

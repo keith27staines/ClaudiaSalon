@@ -2,7 +2,7 @@
 //  PaymentCategory.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/04/2015.
+//  Created by Keith Staines on 09/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -23,10 +23,10 @@
 @dynamic isSale;
 @dynamic isStartupCost;
 @dynamic isTransferBetweenAccounts;
+@dynamic defaultCategoryForMoneyTransfers;
 @dynamic defaultCategoryForPayments;
-@dynamic payments;
 @dynamic defaultCategoryForSales;
 @dynamic defaultCategoryForWages;
-@dynamic defaultCategoryForMoneyTransfers;
+@dynamic payments;
 
 @end

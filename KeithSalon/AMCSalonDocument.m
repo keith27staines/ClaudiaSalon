@@ -36,7 +36,7 @@
 
 // Imports required for data fixes
 #import "ServiceCategory+Methods.h"
-// End fixes
+// End imports for data fixes
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 
@@ -90,26 +90,26 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 }
 -(void)dataFixes {
     // Begin Service category data fix
-    ServiceCategory * rootCategory = _salon.rootServiceCategory;
-    if (!rootCategory) {
-        rootCategory   = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
-        _salon.rootServiceCategory = rootCategory;
+    ServiceCategory * rootServiceCategory = _salon.rootServiceCategory;
+    if (!rootServiceCategory) {
+        rootServiceCategory   = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
+        _salon.rootServiceCategory = rootServiceCategory;
         ServiceCategory * hairCategory = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
         ServiceCategory * beautyCategory = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
 
-        rootCategory.name   = @"Service Categories";
+        rootServiceCategory.name   = @"Service Categories";
         hairCategory.name   = @"Hair";
         beautyCategory.name = @"Beauty";
-        rootCategory.isSystemCategory = @YES;
+        rootServiceCategory.isSystemCategory = @YES;
         hairCategory.isSystemCategory = @YES;
         beautyCategory.isSystemCategory = @YES;
-        rootCategory.isDefaultCategory = @YES;
+        rootServiceCategory.isDefaultCategory = @YES;
         hairCategory.isDefaultCategory = @YES;
         beautyCategory.isDefaultCategory = @YES;
-        [rootCategory addSubCategoriesObject:hairCategory];
-        [rootCategory addSubCategoriesObject:beautyCategory];
+        [rootServiceCategory addSubCategoriesObject:hairCategory];
+        [rootServiceCategory addSubCategoriesObject:beautyCategory];
         for (ServiceCategory * category in [ServiceCategory allObjectsWithMoc:self.managedObjectContext]) {
-            if (!category.parent && category != rootCategory) {
+            if (!category.parent && category != rootServiceCategory) {
                 if ([category isHairCategory]) {
                     category.parent = hairCategory;
                 } else {
@@ -118,8 +118,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
                 category.salon = _salon;
             }
         }
-    }
-    // End Service category data fix
+    } // End Service Category data fix
 }
 -(Customer *)anonymousCustomer {
     if (!self.salon.anonymousCustomer) {
