@@ -15,7 +15,7 @@
 #import "AMCTreeNode.h"
 #import "EditServiceCategoryViewController.h"
 #import "EditServiceViewController.h"
-
+#import "AMCCashBookNode.h"
 
 #define rowDragAndDropType @"rowDragAndDropType"
 
@@ -68,10 +68,11 @@
         }
         case AMCCategoryTypePayments:
         {
-            [self readFromUserDefaults];
-            self.titleLabel.stringValue = @"Manage Payment Categories";
-            self.addCategoryMenuTitle = @"Add Payment Category";
-            self.addObjectMenuTitle = @"Add Payment";
+            self.titleLabel.stringValue = @"Manage Accounting and Payment Categories";
+            self.rootNode = [[AMCCashBookNode alloc] initWithSalon:self.salonDocument.salon];
+            self.viewRootNode = self.rootNode;
+            self.addCategoryMenuTitle = @"Add Accounting Category";
+            self.addObjectMenuTitle = @"Add Payment Category";
             break;
         }
     }
@@ -111,13 +112,6 @@
     NSData * data = [[NSUserDefaults standardUserDefaults] dataForKey:kAMCSystemCategories];
     self.rootNode = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     self.rootNode.moc = self.documentMoc;
-    switch (self.categoryType) {
-        case AMCCategoryTypePayments:
-            break;
-        case AMCCategoryTypeServices:
-            //self.viewRootNode = self.rootNode.servicesNode;
-            break;
-    }
 }
 - (IBAction)askResetToDefaults:(id)sender {
     NSAlert * alert = [[NSAlert alloc] init];

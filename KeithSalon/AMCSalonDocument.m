@@ -36,6 +36,8 @@
 
 // Imports required for data fixes
 #import "ServiceCategory+Methods.h"
+#import "AccountingPaymentGroup+Methods.h"
+#import "PaymentCategory+Methods.h"
 // End imports for data fixes
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
@@ -119,6 +121,9 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
             }
         }
     } // End Service Category data fix
+    
+    // Initialise entity "AccountancyPaymentGroup"
+    [AccountingPaymentGroup buildDefaultGroupsForSalon:_salon];
 }
 -(Customer *)anonymousCustomer {
     if (!self.salon.anonymousCustomer) {

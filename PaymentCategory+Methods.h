@@ -8,6 +8,7 @@
 
 #import "PaymentCategory.h"
 #import "AMCSalonDocument.h"
+
 @interface PaymentCategory (Methods)
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;

@@ -2,11 +2,12 @@
 //  PaymentCategory.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 09/06/2015.
+//  Created by Keith Staines on 10/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import "PaymentCategory.h"
+#import "AccountingPaymentGroup.h"
 #import "Payment.h"
 #import "Salon.h"
 
@@ -28,5 +29,7 @@
 @dynamic defaultCategoryForSales;
 @dynamic defaultCategoryForWages;
 @dynamic payments;
+@dynamic expenditureAccountingGroup;
+@dynamic incomeAccountingGroup;
 
 @end

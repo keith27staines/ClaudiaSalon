@@ -8,94 +8,106 @@
 
 #import "AMCCashBookNode.h"
 #import "PaymentCategory+Methods.h"
+#import "AccountingPaymentGroup+Methods.h"
+
 @interface AMCCashBookNode()
 @property AMCTreeNode * incomeNode;
 @property AMCTreeNode * expenditureNode;
+@property PaymentCategory * paymentCategory;
+@property (readonly) AccountingPaymentGroup * accountingGroup;
 @end
 
 @implementation AMCCashBookNode
 
--(instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
++(instancetype)rootCashBookNode:(Salon*)salon {
+    return [[self alloc] initWithSalon:salon];
+}
+-(instancetype)initWithSalon:(Salon*)salon {
+    self.moc = salon.managedObjectContext;
+    return [self initWithAccountancyGroup:salon.rootAccountingGroup];
+}
+-(instancetype)initWithRepresentedObject:(id<AMCTreeNode>)representedObject {
+    self = [super initWithRepresentedObject:representedObject loadSubnodes:NO loadLeaves:NO];
+    return self;
+}
+-(instancetype)initWithAccountancyGroup:(AccountingPaymentGroup*)group {
+    self = [self initWithRepresentedObject:group];
+    NSMutableArray * sortDescriptors = nil;
+    NSArray * sortedArray = nil;
     if (self) {
-        self.incomeNode = [aDecoder decodeObjectForKey:@"incomeNode"];
-        self.expenditureNode = [aDecoder decodeObjectForKey:@"expenditureNode"];
+        sortDescriptors = [NSMutableArray array];
+        [sortDescriptors addObject:[NSSortDescriptor sortDescriptorWithKey:@"isSystemCategory" ascending:NO]];
+        [sortDescriptors addObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+        [sortDescriptors addObject:[NSSortDescriptor sortDescriptorWithKey:@"isLeaf" ascending:YES]];
+        sortedArray = [[group.subgroups allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+        for (AccountingPaymentGroup * subgroup in sortedArray) {
+            [self addChild:[[AMCCashBookNode alloc] initWithAccountancyGroup:subgroup] updateRepresentedObject:NO];
+        }
+        if (group.isExpenditure) {
+            sortDescriptors = [NSMutableArray array];
+            [sortDescriptors addObject:[NSSortDescriptor sortDescriptorWithKey:@"categoryName" ascending:YES]];
+            sortedArray = [[group.expenditurePaymentCategories allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+            for (PaymentCategory * expenditureCategory in sortedArray) {
+                [self addChild:[[AMCCashBookNode alloc] initWithPaymentCategory:expenditureCategory] updateRepresentedObject:NO];
+            }
+        }
+        if (group.isIncome) {
+            sortDescriptors = [NSMutableArray array];
+            [sortDescriptors addObject:[NSSortDescriptor sortDescriptorWithKey:@"categoryName" ascending:YES]];
+            sortedArray = [[group.incomePaymentCategories allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+            for (PaymentCategory * incomeCategory in sortedArray) {
+                [self addChild:[[AMCCashBookNode alloc] initWithPaymentCategory:incomeCategory] updateRepresentedObject:NO];
+            }
+        }
     }
     return self;
 }
--(void)setMoc:(NSManagedObjectContext *)moc {
-    [super setMoc:moc];
-    [self mergeUserCategories];
-}
--(void)encodeWithCoder:(NSCoder *)aCoder {
-    [super encodeWithCoder:aCoder];
-    [aCoder encodeObject:self.incomeNode forKey:@"incomeNode"];
-    [aCoder encodeObject:self.expenditureNode forKey:@"expenditureNode"];
-}
-
--(instancetype)initWithName:(NSString *)string isLeaf:(BOOL)isLeaf {
-    self = [super initWithName:@"Cashbook" isLeaf:isLeaf];
+-(instancetype)initWithPaymentCategory:(PaymentCategory*)category {
+    self = [super initWithName:category.categoryName isLeaf:YES];
     if (self) {
-
-        self.incomeNode = [self addChild:[[AMCTreeNode alloc] initWithName:@"Income" isLeaf:NO]];
-        self.expenditureNode = [self addChild:[[AMCTreeNode alloc] initWithName:@"Expenditure" isLeaf:NO]];
-        
-        // Add default expenditure categories
-        AMCTreeNode * node = self.expenditureNode;
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Accountancy" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Advertising" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Bank charges" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Building and Maintenance" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Cleaning" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Director's Loan (Irina)" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Director's Loan (Keith)" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Drinks" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Equipment" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Garbage" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Insurance" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Phone & Internet" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Refunds" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Rent" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Sales" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Stock" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Sundries" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Transfers" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Travel Expenses" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Wages" isLeaf:NO]];
-
-        // Add default income categories
-        node = self.incomeNode;
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Sales" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Bank charges" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Director's Loan (Irina)" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Director's Loan (Keith)" isLeaf:NO]];
-        [node addChild:[[AMCTreeNode alloc] initWithName:@"Transfers" isLeaf:NO]];
-        
+        self.paymentCategory = category;
     }
     return self;
 }
--(void)mergeUserCategories {
-    NSAssert(self.moc, @"Managed object context must not be nil");
-    NSMutableArray * allAccountancy = [[PaymentCategory allObjectsWithMoc:self.moc] mutableCopy];
-    for (PaymentCategory * paymentCategory in allAccountancy) {
-        AMCTreeNode * node = [[AMCTreeNode alloc] initWithName:paymentCategory.categoryName isLeaf:YES];
-        if (![self.incomeNode containsLeafWithName:node.name]) {
-            // No leaf with the same name as the payment category exists in the tree yet, so we shall add a new appropriately named leaf. The question is, where to put this leaf?
-            [[self bestParentForLeaf:node underNode:self.incomeNode] addChild:[node shallowCopy]];
-        }
-        if (![self.expenditureNode containsLeafWithName:node.name]) {
-            // No leaf with the same name as the payment category exists in the tree yet, so we shall add a new appropriately named leaf. The question is, where to put this leaf?
-            [[self bestParentForLeaf:node underNode:self.expenditureNode] addChild:[node shallowCopy]];
-        }
-    }
-}
--(AMCTreeNode*)bestParentForLeaf:(AMCTreeNode*)leaf underNode:(AMCTreeNode*)start {
-    if ([start containsNodeWithName:leaf.name]) {
-        // There is a node with the right name, and this is the best place to put the new leaf
-        return [start nodeWithName:leaf.name];
+-(NSString *)name {
+    if (self.paymentCategory) {
+        return self.paymentCategory.categoryName;
     } else {
-        // There is no node with a matching name, so our best bet is to put the new leaf in the nearest upward default node and let the user move it to a more appropriate location
-        return [start mostRecentAncestralDefault];
+        return [super name];
     }
+}
+-(void)setName:(NSString *)name {
+    if (self.paymentCategory) {
+        self.paymentCategory.categoryName = name;
+    } else {
+        [super setName:name];
+    }
+}
+-(AMCTreeNode*)addChild:(AMCTreeNode*)child {
+    AMCCashBookNode * accountancyNode = (AMCCashBookNode*)child;
+    child = [super addChild:child];
+    if (child && child.isLeaf) {
+        if (self.accountingGroup.isExpenditure) {
+            [self.accountingGroup addExpenditurePaymentCategoriesObject:accountancyNode.paymentCategory];
+        } else {
+            [self.accountingGroup addIncomePaymentCategoriesObject:accountancyNode.paymentCategory];
+        }
+    }
+    return child;
+}
+-(AMCTreeNode*)removeChild:(AMCTreeNode*)child {
+    AMCCashBookNode * accountancyNode = (AMCCashBookNode*)child;
+    child = [super removeChild:child];
+    if (child && child.isLeaf) {
+        if (self.accountingGroup.isExpenditure) {
+            [self.accountingGroup removeExpenditurePaymentCategoriesObject:accountancyNode.paymentCategory];
+        } else {
+            [self.accountingGroup removeIncomePaymentCategoriesObject:accountancyNode.paymentCategory];
+        }
+    }
+    return child;
+}
+-(AccountingPaymentGroup*)accountingGroup {
+    return (AccountingPaymentGroup*)self.representedObject;
 }
 @end

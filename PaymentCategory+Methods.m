@@ -40,5 +40,4 @@
     NSAssert(matches.count <= 1, @"Unexpected number of matches");
     return matches.firstObject;
 }
-
 @end

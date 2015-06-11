@@ -57,10 +57,10 @@
 -(BOOL)isLeaf {
     return NO;
 }
--(id<AMCTreeNode>)addChild:(ServiceCategory*)child {
+-(id<AMCTreeNode>)addChild:(id<AMCTreeNode>)child {
     if ([child isKindOfClass:[ServiceCategory class]]) {
         ServiceCategory * category = (ServiceCategory*)child;
-        [self addSubCategoriesObject:(ServiceCategory*)category];
+        [self addSubCategoriesObject:category];
         return child;
     }
     if ([child isKindOfClass:[Service class]]) {

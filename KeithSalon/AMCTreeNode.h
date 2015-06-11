@@ -33,6 +33,7 @@
 -(instancetype)init ;
 -(instancetype)initWithName:(NSString*)string isLeaf:(BOOL)isLeaf;
 -(instancetype)initWithRepresentedObject:(id<AMCTreeNode>)representedObject;
+-(instancetype)initWithRepresentedObject:(id<AMCTreeNode>)representedObject loadSubnodes:(BOOL)loadSubnodes loadLeaves:(BOOL)loadLeaves;
 -(instancetype)shallowCopy;
 @property (weak) NSManagedObjectContext * moc;
 @property (weak,readonly) id<AMCTreeNode>representedObject;
@@ -44,6 +45,7 @@
 -(NSInteger)nodesCount;
 -(NSInteger)leavesCount;
 -(AMCTreeNode*)addChild:(AMCTreeNode*)child;
+-(AMCTreeNode*)addChild:(AMCTreeNode *)child updateRepresentedObject:(BOOL)update;
 -(AMCTreeNode*)removeChild:(AMCTreeNode*)child;
 -(AMCTreeNode*)nodeWithName:(NSString*)string;
 -(AMCTreeNode*)leafWithName:(NSString*)string;

@@ -12,6 +12,7 @@
 {
     __weak NSManagedObjectContext * _moc;
     NSString * _name;
+    BOOL _isLeaf;
 }
 @property NSMutableArray * childNodes;
 @property NSMutableArray * childLeafs;
@@ -22,20 +23,25 @@
 
 @implementation AMCTreeNode
 -(instancetype)initWithRepresentedObject:(id<AMCTreeNode>)representedObject {
+    return [self initWithRepresentedObject:representedObject loadSubnodes:YES loadLeaves:YES];
+}
+-(instancetype)initWithRepresentedObject:(id<AMCTreeNode>)representedObject loadSubnodes:(BOOL)loadSubnodes loadLeaves:(BOOL) loadLeaves {
     self = [super init];
     if (self) {
         self.childNodes = [NSMutableArray array];
         self.childLeafs = [NSMutableArray array];
         self.representedObject = representedObject;
-        self.name = representedObject.name;
-        self.isLeaf = representedObject.isLeaf;
-        for (id<AMCTreeNode> node in [representedObject nodes]) {
-            AMCTreeNode * subNode = [[AMCTreeNode alloc] initWithRepresentedObject:node];
-            [self addChild:subNode];
+        if (loadSubnodes) {
+            for (id<AMCTreeNode> node in [representedObject nodes]) {
+                AMCTreeNode * subNode = [[AMCTreeNode alloc] initWithRepresentedObject:node];
+                [self addChild:subNode];
+            }
         }
-        for (id<AMCTreeNode> node in [representedObject leaves]) {
-            AMCTreeNode * subNode = [[AMCTreeNode alloc] initWithRepresentedObject:node];
-            [self addChild:subNode];
+        if (loadLeaves) {
+            for (id<AMCTreeNode> node in [representedObject leaves]) {
+                AMCTreeNode * subNode = [[AMCTreeNode alloc] initWithRepresentedObject:node];
+                [self addChild:subNode];
+            }
         }
     }
     return self;
@@ -111,6 +117,20 @@
         _name = [name copy];
     }
 }
+-(BOOL)isLeaf {
+    if (self.representedObject) {
+        return self.representedObject.isLeaf;
+    } else {
+        return _isLeaf;
+    }
+}
+-(void)setIsLeaf:(BOOL)isLeaf {
+    if (self.representedObject) {
+        NSAssert(NO, @"isLeaf property of represented object is readonly");
+    } else {
+        _isLeaf = isLeaf;
+    }
+}
 -(BOOL)shouldMoveChild:(AMCTreeNode*)child toNewParent:(AMCTreeNode*)newParent {
     if (!child) {
         return NO;  // Child doesn't exist
@@ -139,22 +159,25 @@
     }
     return YES;
 }
--(AMCTreeNode*)addChild:(AMCTreeNode*)child {
+-(AMCTreeNode*)addChild:(AMCTreeNode *)child updateRepresentedObject:(BOOL)update {
     if (!child) return nil;
     if ([self contains:child]) return nil;
     [self.childNodes addObject:child];
-    if (self.representedObject) {
+    if (self.representedObject && child.representedObject && update) {
         [self.representedObject addChild:child.representedObject];
     }
     child.parentNode = self;
     return child;
 }
+-(AMCTreeNode*)addChild:(AMCTreeNode*)child {
+    return [self addChild:child updateRepresentedObject:YES];
+}
 -(AMCTreeNode*)removeChild:(AMCTreeNode*)child {
     if (!child) return nil;
     if (![self contains:child]) return nil;
     [self.childNodes removeObject:child];
-    if (child.representedObject) {
-        [child.representedObject.parentNode removeChild:child.representedObject];
+    if (self.representedObject && child.representedObject) {
+        [self.representedObject.parentNode removeChild:child.representedObject];
     }
     child.parentNode = nil;
     return child;

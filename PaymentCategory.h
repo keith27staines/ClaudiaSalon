@@ -2,14 +2,14 @@
 //  PaymentCategory.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 09/06/2015.
+//  Created by Keith Staines on 10/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Payment, Salon;
+@class AccountingPaymentGroup, Payment, Salon;
 
 @interface PaymentCategory : NSManagedObject
 
@@ -28,6 +28,8 @@
 @property (nonatomic, retain) Salon *defaultCategoryForSales;
 @property (nonatomic, retain) Salon *defaultCategoryForWages;
 @property (nonatomic, retain) NSSet *payments;
+@property (nonatomic, retain) AccountingPaymentGroup *expenditureAccountingGroup;
+@property (nonatomic, retain) AccountingPaymentGroup *incomeAccountingGroup;
 @end
 
 @interface PaymentCategory (CoreDataGeneratedAccessors)

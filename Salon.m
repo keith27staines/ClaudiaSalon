@@ -2,7 +2,7 @@
 //  Salon.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 09/06/2015.
+//  Created by Keith Staines on 10/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -13,7 +13,7 @@
 #import "OpeningHoursWeekTemplate.h"
 #import "PaymentCategory.h"
 #import "ServiceCategory.h"
-
+#import "AccountingPaymentGroup.h"
 
 @implementation Salon
 
@@ -40,5 +40,6 @@
 @dynamic rootServiceCategory;
 @dynamic serviceCategories;
 @dynamic tillAccount;
+@dynamic rootAccountingGroup;
 
 @end
