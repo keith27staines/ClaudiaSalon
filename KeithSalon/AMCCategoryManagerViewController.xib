@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCCategoryManagerViewController">
             <connections>
-                <outlet property="addButton" destination="zol-qx-AvU" id="8JZ-eY-n1n"/>
-                <outlet property="addCategoryMenuItem" destination="Y4C-2b-a0w" id="VD7-H1-Lvz"/>
-                <outlet property="addMenu" destination="GbK-WN-oj2" id="dEg-xK-uph"/>
-                <outlet property="addObjectMenuItem" destination="nNR-yt-ldz" id="t6w-dP-yoO"/>
+                <outlet property="addButton" destination="zXW-vU-0iM" id="oMm-ZG-Ycg"/>
                 <outlet property="categoriesOutlineView" destination="v6G-BB-HH4" id="n0Z-mV-2fq"/>
                 <outlet property="editServiceCategoryViewController" destination="Pby-oh-QJx" id="bBd-cc-yY3"/>
                 <outlet property="editServiceViewController" destination="u53-fA-tem" id="ELe-eb-Z7w"/>
@@ -38,25 +35,13 @@ DQ
                         <action selector="doneButtonClicked:" target="-2" id="OzP-w9-hfg"/>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="zol-qx-AvU">
-                    <rect key="frame" x="20" y="17" width="28" height="28"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="28" id="eCq-Uu-L6B"/>
-                        <constraint firstAttribute="width" constant="28" id="yyV-CV-Mpw"/>
-                    </constraints>
-                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="tlP-98-WWh">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="addButtonClicked:" target="-2" id="hP9-Rs-w4P"/>
-                    </connections>
-                </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="Kz5-82-jgM">
                     <rect key="frame" x="47" y="17" width="28" height="28"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="28" id="6Q4-Cp-EoH"/>
                         <constraint firstAttribute="height" constant="28" id="8hp-w3-f4M"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="28" id="C2O-s8-V1Z"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="28" id="qUY-H7-VBm"/>
                     </constraints>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="N5G-yZ-z67">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -171,67 +156,61 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="zXW-vU-0iM">
+                    <rect key="frame" x="20" y="17" width="28" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="13B-b8-cI4"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="28" id="N4S-iU-3PR"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="28" id="ZWM-z3-LM4"/>
+                        <constraint firstAttribute="width" constant="28" id="h98-co-Upt"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dTU-dR-4Zl">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="addButtonClicked:" target="-2" id="KUE-o2-f12"/>
+                        <outlet property="menu" destination="aMj-YO-LIm" id="IN0-ZD-pbf"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="LTc-ND-65B" secondAttribute="centerX" id="2wc-QR-xK8"/>
                 <constraint firstAttribute="bottom" secondItem="LTc-ND-65B" secondAttribute="bottom" constant="20" id="3NJ-k1-85H"/>
+                <constraint firstItem="Kz5-82-jgM" firstAttribute="centerY" secondItem="zXW-vU-0iM" secondAttribute="centerY" id="8St-wO-nqs"/>
                 <constraint firstAttribute="centerX" secondItem="hJl-2X-Ug1" secondAttribute="centerX" id="OUt-9q-s11"/>
-                <constraint firstItem="zol-qx-AvU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="UCZ-pD-cA2"/>
+                <constraint firstItem="zXW-vU-0iM" firstAttribute="top" secondItem="8Bo-Cr-beH" secondAttribute="bottom" constant="2" id="VxT-xZ-d7N"/>
                 <constraint firstItem="8Bo-Cr-beH" firstAttribute="top" secondItem="hJl-2X-Ug1" secondAttribute="bottom" constant="20" id="Y1I-jC-h2M"/>
                 <constraint firstItem="LTc-ND-65B" firstAttribute="centerY" secondItem="Kz5-82-jgM" secondAttribute="centerY" id="Y2L-AA-2Mf"/>
+                <constraint firstItem="8Bo-Cr-beH" firstAttribute="leading" secondItem="zXW-vU-0iM" secondAttribute="leading" id="ayE-PI-H6b"/>
                 <constraint firstItem="8Bo-Cr-beH" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="caA-Gm-Lpi"/>
-                <constraint firstItem="Kz5-82-jgM" firstAttribute="leading" secondItem="zol-qx-AvU" secondAttribute="trailing" constant="-1" id="dHP-Bn-YnV"/>
                 <constraint firstItem="hJl-2X-Ug1" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="jZj-sm-95G"/>
                 <constraint firstAttribute="trailing" secondItem="8Bo-Cr-beH" secondAttribute="trailing" constant="20" id="nz3-lG-Zg6"/>
-                <constraint firstItem="zol-qx-AvU" firstAttribute="top" secondItem="8Bo-Cr-beH" secondAttribute="bottom" constant="2" id="obD-2J-I8z"/>
                 <constraint firstItem="hJl-2X-Ug1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="psM-j9-Vip"/>
-                <constraint firstItem="zol-qx-AvU" firstAttribute="top" secondItem="Kz5-82-jgM" secondAttribute="top" id="qz2-7g-oCE"/>
                 <constraint firstAttribute="centerX" secondItem="hJl-2X-Ug1" secondAttribute="centerX" priority="250" id="r8F-x3-gHy"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hJl-2X-Ug1" secondAttribute="trailing" constant="20" id="rCT-x5-DGF"/>
+                <constraint firstItem="Kz5-82-jgM" firstAttribute="leading" secondItem="zXW-vU-0iM" secondAttribute="trailing" constant="-1" id="uYg-dz-Pua"/>
                 <constraint firstItem="LTc-ND-65B" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Kz5-82-jgM" secondAttribute="trailing" constant="40" id="wgR-7r-o7U"/>
             </constraints>
             <point key="canvasLocation" x="-5.5" y="8"/>
         </customView>
         <customObject id="jXr-LJ-lme"/>
-        <menu id="GbK-WN-oj2">
-            <items>
-                <menuItem title="New Object..." id="nNR-yt-ldz">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="addObject:" target="-2" id="oaQ-um-527"/>
-                        <binding destination="-2" name="title" keyPath="self.addObjectMenuTitle" id="7w8-RC-Jbd"/>
-                    </connections>
-                </menuItem>
-                <menuItem title="New Category..." id="Y4C-2b-a0w">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="addCategory:" target="-2" id="Kg5-b2-QNV"/>
-                        <binding destination="-2" name="title" keyPath="self.addCategoryMenuTitle" id="HA8-ww-bph"/>
-                    </connections>
-                </menuItem>
-            </items>
-            <connections>
-                <outlet property="delegate" destination="-2" id="5jn-T0-mwH"/>
-            </connections>
-            <point key="canvasLocation" x="-231.5" y="336.5"/>
-        </menu>
         <menu id="rHj-JO-LL1">
             <items>
-                <menuItem title="New Object..." id="Vi5-b1-Nrm">
+                <menuItem title="New Object" id="Vi5-b1-Nrm">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="rightClickAddObject:" target="-2" id="lPe-Yc-fuW"/>
-                        <binding destination="-2" name="title" keyPath="self.addObjectMenuTitle" id="GVq-9U-MwZ"/>
                     </connections>
                 </menuItem>
-                <menuItem title="New Category..." id="R2d-ui-Rzo">
+                <menuItem title="New Category" tag="1" id="R2d-ui-Rzo">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="rightClickAddCategory:" target="-2" id="7eB-4I-Xyr"/>
-                        <binding destination="-2" name="title" keyPath="self.addCategoryMenuTitle" id="52Q-MS-w7G"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="cw1-LV-HfV"/>
-                <menuItem title="Edit..." id="Nid-FU-Q4C">
+                <menuItem title="Edit..." tag="2" id="Nid-FU-Q4C">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="rightClickEdit:" target="-2" id="ob3-08-Z8o"/>
@@ -247,6 +226,26 @@ DQ
         <customObject id="Pby-oh-QJx" customClass="EditServiceCategoryViewController"/>
         <customObject id="u53-fA-tem" customClass="EditServiceViewController"/>
         <customObject id="Mhz-yV-nO2"/>
+        <menu id="aMj-YO-LIm">
+            <items>
+                <menuItem title="New Object" id="AYi-gF-d3n">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickAddObject:" target="-2" id="yuY-rq-9Ts"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="New Category" tag="1" id="Ced-Z0-orO">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickAddCategory:" target="-2" id="e46-DJ-UF1"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="-2" id="uGK-PR-deP"/>
+            </connections>
+            <point key="canvasLocation" x="-210" y="335.5"/>
+        </menu>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="11" height="11"/>

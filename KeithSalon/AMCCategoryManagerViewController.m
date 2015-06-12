@@ -33,8 +33,6 @@
 @property (weak) IBOutlet NSTextField *titleLabel;
 @property (strong) IBOutlet NSMenu *addMenu;
 @property (strong) IBOutlet NSMenu *rightClickMenu;
-@property NSString * addObjectMenuTitle;
-@property NSString * addCategoryMenuTitle;
 @property (weak) IBOutlet NSMenuItem *addObjectMenuItem;
 @property (weak) IBOutlet NSMenuItem *addCategoryMenuItem;
 @property (strong) IBOutlet EditServiceCategoryViewController *editServiceCategoryViewController;
@@ -52,6 +50,7 @@
     [self.categoriesOutlineView registerForDraggedTypes:@[rowDragAndDropType]];
     [self.categoriesOutlineView setDraggingSourceOperationMask:NSDragOperationMove forLocal:YES];
     [self.categoriesOutlineView setDoubleAction:@selector(doubleClick:)];
+    self.addButton.menu.delegate = self;
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
@@ -62,8 +61,6 @@
             id<AMCTreeNode>root = (id<AMCTreeNode>)self.salonDocument.salon.rootServiceCategory;
             self.rootNode = [[AMCTreeNode alloc] initWithRepresentedObject:root];
             self.viewRootNode = self.rootNode;
-            self.addCategoryMenuTitle = @"Add Service Category";
-            self.addObjectMenuTitle = @"Add Service";
             break;
         }
         case AMCCategoryTypePayments:
@@ -71,8 +68,6 @@
             self.titleLabel.stringValue = @"Manage Accounting and Payment Categories";
             self.rootNode = [[AMCCashBookNode alloc] initWithSalon:self.salonDocument.salon];
             self.viewRootNode = self.rootNode;
-            self.addCategoryMenuTitle = @"Add Accounting Category";
-            self.addObjectMenuTitle = @"Add Payment Category";
             break;
         }
     }
@@ -113,21 +108,6 @@
     self.rootNode = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     self.rootNode.moc = self.documentMoc;
 }
-- (IBAction)askResetToDefaults:(id)sender {
-    NSAlert * alert = [[NSAlert alloc] init];
-    alert.messageText = @"Are you sure you want to reset to defaults?";
-    alert.informativeText = @"Warning: This cannot be undone";
-    [alert addButtonWithTitle:@"Cancel"];
-    [alert addButtonWithTitle:@"Reset"];
-    if ([alert runModal] == NSAlertSecondButtonReturn) {
-        [self resetToDefaults];
-    }
-}
--(void)resetToDefaults {
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kAMCSystemCategories];
-    [self readFromUserDefaults];
-    [self.categoriesOutlineView reloadData];
-}
 - (void)moveCategoryContentToDefault:(AMCTreeNode*)category {
     [self moveContentOfCategory:category toCategory:[category mostRecentAncestralDefault]];
 }
@@ -138,9 +118,6 @@
     NSInteger row = [self.categoriesOutlineView rowForItem:node];
     [self.categoriesOutlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
     [self.categoriesOutlineView scrollRowToVisible:row];
-}
-- (IBAction)addButtonClicked:(id)sender {
-    [self.addMenu popUpMenuPositioningItem:self.addObjectMenuItem atLocation:NSMakePoint(0, NSMaxY(self.addButton.bounds)) inView:self.addButton];
 }
 - (IBAction)rightClickAddObject:(id)sender {
     [self addObjectToRow:self.categoriesOutlineView.clickedRow];
@@ -185,6 +162,10 @@
 }
 - (IBAction)doubleClick:(id)sender {
     [self editRow:self.categoriesOutlineView.clickedRow];
+}
+
+- (IBAction)addButtonClicked:(id)sender {
+    [self.addButton.menu popUpMenuPositioningItem:nil atLocation:NSMakePoint(self.addButton.frame.origin.x,self.addButton.frame.origin.y - 10) inView:self.view];
 }
 
 -(AMCTreeNode*)addObjectToRow:(NSInteger)row {
@@ -402,11 +383,23 @@
 }
 #pragma mark - NSMenuDelegate
 -(void)menuNeedsUpdate:(NSMenu *)menu {
-    if (menu == self.addMenu) {
-        
+    NSString * addNodeTitle = @"";
+    NSString * addLeafTitle = @"";
+    switch (self.categoryType) {
+        case AMCCategoryTypePayments: {
+            addNodeTitle = @"Add Accountancy Group";
+            addLeafTitle = @"Add Payment Category";
+            break;
+        }
+        case AMCCategoryTypeServices: {
+            addNodeTitle = @"Add Service Category";
+            addLeafTitle = @"Add Service";
+            break;
+        }
     }
-    if (menu == self.rightClickMenu) {
-        
-    }
+    [menu itemWithTag:0].title = addNodeTitle;
+    [menu itemWithTag:1].title = addLeafTitle;
 }
+#pragma mark - NSPopupButton
+
 @end
