@@ -34,6 +34,13 @@
     }
     return _rootNode;
 }
+-(BOOL)canAddNodeToNode:(AMCTreeNode *)node {
+    return [super canAddNodeToNode:node];
+}
+-(BOOL)canRemoveNode:(AMCTreeNode *)node {
+    if (![super canAddNodeToNode:node] || node.isSystemNode || node.isLeaf) return NO;
+    return YES;
+}
 -(AMCTreeNode *)makeChildLeafForParent:(AMCTreeNode *)parentNode {
     NSAssert(parentNode, @"Parent cannot be nil");
     NSAssert(!parentNode.isLeaf, @"Parent cannot be a leafNode");

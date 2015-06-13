@@ -57,6 +57,9 @@
 -(BOOL)isLeaf {
     return NO;
 }
+-(BOOL)isSystemNode {
+    return self.isSystemCategory.boolValue;
+}
 -(id<AMCTreeNode>)addChild:(id<AMCTreeNode>)child {
     if ([child isKindOfClass:[ServiceCategory class]]) {
         ServiceCategory * category = (ServiceCategory*)child;

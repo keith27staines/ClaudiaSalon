@@ -13,6 +13,7 @@
     __weak NSManagedObjectContext * _moc;
     NSString * _name;
     BOOL _isLeaf;
+    BOOL _isSystemNode;
 }
 @property NSMutableArray * childNodes;
 @property NSMutableArray * childLeafs;
@@ -129,6 +130,13 @@
         NSAssert(NO, @"isLeaf property of represented object is readonly");
     } else {
         _isLeaf = isLeaf;
+    }
+}
+-(BOOL)isSystemNode {
+    if (self.representedObject) {
+        return self.representedObject.isSystemNode;
+    } else {
+        return _isSystemNode;
     }
 }
 -(BOOL)shouldMoveChild:(AMCTreeNode*)child toNewParent:(AMCTreeNode*)newParent {

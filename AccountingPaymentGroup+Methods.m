@@ -132,6 +132,9 @@
 -(BOOL)isLeaf {
     return NO;
 }
+-(BOOL)isSystemNode {
+    return self.isSystemCategory.boolValue;
+}
 -(id<AMCTreeNode>)addChild:(id<AMCTreeNode>)child {
     if ([child isKindOfClass:[AccountingPaymentGroup class]]) {
         AccountingPaymentGroup * group = (AccountingPaymentGroup*)child;

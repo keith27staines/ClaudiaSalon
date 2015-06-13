@@ -22,4 +22,6 @@
 @property (readonly) NSString * titleForAddNodeAction;
 @property (readonly) NSString * titleForAddleafAction;
 -(EditObjectViewController*)editViewControllerForNode:(AMCTreeNode*)node;
+-(BOOL)canAddNodeToNode:(AMCTreeNode*)node;
+-(BOOL)canRemoveNode:(AMCTreeNode*)node;
 @end

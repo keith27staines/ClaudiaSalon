@@ -125,4 +125,7 @@
 -(BOOL)isLeaf {
     return YES;
 }
+-(BOOL)isSystemNode {
+    return NO;
+}
 @end

@@ -32,6 +32,14 @@
 -(NSString *)titleForAddNodeAction {
     return @"Add Service Category";
 }
+-(BOOL)canAddNodeToNode:(AMCTreeNode *)node {
+    if (!node) return NO;
+    return YES;
+}
+-(BOOL)canRemoveNode:(AMCTreeNode *)node {
+    if (!node) return NO;
+    return YES;
+}
 -(AMCTreeNode*)rootNode {
     if (!_rootNode) {
         id<AMCTreeNode>root = (id<AMCTreeNode>)self.salonDocument.salon.rootServiceCategory;
@@ -86,5 +94,4 @@
     }
     return _editServiceCategoryViewController;
 }
-
 @end

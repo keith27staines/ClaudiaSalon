@@ -18,9 +18,7 @@
 
 @interface AMCCategoryManagementViewController () <NSOutlineViewDataSource, NSOutlineViewDelegate,NSMenuDelegate>
 {
-    NSMutableArray * _allPaymentCategoryLeaves;
-    NSMutableArray * _allServiceCategoryLeaves;
-    NSMutableDictionary * _systemCategories;
+
 }
 @property (weak) IBOutlet NSButton *addButton;
 @property (weak) IBOutlet NSButton *removeButton;
@@ -62,6 +60,14 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
 -(EditObjectViewController *)editViewControllerForNode:(AMCTreeNode *)node {
     return nil;
 }
+-(BOOL)canAddNodeToNode:(AMCTreeNode *)node {
+    if (!node) return NO;
+    return YES;
+}
+-(BOOL)canRemoveNode:(AMCTreeNode *)node {
+    if (!node || node.isSystemNode) return NO;
+    return YES;
+}
 #pragma mark - NSView
 -(void)viewDidLoad {
     [self.treeView registerForDraggedTypes:@[rowDragAndDropType]];
@@ -74,6 +80,7 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
     [super prepareForDisplayWithSalon:salonDocument];
     self.titleLabel.stringValue = self.title;
     [self.treeView reloadData];
+    [self outlineViewSelectionDidChange:nil];
 }
 #pragma mark - Actions
 - (IBAction)rightClickAddLeaf:(id)sender {
@@ -217,9 +224,7 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
 -(BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item {
     return NO;
 }
--(void)outlineView:(NSOutlineView *)outlineView updateDraggingItemsForDrag:(id<NSDraggingInfo>)draggingInfo {
-    
-}
+
 -(NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id<NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index {
     if (item) {
         NSPasteboard * pboard = [info draggingPasteboard];
@@ -238,12 +243,34 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
         NSPasteboard * pboard = [info draggingPasteboard];
         NSData * data = [pboard dataForType:rowDragAndDropType];
         NSIndexSet * rowIndexes = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        NSInteger row = [rowIndexes firstIndex];
-        AMCTreeNode * node = [self.treeView itemAtRow:row];
-        [self move:node toParent:item];
+        NSMutableArray * movers = [NSMutableArray array];
+        NSUInteger currentIndex = [rowIndexes firstIndex];
+        while (currentIndex != NSNotFound)
+        {
+            [movers addObject:[self.treeView itemAtRow:currentIndex]];
+            currentIndex = [rowIndexes indexGreaterThanIndex: currentIndex];
+        }
+        for (AMCTreeNode * node in movers) {
+            [self move:node toParent:item];
+        }
+        [self.treeView reloadData];
+        [self.treeView expandItem:item];
+        [self makeVisibleAndSelect:item];
+        return YES;
     }
-    [self.treeView reloadData];
-    return YES;
+    return NO;
+}
+-(void)outlineViewSelectionDidChange:(NSNotification *)notification {
+    NSInteger row = self.treeView.selectedRow;
+    AMCTreeNode * selectedNode = [self.treeView itemAtRow:row];
+    self.addButton.enabled= NO;
+    self.removeButton.enabled = NO;
+    if ([self canAddNodeToNode:selectedNode]) {
+        self.addButton.enabled = YES;
+    }
+    if ([self canRemoveNode:selectedNode]) {
+        self.removeButton.enabled = YES;
+    }
 }
 -(NSArray*)topLevelObjectsInSelection {
     return nil;
@@ -251,15 +278,19 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
 -(BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard {
     NSMutableIndexSet * rowIndexes = [NSMutableIndexSet indexSet];
     for (AMCTreeNode * item in items) {
-        NSInteger row = [self.treeView rowForItem:item];
-        [rowIndexes addIndex:row];
+        AMCTreeNode * node = (AMCTreeNode*)item;
+        if (!node.isSystemNode) {
+            NSInteger row = [self.treeView rowForItem:item];
+            [rowIndexes addIndex:row];
+        }
     }
     if (rowIndexes.count > 0) {
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
         [pasteboard declareTypes:[NSArray arrayWithObject:rowDragAndDropType] owner:self];
         [pasteboard setData:data forType:rowDragAndDropType];
+        return YES;
     }
-    return YES;
+    return NO;
 }
 #pragma mark - NSMenuDelegate
 -(void)menuNeedsUpdate:(NSMenu *)menu {

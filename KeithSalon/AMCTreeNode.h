@@ -16,6 +16,7 @@
 @property id<AMCTreeNode> parentNode;
 @property (copy) NSString * name;
 @property (readonly) BOOL isLeaf;
+@property (readonly) BOOL isSystemNode;
 
 -(id<AMCTreeNode>)addChild:(id<AMCTreeNode>)child;
 -(id<AMCTreeNode>)removeChild:(id<AMCTreeNode>)child;
@@ -41,6 +42,7 @@
 @property AMCTreeNode* parentNode;
 @property (copy) NSString * name;
 @property (readonly) BOOL isLeaf;
+@property (readonly) BOOL isSystemNode;
 @property (readonly) NSInteger count;
 -(NSInteger)nodesCount;
 -(NSInteger)leavesCount;
