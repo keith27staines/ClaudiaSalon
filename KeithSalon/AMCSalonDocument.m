@@ -25,7 +25,8 @@
 #import "AMCSalaryPaymentViewController.h"
 #import "AMCManagersBudgetWindowController.h"
 #import "AMCAccountStatementViewController.h"
-#import "AMCCategoryManagerViewController.h"
+#import "AMCAccountancyGroupManagementViewController.h"
+#import "AMCServiceCategoriesManagementViewController.h"
 #import "AMCFinancialAnalysisViewController.h"
 
 #import "Salon+Methods.h"
@@ -54,7 +55,8 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property (weak) IBOutlet AMCSalaryPaymentViewController *salaryPaymentViewController;
 @property (weak) IBOutlet AMCStaffBusyViewController *staffBusyViewController;
 @property (weak) IBOutlet AMCAccountStatementViewController *accountStatementViewController;
-@property (strong) IBOutlet AMCCategoryManagerViewController *accountGroupingsViewController;
+@property (strong) IBOutlet AMCAccountancyGroupManagementViewController *accountGroupingsViewController;
+@property (strong) IBOutlet AMCServiceCategoriesManagementViewController *serviceCategoryManagmentViewController;
 @property (strong) IBOutlet AMCSalonDetailsViewController *salonDetailsViewController;
 @property (strong) IBOutlet AMCViewController *recurringEventManagementViewController;
 @property (strong) IBOutlet AMCViewController *accountManagementViewController;
@@ -261,14 +263,12 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.mainViewController presentViewControllerAsSheet:self.accountStatementViewController];
 }
 - (IBAction)manageCashbookGroups:(id)sender {
-    self.accountGroupingsViewController.categoryType = AMCCategoryTypePayments;
     [self.accountGroupingsViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.accountGroupingsViewController];
 }
 - (IBAction)manageServices:(id)sender {
-    self.accountGroupingsViewController.categoryType = AMCCategoryTypeServices;
-    [self.accountGroupingsViewController prepareForDisplayWithSalon:self];
-    [self.mainViewController presentViewControllerAsSheet:self.accountGroupingsViewController];
+    [self.serviceCategoryManagmentViewController prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewControllerAsSheet:self.serviceCategoryManagmentViewController];
 }
 -(IBAction)showSalonDetails:(id)sender {
     self.salonDetailsViewController.salonProperties = self.salon;

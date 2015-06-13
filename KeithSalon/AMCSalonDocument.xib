@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
@@ -22,6 +22,7 @@
                 <outlet property="salesViewController" destination="68x-i2-Z7H" id="H4C-DT-k2b"/>
                 <outlet property="salonDetailsViewController" destination="Tv1-mr-T9C" id="vkS-eD-c6c"/>
                 <outlet property="serviceCategoriesViewController" destination="TVM-zP-UFW" id="luu-G9-d0U"/>
+                <outlet property="serviceCategoryManagmentViewController" destination="DfR-6A-GTN" id="NZM-HW-52Z"/>
                 <outlet property="servicesViewController" destination="WNJ-WT-lCg" id="DQf-id-ftP"/>
                 <outlet property="showPaySalary" destination="AMH-O3-exX" id="QCz-KD-Cuc"/>
                 <outlet property="staffBusyViewController" destination="OsB-JJ-cdB" id="VT4-PX-bu8"/>
@@ -225,8 +226,9 @@
         <customObject id="Rhe-aG-xw3" customClass="AMCAccountManagementViewController"/>
         <customObject id="1Jk-n8-g41" customClass="AMCAccountStatementViewController"/>
         <customObject id="OsB-JJ-cdB" customClass="AMCStaffBusyViewController"/>
-        <customObject id="NHf-SU-kAv" customClass="AMCCategoryManagerViewController"/>
+        <customObject id="NHf-SU-kAv" customClass="AMCAccountancyGroupManagementViewController"/>
         <customObject id="ghL-zY-7eX" customClass="AMCFinancialAnalysisViewController"/>
+        <customObject id="DfR-6A-GTN" userLabel="ServiceCategoryManagementViewController" customClass="AMCServiceCategoriesManagementViewController"/>
     </objects>
     <resources>
         <image name="BarChart" width="32" height="32"/>

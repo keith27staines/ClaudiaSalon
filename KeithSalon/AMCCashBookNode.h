@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
-@class Salon;
+@class Salon,AccountingPaymentGroup,PaymentCategory;
 
 #import "AMCTreeNode.h"
 
@@ -14,4 +14,6 @@
 @property (readonly) AMCTreeNode * incomeNode;
 @property (readonly) AMCTreeNode * expenditureNode;
 -(instancetype)initWithSalon:(Salon*)salon;
+-(instancetype)initWithAccountancyGroup:(AccountingPaymentGroup*)group;
+-(instancetype)initWithPaymentCategory:(PaymentCategory*)category;
 @end

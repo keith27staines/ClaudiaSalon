@@ -4,15 +4,14 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="AMCCategoryManagerViewController">
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCCategoryManagementViewController">
             <connections>
                 <outlet property="addButton" destination="zXW-vU-0iM" id="oMm-ZG-Ycg"/>
-                <outlet property="categoriesOutlineView" destination="v6G-BB-HH4" id="n0Z-mV-2fq"/>
-                <outlet property="editServiceCategoryViewController" destination="Pby-oh-QJx" id="bBd-cc-yY3"/>
-                <outlet property="editServiceViewController" destination="u53-fA-tem" id="ELe-eb-Z7w"/>
+                <outlet property="addMenu" destination="aMj-YO-LIm" id="G57-ve-mSa"/>
                 <outlet property="removeButton" destination="Kz5-82-jgM" id="4Qd-1f-BEO"/>
                 <outlet property="rightClickMenu" destination="rHj-JO-LL1" id="mgy-Pd-hq0"/>
                 <outlet property="titleLabel" destination="hJl-2X-Ug1" id="OK6-CA-OmY"/>
+                <outlet property="treeView" destination="v6G-BB-HH4" id="UeV-qH-3Fv"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -149,8 +148,8 @@ DQ
                     </scroller>
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hJl-2X-Ug1">
-                    <rect key="frame" x="202" y="423" width="178" height="23"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manage Groupings" id="9c6-lg-25D">
+                    <rect key="frame" x="165" y="423" width="252" height="23"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Manage Nodes and Leaves" id="9c6-lg-25D">
                         <font key="font" metaFont="systemBold" size="19"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -197,23 +196,23 @@ DQ
         <customObject id="jXr-LJ-lme"/>
         <menu id="rHj-JO-LL1">
             <items>
-                <menuItem title="New Object" id="Vi5-b1-Nrm">
+                <menuItem title="New Node" id="Vi5-b1-Nrm">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickAddObject:" target="-2" id="lPe-Yc-fuW"/>
+                        <action selector="rightClickAddNode:" target="-2" id="qgE-eh-Lmx"/>
                     </connections>
                 </menuItem>
-                <menuItem title="New Category" tag="1" id="R2d-ui-Rzo">
+                <menuItem title="New Leaf" tag="1" id="R2d-ui-Rzo">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickAddCategory:" target="-2" id="7eB-4I-Xyr"/>
+                        <action selector="rightClickAddLeaf:" target="-2" id="Qgw-sd-TZ5"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="cw1-LV-HfV"/>
                 <menuItem title="Edit..." tag="2" id="Nid-FU-Q4C">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickEdit:" target="-2" id="ob3-08-Z8o"/>
+                        <action selector="rightClickEdit:" target="-2" id="aHu-2S-ixn"/>
                     </connections>
                 </menuItem>
             </items>
@@ -223,21 +222,19 @@ DQ
             <point key="canvasLocation" x="27" y="340.5"/>
         </menu>
         <userDefaultsController representsSharedInstance="YES" id="bzs-Tl-9gy"/>
-        <customObject id="Pby-oh-QJx" customClass="EditServiceCategoryViewController"/>
-        <customObject id="u53-fA-tem" customClass="EditServiceViewController"/>
         <customObject id="Mhz-yV-nO2"/>
         <menu id="aMj-YO-LIm">
             <items>
-                <menuItem title="New Object" id="AYi-gF-d3n">
+                <menuItem title="New Node" id="AYi-gF-d3n">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickAddObject:" target="-2" id="yuY-rq-9Ts"/>
+                        <action selector="addNode:" target="-2" id="wPE-dY-PJu"/>
                     </connections>
                 </menuItem>
-                <menuItem title="New Category" tag="1" id="Ced-Z0-orO">
+                <menuItem title="New Leaf" tag="1" id="Ced-Z0-orO">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="rightClickAddCategory:" target="-2" id="e46-DJ-UF1"/>
+                        <action selector="addLeaf:" target="-2" id="vT3-br-Kbb"/>
                     </connections>
                 </menuItem>
             </items>

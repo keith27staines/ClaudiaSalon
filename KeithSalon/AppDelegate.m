@@ -13,7 +13,7 @@
 #import "NSDate+AMCDate.h"
 #import "AMCAutoCloseWindowController.h"
 #import "AMCPreferencesWindowController.h"
-#import "AMCCategoryManagerViewController.h"
+#import "AMCCategoryManagementViewController.h"
 #define kSalonsDictionary @"kSalonsDictionary"
 #define kDefaultSalonPath @"kDefaultSalonPath"
 #define kShowWelcomeWindow @"kShowWelcomeWindow"
@@ -39,11 +39,9 @@
 @implementation AppDelegate
 
 -(void)applicationWillFinishLaunching:(NSNotification *)notification {
-    AMCCategoryManagerViewController * categoryManager = [[AMCCategoryManagerViewController alloc] init];
     NSDictionary * defaults = @{kDefaultSalonPath:@"",
                                 kSalonsDictionary: @{},
-                                kShowWelcomeWindow: @(YES),
-                                kAMCSystemCategories: categoryManager.dataForUserDefaultsRegistration
+                                kShowWelcomeWindow: @(YES)
                                 };
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     [self registerForNotifications];
