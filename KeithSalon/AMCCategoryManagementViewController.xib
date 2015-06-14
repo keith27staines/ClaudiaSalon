@@ -209,6 +209,13 @@ DQ
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="cw1-LV-HfV"/>
+                <menuItem title="Delete" tag="3" id="jp6-z1-gki">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickRemove:" target="-2" id="1uq-I4-Q4M"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="U3s-9K-fkA"/>
                 <menuItem title="Edit..." tag="2" id="Nid-FU-Q4C">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>

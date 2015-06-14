@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
     MenuButtonTagsAddNode = 0,
     MenuButtonTagsAddLeaf = 1,
     MenuButtonTagsEdit = 2,
+    MenuButtonTagsDelete = 3
 };
 
 @implementation AMCCategoryManagementViewController
@@ -111,13 +112,21 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
 - (IBAction)addButtonClicked:(id)sender {
     [self.addButton.menu popUpMenuPositioningItem:nil atLocation:NSMakePoint(self.addButton.frame.origin.x,self.addButton.frame.origin.y - 10) inView:self.view];
 }
+- (IBAction)rightClickRemove:(id)sender {
+    [self removeRow:self.treeView.clickedRow];
+}
 - (IBAction)removeButtonClicked:(id)sender {
-    NSInteger row = self.treeView.selectedRow;
-    AMCTreeNode * item = [self.treeView itemAtRow:row];
-    if (!item) return;
-    if (item.isLeaf) return;
-    [self moveContentOfCategory:item toCategory:[item mostRecentAncestralDefault]];
-    [item.parentNode removeChild:item];
+    [self removeRow:self.treeView.selectedRow];
+}
+-(void)removeRow:(NSInteger)row {
+    if (row < 0) return;
+    [self removeNode:[self.treeView itemAtRow:row]];
+}
+-(void)removeNode:(AMCTreeNode*)node {
+    if (!node) return;
+    if (node.isLeaf) return;
+    [self moveContentOfCategory:node toCategory:node.parentNode];
+    [node.parentNode removeChild:node];
     [self.treeView reloadData];
 }
 - (IBAction)doneButtonClicked:(id)sender {
@@ -131,16 +140,20 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
 }
 #pragma mark - Add object implementation
 -(AMCTreeNode*)addNodeToRow:(NSInteger)row {
-    AMCTreeNode * parentNode = [self parentForRow:row];
+    return [self addNodeToNode:[self firstParentNodeForRow:row]];
+}
+-(AMCTreeNode*)addLeafToRow:(NSInteger)row {
+    return [self addLeafToNode:[self firstParentNodeForRow:row]];
+}
+-(AMCTreeNode*)addLeafToNode:(AMCTreeNode*)parentNode {
     if (!parentNode) return nil;
-    AMCTreeNode * newNode = [self makeChildNodeForParent:parentNode];
+    AMCTreeNode * newNode = [self makeChildLeafForParent:parentNode];
     [self makeVisibleAndSelect:newNode];
     return newNode;
 }
--(AMCTreeNode*)addLeafToRow:(NSInteger)row {
-    AMCTreeNode * parentNode = [self parentForRow:row];
+-(AMCTreeNode*)addNodeToNode:(AMCTreeNode*)parentNode {
     if (!parentNode) return nil;
-    AMCTreeNode * newNode = [self makeChildLeafForParent:parentNode];
+    AMCTreeNode * newNode = [self makeChildNodeForParent:parentNode];
     [self makeVisibleAndSelect:newNode];
     return newNode;
 }
@@ -291,8 +304,17 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
 }
 #pragma mark - NSMenuDelegate
 -(void)menuNeedsUpdate:(NSMenu *)menu {
-    [menu itemWithTag:0].title = self.titleForAddNodeAction;
-    [menu itemWithTag:1].title = self.titleForAddleafAction;
+    menu.autoenablesItems = NO;
+    [menu itemWithTag:MenuButtonTagsAddNode].title = self.titleForAddNodeAction;
+    [menu itemWithTag:MenuButtonTagsAddLeaf].title = self.titleForAddleafAction;
+    AMCTreeNode * actionNode = nil;
+    if (menu == self.rightClickMenu) {
+        actionNode = [self.treeView itemAtRow:self.treeView.clickedRow];
+        [menu itemWithTag:MenuButtonTagsDelete].enabled = [self canRemoveNode:actionNode];
+    } else {
+        // Nothing to do, but if there was, it would probably begin with this...
+        //actionNode = [self.treeView itemAtRow:self.treeView.selectedRow];
+    }
 }
 #pragma mark - Convenience methods
 -(void)makeVisibleAndSelect:(AMCTreeNode*)node {
@@ -303,7 +325,7 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
     [self.treeView selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
     [self.treeView scrollRowToVisible:row];
 }
--(AMCTreeNode*)parentForRow:(NSInteger)row {
+-(AMCTreeNode*)firstParentNodeForRow:(NSInteger)row {
     if (row < 0) return nil;
     AMCTreeNode *parentNode = [self.treeView itemAtRow:row];
     if (parentNode.isLeaf) {

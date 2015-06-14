@@ -38,7 +38,7 @@
     return [super canAddNodeToNode:node];
 }
 -(BOOL)canRemoveNode:(AMCTreeNode *)node {
-    if (![super canAddNodeToNode:node] || node.isSystemNode || node.isLeaf) return NO;
+    if (![super canRemoveNode:node] || node.isSystemNode || node.isLeaf) return NO;
     return YES;
 }
 -(AMCTreeNode *)makeChildLeafForParent:(AMCTreeNode *)parentNode {
