@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
     return YES;
 }
 -(BOOL)canRemoveNode:(AMCTreeNode *)node {
-    if (!node || node.isSystemNode) return NO;
+    if (!node || node.isSystemNode || node.isLeaf) return NO;
     return YES;
 }
 #pragma mark - NSView
@@ -166,9 +166,6 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
 }
 -(void)moveContentOfCategory:(AMCTreeNode*)sourceCategory toCategory:(AMCTreeNode*)destinationCategory {
     if (sourceCategory == destinationCategory) {
-        return;
-    }
-    if ([destinationCategory hasDescendent:sourceCategory]) {
         return;
     }
     for (AMCTreeNode * item in sourceCategory.allChildren) {

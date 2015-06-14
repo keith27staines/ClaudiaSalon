@@ -33,12 +33,10 @@
     return @"Add Service Category";
 }
 -(BOOL)canAddNodeToNode:(AMCTreeNode *)node {
-    if (!node) return NO;
-    return YES;
+    return [super canAddNodeToNode:node];
 }
 -(BOOL)canRemoveNode:(AMCTreeNode *)node {
-    if (!node) return NO;
-    return YES;
+    return [super canRemoveNode:node];
 }
 -(AMCTreeNode*)rootNode {
     if (!_rootNode) {
