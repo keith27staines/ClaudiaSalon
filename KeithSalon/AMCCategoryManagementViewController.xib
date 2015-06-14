@@ -229,7 +229,6 @@ DQ
             <point key="canvasLocation" x="27" y="340.5"/>
         </menu>
         <userDefaultsController representsSharedInstance="YES" id="bzs-Tl-9gy"/>
-        <customObject id="Mhz-yV-nO2"/>
         <menu id="aMj-YO-LIm">
             <items>
                 <menuItem title="New Node" id="AYi-gF-d3n">

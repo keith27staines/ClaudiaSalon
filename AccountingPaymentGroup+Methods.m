@@ -46,6 +46,7 @@
         income.isSystemCategory = @YES;
         income.name = @"Income";
         income.parent = root;
+        income.incomeRoot = salon;
         
         AccountingPaymentGroup * expenditure = [AccountingPaymentGroup newObjectWithMoc:salon.managedObjectContext];
         expenditure.isExpenditure = @YES;
@@ -53,6 +54,7 @@
         expenditure.isSystemCategory = @YES;
         expenditure.name = @"Expenditure";
         expenditure.parent = root;
+        expenditure.expenditureRoot = salon;
         
         AccountingPaymentGroup * expenditureOther = [AccountingPaymentGroup newObjectWithMoc:salon.managedObjectContext];
         expenditureOther.isExpenditure = @YES;

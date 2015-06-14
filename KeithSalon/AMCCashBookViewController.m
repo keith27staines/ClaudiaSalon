@@ -32,7 +32,7 @@
 
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
-    self.cashbook = [[AMCCashBook alloc] initWithManagedObjectContext:self.documentMoc account:self.account statementItems:self.statementItems firstDay:self.firstDay lastDay:self.lastDay balanceBroughtForward:self.balanceBroughtForward balancePerBank:self.balancePerBank];
+    self.cashbook = [[AMCCashBook alloc] initWithSalon:salonDocument.salon managedObjectContext:self.documentMoc account:self.account statementItems:self.statementItems firstDay:self.firstDay lastDay:self.lastDay balanceBroughtForward:self.balanceBroughtForward balancePerBank:self.balancePerBank];
     [self addColumnsToIncomeTable];
     [self addColumnsToExpenditureTable];
     self.incomeTable.delegate = self;
@@ -95,7 +95,7 @@
     }];
 }
 -(BOOL)writeCashbookToFile:(NSString*)filename error:(NSError**)error {
-    AMCCashBook * cashBook = [[AMCCashBook alloc] initWithManagedObjectContext:self.documentMoc account:self.account statementItems:self.statementItems firstDay:self.firstDay lastDay:self.lastDay balanceBroughtForward:self.balanceBroughtForward balancePerBank:self.balancePerBank];
+    AMCCashBook * cashBook = [[AMCCashBook alloc] initWithSalon:self.salonDocument.salon managedObjectContext:self.documentMoc account:self.account statementItems:self.statementItems firstDay:self.firstDay lastDay:self.lastDay balanceBroughtForward:self.balanceBroughtForward balancePerBank:self.balancePerBank];
     return [cashBook writeToFile:filename error:error];
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {

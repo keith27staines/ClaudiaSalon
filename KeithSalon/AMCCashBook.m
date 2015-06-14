@@ -7,12 +7,12 @@
 //
 
 #import "AMCCashBook.h"
+#import "Salon+Methods.h"
 #import "NSDate+AMCDate.h"
 #import "AMCAccountStatementItem.h"
 #import "Payment+Methods.h"
 #import "PaymentCategory+Methods.h"
-#import "AMCCategoriesRootNode.h"
-#import "AMCCashBookNode.h"
+#import "AMCCashBookRootNode.h"
 #import "Account+Methods.h"
 
 @interface AMCCashBook()
@@ -21,17 +21,18 @@
     NSMutableArray * _expenditureDictionaries;
     NSMutableDictionary * _incomeTotals;
     NSMutableDictionary * _expenditureTotals;
-    AMCCashBookNode * _cashbookNode;
+    AMCCashBookRootNode * _cashbookRootNode;
 }
 @property (copy, nonatomic) NSDate * firstDay;
 @property (copy, nonatomic) NSDate * lastDay;
-@property (nonatomic) Account * account;
+@property (readwrite, nonatomic) Salon * salon;
+@property (readwrite, nonatomic) Account * account;
 
-@property (nonatomic) double balanceBroughtForward;
-@property (nonatomic) double receipts;
-@property (nonatomic) double expenses;
-@property (nonatomic) double balancePerBank;
-@property (nonatomic) double difference;
+@property (readwrite,nonatomic) double balanceBroughtForward;
+@property (readwrite,nonatomic) double receipts;
+@property (readwrite,nonatomic) double expenses;
+@property (readwrite,nonatomic) double balancePerBank;
+@property (readwrite,nonatomic) double difference;
 @property (nonatomic) NSMutableArray * statementItems;
 @property (copy, nonatomic) NSArray * incomeHeaders;
 @property (copy, nonatomic) NSArray * expenditureHeaders;
@@ -45,22 +46,24 @@
 @property (nonatomic) double totalFeeOnExpenses;
 @property NSDate * startDate;
 @property NSDate * endDate;
-@property (readonly) AMCCashBookNode * cashbookNode;
+@property (readonly) AMCCashBookRootNode * cashbookRootNode;
 @property NSManagedObjectContext * moc;
 @end
 
 @implementation AMCCashBook
 
--(instancetype)initWithManagedObjectContext:(NSManagedObjectContext*)moc
-                                    account:(Account*)account
-                             statementItems:(NSArray*)statementItems
-                                   firstDay:(NSDate*)firstDay
-                                    lastDay:(NSDate*)lastDay
-                      balanceBroughtForward:(double)balanceBroughtForward
-                             balancePerBank:(double)balancePerBank {
+-(instancetype)initWithSalon:(Salon*)salon
+        managedObjectContext:(NSManagedObjectContext*)moc
+                     account:(Account*)account
+              statementItems:(NSArray*)statementItems
+                    firstDay:(NSDate*)firstDay
+                     lastDay:(NSDate*)lastDay
+       balanceBroughtForward:(double)balanceBroughtForward
+              balancePerBank:(double)balancePerBank {
     self = [super init];
     if (self) {
         self.moc = moc;
+        self.salon = salon;
         self.account = account;
         self.statementItems = [statementItems mutableCopy];
         self.balanceBroughtForward = balanceBroughtForward;
@@ -74,14 +77,11 @@
     }
     return self;
 }
--(AMCCashBookNode *)cashbookNode {
-    if (!_cashbookNode) {
-        NSData * data = [[NSUserDefaults standardUserDefaults] dataForKey:kAMCSystemCategories];
-        AMCTreeNode * rootNode = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        rootNode.moc = self.moc;
-        _cashbookNode = (AMCCashBookNode*)[rootNode nodeWithName:@"Cashbook"];
+-(AMCCashBookRootNode *)cashbookRootNode {
+    if (!_cashbookRootNode) {
+        _cashbookRootNode = [[AMCCashBookRootNode alloc] initWithSalon:self.salon];
     }
-    return _cashbookNode;
+    return _cashbookRootNode;
 }
 
 -(void)analyse {
@@ -166,8 +166,8 @@
 }
 -(void)configureHeaders {
     NSArray * commonHeaders = @[@"Date",@"Payee/Payer",@"Details",@"Total",@"Fee"];
-    NSArray * incomeSpecificHeaders = [self.cashbookNode.incomeNode childNodeNames];
-    NSArray * expenditureSpecificHeaders = [self.cashbookNode.expenditureNode childNodeNames];
+    NSArray * incomeSpecificHeaders = [self.cashbookRootNode.incomeRoot childNodeNames];
+    NSArray * expenditureSpecificHeaders = [self.cashbookRootNode.expenditureRoot childNodeNames];
     self.incomeHeaders = [commonHeaders arrayByAddingObjectsFromArray:incomeSpecificHeaders];
     self.expenditureHeaders = [commonHeaders arrayByAddingObjectsFromArray:expenditureSpecificHeaders];
 }
@@ -207,10 +207,10 @@
         // Payments can be either income or expenditure, depending on direction
         if (payment.isIncoming) {
             // payment is income
-            directionNode = self.cashbookNode.incomeNode;
+            directionNode = self.cashbookRootNode.incomeRoot;
         } else {
             // payment is expenditure
-            directionNode = self.cashbookNode.expenditureNode;
+            directionNode = self.cashbookRootNode.expenditureRoot;
         }
         NSString * categoryName = payment.paymentCategory.categoryName;
         AMCTreeNode * leaf = [directionNode leafWithName:categoryName];

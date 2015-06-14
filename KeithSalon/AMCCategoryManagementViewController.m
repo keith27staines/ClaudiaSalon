@@ -9,9 +9,7 @@
 #import "AMCCategoryManagementViewController.h"
 #import "AMCSalonDocument.h"
 #import "PaymentCategory+Methods.h"
-#import "AMCCategoriesRootNode.h"
 #import "EditObjectViewController.h"
-
 #import "AMCCashBookNode.h"
 
 #define rowDragAndDropType @"rowDragAndDropType"
@@ -27,6 +25,7 @@
 @property (weak) IBOutlet NSTextField *titleLabel;
 @property (strong) IBOutlet NSMenu *addMenu;
 @property (strong) IBOutlet NSMenu *rightClickMenu;
+@property (strong) EditObjectViewController *editObjectViewController;
 @end
 
 typedef NS_ENUM(NSInteger, MenuButtonTags) {

@@ -5,22 +5,24 @@
 //  Created by Keith Staines on 17/03/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
-@class Account, AMCAccountStatementItem;
+@class Salon,Account, AMCAccountStatementItem;
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
 @interface AMCCashBook : NSObject
 
--(instancetype)initWithManagedObjectContext:(NSManagedObjectContext*)moc
-                                    account:(Account*)account
-                             statementItems:(NSArray*)statementItems
-                                   firstDay:(NSDate*)firstDay
-                                    lastDay:(NSDate*)lastDay
-                      balanceBroughtForward:(double)balanceBroughtForward
-                             balancePerBank:(double)balancePerBank;
+-(instancetype)initWithSalon:(Salon*)salon
+        managedObjectContext:(NSManagedObjectContext*)moc
+                     account:(Account*)account
+              statementItems:(NSArray*)statementItems
+                    firstDay:(NSDate*)firstDay
+                     lastDay:(NSDate*)lastDay
+       balanceBroughtForward:(double)balanceBroughtForward
+              balancePerBank:(double)balancePerBank;
 
 @property (copy, readonly, nonatomic) NSDate * firstDay;
 @property (copy, readonly, nonatomic) NSDate * lastDay;
+@property (readonly, nonatomic) Salon * Salon;
 @property (readonly, nonatomic) Account * account;
 
 @property (readonly, nonatomic) double balanceBroughtForward;

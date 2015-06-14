@@ -65,9 +65,8 @@
 -(AMCTreeNode*)leafAtIndex:(NSInteger)index;
 -(BOOL)shouldMoveChild:(AMCTreeNode*)child toNewParent:(AMCTreeNode*)proposedParent;
 
-
-@property (readonly,copy) NSArray * leaves;
-@property (readonly,copy) NSArray * nodes;
+@property NSMutableArray * childNodes;
+@property NSMutableArray * childLeafs;
 
 -(BOOL)contains:(AMCTreeNode*)node;
 

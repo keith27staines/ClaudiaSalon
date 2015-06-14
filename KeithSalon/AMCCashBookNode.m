@@ -11,21 +11,12 @@
 #import "AccountingPaymentGroup+Methods.h"
 
 @interface AMCCashBookNode()
-@property AMCTreeNode * incomeNode;
-@property AMCTreeNode * expenditureNode;
 @property PaymentCategory * paymentCategory;
 @property (readonly) AccountingPaymentGroup * accountingGroup;
 @end
 
 @implementation AMCCashBookNode
 
-+(instancetype)rootCashBookNode:(Salon*)salon {
-    return [[self alloc] initWithSalon:salon];
-}
--(instancetype)initWithSalon:(Salon*)salon {
-    self.moc = salon.managedObjectContext;
-    return [self initWithAccountancyGroup:salon.rootAccountingGroup];
-}
 -(instancetype)initWithRepresentedObject:(id<AMCTreeNode>)representedObject {
     self = [super initWithRepresentedObject:representedObject loadSubnodes:NO loadLeaves:NO];
     return self;

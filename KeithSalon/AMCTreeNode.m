@@ -15,8 +15,6 @@
     BOOL _isLeaf;
     BOOL _isSystemNode;
 }
-@property NSMutableArray * childNodes;
-@property NSMutableArray * childLeafs;
 @property (readwrite) BOOL isLeaf;
 @property (weak,readwrite) id<AMCTreeNode> representedObject;
 

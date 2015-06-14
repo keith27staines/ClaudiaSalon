@@ -9,12 +9,15 @@
 #import "AMCAccountancyGroupManagementViewController.h"
 #import "PaymentCategory+Methods.h"
 #import "AccountingPaymentGroup+Methods.h"
-#import "AMCCashBookNode.h"
+#import "AMCCashBookRootNode.h"
+#import "EditPaymentCategoryViewController.h"
+#import "EditAccountancyGroupViewController.h"
 
 @interface AMCAccountancyGroupManagementViewController ()
 {
     AMCTreeNode * _rootNode;
-
+    EditPaymentCategoryViewController * _editPaymentCategoryViewController;
+    EditAccountancyGroupViewController * _editAccountingGroupViewController;
 }
 @end
 
@@ -30,7 +33,7 @@
 }
 -(AMCTreeNode*)rootNode {
     if (!_rootNode) {
-        _rootNode = [[AMCCashBookNode alloc] initWithSalon:self.salonDocument.salon];
+        _rootNode = [[AMCCashBookRootNode alloc] initWithSalon:self.salonDocument.salon];
     }
     return _rootNode;
 }
@@ -67,7 +70,21 @@
     return newNode;
 }
 -(EditObjectViewController *)editViewControllerForNode:(AMCTreeNode*)nodeToEdit {
-    return nil;
+    EditObjectViewController * editor = nil;
+    if (nodeToEdit.isLeaf) {
+        if (!_editPaymentCategoryViewController) {
+            _editPaymentCategoryViewController = [[EditPaymentCategoryViewController alloc] init];
+        }
+        editor = _editPaymentCategoryViewController;
+        editor.objectToEdit = ((AMCCashBookNode*)nodeToEdit).paymentCategory;
+    } else {
+        if (!_editAccountingGroupViewController) {
+            _editAccountingGroupViewController = [[EditAccountancyGroupViewController alloc] init];
+        }
+        editor = _editAccountingGroupViewController;
+        editor.objectToEdit = nodeToEdit.representedObject;
+    }
+    return editor;
 }
 @end
 

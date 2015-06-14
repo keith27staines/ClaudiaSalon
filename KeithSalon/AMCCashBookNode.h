@@ -11,9 +11,7 @@
 #import "AMCTreeNode.h"
 
 @interface AMCCashBookNode : AMCTreeNode
-@property (readonly) AMCTreeNode * incomeNode;
-@property (readonly) AMCTreeNode * expenditureNode;
--(instancetype)initWithSalon:(Salon*)salon;
 -(instancetype)initWithAccountancyGroup:(AccountingPaymentGroup*)group;
 -(instancetype)initWithPaymentCategory:(PaymentCategory*)category;
+@property (readonly) PaymentCategory * paymentCategory;
 @end

@@ -32,7 +32,7 @@
 }
 -(NSString *)objectTypeAndName
 {
-    NSMutableString * objectTypeAndName = [@"Service Category" mutableCopy];
+    NSMutableString * objectTypeAndName = [@"Service" mutableCopy];
     if (self.objectToEdit) {
         Service * object = (Service*)self.objectToEdit;
         NSString * objectName = object.name;
