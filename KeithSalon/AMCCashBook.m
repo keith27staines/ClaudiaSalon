@@ -201,27 +201,18 @@
 }
 -(NSString*)headingFromStatementItem:(AMCAccountStatementItem*)item {
     AMCTreeNode * directionNode;
-    if (item.isPayment) {
-        // item is a payment
-        Payment * payment = item.payment;
-        // Payments can be either income or expenditure, depending on direction
-        if (payment.isIncoming) {
-            // payment is income
-            directionNode = self.cashbookRootNode.incomeRoot;
-        } else {
-            // payment is expenditure
-            directionNode = self.cashbookRootNode.expenditureRoot;
-        }
-        NSString * categoryName = payment.paymentCategory.categoryName;
-        AMCTreeNode * leaf = [directionNode leafWithName:categoryName];
-        if (leaf) {
-            return leaf.parentNode.name;
-        }
-        return @"Other";
+    Payment * payment = item.payment;
+    if (payment.isIncoming) {
+        // payment is income
+        directionNode = self.cashbookRootNode.incomeRoot;
     } else {
-        // item is a sale, and sales are always income in the Sales category
-        return @"Sales";
+        // payment is expenditure
+        directionNode = self.cashbookRootNode.expenditureRoot;
     }
+    NSString * categoryName = payment.paymentCategory.categoryName;
+    AMCTreeNode * leaf = [directionNode leafWithName:categoryName];
+    NSAssert(leaf, @"Leaf must not be nil");
+    return leaf.parentNode.name;
 }
 -(BOOL)writeToFile:(NSString*)filename error:(NSError**)error {
     NSNumberFormatter * nf = [[NSNumberFormatter alloc] init];

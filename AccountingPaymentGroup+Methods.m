@@ -56,19 +56,11 @@
         expenditure.parent = root;
         expenditure.expenditureRoot = salon;
         
-        AccountingPaymentGroup * expenditureOther = [AccountingPaymentGroup newObjectWithMoc:salon.managedObjectContext];
-        expenditureOther.isExpenditure = @YES;
-        expenditureOther.isIncome = @NO;
+        AccountingPaymentGroup * expenditureOther = [expenditure addSubgroupWithName:@"Other Expenditure"];
         expenditureOther.isSystemCategory = @YES;
-        expenditureOther.name = @"Other";
-        expenditureOther.parent = expenditure;
         
-        AccountingPaymentGroup * incomeOther = [AccountingPaymentGroup newObjectWithMoc:salon.managedObjectContext];
-        incomeOther.isExpenditure = @NO;
-        incomeOther.isIncome = @YES;
+        AccountingPaymentGroup * incomeOther = [income addSubgroupWithName:@"Other Income"];
         incomeOther.isSystemCategory = @YES;
-        incomeOther.name = @"Other";
-        incomeOther.parent = income;
         
         for (NSString * name in [AccountingPaymentGroup defaultIncomeGroupNames]) {
             [income addSubgroupWithName:name];
@@ -82,13 +74,14 @@
         }
     }
 }
--(void)addSubgroupWithName:(NSString*)name {
+-(AccountingPaymentGroup*)addSubgroupWithName:(NSString*)name {
     AccountingPaymentGroup * subgroup = [AccountingPaymentGroup newObjectWithMoc:self.managedObjectContext];
     subgroup.name = name;
     subgroup.isIncome = self.isIncome;
     subgroup.isExpenditure = self.isExpenditure;
     subgroup.isSystemCategory = @NO;
     subgroup.parent = self;
+    return subgroup;
 }
 +(NSArray*)defaultExpenditureGroupNames {
     return @[@"Accountancy",
@@ -101,7 +94,6 @@
              @"Drinks",
              @"Equipment",
              @"Garbage",
-             @"Insurance",
              @"Insurance",
              @"Phone & Internet",
              @"Refunds",
@@ -144,7 +136,7 @@
         return child;
     }
     if ([child isKindOfClass:[PaymentCategory class]]) {
-        if (self.isExpenditure) {
+        if (self.isExpenditure.boolValue) {
             [self addExpenditurePaymentCategoriesObject:child];
         } else {
             [self addIncomePaymentCategoriesObject:child];
@@ -158,7 +150,7 @@
         return child;
     }
     if ([child isKindOfClass:[PaymentCategory class]]) {
-        if (self.isExpenditure) {
+        if (self.isExpenditure.boolValue) {
             [self removeExpenditurePaymentCategoriesObject:child];
         } else {
             [self removeIncomePaymentCategoriesObject:child];
@@ -174,7 +166,7 @@
     return self.expenditurePaymentCategories.count + self.incomePaymentCategories.count;
 }
 -(NSArray *)leaves {
-    if (self.isExpenditure) {
+    if (self.isExpenditure.boolValue) {
         return [[self.expenditurePaymentCategories allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"categoryName" ascending:YES]]];
     } else {
         return [[self.incomePaymentCategories allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"categoryName" ascending:YES]]];

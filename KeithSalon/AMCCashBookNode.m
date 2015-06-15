@@ -34,7 +34,7 @@
         for (AccountingPaymentGroup * subgroup in sortedArray) {
             [self addChild:[[AMCCashBookNode alloc] initWithAccountancyGroup:subgroup] updateRepresentedObject:NO];
         }
-        if (group.isExpenditure) {
+        if (group.isExpenditure.boolValue) {
             sortDescriptors = [NSMutableArray array];
             [sortDescriptors addObject:[NSSortDescriptor sortDescriptorWithKey:@"categoryName" ascending:YES]];
             sortedArray = [[group.expenditurePaymentCategories allObjects] sortedArrayUsingDescriptors:sortDescriptors];
@@ -42,7 +42,7 @@
                 [self addChild:[[AMCCashBookNode alloc] initWithPaymentCategory:expenditureCategory] updateRepresentedObject:NO];
             }
         }
-        if (group.isIncome) {
+        if (group.isIncome.boolValue) {
             sortDescriptors = [NSMutableArray array];
             [sortDescriptors addObject:[NSSortDescriptor sortDescriptorWithKey:@"categoryName" ascending:YES]];
             sortedArray = [[group.incomePaymentCategories allObjects] sortedArrayUsingDescriptors:sortDescriptors];
@@ -78,7 +78,7 @@
     AMCCashBookNode * accountancyNode = (AMCCashBookNode*)child;
     child = [super addChild:child];
     if (child && child.isLeaf) {
-        if (self.accountingGroup.isExpenditure) {
+        if (self.accountingGroup.isExpenditure.boolValue) {
             [self.accountingGroup addExpenditurePaymentCategoriesObject:accountancyNode.paymentCategory];
         } else {
             [self.accountingGroup addIncomePaymentCategoriesObject:accountancyNode.paymentCategory];
@@ -90,7 +90,7 @@
     AMCCashBookNode * accountancyNode = (AMCCashBookNode*)child;
     child = [super removeChild:child];
     if (child && child.isLeaf) {
-        if (self.accountingGroup.isExpenditure) {
+        if (self.accountingGroup.isExpenditure.boolValue) {
             [self.accountingGroup removeExpenditurePaymentCategoriesObject:accountancyNode.paymentCategory];
         } else {
             [self.accountingGroup removeIncomePaymentCategoriesObject:accountancyNode.paymentCategory];
