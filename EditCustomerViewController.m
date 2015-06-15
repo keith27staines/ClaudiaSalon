@@ -26,18 +26,8 @@
 {
     return @"EditCustomerViewController";
 }
--(NSString *)objectTypeAndName
-{
-    NSMutableString * objectTypeAndName = [@"Customer" mutableCopy];
-    if (self.objectToEdit) {
-        Customer * object = (Customer*)self.objectToEdit;
-        NSString * objectName = object.fullName;
-        if (objectName) {
-            [objectTypeAndName appendString:@": "];
-            [objectTypeAndName appendString:objectName];
-        }
-    }
-    return objectTypeAndName;
+-(NSString *)objectTypeAndName {
+    return @"Customer";
 }
 -(void)setObjectToEdit:(id)objectToEdit {
     [self view];

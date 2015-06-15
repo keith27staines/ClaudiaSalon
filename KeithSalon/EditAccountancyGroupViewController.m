@@ -16,40 +16,25 @@
 
 @implementation EditAccountancyGroupViewController
 
--(NSString *)nibName
-{
+-(NSString *)nibName {
     return @"EditAccountancyGroupViewController";
 }
--(NSString *)objectTypeAndName
-{
-    NSMutableString * objectTypeAndName = [@"Accounting Group" mutableCopy];
-    if (self.objectToEdit) {
-        AccountingPaymentGroup * object = (AccountingPaymentGroup*)self.objectToEdit;
-        NSString * objectName = object.name;
-        if (objectName) {
-            [objectTypeAndName appendString:@": "];
-            [objectTypeAndName appendString:objectName];
-        }
-    }
-    return objectTypeAndName;
+-(NSString *)objectTypeAndName {
+    return @"Accounting Group";
 }
--(void)clear
-{
+-(void)clear {
     self.nameField.stringValue = @"";
 }
--(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
-{
+-(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     AccountingPaymentGroup * group = (AccountingPaymentGroup*)self.objectToEdit;
     self.nameField.stringValue  = (group.name)?group.name:@"";
 }
--(NSArray *)editableControls
-{
+-(NSArray *)editableControls {
     return  @[self.nameField];
 }
 #pragma mark - NSControlTextEditingDelegate
--(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
-{
+-(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
     BOOL controlIsValid = NO;
     
     if (control == self.nameField) {
@@ -57,20 +42,17 @@
     }
     return controlIsValid;
 }
--(void)controlTextDidEndEditing:(NSNotification *)obj
-{
+-(void)controlTextDidEndEditing:(NSNotification *)obj {
     [self.doneButton setEnabled:[self isValid]];
 }
 -(void)controlTextDidChange:(NSNotification *)obj {
     [self enableDoneButton];
 }
--(BOOL)isValid
-{
+-(BOOL)isValid {
     if (![self validateName:self.nameField.stringValue]) return NO;
     return YES;
 }
--(void)updateObject
-{
+-(void)updateObject {
     AccountingPaymentGroup * group = self.objectToEdit;
     group.name = self.nameField.stringValue;
 }

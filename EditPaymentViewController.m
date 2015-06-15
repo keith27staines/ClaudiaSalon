@@ -57,24 +57,13 @@
         }
     }
 }
--(NSString *)nibName
-{
+-(NSString *)nibName {
     return @"EditPaymentViewController";
 }
--(NSString *)objectTypeAndName
-{
-    NSMutableString * objectTypeAndName = [@"Payment" mutableCopy];
-    if (self.objectToEdit) {
-        NSString * objectName = @"";
-        if (objectName) {
-            [objectTypeAndName appendString:@": "];
-            [objectTypeAndName appendString:objectName];
-        }
-    }
-    return objectTypeAndName;
+-(NSString *)objectTypeAndName {
+    return @"Payment";
 }
--(void)clear
-{
+-(void)clear {
     self.paymentReasonField.stringValue = @"";
     self.payeeField.stringValue = @"";
     [self.paymentDatePicker setDateValue:[NSDate date]];

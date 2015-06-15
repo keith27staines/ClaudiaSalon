@@ -20,7 +20,7 @@
 }
 @property (weak) IBOutlet NSButton *addButton;
 @property (weak) IBOutlet NSButton *removeButton;
-@property (weak) IBOutlet NSOutlineView *treeView;
+
 
 @property (weak) IBOutlet NSTextField *titleLabel;
 @property (strong) IBOutlet NSMenu *addMenu;
@@ -61,7 +61,9 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
     return nil;
 }
 -(BOOL)canAddNodeToNode:(AMCTreeNode *)node {
-    if (!node) return NO;
+    return YES;
+}
+-(BOOL)canAddLeafToNode:(AMCTreeNode*) node {
     return YES;
 }
 -(BOOL)canRemoveNode:(AMCTreeNode *)node {
@@ -119,12 +121,12 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
 }
 -(void)removeRow:(NSInteger)row {
     if (row < 0) return;
-    [self removeNode:[self.treeView itemAtRow:row]];
+    [self deleteNode:[self.treeView itemAtRow:row]];
 }
--(void)removeNode:(AMCTreeNode*)node {
+-(void)deleteNode:(AMCTreeNode*)node {
     if (!node) return;
     if (node.isLeaf) return;
-    [self moveContentOfCategory:node toCategory:node.parentNode];
+    [self moveContentOfNode:node toNode:node.parentNode];
     [node.parentNode removeChild:node];
     [self.treeView reloadData];
 }
@@ -176,13 +178,13 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
     [self.treeView expandItem:newParent];
     return YES;
 }
--(void)moveContentOfCategory:(AMCTreeNode*)sourceCategory toCategory:(AMCTreeNode*)destinationCategory {
-    if (sourceCategory == destinationCategory) {
+-(void)moveContentOfNode:(AMCTreeNode*)sourceNode toNode:(AMCTreeNode*)destinationNode {
+    if (sourceNode == destinationNode) {
         return;
     }
-    for (AMCTreeNode * item in sourceCategory.allChildren) {
-        [sourceCategory removeChild:item];
-        [destinationCategory addChild:item];
+    for (AMCTreeNode * item in sourceNode.allChildren) {
+        [sourceNode removeChild:item];
+        [destinationNode addChild:item];
     }
 }
 #pragma mark - NSOutlineView
@@ -309,7 +311,10 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
     AMCTreeNode * actionNode = nil;
     if (menu == self.rightClickMenu) {
         actionNode = [self.treeView itemAtRow:self.treeView.clickedRow];
+        [menu itemWithTag:MenuButtonTagsAddNode].enabled = [self canAddNodeToNode:actionNode];
+        [menu itemWithTag:MenuButtonTagsAddLeaf].enabled = [self canAddLeafToNode:actionNode];
         [menu itemWithTag:MenuButtonTagsDelete].enabled = [self canRemoveNode:actionNode];
+        [menu itemWithTag:MenuButtonTagsEdit].enabled = (actionNode != nil);
     } else {
         // Nothing to do, but if there was, it would probably begin with this...
         //actionNode = [self.treeView itemAtRow:self.treeView.selectedRow];
@@ -325,7 +330,7 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
     [self.treeView scrollRowToVisible:row];
 }
 -(AMCTreeNode*)firstParentNodeForRow:(NSInteger)row {
-    if (row < 0) return nil;
+    if (row < 0) return self.rootNode;
     AMCTreeNode *parentNode = [self.treeView itemAtRow:row];
     if (parentNode.isLeaf) {
         parentNode = parentNode.parentNode;

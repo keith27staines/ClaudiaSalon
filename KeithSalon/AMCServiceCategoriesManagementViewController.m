@@ -52,7 +52,7 @@
     if (!parentNode) return nil;
     if (parentNode.isLeaf) return nil;
     id<AMCTreeNode> representedObject = nil;
-    representedObject = [ServiceCategory newObjectWithMoc:self.documentMoc];
+    representedObject = [Service newObjectWithMoc:self.documentMoc];
     representedObject.name = @"New Service";
     newLeaf = [[AMCTreeNode alloc] initWithRepresentedObject:representedObject];
     [parentNode addChild:newLeaf];
@@ -65,7 +65,7 @@
     if (!parentNode) return nil;
     if (parentNode.isLeaf) return nil;
     id<AMCTreeNode> representedObject = nil;
-    representedObject = [Service newObjectWithMoc:self.documentMoc];
+    representedObject = [ServiceCategory newObjectWithMoc:self.documentMoc];
     representedObject.name = @"New Service Category";
     newNode = [[AMCTreeNode alloc] initWithRepresentedObject:representedObject];
     [parentNode addChild:newNode];

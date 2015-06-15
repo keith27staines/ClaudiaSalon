@@ -26,40 +26,25 @@
 -(void)cancelButton:(NSButton *)sender {
     [super cancelButton:sender];
 }
--(NSString *)nibName
-{
+-(NSString *)nibName {
     return @"EditServiceViewController";
 }
--(NSString *)objectTypeAndName
-{
-    NSMutableString * objectTypeAndName = [@"Service" mutableCopy];
-    if (self.objectToEdit) {
-        Service * object = (Service*)self.objectToEdit;
-        NSString * objectName = object.name;
-        if (objectName) {
-            [objectTypeAndName appendString:@": "];
-            [objectTypeAndName appendString:objectName];
-        }
-    }
-    return objectTypeAndName;
+-(NSString *)objectTypeAndName {
+    return @"Service";
 }
--(Service*)service
-{
+-(Service*)service {
     return (Service*)self.objectToEdit;
 }
--(void)clear
-{
+-(void)clear {
     [self setObjectToEdit:self.objectToEdit];
 }
--(void)setObjectToEdit:(id)objectToEdit
-{
+-(void)setObjectToEdit:(id)objectToEdit {
     [super setObjectToEdit:objectToEdit];
     Service * service = objectToEdit;
     self.products = [[service.product allObjects] mutableCopy];
     [self deluxeChanged:self.deluxeCheckbox];
 }
--(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
-{
+-(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     Service * service = self.service;
     self.nameField.stringValue = (service.name)?service.name : @"";
@@ -89,8 +74,7 @@
     [self setPriceControls];
     [self deluxeChanged:self];
 }
--(void)setPriceControls
-{
+-(void)setPriceControls {
     Service * service = self.service;
     self.minimumPrice.stringValue = [NSString stringWithFormat:@"£%@",service.minimumCharge];
     self.nominalPrice.stringValue = [NSString stringWithFormat:@"£%@",service.nominalCharge];
@@ -102,8 +86,7 @@
     self.maximumPrice.stringValue = [NSString stringWithFormat:@"£%@",service.maximumCharge];
     self.nominalPrice.stringValue = [NSString stringWithFormat:@"£%@",service.nominalCharge];
 }
--(NSArray *)editableControls
-{
+-(NSArray *)editableControls {
     return  @[self.nameField,
               self.timeRequired,
               self.minimumPrice,
@@ -115,8 +98,7 @@
 -(void)controlTextDidChange:(NSNotification *)obj {
     [self enableDoneButton];
 }
--(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
-{
+-(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
     BOOL controlIsValid = NO;
     
     if (control == self.nameField) {
@@ -131,12 +113,10 @@
     [self enableDoneButton];
     return controlIsValid;
 }
--(void)controlTextDidEndEditing:(NSNotification *)obj
-{
+-(void)controlTextDidEndEditing:(NSNotification *)obj {
     [self enableDoneButton];
 }
--(BOOL)isValid
-{
+-(BOOL)isValid {
     if (![self validateName:self.nameField.stringValue]) return NO;
     double nominal = self.nominalPrice.doubleValue;
     double minimum = self.minimumPrice.doubleValue;
@@ -147,8 +127,7 @@
     }
     return NO;
 }
--(void)updateObject
-{
+-(void)updateObject {
     Service * service = self.objectToEdit;
     service.name = self.nameField.stringValue;
     service.nominalCharge = @(self.nominalPrice.integerValue);

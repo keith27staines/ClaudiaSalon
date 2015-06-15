@@ -21,36 +21,22 @@
 {
     return @"EditPaymentCategoryViewController";
 }
--(NSString *)objectTypeAndName
-{
-    NSMutableString * objectTypeAndName = [@"Payment Category" mutableCopy];
-    if (self.objectToEdit) {
-        PaymentCategory * object = (PaymentCategory*)self.objectToEdit;
-        NSString * objectName = object.categoryName;
-        if (objectName) {
-            [objectTypeAndName appendString:@": "];
-            [objectTypeAndName appendString:objectName];
-        }
-    }
-    return objectTypeAndName;
+-(NSString *)objectTypeAndName {
+    return @"Payment Category";
 }
--(void)clear
-{
+-(void)clear {
     self.categoryName.stringValue = @"";
 }
--(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
-{
+-(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     PaymentCategory * category = (PaymentCategory*)self.objectToEdit;
     self.categoryName.stringValue  = (category.categoryName)?category.categoryName:@"";
 }
--(NSArray *)editableControls
-{
+-(NSArray *)editableControls {
     return  @[self.categoryName];
 }
 #pragma mark - NSControlTextEditingDelegate
--(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
-{
+-(BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor {
     BOOL controlIsValid = NO;
     
     if (control == self.categoryName) {
@@ -58,20 +44,17 @@
     }
     return controlIsValid;
 }
--(void)controlTextDidEndEditing:(NSNotification *)obj
-{
+-(void)controlTextDidEndEditing:(NSNotification *)obj {
     [self.doneButton setEnabled:[self isValid]];
 }
 -(void)controlTextDidChange:(NSNotification *)obj {
     [self enableDoneButton];
 }
--(BOOL)isValid
-{
+-(BOOL)isValid {
     if (![self validateName:self.categoryName.stringValue]) return NO;
     return YES;
 }
--(void)updateObject
-{
+-(void)updateObject {
     PaymentCategory * category = self.objectToEdit;
     category.categoryName = self.categoryName.stringValue;
 }

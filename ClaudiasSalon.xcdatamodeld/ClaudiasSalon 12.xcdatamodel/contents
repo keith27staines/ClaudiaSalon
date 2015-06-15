@@ -28,8 +28,10 @@
         <attribute name="isIncome" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isSystemCategory" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="expenditureOther" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="expenditureOtherGroup" inverseEntity="Salon" syncable="YES"/>
         <relationship name="expenditurePaymentCategories" toMany="YES" deletionRule="Nullify" destinationEntity="PaymentCategory" inverseName="expenditureAccountingGroup" inverseEntity="PaymentCategory" syncable="YES"/>
         <relationship name="expenditureRoot" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="rootExpenditureGroup" inverseEntity="Salon" syncable="YES"/>
+        <relationship name="incomeOther" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="incomeOtherGroup" inverseEntity="Salon" syncable="YES"/>
         <relationship name="incomePaymentCategories" toMany="YES" deletionRule="Nullify" destinationEntity="PaymentCategory" inverseName="incomeAccountingGroup" inverseEntity="PaymentCategory" syncable="YES"/>
         <relationship name="incomeRoot" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="rootIncomeGroup" inverseEntity="Salon" syncable="YES"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AccountingPaymentGroup" inverseName="subgroups" inverseEntity="AccountingPaymentGroup" syncable="YES"/>
@@ -101,9 +103,11 @@
         <attribute name="leavingDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="monthOfBirth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="paidFromManagersBudget" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="455972400" defaultValueString="&quot;now&quot;" syncable="YES"/>
+        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="456058800" defaultValueString="&quot;now&quot;" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="canDo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="canBeDoneBy" inverseEntity="Service" syncable="YES"/>
         <relationship name="holidays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Holiday" inverseName="employee" inverseEntity="Holiday" syncable="YES"/>
@@ -297,6 +301,8 @@
         <relationship name="defaultPaymentCategoryForPayments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PaymentCategory" inverseName="defaultCategoryForPayments" inverseEntity="PaymentCategory" syncable="YES"/>
         <relationship name="defaultPaymentCategoryForSales" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PaymentCategory" inverseName="defaultCategoryForSales" inverseEntity="PaymentCategory" syncable="YES"/>
         <relationship name="defaultPaymentCategoryForWages" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PaymentCategory" inverseName="defaultCategoryForWages" inverseEntity="PaymentCategory" syncable="YES"/>
+        <relationship name="expenditureOtherGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AccountingPaymentGroup" inverseName="expenditureOther" inverseEntity="AccountingPaymentGroup" syncable="YES"/>
+        <relationship name="incomeOtherGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AccountingPaymentGroup" inverseName="incomeOther" inverseEntity="AccountingPaymentGroup" syncable="YES"/>
         <relationship name="manager" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="manages" inverseEntity="Employee" syncable="YES"/>
         <relationship name="openingHoursWeekTemplate" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OpeningHoursWeekTemplate" inverseName="salon" inverseEntity="OpeningHoursWeekTemplate" syncable="YES"/>
         <relationship name="primaryBankAccount" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="primaryBankAccountForSalon" inverseEntity="Account" syncable="YES"/>
@@ -412,12 +418,12 @@
     </entity>
     <elements>
         <element name="Account" positionX="0" positionY="0" width="128" height="360"/>
-        <element name="AccountingPaymentGroup" positionX="0" positionY="0" width="128" height="210"/>
+        <element name="AccountingPaymentGroup" positionX="0" positionY="0" width="128" height="240"/>
         <element name="AccountReconciliation" positionX="0" positionY="0" width="128" height="90"/>
         <element name="Appointment" positionX="0" positionY="0" width="128" height="255"/>
         <element name="CalendarDay" positionX="0" positionY="0" width="128" height="75"/>
         <element name="Customer" positionX="0" positionY="0" width="128" height="375"/>
-        <element name="Employee" positionX="0" positionY="0" width="128" height="465"/>
+        <element name="Employee" positionX="0" positionY="0" width="128" height="495"/>
         <element name="Holiday" positionX="0" positionY="0" width="128" height="135"/>
         <element name="IntervalDuringDay" positionX="0" positionY="0" width="128" height="120"/>
         <element name="LastUpdatedBy" positionX="0" positionY="0" width="128" height="105"/>
@@ -431,7 +437,7 @@
         <element name="Salary" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Sale" positionX="0" positionY="0" width="128" height="330"/>
         <element name="SaleItem" positionX="0" positionY="0" width="128" height="225"/>
-        <element name="Salon" positionX="0" positionY="0" width="128" height="435"/>
+        <element name="Salon" positionX="0" positionY="0" width="128" height="465"/>
         <element name="Service" positionX="0" positionY="0" width="128" height="300"/>
         <element name="ServiceCategory" positionX="0" positionY="0" width="128" height="255"/>
         <element name="ShoppingList" positionX="0" positionY="0" width="128" height="120"/>

@@ -2,7 +2,7 @@
 //  Salon.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 14/06/2015.
+//  Created by Keith Staines on 15/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -44,5 +44,7 @@
 @dynamic tillAccount;
 @dynamic rootExpenditureGroup;
 @dynamic rootIncomeGroup;
+@dynamic incomeOtherGroup;
+@dynamic expenditureOtherGroup;
 
 @end

@@ -17,35 +17,21 @@
 
 @implementation EditServiceCategoryViewController
 
--(NSString *)nibName
-{
+-(NSString *)nibName {
     return @"EditServiceCategoryViewController";
 }
--(NSString *)objectTypeAndName
-{
-    NSMutableString * objectTypeAndName = [@"Service Category" mutableCopy];
-    if (self.objectToEdit) {
-        ServiceCategory * object = (ServiceCategory*)self.objectToEdit;
-        NSString * objectName = object.name;
-        if (objectName) {
-            [objectTypeAndName appendString:@": "];
-            [objectTypeAndName appendString:objectName];
-        }
-    }
-    return objectTypeAndName;
+-(NSString *)objectTypeAndName {
+    return @"Service Category";
 }
--(void)clear
-{
+-(void)clear {
     self.nameOfService.stringValue = @"";
 }
--(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
-{
+-(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     ServiceCategory * category = (ServiceCategory*)self.objectToEdit;
     self.nameOfService.stringValue  = (category.name)?category.name:@"";
 }
--(NSArray *)editableControls
-{
+-(NSArray *)editableControls {
     return  @[self.nameOfService];
 }
 #pragma mark - NSControlTextEditingDelegate

@@ -12,7 +12,6 @@
 
 @interface AMCCashBookNode()
 @property PaymentCategory * paymentCategory;
-@property (readonly) AccountingPaymentGroup * accountingGroup;
 @end
 
 @implementation AMCCashBookNode
@@ -53,6 +52,20 @@
     }
     return self;
 }
+-(BOOL)isExpenditure {
+    if (self.accountingGroup) {
+        return self.accountingGroup.isExpenditure.boolValue;
+    } else {
+        return ((AMCCashBookNode*)(self.parentNode)).isExpenditure;
+    }
+}
+-(BOOL)isIncome {
+    if (self.accountingGroup) {
+        return self.accountingGroup.isIncome.boolValue;
+    } else {
+        return ((AMCCashBookNode*)(self.parentNode)).isIncome;
+    }
+}
 -(instancetype)initWithPaymentCategory:(PaymentCategory*)category {
     self = [super initWithName:category.categoryName isLeaf:YES];
     if (self) {
@@ -89,12 +102,14 @@
 -(AMCTreeNode*)removeChild:(AMCTreeNode*)child {
     AMCCashBookNode * accountancyNode = (AMCCashBookNode*)child;
     child = [super removeChild:child];
-    if (child && child.isLeaf) {
+    if (child.isLeaf) {
         if (self.accountingGroup.isExpenditure.boolValue) {
             [self.accountingGroup removeExpenditurePaymentCategoriesObject:accountancyNode.paymentCategory];
         } else {
             [self.accountingGroup removeIncomePaymentCategoriesObject:accountancyNode.paymentCategory];
         }
+    } else {
+        [self.accountingGroup removeSubgroupsObject:child.representedObject];
     }
     return child;
 }

@@ -2,7 +2,7 @@
 //  Employee.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
+//  Created by Keith Staines on 15/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -32,6 +32,8 @@
 @property (nonatomic, retain) NSString * postcode;
 @property (nonatomic, retain) NSDate * startingDate;
 @property (nonatomic, retain) NSString * uid;
+@property (nonatomic, retain) NSString * password;
+@property (nonatomic, retain) id photo;
 @property (nonatomic, retain) NSSet *canDo;
 @property (nonatomic, retain) NSSet *holidays;
 @property (nonatomic, retain) Salon *manages;

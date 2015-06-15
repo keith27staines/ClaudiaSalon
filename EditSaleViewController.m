@@ -63,12 +63,10 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
     [self displayWizardStep];
     [self.doneButton setHidden:YES];
 }
--(NSString *)objectTypeAndName
-{
+-(NSString *)objectTypeAndName {
     return @"Sale";
 }
--(Sale *)sale
-{
+-(Sale *)sale {
     return (Sale*)self.objectToEdit;
 }
 - (IBAction)previousStep:(id)sender {

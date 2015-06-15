@@ -38,11 +38,35 @@
     return _rootNode;
 }
 -(BOOL)canAddNodeToNode:(AMCTreeNode *)node {
-    return [super canAddNodeToNode:node];
+    AMCCashBookRootNode * root = (AMCCashBookRootNode*)self.rootNode;
+    if (node == root.expenditureRoot || node == root.incomeRoot) {
+        return YES;
+    }
+    return NO;
+}
+-(BOOL)canAddLeafToNode:(AMCTreeNode *)node {
+    AMCCashBookRootNode * root = (AMCCashBookRootNode*)self.rootNode;
+    if (node.parentNode == root.expenditureRoot || node.parentNode == root.incomeRoot) {
+        return YES;
+    }
+    return NO;
 }
 -(BOOL)canRemoveNode:(AMCTreeNode *)node {
     if (![super canRemoveNode:node] || node.isSystemNode || node.isLeaf) return NO;
     return YES;
+}
+-(void)deleteNode:(AMCTreeNode*)node {
+    if (!node) return;
+    if (node.isLeaf) return;
+    AMCCashBookRootNode * root = (AMCCashBookRootNode*)_rootNode;
+    AMCCashBookNode * cashbookNode = (AMCCashBookNode*)node;
+    if (cashbookNode.isExpenditure) {
+        [self moveContentOfNode:node toNode:root.expenditureOtherNode];
+    } else {
+        [self moveContentOfNode:node toNode:root.incomeOtherNode];
+    }
+    [node.parentNode removeChild:node];
+    [self.treeView reloadData];
 }
 -(AMCTreeNode *)makeChildLeafForParent:(AMCTreeNode *)parentNode {
     NSAssert(parentNode, @"Parent cannot be nil");
@@ -85,6 +109,25 @@
         editor.objectToEdit = nodeToEdit.representedObject;
     }
     return editor;
+}
+#pragma mark - Move object implementation
+-(BOOL)shouldMove:(AMCTreeNode*)moving toParent:(AMCTreeNode*)proposedParent {
+    if (![super shouldMove:moving toParent:proposedParent]) {
+        return NO;
+    }
+    
+    // Can't move from expenditure categories to income categories or vice-versa
+    AMCCashBookNode * movingCashNode = (AMCCashBookNode*)moving;
+    AMCCashBookNode * proposedParentCashNode = (AMCCashBookNode*)proposedParent;
+    if (movingCashNode.isExpenditure != proposedParentCashNode.isExpenditure &&
+        movingCashNode.isIncome != proposedParentCashNode.isIncome) {
+        return NO;
+    }
+    if (moving.isLeaf) {
+        return [self canAddLeafToNode:proposedParent];
+    } else {
+        return [self canAddNodeToNode:proposedParent];
+    }
 }
 @end
 

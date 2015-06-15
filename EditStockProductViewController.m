@@ -22,18 +22,8 @@
 {
     return @"EditStockProductViewController";
 }
--(NSString *)objectTypeAndName
-{
-    NSMutableString * objectTypeAndName = [@"Stocked Product:" mutableCopy];
-    if (self.objectToEdit) {
-        StockedProduct * object = (StockedProduct*)self.objectToEdit;
-        NSString * objectName = object.name;
-        if (objectName) {
-            [objectTypeAndName appendString:@": "];
-            [objectTypeAndName appendString:objectName];
-        }
-    }
-    return objectTypeAndName;
+-(NSString *)objectTypeAndName {
+    return @"Stocked Product";
 }
 -(void)viewDidAppear {
     [self.view.window makeFirstResponder:self.view.window];

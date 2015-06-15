@@ -2,7 +2,7 @@
 //  Salon.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 14/06/2015.
+//  Created by Keith Staines on 15/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -39,5 +39,7 @@
 @property (nonatomic, retain) Account *tillAccount;
 @property (nonatomic, retain) AccountingPaymentGroup *rootExpenditureGroup;
 @property (nonatomic, retain) AccountingPaymentGroup *rootIncomeGroup;
+@property (nonatomic, retain) AccountingPaymentGroup *incomeOtherGroup;
+@property (nonatomic, retain) AccountingPaymentGroup *expenditureOtherGroup;
 
 @end

@@ -14,4 +14,7 @@
 -(instancetype)initWithAccountancyGroup:(AccountingPaymentGroup*)group;
 -(instancetype)initWithPaymentCategory:(PaymentCategory*)category;
 @property (readonly) PaymentCategory * paymentCategory;
+@property (readonly) AccountingPaymentGroup * accountingGroup;
+@property (readonly) BOOL isExpenditure;
+@property (readonly) BOOL isIncome;
 @end

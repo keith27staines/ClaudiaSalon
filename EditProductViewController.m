@@ -20,22 +20,11 @@
 {
     return @"EditProductViewController";
 }
--(NSString *)objectTypeAndName
-{
-    NSMutableString * objectTypeAndName = [@"Product" mutableCopy];
-    if (self.objectToEdit) {
-        Product * object = (Product*)self.objectToEdit;
-        NSString * objectName = object.productType;
-        if (objectName) {
-            [objectTypeAndName appendString:@": "];
-            [objectTypeAndName appendString:objectName];
-        }
-    }
-    return objectTypeAndName;
+-(NSString *)objectTypeAndName {
+    return @"Product";
 }
 
--(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
-{
+-(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     Product * product = (Product*)self.objectToEdit;
     switch (self.editMode) {

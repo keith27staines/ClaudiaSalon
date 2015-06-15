@@ -13,5 +13,7 @@
 @property (readonly) Salon * salon;
 @property (readonly) AMCCashBookNode * expenditureRoot;
 @property (readonly) AMCCashBookNode * incomeRoot;
+@property (readonly) AMCCashBookNode * expenditureOtherNode;
+@property (readonly) AMCCashBookNode * incomeOtherNode;
 -(instancetype)initWithSalon:(Salon*)salon;
 @end

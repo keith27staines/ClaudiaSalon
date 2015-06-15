@@ -2,7 +2,7 @@
 //  Employee.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
+//  Created by Keith Staines on 15/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -37,6 +37,8 @@
 @dynamic postcode;
 @dynamic startingDate;
 @dynamic uid;
+@dynamic password;
+@dynamic photo;
 @dynamic canDo;
 @dynamic holidays;
 @dynamic manages;

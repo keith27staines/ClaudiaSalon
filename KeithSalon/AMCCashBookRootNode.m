@@ -17,6 +17,8 @@
 @property (readwrite) Salon * salon;
 @property (readwrite) AMCCashBookNode * expenditureRoot;
 @property (readwrite) AMCCashBookNode * incomeRoot;
+@property (readwrite) AMCCashBookNode * expenditureOtherNode;
+@property (readwrite) AMCCashBookNode * incomeOtherNode;
 
 @end
 
@@ -31,12 +33,27 @@
     NSAssert(group == self.salon.rootAccountingGroup,@"Group must be the root group");
     self = [super initWithAccountancyGroup:group];
     if (self) {
+        // Identify incomeRoot and expenditureRoot nodes
         for (AMCCashBookNode * childNode in self.childNodes) {
             if (childNode.representedObject == self.salon.rootIncomeGroup) {
                 self.incomeRoot = childNode;
             }
             if (childNode.representedObject == self.salon.rootExpenditureGroup) {
                 self.expenditureRoot = childNode;
+            }
+        }
+        // Identify incomeOther node
+        for (AMCCashBookNode * childNode in self.incomeRoot.childNodes) {
+            if (childNode.representedObject == self.salon.incomeOtherGroup) {
+                self.incomeOtherNode = childNode;
+                break;
+            }
+        }
+        // Identify expenditureOther node
+        for (AMCCashBookNode * childNode in self.expenditureRoot.childNodes) {
+            if (childNode.representedObject == self.salon.expenditureOtherGroup) {
+                self.expenditureOtherNode = childNode;
+                break;
             }
         }
     }

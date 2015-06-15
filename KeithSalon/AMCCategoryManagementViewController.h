@@ -13,7 +13,7 @@
 
 @interface AMCCategoryManagementViewController : AMCViewController
 
-// Override these but call super
+// Override these (might have to call super)
 -(BOOL)shouldMove:(AMCTreeNode*)moving toParent:(AMCTreeNode*)proposedParent;
 -(void)menuNeedsUpdate:(NSMenu *)menu;
 -(AMCTreeNode*)makeChildLeafForParent:(AMCTreeNode*)node;
@@ -23,5 +23,9 @@
 @property (readonly) NSString * titleForAddleafAction;
 -(EditObjectViewController*)editViewControllerForNode:(AMCTreeNode*)node;
 -(BOOL)canAddNodeToNode:(AMCTreeNode*)node;
+-(BOOL)canAddLeafToNode:(AMCTreeNode*)node;
 -(BOOL)canRemoveNode:(AMCTreeNode*)node;
+-(void)deleteNode:(AMCTreeNode*)node;
+-(void)moveContentOfNode:(AMCTreeNode*)sourceNode toNode:(AMCTreeNode*)destinationNode;
+@property (weak) IBOutlet NSOutlineView *treeView;
 @end

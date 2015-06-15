@@ -2,7 +2,7 @@
 //  AccountingPaymentGroup.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 14/06/2015.
+//  Created by Keith Staines on 15/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -24,6 +24,8 @@
 @property (nonatomic, retain) NSSet *subgroups;
 @property (nonatomic, retain) Salon *incomeRoot;
 @property (nonatomic, retain) Salon *expenditureRoot;
+@property (nonatomic, retain) Salon *incomeOther;
+@property (nonatomic, retain) Salon *expenditureOther;
 @end
 
 @interface AccountingPaymentGroup (CoreDataGeneratedAccessors)

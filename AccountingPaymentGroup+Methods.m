@@ -56,11 +56,11 @@
         expenditure.parent = root;
         expenditure.expenditureRoot = salon;
         
-        AccountingPaymentGroup * expenditureOther = [expenditure addSubgroupWithName:@"Other Expenditure"];
-        expenditureOther.isSystemCategory = @YES;
+        salon.expenditureOtherGroup = [expenditure addSubgroupWithName:@"Other Expenditure"];
+        salon.expenditureOtherGroup.isSystemCategory = @YES;
         
-        AccountingPaymentGroup * incomeOther = [income addSubgroupWithName:@"Other Income"];
-        incomeOther.isSystemCategory = @YES;
+        salon.incomeOtherGroup = [income addSubgroupWithName:@"Other Income"];
+        salon.incomeOtherGroup.isSystemCategory = @YES;
         
         for (NSString * name in [AccountingPaymentGroup defaultIncomeGroupNames]) {
             [income addSubgroupWithName:name];
@@ -69,8 +69,8 @@
             [expenditure addSubgroupWithName:name];
         }
         for (PaymentCategory * category in [PaymentCategory allObjectsWithMoc:salon.managedObjectContext]) {
-            category.incomeAccountingGroup = incomeOther;
-            category.expenditureAccountingGroup = expenditureOther;
+            category.incomeAccountingGroup = salon.incomeOtherGroup;
+            category.expenditureAccountingGroup = salon.expenditureOtherGroup;
         }
     }
 }
