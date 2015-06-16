@@ -2,13 +2,14 @@
 //  Payment.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 05/05/2015.
+//  Created by Keith Staines on 16/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import "Payment.h"
 #import "Account.h"
 #import "Note.h"
+#import "Payment.h"
 #import "PaymentCategory.h"
 #import "RecurringItem.h"
 #import "Sale.h"
@@ -40,9 +41,10 @@
 @dynamic paymentCategory;
 @dynamic refunding;
 @dynamic sale;
+@dynamic saleAdvancePayment;
 @dynamic shoppingList;
 @dynamic templateForRecurringItem;
 @dynamic workRecord;
-@dynamic saleAdvancePayment;
+@dynamic transferPartner;
 
 @end

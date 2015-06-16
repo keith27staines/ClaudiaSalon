@@ -107,7 +107,7 @@
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photo" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="456058800" defaultValueString="&quot;now&quot;" syncable="YES"/>
+        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="456145200" defaultValueString="&quot;now&quot;" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="canDo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="canBeDoneBy" inverseEntity="Service" syncable="YES"/>
         <relationship name="holidays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Holiday" inverseName="employee" inverseEntity="Holiday" syncable="YES"/>
@@ -195,6 +195,7 @@
         <relationship name="saleAdvancePayment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sale" inverseName="advancePayment" inverseEntity="Sale" syncable="YES"/>
         <relationship name="shoppingList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingList" inverseName="payment" inverseEntity="ShoppingList" syncable="YES"/>
         <relationship name="templateForRecurringItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecurringItem" inverseName="paymentTemplate" inverseEntity="RecurringItem" syncable="YES"/>
+        <relationship name="transferPartner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Payment" inverseName="transferPartner" inverseEntity="Payment" syncable="YES"/>
         <relationship name="workRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkRecord" inverseName="wages" inverseEntity="WorkRecord" syncable="YES"/>
     </entity>
     <entity name="PaymentCategory" representedClassName="PaymentCategory" syncable="YES">
@@ -430,7 +431,7 @@
         <element name="Note" positionX="0" positionY="0" width="128" height="330"/>
         <element name="OpeningHoursDayTemplate" positionX="0" positionY="0" width="128" height="90"/>
         <element name="OpeningHoursWeekTemplate" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="Payment" positionX="0" positionY="0" width="128" height="420"/>
+        <element name="Payment" positionX="0" positionY="0" width="128" height="435"/>
         <element name="PaymentCategory" positionX="0" positionY="0" width="128" height="300"/>
         <element name="Product" positionX="0" positionY="0" width="128" height="165"/>
         <element name="RecurringItem" positionX="0" positionY="0" width="128" height="180"/>

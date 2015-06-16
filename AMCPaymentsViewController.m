@@ -8,10 +8,10 @@
 
 #import "AMCPaymentsViewController.h"
 #import "AMCMoneyTransferViewController.h"
-#import "AMCPaymentCategoryListViewController.h"
-#import "AMCSalaryPaymentViewController.h"
 
 #import "Payment+Methods.h"
+#import "Sale+Methods.h"
+#import "Customer+Methods.h"
 #import "Account+Methods.h"
 #import "AMCConstants.h"
 #import "NSDate+AMCDate.h"
@@ -20,6 +20,11 @@
 #import "WorkRecord+Methods.h"
 #import "Employee+Methods.h"
 #import "AMCSalonDocument.h"
+#import "EditCustomerViewController.h"
+#import "EditEmployeeViewController.h"
+#import "EditSaleViewController.h"
+#import "AMCWizardForNewAppointmentWindowController.h"
+#import "AMCAppointmentViewer.h"
 
 @interface AMCPaymentsViewController ()
 {
@@ -28,14 +33,15 @@
 @property (weak) IBOutlet NSPopUpButton *accountSelector;
 @property (weak) IBOutlet NSSegmentedControl *directionSelector;
 @property (weak) IBOutlet NSSegmentedControl *reconciliationStateSelector;
-@property (weak) IBOutlet NSButton *tillPaymentButton;
-@property (weak) IBOutlet NSButton *bankPaymentButton;
-@property (weak) IBOutlet NSButton *transferMoneyButton;
-@property (weak) IBOutlet NSButton *voidPaymentButton;
-@property (strong) IBOutlet AMCSalaryPaymentViewController *salaryPaymentWindowController;
 @property (strong) IBOutlet AMCMoneyTransferViewController * moneyTransferViewController;
-@property (strong) IBOutlet AMCPaymentCategoryListViewController *paymentCategoryListViewController;
 @property (weak) IBOutlet NSPopUpButton *paymentCategoryPopup;
+@property (weak) IBOutlet NSButton *addButton;
+
+@property (strong) IBOutlet EditCustomerViewController *editCustomerViewController;
+@property (strong) IBOutlet EditEmployeeViewController *editEmployeeViewController;
+@property (strong) IBOutlet AMCWizardForNewAppointmentWindowController *appointmentWizard;
+@property (strong) IBOutlet EditSaleViewController *saleWizard;
+@property (strong) IBOutlet AMCAppointmentViewer *appointmentViewer;
 
 @end
 
@@ -83,6 +89,7 @@
     [super prepareForDisplayWithSalon:salonDocument];
     [self populateAccountPopup];
     [self populatePaymentCategoryPopup];
+    self.dataTable.doubleAction = @selector(viewDetailsClicked:);
 }
 -(void)applySearchField {
     NSString * search = self.searchField.stringValue;
@@ -208,6 +215,83 @@
     [self.accountSelector selectItemAtIndex:0];
 }
 #pragma mark - Actions
+-(IBAction)viewDetailsClicked:(id)sender {
+    self.objectSelectedBeforeEditorInvoked = self.selectedObject;
+    [self editObject:self.selectedObject forSalon:self.salonDocument inMode:EditModeView withViewController:self.editObjectViewController];
+}
+-(IBAction)rightClickViewDetails:(id)sender {
+    self.objectSelectedBeforeEditorInvoked = self.selectedObject;
+    Payment * payment = self.displayedObjects[self.dataTable.clickedRow];
+    [self editObject:payment forSalon:self.salonDocument inMode:EditModeView withViewController:self.editObjectViewController];
+}
+- (IBAction)showAddRemoveActionMenu:(id)sender {
+    NSButton * button = (NSButton*)sender;
+    NSMenu * menu = button.menu;
+    // Get menu rect in screen window coordinates (menu's size is in screen coordinates)
+    NSRect menuRect = [button.window convertRectFromBacking:NSMakeRect(0, 0, menu.size.width, menu.size.height)];
+    menuRect = [self.view convertRect:menuRect fromView:nil];
+    [menu popUpMenuPositioningItem:nil atLocation:NSMakePoint(button.frame.origin.x+4, NSMaxY(button.frame)+menuRect.size.height-10) inView:self.view];
+}
+-(IBAction)rightClickViewPayeeInfo:(id)sender {
+    self.objectSelectedBeforeEditorInvoked = self.selectedObject;
+    Payment * payment = self.displayedObjects[self.dataTable.clickedRow];
+    if (payment.sale.customer) {
+        self.editCustomerViewController.objectToEdit = payment.sale.customer;
+        self.editCustomerViewController.editMode = EditModeView;
+        [self.editCustomerViewController prepareForDisplayWithSalon:self.salonDocument];
+        [self presentViewControllerAsSheet:self.editCustomerViewController];
+    } else if(payment.workRecord.employee) {
+        self.editEmployeeViewController.objectToEdit = payment.workRecord.employee;
+        self.editEmployeeViewController.editMode = EditModeView;
+        [self.editEmployeeViewController prepareForDisplayWithSalon:self.salonDocument];
+        [self presentViewControllerAsSheet:self.editEmployeeViewController];
+    } else {
+        NSAlert * alert = [[NSAlert alloc] init];
+        alert.alertStyle = NSInformationalAlertStyle;
+        alert.messageText = @"No Customer Found";
+        alert.informativeText = @"This Payment isn't associated with a Customer";
+        [alert runModal];
+    }
+}
+-(IBAction)rightClickViewSale:(id)sender {
+    self.objectSelectedBeforeEditorInvoked = self.selectedObject;
+    Payment * payment = self.displayedObjects[self.dataTable.clickedRow];
+    if (payment.sale) {
+        self.appointmentViewer.sale = payment.sale;
+        self.appointmentViewer.customer = payment.sale.customer;
+        self.appointmentViewer.appointment = payment.sale.fromAppointment;
+        self.appointmentViewer.selectedView = AMCAppointmentViewSale;
+        [self.appointmentViewer prepareForDisplayWithSalon:self.salonDocument];
+        [self presentViewControllerAsSheet:self.appointmentViewer];
+//        self.saleWizard.objectToEdit = payment.sale;
+//        self.saleWizard.editMode = EditModeView;
+//        [self.saleWizard prepareForDisplayWithSalon:self.salonDocument];
+//        [self presentViewControllerAsSheet:self.saleWizard];
+    } else {
+        NSAlert * alert = [[NSAlert alloc] init];
+        alert.alertStyle = NSInformationalAlertStyle;
+        alert.messageText = @"No Sale Found";
+        alert.informativeText = @"This Payment isn't associated with a Sale";
+        [alert runModal];
+    }
+}
+-(IBAction)rightClickViewAppointment:(id)sender {
+    self.objectSelectedBeforeEditorInvoked = self.selectedObject;
+    Payment * payment = self.displayedObjects[self.dataTable.clickedRow];
+    if (payment.sale.fromAppointment) {
+//        self.appointmentWizard.delegate = self;
+        self.appointmentWizard.editMode = EditModeView;
+            self.appointmentWizard.objectToManage = payment.sale.fromAppointment;
+        self.appointmentWizard.document = self.salonDocument;
+        [NSApp beginSheet:self.appointmentWizard.window modalForWindow:self.view.window modalDelegate:self.view.window didEndSelector:NULL contextInfo:nil];
+    } else {
+        NSAlert * alert = [[NSAlert alloc] init];
+        alert.alertStyle = NSInformationalAlertStyle;
+        alert.messageText = @"No Appointment Found";
+        alert.informativeText = @"This Payment isn't associated with an Appointment";
+        [alert runModal];
+    }
+}
 - (IBAction)accountSelected:(id)sender {
     [self reloadData];
 }
@@ -233,24 +317,32 @@
 }
 - (IBAction)transferMoneyClicked:(id)sender {
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
-    NSButton * button = sender;
     [self.moneyTransferViewController prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewController:self.moneyTransferViewController asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorApplicationDefined];
+    [self presentViewControllerAsSheet:self.moneyTransferViewController];
+}
+- (IBAction)rightClickVoidPayment:(id)sender {
+    self.objectSelectedBeforeEditorInvoked = self.selectedObject;
+    Payment * payment = self.displayedObjects[self.dataTable.clickedRow];
+    [self voidPayment:payment];
 }
 - (IBAction)voidPaymentClicked:(id)sender {
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
-    Payment * payment = [self selectedPayment];
+    [self voidPayment:[self selectedPayment]];
+}
+-(void)voidPayment:(Payment*)payment {
     if (!payment) return;
     if (payment.isReconciled) {
         NSAlert * alert = [[NSAlert alloc] init];
+        alert.alertStyle = NSInformationalAlertStyle;
         alert.messageText = @"Payment cannot be edited or voided";
         alert.informativeText = @"The date of the last account reconciliation point for the payment's account is later than the payment date. The details of this payment are now fixed in order to protect the validity of the accounts";
         [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
             
         }];
     } else {
-        NSString * info = [NSString stringWithFormat:@"Once voided, this Payment of £%@ to %@ will no longer be visible on the Payments tab and will not appear in reports or Sales totals.\n\nPlease note that you can't undo this action.",payment.amount,payment.payeeName];
+        NSString * info = [NSString stringWithFormat:@"Once voided, this Payment of £%@ to %@ will no longer be visible on the Payments tab and will not appear in reports or Sales totals.\n\nYou can't undo this action.",payment.amount,payment.payeeName];
         NSAlert *alert = [[NSAlert alloc] init];
+        alert.alertStyle = NSWarningAlertStyle;
         [alert setMessageText:@"Void this Payment?"];
         [alert setInformativeText:info];
         [alert addButtonWithTitle:@"Void the Payment"];
@@ -258,22 +350,30 @@
         [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse response) {
             if (response == NSAlertFirstButtonReturn) {
                 payment.voided = @(YES);
+                payment.transferPartner.voided = @(YES);
                 [self reloadData];
+                NSAlert * alert = [[NSAlert alloc] init];
+                alert.alertStyle = NSInformationalAlertStyle;
+                alert.messageText = @"Payment was a transfer";
+                NSString * thisDirection;
+                NSString * otherDirection;
+                if (payment.transferPartner) {
+                    if (payment.isIncoming) {
+                        thisDirection = @"incoming";
+                        otherDirection = @"outgoing";
+                    } else {
+                        thisDirection = @"outgoing";
+                        otherDirection = @"incoming";
+                    }
+                }
+                alert.informativeText = [NSString stringWithFormat:@"This payment was the %@ payment of a transfer. The corresponding %@ payment has also been voided",thisDirection,otherDirection];
+                [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:nil];
             }
         }];
     }
 }
 - (IBAction)paymentCategoryChanged:(id)sender {
     [self reloadData];
-}
-
-- (IBAction)editPaymentCategoryList:(id)sender {
-    [self.paymentCategoryListViewController prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewControllerAsSheet:self.paymentCategoryListViewController];
-}
-- (IBAction)paySalariesButtonClicked:(id)sender {
-    [self.salaryPaymentWindowController prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewControllerAsSheet:self.salaryPaymentWindowController];
 }
 -(void)dismissViewController:(NSViewController *)viewController {
     [self populatePaymentCategoryPopup];
