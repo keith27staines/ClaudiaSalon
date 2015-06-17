@@ -8,24 +8,27 @@
 
 #import "AMCAppointmentViewer.h"
 #import "Appointment+Methods.h"
-#import "Salary+Methods.h"
+#import "Sale+Methods.h"
 #import "Customer+Methods.h"
 #import "Employee+Methods.h"
 #import "SaleItem+Methods.h"
-
-
+#import "AMCQuickQuoteViewController.h"
 
 @interface AMCAppointmentViewer ()
 
 @property (strong) IBOutlet NSViewController *appointmentViewController;
 @property (strong) IBOutlet NSViewController *saleViewController;
-
 @property (strong) IBOutlet NSViewController *customerViewController;
+@property (strong) IBOutlet NSViewController *noInformationViewController;
+
+@property (strong) IBOutlet AMCQuickQuoteViewController *paymentInfoViewController;
 
 @property (weak) IBOutlet NSView *container;
 @property (weak) IBOutlet NSSegmentedControl *viewSelector;
 @property NSViewController * currentViewController;
 @property NSView * currentView;
+@property (weak) IBOutlet NSButton *paymentInfoButton;
+@property (weak) IBOutlet NSTextField *totalLabel;
 
 @end
 
@@ -38,6 +41,7 @@
     [self addChildViewController:self.appointmentViewController];
     [self addChildViewController:self.saleViewController];
     [self addChildViewController:self.customerViewController];
+    [self addChildViewController:self.noInformationViewController];
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
@@ -71,11 +75,15 @@
     NSViewController * viewController = nil;
     switch (viewNumber) {
         case AMCAppointmentViewAppointment: {
-            viewController = self.appointmentViewController;
+            if (self.appointment) {
+                viewController = self.appointmentViewController;
+            }
             break;
         }
         case AMCAppointmentViewSale: {
-            viewController = self.saleViewController;
+            if (self.sale && !self.sale.hidden.boolValue) {
+                viewController = self.saleViewController;
+            }
             break;
         }
         case AMCAppointmentViewCustomer: {
@@ -83,6 +91,14 @@
             break;
         }
     }
+    if (!viewController) {
+        viewController = self.noInformationViewController;
+    }
     return viewController;
+}
+- (IBAction)showPaymentInfo:(id)sender {
+    self.paymentInfoViewController.sale = self.sale;
+    [self.paymentInfoViewController prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewController:self.paymentInfoViewController asPopoverRelativeToRect:self.totalLabel.bounds ofView:self.totalLabel preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorTransient];
 }
 @end

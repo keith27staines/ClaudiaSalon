@@ -20,10 +20,8 @@
 #import "WorkRecord+Methods.h"
 #import "Employee+Methods.h"
 #import "AMCSalonDocument.h"
-#import "EditCustomerViewController.h"
+
 #import "EditEmployeeViewController.h"
-#import "EditSaleViewController.h"
-#import "AMCWizardForNewAppointmentWindowController.h"
 #import "AMCAppointmentViewer.h"
 
 @interface AMCPaymentsViewController ()
@@ -37,10 +35,7 @@
 @property (weak) IBOutlet NSPopUpButton *paymentCategoryPopup;
 @property (weak) IBOutlet NSButton *addButton;
 
-@property (strong) IBOutlet EditCustomerViewController *editCustomerViewController;
 @property (strong) IBOutlet EditEmployeeViewController *editEmployeeViewController;
-@property (strong) IBOutlet AMCWizardForNewAppointmentWindowController *appointmentWizard;
-@property (strong) IBOutlet EditSaleViewController *saleWizard;
 @property (strong) IBOutlet AMCAppointmentViewer *appointmentViewer;
 
 @end
@@ -236,10 +231,7 @@
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
     Payment * payment = self.displayedObjects[self.dataTable.clickedRow];
     if (payment.sale.customer) {
-        self.editCustomerViewController.objectToEdit = payment.sale.customer;
-        self.editCustomerViewController.editMode = EditModeView;
-        [self.editCustomerViewController prepareForDisplayWithSalon:self.salonDocument];
-        [self presentViewControllerAsSheet:self.editCustomerViewController];
+        [self presentAppointmentViewerOnTab:AMCAppointmentViewCustomer withPayment:payment];
     } else if(payment.workRecord.employee) {
         self.editEmployeeViewController.objectToEdit = payment.workRecord.employee;
         self.editEmployeeViewController.editMode = EditModeView;
@@ -257,16 +249,7 @@
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
     Payment * payment = self.displayedObjects[self.dataTable.clickedRow];
     if (payment.sale) {
-        self.appointmentViewer.sale = payment.sale;
-        self.appointmentViewer.customer = payment.sale.customer;
-        self.appointmentViewer.appointment = payment.sale.fromAppointment;
-        self.appointmentViewer.selectedView = AMCAppointmentViewSale;
-        [self.appointmentViewer prepareForDisplayWithSalon:self.salonDocument];
-        [self presentViewControllerAsSheet:self.appointmentViewer];
-//        self.saleWizard.objectToEdit = payment.sale;
-//        self.saleWizard.editMode = EditModeView;
-//        [self.saleWizard prepareForDisplayWithSalon:self.salonDocument];
-//        [self presentViewControllerAsSheet:self.saleWizard];
+        [self presentAppointmentViewerOnTab:AMCAppointmentViewSale withPayment:payment];
     } else {
         NSAlert * alert = [[NSAlert alloc] init];
         alert.alertStyle = NSInformationalAlertStyle;
@@ -275,15 +258,20 @@
         [alert runModal];
     }
 }
+-(void)presentAppointmentViewerOnTab:(AMCAppointmentViews)tab
+                         withPayment:(Payment*)payment {
+    self.appointmentViewer.sale = payment.sale;
+    self.appointmentViewer.customer = payment.sale.customer;
+    self.appointmentViewer.appointment = payment.sale.fromAppointment;
+    self.appointmentViewer.selectedView = tab;
+    [self.appointmentViewer prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewControllerAsSheet:self.appointmentViewer];
+}
 -(IBAction)rightClickViewAppointment:(id)sender {
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
     Payment * payment = self.displayedObjects[self.dataTable.clickedRow];
     if (payment.sale.fromAppointment) {
-//        self.appointmentWizard.delegate = self;
-        self.appointmentWizard.editMode = EditModeView;
-            self.appointmentWizard.objectToManage = payment.sale.fromAppointment;
-        self.appointmentWizard.document = self.salonDocument;
-        [NSApp beginSheet:self.appointmentWizard.window modalForWindow:self.view.window modalDelegate:self.view.window didEndSelector:NULL contextInfo:nil];
+        [self presentAppointmentViewerOnTab:AMCAppointmentViewAppointment withPayment:payment];
     } else {
         NSAlert * alert = [[NSAlert alloc] init];
         alert.alertStyle = NSInformationalAlertStyle;

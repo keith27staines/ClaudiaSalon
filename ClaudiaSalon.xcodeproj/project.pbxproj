@@ -1328,12 +1328,12 @@
 		53AE26E51AA3070900A1B3E4 /* Appointment tab view */ = {
 			isa = PBXGroup;
 			children = (
-				5381C5F81B308C3000E99946 /* Appointment Viewer */,
 				53D69C061A9B23B60004CE10 /* AMCAppointmentsViewController.xib */,
 				53D69DA21A9B243C0004CE10 /* AMCAppointmentsViewController.h */,
 				53D69C931A9B240B0004CE10 /* AMCAppointmentsViewController.m */,
 				53D69DA31A9B243C0004CE10 /* AMCAppointmentsView.h */,
 				53D69C941A9B240B0004CE10 /* AMCAppointmentsView.m */,
+				5381C5F81B308C3000E99946 /* Appointment Viewer */,
 			);
 			name = "Appointment tab view";
 			sourceTree = "<group>";

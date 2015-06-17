@@ -23,6 +23,7 @@
 #import "AMCQuickQuoteViewController.h"
 #import "AMCSalonDocument.h"
 #import "Payment+Methods.h"
+#import "AMCAppointmentViewer.h"
 
 typedef NS_ENUM(NSInteger, AMCPeriod) {
     AMCperiodNone = -1,
@@ -67,6 +68,9 @@ NSAnimationDelegate>
 @property (readonly) AMCCompleteAppointmentViewController * completeAppointmentViewController;
 @property (readonly) AMCQuickQuoteViewController * quickQuoteViewController;
 @property (readonly) AMCAssociatedNotesViewController * associatedNotesViewController;
+
+@property (strong) IBOutlet AMCAppointmentViewer *appointmentViewer;
+
 @property Appointment * previouslySelectedAppointment;
 @property (weak) IBOutlet NSButton *actionButton;
 
@@ -213,6 +217,8 @@ NSAnimationDelegate>
 -(void)menuNeedsUpdate:(NSMenu *)menu {
     Appointment * appointment = nil;
     menu.autoenablesItems = NO;
+    self.actionEditMenuItem.enabled = YES;
+    self.rightClickEditMenuItem.enabled = YES;
     if (menu == self.rightClickMenu) {
         appointment = [self appointmentForRightClick];
         for (NSMenuItem * item in menu.itemArray) {
@@ -230,16 +236,21 @@ NSAnimationDelegate>
             self.actionCompleteMenuItem.enabled = NO;
             self.rightClickCompleteMenuItem.enabled = NO;
             self.actionCancelMenuItem.title = @"Reinstate Appointment";
-            self.actionEditMenuItem.enabled = NO;
-            self.rightClickEditMenuItem.enabled = NO;
+            self.rightClickEditMenuItem.title = @"View Appointment";
+            self.actionEditMenuItem.title = @"Edit Appointment";
         } else {
             self.actionCompleteMenuItem.enabled = !appointment.completed.boolValue;
             self.rightClickCompleteMenuItem.enabled = !appointment.completed.boolValue;
             self.actionCancelMenuItem.title = @"Cancel Appointment";
             self.actionCancelMenuItem.enabled = !appointment.completed.boolValue;
             self.rightClickCancelMenuItem.enabled = !appointment.completed.boolValue;
-            self.actionEditMenuItem.enabled = !appointment.completed.boolValue;
-            self.rightClickEditMenuItem.enabled = !appointment.completed.boolValue;
+            if (appointment.completed.boolValue) {
+                self.rightClickEditMenuItem.title = @"View Appointment";
+                self.actionEditMenuItem.title = @"View Appointment";
+            } else {
+                self.rightClickEditMenuItem.title = @"Edit Appointment";
+                self.actionEditMenuItem.title = @"Edit Appointment";
+            }
         }
         self.rightClickCancelMenuItem.title = self.actionCancelMenuItem.title;
     }
@@ -269,6 +280,15 @@ NSAnimationDelegate>
     }
 }
 #pragma mark - Helpers
+-(void)presentAppointmentViewerOnTab:(AMCAppointmentViews)tab
+                            withAppointment:(Appointment*)appointment {
+    self.appointmentViewer.appointment = appointment;
+    self.appointmentViewer.sale = appointment.sale;
+    self.appointmentViewer.customer = appointment.customer;
+    self.appointmentViewer.selectedView = tab;
+    [self.appointmentViewer prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewControllerAsSheet:self.appointmentViewer];
+}
 -(NSString*)stringDescribingTimeSpecifiedInMinutes:(NSInteger)time {
     if (time < 60) {
         return [NSString stringWithFormat:@"%li minutes",(long)time];
@@ -362,18 +382,19 @@ NSAnimationDelegate>
         if (appointment.cancelled.boolValue) {
             // appointment is currently cancelled
             [self.completeAppointmentButton setEnabled:NO];
-            [self.editAppointmentButton setEnabled:NO];
+            self.editAppointmentButton.title = @"View Appointment";
         } else {
 
         }
         if (appointment.completed.boolValue) {
             // appointment is currently completed
+            self.editAppointmentButton.title = @"View Appointment";
             [self.completeAppointmentButton setEnabled:NO];
-            [self.editAppointmentButton setEnabled:NO];
         }
         if (!appointment.completed.boolValue && !appointment.cancelled.boolValue) {
             [self.completeAppointmentButton setEnabled:YES];
-            [self.editAppointmentButton setEnabled:YES];
+            self.editAppointmentButton.title = @"Edit Appointment";
+            //[self.editAppointmentButton setEnabled:YES];
         }
     } else {
         self.totalLabel.stringValue = @"";
@@ -620,6 +641,8 @@ NSAnimationDelegate>
     [self viewCustomerForAppointment:[self appointmentForRightClick]];
 }
 -(Appointment*)appointmentForRightClick {
+    NSInteger rightClickRow = self.appointmentsTable.clickedRow;
+    if (rightClickRow < 0) return nil;
     [self.appointmentsTable selectRowIndexes:[NSIndexSet indexSetWithIndex:self.appointmentsTable.clickedRow] byExtendingSelection:NO];
     [self.view.window makeFirstResponder:self.appointmentsTable];
     NSInteger clickedRow = self.appointmentsTable.clickedRow;
@@ -649,7 +672,11 @@ NSAnimationDelegate>
     [self editAppointment:self.selectedAppointment];
 }
 -(void)editAppointment:(Appointment*)appointment {
-    [self showBookingWizardInMode:EditModeEdit];
+    if (appointment.completed.boolValue || appointment.cancelled.boolValue) {
+        [self presentAppointmentViewerOnTab:AMCAppointmentViewAppointment withAppointment:appointment];
+    } else {
+        [self showBookingWizardInMode:EditModeEdit];
+    }
 }
 -(IBAction)cancelSelectedAppointment:(id)sender {
     [self cancelAppointment:self.selectedAppointment];

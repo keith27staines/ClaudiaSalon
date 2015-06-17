@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
@@ -16,6 +16,7 @@
                 <outlet property="actionViewCustomerNotesMenuItem" destination="ib3-Za-Ftf" id="Lhv-VC-KCk"/>
                 <outlet property="actionViewPriceDetailsMenuItem" destination="fgT-dG-kYc" id="DRt-p6-VwA"/>
                 <outlet property="appointmentStateSelectorButton" destination="Tce-nE-0p0" id="RzQ-W2-x6x"/>
+                <outlet property="appointmentViewer" destination="FwN-xE-xd6" id="0QC-90-WYq"/>
                 <outlet property="appointmentsTable" destination="yol-SD-GjD" id="17T-Pd-Wjj"/>
                 <outlet property="completeAppointmentButton" destination="vKJ-HN-7eo" id="dzi-D8-z9h"/>
                 <outlet property="createAppointmentButton" destination="bgs-Pr-bo2" id="koO-ao-dgb"/>
@@ -574,6 +575,7 @@
             <point key="canvasLocation" x="-147.5" y="-92.5"/>
         </menu>
         <userDefaultsController representsSharedInstance="YES" id="qOD-0D-dA0"/>
+        <customObject id="FwN-xE-xd6" customClass="AMCAppointmentViewer"/>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

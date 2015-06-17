@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
@@ -9,16 +9,13 @@
                 <outlet property="accountSelector" destination="qEW-uA-V0b" id="4ey-ye-Jb8"/>
                 <outlet property="addButton" destination="nJS-1F-dQm" id="xzU-oc-AIJ"/>
                 <outlet property="appointmentViewer" destination="U3I-7M-xH0" id="xn8-qr-0n3"/>
-                <outlet property="appointmentWizard" destination="xsT-be-NUg" id="ssZ-ZV-6x2"/>
                 <outlet property="dataTable" destination="l3s-WW-xOl" id="kzL-QH-mec"/>
                 <outlet property="directionSelector" destination="I2y-YB-zVh" id="ccp-d6-Jor"/>
-                <outlet property="editCustomerViewController" destination="V6e-IG-1Wm" id="Bhq-B4-yWE"/>
                 <outlet property="editEmployeeViewController" destination="uzy-wU-uZB" id="khX-vl-LcH"/>
                 <outlet property="editObjectViewController" destination="1lh-N9-WKa" id="QEX-ak-pcd"/>
                 <outlet property="moneyTransferViewController" destination="CNt-TN-GWL" id="BGB-YO-4Mq"/>
                 <outlet property="paymentCategoryPopup" destination="Dhj-07-MBN" id="QvB-E2-t21"/>
                 <outlet property="reconciliationStateSelector" destination="yN5-2N-x31" id="SyT-9T-Quv"/>
-                <outlet property="saleWizard" destination="UWc-CO-C2g" id="v5Q-Ws-aiN"/>
                 <outlet property="searchField" destination="Krs-3K-cAh" id="4vn-Oc-MRT"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -582,10 +579,7 @@
             </connections>
             <point key="canvasLocation" x="-267.5" y="301.5"/>
         </menu>
-        <customObject id="V6e-IG-1Wm" customClass="EditCustomerViewController"/>
         <customObject id="uzy-wU-uZB" customClass="EditEmployeeViewController"/>
-        <customObject id="xsT-be-NUg" customClass="AMCWizardForNewAppointmentWindowController"/>
-        <customObject id="UWc-CO-C2g" customClass="EditSaleViewController"/>
         <customObject id="U3I-7M-xH0" customClass="AMCAppointmentViewer"/>
     </objects>
     <resources>

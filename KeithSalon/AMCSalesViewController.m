@@ -19,6 +19,7 @@
 #import "EditObjectViewControllerDelegate.h"
 #import "AMCQuickQuoteViewController.h"
 #import "AMCAssociatedNotesViewController.h"
+#import "AMCAppointmentViewer.h"
 
 @interface AMCSalesViewController () <NSTableViewDelegate, NSControlTextEditingDelegate, NSAnimationDelegate, AMCReceiptPrinterWindowControllerDelegate, EditObjectViewControllerDelegate, AMCQuickQuoteViewControllerDelegate>
 {
@@ -32,6 +33,7 @@
 @property (weak) IBOutlet AMCQuickQuoteViewController * quickQuoteViewController;
 @property (weak) IBOutlet EditObjectViewController * editCustomerViewController;
 @property (strong) IBOutlet AMCAssociatedNotesViewController *notesViewController;
+@property (strong) IBOutlet AMCAppointmentViewer *appointmentViewer;
 
 @property (weak) IBOutlet NSButton *actionButton;
 @property (weak) IBOutlet NSButton *quickQuoteButton;
@@ -96,13 +98,11 @@
 }
 -(void)viewSale:(Sale*)sale {
     if (!sale) return;
-    EditMode editMode;
     if (sale.isQuote.boolValue) {
-        editMode = EditModeEdit;
+        [self editObject:sale inMode:EditModeEdit withViewController:self.editSaleViewController];
     } else {
-        editMode = EditModeView;
+        [self presentAppointmentViewerOnTab:AMCAppointmentViewSale withSale:sale];
     }
-    [self editObject:sale inMode:editMode withViewController:self.editSaleViewController];
 }
 #pragma mark - Action: Void sale
 - (IBAction)rightClickVoidSale:(id)sender {
@@ -181,6 +181,15 @@
         modalDelegate:[NSApp mainWindow] didEndSelector:NULL contextInfo:nil];
 }
 #pragma mark - Edit object detail methods
+-(void)presentAppointmentViewerOnTab:(AMCAppointmentViews)tab
+                         withSale:(Sale*)sale {
+    self.appointmentViewer.sale = sale;
+    self.appointmentViewer.customer = sale.customer;
+    self.appointmentViewer.appointment = sale.fromAppointment;
+    self.appointmentViewer.selectedView = tab;
+    [self.appointmentViewer prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewControllerAsSheet:self.appointmentViewer];
+}
 -(Sale*)selectedSale
 {
     return _selectedSale;

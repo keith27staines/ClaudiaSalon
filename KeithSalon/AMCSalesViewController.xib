@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="actionButton" destination="Mhc-bo-jJN" id="v5C-9I-A0y"/>
                 <outlet property="actionMenu" destination="ZsT-gL-XmD" id="TjQ-Ix-pAi"/>
+                <outlet property="appointmentViewer" destination="KYd-Ob-398" id="HRC-kI-YR4"/>
                 <outlet property="cancelSaleViewController" destination="8hr-8M-Wvd" id="v3i-tz-PAW"/>
                 <outlet property="editCustomerViewController" destination="KhB-l2-qhj" id="WtY-ed-ddP"/>
                 <outlet property="editSaleActionMenuItem" destination="ERb-dP-8jb" id="eFy-h6-Jo8"/>
@@ -383,11 +384,11 @@ IA
                         </binding>
                     </connections>
                 </menuItem>
-                <menuItem title="Void Sale..." id="lMY-xm-r0A">
+                <menuItem title="View Receipt..." id="SSD-Fk-bGh">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="voidSelectedSale:" target="-2" id="1o4-0D-khp"/>
-                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="6I2-0q-Rd8">
+                        <action selector="viewSelectedSaleReceipt:" target="-2" id="rvY-Xp-8eG"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="W69-78-mbj">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -395,11 +396,11 @@ IA
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="tcU-4n-joi"/>
-                <menuItem title="View Receipt..." id="SSD-Fk-bGh">
+                <menuItem title="Void Sale..." id="lMY-xm-r0A">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="viewSelectedSaleReceipt:" target="-2" id="rvY-Xp-8eG"/>
-                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="W69-78-mbj">
+                        <action selector="voidSelectedSale:" target="-2" id="1o4-0D-khp"/>
+                        <binding destination="-2" name="enabled" keyPath="self.selectedSale" id="6I2-0q-Rd8">
                             <dictionary key="options">
                                 <string key="NSValueTransformerName">NSIsNotNil</string>
                             </dictionary>
@@ -462,17 +463,17 @@ IA
                         <action selector="rightClickViewSale:" target="-2" id="ff5-fj-Bnd"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Void Sale..." id="u1E-ZT-TGV">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="rightClickVoidSale:" target="-2" id="jjt-xm-zWi"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="xaD-FC-XCh"/>
                 <menuItem title="View Receipt..." id="UZ8-K3-abi">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="rightClickViewSaleReceipt:" target="-2" id="fkW-J0-ZPg"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="xaD-FC-XCh"/>
+                <menuItem title="Void Sale..." id="u1E-ZT-TGV">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="rightClickVoidSale:" target="-2" id="jjt-xm-zWi"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="XVI-Fg-ZZ5"/>
@@ -500,6 +501,7 @@ IA
             </connections>
             <point key="canvasLocation" x="-580.5" y="-679.5"/>
         </menu>
+        <customObject id="KYd-Ob-398" customClass="AMCAppointmentViewer"/>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
