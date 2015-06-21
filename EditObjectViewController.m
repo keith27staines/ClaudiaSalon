@@ -78,6 +78,18 @@
 -(void)clear {
     
 }
+-(void)enableEditableControls:(BOOL)yn
+{
+    NSArray * allEditControls = [self editableControls];
+    for (NSControl * control in allEditControls) {
+        if ([control isKindOfClass:[NSTextField class]]) {
+            NSTextField * tf = (NSTextField*)control;
+            [tf setEditable:yn];
+        } else {
+            [control setEnabled:yn];
+        }
+    }
+}
 #pragma mark - Actions
 -(IBAction)enterEditMode:(NSButton*)sender
 {
@@ -180,18 +192,7 @@
 -(id)objectToEdit {
     return _objectToEdit;
 }
--(void)enableEditableControls:(BOOL)yn
-{
-    NSArray * allEditControls = [self editableControls];
-    for (NSControl * control in allEditControls) {
-        if ([control isKindOfClass:[NSTextField class]]) {
-            NSTextField * tf = (NSTextField*)control;
-            [tf setEditable:yn];
-        } else {
-            [control setEnabled:yn];
-        }
-    }
-}
+
 #pragma mark - Helpers
 
 @end

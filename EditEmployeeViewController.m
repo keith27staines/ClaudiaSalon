@@ -11,10 +11,13 @@
 #import "Employee+Methods.h"
 #import "AMCSalaryEditorViewController.h"
 #import "AMCSalonDocument.h"
+#import "AMCPasswordEditor.h"
 
 @interface EditEmployeeViewController ()
 @property (strong) IBOutlet AMCSalaryEditorViewController *salaryEditorViewController;
-
+@property (weak) IBOutlet NSImageView *photoView;
+@property (weak,readonly) Employee * employee;
+@property (strong) IBOutlet AMCPasswordEditor *passwordEditor;
 @end
 
 @implementation EditEmployeeViewController
@@ -40,9 +43,14 @@
     return objectTypeAndName;
 }
 -(void)resetToObject {
-    Employee * employee = (Employee*)self.objectToEdit;
+    Employee * employee = self.employee;
     self.firstName.stringValue  = (employee.firstName)?employee.firstName:@"";
     self.lastName.stringValue = (employee.lastName)?employee.lastName:@"";
+    if (employee.photo) {
+        self.photoView.image = [NSKeyedUnarchiver unarchiveObjectWithData:employee.photo];
+    } else {
+        self.photoView.image = [[NSBundle mainBundle] imageForResource:@"UserIcon"];
+    }
     self.email.stringValue = (employee.email)?employee.email:@"";
     self.mobile.stringValue = (employee.phone)?employee.phone:@"";
     self.postcode.stringValue = (employee.postcode)?employee.postcode:@"";
@@ -71,11 +79,23 @@
         case EditModeEdit:
         {
             [self.dayAndMonthPopupController setEnabled:YES];
+            [self.dayAndMonthPopupController setEnabled:YES];
             break;
         }
     }
 }
-
+-(void)enableEditableControls:(BOOL)yn {
+    [super enableEditableControls:yn];
+    if (yn == YES) {
+        self.photoView.enabled = YES;
+        self.photoView.allowsCutCopyPaste = YES;
+        self.photoView.imageFrameStyle = NSImageFrameGroove;
+    } else {
+        self.photoView.enabled = NO;
+        self.photoView.allowsCutCopyPaste = NO;
+        self.photoView.imageFrameStyle = NSImageFrameNone;
+    }
+}
 -(NSArray *)editableControls
 {
  return  @[self.firstName,
@@ -85,7 +105,8 @@
            self.postcode,
            self.addressLine1,
            self.addressLine2,
-           self.activeMemberOfStaffCheckbox];
+           self.activeMemberOfStaffCheckbox,
+           self.photoView];
 }
 -(BOOL)isValid
 {
@@ -97,7 +118,7 @@
 }
 -(void)updateObject
 {
-    Employee * employee = self.objectToEdit;
+    Employee * employee = self.employee;
     employee.firstName = self.firstName.stringValue;
     employee.lastName = self.lastName.stringValue;
     employee.phone = self.mobile.stringValue;
@@ -108,6 +129,7 @@
     employee.monthOfBirth = @(self.dayAndMonthPopupController.monthNumber);
     employee.dayOfBirth = @(self.dayAndMonthPopupController.dayNumber);
     employee.isActive = @(self.activeMemberOfStaffCheckbox.state == NSOnState);
+    employee.photo = [NSKeyedArchiver archivedDataWithRootObject:self.photoView.image];
     employee.lastUpdatedDate = [NSDate date];
 }
 #pragma mark - NSControlTextEditingDelegate
@@ -168,5 +190,16 @@
     [self.salaryEditorViewController updateWithEmployee:self.objectToEdit forDate:[NSDate date]];
     [self presentViewControllerAsSheet:self.salaryEditorViewController];
 }
-
+- (IBAction)setPassword:(id)sender {
+    self.passwordEditor.employee = self.employee;
+    self.passwordEditor.firstPassword = NO;
+    self.passwordEditor.resetMode = NO;
+    [self.passwordEditor prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewControllerAsSheet:self.passwordEditor];
+}
+-(Employee *)employee {
+    return (Employee*)self.objectToEdit;
+}
+- (IBAction)picChanged:(id)sender {
+}
 @end

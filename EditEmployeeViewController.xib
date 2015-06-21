@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
@@ -18,6 +18,8 @@
                 <outlet property="lastName" destination="tVb-EV-4qf" id="zWp-3b-Syb"/>
                 <outlet property="mobile" destination="AjD-CJ-ahO" id="MeU-Al-pnQ"/>
                 <outlet property="panelTitle" destination="xru-Vg-y66" id="fJF-xh-wI6"/>
+                <outlet property="passwordEditor" destination="aQW-VE-XOp" id="eIf-eQ-2z0"/>
+                <outlet property="photoView" destination="IlT-vv-fNM" id="UEK-J8-d8r"/>
                 <outlet property="postcode" destination="7A5-79-3cp" id="Vb7-fT-fgJ"/>
                 <outlet property="salaryEditorViewController" destination="QHd-b7-L7v" id="HkG-EK-ERk"/>
                 <outlet property="view" destination="fge-p5-esD" id="MCX-HY-lWb"/>
@@ -47,7 +49,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="47i-39-xLa">
-                    <rect key="frame" x="162" y="445" width="411" height="29"/>
+                    <rect key="frame" x="162" y="445" width="226" height="29"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="First Name" drawsBackground="YES" id="eJC-93-Ysq">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
@@ -58,7 +60,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tVb-EV-4qf">
-                    <rect key="frame" x="162" y="406" width="411" height="29"/>
+                    <rect key="frame" x="162" y="406" width="226" height="29"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Last Name" drawsBackground="YES" id="Ok7-ar-oRF">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
@@ -69,7 +71,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iez-tF-oVu">
-                    <rect key="frame" x="92" y="368" width="64" height="24"/>
+                    <rect key="frame" x="92" y="331" width="64" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Email:" id="gf1-cE-Ve1">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -77,7 +79,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BGK-sn-t8s">
-                    <rect key="frame" x="162" y="366" width="411" height="29"/>
+                    <rect key="frame" x="162" y="329" width="411" height="29"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="somebody@gmail.com" drawsBackground="YES" id="XkA-CJ-jZf">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
@@ -99,7 +101,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qei-gg-9u6">
-                    <rect key="frame" x="71" y="329" width="85" height="24"/>
+                    <rect key="frame" x="71" y="369" width="85" height="24"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Mobile:" id="Jms-w9-W4t">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -115,7 +117,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AjD-CJ-ahO">
-                    <rect key="frame" x="162" y="327" width="284" height="29"/>
+                    <rect key="frame" x="162" y="368" width="226" height="29"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="mobile number" drawsBackground="YES" id="oly-ST-9dc">
                         <font key="font" metaFont="system" size="18"/>
                         <color key="textColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
@@ -235,7 +237,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zBu-e2-o6t">
-                    <rect key="frame" x="467" y="324" width="90" height="32"/>
+                    <rect key="frame" x="158" y="13" width="90" height="32"/>
                     <buttonCell key="cell" type="push" title="Salary..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gOx-qO-qGY">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -245,7 +247,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TVQ-jE-c6G">
-                    <rect key="frame" x="211" y="13" width="83" height="32"/>
+                    <rect key="frame" x="402" y="13" width="83" height="32"/>
                     <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="IAR-tX-PdH">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -258,7 +260,7 @@ Gw
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lzg-Ub-QJ6">
-                    <rect key="frame" x="305" y="13" width="83" height="32"/>
+                    <rect key="frame" x="496" y="13" width="83" height="32"/>
                     <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FU6-DK-bNg">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -289,14 +291,31 @@ Gw
                     </connections>
                 </textField>
                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KLo-hZ-Osv">
-                    <rect key="frame" x="221" y="492" width="161" height="18"/>
+                    <rect key="frame" x="30" y="494" width="161" height="18"/>
                     <buttonCell key="cell" type="check" title="Active member of staff" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wGt-mg-1HJ">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YSu-je-hSf">
+                    <rect key="frame" x="21" y="13" width="137" height="32"/>
+                    <buttonCell key="cell" type="push" title="Set Password..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GBi-GX-EVG">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="setPassword:" target="-2" id="x1p-nv-p7B"/>
+                    </connections>
+                </button>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IlT-vv-fNM">
+                    <rect key="frame" x="418" y="366" width="128" height="128"/>
+                    <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyUpOrDown" imageFrameStyle="grayBezel" image="UserIcon" id="NaL-hn-wwa"/>
+                    <connections>
+                        <action selector="picChanged:" target="-2" id="x5m-Pj-KwB"/>
+                    </connections>
+                </imageView>
             </subviews>
-            <point key="canvasLocation" x="369.5" y="330.5"/>
+            <point key="canvasLocation" x="676.5" y="-288.5"/>
         </customView>
         <customObject id="PW4-5A-MbO" customClass="AMCDayAndMonthPopupViewController">
             <connections>
@@ -305,5 +324,10 @@ Gw
                 <outlet property="monthPopupButton" destination="vb8-lZ-MvL" id="MaU-Wi-vSt"/>
             </connections>
         </customObject>
+        <userDefaultsController representsSharedInstance="YES" id="omk-s6-h2d"/>
+        <customObject id="aQW-VE-XOp" customClass="AMCPasswordEditor"/>
     </objects>
+    <resources>
+        <image name="UserIcon" width="24" height="24"/>
+    </resources>
 </document>

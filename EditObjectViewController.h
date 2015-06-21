@@ -27,10 +27,12 @@
 -(IBAction)cancelButton:(NSButton*)sender;
 -(IBAction)doneButton:(NSButton*)sender;
 
-#pragma mark - methods subclasses must override and call base class
+#pragma mark - Posible overrides
+-(void)enableEditableControls:(BOOL)yn;
 -(void)updateObject;
 -(NSArray*)editableControls;
 -(void)enableDoneButton;
+
 #pragma mark - other properties common to all object editors
 @property (weak) id objectToEdit;
 @property (copy,readonly) NSString * objectTypeAndName;
@@ -44,7 +46,5 @@
 -(BOOL)isValid;
 
 #pragma mark - helpers not designed to be overriden
--(void)enableEditableControls:(BOOL)yn;
-
 -(void)clear;
 @end
