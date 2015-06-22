@@ -58,6 +58,8 @@
 		534DFF681B0736970077F124 /* AMCRolloverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 534DFF671B0736970077F124 /* AMCRolloverButton.m */; };
 		535191691B36B60500F8D37A /* AMCPasswordEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 535191671B36B60500F8D37A /* AMCPasswordEditor.m */; };
 		5351916A1B36B60500F8D37A /* AMCPasswordEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535191681B36B60500F8D37A /* AMCPasswordEditor.xib */; };
+		5351916E1B37F56D00F8D37A /* AMCChangeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5351916C1B37F56D00F8D37A /* AMCChangeUserViewController.m */; };
+		5351916F1B37F56D00F8D37A /* AMCChangeUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */; };
 		535F0DEC1AB232CB0035CFD8 /* AMCAccountStatementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */; };
 		535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */; };
 		535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */; };
@@ -373,6 +375,9 @@
 		535191661B36B60500F8D37A /* AMCPasswordEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPasswordEditor.h; sourceTree = "<group>"; };
 		535191671B36B60500F8D37A /* AMCPasswordEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPasswordEditor.m; sourceTree = "<group>"; };
 		535191681B36B60500F8D37A /* AMCPasswordEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPasswordEditor.xib; sourceTree = "<group>"; };
+		5351916B1B37F56D00F8D37A /* AMCChangeUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCChangeUserViewController.h; sourceTree = "<group>"; };
+		5351916C1B37F56D00F8D37A /* AMCChangeUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCChangeUserViewController.m; sourceTree = "<group>"; };
+		5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCChangeUserViewController.xib; sourceTree = "<group>"; };
 		535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAccountStatementViewController.xib; sourceTree = "<group>"; };
 		535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementItem.m; sourceTree = "<group>"; };
 		535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementViewController.m; sourceTree = "<group>"; };
@@ -930,6 +935,16 @@
 				535191681B36B60500F8D37A /* AMCPasswordEditor.xib */,
 			);
 			name = EditPassword;
+			sourceTree = "<group>";
+		};
+		535191701B37F57700F8D37A /* Change User View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5351916B1B37F56D00F8D37A /* AMCChangeUserViewController.h */,
+				5351916C1B37F56D00F8D37A /* AMCChangeUserViewController.m */,
+				5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */,
+			);
+			name = "Change User View Controller";
 			sourceTree = "<group>";
 		};
 		535F0DE61AB232B10035CFD8 /* Account Statement */ = {
@@ -1868,6 +1883,7 @@
 				5346C58F1ABB221A005D4540 /* Category Management */,
 				532377D01AA8C3BF009FA91D /* Bank statements */,
 				530D54721B19A5C600F6C4FE /* Auto-close management */,
+				535191701B37F57700F8D37A /* Change User View Controller */,
 			);
 			name = "Document objects";
 			sourceTree = "<group>";
@@ -2090,6 +2106,7 @@
 				53D69C4F1A9B23B70004CE10 /* EditPaymentViewController.xib in Resources */,
 				53D69C3E1A9B23B70004CE10 /* AMCReportsViewController.xib in Resources */,
 				53D69C241A9B23B60004CE10 /* AMCProductSelectorWindowController.xib in Resources */,
+				5351916F1B37F56D00F8D37A /* AMCChangeUserViewController.xib in Resources */,
 				53D69C261A9B23B60004CE10 /* AMCQuickQuoteViewController.xib in Resources */,
 				53D69C541A9B23B70004CE10 /* AMCStaffBusyViewController.xib in Resources */,
 				539D2DDE1B15FC9A00761711 /* AMCSalesViewController.xib in Resources */,
@@ -2281,6 +2298,7 @@
 				53D69D4D1A9B240C0004CE10 /* EditObjectViewController.m in Sources */,
 				53D69BB81A9B22830004CE10 /* main.m in Sources */,
 				5346C5971ABB2887005D4540 /* AMCTreeNode.m in Sources */,
+				5351916E1B37F56D00F8D37A /* AMCChangeUserViewController.m in Sources */,
 				5346C5931ABB2265005D4540 /* AMCCategoryManagementViewController.m in Sources */,
 				53D69D061A9B240C0004CE10 /* AMCDateRangeSelectorViewController.m in Sources */,
 				53D69CFA1A9B240C0004CE10 /* AMCWizardForNewAppointmentWindowController.m in Sources */,

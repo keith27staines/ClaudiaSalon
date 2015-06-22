@@ -32,6 +32,8 @@
 @property BOOL storeNeedsInitializing;
 @property (readonly) Customer * anonymousCustomer;
 
+@property Employee * currentUser;
+
 // Toolbar actions
 - (IBAction)salonToolbarButton:(id)sender;
 - (IBAction)showMoneyInTill:(id)sender;

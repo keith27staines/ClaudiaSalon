@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
@@ -10,9 +10,11 @@
                 <outlet property="accountManagementViewController" destination="Rhe-aG-xw3" id="VY5-te-bhS"/>
                 <outlet property="accountStatementViewController" destination="1Jk-n8-g41" id="cxc-b7-2KS"/>
                 <outlet property="appointmentsViewController" destination="ep0-5P-lze" id="8g5-vB-Axp"/>
+                <outlet property="changeUserViewController" destination="Q3E-9P-95X" id="7ry-fd-lfu"/>
                 <outlet property="customersViewController" destination="oXL-VX-kuO" id="ERb-zc-jVa"/>
                 <outlet property="employeesViewController" destination="APQ-R9-ufU" id="Hv6-ZK-Efv"/>
                 <outlet property="financialAnalysisViewController" destination="ghL-zY-7eX" id="chg-VW-DtV"/>
+                <outlet property="logoutMenuItem" destination="HnL-0f-HCx" id="boS-G4-YCW"/>
                 <outlet property="managersBudgetWindowController" destination="lY1-5d-xCC" id="R3G-mk-aJR"/>
                 <outlet property="paymentsViewController" destination="T1c-WN-oS2" id="LsJ-uR-FPC"/>
                 <outlet property="recurringEventManagementViewController" destination="aEQ-Oc-c3b" id="YhB-f1-4uN"/>
@@ -27,6 +29,10 @@
                 <outlet property="showPaySalary" destination="AMH-O3-exX" id="QCz-KD-Cuc"/>
                 <outlet property="staffBusyViewController" destination="OsB-JJ-cdB" id="VT4-PX-bu8"/>
                 <outlet property="stockViewController" destination="VmQ-wC-qjz" id="ikv-tn-blT"/>
+                <outlet property="switchUserMenu" destination="wOI-ve-xxz" id="f2Y-xS-gQm"/>
+                <outlet property="switchUserMenuIem" destination="YZq-hi-zO4" id="egV-uA-NB5"/>
+                <outlet property="titleItem" destination="c3K-sb-Q2O" id="dIM-dg-ric"/>
+                <outlet property="toolbarUserPhotoItem" destination="Zed-Ij-tDH" id="beZ-Vi-c6L"/>
                 <outlet property="topTabView" destination="dts-cm-2bm" id="9vb-gi-AN2"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="FNs-Ml-NUV"/>
             </connections>
@@ -171,7 +177,7 @@
                             <action selector="paySalaries:" target="-2" id="8ta-fH-UHH"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="A5C28CEF-904F-4FB8-8457-E73AFCC34BDB" label="Manager's Budget" paletteLabel="Manager's Budget" tag="-1" image="BarChart" id="Jka-uK-Hc8">
+                    <toolbarItem implicitItemIdentifier="A5C28CEF-904F-4FB8-8457-E73AFCC34BDB" label="Budget" paletteLabel="Budget" tag="-1" image="BarChart" id="Jka-uK-Hc8">
                         <connections>
                             <action selector="showManagersBudget:" target="-2" id="iZF-VN-jj4"/>
                         </connections>
@@ -181,18 +187,61 @@
                             <action selector="showBankStatements:" target="-2" id="QcB-gz-4ff"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="985A9B68-9E2C-4EAE-8CAD-ABE0A79BA481" label="" paletteLabel="" id="N06-ft-jtC">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="100" height="28"/>
+                        <size key="maxSize" width="100" height="28"/>
+                        <popUpButton key="view" verticalHuggingPriority="750" id="BMi-vh-Va5">
+                            <rect key="frame" x="0.0" y="14" width="100" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <popUpButtonCell key="cell" type="roundTextured" title="User name" bezelStyle="texturedRounded" image="UserIcon" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" autoenablesItems="NO" id="ohL-dH-LnN">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="menu"/>
+                                <menu key="menu" autoenablesItems="NO" id="wOI-ve-xxz">
+                                    <items>
+                                        <menuItem title="User name" state="on" id="c3K-sb-Q2O">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                        </menuItem>
+                                        <menuItem title="Log out current user" id="HnL-0f-HCx">
+                                            <connections>
+                                                <action selector="logoutCurrentUser:" target="-2" id="IBr-oW-KaH"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Switch user..." id="YZq-hi-zO4">
+                                            <connections>
+                                                <action selector="switchUser:" target="-2" id="3ul-0M-Q8W"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="D2y-ga-24C"/>
+                                    </connections>
+                                </menu>
+                            </popUpButtonCell>
+                        </popUpButton>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="B0414B8B-707C-40A9-899E-C94C611D5FA0" label="" paletteLabel="" tag="-1" image="UserIcon" id="Zed-Ij-tDH">
+                        <size key="minSize" width="48" height="48"/>
+                        <size key="maxSize" width="48" height="48"/>
+                        <connections>
+                            <action selector="performClick:" target="BMi-vh-Va5" id="Y8x-Uw-6rM"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
+                    <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="amc-Kh-hfA"/>
                     <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="IZp-bX-nji"/>
-                    <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="4ku-0m-mPp"/>
                     <toolbarItem reference="7oS-Ii-ebJ"/>
-                    <toolbarItem reference="Jka-uK-Hc8"/>
                     <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="FIF-Al-kU4"/>
+                    <toolbarItem reference="Jka-uK-Hc8"/>
                     <toolbarItem reference="8st-gg-pmT"/>
+                    <toolbarItem reference="Zed-Ij-tDH"/>
+                    <toolbarItem reference="N06-ft-jtC"/>
+                    <toolbarItem reference="7oS-Ii-ebJ"/>
                 </defaultToolbarItems>
             </toolbar>
             <point key="canvasLocation" x="-566.5" y="-2112"/>
@@ -229,6 +278,7 @@
         <customObject id="NHf-SU-kAv" customClass="AMCAccountancyGroupManagementViewController"/>
         <customObject id="ghL-zY-7eX" customClass="AMCFinancialAnalysisViewController"/>
         <customObject id="DfR-6A-GTN" userLabel="ServiceCategoryManagementViewController" customClass="AMCServiceCategoriesManagementViewController"/>
+        <customObject id="Q3E-9P-95X" customClass="AMCChangeUserViewController"/>
     </objects>
     <resources>
         <image name="BarChart" width="32" height="32"/>
@@ -236,5 +286,6 @@
         <image name="NSFolder" width="32" height="32"/>
         <image name="PaySalary" width="128" height="128"/>
         <image name="TimeLineIcon" width="48" height="48"/>
+        <image name="UserIcon" width="24" height="24"/>
     </resources>
 </document>

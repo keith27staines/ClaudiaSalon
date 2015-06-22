@@ -34,20 +34,23 @@
 #import "NSDate+AMCDate.h"
 #import "AMCSalonDetailsViewController.h"
 #import "RecurringItem+Methods.h"
+#import "AMCChangeUserViewController.h"
 
 // Imports required for data fixes
 #import "ServiceCategory+Methods.h"
 #import "AccountingPaymentGroup+Methods.h"
 #import "PaymentCategory+Methods.h"
+#import "Employee+Methods.h"
 // End imports for data fixes
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 
-@interface AMCSalonDocument() <NSTabViewDelegate>
+@interface AMCSalonDocument() <NSTabViewDelegate,NSMenuDelegate>
 {
     BOOL _storeNeedsInitializing;
     Salon * _salon;
     OpeningHoursWeekTemplate * _openingHoursWeekTemplate;
+    Employee * _currentUser;
 }
 
 @property (weak) IBOutlet AMCRequestPasswordWindowController *requestPasswordWindowController;
@@ -69,6 +72,13 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property NSViewAnimation * notesDownAnimation;
 @property NSRect notesButtonInitialRect;
 @property NSURL * dataStoreDirectory;
+@property (strong) IBOutlet AMCChangeUserViewController *changeUserViewController;
+
+@property (weak) IBOutlet NSMenu *switchUserMenu;
+@property (weak) IBOutlet NSMenuItem *titleItem;
+@property (weak) IBOutlet NSMenuItem *logoutMenuItem;
+@property (weak) IBOutlet NSMenuItem *switchUserMenuIem;
+@property (weak) IBOutlet NSToolbarItem *toolbarUserPhotoItem;
 
 @end
 
@@ -126,6 +136,16 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     
     // Initialise entity "AccountancyPaymentGroup"
     [AccountingPaymentGroup buildDefaultGroupsForSalon:_salon];
+    
+    // Employees
+    for (Employee * employee in [Employee allObjectsWithMoc:self.managedObjectContext]) {
+        if (!employee.password || employee.password.length < 4) {
+            employee.password = @"1234";
+        }
+        if (!employee.photo) {
+            employee.photo = [[NSBundle mainBundle] imageForResource:@"UserIcon"];
+        }
+    }
 }
 -(Customer *)anonymousCustomer {
     if (!self.salon.anonymousCustomer) {
@@ -164,6 +184,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     self.mainViewController.view = self.windowForSheet.contentView;
     [self.topTabView selectFirstTabViewItem:self];
     [self tabView:self.topTabView didSelectTabViewItem:self.topTabView.selectedTabViewItem];
+    self.currentUser = nil;
 }
 + (BOOL)autosavesInPlace {
     return YES;
@@ -287,5 +308,36 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.financialAnalysisViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.financialAnalysisViewController];
 }
-
+- (IBAction)switchUser:(id)sender {
+    [self.changeUserViewController prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewControllerAsSheet:self.changeUserViewController];
+}
+-(Employee *)currentUser {
+    return _currentUser;
+}
+-(void)setCurrentUser:(Employee *)currentUser {
+    _currentUser = currentUser;
+    if (currentUser) {
+        self.toolbarUserPhotoItem.image = currentUser.photo;
+        self.titleItem.title = currentUser.firstName;
+    } else {
+        self.toolbarUserPhotoItem.image = [[NSBundle mainBundle] imageForResource:@"UserIcon"];
+        self.titleItem.title = @"Default user";
+    }
+}
+- (IBAction)logoutCurrentUser:(id)sender {
+    self.currentUser = nil;
+}
+-(void)menuNeedsUpdate:(NSMenu *)menu {
+    if (menu == self.switchUserMenu) {
+        if (self.currentUser) {
+            self.logoutMenuItem.enabled = YES;
+            self.switchUserMenuIem.title = @"Switch user...";
+        } else {
+            self.logoutMenuItem.enabled = NO;
+            self.switchUserMenuIem.title = @"Login...";
+        }
+        self.switchUserMenuIem.enabled = YES;
+    }
+}
 @end

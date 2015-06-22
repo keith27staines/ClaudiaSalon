@@ -46,11 +46,7 @@
     Employee * employee = self.employee;
     self.firstName.stringValue  = (employee.firstName)?employee.firstName:@"";
     self.lastName.stringValue = (employee.lastName)?employee.lastName:@"";
-    if (employee.photo) {
-        self.photoView.image = [NSKeyedUnarchiver unarchiveObjectWithData:employee.photo];
-    } else {
-        self.photoView.image = [[NSBundle mainBundle] imageForResource:@"UserIcon"];
-    }
+    self.photoView.image = employee.photo;
     self.email.stringValue = (employee.email)?employee.email:@"";
     self.mobile.stringValue = (employee.phone)?employee.phone:@"";
     self.postcode.stringValue = (employee.postcode)?employee.postcode:@"";
@@ -129,7 +125,7 @@
     employee.monthOfBirth = @(self.dayAndMonthPopupController.monthNumber);
     employee.dayOfBirth = @(self.dayAndMonthPopupController.dayNumber);
     employee.isActive = @(self.activeMemberOfStaffCheckbox.state == NSOnState);
-    employee.photo = [NSKeyedArchiver archivedDataWithRootObject:self.photoView.image];
+    employee.photo = self.photoView.image;
     employee.lastUpdatedDate = [NSDate date];
 }
 #pragma mark - NSControlTextEditingDelegate
