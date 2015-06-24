@@ -12,12 +12,16 @@
 #import "AMCSalaryEditorViewController.h"
 #import "AMCSalonDocument.h"
 #import "AMCPasswordEditor.h"
+#import "AMCUserRoleEditor.h"
 
 @interface EditEmployeeViewController ()
 @property (strong) IBOutlet AMCSalaryEditorViewController *salaryEditorViewController;
 @property (weak) IBOutlet NSImageView *photoView;
 @property (weak,readonly) Employee * employee;
 @property (strong) IBOutlet AMCPasswordEditor *passwordEditor;
+
+@property (strong) IBOutlet AMCUserRoleEditor *userRolesEditor;
+
 @end
 
 @implementation EditEmployeeViewController
@@ -192,6 +196,12 @@
     self.passwordEditor.resetMode = NO;
     [self.passwordEditor prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewControllerAsSheet:self.passwordEditor];
+}
+- (IBAction)setRoles:(id)sender {
+    self.userRolesEditor.employee = self.employee;
+    self.userRolesEditor.editMode = self.editMode;
+    [self.userRolesEditor prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewControllerAsSheet:self.userRolesEditor];
 }
 -(Employee *)employee {
     return (Employee*)self.objectToEdit;

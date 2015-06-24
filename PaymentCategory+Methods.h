@@ -12,5 +12,4 @@
 @interface PaymentCategory (Methods)
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
-+(PaymentCategory*)paymentWithName:(NSString*)name inMoc:(NSManagedObjectContext*)moc;
 @end

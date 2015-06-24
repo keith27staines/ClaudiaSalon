@@ -22,6 +22,7 @@
                 <outlet property="photoView" destination="IlT-vv-fNM" id="UEK-J8-d8r"/>
                 <outlet property="postcode" destination="7A5-79-3cp" id="Vb7-fT-fgJ"/>
                 <outlet property="salaryEditorViewController" destination="QHd-b7-L7v" id="HkG-EK-ERk"/>
+                <outlet property="userRolesEditor" destination="7TX-gV-rVh" id="z9g-7r-oEJ"/>
                 <outlet property="view" destination="fge-p5-esD" id="MCX-HY-lWb"/>
             </connections>
         </customObject>
@@ -237,7 +238,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zBu-e2-o6t">
-                    <rect key="frame" x="158" y="13" width="90" height="32"/>
+                    <rect key="frame" x="134" y="13" width="90" height="32"/>
                     <buttonCell key="cell" type="push" title="Salary..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gOx-qO-qGY">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -257,16 +258,6 @@ Gw
                     </buttonCell>
                     <connections>
                         <action selector="cancelButton:" target="-2" id="Wne-vo-dZ1"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lzg-Ub-QJ6">
-                    <rect key="frame" x="496" y="13" width="83" height="32"/>
-                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FU6-DK-bNg">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="doneButton:" target="-2" id="2iZ-z2-H2e"/>
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="96q-0v-pEN">
@@ -298,8 +289,8 @@ Gw
                     </buttonCell>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YSu-je-hSf">
-                    <rect key="frame" x="21" y="13" width="137" height="32"/>
-                    <buttonCell key="cell" type="push" title="Set Password..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GBi-GX-EVG">
+                    <rect key="frame" x="21" y="13" width="113" height="32"/>
+                    <buttonCell key="cell" type="push" title="Password..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GBi-GX-EVG">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -314,8 +305,28 @@ Gw
                         <action selector="picChanged:" target="-2" id="x5m-Pj-KwB"/>
                     </connections>
                 </imageView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JGe-Li-jbE">
+                    <rect key="frame" x="224" y="13" width="87" height="32"/>
+                    <buttonCell key="cell" type="push" title="Roles..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xX4-9C-Pvg">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="setRoles:" target="-2" id="h1z-we-dog"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lzg-Ub-QJ6">
+                    <rect key="frame" x="496" y="13" width="83" height="32"/>
+                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FU6-DK-bNg">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="doneButton:" target="-2" id="2iZ-z2-H2e"/>
+                    </connections>
+                </button>
             </subviews>
-            <point key="canvasLocation" x="676.5" y="-288.5"/>
+            <point key="canvasLocation" x="358.5" y="-569.5"/>
         </customView>
         <customObject id="PW4-5A-MbO" customClass="AMCDayAndMonthPopupViewController">
             <connections>
@@ -326,6 +337,7 @@ Gw
         </customObject>
         <userDefaultsController representsSharedInstance="YES" id="omk-s6-h2d"/>
         <customObject id="aQW-VE-XOp" customClass="AMCPasswordEditor"/>
+        <customObject id="7TX-gV-rVh" customClass="AMCUserRoleEditor"/>
     </objects>
     <resources>
         <image name="UserIcon" width="24" height="24"/>

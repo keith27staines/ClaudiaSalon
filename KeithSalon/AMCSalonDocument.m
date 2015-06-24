@@ -5,7 +5,8 @@
 //  Created by Keith Staines on 19/07/2014.
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
-
+#import <objc/runtime.h>
+#import <IOKit/IOKitLib.h>
 #import "AMCSalonDocument.h"
 #import "AMCStorePopulator.h"
 #import "AMCReportsViewController.h"
@@ -35,12 +36,15 @@
 #import "AMCSalonDetailsViewController.h"
 #import "RecurringItem+Methods.h"
 #import "AMCChangeUserViewController.h"
+#import "AMCRoleManageViewController.h"
 
 // Imports required for data fixes
 #import "ServiceCategory+Methods.h"
 #import "AccountingPaymentGroup+Methods.h"
 #import "PaymentCategory+Methods.h"
 #import "Employee+Methods.h"
+#import "Role+Methods.h"
+#import "RoleAction+Methods.h"
 // End imports for data fixes
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
@@ -74,6 +78,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property NSURL * dataStoreDirectory;
 @property (strong) IBOutlet AMCChangeUserViewController *changeUserViewController;
 
+@property (strong) IBOutlet AMCRoleManageViewController *roleManager;
 @property (weak) IBOutlet NSMenu *switchUserMenu;
 @property (weak) IBOutlet NSMenuItem *titleItem;
 @property (weak) IBOutlet NSMenuItem *logoutMenuItem;
@@ -146,6 +151,80 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
             employee.photo = [[NSBundle mainBundle] imageForResource:@"UserIcon"];
         }
     }
+    
+    // Roles
+    if ([Role allObjectsWithMoc:self.managedObjectContext].count == 0) {
+        self.salon.systemRole       = [Role newObjectWithMoc:self.managedObjectContext];
+        self.salon.systemAdminRole  = [Role newObjectWithMoc:self.managedObjectContext];
+        self.salon.devSupportRole   = [Role newObjectWithMoc:self.managedObjectContext];
+        self.salon.managerRole      = [Role newObjectWithMoc:self.managedObjectContext];
+        self.salon.accountantRole   = [Role newObjectWithMoc:self.managedObjectContext];
+        self.salon.receptionistRole = [Role newObjectWithMoc:self.managedObjectContext];
+        self.salon.basicUserRole    = [Role newObjectWithMoc:self.managedObjectContext];
+        self.salon.systemRole.name       = @"System";
+        self.salon.systemAdminRole.name  = @"System Administrator";
+        self.salon.devSupportRole.name   = @"Dev";
+        self.salon.managerRole.name      = @"Manager";
+        self.salon.accountantRole.name   = @"Accountant";
+        self.salon.receptionistRole.name = @"Receptionist";
+        self.salon.basicUserRole.name    = @"Basic User";
+        self.salon.systemRole.fullDescription       = @"All-powerful role reserved for system-generated events. Do not give this role to any user";
+        self.salon.systemAdminRole.fullDescription  = @"System Administrators need special permissions to configure the application";
+        self.salon.devSupportRole.fullDescription   = @"Developers have access to special functions that allow them to investigate and debug problems";
+        self.salon.managerRole.fullDescription      = @"Managers have access to all business functions but not technical functions";
+        self.salon.accountantRole.fullDescription   = @"Accountants have access to financial functions but not to day-to-day business functions";
+        self.salon.receptionistRole.fullDescription = @"Receptionists can take appointments and enter sales";
+        self.salon.basicUserRole.fullDescription    = @"Basic Users can view appointments and sales";
+        self.salon.systemRole.isSystemRole          = @YES;
+        self.salon.systemAdminRole.isSystemRole     = @YES;
+        self.salon.devSupportRole.isSystemRole      = @YES;
+        self.salon.managerRole.isSystemRole         = @YES;
+        self.salon.accountantRole.isSystemRole      = @YES;
+        self.salon.receptionistRole.isSystemRole    = @YES;
+        self.salon.basicUserRole.isSystemRole       = @YES;
+        [self.salon.manager addRolesObject:self.salon.managerRole];
+        [self.salon.manager addRolesObject:self.salon.receptionistRole];
+        
+        for (Employee * employee in [Employee allObjectsWithMoc:self.managedObjectContext]) {
+            [employee addRolesObject:self.salon.basicUserRole];
+        }
+        [self.salon.manager addRolesObject:self.salon.basicUserRole];
+    }
+    NSArray * viewControllerClasses = subclasses([AMCViewController class]);
+    RoleAction * viewAction = nil;
+    RoleAction * editAction = nil;
+    RoleAction * createAction = nil;
+    RoleAction * deleteAction = nil;
+    NSString * viewActionName = nil;
+
+    for (Role * role in [Role allObjectsWithMoc:self.managedObjectContext]) {
+        for (Class class in viewControllerClasses) {
+            viewActionName = NSStringFromClass(class);
+            viewAction = [RoleAction fetchActionWithName:viewActionName inMoc:self.managedObjectContext];
+            if (viewAction) continue; // Already added this view action and its related edit/create/delete actions
+          
+            // add view action
+            viewAction = [RoleAction newObjectWithMoc:self.managedObjectContext];
+            viewAction.name = viewActionName;
+            [role addAllowedActionsObject:viewAction];
+            
+            // add edit action
+            editAction = [RoleAction newObjectWithMoc:self.managedObjectContext];
+            editAction.name = [viewActionName stringByAppendingString:@"_Edit"];
+            [role addAllowedActionsObject:editAction];
+            
+            // add create action
+            createAction = [RoleAction newObjectWithMoc:self.managedObjectContext];
+            createAction.name = [viewActionName stringByAppendingString:@"_Create"];
+            [role addAllowedActionsObject:createAction];
+            
+            // add delete action
+            deleteAction = [RoleAction newObjectWithMoc:self.managedObjectContext];
+            deleteAction.name = [viewActionName stringByAppendingString:@"_Delete"];
+            // Nobody gets delete permissions! [role addAllowedActionsObject:deleteAction];
+        }
+    }
+    
 }
 -(Customer *)anonymousCustomer {
     if (!self.salon.anonymousCustomer) {
@@ -328,6 +407,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 - (IBAction)logoutCurrentUser:(id)sender {
     self.currentUser = nil;
 }
+- (IBAction)manageRolesAndRoleActions:(id)sender {
+    [self.roleManager prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewControllerAsSheet:self.roleManager];
+}
 -(void)menuNeedsUpdate:(NSMenu *)menu {
     if (menu == self.switchUserMenu) {
         if (self.currentUser) {
@@ -339,5 +422,71 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         }
         self.switchUserMenuIem.enabled = YES;
     }
+}
+
+NSArray *subclasses(Class parentClass)
+{
+    int numClasses = objc_getClassList(NULL, 0);
+    Class *classes = NULL;
+    
+    classes = (__unsafe_unretained Class*)malloc(sizeof(Class) * numClasses);
+    numClasses = objc_getClassList(classes, numClasses);
+    
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSInteger i = 0; i < numClasses; i++)
+    {
+        Class superClass = classes[i];
+        do
+        {
+            superClass = class_getSuperclass(superClass);
+        } while(superClass && superClass != parentClass);
+        
+        if (superClass == nil)
+        {
+            continue;
+        }
+        
+        [result addObject:classes[i]];
+    }
+    
+    free(classes);
+    
+    return result;
+}
+int64_t SystemIdleTime(void) {
+    int64_t idlesecs = -1;
+    io_iterator_t iter = 0;
+    if (IOServiceGetMatchingServices(kIOMasterPortDefault,
+                                     IOServiceMatching("IOHIDSystem"),
+                                     &iter) == KERN_SUCCESS)
+    {
+        io_registry_entry_t entry = IOIteratorNext(iter);
+        if (entry) {
+            CFMutableDictionaryRef dict = NULL;
+            kern_return_t status;
+            status = IORegistryEntryCreateCFProperties(entry,
+                                                       &dict,
+                                                       kCFAllocatorDefault, 0);
+            if (status == KERN_SUCCESS)
+            {
+                CFNumberRef obj = CFDictionaryGetValue(dict,
+                                                       CFSTR("HIDIdleTime"));
+                if (obj) {
+                    int64_t nanoseconds = 0;
+                    if (CFNumberGetValue(obj,
+                                         kCFNumberSInt64Type,
+                                         &nanoseconds))
+                    {
+                        // Convert from nanoseconds to seconds.
+                        idlesecs = (nanoseconds >> 30);
+                    }
+                }
+                CFRelease(dict);
+            }
+            IOObjectRelease(entry);
+        }
+        IOObjectRelease(iter);
+    }
+    return idlesecs;
 }
 @end

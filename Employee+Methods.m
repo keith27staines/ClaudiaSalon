@@ -12,6 +12,8 @@
 #import "NSDate+AMCDate.h"
 #import "WorkRecord+Methods.h"
 #import "Salon+Methods.h"
+#import "Role+Methods.h"
+#import "RoleAction+Methods.h"
 
 @implementation Employee (Methods)
 
@@ -35,6 +37,7 @@
     employee.leavingDate = [NSDate distantFuture];
     employee.uid = @"";
     employee.workRecordTemplate = [WorkRecord newObjectWithMoc:moc];
+    [employee addRolesObject:[Salon salonWithMoc:moc].basicUserRole];
     return employee;
 }
 +(NSArray*)allActiveEmployeesWithMoc:(NSManagedObjectContext*)moc {
@@ -149,7 +152,14 @@
     return self.workRecordTemplate;
 }
 
-
+-(NSNumber*)canPerformActionWithName:(NSString*)name {
+    for (Role * role in self.roles) {
+        if ([role allowsActionWithName:name]) {
+            return @YES;
+        }
+    }
+    return @NO;
+}
 
 
 

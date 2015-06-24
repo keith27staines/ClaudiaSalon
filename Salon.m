@@ -2,7 +2,7 @@
 //  Salon.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 15/06/2015.
+//  Created by Keith Staines on 23/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -13,6 +13,7 @@
 #import "Employee.h"
 #import "OpeningHoursWeekTemplate.h"
 #import "PaymentCategory.h"
+#import "Role.h"
 #import "ServiceCategory.h"
 
 
@@ -35,16 +36,23 @@
 @dynamic defaultPaymentCategoryForPayments;
 @dynamic defaultPaymentCategoryForSales;
 @dynamic defaultPaymentCategoryForWages;
+@dynamic expenditureOtherGroup;
+@dynamic incomeOtherGroup;
 @dynamic manager;
 @dynamic openingHoursWeekTemplate;
 @dynamic primaryBankAccount;
 @dynamic rootAccountingGroup;
+@dynamic rootExpenditureGroup;
+@dynamic rootIncomeGroup;
 @dynamic rootServiceCategory;
 @dynamic serviceCategories;
 @dynamic tillAccount;
-@dynamic rootExpenditureGroup;
-@dynamic rootIncomeGroup;
-@dynamic incomeOtherGroup;
-@dynamic expenditureOtherGroup;
+@dynamic systemRole;
+@dynamic devSupportRole;
+@dynamic systemAdminRole;
+@dynamic accountantRole;
+@dynamic managerRole;
+@dynamic basicUserRole;
+@dynamic receptionistRole;
 
 @end

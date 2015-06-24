@@ -24,4 +24,5 @@
 -(Salary*)salaryPreceedingSalary:(Salary*)salary;
 -(NSArray*)workRecordsForDate:(NSDate*)date;
 -(WorkRecord*)ensureWorkRecordTemplateExists;
+-(NSNumber*)canPerformActionWithName:(NSString*)name;
 @end

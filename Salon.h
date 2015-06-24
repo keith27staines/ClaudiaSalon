@@ -2,14 +2,14 @@
 //  Salon.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 15/06/2015.
+//  Created by Keith Staines on 23/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Account, AccountingPaymentGroup, Customer, Employee, OpeningHoursWeekTemplate, PaymentCategory, ServiceCategory;
+@class Account, AccountingPaymentGroup, Customer, Employee, OpeningHoursWeekTemplate, PaymentCategory, Role, ServiceCategory;
 
 @interface Salon : NSManagedObject
 
@@ -30,16 +30,23 @@
 @property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForPayments;
 @property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForSales;
 @property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForWages;
+@property (nonatomic, retain) AccountingPaymentGroup *expenditureOtherGroup;
+@property (nonatomic, retain) AccountingPaymentGroup *incomeOtherGroup;
 @property (nonatomic, retain) Employee *manager;
 @property (nonatomic, retain) OpeningHoursWeekTemplate *openingHoursWeekTemplate;
 @property (nonatomic, retain) Account *primaryBankAccount;
 @property (nonatomic, retain) AccountingPaymentGroup *rootAccountingGroup;
+@property (nonatomic, retain) AccountingPaymentGroup *rootExpenditureGroup;
+@property (nonatomic, retain) AccountingPaymentGroup *rootIncomeGroup;
 @property (nonatomic, retain) ServiceCategory *rootServiceCategory;
 @property (nonatomic, retain) ServiceCategory *serviceCategories;
 @property (nonatomic, retain) Account *tillAccount;
-@property (nonatomic, retain) AccountingPaymentGroup *rootExpenditureGroup;
-@property (nonatomic, retain) AccountingPaymentGroup *rootIncomeGroup;
-@property (nonatomic, retain) AccountingPaymentGroup *incomeOtherGroup;
-@property (nonatomic, retain) AccountingPaymentGroup *expenditureOtherGroup;
+@property (nonatomic, retain) Role *systemRole;
+@property (nonatomic, retain) Role *devSupportRole;
+@property (nonatomic, retain) Role *systemAdminRole;
+@property (nonatomic, retain) Role *accountantRole;
+@property (nonatomic, retain) Role *managerRole;
+@property (nonatomic, retain) Role *basicUserRole;
+@property (nonatomic, retain) Role *receptionistRole;
 
 @end

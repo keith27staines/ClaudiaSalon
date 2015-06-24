@@ -20,6 +20,7 @@
                 <outlet property="recurringEventManagementViewController" destination="aEQ-Oc-c3b" id="YhB-f1-4uN"/>
                 <outlet property="reportsViewController" destination="Idc-1W-TmU" id="lhn-FL-j6R"/>
                 <outlet property="requestPasswordWindowController" destination="1nv-NK-Vvr" id="1bD-ce-UKV"/>
+                <outlet property="roleManager" destination="OZM-96-GeK" id="JxE-p5-t1c"/>
                 <outlet property="salaryPaymentViewController" destination="BIc-nr-cPO" id="Q57-Zz-wqm"/>
                 <outlet property="salesViewController" destination="68x-i2-Z7H" id="H4C-DT-k2b"/>
                 <outlet property="salonDetailsViewController" destination="Tv1-mr-T9C" id="vkS-eD-c6c"/>
@@ -279,6 +280,7 @@
         <customObject id="ghL-zY-7eX" customClass="AMCFinancialAnalysisViewController"/>
         <customObject id="DfR-6A-GTN" userLabel="ServiceCategoryManagementViewController" customClass="AMCServiceCategoriesManagementViewController"/>
         <customObject id="Q3E-9P-95X" customClass="AMCChangeUserViewController"/>
+        <customObject id="OZM-96-GeK" customClass="AMCRoleManageViewController"/>
     </objects>
     <resources>
         <image name="BarChart" width="32" height="32"/>

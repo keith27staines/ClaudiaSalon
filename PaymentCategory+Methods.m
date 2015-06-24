@@ -34,10 +34,4 @@
     paymentCategory.createdDate = [NSDate date];
     return paymentCategory;
 }
-+(PaymentCategory*)paymentWithName:(NSString*)name inMoc:(NSManagedObjectContext*)moc {
-    NSArray * allPayments = [PaymentCategory allObjectsWithMoc:moc];
-    NSArray * matches = [allPayments filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"categoryName = %@",name]];
-    NSAssert(matches.count <= 1, @"Unexpected number of matches");
-    return matches.firstObject;
-}
 @end
