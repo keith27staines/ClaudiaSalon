@@ -106,12 +106,14 @@
 		53D4FC531B39363D009EBF70 /* RoleAction+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC521B39363D009EBF70 /* RoleAction+Methods.m */; };
 		53D4FC5B1B3948ED009EBF70 /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC5A1B3948ED009EBF70 /* Salon.m */; };
 		53D4FC5E1B3948EE009EBF70 /* Role.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC5D1B3948EE009EBF70 /* Role.m */; };
-		53D4FC611B3948EE009EBF70 /* RoleAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC601B3948EE009EBF70 /* RoleAction.m */; };
 		53D4FC641B394D22009EBF70 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC631B394D22009EBF70 /* Employee.m */; };
 		53D4FC971B3997BF009EBF70 /* AMCUserRoleEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC951B3997BF009EBF70 /* AMCUserRoleEditor.m */; };
 		53D4FC981B3997BF009EBF70 /* AMCUserRoleEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FC961B3997BF009EBF70 /* AMCUserRoleEditor.xib */; };
 		53D4FC9C1B39D61A009EBF70 /* AMCRoleManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC9A1B39D61A009EBF70 /* AMCRoleManageViewController.m */; };
 		53D4FC9D1B39D61A009EBF70 /* AMCRoleManageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FC9B1B39D61A009EBF70 /* AMCRoleManageViewController.xib */; };
+		53D4FCA41B3AE261009EBF70 /* RoleAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCA31B3AE261009EBF70 /* RoleAction.m */; };
+		53D4FCA81B3BF391009EBF70 /* AMCPermissionDeniedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */; };
+		53D4FCA91B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */; };
 		53D69BB61A9B22830004CE10 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69BB51A9B22830004CE10 /* AppDelegate.m */; };
 		53D69BB81A9B22830004CE10 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69BB71A9B22830004CE10 /* main.m */; };
 		53D69BC61A9B22830004CE10 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D69BC41A9B22830004CE10 /* MainMenu.xib */; };
@@ -468,8 +470,6 @@
 		53D4FC5A1B3948ED009EBF70 /* Salon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salon.m; sourceTree = "<group>"; };
 		53D4FC5C1B3948EE009EBF70 /* Role.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Role.h; sourceTree = "<group>"; };
 		53D4FC5D1B3948EE009EBF70 /* Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Role.m; sourceTree = "<group>"; };
-		53D4FC5F1B3948EE009EBF70 /* RoleAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoleAction.h; sourceTree = "<group>"; };
-		53D4FC601B3948EE009EBF70 /* RoleAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoleAction.m; sourceTree = "<group>"; };
 		53D4FC621B394D22009EBF70 /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
 		53D4FC631B394D22009EBF70 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
 		53D4FC941B3997BF009EBF70 /* AMCUserRoleEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCUserRoleEditor.h; sourceTree = "<group>"; };
@@ -478,6 +478,11 @@
 		53D4FC991B39D61A009EBF70 /* AMCRoleManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCRoleManageViewController.h; sourceTree = "<group>"; };
 		53D4FC9A1B39D61A009EBF70 /* AMCRoleManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCRoleManageViewController.m; sourceTree = "<group>"; };
 		53D4FC9B1B39D61A009EBF70 /* AMCRoleManageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCRoleManageViewController.xib; sourceTree = "<group>"; };
+		53D4FCA21B3AE261009EBF70 /* RoleAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoleAction.h; sourceTree = "<group>"; };
+		53D4FCA31B3AE261009EBF70 /* RoleAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoleAction.m; sourceTree = "<group>"; };
+		53D4FCA51B3BF391009EBF70 /* AMCPermissionDeniedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPermissionDeniedViewController.h; sourceTree = "<group>"; };
+		53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPermissionDeniedViewController.m; sourceTree = "<group>"; };
+		53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPermissionDeniedViewController.xib; sourceTree = "<group>"; };
 		53D69BAF1A9B22830004CE10 /* ClaudiaSalon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudiaSalon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D69BB31A9B22830004CE10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53D69BB41A9B22830004CE10 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -837,6 +842,9 @@
 			children = (
 				53D69DF01A9B243C0004CE10 /* AMCViewController.h */,
 				53D69CE11A9B240C0004CE10 /* AMCViewController.m */,
+				53D4FCA51B3BF391009EBF70 /* AMCPermissionDeniedViewController.h */,
+				53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */,
+				53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */,
 			);
 			name = AMCViewController;
 			sourceTree = "<group>";
@@ -1938,10 +1946,10 @@
 		53D69E031A9B6BE70004CE10 /* Data model objects */ = {
 			isa = PBXGroup;
 			children = (
+				53D4FCA21B3AE261009EBF70 /* RoleAction.h */,
+				53D4FCA31B3AE261009EBF70 /* RoleAction.m */,
 				53D4FC621B394D22009EBF70 /* Employee.h */,
 				53D4FC631B394D22009EBF70 /* Employee.m */,
-				53D4FC5F1B3948EE009EBF70 /* RoleAction.h */,
-				53D4FC601B3948EE009EBF70 /* RoleAction.m */,
 				53D4FC5C1B3948EE009EBF70 /* Role.h */,
 				53D4FC5D1B3948EE009EBF70 /* Role.m */,
 				53D4FC591B3948ED009EBF70 /* Salon.h */,
@@ -2155,6 +2163,7 @@
 				53D69C241A9B23B60004CE10 /* AMCProductSelectorWindowController.xib in Resources */,
 				5351916F1B37F56D00F8D37A /* AMCChangeUserViewController.xib in Resources */,
 				53D69C261A9B23B60004CE10 /* AMCQuickQuoteViewController.xib in Resources */,
+				53D4FCA91B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib in Resources */,
 				53D69C541A9B23B70004CE10 /* AMCStaffBusyViewController.xib in Resources */,
 				539D2DDE1B15FC9A00761711 /* AMCSalesViewController.xib in Resources */,
 				5346C58E1ABB074C005D4540 /* AMCPreferencesWindowController.xib in Resources */,
@@ -2242,7 +2251,6 @@
 				53D69D171A9B240C0004CE10 /* AMCEntityViewController.m in Sources */,
 				530171211ACA80170047116D /* AMCAccountManagementViewController.m in Sources */,
 				53D69D521A9B240C0004CE10 /* SelectCustomerStepViewController.m in Sources */,
-				53D4FC611B3948EE009EBF70 /* RoleAction.m in Sources */,
 				530171691ACB15EB0047116D /* ShoppingListItem.m in Sources */,
 				535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */,
 				53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */,
@@ -2334,6 +2342,7 @@
 				53D69D591A9B240C0004CE10 /* MakePaymentStepViewController.m in Sources */,
 				5330E23E1AF8B2400062FD93 /* Sale.m in Sources */,
 				539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */,
+				53D4FCA81B3BF391009EBF70 /* AMCPermissionDeniedViewController.m in Sources */,
 				5301714B1ACB15C10047116D /* Note.m in Sources */,
 				5301712D1ACB15C10047116D /* AccountReconciliation.m in Sources */,
 				530171541ACB15C20047116D /* Product.m in Sources */,
@@ -2347,6 +2356,7 @@
 				53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */,
 				535F0DF51AB2339A0035CFD8 /* AMCAutoCloseViewController.m in Sources */,
 				5301717E1ACB15EB0047116D /* ShoppingList.m in Sources */,
+				53D4FCA41B3AE261009EBF70 /* RoleAction.m in Sources */,
 				53D69D4D1A9B240C0004CE10 /* EditObjectViewController.m in Sources */,
 				53D69BB81A9B22830004CE10 /* main.m in Sources */,
 				5346C5971ABB2887005D4540 /* AMCTreeNode.m in Sources */,

@@ -31,8 +31,8 @@
     Role * role = [NSEntityDescription insertNewObjectForEntityForName:@"Role" inManagedObjectContext:moc];
     return role;
 }
--(NSNumber*)allowsActionWithName:(NSString*)name {
-    RoleAction * action = [self actionWithName:name];
+-(NSNumber*)allowsActionWithCodeUnitName:(NSString*)name actionName:(NSString*)verb {
+    RoleAction * action = [self actionWithCodeUnitName:name verb:verb];
     return [self allowsAction:action];
 }
 -(NSNumber*)allowsAction:(RoleAction*)action {
@@ -41,8 +41,8 @@
     }
     return @NO;
 }
--(RoleAction*)actionWithName:(NSString*)name {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@",name];
+-(RoleAction*)actionWithCodeUnitName:(NSString*)name verb:(NSString*)verb {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"codeUnitName == %@ and actionName == %@",name,verb];
     NSSet * filteredSet = [self.allowedActions filteredSetUsingPredicate:predicate];
     if (!filteredSet || filteredSet.count == 0) {
         return nil;

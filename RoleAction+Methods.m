@@ -28,8 +28,8 @@
     RoleAction * action = [NSEntityDescription insertNewObjectForEntityForName:@"RoleAction" inManagedObjectContext:moc];
     return action;
 }
-+(RoleAction*)fetchActionWithName:(NSString*)name inMoc:(NSManagedObjectContext*)moc {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@",name];
++(RoleAction*)fetchActionWithCodeUnitName:(NSString*)name actionName:(NSString*)action inMoc:(NSManagedObjectContext*)moc {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"codeUnitName == %@ and actionName = %@",name,action];
     NSArray * filteredArray = [[self allObjectsWithMoc:moc] filteredArrayUsingPredicate:predicate];
     if (!filteredArray || filteredArray.count == 0) {
         return nil;

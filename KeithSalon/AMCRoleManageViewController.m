@@ -15,15 +15,22 @@
 @property (weak) IBOutlet NSPopUpButton *roleSelector;
 @property (weak) IBOutlet NSTableView *actionTable;
 @property NSArray * roleActions;
-@property (weak) IBOutlet NSTextField *infoLabel;
-@property (weak) IBOutlet NSTextField *nameLabel;
-@property (strong) IBOutlet NSView *infoView;
-@property (weak) IBOutlet NSTextField *infoViewTitleLabel;
+
+@property (strong) IBOutlet NSViewController *roleInfoViewController;
+@property (weak) IBOutlet NSTextField *roleInfoTitleLabel;
+@property (weak) IBOutlet NSTextField *roleInfoDescriptionLabel;
+@property BOOL roleInfoIsPresented;
+
+@property (strong) IBOutlet NSViewController *actionInfoViewController;
+@property (weak) IBOutlet NSTextField *actionInfoTitleLabel;
+@property (weak) IBOutlet NSTextField *actionInfoDescriptionLabel;
+@property (strong) IBOutlet NSView *actionInfoView;
+@property (strong) IBOutlet NSTextField *actionVerbLabel;
+@property (strong) IBOutlet NSTextField * codeUnitNameLabel;
+@property BOOL actionInfoIsPresented;
+
 @property (weak, readonly) Role * selectedRole;
 @property (weak, readonly) RoleAction * clickedRoleAction;
-@property (weak) IBOutlet NSTextField *infoViewContentLabel;
-@property (strong) IBOutlet NSViewController *infoViewController;
-@property BOOL infoIsPresented;
 @end
 
 @implementation AMCRoleManageViewController
@@ -35,6 +42,8 @@
     [super prepareForDisplayWithSalon:salonDocument];
     [self reloadRolePopup];
     [self reloadTableData];
+    self.roleInfoIsPresented = NO;
+    self.actionInfoIsPresented = NO;
 }
 -(void)reloadRolePopup {
     [self.roleSelector removeAllItems];
@@ -55,25 +64,32 @@
 }
 
 - (IBAction)showRoleInfo:(id)sender {
+    [self ensurePopupNotPresented];
     NSButton * infoButton = sender;
-    self.infoViewTitleLabel.stringValue = self.selectedRole.name;
-    self.infoViewContentLabel.stringValue = self.selectedRole.fullDescription;
-    [self presentInfoViewRelativeToView:infoButton];
+    self.roleInfoTitleLabel.stringValue = self.selectedRole.name;
+    self.roleInfoDescriptionLabel.stringValue = self.selectedRole.fullDescription;
+    self.roleInfoIsPresented = YES;
+    [self presentViewController:self.roleInfoViewController asPopoverRelativeToRect:infoButton.bounds ofView:infoButton preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorTransient];
 }
 - (IBAction)showActionInfo:(id)sender {
+    [self ensurePopupNotPresented];
     NSButton * infoButton = sender;
     NSInteger row = [self.actionTable rowForView:sender];
     RoleAction * roleAction = self.roleActions[row];
-    self.infoViewTitleLabel.stringValue = roleAction.name;
-    self.infoViewContentLabel.stringValue = (roleAction.fullDescription)?roleAction.fullDescription:@"No description is available";
-    [self presentInfoViewRelativeToView:infoButton];
+    self.actionInfoTitleLabel.stringValue = roleAction.name;
+    self.actionInfoDescriptionLabel.stringValue = (roleAction.fullDescription)?roleAction.fullDescription:@"No description is available";
+    self.actionVerbLabel.stringValue = roleAction.actionName;
+    self.codeUnitNameLabel.stringValue = roleAction.codeUnitName;
+    self.actionInfoIsPresented = YES;
+    [self presentViewController:self.actionInfoViewController asPopoverRelativeToRect:infoButton.bounds ofView:infoButton preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorTransient];
 }
--(void)presentInfoViewRelativeToView:(NSView*)view {
-    if (self.infoIsPresented) {
-        [self dismissViewController:self.infoViewController];
+-(void)ensurePopupNotPresented {
+    if (self.roleInfoIsPresented) {
+        [self dismissViewController:self.roleInfoViewController];
     }
-    self.infoIsPresented = YES;
-    [self presentViewController:self.infoViewController asPopoverRelativeToRect:view.bounds ofView:view preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorTransient];
+    if (self.actionInfoIsPresented) {
+        [self dismissViewController:self.actionInfoViewController];
+    }
 }
 - (IBAction)changeAssignment:(id)sender {
     NSInteger row = [self.actionTable rowForView:sender];
@@ -90,7 +106,6 @@
     NSInteger row = self.actionTable.clickedRow;
     return self.roleActions[row];
 }
-
 -(Role *)selectedRole {
     return self.roleSelector.selectedItem.representedObject;
 }
@@ -113,9 +128,14 @@
     checkbox.title = (checkbox.state == NSOnState)?@"Assigned":@"Unassigned";
 }
 -(void)dismissViewController:(NSViewController *)viewController {
-    if (viewController == self.infoViewController) {
-        self.infoIsPresented = NO;
+    if (viewController == self.roleInfoViewController && self.roleInfoIsPresented) {
+        self.roleInfoIsPresented = NO;
+        [super dismissViewController:viewController];
+    } else if (viewController == self.actionInfoViewController && self.actionInfoIsPresented) {
+        self.actionInfoIsPresented = NO;
+        [super dismissViewController:viewController];
+    } else {
+        [super dismissViewController:viewController];
     }
-    [super dismissViewController:viewController];
 }
 @end

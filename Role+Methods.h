@@ -11,5 +11,5 @@
 @interface Role (Methods)
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
--(NSNumber*)allowsActionWithName:(NSString*)name;
+-(NSNumber*)allowsActionWithCodeUnitName:(NSString*)name actionName:(NSString*)verb;
 @end

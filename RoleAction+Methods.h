@@ -11,5 +11,5 @@
 @interface RoleAction (Methods)
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
-+(RoleAction*)fetchActionWithName:(NSString*)name inMoc:(NSManagedObjectContext*)moc ;
++(RoleAction*)fetchActionWithCodeUnitName:(NSString*)name actionName:(NSString*)action inMoc:(NSManagedObjectContext*)moc;
 @end

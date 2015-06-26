@@ -191,40 +191,77 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         [self.salon.manager addRolesObject:self.salon.basicUserRole];
     }
     NSArray * viewControllerClasses = subclasses([AMCViewController class]);
-    RoleAction * viewAction = nil;
-    RoleAction * editAction = nil;
-    RoleAction * createAction = nil;
-    RoleAction * deleteAction = nil;
-    NSString * viewActionName = nil;
+    RoleAction * roleActionView = nil;
+    RoleAction * roleActionEdit = nil;
+    RoleAction * roleActionCreate = nil;
 
-    for (Role * role in [Role allObjectsWithMoc:self.managedObjectContext]) {
-        for (Class class in viewControllerClasses) {
-            viewActionName = NSStringFromClass(class);
-            viewAction = [RoleAction fetchActionWithName:viewActionName inMoc:self.managedObjectContext];
-            if (viewAction) continue; // Already added this view action and its related edit/create/delete actions
-          
-            // add view action
-            viewAction = [RoleAction newObjectWithMoc:self.managedObjectContext];
-            viewAction.name = viewActionName;
-            [role addAllowedActionsObject:viewAction];
-            
-            // add edit action
-            editAction = [RoleAction newObjectWithMoc:self.managedObjectContext];
-            editAction.name = [viewActionName stringByAppendingString:@"_Edit"];
-            [role addAllowedActionsObject:editAction];
-            
-            // add create action
-            createAction = [RoleAction newObjectWithMoc:self.managedObjectContext];
-            createAction.name = [viewActionName stringByAppendingString:@"_Create"];
-            [role addAllowedActionsObject:createAction];
-            
-            // add delete action
-            deleteAction = [RoleAction newObjectWithMoc:self.managedObjectContext];
-            deleteAction.name = [viewActionName stringByAppendingString:@"_Delete"];
-            // Nobody gets delete permissions! [role addAllowedActionsObject:deleteAction];
+    for (Class class in viewControllerClasses) {
+        NSString * className = NSStringFromClass(class);
+        
+        roleActionView = [RoleAction fetchActionWithCodeUnitName:className actionName:@"View" inMoc:self.managedObjectContext];
+        if (roleActionView) continue; // Already added this view action and its related edit/create/delete actions
+        
+        // add view action
+        roleActionView = [RoleAction newObjectWithMoc:self.managedObjectContext];
+        roleActionView.codeUnitName = className;
+        roleActionView.actionName = @"View";
+        [self generateFriendlyName:roleActionView];
+        
+        // add edit action
+        roleActionEdit = [RoleAction newObjectWithMoc:self.managedObjectContext];
+        roleActionEdit.codeUnitName = className;
+        roleActionEdit.actionName = @"Edit";
+        [self generateFriendlyName:roleActionEdit];
+        
+        // add create action
+        roleActionCreate = [RoleAction newObjectWithMoc:self.managedObjectContext];
+        roleActionCreate.codeUnitName = className;
+        roleActionCreate.actionName = @"Create";
+        [self generateFriendlyName:roleActionCreate];
+        
+        for (Role * role in [Role allObjectsWithMoc:self.managedObjectContext]) {
+            if (role == self.salon.managerRole || role == self.salon.systemAdminRole || role == self.salon.systemRole) {
+                [role addAllowedActionsObject:roleActionView];
+                [role addAllowedActionsObject:roleActionEdit];
+                [role addAllowedActionsObject:roleActionCreate];
+            } else {
+                [role addAllowedActionsObject:roleActionView];
+            }
         }
     }
-    
+}
+-(void)generateFriendlyName:(RoleAction*)roleAction {
+    NSMutableString * friendlyName = [roleAction.codeUnitName mutableCopy];
+    NSString * verb = [roleAction.actionName copy];
+    [friendlyName replaceOccurrencesOfString:@"ViewController" withString:@"" options:0 range:NSMakeRange(0, friendlyName.length)];
+    [friendlyName replaceOccurrencesOfString:@"Editor" withString:@"" options:0 range:NSMakeRange(0, friendlyName.length)];
+    // Find first lowercase character
+    int firstLower = 0;
+    for (int i = 0; i < friendlyName.length; i++) {
+        NSString * c = [friendlyName substringWithRange:NSMakeRange(i, 1)];
+        if ([c isEqualToString:[c uppercaseString]]) {
+            continue;
+        } else {
+            firstLower = i;
+            break;
+        }
+    }
+    // Remove all but the last of the preceeding uppercase characters
+    if (firstLower > 0) {
+        friendlyName = [[friendlyName substringFromIndex:firstLower - 1] mutableCopy];
+    }
+    // Put a space after any lower case letter that preceeds an upper case letter
+    int i = 0;
+    while (i < friendlyName.length - 2) {
+        NSString * c1 = [friendlyName substringWithRange:NSMakeRange(i, 1)];
+        NSString * c2 = [friendlyName substringWithRange:NSMakeRange(i+1,1)];
+        if ([c1 isEqualToString:[c1 lowercaseString]] && [c2 isEqualToString:[c2 uppercaseString]]) {
+            [friendlyName insertString:@" " atIndex:i+1];
+            i += 2;
+        }
+        i++;
+    }
+    roleAction.name = [friendlyName stringByAppendingString:[NSString stringWithFormat:@" (%@)",verb]];
 }
 -(Customer *)anonymousCustomer {
     if (!self.salon.anonymousCustomer) {

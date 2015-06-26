@@ -6,13 +6,15 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCRoleManageViewController">
             <connections>
+                <outlet property="actionInfoDescriptionLabel" destination="luf-1W-vHa" id="TJz-bx-iTD"/>
+                <outlet property="actionInfoTitleLabel" destination="JAT-9E-UhB" id="119-4g-rl1"/>
+                <outlet property="actionInfoViewController" destination="1xw-4Q-c4N" id="AUV-eQ-TH7"/>
                 <outlet property="actionTable" destination="0hf-6U-uuk" id="eKQ-2y-3Bz"/>
-                <outlet property="infoLabel" destination="ibY-ts-VEN" id="KvV-wI-5Vq"/>
-                <outlet property="infoView" destination="zs5-Ks-dmB" id="DeL-8U-ycz"/>
-                <outlet property="infoViewContentLabel" destination="ibY-ts-VEN" id="Cf5-pl-1iW"/>
-                <outlet property="infoViewController" destination="QEl-bo-xoo" id="w3P-Rx-c8t"/>
-                <outlet property="infoViewTitleLabel" destination="JBc-OZ-Uhy" id="0ax-zA-deU"/>
-                <outlet property="nameLabel" destination="JBc-OZ-Uhy" id="I3A-7B-VsR"/>
+                <outlet property="actionVerbLabel" destination="uAW-kq-cdE" id="leW-61-2d8"/>
+                <outlet property="codeUnitNameLabel" destination="e7F-zy-o50" id="bVE-zP-fzo"/>
+                <outlet property="roleInfoDescriptionLabel" destination="ibY-ts-VEN" id="ryw-N9-6cV"/>
+                <outlet property="roleInfoTitleLabel" destination="JBc-OZ-Uhy" id="7Ad-rq-Yc9"/>
+                <outlet property="roleInfoViewController" destination="QEl-bo-xoo" id="wMO-HA-dFv"/>
                 <outlet property="roleSelector" destination="fZu-3x-42x" id="1U7-FF-SXj"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -68,10 +70,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="41" rowSizeStyle="automatic" viewBased="YES" id="0hf-6U-uuk">
-                                <rect key="frame" x="0.0" y="0.0" width="238" height="117"/>
+                                <rect key="frame" x="0.0" y="0.0" width="789" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
                                     <tableColumn identifier="actionColumn" width="786" minWidth="40" maxWidth="1000" id="NIe-ff-ymW">
@@ -155,7 +158,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="joM-vg-YJw"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="72Z-0m-Y83">
-                        <rect key="frame" x="1" y="117.46504271030426" width="236.81940460205078" height="16"/>
+                        <rect key="frame" x="1" y="117.46504271030426" width="237" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="fUn-0g-BWb">
@@ -232,9 +235,70 @@
             </constraints>
             <point key="canvasLocation" x="66" y="644"/>
         </customView>
-        <viewController id="QEl-bo-xoo" userLabel="Info View Controller">
+        <viewController id="QEl-bo-xoo" userLabel="Role Info View Controller">
             <connections>
                 <outlet property="view" destination="zs5-Ks-dmB" id="uVf-yC-GgM"/>
+            </connections>
+        </viewController>
+        <customView id="6SQ-Y9-3Qt">
+            <rect key="frame" x="0.0" y="0.0" width="370" height="111"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JAT-9E-UhB">
+                    <rect key="frame" x="18" y="80" width="334" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="EdH-2n-6vl">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" translatesAutoresizingMaskIntoConstraints="NO" id="luf-1W-vHa">
+                    <rect key="frame" x="18" y="20" width="334" height="17"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Multiline Label" id="Jpo-C0-pBZ">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uAW-kq-cdE">
+                    <rect key="frame" x="20" y="55" width="70" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="66" id="RRY-SW-1Fe"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Verb" id="jVc-zE-Pfo">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e7F-zy-o50">
+                    <rect key="frame" x="105" y="55" width="247" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Code Unit" id="380-nB-J80">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="e7F-zy-o50" firstAttribute="leading" secondItem="uAW-kq-cdE" secondAttribute="trailing" constant="19" id="8y9-UH-4sf"/>
+                <constraint firstItem="e7F-zy-o50" firstAttribute="baseline" secondItem="uAW-kq-cdE" secondAttribute="baseline" id="Mbb-f2-IqP"/>
+                <constraint firstItem="JAT-9E-UhB" firstAttribute="top" secondItem="6SQ-Y9-3Qt" secondAttribute="top" constant="14" id="WcY-SP-cxd"/>
+                <constraint firstItem="uAW-kq-cdE" firstAttribute="leading" secondItem="6SQ-Y9-3Qt" secondAttribute="leading" constant="22" id="YaF-aP-wWp"/>
+                <constraint firstItem="luf-1W-vHa" firstAttribute="top" secondItem="uAW-kq-cdE" secondAttribute="bottom" constant="18" id="dZL-Qf-Yrg"/>
+                <constraint firstAttribute="bottom" secondItem="luf-1W-vHa" secondAttribute="bottom" constant="20" id="f2k-Jo-wo8"/>
+                <constraint firstItem="luf-1W-vHa" firstAttribute="leading" secondItem="6SQ-Y9-3Qt" secondAttribute="leading" constant="20" id="fOi-Mp-ppH"/>
+                <constraint firstAttribute="trailing" secondItem="e7F-zy-o50" secondAttribute="trailing" constant="20" id="m0I-vQ-aHG"/>
+                <constraint firstItem="JAT-9E-UhB" firstAttribute="leading" secondItem="6SQ-Y9-3Qt" secondAttribute="leading" constant="20" id="mAB-Ur-qde"/>
+                <constraint firstAttribute="trailing" secondItem="luf-1W-vHa" secondAttribute="trailing" constant="20" id="rAa-jG-pHX"/>
+                <constraint firstItem="uAW-kq-cdE" firstAttribute="top" secondItem="JAT-9E-UhB" secondAttribute="bottom" constant="8" symbolic="YES" id="tp7-6c-Ihj"/>
+                <constraint firstAttribute="trailing" secondItem="JAT-9E-UhB" secondAttribute="trailing" constant="20" symbolic="YES" id="vFO-c0-lLs"/>
+            </constraints>
+            <point key="canvasLocation" x="506" y="656.5"/>
+        </customView>
+        <viewController id="1xw-4Q-c4N" userLabel="Action Info View Controller">
+            <connections>
+                <outlet property="view" destination="6SQ-Y9-3Qt" id="OGc-65-1Zo"/>
             </connections>
         </viewController>
     </objects>

@@ -107,7 +107,7 @@
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photo" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="456750000" defaultValueString="&quot;now&quot;" syncable="YES"/>
+        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="456836400" defaultValueString="&quot;now&quot;" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="canDo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="canBeDoneBy" inverseEntity="Service" syncable="YES"/>
         <relationship name="holidays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Holiday" inverseName="employee" inverseEntity="Holiday" syncable="YES"/>
@@ -254,6 +254,8 @@
         <relationship name="systemRoleForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="systemRole" inverseEntity="Salon" syncable="YES"/>
     </entity>
     <entity name="RoleAction" representedClassName="RoleAction" syncable="YES">
+        <attribute name="actionName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="codeUnitName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fullDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="roles" toMany="YES" deletionRule="Nullify" destinationEntity="Role" inverseName="allowedActions" inverseEntity="Role" syncable="YES"/>
@@ -463,7 +465,7 @@
         <element name="Product" positionX="0" positionY="0" width="128" height="165"/>
         <element name="RecurringItem" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Role" positionX="9" positionY="153" width="128" height="225"/>
-        <element name="RoleAction" positionX="18" positionY="162" width="128" height="90"/>
+        <element name="RoleAction" positionX="18" positionY="162" width="128" height="120"/>
         <element name="Salary" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Sale" positionX="0" positionY="0" width="128" height="330"/>
         <element name="SaleItem" positionX="0" positionY="0" width="128" height="225"/>

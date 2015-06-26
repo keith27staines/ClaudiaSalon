@@ -2,7 +2,7 @@
 //  RoleAction.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 23/06/2015.
+//  Created by Keith Staines on 24/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -15,6 +15,8 @@
 
 @property (nonatomic, retain) NSString * fullDescription;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * actionName;
+@property (nonatomic, retain) NSString * codeUnitName;
 @property (nonatomic, retain) NSSet *roles;
 @end
 

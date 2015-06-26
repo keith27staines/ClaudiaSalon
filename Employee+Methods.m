@@ -152,9 +152,9 @@
     return self.workRecordTemplate;
 }
 
--(NSNumber*)canPerformActionWithName:(NSString*)name {
+-(NSNumber*)canPerformAction:(NSString*)name withActionName:(NSString*)verb {
     for (Role * role in self.roles) {
-        if ([role allowsActionWithName:name]) {
+        if ([role allowsActionWithCodeUnitName:name actionName:verb]) {
             return @YES;
         }
     }

@@ -334,12 +334,13 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Manage" id="Bgb-FL-QbE">
                         <items>
-                            <menuItem title="Roles..." id="eOf-NT-MRf">
+                            <menuItem title="Roles and Permissions..." id="eOf-NT-MRf">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="manageRolesAndRoleActions:" target="-1" id="7uh-HJ-a6j"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="BJ3-mb-o5H"/>
                             <menuItem title="Services and Service Categories..." id="uup-Na-Wnc">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>

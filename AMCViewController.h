@@ -16,4 +16,5 @@
 @property (weak, readonly) NSManagedObjectContext * documentMoc;
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument*)salonDocument;
 -(void)reloadData;
+-(NSString*)editModeVerb;
 @end
