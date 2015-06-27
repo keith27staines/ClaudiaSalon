@@ -1,15 +1,16 @@
 //
-//  RoleAction+Methods.h
+//  BusinessFunction+Methods.h
 //  ClaudiaSalon
 //
 //  Created by Keith Staines on 23/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
-#import "RoleAction.h"
+#import "BusinessFunction.h"
 
-@interface RoleAction (Methods)
+@interface BusinessFunction (Methods)
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
-+(RoleAction*)fetchActionWithCodeUnitName:(NSString*)name actionName:(NSString*)action inMoc:(NSManagedObjectContext*)moc;
++(BusinessFunction*)fetchBusinessFunctionWithCodeUnitName:(NSString*)name inMoc:(NSManagedObjectContext*)moc;
+-(NSArray*)mappedRoles;
 @end

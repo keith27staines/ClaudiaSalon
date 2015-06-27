@@ -5,11 +5,12 @@
 //  Created by Keith Staines on 23/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
-
+@class BusinessFunction;
 #import "Role.h"
 
 @interface Role (Methods)
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
--(NSNumber*)allowsActionWithCodeUnitName:(NSString*)name actionName:(NSString*)verb;
+-(NSNumber*)allowsBusinessFunction:(BusinessFunction*)function verb:(NSString*)verb;
+
 @end

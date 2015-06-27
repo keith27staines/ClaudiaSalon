@@ -103,17 +103,21 @@
 		53D325A51A9E390B00AFCDE4 /* AMCWelcomeScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D325A31A9E390B00AFCDE4 /* AMCWelcomeScreen.m */; };
 		53D325A61A9E390B00AFCDE4 /* AMCWelcomeScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D325A41A9E390B00AFCDE4 /* AMCWelcomeScreen.xib */; };
 		53D4FC501B3934A5009EBF70 /* Role+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC4F1B3934A5009EBF70 /* Role+Methods.m */; };
-		53D4FC531B39363D009EBF70 /* RoleAction+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC521B39363D009EBF70 /* RoleAction+Methods.m */; };
+		53D4FC531B39363D009EBF70 /* BusinessFunction+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC521B39363D009EBF70 /* BusinessFunction+Methods.m */; };
 		53D4FC5B1B3948ED009EBF70 /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC5A1B3948ED009EBF70 /* Salon.m */; };
-		53D4FC5E1B3948EE009EBF70 /* Role.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC5D1B3948EE009EBF70 /* Role.m */; };
 		53D4FC641B394D22009EBF70 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC631B394D22009EBF70 /* Employee.m */; };
 		53D4FC971B3997BF009EBF70 /* AMCUserRoleEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC951B3997BF009EBF70 /* AMCUserRoleEditor.m */; };
 		53D4FC981B3997BF009EBF70 /* AMCUserRoleEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FC961B3997BF009EBF70 /* AMCUserRoleEditor.xib */; };
 		53D4FC9C1B39D61A009EBF70 /* AMCRoleManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC9A1B39D61A009EBF70 /* AMCRoleManageViewController.m */; };
 		53D4FC9D1B39D61A009EBF70 /* AMCRoleManageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FC9B1B39D61A009EBF70 /* AMCRoleManageViewController.xib */; };
-		53D4FCA41B3AE261009EBF70 /* RoleAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCA31B3AE261009EBF70 /* RoleAction.m */; };
 		53D4FCA81B3BF391009EBF70 /* AMCPermissionDeniedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */; };
 		53D4FCA91B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */; };
+		53D4FCAD1B3D904D009EBF70 /* AMCRolesMappingToScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCAB1B3D904D009EBF70 /* AMCRolesMappingToScreen.m */; };
+		53D4FCAE1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FCAC1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib */; };
+		53D4FCC31B3EF634009EBF70 /* Permission.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCC21B3EF634009EBF70 /* Permission.m */; };
+		53D4FCC61B3EF635009EBF70 /* Role.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCC51B3EF635009EBF70 /* Role.m */; };
+		53D4FCC91B3EF635009EBF70 /* BusinessFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCC81B3EF635009EBF70 /* BusinessFunction.m */; };
+		53D4FCCC1B3EF688009EBF70 /* Permission+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCCB1B3EF688009EBF70 /* Permission+Methods.m */; };
 		53D69BB61A9B22830004CE10 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69BB51A9B22830004CE10 /* AppDelegate.m */; };
 		53D69BB81A9B22830004CE10 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69BB71A9B22830004CE10 /* main.m */; };
 		53D69BC61A9B22830004CE10 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D69BC41A9B22830004CE10 /* MainMenu.xib */; };
@@ -463,13 +467,11 @@
 		53D325A41A9E390B00AFCDE4 /* AMCWelcomeScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCWelcomeScreen.xib; sourceTree = "<group>"; };
 		53D4FC4E1B3934A5009EBF70 /* Role+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Role+Methods.h"; sourceTree = "<group>"; };
 		53D4FC4F1B3934A5009EBF70 /* Role+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Role+Methods.m"; sourceTree = "<group>"; };
-		53D4FC511B39363D009EBF70 /* RoleAction+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RoleAction+Methods.h"; sourceTree = "<group>"; };
-		53D4FC521B39363D009EBF70 /* RoleAction+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RoleAction+Methods.m"; sourceTree = "<group>"; };
+		53D4FC511B39363D009EBF70 /* BusinessFunction+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BusinessFunction+Methods.h"; sourceTree = "<group>"; };
+		53D4FC521B39363D009EBF70 /* BusinessFunction+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BusinessFunction+Methods.m"; sourceTree = "<group>"; };
 		53D4FC571B394339009EBF70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53D4FC591B3948ED009EBF70 /* Salon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Salon.h; sourceTree = "<group>"; };
 		53D4FC5A1B3948ED009EBF70 /* Salon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Salon.m; sourceTree = "<group>"; };
-		53D4FC5C1B3948EE009EBF70 /* Role.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Role.h; sourceTree = "<group>"; };
-		53D4FC5D1B3948EE009EBF70 /* Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Role.m; sourceTree = "<group>"; };
 		53D4FC621B394D22009EBF70 /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
 		53D4FC631B394D22009EBF70 /* Employee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Employee.m; sourceTree = "<group>"; };
 		53D4FC941B3997BF009EBF70 /* AMCUserRoleEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCUserRoleEditor.h; sourceTree = "<group>"; };
@@ -478,11 +480,20 @@
 		53D4FC991B39D61A009EBF70 /* AMCRoleManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCRoleManageViewController.h; sourceTree = "<group>"; };
 		53D4FC9A1B39D61A009EBF70 /* AMCRoleManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCRoleManageViewController.m; sourceTree = "<group>"; };
 		53D4FC9B1B39D61A009EBF70 /* AMCRoleManageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCRoleManageViewController.xib; sourceTree = "<group>"; };
-		53D4FCA21B3AE261009EBF70 /* RoleAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoleAction.h; sourceTree = "<group>"; };
-		53D4FCA31B3AE261009EBF70 /* RoleAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoleAction.m; sourceTree = "<group>"; };
 		53D4FCA51B3BF391009EBF70 /* AMCPermissionDeniedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPermissionDeniedViewController.h; sourceTree = "<group>"; };
 		53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPermissionDeniedViewController.m; sourceTree = "<group>"; };
 		53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPermissionDeniedViewController.xib; sourceTree = "<group>"; };
+		53D4FCAA1B3D904D009EBF70 /* AMCRolesMappingToScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCRolesMappingToScreen.h; sourceTree = "<group>"; };
+		53D4FCAB1B3D904D009EBF70 /* AMCRolesMappingToScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCRolesMappingToScreen.m; sourceTree = "<group>"; };
+		53D4FCAC1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCRolesMappingToScreen.xib; sourceTree = "<group>"; };
+		53D4FCC11B3EF634009EBF70 /* Permission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Permission.h; sourceTree = "<group>"; };
+		53D4FCC21B3EF634009EBF70 /* Permission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Permission.m; sourceTree = "<group>"; };
+		53D4FCC41B3EF635009EBF70 /* Role.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Role.h; sourceTree = "<group>"; };
+		53D4FCC51B3EF635009EBF70 /* Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Role.m; sourceTree = "<group>"; };
+		53D4FCC71B3EF635009EBF70 /* BusinessFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessFunction.h; sourceTree = "<group>"; };
+		53D4FCC81B3EF635009EBF70 /* BusinessFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessFunction.m; sourceTree = "<group>"; };
+		53D4FCCA1B3EF688009EBF70 /* Permission+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Permission+Methods.h"; sourceTree = "<group>"; };
+		53D4FCCB1B3EF688009EBF70 /* Permission+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Permission+Methods.m"; sourceTree = "<group>"; };
 		53D69BAF1A9B22830004CE10 /* ClaudiaSalon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudiaSalon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D69BB31A9B22830004CE10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53D69BB41A9B22830004CE10 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -842,6 +853,9 @@
 			children = (
 				53D69DF01A9B243C0004CE10 /* AMCViewController.h */,
 				53D69CE11A9B240C0004CE10 /* AMCViewController.m */,
+				53D4FCAA1B3D904D009EBF70 /* AMCRolesMappingToScreen.h */,
+				53D4FCAB1B3D904D009EBF70 /* AMCRolesMappingToScreen.m */,
+				53D4FCAC1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib */,
 				53D4FCA51B3BF391009EBF70 /* AMCPermissionDeniedViewController.h */,
 				53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */,
 				53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */,
@@ -1946,12 +1960,14 @@
 		53D69E031A9B6BE70004CE10 /* Data model objects */ = {
 			isa = PBXGroup;
 			children = (
-				53D4FCA21B3AE261009EBF70 /* RoleAction.h */,
-				53D4FCA31B3AE261009EBF70 /* RoleAction.m */,
+				53D4FCC71B3EF635009EBF70 /* BusinessFunction.h */,
+				53D4FCC81B3EF635009EBF70 /* BusinessFunction.m */,
+				53D4FCC41B3EF635009EBF70 /* Role.h */,
+				53D4FCC51B3EF635009EBF70 /* Role.m */,
+				53D4FCC11B3EF634009EBF70 /* Permission.h */,
+				53D4FCC21B3EF634009EBF70 /* Permission.m */,
 				53D4FC621B394D22009EBF70 /* Employee.h */,
 				53D4FC631B394D22009EBF70 /* Employee.m */,
-				53D4FC5C1B3948EE009EBF70 /* Role.h */,
-				53D4FC5D1B3948EE009EBF70 /* Role.m */,
 				53D4FC591B3948ED009EBF70 /* Salon.h */,
 				53D4FC5A1B3948ED009EBF70 /* Salon.m */,
 				5381C5F51B306C1600E99946 /* Payment.h */,
@@ -2064,8 +2080,10 @@
 				530171841ACBD21F0047116D /* RecurringItem+Methods.m */,
 				53D4FC4E1B3934A5009EBF70 /* Role+Methods.h */,
 				53D4FC4F1B3934A5009EBF70 /* Role+Methods.m */,
-				53D4FC511B39363D009EBF70 /* RoleAction+Methods.h */,
-				53D4FC521B39363D009EBF70 /* RoleAction+Methods.m */,
+				53D4FC511B39363D009EBF70 /* BusinessFunction+Methods.h */,
+				53D4FC521B39363D009EBF70 /* BusinessFunction+Methods.m */,
+				53D4FCCA1B3EF688009EBF70 /* Permission+Methods.h */,
+				53D4FCCB1B3EF688009EBF70 /* Permission+Methods.m */,
 			);
 			name = "Method Categories on Data Objects";
 			path = ..;
@@ -2162,6 +2180,7 @@
 				53D69C3E1A9B23B70004CE10 /* AMCReportsViewController.xib in Resources */,
 				53D69C241A9B23B60004CE10 /* AMCProductSelectorWindowController.xib in Resources */,
 				5351916F1B37F56D00F8D37A /* AMCChangeUserViewController.xib in Resources */,
+				53D4FCAE1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib in Resources */,
 				53D69C261A9B23B60004CE10 /* AMCQuickQuoteViewController.xib in Resources */,
 				53D4FCA91B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib in Resources */,
 				53D69C541A9B23B70004CE10 /* AMCStaffBusyViewController.xib in Resources */,
@@ -2246,7 +2265,7 @@
 			files = (
 				53D69D3C1A9B240C0004CE10 /* Product+Methods.m in Sources */,
 				53D69D0E1A9B240C0004CE10 /* AMCShoppingListPrintViewController.m in Sources */,
-				53D4FC531B39363D009EBF70 /* RoleAction+Methods.m in Sources */,
+				53D4FC531B39363D009EBF70 /* BusinessFunction+Methods.m in Sources */,
 				53D69D4F1A9B240C0004CE10 /* EditSaleViewController.m in Sources */,
 				53D69D171A9B240C0004CE10 /* AMCEntityViewController.m in Sources */,
 				530171211ACA80170047116D /* AMCAccountManagementViewController.m in Sources */,
@@ -2275,6 +2294,7 @@
 				53D69D1B1A9B240C0004CE10 /* AMCCancelAppointmentViewController.m in Sources */,
 				5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */,
 				5381C5C51B2C186A00E99946 /* AMCServiceCategoriesManagementViewController.m in Sources */,
+				53D4FCC91B3EF635009EBF70 /* BusinessFunction.m in Sources */,
 				53D69D541A9B240C0004CE10 /* AMCRefundView.m in Sources */,
 				5381C5C81B2C250C00E99946 /* AMCAccountancyGroupManagementViewController.m in Sources */,
 				53D69D501A9B240C0004CE10 /* WizardStepViewController.m in Sources */,
@@ -2290,7 +2310,6 @@
 				53D69D0D1A9B240C0004CE10 /* AMCStockControlViewController.m in Sources */,
 				530171391ACB15C10047116D /* Salary.m in Sources */,
 				53D69CF41A9B240C0004CE10 /* AMCStorePopulator.m in Sources */,
-				53D4FC5E1B3948EE009EBF70 /* Role.m in Sources */,
 				53D69D5B1A9B240C0004CE10 /* AMCPaymentFormatter.m in Sources */,
 				53D69D451A9B240C0004CE10 /* StockedBrand+Methods.m in Sources */,
 				5301713C1ACB15C10047116D /* OpeningHoursWeekTemplate.m in Sources */,
@@ -2316,6 +2335,7 @@
 				530171571ACB15C20047116D /* Customer.m in Sources */,
 				53D69D1E1A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m in Sources */,
 				53D69D491A9B240C0004CE10 /* WorkRecord+Methods.m in Sources */,
+				53D4FCC61B3EF635009EBF70 /* Role.m in Sources */,
 				53D69D531A9B240C0004CE10 /* AMCRefundViewController.m in Sources */,
 				5346C59A1ABFF6AC005D4540 /* AMCCashBookNode.m in Sources */,
 				53D69D411A9B240C0004CE10 /* Note+Methods.m in Sources */,
@@ -2335,12 +2355,14 @@
 				53D69CEF1A9B240C0004CE10 /* AMCQuickQuoteViewController.m in Sources */,
 				531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */,
 				5381C5DB1B2DDC6700E99946 /* EditAccountancyGroupViewController.m in Sources */,
+				53D4FCCC1B3EF688009EBF70 /* Permission+Methods.m in Sources */,
 				53D69D5C1A9B240C0004CE10 /* EditCustomerViewController.m in Sources */,
 				53D69D5D1A9B240C0004CE10 /* EditPaymentViewController.m in Sources */,
 				5346C58D1ABB074C005D4540 /* AMCPreferencesWindowController.m in Sources */,
 				5381C5BC1B2812D700E99946 /* AccountingPaymentGroup+Methods.m in Sources */,
 				53D69D591A9B240C0004CE10 /* MakePaymentStepViewController.m in Sources */,
 				5330E23E1AF8B2400062FD93 /* Sale.m in Sources */,
+				53D4FCAD1B3D904D009EBF70 /* AMCRolesMappingToScreen.m in Sources */,
 				539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */,
 				53D4FCA81B3BF391009EBF70 /* AMCPermissionDeniedViewController.m in Sources */,
 				5301714B1ACB15C10047116D /* Note.m in Sources */,
@@ -2356,7 +2378,6 @@
 				53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */,
 				535F0DF51AB2339A0035CFD8 /* AMCAutoCloseViewController.m in Sources */,
 				5301717E1ACB15EB0047116D /* ShoppingList.m in Sources */,
-				53D4FCA41B3AE261009EBF70 /* RoleAction.m in Sources */,
 				53D69D4D1A9B240C0004CE10 /* EditObjectViewController.m in Sources */,
 				53D69BB81A9B22830004CE10 /* main.m in Sources */,
 				5346C5971ABB2887005D4540 /* AMCTreeNode.m in Sources */,
@@ -2387,6 +2408,7 @@
 				53D69CF51A9B240C0004CE10 /* NSDate+AMCDate.m in Sources */,
 				53D69D511A9B240C0004CE10 /* WizardStepView.m in Sources */,
 				530171661ACB15EA0047116D /* WorkRecord.m in Sources */,
+				53D4FCC31B3EF634009EBF70 /* Permission.m in Sources */,
 				53D69D4C1A9B240C0004CE10 /* ProductSelectorViewController.m in Sources */,
 				53D69D031A9B240C0004CE10 /* AMCBookingViewController.m in Sources */,
 				536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */,

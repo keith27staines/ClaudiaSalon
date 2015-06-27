@@ -59,6 +59,12 @@
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="appointment" inverseEntity="Note" syncable="YES"/>
         <relationship name="sale" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sale" inverseName="fromAppointment" inverseEntity="Sale" syncable="YES"/>
     </entity>
+    <entity name="BusinessFunction" representedClassName="BusinessFunction" syncable="YES">
+        <attribute name="codeUnitName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fullDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="functionName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="roleFunctionActions" toMany="YES" deletionRule="Nullify" destinationEntity="Permission" inverseName="businessFunction" inverseEntity="Permission" syncable="YES"/>
+    </entity>
     <entity name="CalendarDay" representedClassName="CalendarDay" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="openingTimes" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="IntervalDuringDay" inverseName="calendarDay" inverseEntity="IntervalDuringDay" syncable="YES"/>
@@ -107,7 +113,7 @@
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photo" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="456836400" defaultValueString="&quot;now&quot;" syncable="YES"/>
+        <attribute name="startingDate" attributeType="Date" defaultDateTimeInterval="457095600" defaultValueString="&quot;now&quot;" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="canDo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Service" inverseName="canBeDoneBy" inverseEntity="Service" syncable="YES"/>
         <relationship name="holidays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Holiday" inverseName="employee" inverseEntity="Holiday" syncable="YES"/>
@@ -218,6 +224,13 @@
         <relationship name="incomeAccountingGroup" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AccountingPaymentGroup" inverseName="incomePaymentCategories" inverseEntity="AccountingPaymentGroup" syncable="YES"/>
         <relationship name="payments" toMany="YES" deletionRule="Nullify" destinationEntity="Payment" inverseName="paymentCategory" inverseEntity="Payment" syncable="YES"/>
     </entity>
+    <entity name="Permission" representedClassName="Permission" syncable="YES">
+        <attribute name="createAction" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="editAction" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="viewAction" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <relationship name="businessFunction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BusinessFunction" inverseName="roleFunctionActions" inverseEntity="BusinessFunction" syncable="YES"/>
+        <relationship name="role" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Role" inverseName="roleFunctionActions" inverseEntity="Role" syncable="YES"/>
+    </entity>
     <entity name="Product" representedClassName="Product" syncable="YES">
         <attribute name="brandName" attributeType="String" minValueString="3" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -244,21 +257,14 @@
         <attribute name="isSystemRole" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="accountantRoleForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="accountantRole" inverseEntity="Salon" syncable="YES"/>
-        <relationship name="allowedActions" toMany="YES" deletionRule="Nullify" destinationEntity="RoleAction" inverseName="roles" inverseEntity="RoleAction" syncable="YES"/>
         <relationship name="basicUserRoleForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="basicUserRole" inverseEntity="Salon" syncable="YES"/>
         <relationship name="devSupportRoleForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="devSupportRole" inverseEntity="Salon" syncable="YES"/>
         <relationship name="employeesInRole" toMany="YES" deletionRule="Nullify" destinationEntity="Employee" inverseName="roles" inverseEntity="Employee" syncable="YES"/>
         <relationship name="managerRoleForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="managerRole" inverseEntity="Salon" syncable="YES"/>
         <relationship name="receptionistRoleForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="receptionistRole" inverseEntity="Salon" syncable="YES"/>
+        <relationship name="roleFunctionActions" toMany="YES" deletionRule="Nullify" destinationEntity="Permission" inverseName="role" inverseEntity="Permission" syncable="YES"/>
         <relationship name="systemAdminRoleForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="systemAdminRole" inverseEntity="Salon" syncable="YES"/>
         <relationship name="systemRoleForSalon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="systemRole" inverseEntity="Salon" syncable="YES"/>
-    </entity>
-    <entity name="RoleAction" representedClassName="RoleAction" syncable="YES">
-        <attribute name="actionName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="codeUnitName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fullDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="roles" toMany="YES" deletionRule="Nullify" destinationEntity="Role" inverseName="allowedActions" inverseEntity="Role" syncable="YES"/>
     </entity>
     <entity name="Salary" representedClassName="Salary" syncable="YES">
         <attribute name="extraHoursRate" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
@@ -447,37 +453,38 @@
         <relationship name="workRecordTemplateForEmployee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="workRecordTemplate" inverseEntity="Employee" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="0" positionY="0" width="128" height="360"/>
-        <element name="AccountingPaymentGroup" positionX="0" positionY="0" width="128" height="240"/>
-        <element name="AccountReconciliation" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="Appointment" positionX="0" positionY="0" width="128" height="255"/>
-        <element name="CalendarDay" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="Customer" positionX="0" positionY="0" width="128" height="375"/>
-        <element name="Employee" positionX="0" positionY="0" width="128" height="510"/>
-        <element name="Holiday" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="IntervalDuringDay" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="LastUpdatedBy" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="Note" positionX="0" positionY="0" width="128" height="330"/>
-        <element name="OpeningHoursDayTemplate" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="OpeningHoursWeekTemplate" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="Payment" positionX="0" positionY="0" width="128" height="435"/>
-        <element name="PaymentCategory" positionX="0" positionY="0" width="128" height="300"/>
-        <element name="Product" positionX="0" positionY="0" width="128" height="165"/>
-        <element name="RecurringItem" positionX="0" positionY="0" width="128" height="180"/>
-        <element name="Role" positionX="9" positionY="153" width="128" height="225"/>
-        <element name="RoleAction" positionX="18" positionY="162" width="128" height="120"/>
-        <element name="Salary" positionX="0" positionY="0" width="128" height="180"/>
-        <element name="Sale" positionX="0" positionY="0" width="128" height="330"/>
-        <element name="SaleItem" positionX="0" positionY="0" width="128" height="225"/>
-        <element name="Salon" positionX="0" positionY="0" width="128" height="570"/>
-        <element name="Service" positionX="0" positionY="0" width="128" height="300"/>
-        <element name="ServiceCategory" positionX="0" positionY="0" width="128" height="255"/>
-        <element name="ShoppingList" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="ShoppingListItem" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="StockedBrand" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="StockedCategory" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="StockedItem" positionX="0" positionY="0" width="128" height="135"/>
-        <element name="StockedProduct" positionX="0" positionY="0" width="128" height="255"/>
-        <element name="WorkRecord" positionX="0" positionY="0" width="128" height="240"/>
+        <element name="Account" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AccountingPaymentGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AccountReconciliation" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Appointment" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="BusinessFunction" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="CalendarDay" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Customer" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Employee" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Holiday" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="IntervalDuringDay" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="LastUpdatedBy" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Note" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="OpeningHoursDayTemplate" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="OpeningHoursWeekTemplate" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Payment" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PaymentCategory" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Permission" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Product" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="RecurringItem" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Role" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Salary" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Sale" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="SaleItem" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Salon" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Service" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ServiceCategory" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ShoppingList" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ShoppingListItem" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="StockedBrand" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="StockedCategory" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="StockedItem" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="StockedProduct" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="WorkRecord" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

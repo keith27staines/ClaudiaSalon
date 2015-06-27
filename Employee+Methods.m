@@ -13,7 +13,7 @@
 #import "WorkRecord+Methods.h"
 #import "Salon+Methods.h"
 #import "Role+Methods.h"
-#import "RoleAction+Methods.h"
+#import "BusinessFunction+Methods.h"
 
 @implementation Employee (Methods)
 
@@ -152,9 +152,9 @@
     return self.workRecordTemplate;
 }
 
--(NSNumber*)canPerformAction:(NSString*)name withActionName:(NSString*)verb {
+-(NSNumber*)canPerformBusinessFunction:(BusinessFunction*)businessFunction verb:(NSString*)verb {
     for (Role * role in self.roles) {
-        if ([role allowsActionWithCodeUnitName:name actionName:verb]) {
+        if ([role allowsBusinessFunction:businessFunction verb:verb]) {
             return @YES;
         }
     }

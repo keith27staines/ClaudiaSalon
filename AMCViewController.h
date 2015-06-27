@@ -5,7 +5,7 @@
 //  Created by Keith Staines on 21/02/2015.
 //  Copyright (c) 2015 Keith Staines. All rights reserved.
 //
-@class AMCSalonDocument;
+@class AMCSalonDocument,BusinessFunction;
 
 #import <Cocoa/Cocoa.h>
 
@@ -17,4 +17,5 @@
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument*)salonDocument;
 -(void)reloadData;
 -(NSString*)editModeVerb;
+@property (strong,readonly) BusinessFunction * businessFunction;
 @end

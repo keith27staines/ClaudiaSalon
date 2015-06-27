@@ -8,8 +8,9 @@
 
 #import "Role+Methods.h"
 #import "Salon+Methods.h"
-#import "RoleAction+Methods.h"
+#import "BusinessFunction+Methods.h"
 #import "Employee+Methods.h"
+#import "Permission+Methods.h"
 
 @implementation Role (Methods)
 
@@ -31,23 +32,32 @@
     Role * role = [NSEntityDescription insertNewObjectForEntityForName:@"Role" inManagedObjectContext:moc];
     return role;
 }
--(NSNumber*)allowsActionWithCodeUnitName:(NSString*)name actionName:(NSString*)verb {
-    RoleAction * action = [self actionWithCodeUnitName:name verb:verb];
-    return [self allowsAction:action];
-}
--(NSNumber*)allowsAction:(RoleAction*)action {
-    if ([self.allowedActions containsObject:action]) {
-        return @YES;
+-(NSNumber*)allowsBusinessFunction:(BusinessFunction*)function verb:(NSString*)verb {
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"businessFunction = %@",function];
+    NSSet * filteredSet = [self.roleFunctionActions filteredSetUsingPredicate:predicate];
+    NSAssert(filteredSet.count < 2, @"There should only be one RoleFunctionAction connecting the specified function to this role");
+    if (filteredSet.count == 1) {
+        Permission * permission = filteredSet.anyObject;
+        if ([verb isEqualToString:@"View"] && permission.viewAction.boolValue) {
+            return @YES;
+        }
+        if ([verb isEqualToString:@"Edit"] && permission.editAction.boolValue) {
+            return @YES;
+        }
+        if ([verb isEqualToString:@"Create"] && permission.createAction.boolValue) {
+            return @YES;
+        }
+        return @NO;
     }
     return @NO;
 }
--(RoleAction*)actionWithCodeUnitName:(NSString*)name verb:(NSString*)verb {
+-(BusinessFunction*)actionWithCodeUnitName:(NSString*)name verb:(NSString*)verb {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"codeUnitName == %@ and actionName == %@",name,verb];
-    NSSet * filteredSet = [self.allowedActions filteredSetUsingPredicate:predicate];
+    NSSet * filteredSet = [self.roleFunctionActions filteredSetUsingPredicate:predicate];
     if (!filteredSet || filteredSet.count == 0) {
         return nil;
     } else {
-        NSAssert(filteredSet.count == 1, @"RoleAction names must be unique");
+        NSAssert(filteredSet.count == 1, @"BusinessFunction names must be unique");
         return filteredSet.anyObject;
     }
 }

@@ -8,13 +8,14 @@
 
 #import "AMCRoleManageViewController.h"
 #import "Role+Methods.h"
-#import "RoleAction+Methods.h"
+#import "Permission+Methods.h"
+#import "BusinessFunction+Methods.h"
 #import "AMCSalonDocument.h"
 
 @interface AMCRoleManageViewController () <NSTableViewDelegate, NSTableViewDataSource>
 @property (weak) IBOutlet NSPopUpButton *roleSelector;
 @property (weak) IBOutlet NSTableView *actionTable;
-@property NSArray * roleActions;
+@property NSArray * businessFunctions;
 
 @property (strong) IBOutlet NSViewController *roleInfoViewController;
 @property (weak) IBOutlet NSTextField *roleInfoTitleLabel;
@@ -30,7 +31,7 @@
 @property BOOL actionInfoIsPresented;
 
 @property (weak, readonly) Role * selectedRole;
-@property (weak, readonly) RoleAction * clickedRoleAction;
+@property (weak, readonly) BusinessFunction * clickedBusinessFunction;
 @end
 
 @implementation AMCRoleManageViewController
@@ -56,7 +57,7 @@
     [self.roleSelector selectItemAtIndex:0];
 }
 -(void)reloadTableData {
-    self.roleActions = [RoleAction allObjectsWithMoc:self.salonDocument.managedObjectContext];
+    self.businessFunctions = [BusinessFunction allObjectsWithMoc:self.salonDocument.managedObjectContext];
     [self.actionTable reloadData];
 }
 - (IBAction)roleChanged:(id)sender {
@@ -75,11 +76,10 @@
     [self ensurePopupNotPresented];
     NSButton * infoButton = sender;
     NSInteger row = [self.actionTable rowForView:sender];
-    RoleAction * roleAction = self.roleActions[row];
-    self.actionInfoTitleLabel.stringValue = roleAction.name;
-    self.actionInfoDescriptionLabel.stringValue = (roleAction.fullDescription)?roleAction.fullDescription:@"No description is available";
-    self.actionVerbLabel.stringValue = roleAction.actionName;
-    self.codeUnitNameLabel.stringValue = roleAction.codeUnitName;
+    BusinessFunction * businessFunction = self.businessFunctions[row];
+    self.actionInfoTitleLabel.stringValue = [@"Function:" stringByAppendingString:businessFunction.functionName];
+    self.actionInfoDescriptionLabel.stringValue = (businessFunction.fullDescription)?businessFunction.fullDescription:@"No description is available";
+    self.codeUnitNameLabel.stringValue = businessFunction.codeUnitName;
     self.actionInfoIsPresented = YES;
     [self presentViewController:self.actionInfoViewController asPopoverRelativeToRect:infoButton.bounds ofView:infoButton preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorTransient];
 }
@@ -93,39 +93,42 @@
 }
 - (IBAction)changeAssignment:(id)sender {
     NSInteger row = [self.actionTable rowForView:sender];
-    RoleAction * roleAction = self.roleActions[row];
+    BusinessFunction * businessFunction = self.businessFunctions[row];
     NSButton * checkbox = sender;
-    if (checkbox.state == NSOnState) {
-        [roleAction addRolesObject:self.selectedRole];
-    } else {
-        [roleAction removeRolesObject:self.selectedRole];
-    }
-    [self updateCheckbox:sender fromRoleAction:roleAction];
+//    if (checkbox.state == NSOnState) {
+//        [businessFunction addRolesObject:self.selectedRole];
+//    } else {
+//        [businessFunction removeRolesObject:self.selectedRole];
+//    }
+    [self updateCheckbox:sender fromBusinessFunction:businessFunction];
 }
--(RoleAction *)clickedRoleAction {
+-(BusinessFunction *)clickedBusinessFunction {
     NSInteger row = self.actionTable.clickedRow;
-    return self.roleActions[row];
+    return self.businessFunctions[row];
 }
 -(Role *)selectedRole {
     return self.roleSelector.selectedItem.representedObject;
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return self.roleActions.count;
+    return self.businessFunctions.count;
 }
 -(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    RoleAction * roleAction = self.roleActions[row];
+    BusinessFunction * businessFunction = self.businessFunctions[row];
     if ([tableColumn.identifier isEqualToString:@"actionColumn"]) {
         NSTableCellView * view = [self.actionTable makeViewWithIdentifier:@"actionView" owner:self];
-        view.textField.stringValue = roleAction.name;
+        view.textField.stringValue = businessFunction.functionName;
         NSButton * checkbox = [view viewWithTag:2];
-        [self updateCheckbox:checkbox fromRoleAction:roleAction];
+        [self updateCheckbox:checkbox fromBusinessFunction:businessFunction];
         return view;
     }
     return nil;
 }
--(void)updateCheckbox:(NSButton*)checkbox fromRoleAction:(RoleAction*)roleAction {
-    checkbox.state = ([roleAction.roles containsObject:self.selectedRole])?NSOnState:NSOffState;
-    checkbox.title = (checkbox.state == NSOnState)?@"Assigned":@"Unassigned";
+-(void)updateCheckbox:(NSButton*)checkbox fromBusinessFunction:(BusinessFunction*)businessFunction {
+    Role * role = self.selectedRole;
+    Permission * permission = [Permission fetchPermissionWithRole:self.selectedRole businessFunction:businessFunction];
+    
+//    checkbox.state = ([businessFunction.roles containsObject:self.selectedRole])?NSOnState:NSOffState;
+//    checkbox.title = (checkbox.state == NSOnState)?@"Assigned":@"Unassigned";
 }
 -(void)dismissViewController:(NSViewController *)viewController {
     if (viewController == self.roleInfoViewController && self.roleInfoIsPresented) {

@@ -2,13 +2,13 @@
 //  Role.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 23/06/2015.
+//  Created by Keith Staines on 27/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
 #import "Role.h"
 #import "Employee.h"
-#import "RoleAction.h"
+#import "Permission.h"
 #import "Salon.h"
 
 
@@ -17,7 +17,7 @@
 @dynamic fullDescription;
 @dynamic name;
 @dynamic isSystemRole;
-@dynamic allowedActions;
+@dynamic roleFunctionActions;
 @dynamic employeesInRole;
 @dynamic systemRoleForSalon;
 @dynamic devSupportRoleForSalon;

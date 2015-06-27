@@ -44,7 +44,8 @@
 #import "PaymentCategory+Methods.h"
 #import "Employee+Methods.h"
 #import "Role+Methods.h"
-#import "RoleAction+Methods.h"
+#import "BusinessFunction+Methods.h"
+#import "Permission+Methods.h"
 // End imports for data fixes
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
@@ -169,11 +170,11 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         self.salon.receptionistRole.name = @"Receptionist";
         self.salon.basicUserRole.name    = @"Basic User";
         self.salon.systemRole.fullDescription       = @"All-powerful role reserved for system-generated events. Do not give this role to any user";
-        self.salon.systemAdminRole.fullDescription  = @"System Administrators need special permissions to configure the application";
-        self.salon.devSupportRole.fullDescription   = @"Developers have access to special functions that allow them to investigate and debug problems";
-        self.salon.managerRole.fullDescription      = @"Managers have access to all business functions but not technical functions";
+        self.salon.systemAdminRole.fullDescription  = @"System Administrators have the permissions required to configure the application";
+        self.salon.devSupportRole.fullDescription   = @"Developers have access to functions that allow them to investigate and debug problems";
+        self.salon.managerRole.fullDescription      = @"Managers have access to all business functions but not to technical functions";
         self.salon.accountantRole.fullDescription   = @"Accountants have access to financial functions but not to day-to-day business functions";
-        self.salon.receptionistRole.fullDescription = @"Receptionists can take appointments and enter sales";
+        self.salon.receptionistRole.fullDescription = @"Receptionists have permissions that allow them to take appointments and enter sales";
         self.salon.basicUserRole.fullDescription    = @"Basic Users can view appointments and sales";
         self.salon.systemRole.isSystemRole          = @YES;
         self.salon.systemAdminRole.isSystemRole     = @YES;
@@ -191,50 +192,37 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         [self.salon.manager addRolesObject:self.salon.basicUserRole];
     }
     NSArray * viewControllerClasses = subclasses([AMCViewController class]);
-    RoleAction * roleActionView = nil;
-    RoleAction * roleActionEdit = nil;
-    RoleAction * roleActionCreate = nil;
+    BusinessFunction * businessFunction = nil;
 
     for (Class class in viewControllerClasses) {
         NSString * className = NSStringFromClass(class);
         
-        roleActionView = [RoleAction fetchActionWithCodeUnitName:className actionName:@"View" inMoc:self.managedObjectContext];
-        if (roleActionView) continue; // Already added this view action and its related edit/create/delete actions
+        businessFunction = [BusinessFunction fetchBusinessFunctionWithCodeUnitName:className inMoc:self.managedObjectContext];
+        if (businessFunction) continue; // Already added this view action and its related edit/create/delete actions
         
-        // add view action
-        roleActionView = [RoleAction newObjectWithMoc:self.managedObjectContext];
-        roleActionView.codeUnitName = className;
-        roleActionView.actionName = @"View";
-        [self generateFriendlyName:roleActionView];
-        
-        // add edit action
-        roleActionEdit = [RoleAction newObjectWithMoc:self.managedObjectContext];
-        roleActionEdit.codeUnitName = className;
-        roleActionEdit.actionName = @"Edit";
-        [self generateFriendlyName:roleActionEdit];
-        
-        // add create action
-        roleActionCreate = [RoleAction newObjectWithMoc:self.managedObjectContext];
-        roleActionCreate.codeUnitName = className;
-        roleActionCreate.actionName = @"Create";
-        [self generateFriendlyName:roleActionCreate];
+        // add business function
+        businessFunction = [BusinessFunction newObjectWithMoc:self.managedObjectContext];
+        businessFunction.codeUnitName = className;
+        businessFunction.functionName = [self generateFunctionName:businessFunction];
         
         for (Role * role in [Role allObjectsWithMoc:self.managedObjectContext]) {
+            Permission * permission = [Permission newObjectWithMoc:self.managedObjectContext];
+            permission.role = role;
+            permission.businessFunction = businessFunction;
             if (role == self.salon.managerRole || role == self.salon.systemAdminRole || role == self.salon.systemRole) {
-                [role addAllowedActionsObject:roleActionView];
-                [role addAllowedActionsObject:roleActionEdit];
-                [role addAllowedActionsObject:roleActionCreate];
+                permission.viewAction = @YES;
+                permission.editAction = @YES;
+                permission.createAction = @YES;
             } else {
-                [role addAllowedActionsObject:roleActionView];
+                permission.viewAction = @YES;
             }
         }
     }
 }
--(void)generateFriendlyName:(RoleAction*)roleAction {
-    NSMutableString * friendlyName = [roleAction.codeUnitName mutableCopy];
-    NSString * verb = [roleAction.actionName copy];
+-(NSString*)generateFunctionName:(BusinessFunction*)businessFunction {
+    NSMutableString * friendlyName = [businessFunction.codeUnitName mutableCopy];
     [friendlyName replaceOccurrencesOfString:@"ViewController" withString:@"" options:0 range:NSMakeRange(0, friendlyName.length)];
-    [friendlyName replaceOccurrencesOfString:@"Editor" withString:@"" options:0 range:NSMakeRange(0, friendlyName.length)];
+    
     // Find first lowercase character
     int firstLower = 0;
     for (int i = 0; i < friendlyName.length; i++) {
@@ -261,7 +249,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         }
         i++;
     }
-    roleAction.name = [friendlyName stringByAppendingString:[NSString stringWithFormat:@" (%@)",verb]];
+    return friendlyName;
 }
 -(Customer *)anonymousCustomer {
     if (!self.salon.anonymousCustomer) {
@@ -444,7 +432,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 - (IBAction)logoutCurrentUser:(id)sender {
     self.currentUser = nil;
 }
-- (IBAction)manageRolesAndRoleActions:(id)sender {
+- (IBAction)manageRolesAndBusinessFunctions:(id)sender {
     [self.roleManager prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.roleManager];
 }

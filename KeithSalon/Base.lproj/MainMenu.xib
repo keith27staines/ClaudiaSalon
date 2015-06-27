@@ -334,10 +334,16 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Manage" id="Bgb-FL-QbE">
                         <items>
+                            <menuItem title="Roles to Screen Mapping..." keyEquivalent="k" id="Y74-cu-8aq">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="showRolesToCodeUnitMapping:" target="-1" id="xY7-vJ-oDe"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Roles and Permissions..." id="eOf-NT-MRf">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="manageRolesAndRoleActions:" target="-1" id="7uh-HJ-a6j"/>
+                                    <action selector="manageRolesAndBusinessFunctions:" target="-1" id="7uh-HJ-a6j"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="BJ3-mb-o5H"/>
