@@ -4,13 +4,13 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="AMCRoleManageViewController">
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCPermissionsForRoleEditor">
             <connections>
                 <outlet property="actionInfoDescriptionLabel" destination="luf-1W-vHa" id="TJz-bx-iTD"/>
                 <outlet property="actionInfoTitleLabel" destination="JAT-9E-UhB" id="119-4g-rl1"/>
                 <outlet property="actionInfoViewController" destination="1xw-4Q-c4N" id="AUV-eQ-TH7"/>
-                <outlet property="actionTable" destination="0hf-6U-uuk" id="eKQ-2y-3Bz"/>
                 <outlet property="codeUnitNameLabel" destination="e7F-zy-o50" id="bVE-zP-fzo"/>
+                <outlet property="permissionsTable" destination="0hf-6U-uuk" id="92g-Ng-M9d"/>
                 <outlet property="roleInfoDescriptionLabel" destination="ibY-ts-VEN" id="ryw-N9-6cV"/>
                 <outlet property="roleInfoTitleLabel" destination="JBc-OZ-Uhy" id="7Ad-rq-Yc9"/>
                 <outlet property="roleInfoViewController" destination="QEl-bo-xoo" id="wMO-HA-dFv"/>
@@ -63,7 +63,7 @@
                     </connections>
                 </popUpButton>
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="43" horizontalPageScroll="10" verticalLineScroll="43" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vx-Xz-b0L">
-                    <rect key="frame" x="20" y="61" width="791" height="571"/>
+                    <rect key="frame" x="20" y="59" width="791" height="573"/>
                     <clipView key="contentView" id="4Gp-Mv-N9Z">
                         <rect key="frame" x="1" y="17" width="238" height="117"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -201,12 +201,12 @@
                 </box>
             </subviews>
             <constraints>
-                <constraint firstItem="rgJ-85-iHu" firstAttribute="top" secondItem="2vx-Xz-b0L" secondAttribute="bottom" constant="20" id="0cn-50-p3F"/>
                 <constraint firstItem="2vx-Xz-b0L" firstAttribute="top" secondItem="sFH-ZY-gvl" secondAttribute="bottom" constant="45" id="3Vl-CB-1TE"/>
                 <constraint firstAttribute="bottom" secondItem="rgJ-85-iHu" secondAttribute="bottom" constant="20" id="51E-I5-lGe"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fZu-3x-42x" secondAttribute="trailing" constant="20" id="9yt-8u-d1P"/>
                 <constraint firstItem="2vx-Xz-b0L" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="Ieh-As-0eQ"/>
                 <constraint firstItem="fZu-3x-42x" firstAttribute="leading" secondItem="sFH-ZY-gvl" secondAttribute="trailing" constant="8" symbolic="YES" id="NFP-vx-iyl"/>
+                <constraint firstItem="rgJ-85-iHu" firstAttribute="top" secondItem="2vx-Xz-b0L" secondAttribute="bottom" constant="18" id="SCr-xS-s4x"/>
                 <constraint firstItem="qht-yU-3uL" firstAttribute="top" secondItem="sFH-ZY-gvl" secondAttribute="bottom" constant="20" id="Sm7-cs-Px3"/>
                 <constraint firstAttribute="trailing" secondItem="2vx-Xz-b0L" secondAttribute="trailing" constant="20" id="baP-mP-bQY"/>
                 <constraint firstItem="sFH-ZY-gvl" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="eYu-Ir-8oA"/>

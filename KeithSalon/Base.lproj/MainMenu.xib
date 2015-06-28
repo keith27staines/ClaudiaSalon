@@ -334,13 +334,19 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Manage" id="Bgb-FL-QbE">
                         <items>
-                            <menuItem title="Roles to Screen Mapping..." keyEquivalent="k" id="Y74-cu-8aq">
+                            <menuItem title="Roles..." id="LwO-FS-h0i">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showRoleMaintenance:" target="-1" id="y4t-sx-QaS"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Roles-to-Screen Mapping..." keyEquivalent="k" id="Y74-cu-8aq">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="showRolesToCodeUnitMapping:" target="-1" id="xY7-vJ-oDe"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Roles and Permissions..." id="eOf-NT-MRf">
+                            <menuItem title="Permissions for Roles..." id="eOf-NT-MRf">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="manageRolesAndBusinessFunctions:" target="-1" id="7uh-HJ-a6j"/>

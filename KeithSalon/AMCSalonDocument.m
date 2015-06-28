@@ -36,7 +36,8 @@
 #import "AMCSalonDetailsViewController.h"
 #import "RecurringItem+Methods.h"
 #import "AMCChangeUserViewController.h"
-#import "AMCRoleManageViewController.h"
+#import "AMCPermissionsForRoleEditor.h"
+#import "AMCRoleMaintenance.h"
 
 // Imports required for data fixes
 #import "ServiceCategory+Methods.h"
@@ -79,7 +80,9 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property NSURL * dataStoreDirectory;
 @property (strong) IBOutlet AMCChangeUserViewController *changeUserViewController;
 
-@property (strong) IBOutlet AMCRoleManageViewController *roleManager;
+@property (strong) IBOutlet AMCPermissionsForRoleEditor *permissionsForRoleEditor;
+@property (strong) IBOutlet AMCRoleMaintenance *roleMaintenance;
+
 @property (weak) IBOutlet NSMenu *switchUserMenu;
 @property (weak) IBOutlet NSMenuItem *titleItem;
 @property (weak) IBOutlet NSMenuItem *logoutMenuItem;
@@ -215,6 +218,8 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
                 permission.createAction = @YES;
             } else {
                 permission.viewAction = @YES;
+                permission.editAction = @NO;
+                permission.createAction = @NO;
             }
         }
     }
@@ -432,9 +437,13 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 - (IBAction)logoutCurrentUser:(id)sender {
     self.currentUser = nil;
 }
-- (IBAction)manageRolesAndBusinessFunctions:(id)sender {
-    [self.roleManager prepareForDisplayWithSalon:self];
-    [self.mainViewController presentViewControllerAsSheet:self.roleManager];
+- (IBAction)showPermissionsForRoleEditor:(id)sender {
+    [self.permissionsForRoleEditor prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewControllerAsSheet:self.permissionsForRoleEditor];
+}
+- (IBAction)showRoleMaintenance:(id)sender {
+    [self.roleMaintenance prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewControllerAsSheet:self.roleMaintenance];
 }
 -(void)menuNeedsUpdate:(NSMenu *)menu {
     if (menu == self.switchUserMenu) {

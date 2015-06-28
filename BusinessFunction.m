@@ -2,7 +2,7 @@
 //  BusinessFunction.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 27/06/2015.
+//  Created by Keith Staines on 28/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -12,9 +12,9 @@
 
 @implementation BusinessFunction
 
+@dynamic codeUnitName;
 @dynamic fullDescription;
 @dynamic functionName;
-@dynamic codeUnitName;
-@dynamic roleFunctionActions;
+@dynamic permissions;
 
 @end

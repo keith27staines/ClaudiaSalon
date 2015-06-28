@@ -41,7 +41,7 @@
 }
 -(NSArray *)mappedRoles {
     NSMutableSet * mappedRoles = [NSMutableSet set];
-    for (Permission * permission in self.roleFunctionActions) {
+    for (Permission * permission in self.permissions) {
         [mappedRoles addObject:permission.role];
     }
     return [mappedRoles allObjects];

@@ -1,21 +1,21 @@
 //
-//  AMCRoleManageViewController.m
+//  AMCPermissionsForRoleEditor.m
 //  ClaudiaSalon
 //
 //  Created by Keith Staines on 23/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
-#import "AMCRoleManageViewController.h"
+#import "AMCPermissionsForRoleEditor.h"
 #import "Role+Methods.h"
 #import "Permission+Methods.h"
 #import "BusinessFunction+Methods.h"
 #import "AMCSalonDocument.h"
 
-@interface AMCRoleManageViewController () <NSTableViewDelegate, NSTableViewDataSource>
+@interface AMCPermissionsForRoleEditor () <NSTableViewDelegate, NSTableViewDataSource>
 @property (weak) IBOutlet NSPopUpButton *roleSelector;
-@property (weak) IBOutlet NSTableView *actionTable;
-@property NSArray * businessFunctions;
+@property (weak) IBOutlet NSTableView *permissionsTable;
+@property NSMutableArray * permissions;
 
 @property (strong) IBOutlet NSViewController *roleInfoViewController;
 @property (weak) IBOutlet NSTextField *roleInfoTitleLabel;
@@ -32,12 +32,13 @@
 
 @property (weak, readonly) Role * selectedRole;
 @property (weak, readonly) BusinessFunction * clickedBusinessFunction;
+
 @end
 
-@implementation AMCRoleManageViewController
+@implementation AMCPermissionsForRoleEditor
 
 -(NSString *)nibName {
-    return @"AMCRoleManageViewController";
+    return @"AMCPermissionsForRoleEditor";
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
@@ -57,8 +58,9 @@
     [self.roleSelector selectItemAtIndex:0];
 }
 -(void)reloadTableData {
-    self.businessFunctions = [BusinessFunction allObjectsWithMoc:self.salonDocument.managedObjectContext];
-    [self.actionTable reloadData];
+
+    self.permissions = [[self.selectedRole.permissions allObjects] mutableCopy];
+    [self.permissionsTable reloadData];
 }
 - (IBAction)roleChanged:(id)sender {
     [self reloadTableData];
@@ -75,8 +77,9 @@
 - (IBAction)showActionInfo:(id)sender {
     [self ensurePopupNotPresented];
     NSButton * infoButton = sender;
-    NSInteger row = [self.actionTable rowForView:sender];
-    BusinessFunction * businessFunction = self.businessFunctions[row];
+    NSInteger row = [self.permissionsTable rowForView:sender];
+    Permission * permission = self.permissions[row];
+    BusinessFunction * businessFunction = permission.businessFunction;
     self.actionInfoTitleLabel.stringValue = [@"Function:" stringByAppendingString:businessFunction.functionName];
     self.actionInfoDescriptionLabel.stringValue = (businessFunction.fullDescription)?businessFunction.fullDescription:@"No description is available";
     self.codeUnitNameLabel.stringValue = businessFunction.codeUnitName;
@@ -92,44 +95,49 @@
     }
 }
 - (IBAction)changeAssignment:(id)sender {
-    NSInteger row = [self.actionTable rowForView:sender];
-    BusinessFunction * businessFunction = self.businessFunctions[row];
-    NSButton * checkbox = sender;
-//    if (checkbox.state == NSOnState) {
-//        [businessFunction addRolesObject:self.selectedRole];
-//    } else {
-//        [businessFunction removeRolesObject:self.selectedRole];
-//    }
-    [self updateCheckbox:sender fromBusinessFunction:businessFunction];
+    NSButton * button = (NSButton*)sender;
+    NSInteger tag = button.tag;
+    NSInteger row = [self.permissionsTable rowForView:button];
+    Permission * permission = self.permissions[row];
+    switch (tag) {
+        case 2:
+            permission.viewAction = @((button.state==NSOnState)?YES:NO);
+            break;
+        case 3:
+            permission.editAction = @((button.state==NSOnState)?YES:NO);
+            break;
+        case 4:
+            permission.createAction = @((button.state==NSOnState)?YES:NO);
+            break;
+    }
 }
--(BusinessFunction *)clickedBusinessFunction {
-    NSInteger row = self.actionTable.clickedRow;
-    return self.businessFunctions[row];
+-(Permission *)clickedPermission {
+    NSInteger row = self.permissionsTable.clickedRow;
+    return self.permissions[row];
 }
 -(Role *)selectedRole {
     return self.roleSelector.selectedItem.representedObject;
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return self.businessFunctions.count;
+    return self.permissions.count;
 }
 -(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    BusinessFunction * businessFunction = self.businessFunctions[row];
+    Permission * permission = self.permissions[row];
+    BusinessFunction * businessFunction = permission.businessFunction;
     if ([tableColumn.identifier isEqualToString:@"actionColumn"]) {
-        NSTableCellView * view = [self.actionTable makeViewWithIdentifier:@"actionView" owner:self];
+        NSTableCellView * view = [self.permissionsTable makeViewWithIdentifier:@"actionView" owner:self];
         view.textField.stringValue = businessFunction.functionName;
-        NSButton * checkbox = [view viewWithTag:2];
-        [self updateCheckbox:checkbox fromBusinessFunction:businessFunction];
+        NSButton * viewCheckbox   = [view viewWithTag:2];
+        NSButton * editCheckbox   = [view viewWithTag:3];
+        NSButton * createCheckbox = [view viewWithTag:4];
+        viewCheckbox.state   = (permission.viewAction.boolValue)?NSOnState:NSOffState;
+        editCheckbox.state   = (permission.editAction.boolValue)?NSOnState:NSOffState;
+        createCheckbox.state = (permission.createAction.boolValue)?NSOnState:NSOffState;
         return view;
     }
     return nil;
 }
--(void)updateCheckbox:(NSButton*)checkbox fromBusinessFunction:(BusinessFunction*)businessFunction {
-    Role * role = self.selectedRole;
-    Permission * permission = [Permission fetchPermissionWithRole:self.selectedRole businessFunction:businessFunction];
-    
-//    checkbox.state = ([businessFunction.roles containsObject:self.selectedRole])?NSOnState:NSOffState;
-//    checkbox.title = (checkbox.state == NSOnState)?@"Assigned":@"Unassigned";
-}
+
 -(void)dismissViewController:(NSViewController *)viewController {
     if (viewController == self.roleInfoViewController && self.roleInfoIsPresented) {
         self.roleInfoIsPresented = NO;

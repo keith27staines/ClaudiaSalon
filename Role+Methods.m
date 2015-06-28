@@ -34,8 +34,8 @@
 }
 -(NSNumber*)allowsBusinessFunction:(BusinessFunction*)function verb:(NSString*)verb {
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"businessFunction = %@",function];
-    NSSet * filteredSet = [self.roleFunctionActions filteredSetUsingPredicate:predicate];
-    NSAssert(filteredSet.count < 2, @"There should only be one RoleFunctionAction connecting the specified function to this role");
+    NSSet * filteredSet = [self.permissions filteredSetUsingPredicate:predicate];
+    NSAssert(filteredSet.count < 2, @"There should only be one Permission connecting the specified function to this role");
     if (filteredSet.count == 1) {
         Permission * permission = filteredSet.anyObject;
         if ([verb isEqualToString:@"View"] && permission.viewAction.boolValue) {
@@ -53,7 +53,7 @@
 }
 -(BusinessFunction*)actionWithCodeUnitName:(NSString*)name verb:(NSString*)verb {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"codeUnitName == %@ and actionName == %@",name,verb];
-    NSSet * filteredSet = [self.roleFunctionActions filteredSetUsingPredicate:predicate];
+    NSSet * filteredSet = [self.permissions filteredSetUsingPredicate:predicate];
     if (!filteredSet || filteredSet.count == 0) {
         return nil;
     } else {

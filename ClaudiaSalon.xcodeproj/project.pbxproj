@@ -108,16 +108,18 @@
 		53D4FC641B394D22009EBF70 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC631B394D22009EBF70 /* Employee.m */; };
 		53D4FC971B3997BF009EBF70 /* AMCUserRoleEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC951B3997BF009EBF70 /* AMCUserRoleEditor.m */; };
 		53D4FC981B3997BF009EBF70 /* AMCUserRoleEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FC961B3997BF009EBF70 /* AMCUserRoleEditor.xib */; };
-		53D4FC9C1B39D61A009EBF70 /* AMCRoleManageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC9A1B39D61A009EBF70 /* AMCRoleManageViewController.m */; };
-		53D4FC9D1B39D61A009EBF70 /* AMCRoleManageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FC9B1B39D61A009EBF70 /* AMCRoleManageViewController.xib */; };
+		53D4FC9C1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC9A1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.m */; };
+		53D4FC9D1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FC9B1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.xib */; };
 		53D4FCA81B3BF391009EBF70 /* AMCPermissionDeniedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */; };
 		53D4FCA91B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */; };
 		53D4FCAD1B3D904D009EBF70 /* AMCRolesMappingToScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCAB1B3D904D009EBF70 /* AMCRolesMappingToScreen.m */; };
 		53D4FCAE1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FCAC1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib */; };
 		53D4FCC31B3EF634009EBF70 /* Permission.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCC21B3EF634009EBF70 /* Permission.m */; };
-		53D4FCC61B3EF635009EBF70 /* Role.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCC51B3EF635009EBF70 /* Role.m */; };
-		53D4FCC91B3EF635009EBF70 /* BusinessFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCC81B3EF635009EBF70 /* BusinessFunction.m */; };
 		53D4FCCC1B3EF688009EBF70 /* Permission+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCCB1B3EF688009EBF70 /* Permission+Methods.m */; };
+		53D4FCCF1B3FD2A5009EBF70 /* BusinessFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCCE1B3FD2A5009EBF70 /* BusinessFunction.m */; };
+		53D4FCD21B3FD2A6009EBF70 /* Role.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCD11B3FD2A6009EBF70 /* Role.m */; };
+		53D4FCD71B4044FB009EBF70 /* AMCRoleMaintenance.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCD51B4044FB009EBF70 /* AMCRoleMaintenance.m */; };
+		53D4FCD81B4044FB009EBF70 /* AMCRoleMaintenance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FCD61B4044FB009EBF70 /* AMCRoleMaintenance.xib */; };
 		53D69BB61A9B22830004CE10 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69BB51A9B22830004CE10 /* AppDelegate.m */; };
 		53D69BB81A9B22830004CE10 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69BB71A9B22830004CE10 /* main.m */; };
 		53D69BC61A9B22830004CE10 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D69BC41A9B22830004CE10 /* MainMenu.xib */; };
@@ -477,9 +479,9 @@
 		53D4FC941B3997BF009EBF70 /* AMCUserRoleEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCUserRoleEditor.h; sourceTree = "<group>"; };
 		53D4FC951B3997BF009EBF70 /* AMCUserRoleEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCUserRoleEditor.m; sourceTree = "<group>"; };
 		53D4FC961B3997BF009EBF70 /* AMCUserRoleEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCUserRoleEditor.xib; sourceTree = "<group>"; };
-		53D4FC991B39D61A009EBF70 /* AMCRoleManageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCRoleManageViewController.h; sourceTree = "<group>"; };
-		53D4FC9A1B39D61A009EBF70 /* AMCRoleManageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCRoleManageViewController.m; sourceTree = "<group>"; };
-		53D4FC9B1B39D61A009EBF70 /* AMCRoleManageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCRoleManageViewController.xib; sourceTree = "<group>"; };
+		53D4FC991B39D61A009EBF70 /* AMCPermissionsForRoleEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPermissionsForRoleEditor.h; sourceTree = "<group>"; };
+		53D4FC9A1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPermissionsForRoleEditor.m; sourceTree = "<group>"; };
+		53D4FC9B1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPermissionsForRoleEditor.xib; sourceTree = "<group>"; };
 		53D4FCA51B3BF391009EBF70 /* AMCPermissionDeniedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPermissionDeniedViewController.h; sourceTree = "<group>"; };
 		53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPermissionDeniedViewController.m; sourceTree = "<group>"; };
 		53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPermissionDeniedViewController.xib; sourceTree = "<group>"; };
@@ -488,12 +490,15 @@
 		53D4FCAC1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCRolesMappingToScreen.xib; sourceTree = "<group>"; };
 		53D4FCC11B3EF634009EBF70 /* Permission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Permission.h; sourceTree = "<group>"; };
 		53D4FCC21B3EF634009EBF70 /* Permission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Permission.m; sourceTree = "<group>"; };
-		53D4FCC41B3EF635009EBF70 /* Role.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Role.h; sourceTree = "<group>"; };
-		53D4FCC51B3EF635009EBF70 /* Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Role.m; sourceTree = "<group>"; };
-		53D4FCC71B3EF635009EBF70 /* BusinessFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessFunction.h; sourceTree = "<group>"; };
-		53D4FCC81B3EF635009EBF70 /* BusinessFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessFunction.m; sourceTree = "<group>"; };
 		53D4FCCA1B3EF688009EBF70 /* Permission+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Permission+Methods.h"; sourceTree = "<group>"; };
 		53D4FCCB1B3EF688009EBF70 /* Permission+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Permission+Methods.m"; sourceTree = "<group>"; };
+		53D4FCCD1B3FD2A5009EBF70 /* BusinessFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessFunction.h; sourceTree = "<group>"; };
+		53D4FCCE1B3FD2A5009EBF70 /* BusinessFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessFunction.m; sourceTree = "<group>"; };
+		53D4FCD01B3FD2A6009EBF70 /* Role.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Role.h; sourceTree = "<group>"; };
+		53D4FCD11B3FD2A6009EBF70 /* Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Role.m; sourceTree = "<group>"; };
+		53D4FCD41B4044FB009EBF70 /* AMCRoleMaintenance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCRoleMaintenance.h; sourceTree = "<group>"; };
+		53D4FCD51B4044FB009EBF70 /* AMCRoleMaintenance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCRoleMaintenance.m; sourceTree = "<group>"; };
+		53D4FCD61B4044FB009EBF70 /* AMCRoleMaintenance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCRoleMaintenance.xib; sourceTree = "<group>"; };
 		53D69BAF1A9B22830004CE10 /* ClaudiaSalon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudiaSalon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D69BB31A9B22830004CE10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		53D69BB41A9B22830004CE10 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -853,9 +858,6 @@
 			children = (
 				53D69DF01A9B243C0004CE10 /* AMCViewController.h */,
 				53D69CE11A9B240C0004CE10 /* AMCViewController.m */,
-				53D4FCAA1B3D904D009EBF70 /* AMCRolesMappingToScreen.h */,
-				53D4FCAB1B3D904D009EBF70 /* AMCRolesMappingToScreen.m */,
-				53D4FCAC1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib */,
 				53D4FCA51B3BF391009EBF70 /* AMCPermissionDeniedViewController.h */,
 				53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */,
 				53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */,
@@ -1340,9 +1342,6 @@
 				53D69C171A9B23B60004CE10 /* EditEmployeeViewController.xib */,
 				53D69DEB1A9B243C0004CE10 /* EditEmployeeViewController.h */,
 				53D69CDB1A9B240C0004CE10 /* EditEmployeeViewController.m */,
-				53D4FC941B3997BF009EBF70 /* AMCUserRoleEditor.h */,
-				53D4FC951B3997BF009EBF70 /* AMCUserRoleEditor.m */,
-				53D4FC961B3997BF009EBF70 /* AMCUserRoleEditor.xib */,
 			);
 			name = "Edit Employee";
 			path = ..;
@@ -1868,14 +1867,57 @@
 			name = "Welcome Screen";
 			sourceTree = "<group>";
 		};
-		53D4FC9E1B39D622009EBF70 /* Role Management */ = {
+		53D4FC9E1B39D622009EBF70 /* Permissions For Roles */ = {
 			isa = PBXGroup;
 			children = (
-				53D4FC991B39D61A009EBF70 /* AMCRoleManageViewController.h */,
-				53D4FC9A1B39D61A009EBF70 /* AMCRoleManageViewController.m */,
-				53D4FC9B1B39D61A009EBF70 /* AMCRoleManageViewController.xib */,
+				53D4FC991B39D61A009EBF70 /* AMCPermissionsForRoleEditor.h */,
+				53D4FC9A1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.m */,
+				53D4FC9B1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.xib */,
 			);
-			name = "Role Management";
+			name = "Permissions For Roles";
+			sourceTree = "<group>";
+		};
+		53D4FCD31B4044A4009EBF70 /* Roles and Permissions */ = {
+			isa = PBXGroup;
+			children = (
+				53D4FCDB1B4053EB009EBF70 /* Role To Screen Mapping */,
+				53D4FCDA1B40538F009EBF70 /* Users Roles */,
+				53D4FC9E1B39D622009EBF70 /* Permissions For Roles */,
+				53D4FCD91B40535F009EBF70 /* Role Maintenance */,
+			);
+			name = "Roles and Permissions";
+			sourceTree = "<group>";
+		};
+		53D4FCD91B40535F009EBF70 /* Role Maintenance */ = {
+			isa = PBXGroup;
+			children = (
+				53D4FCD41B4044FB009EBF70 /* AMCRoleMaintenance.h */,
+				53D4FCD51B4044FB009EBF70 /* AMCRoleMaintenance.m */,
+				53D4FCD61B4044FB009EBF70 /* AMCRoleMaintenance.xib */,
+			);
+			name = "Role Maintenance";
+			sourceTree = "<group>";
+		};
+		53D4FCDA1B40538F009EBF70 /* Users Roles */ = {
+			isa = PBXGroup;
+			children = (
+				53D4FC941B3997BF009EBF70 /* AMCUserRoleEditor.h */,
+				53D4FC951B3997BF009EBF70 /* AMCUserRoleEditor.m */,
+				53D4FC961B3997BF009EBF70 /* AMCUserRoleEditor.xib */,
+			);
+			name = "Users Roles";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		53D4FCDB1B4053EB009EBF70 /* Role To Screen Mapping */ = {
+			isa = PBXGroup;
+			children = (
+				53D4FCAA1B3D904D009EBF70 /* AMCRolesMappingToScreen.h */,
+				53D4FCAB1B3D904D009EBF70 /* AMCRolesMappingToScreen.m */,
+				53D4FCAC1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib */,
+			);
+			name = "Role To Screen Mapping";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		53D69BA61A9B22830004CE10 = {
@@ -1932,6 +1974,7 @@
 				53D69E001A9B43890004CE10 /* AMCSalonDocument.xib */,
 				53D69DFD1A9B41B60004CE10 /* AMCSalonDocument.h */,
 				53D69DFE1A9B41B60004CE10 /* AMCSalonDocument.m */,
+				53D4FCD31B4044A4009EBF70 /* Roles and Permissions */,
 				53AE26FC1AA3128C00A1B3E4 /* Accounts */,
 				53AE26EF1AA30E3A00A1B3E4 /* Notes */,
 				53AE26F11AA30F6700A1B3E4 /* Request Password */,
@@ -1943,7 +1986,6 @@
 				532377D01AA8C3BF009FA91D /* Bank statements */,
 				530D54721B19A5C600F6C4FE /* Auto-close management */,
 				535191701B37F57700F8D37A /* Change User View Controller */,
-				53D4FC9E1B39D622009EBF70 /* Role Management */,
 			);
 			name = "Document objects";
 			sourceTree = "<group>";
@@ -1960,10 +2002,10 @@
 		53D69E031A9B6BE70004CE10 /* Data model objects */ = {
 			isa = PBXGroup;
 			children = (
-				53D4FCC71B3EF635009EBF70 /* BusinessFunction.h */,
-				53D4FCC81B3EF635009EBF70 /* BusinessFunction.m */,
-				53D4FCC41B3EF635009EBF70 /* Role.h */,
-				53D4FCC51B3EF635009EBF70 /* Role.m */,
+				53D4FCD01B3FD2A6009EBF70 /* Role.h */,
+				53D4FCD11B3FD2A6009EBF70 /* Role.m */,
+				53D4FCCD1B3FD2A5009EBF70 /* BusinessFunction.h */,
+				53D4FCCE1B3FD2A5009EBF70 /* BusinessFunction.m */,
 				53D4FCC11B3EF634009EBF70 /* Permission.h */,
 				53D4FCC21B3EF634009EBF70 /* Permission.m */,
 				53D4FC621B394D22009EBF70 /* Employee.h */,
@@ -2166,7 +2208,7 @@
 				530D54A61B270C9300F6C4FE /* Property List.plist in Resources */,
 				530171221ACA80170047116D /* AMCAccountManagementViewController.xib in Resources */,
 				53D69C431A9B23B70004CE10 /* AMCCancelAppointmentViewController.xib in Resources */,
-				53D4FC9D1B39D61A009EBF70 /* AMCRoleManageViewController.xib in Resources */,
+				53D4FC9D1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.xib in Resources */,
 				530D546F1B18D3E100F6C4FE /* AMCEmployeesViewController.xib in Resources */,
 				53D69C451A9B23B70004CE10 /* ProductSelectorViewController.xib in Resources */,
 				53D69C371A9B23B70004CE10 /* AMCRequestPasswordWindowController.xib in Resources */,
@@ -2253,6 +2295,7 @@
 				53D69C421A9B23B70004CE10 /* AMCAppointmentsViewController.xib in Resources */,
 				53D69C441A9B23B70004CE10 /* AMCCompleteAppointmentViewController.xib in Resources */,
 				53D69C3A1A9B23B70004CE10 /* AMCShoppingListPrintViewController.xib in Resources */,
+				53D4FCD81B4044FB009EBF70 /* AMCRoleMaintenance.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2294,7 +2337,7 @@
 				53D69D1B1A9B240C0004CE10 /* AMCCancelAppointmentViewController.m in Sources */,
 				5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */,
 				5381C5C51B2C186A00E99946 /* AMCServiceCategoriesManagementViewController.m in Sources */,
-				53D4FCC91B3EF635009EBF70 /* BusinessFunction.m in Sources */,
+				53D4FCCF1B3FD2A5009EBF70 /* BusinessFunction.m in Sources */,
 				53D69D541A9B240C0004CE10 /* AMCRefundView.m in Sources */,
 				5381C5C81B2C250C00E99946 /* AMCAccountancyGroupManagementViewController.m in Sources */,
 				53D69D501A9B240C0004CE10 /* WizardStepViewController.m in Sources */,
@@ -2335,7 +2378,6 @@
 				530171571ACB15C20047116D /* Customer.m in Sources */,
 				53D69D1E1A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m in Sources */,
 				53D69D491A9B240C0004CE10 /* WorkRecord+Methods.m in Sources */,
-				53D4FCC61B3EF635009EBF70 /* Role.m in Sources */,
 				53D69D531A9B240C0004CE10 /* AMCRefundViewController.m in Sources */,
 				5346C59A1ABFF6AC005D4540 /* AMCCashBookNode.m in Sources */,
 				53D69D411A9B240C0004CE10 /* Note+Methods.m in Sources */,
@@ -2391,6 +2433,8 @@
 				53D69D1D1A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m in Sources */,
 				53D69D041A9B240C0004CE10 /* AMCBookingRowView.m in Sources */,
 				53D69D371A9B240C0004CE10 /* PaymentCategory+Methods.m in Sources */,
+				53D4FCD21B3FD2A6009EBF70 /* Role.m in Sources */,
+				53D4FCD71B4044FB009EBF70 /* AMCRoleMaintenance.m in Sources */,
 				531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */,
 				5301715A1ACB15C20047116D /* OpeningHoursDayTemplate.m in Sources */,
 				5330544B1AE4DA37007B1264 /* Account.m in Sources */,
@@ -2422,7 +2466,7 @@
 				53D69D141A9B240C0004CE10 /* AMCReportsView.m in Sources */,
 				5381C5FC1B308C8500E99946 /* AMCAppointmentViewer.m in Sources */,
 				53D69D3B1A9B240C0004CE10 /* SaleItem+Methods.m in Sources */,
-				53D4FC9C1B39D61A009EBF70 /* AMCRoleManageViewController.m in Sources */,
+				53D4FC9C1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.m in Sources */,
 				53D69D071A9B240C0004CE10 /* AMCSalaryCalculator.m in Sources */,
 				53D69D111A9B240C0004CE10 /* AMCStockedCategoryMaintenanceWindowController.m in Sources */,
 				530171331ACB15C10047116D /* Holiday.m in Sources */,

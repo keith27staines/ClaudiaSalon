@@ -13,7 +13,7 @@
 #import "Employee+Methods.h"
 
 @interface AMCRolesMappingToScreen () <NSTableViewDataSource, NSTableViewDelegate>
-@property (weak) IBOutlet NSSegmentedControl *editViewSegmentedControl;
+
 @property (weak) IBOutlet NSTextField *titleLabel;
 @property (weak) IBOutlet NSTableView *dataTable;
 @property (strong) NSMutableArray * roleArray;
@@ -25,6 +25,9 @@
 @property BOOL infoShown;
 @property (weak) IBOutlet NSTextField *popupRoleNameLabel;
 @property (weak) IBOutlet NSTextField *popupRoleDescriptionLabel;
+@property (weak) IBOutlet NSPopUpButton *userPopup;
+@property (weak) IBOutlet NSButton *addRoleToUserButton;
+@property (weak) IBOutlet NSButton *removeRoleFromUserButton;
 
 @end
 
@@ -41,6 +44,10 @@
     return @"AMCRolesMappingToScreen";
 }
 - (IBAction)filtersChanged:(id)sender {
+    [self refilterData];
+    [self reloadData];
+}
+-(void)refilterData {
     switch (self.filterSegmentedControl.selectedSegment) {
         case 0:
             self.filteredRoles = [self.roleArray mutableCopy];
@@ -53,33 +60,85 @@
             }
             break;
     }
-    [self.dataTable reloadData];
 }
 -(EditMode)editMode {
     return _editMode;
 }
+- (IBAction)userChanged:(id)sender {
+    self.currentUser = self.userPopup.selectedItem.representedObject;
+    [self reloadData];
+}
+-(void)configureButtons {
+    if (self.editMode == EditModeView || !self.currentUser || self.dataTable.selectedRow < 0) {
+        self.addRoleToUserButton.enabled = NO;
+        self.removeRoleFromUserButton.enabled = NO;
+        return;
+    }
+    switch (self.filterSegmentedControl.selectedSegment) {
+        case 0: {
+            self.addRoleToUserButton.enabled = YES;
+            self.removeRoleFromUserButton.enabled = NO;
+            break;
+        }
+        case 1: {
+            self.addRoleToUserButton.enabled = NO;
+            self.removeRoleFromUserButton.enabled = YES;
+            break;
+        }
+    }
+}
+
 -(void)setEditMode:(EditMode)editMode {
     _editMode = editMode;
-    [self.editModeSegmentedControl selectSegmentWithTag:0];
-    [self.dataTable reloadData];
+    if (editMode == EditModeView) {
+        [self.editModeSegmentedControl selectSegmentWithTag:0];
+    } else {
+        [self.editModeSegmentedControl selectSegmentWithTag:1];
+    }
+    if ([self isViewLoaded]) {
+        [self reloadData];
+    }
 }
--(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
-    [super prepareForDisplayWithSalon:salonDocument];
-    self.editMode = EditModeView;
-    self.editViewSegmentedControl.selectedSegment = 0;
+-(void)reloadData {
     self.roleArray = [[self.mappedbusinessFunction mappedRoles] mutableCopy];
-    self.filterSegmentedControl.selectedSegment = 1;
-    [self filtersChanged:self];
+    [self refilterData];
     NSString * currentUserString = self.currentUser.fullName;
     if (!currentUserString) {
         currentUserString = @"Basic User's";
     }
     currentUserString = [currentUserString stringByAppendingString:@" roles"];
     [self.filterSegmentedControl setLabel:currentUserString forSegment:1];
-    self.infoShown = NO;
     self.titleLabel.stringValue = [@"Permissions for: " stringByAppendingString:self.mappedbusinessFunction.functionName];
+    [self.dataTable reloadData];
+    [self configureButtons];
 }
-- (IBAction)editViewSegmentedControl:(id)sender {
+-(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
+    [super prepareForDisplayWithSalon:salonDocument];
+    self.editMode = EditModeView;
+    self.filterSegmentedControl.selectedSegment = 1;
+    [self filtersChanged:self];
+    self.infoShown = NO;
+    [self loadUserPopup];
+    [self reloadData];
+}
+-(void)loadUserPopup {
+    [self.userPopup removeAllItems];
+    NSMenuItem * item = nil;
+    NSMenu * menu = self.userPopup.menu;
+    [self.userPopup addItemWithTitle:@"Basic User"];
+    item = [NSMenuItem separatorItem];
+    [menu addItem:item];
+    for (Employee * employee in [Employee allActiveEmployeesWithMoc:self.documentMoc]) {
+        item = [[NSMenuItem alloc] init];
+        item.title = employee.fullName;
+        item.representedObject = employee;
+        [menu addItem:item];
+        if (employee == self.currentUser) {
+            [self.userPopup selectItem:item];
+        }
+    }
+}
+- (IBAction)editModeSegmentedControl:(id)sender {
     NSSegmentedControl * segmented = sender;
     if (segmented.selectedSegment == 0) {
         self.editMode = EditModeView;
@@ -88,9 +147,9 @@
     }
     [self.dataTable reloadData];
 }
-- (IBAction)addButton:(id)sender {
+- (IBAction)addRoleToUserButton:(id)sender {
 }
-- (IBAction)removeButton:(id)sender {
+- (IBAction)removeRoleFromUserButton:(id)sender {
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     return self.filteredRoles.count;
@@ -127,6 +186,9 @@
         return view;
     }
     return nil;
+}
+-(void)tableViewSelectionDidChange:(NSNotification *)notification {
+    [self configureButtons];
 }
 -(void)ensureInfoNotShown {
     if (self.infoShown) {

@@ -2,7 +2,7 @@
 //  Role.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 27/06/2015.
+//  Created by Keith Staines on 28/06/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
 
@@ -15,16 +15,16 @@
 @implementation Role
 
 @dynamic fullDescription;
-@dynamic name;
 @dynamic isSystemRole;
-@dynamic roleFunctionActions;
-@dynamic employeesInRole;
-@dynamic systemRoleForSalon;
-@dynamic devSupportRoleForSalon;
-@dynamic systemAdminRoleForSalon;
-@dynamic managerRoleForSalon;
+@dynamic name;
 @dynamic accountantRoleForSalon;
-@dynamic receptionistRoleForSalon;
 @dynamic basicUserRoleForSalon;
+@dynamic devSupportRoleForSalon;
+@dynamic employeesInRole;
+@dynamic managerRoleForSalon;
+@dynamic receptionistRoleForSalon;
+@dynamic permissions;
+@dynamic systemAdminRoleForSalon;
+@dynamic systemRoleForSalon;
 
 @end

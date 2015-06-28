@@ -17,10 +17,11 @@
                 <outlet property="logoutMenuItem" destination="HnL-0f-HCx" id="boS-G4-YCW"/>
                 <outlet property="managersBudgetWindowController" destination="lY1-5d-xCC" id="R3G-mk-aJR"/>
                 <outlet property="paymentsViewController" destination="T1c-WN-oS2" id="LsJ-uR-FPC"/>
+                <outlet property="permissionsForRoleEditor" destination="OZM-96-GeK" id="oHe-q5-UE1"/>
                 <outlet property="recurringEventManagementViewController" destination="aEQ-Oc-c3b" id="YhB-f1-4uN"/>
                 <outlet property="reportsViewController" destination="Idc-1W-TmU" id="lhn-FL-j6R"/>
                 <outlet property="requestPasswordWindowController" destination="1nv-NK-Vvr" id="1bD-ce-UKV"/>
-                <outlet property="roleManager" destination="OZM-96-GeK" id="JxE-p5-t1c"/>
+                <outlet property="roleMaintenance" destination="bl8-rj-ky9" id="yNS-9D-O61"/>
                 <outlet property="salaryPaymentViewController" destination="BIc-nr-cPO" id="Q57-Zz-wqm"/>
                 <outlet property="salesViewController" destination="68x-i2-Z7H" id="H4C-DT-k2b"/>
                 <outlet property="salonDetailsViewController" destination="Tv1-mr-T9C" id="vkS-eD-c6c"/>
@@ -195,12 +196,12 @@
                         <popUpButton key="view" verticalHuggingPriority="750" id="BMi-vh-Va5">
                             <rect key="frame" x="0.0" y="14" width="100" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="User name" bezelStyle="texturedRounded" image="UserIcon" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" autoenablesItems="NO" id="ohL-dH-LnN">
+                            <popUpButtonCell key="cell" type="roundTextured" title="User name" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" autoenablesItems="NO" id="ohL-dH-LnN">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="wOI-ve-xxz">
                                     <items>
-                                        <menuItem title="User name" state="on" id="c3K-sb-Q2O">
+                                        <menuItem title="User name" state="on" hidden="YES" id="c3K-sb-Q2O">
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                         </menuItem>
                                         <menuItem title="Log out current user" id="HnL-0f-HCx">
@@ -280,7 +281,8 @@
         <customObject id="ghL-zY-7eX" customClass="AMCFinancialAnalysisViewController"/>
         <customObject id="DfR-6A-GTN" userLabel="ServiceCategoryManagementViewController" customClass="AMCServiceCategoriesManagementViewController"/>
         <customObject id="Q3E-9P-95X" customClass="AMCChangeUserViewController"/>
-        <customObject id="OZM-96-GeK" customClass="AMCRoleManageViewController"/>
+        <customObject id="OZM-96-GeK" customClass="AMCPermissionsForRoleEditor"/>
+        <viewController id="bl8-rj-ky9" userLabel="Role Maintenance" customClass="AMCRoleMaintenance"/>
     </objects>
     <resources>
         <image name="BarChart" width="32" height="32"/>

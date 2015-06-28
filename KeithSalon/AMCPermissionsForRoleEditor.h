@@ -1,5 +1,5 @@
 //
-//  AMCRoleManageViewController.h
+//  AMCPermissionsForRoleEditor.h
 //  ClaudiaSalon
 //
 //  Created by Keith Staines on 23/06/2015.
@@ -8,6 +8,6 @@
 
 #import "AMCViewController.h"
 
-@interface AMCRoleManageViewController : AMCViewController
+@interface AMCPermissionsForRoleEditor : AMCViewController
 
 @end
