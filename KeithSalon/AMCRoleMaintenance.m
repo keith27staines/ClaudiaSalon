@@ -14,7 +14,8 @@
 #import "Role+Methods.h"
 #import "AMCPermissionsForRoleEditor.h"
 
-@interface AMCRoleMaintenance () <NSTableViewDataSource, NSTableViewDelegate>
+@interface AMCRoleMaintenance () <NSTableViewDataSource, NSTableViewDelegate, NSTextDelegate>
+
 @property (weak) IBOutlet NSSegmentedControl *editModeSegmentedControl;
 @property (weak) IBOutlet NSTableView *rolesTable;
 @property (weak) IBOutlet NSTableView *usersTable;
@@ -32,6 +33,10 @@
 @property (readonly) Role * selectedRole;
 @property (weak) IBOutlet NSTextField *roleName;
 @property (weak) IBOutlet NSTextField *roleDescription;
+
+@property (weak) IBOutlet NSButton *createRoleButton;
+@property (weak) IBOutlet NSTextField *nameInstructionLabel;
+@property (weak) IBOutlet NSTextField *descriptionInstructionLabel;
 
 @end
 
@@ -67,11 +72,6 @@
     }
     self.usersArray = [[Employee allActiveEmployeesWithMoc:self.documentMoc] mutableCopy];
     self.rolesArray = [[Role allObjectsWithMoc:self.documentMoc] mutableCopy];
-    self.rolesToCopyArray = [NSMutableArray array];
-    for (Role * role in self.rolesArray) {
-        NSDictionary * d = @{@"name":role.name, @"copyThis":@NO};
-        [self.rolesToCopyArray addObject:d];
-    }
     [self.rolesTable reloadData];
     [self.usersTable reloadData];
 }
@@ -80,7 +80,29 @@
     [self reloadData];
 }
 - (IBAction)addRole:(id)sender {
+    self.createRoleButton.enabled = NO;
+    self.roleName.stringValue = @"";
+    self.roleDescription.stringValue = @"";
+    self.nameInstructionLabel.hidden = YES;
+    self.descriptionInstructionLabel.hidden = YES;
+    self.rolesToCopyArray = [NSMutableArray array];
+    for (Role * role in self.rolesArray) {
+        NSMutableDictionary * d = [@{@"role":role, @"copyThis":@NO} mutableCopy];
+        [self.rolesToCopyArray addObject:d];
+    }
+    [self.rolesToCopyTable reloadData];
     [self presentViewControllerAsSheet:self.addRoleViewController];
+}
+- (IBAction)roleToCopyChanged:(id)sender {
+    NSButton * button = (NSButton*)sender;
+    NSInteger row = [self.rolesToCopyTable rowForView:button];
+    if (row < 0) return;
+    NSMutableDictionary * d = self.rolesToCopyArray[row];
+    if (button.state == NSOnState) {
+        d[@"copyThis"] = @YES;
+    } else {
+        d[@"copyThis"] = @NO;
+    }
 }
 - (IBAction)removeRole:(id)sender {
 }
@@ -93,6 +115,28 @@
     if (row < 0) return nil;
     return self.rolesArray[row];
 }
+-(BOOL)isNewRoleNameValid:(NSString*)newRoleName {
+    if (!newRoleName || newRoleName.length < 4) {
+        return NO;
+    }
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"name like[cd] %@",newRoleName];
+    NSArray * matchingNames = [self.rolesArray filteredArrayUsingPredicate:predicate];
+    if (matchingNames.count == 0) {
+        return YES;
+    }
+    if (matchingNames.count == 1) {
+        return NO;
+    }
+    NSAssert(NO, @"There should be only one match at most because names are supposed to be unique");
+    return NO;
+}
+-(BOOL)isNewRoleDescriptionValid:(NSString*)newRoleDescription {
+    if (!newRoleDescription || newRoleDescription.length < 4) {
+        return NO;
+    } else {
+        return YES;
+    }
+}
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     if (tableView == self.rolesTable) {
         return self.rolesArray.count;
@@ -101,7 +145,7 @@
         return self.usersArray.count;
     }
     if (tableView == self.rolesToCopyTable) {
-        return self.rolesArray.count;
+        return self.rolesToCopyArray.count;
     }
     NSAssert(NO, @"Number of rows not specified for table %@",tableView);
     return 0;
@@ -131,8 +175,9 @@
         NSDictionary * d = self.rolesToCopyArray[row];
         NSTableCellView * view = [self.rolesToCopyTable makeViewWithIdentifier:@"mainCell" owner:self];
         NSButton * checkbox = [view viewWithTag:0];
-        checkbox.title = d[@"name"];
-        checkbox.state = ([d[@"copyThis"] isEqual:@YES])?NSOnState:NSOffState;
+        Role * role = d[@"role"];
+        checkbox.title = role.name;
+        checkbox.state = ([d[@"copyThis"] isEqualToNumber:@YES])?NSOnState:NSOffState;
         return view;
     }
     NSAssert(NO, @"No view for row");
@@ -146,23 +191,60 @@
 - (IBAction)cancelCreateNewRole:(id)sender {
     [self dismissViewController:self.addRoleViewController];
 }
-
+-(void)controlTextDidChange:(NSNotification *)obj {
+    if (obj.object == self.roleName || obj.object == self.roleDescription) {
+        BOOL roleNameValid = [self isNewRoleNameValid:self.roleName.stringValue];
+        BOOL roleDescriptionValid = [self isNewRoleDescriptionValid:self.roleDescription.stringValue];
+        self.createRoleButton.enabled = NO;
+        self.nameInstructionLabel.hidden = YES;
+        self.descriptionInstructionLabel.hidden = YES;
+        if (roleNameValid && roleDescriptionValid) {
+            self.createRoleButton.enabled = YES;
+        } else {
+            // Name and/or description validation failed
+            if (!roleNameValid && obj.object == self.roleName) {
+                // Failed name validation
+                self.nameInstructionLabel.hidden = NO;
+            }
+            if (!roleDescriptionValid && obj.object == self.roleDescription) {
+                // failed description validation
+                self.descriptionInstructionLabel.hidden = NO;
+            }
+        }
+    }
+}
 - (IBAction)createNewRole:(id)sender {
-    Role * role = [Role newObjectWithMoc:self.documentMoc];
-    role.name = self.roleName.stringValue;
-    role.fullDescription = self.roleDescription.stringValue;
+    Role * newRole = [Role newObjectWithMoc:self.documentMoc];
+    newRole.name = self.roleName.stringValue;
+    newRole.fullDescription = self.roleDescription.stringValue;
     for (NSDictionary * d in self.rolesToCopyArray) {
         if ([d[@"copyThis"] isEqualToNumber:@YES]) {
             Role * copyFrom = d[@"role"];
-            for (Permission * permission in copyFrom.permissions) {
-
-            }
+            [self addPermissionsFromRole:copyFrom toRole:newRole];
         }
     }
     [self dismissViewController:self.addRoleViewController];
     NSInteger insertIndex = self.rolesTable.selectedRow;
-    [self.rolesArray insertObject:role atIndex:insertIndex];
+    [self.rolesArray insertObject:newRole atIndex:insertIndex];
     [self.rolesTable insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:insertIndex] withAnimation:NSTableViewAnimationEffectFade];
 }
-
+-(void)addPermissionsFromRole:(Role*)copyFromRole toRole:(Role*)copyToRole {
+    Permission * copyToPermission;
+    for (Permission * copyFromPermission in copyFromRole.permissions) {
+        BusinessFunction * businessFunction = copyFromPermission.businessFunction;
+        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"businessFunction = %@",businessFunction];
+        NSSet * existingPermissions = [copyToRole.permissions filteredSetUsingPredicate:predicate];
+        NSAssert(existingPermissions.count < 2,@"Should be only one permission mapping role to business function");
+        if (existingPermissions.count == 0) {
+            copyToPermission = [Permission newObjectWithMoc:self.documentMoc];
+            copyToPermission.role = copyToRole;
+            copyToPermission.businessFunction = copyFromPermission.businessFunction;
+        } else {
+            copyToPermission = existingPermissions.anyObject;
+        }
+        if (copyFromPermission.viewAction.boolValue)   copyToPermission.viewAction   = @YES;
+        if (copyFromPermission.editAction.boolValue)   copyToPermission.editAction   = @YES;
+        if (copyFromPermission.createAction.boolValue) copyToPermission.createAction = @YES;
+    }
+}
 @end
