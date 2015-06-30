@@ -47,6 +47,9 @@
     }
     return self;
 }
+-(BOOL)permissionDeniedNeedsOKButton {
+    return YES;
+}
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument*)salonDocument {
     NSAssert(salonDocument, @"The salonDocument should not be nill");
     self.salonDocument = salonDocument;
@@ -65,6 +68,10 @@
         self.view = self.myView;
         [self reloadData];
     } else {
+        self.permissionDeniedViewController.businessFunction = self.businessFunction;
+        self.permissionDeniedViewController.editModeVerb = self.editModeVerb;
+        self.permissionDeniedViewController.currentUser = self.salonDocument.currentUser;
+        self.permissionDeniedViewController.salonDocument = self.salonDocument;
         self.view = self.permissionDeniedViewController.view;
     }
 }

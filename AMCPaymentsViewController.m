@@ -95,7 +95,10 @@
     NSPredicate * searchPredicate = [NSPredicate predicateWithFormat:@"payeeName contains[cd] %@ or amount = %@",search,@(search.doubleValue)];
     self.displayedObjects = [self.filteredObjects filteredArrayUsingPredicate:searchPredicate];
 }
-
+#pragma mark - "PermissionDenied" Delegate
+-(BOOL)permissionDeniedNeedsOKButton {
+    return NO;
+}
 #pragma mark - NSViewController Overrides
 -(NSString *)nibName {
     return @"AMCPaymentsViewController";

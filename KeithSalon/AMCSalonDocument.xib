@@ -196,7 +196,7 @@
                         <popUpButton key="view" verticalHuggingPriority="750" id="BMi-vh-Va5">
                             <rect key="frame" x="0.0" y="14" width="100" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <popUpButtonCell key="cell" type="roundTextured" title="User name" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" autoenablesItems="NO" id="ohL-dH-LnN">
+                            <popUpButtonCell key="cell" type="roundTextured" title="User name" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" autoenablesItems="NO" selectedItem="YZq-hi-zO4" id="ohL-dH-LnN">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="menu"/>
                                 <menu key="menu" autoenablesItems="NO" id="wOI-ve-xxz">
@@ -226,7 +226,7 @@
                         <size key="minSize" width="48" height="48"/>
                         <size key="maxSize" width="48" height="48"/>
                         <connections>
-                            <action selector="performClick:" target="BMi-vh-Va5" id="Y8x-Uw-6rM"/>
+                            <action selector="userIconClicked:" target="-1" id="JIP-vh-DCQ"/>
                         </connections>
                     </toolbarItem>
                 </allowedToolbarItems>

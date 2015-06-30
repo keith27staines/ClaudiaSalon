@@ -66,7 +66,10 @@
     [self.salesTable setSortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:NO]]];
     self.salesTable.doubleAction = @selector(viewSelectedSale:);
 }
-
+#pragma mark - "PermissionDenied" Delegate
+-(BOOL)permissionDeniedNeedsOKButton {
+    return NO;
+}
 #pragma mark - Action: Other actions
 - (IBAction)showActionMenu:(id)sender {
     //[self menuNeedsUpdate:self.actionMenu];

@@ -45,6 +45,10 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
 {
     return @"AMCReportsViewController";
 }
+#pragma mark - "PermissionDenied" Delegate
+-(BOOL)permissionDeniedNeedsOKButton {
+    return NO;
+}
 - (IBAction)reportPeriodChanged:(id)sender {
     [self reloadData];
 }

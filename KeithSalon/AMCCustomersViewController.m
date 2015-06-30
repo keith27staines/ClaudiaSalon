@@ -37,6 +37,10 @@
 -(NSArray *)initialSortDescriptors {
     return @[[NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES]];
 }
+#pragma mark - "PermissionDenied" Delegate
+-(BOOL)permissionDeniedNeedsOKButton {
+    return NO;
+}
 #pragma mark - AMCDayAndMonthPopupControllerDelegate
 -(void)dayAndMonthControllerDidUpdate:(AMCDayAndMonthPopupViewController *)dayAndMonthController
 {

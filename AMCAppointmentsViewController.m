@@ -105,12 +105,17 @@ NSAnimationDelegate>
     self.appointmentsTable.target = self;
     [self.appointmentsTable setDoubleAction:@selector(tableDoubleClick:)];
 }
+#pragma mark - "PermissionDenied" Delegate
+-(BOOL)permissionDeniedNeedsOKButton {
+    return NO;
+}
 #pragma mark - AMCAppointmentsViewDelegate
 -(void)appointmentsViewDidAwakeFromNib:(AMCAppointmentsView *)appointmentsView
 {
     [self buildIntervalSegmentedControl:appointmentsView.intervalPickerSegmentedControl];
     [self reloadData];
 }
+
 #pragma mark - NSTableViewDataSource
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {

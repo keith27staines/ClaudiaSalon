@@ -39,21 +39,39 @@
     self.currentViewController = self.selectUserViewController;
 }
 - (IBAction)showEnterPassword:(id)sender {
+    NSInteger row = [self.employeeTable rowForView:sender];
+    if (row < 0 || row == NSNotFound) {
+        return;
+    }
+    self.selectedEmployee = self.usersArrayController.arrangedObjects[row];
     if (self.currentViewController != self.passwordViewController) {
+        self.titleLabel.stringValue = @"Enter Password";
         self.passwordField.stringValue = @"";
         self.infoLabel.stringValue = @"";
         [self transitionFromViewController:self.currentViewController toViewController:self.passwordViewController options:NSViewControllerTransitionSlideLeft completionHandler:^{
             self.currentViewController = self.passwordViewController;
             [self.view.window makeFirstResponder:self.passwordField];
+            self.verticalGap.animator.constant = 50;
+            self.currentUserBox.hidden = YES;
         }];
     }
 }
 - (IBAction)showSelectUser:(id)sender {
+
     if (self.currentViewController != self.selectUserViewController) {
         [self transitionFromViewController:self.currentViewController toViewController:self.selectUserViewController options:NSViewControllerTransitionSlideRight completionHandler:^{
             self.currentViewController = self.selectUserViewController;
             [self.view.window makeFirstResponder:self.employeeTable];
         }];
+    }
+    if (self.salonDocument.currentUser) {
+        self.titleLabel.stringValue = @"Switch User or Sign-out";
+        self.currentUserBox.hidden = NO;
+        self.verticalGap.animator.constant = 150;
+    } else {
+        self.titleLabel.stringValue = @"Select user and Sign-in";
+        self.currentUserBox.hidden = YES;
+        self.verticalGap.animator.constant = 50;
     }
 }
 - (IBAction)trySwitchToUser:(id)sender {
@@ -66,6 +84,11 @@
         self.infoLabel.stringValue = @"Invalid Password!";
     }
 }
+- (IBAction)signout:(id)sender {
+    self.salonDocument.currentUser = nil;
+    self.currentUserBox.hidden = YES;
+    self.verticalGap.animator.constant = 50;
+}
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
     self.usersArrayController.managedObjectContext = salonDocument.managedObjectContext;
@@ -73,14 +96,7 @@
     self.cancelled = YES;
     self.infoLabel.stringValue = @"";
     [self showSelectUser:self];
-    if (salonDocument.currentUser) {
-        self.titleLabel.stringValue = @"Switch to another user";
-        self.currentUserBox.hidden = NO;
-    } else {
-        self.titleLabel.stringValue = @"Select user and login";
-        self.currentUserBox.hidden = YES;
-        self.verticalGap.constant = 50;
-    }
+
     [self.view setNeedsUpdateConstraints:YES];
     [self.view setNeedsLayout:YES];
     [self.view setNeedsDisplay:YES];
@@ -90,6 +106,7 @@
     [self.employeeTable deselectAll:self];
     [self.view.window makeFirstResponder:self.employeeTable];
     [self.view.window layoutIfNeeded];
+    self.selectedEmployee = nil;
 }
 -(void)updateViewConstraints {
     [super updateViewConstraints];
@@ -98,17 +115,5 @@
     } else {
         self.verticalGap.constant = 50;
     }
-}
--(Employee *)selectedEmployee {
-    return self.usersArrayController.selectedObjects.firstObject;
-}
--(void)setSelectedEmployee:(Employee *)employee {
-    if (!employee) {
-        return;
-    }
-    [self.employeeTable selectRowIndexes:[NSIndexSet indexSetWithIndex:[self.usersArrayController.arrangedObjects indexOfObject:employee]] byExtendingSelection:NO];
-}
--(void)tableViewSelectionDidChange:(NSNotification *)notification {
-    self.selectedEmployee = (Employee*)self.usersArrayController.selectedObjects.firstObject;
 }
 @end

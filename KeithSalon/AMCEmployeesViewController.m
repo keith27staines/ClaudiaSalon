@@ -37,6 +37,11 @@
 -(NSArray *)initialSortDescriptors {
     return @[[NSSortDescriptor sortDescriptorWithKey:@"isActive" ascending:NO],[NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES selector:@selector(caseInsensitiveCompare:)]];
 }
+#pragma mark - "PermissionDenied" Delegate
+-(BOOL)permissionDeniedNeedsOKButton {
+    return NO;
+}
+
 # pragma mark - Filters changed
 
 - (IBAction)activeFilterChanged:(id)sender {

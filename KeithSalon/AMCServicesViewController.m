@@ -23,6 +23,10 @@
 -(NSString *)nibName {
     return @"AMCServicesViewController";
 }
+#pragma mark - "PermissionDenied" Delegate
+-(BOOL)permissionDeniedNeedsOKButton {
+    return NO;
+}
 #pragma mark - NSMenuDelegate
 -(void)menuNeedsUpdate:(NSMenu*)menu {
     menu.autoenablesItems = NO;

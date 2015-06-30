@@ -107,6 +107,7 @@
 - (IBAction)removeRole:(id)sender {
 }
 - (IBAction)showPermissionsForRoleEditor:(id)sender {
+    self.permissionsForRoleEditor.selectedRole = self.selectedRole;
     [self.permissionsForRoleEditor prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewControllerAsSheet:self.permissionsForRoleEditor];
 }

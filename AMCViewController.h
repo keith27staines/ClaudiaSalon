@@ -18,4 +18,6 @@
 -(void)reloadData;
 -(NSString*)editModeVerb;
 @property (strong,readonly) BusinessFunction * businessFunction;
+@property (readonly) BOOL permissionDeniedNeedsOKButton;
+
 @end

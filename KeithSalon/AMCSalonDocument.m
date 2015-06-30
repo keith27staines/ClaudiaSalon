@@ -340,20 +340,18 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     }
 }
 -(void)safelyAddContentFromViewController:(AMCViewController*)viewController toContainerView:(NSView*)container  {
-    // Only add if not already added
-    if ([container subviews].count == 0) {
-        [viewController prepareForDisplayWithSalon:self];
-        NSView * view = viewController.view;
-        [view setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [container addSubview:view];
-        NSDictionary * views = NSDictionaryOfVariableBindings(view);
-        NSArray * constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[view]-|" options:0 metrics:nil views:views];
-        [container addConstraints:constraints];
-        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[view]-|" options:0 metrics:nil views:views];
-        [container addConstraints:constraints];
-    } else {
-        [viewController prepareForDisplayWithSalon:self];
+    while (container.subviews.count > 0) {
+        [container.subviews.firstObject removeFromSuperviewWithoutNeedingDisplay];
     }
+    [viewController prepareForDisplayWithSalon:self];
+    NSView * view = viewController.view;
+    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [container addSubview:view];
+    NSDictionary * views = NSDictionaryOfVariableBindings(view);
+    NSArray * constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[view]-|" options:0 metrics:nil views:views];
+    [container addConstraints:constraints];
+    constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[view]-|" options:0 metrics:nil views:views];
+    [container addConstraints:constraints];
 }
 - (IBAction)salonToolbarButton:(id)sender {
     NSDate * date = [NSDate date];
@@ -416,6 +414,9 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 - (IBAction)showFinancialAnalysis:(id)sender {
     [self.financialAnalysisViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.financialAnalysisViewController];
+}
+-(IBAction)userIconClicked:(id)sender {
+    [self switchUser:self];
 }
 - (IBAction)switchUser:(id)sender {
     [self.changeUserViewController prepareForDisplayWithSalon:self];

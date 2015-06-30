@@ -37,6 +37,10 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
 - (NSString*)entityName {
     return @"StockedProduct";
 }
+#pragma mark - "PermissionDenied" Delegate
+-(BOOL)permissionDeniedNeedsOKButton {
+    return NO;
+}
 -(NSPredicate*)filtersPredicate {
     NSMutableArray * predicates = [NSMutableArray array];
     StockedCategory * category = self.stockedCategoryPopupButton.selectedItem.representedObject;

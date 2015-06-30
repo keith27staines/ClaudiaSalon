@@ -13,6 +13,9 @@
 #import "AMCSalonDocument.h"
 
 @interface AMCPermissionsForRoleEditor () <NSTableViewDelegate, NSTableViewDataSource>
+{
+    __weak Role * _selectedRole;
+}
 @property (weak) IBOutlet NSPopUpButton *roleSelector;
 @property (weak) IBOutlet NSTableView *permissionsTable;
 @property NSMutableArray * permissions;
@@ -29,8 +32,6 @@
 @property (strong) IBOutlet NSTextField *actionVerbLabel;
 @property (strong) IBOutlet NSTextField * codeUnitNameLabel;
 @property BOOL actionInfoIsPresented;
-
-@property (weak, readonly) Role * selectedRole;
 @property (weak, readonly) BusinessFunction * clickedBusinessFunction;
 
 @end
@@ -54,8 +55,14 @@
         item.representedObject = role;
         item.title = role.name;
         [self.roleSelector.menu addItem:item];
+        if (role == self.selectedRole) {
+            [self.roleSelector selectItem:item];
+        }
     }
-    [self.roleSelector selectItemAtIndex:0];
+    if (!self.selectedRole) {
+        [self.roleSelector selectItemAtIndex:0];
+        self.selectedRole = self.roleSelector.selectedItem.representedObject;
+    }
 }
 -(void)reloadTableData {
 
@@ -63,9 +70,9 @@
     [self.permissionsTable reloadData];
 }
 - (IBAction)roleChanged:(id)sender {
+    self.selectedRole = self.roleSelector.selectedItem.representedObject;
     [self reloadTableData];
 }
-
 - (IBAction)showRoleInfo:(id)sender {
     [self ensurePopupNotPresented];
     NSButton * infoButton = sender;
@@ -116,7 +123,10 @@
     return self.permissions[row];
 }
 -(Role *)selectedRole {
-    return self.roleSelector.selectedItem.representedObject;
+    return _selectedRole;
+}
+-(void)setSelectedRole:(Role *)selectedRole {
+    _selectedRole = selectedRole;
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     return self.permissions.count;
