@@ -19,5 +19,6 @@
 -(NSString*)editModeVerb;
 @property (strong,readonly) BusinessFunction * businessFunction;
 @property (readonly) BOOL permissionDeniedNeedsOKButton;
+-(IBAction)showRolesToCodeUnitMapping:(id)sender;
 
 @end

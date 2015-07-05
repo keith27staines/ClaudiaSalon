@@ -163,7 +163,7 @@ Gw
                 </scrollView>
             </subviews>
             <constraints>
-                <constraint firstItem="y1E-hJ-Nm8" firstAttribute="top" secondItem="mWQ-AF-WHG" secondAttribute="bottom" constant="14" id="8kk-4j-beY"/>
+                <constraint firstItem="y1E-hJ-Nm8" firstAttribute="top" secondItem="mWQ-AF-WHG" secondAttribute="bottom" constant="14" id="5KZ-H4-mdT"/>
                 <constraint firstAttribute="trailing" secondItem="mWQ-AF-WHG" secondAttribute="trailing" id="9yQ-cW-F0S"/>
                 <constraint firstItem="mWQ-AF-WHG" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="ZJj-Dt-xiE"/>
                 <constraint firstItem="y1E-hJ-Nm8" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="64" id="dkA-KA-Dt2"/>
@@ -366,7 +366,7 @@ Gw
                 <outlet property="view" destination="Hz6-mo-xeY" id="fFF-Fd-GA3"/>
             </connections>
         </viewController>
-        <arrayController mode="entity" entityName="Employee" fetchPredicateFormat="isActive = YES" editable="NO" automaticallyPreparesContent="YES" avoidsEmptySelection="NO" id="F7Z-8g-kfH"/>
+        <arrayController mode="entity" entityName="Employee" editable="NO" automaticallyPreparesContent="YES" avoidsEmptySelection="NO" id="F7Z-8g-kfH"/>
         <viewController id="bEq-dI-pqS" userLabel="passwordViewController">
             <connections>
                 <outlet property="view" destination="6cm-RA-o0B" id="amo-lU-gNt"/>

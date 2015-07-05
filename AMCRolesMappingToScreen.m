@@ -7,9 +7,9 @@
 //
 
 #import "AMCRolesMappingToScreen.h"
-#import "AMCSalonDocument.h"
 #import "Role+Methods.h"
 #import "BusinessFunction+Methods.h"
+#import "Permission+Methods.h"
 #import "Employee+Methods.h"
 
 @interface AMCRolesMappingToScreen () <NSTableViewDataSource, NSTableViewDelegate>
@@ -18,7 +18,7 @@
 @property (weak) IBOutlet NSTableView *dataTable;
 @property (strong) NSMutableArray * roleArray;
 @property (strong) NSMutableArray * filteredRoles;
-@property EditMode editMode;
+
 @property (weak) IBOutlet NSSegmentedControl *filterSegmentedControl;
 @property (weak) IBOutlet NSSegmentedControl *editModeSegmentedControl;
 @property (strong) IBOutlet NSViewController *infoViewController;
@@ -28,6 +28,7 @@
 @property (weak) IBOutlet NSPopUpButton *userPopup;
 @property (weak) IBOutlet NSButton *addRoleToUserButton;
 @property (weak) IBOutlet NSButton *removeRoleFromUserButton;
+@property NSMutableArray * rolePermissionDictionaries;
 
 @end
 
@@ -60,6 +61,21 @@
             }
             break;
     }
+    self.rolePermissionDictionaries = [NSMutableArray array];
+    for (Role * role in self.filteredRoles) {
+        Permission * permission = [role permissionForBusinessFunction:self.mappedBusinessFunction];
+        NSDictionary * dictionary = [self dictionaryWithRole:role permission:permission];
+        [self.rolePermissionDictionaries addObject:dictionary];
+    }
+}
+-(NSDictionary*)dictionaryWithRole:(Role*)role permission:(Permission*)permission {
+    return @{@"role":role, @"permission":permission};
+}
+-(Role*)roleFromDictionary:(NSDictionary*)dictionary {
+    return dictionary[@"role"];
+}
+-(Permission*)permissionFromDictionary:(NSDictionary*)dictionary {
+    return dictionary[@"permission"];
 }
 -(EditMode)editMode {
     return _editMode;
@@ -67,6 +83,25 @@
 - (IBAction)userChanged:(id)sender {
     self.currentUser = self.userPopup.selectedItem.representedObject;
     [self reloadData];
+}
+-(IBAction)permissionCheckboxChanged:(id)sender {
+    NSButton * button = sender;
+    NSInteger row = [self.dataTable rowForView:button];
+    Permission * permission = [self permissionFromDictionary:self.rolePermissionDictionaries[row]];
+    switch (button.tag) {
+        case 0: {
+            permission.viewAction = (button.state == NSOnState)?@YES:@NO;
+            break;
+        }
+        case 1: {
+            permission.editAction = (button.state == NSOnState)?@YES:@NO;
+            break;
+        }
+        case 2: {
+            permission.createAction = (button.state == NSOnState)?@YES:@NO;
+            break;
+        }
+    }
 }
 -(void)configureButtons {
     if (self.editMode == EditModeView || !self.currentUser || self.dataTable.selectedRow < 0) {
@@ -100,7 +135,7 @@
     }
 }
 -(void)reloadData {
-    self.roleArray = [[self.mappedbusinessFunction mappedRoles] mutableCopy];
+    self.roleArray = [[self.mappedBusinessFunction mappedRoles] mutableCopy];
     [self refilterData];
     NSString * currentUserString = self.currentUser.fullName;
     if (!currentUserString) {
@@ -108,7 +143,7 @@
     }
     currentUserString = [currentUserString stringByAppendingString:@" roles"];
     [self.filterSegmentedControl setLabel:currentUserString forSegment:1];
-    self.titleLabel.stringValue = [@"Permissions for: " stringByAppendingString:self.mappedbusinessFunction.functionName];
+    self.titleLabel.stringValue = [@"Permissions for: " stringByAppendingString:self.mappedBusinessFunction.functionName];
     [self.dataTable reloadData];
     [self configureButtons];
 }
@@ -152,7 +187,7 @@
 - (IBAction)removeRoleFromUserButton:(id)sender {
 }
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    return self.filteredRoles.count;
+    return self.rolePermissionDictionaries.count;
 }
 - (IBAction)showInfo:(id)sender {
     NSButton * button = sender;
@@ -166,7 +201,8 @@
 }
 
 -(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    Role * role = self.filteredRoles[row];
+    Permission * permission = [self permissionFromDictionary:self.rolePermissionDictionaries[row]];
+    Role * role = permission.role;
     if ([tableColumn.identifier isEqualToString:@"roleNameColumn"]) {
         NSTableCellView * view = [tableView makeViewWithIdentifier:@"roleNameView" owner:self];
         view.textField.stringValue = role.name;
@@ -177,9 +213,9 @@
         NSButton * viewCheckbox = [view viewWithTag:0];
         NSButton * editCheckbox = [view viewWithTag:1];
         NSButton * createCheckbox = [view viewWithTag:2];
-        viewCheckbox.state = ([role allowsBusinessFunction:self.mappedbusinessFunction verb:@"View"]).boolValue?NSOnState:NSOffState;
-        editCheckbox.state = ([role allowsBusinessFunction:self.mappedbusinessFunction verb:@"Edit"]).boolValue?NSOnState:NSOffState;
-        createCheckbox.state = ([role allowsBusinessFunction:self.mappedbusinessFunction verb:@"Create"]).boolValue?NSOnState:NSOffState;
+        viewCheckbox.state = (permission.viewAction.boolValue)?NSOnState:NSOffState;
+        editCheckbox.state = (permission.editAction.boolValue)?NSOnState:NSOffState;
+        createCheckbox.state = (permission.createAction.boolValue)?NSOnState:NSOffState;
         viewCheckbox.enabled = (self.editMode==EditModeEdit)?YES:NO;
         editCheckbox.enabled = viewCheckbox.enabled;
         createCheckbox.enabled = viewCheckbox.enabled;

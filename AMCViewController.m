@@ -100,7 +100,7 @@
     if (!_rolesToScreenMapViewController) {
         _rolesToScreenMapViewController = [[AMCRolesMappingToScreen alloc] init];
     }
-    _rolesToScreenMapViewController.mappedbusinessFunction = self.businessFunction;
+    _rolesToScreenMapViewController.mappedBusinessFunction = self.businessFunction;
     _rolesToScreenMapViewController.currentUser = self.salonDocument.currentUser;
     return _rolesToScreenMapViewController;
 }

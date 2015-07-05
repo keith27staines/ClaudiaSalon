@@ -25,4 +25,6 @@
 -(NSArray*)workRecordsForDate:(NSDate*)date;
 -(WorkRecord*)ensureWorkRecordTemplateExists;
 -(NSNumber*)canPerformBusinessFunction:(BusinessFunction*)businessFunction verb:(NSString*)verb;
++(NSArray*)fetchEmployeesWhoCanPerformBusinessFunction:(BusinessFunction*)function;
+
 @end

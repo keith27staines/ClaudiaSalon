@@ -1880,6 +1880,7 @@
 		53D4FCD31B4044A4009EBF70 /* Roles and Permissions */ = {
 			isa = PBXGroup;
 			children = (
+				535191701B37F57700F8D37A /* Change User View Controller */,
 				53D4FCDB1B4053EB009EBF70 /* Role To Screen Mapping */,
 				53D4FCDA1B40538F009EBF70 /* Users Roles */,
 				53D4FC9E1B39D622009EBF70 /* Permissions For Roles */,
@@ -1985,7 +1986,6 @@
 				5346C58F1ABB221A005D4540 /* Category Management */,
 				532377D01AA8C3BF009FA91D /* Bank statements */,
 				530D54721B19A5C600F6C4FE /* Auto-close management */,
-				535191701B37F57700F8D37A /* Change User View Controller */,
 			);
 			name = "Document objects";
 			sourceTree = "<group>";

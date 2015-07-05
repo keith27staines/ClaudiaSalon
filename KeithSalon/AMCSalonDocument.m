@@ -11,6 +11,7 @@
 #import "AMCStorePopulator.h"
 #import "AMCReportsViewController.h"
 
+#import "AMCViewController.h"
 #import "AMCAppointmentsViewController.h"
 #import "AMCSalesViewController.h"
 #import "AMCCustomersViewController.h"
@@ -71,6 +72,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property (strong) IBOutlet AMCViewController *accountManagementViewController;
 @property (weak) IBOutlet NSButton *showPaySalary;
 @property AMCViewController * mainViewController;
+@property (weak) AMCViewController * selectedViewController;
 
 @property (strong) IBOutlet AMCFinancialAnalysisViewController *financialAnalysisViewController;
 
@@ -110,6 +112,9 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         [NSTimer scheduledTimerWithTimeInterval:3600 target:self selector:@selector(processRecurringEvents:) userInfo:nil repeats:YES];
     }
     return _salon;
+}
+-(IBAction)showRolesToCodeUnitMapping:(id)sender {
+    [self.selectedViewController showRolesToCodeUnitMapping:self];
 }
 -(void)dataFixes {
     // Begin Service category data fix
@@ -343,6 +348,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     while (container.subviews.count > 0) {
         [container.subviews.firstObject removeFromSuperviewWithoutNeedingDisplay];
     }
+    self.selectedViewController = viewController;
     [viewController prepareForDisplayWithSalon:self];
     NSView * view = viewController.view;
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];

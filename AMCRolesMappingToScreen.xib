@@ -32,7 +32,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView identifier="nameColumn" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="25" rowSizeStyle="automatic" viewBased="YES" id="MjI-lq-pwU">
-                                <rect key="frame" x="0.0" y="0.0" width="238" height="117"/>
+                                <rect key="frame" x="0.0" y="0.0" width="522" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -97,6 +97,9 @@
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
+                                                        <connections>
+                                                            <action selector="permissionCheckboxChanged:" target="-2" id="tmx-jp-gLk"/>
+                                                        </connections>
                                                     </button>
                                                     <button horizontalHuggingPriority="251" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="8HB-sb-nm0">
                                                         <rect key="frame" x="118" y="4" width="47" height="18"/>
@@ -104,13 +107,9 @@
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
-                                                    </button>
-                                                    <button tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="1cS-Ux-0lM">
-                                                        <rect key="frame" x="181" y="4" width="63" height="18"/>
-                                                        <buttonCell key="cell" type="check" title="Create" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hPj-cS-qJK">
-                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="permissionCheckboxChanged:" target="-2" id="OgS-Rd-ARd"/>
+                                                        </connections>
                                                     </button>
                                                     <button horizontalHuggingPriority="750" verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="GQV-AC-urL">
                                                         <rect key="frame" x="256" y="-9" width="39" height="38"/>
@@ -120,6 +119,16 @@
                                                         </buttonCell>
                                                         <connections>
                                                             <action selector="showInfo:" target="-2" id="N91-3j-B8M"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="1cS-Ux-0lM">
+                                                        <rect key="frame" x="181" y="4" width="63" height="18"/>
+                                                        <buttonCell key="cell" type="check" title="Create" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hPj-cS-qJK">
+                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="permissionCheckboxChanged:" target="-2" id="cNq-Ro-utP"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -150,7 +159,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="135" id="ovb-Iv-HGo"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="d74-mW-jTa">
-                        <rect key="frame" x="1" y="117.49841725826263" width="236.89305877685547" height="16"/>
+                        <rect key="frame" x="1" y="117.49841725826263" width="237" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Jc6-zm-QxR">

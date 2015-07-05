@@ -10,4 +10,9 @@
 
 @interface AMCChangeUserViewController : AMCViewController
 
+@property (weak) IBOutlet NSLayoutConstraint *verticalGap;
+@property (weak) IBOutlet NSBox *currentUserBox;
+@property (readonly,copy) NSString * switchUserTitle;
+-(void)displayCurrentUserBox:(BOOL)displayCurrentUserBox;
+@property BOOL authorizingMode;
 @end

@@ -151,7 +151,6 @@
     }
     return self.workRecordTemplate;
 }
-
 -(NSNumber*)canPerformBusinessFunction:(BusinessFunction*)businessFunction verb:(NSString*)verb {
     for (Role * role in self.roles) {
         if ([role allowsBusinessFunction:businessFunction verb:verb]) {
@@ -160,8 +159,10 @@
     }
     return @NO;
 }
-
-
++(NSArray*)fetchEmployeesWhoCanPerformBusinessFunction:(BusinessFunction*)function {
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"any roles.permissions.businessFunction = %@",function];
+    return [[self allActiveEmployeesWithMoc:function.managedObjectContext] filteredArrayUsingPredicate:predicate];
+}
 
 
 

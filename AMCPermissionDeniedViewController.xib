@@ -7,6 +7,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="AMCPermissionDeniedViewController">
             <connections>
                 <outlet property="businessFunctionLabel" destination="9xr-t5-1IH" id="4Hd-ch-KBA"/>
+                <outlet property="roleToScreenMap" destination="XqL-bu-zqP" id="2mQ-Zi-oJS"/>
+                <outlet property="signInAdministrator" destination="UpN-mq-0N4" id="zZ2-gq-6A4"/>
                 <outlet property="titleLabel" destination="Vj6-ad-cE5" id="6DC-s8-2Xb"/>
                 <outlet property="userNameLabel" destination="o9v-aW-Q9v" id="Sub-W8-3H8"/>
                 <outlet property="verbLabel" destination="Gln-nb-ggu" id="ntr-Pk-kS0"/>
@@ -127,13 +129,13 @@ DQ
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yOF-x0-MO3">
-                    <rect key="frame" x="436" y="151" width="163" height="32"/>
-                    <buttonCell key="cell" type="push" title="Request Permission" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GZf-H7-MNe">
+                    <rect key="frame" x="436" y="151" width="175" height="32"/>
+                    <buttonCell key="cell" type="push" title="Request Permission..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GZf-H7-MNe">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="showRolesToCodeUnitMapping:" target="-1" id="OOF-c3-hgt"/>
+                        <action selector="requestPermission:" target="-2" id="RFm-f9-0OL"/>
                     </connections>
                 </button>
             </subviews>
@@ -174,6 +176,8 @@ DQ
             <point key="canvasLocation" x="-16" y="470"/>
         </customView>
         <userDefaultsController representsSharedInstance="YES" id="QCH-xA-mLn"/>
+        <customObject id="UpN-mq-0N4" customClass="AMCChangeUserViewController"/>
+        <customObject id="XqL-bu-zqP" customClass="AMCRolesMappingToScreen"/>
     </objects>
     <resources>
         <image name="Buterfly" width="256" height="256"/>

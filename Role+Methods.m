@@ -51,15 +51,14 @@
     }
     return @NO;
 }
--(BusinessFunction*)actionWithCodeUnitName:(NSString*)name verb:(NSString*)verb {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"codeUnitName == %@ and actionName == %@",name,verb];
-    NSSet * filteredSet = [self.permissions filteredSetUsingPredicate:predicate];
-    if (!filteredSet || filteredSet.count == 0) {
+-(Permission*)permissionForBusinessFunction:(BusinessFunction*)function {
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"businessFunction = %@",function];
+    NSSet * permissionForFunction = [self.permissions filteredSetUsingPredicate:predicate];
+    if (!permissionForFunction || permissionForFunction.count == 0) {
         return nil;
-    } else {
-        NSAssert(filteredSet.count == 1, @"BusinessFunction names must be unique");
-        return filteredSet.anyObject;
     }
+    NSAssert(permissionForFunction.count == 1, @"There should be exactly one permission joining this role %@ to business function",self,function);
+    return [permissionForFunction anyObject];
 }
 
 @end

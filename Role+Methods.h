@@ -12,5 +12,5 @@
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
 -(NSNumber*)allowsBusinessFunction:(BusinessFunction*)function verb:(NSString*)verb;
-
+-(Permission*)permissionForBusinessFunction:(BusinessFunction*)function;
 @end

@@ -22,8 +22,6 @@
 @property (weak) Employee * selectedEmployee;
 @property (weak) IBOutlet NSTableView *employeeTable;
 @property (weak) IBOutlet NSTextField *titleLabel;
-@property (weak) IBOutlet NSBox *currentUserBox;
-@property (weak) IBOutlet NSLayoutConstraint *verticalGap;
 
 @end
 
@@ -38,12 +36,39 @@
     [self.containerView addSubview:self.selectUserViewController.view];
     self.currentViewController = self.selectUserViewController;
 }
+-(NSString *)switchUserTitle{
+    if (self.authorizingMode) return @"Select Authorizing Manager";
+
+    if (self.salonDocument.currentUser) {
+        return @"Switch User or Sign-out";
+    } else {
+        return @"Select User to Sign-in";
+    }
+}
+-(void)displayCurrentUserBox:(BOOL)displayCurrentUserBox {
+    if (self.authorizingMode) {
+        self.currentUserBox.hidden = YES;
+        self.verticalGap.animator.constant = 50;
+        return;
+    }
+    if (displayCurrentUserBox == YES) {
+        self.verticalGap.animator.constant = 150;
+        self.currentUserBox.hidden = NO;
+    } else {
+        self.currentUserBox.hidden = YES;
+        self.verticalGap.animator.constant = 50;
+    }
+}
 - (IBAction)showEnterPassword:(id)sender {
     NSInteger row = [self.employeeTable rowForView:sender];
     if (row < 0 || row == NSNotFound) {
         return;
     }
     self.selectedEmployee = self.usersArrayController.arrangedObjects[row];
+    [self showGetSelectedUsersPassword];
+
+}
+-(void)showGetSelectedUsersPassword {
     if (self.currentViewController != self.passwordViewController) {
         self.titleLabel.stringValue = @"Enter Password";
         self.passwordField.stringValue = @"";
@@ -51,27 +76,22 @@
         [self transitionFromViewController:self.currentViewController toViewController:self.passwordViewController options:NSViewControllerTransitionSlideLeft completionHandler:^{
             self.currentViewController = self.passwordViewController;
             [self.view.window makeFirstResponder:self.passwordField];
-            self.verticalGap.animator.constant = 50;
-            self.currentUserBox.hidden = YES;
+            [self displayCurrentUserBox:NO];
         }];
     }
 }
 - (IBAction)showSelectUser:(id)sender {
-
     if (self.currentViewController != self.selectUserViewController) {
         [self transitionFromViewController:self.currentViewController toViewController:self.selectUserViewController options:NSViewControllerTransitionSlideRight completionHandler:^{
             self.currentViewController = self.selectUserViewController;
             [self.view.window makeFirstResponder:self.employeeTable];
         }];
     }
-    if (self.salonDocument.currentUser) {
-        self.titleLabel.stringValue = @"Switch User or Sign-out";
-        self.currentUserBox.hidden = NO;
-        self.verticalGap.animator.constant = 150;
+    self.titleLabel.stringValue = self.switchUserTitle;
+    if (self.salonDocument.currentUser && !self.authorizingMode) {
+        [self displayCurrentUserBox:YES];
     } else {
-        self.titleLabel.stringValue = @"Select user and Sign-in";
-        self.currentUserBox.hidden = YES;
-        self.verticalGap.animator.constant = 50;
+        [self displayCurrentUserBox:NO];
     }
 }
 - (IBAction)trySwitchToUser:(id)sender {
@@ -86,8 +106,7 @@
 }
 - (IBAction)signout:(id)sender {
     self.salonDocument.currentUser = nil;
-    self.currentUserBox.hidden = YES;
-    self.verticalGap.animator.constant = 50;
+    [self displayCurrentUserBox:NO];
 }
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
     [super prepareForDisplayWithSalon:salonDocument];
@@ -95,25 +114,23 @@
     self.passwordField.stringValue = @"";
     self.cancelled = YES;
     self.infoLabel.stringValue = @"";
+    self.currentUserBox.hidden = YES;
+    self.verticalGap.constant = 50;
     [self showSelectUser:self];
-
-    [self.view setNeedsUpdateConstraints:YES];
-    [self.view setNeedsLayout:YES];
-    [self.view setNeedsDisplay:YES];
     [self.view invalidateIntrinsicContentSize];
+    [self.view layout];
+    [self.view setNeedsDisplay:YES];
     self.employeeTable.doubleAction = @selector(showEnterPassword:);
-    self.usersArrayController.filterPredicate = [NSPredicate predicateWithFormat:@"isActive = YES AND self != %@",self.salonDocument.currentUser];
-    [self.employeeTable deselectAll:self];
-    [self.view.window makeFirstResponder:self.employeeTable];
-    [self.view.window layoutIfNeeded];
-    self.selectedEmployee = nil;
-}
--(void)updateViewConstraints {
-    [super updateViewConstraints];
-    if (self.salonDocument.currentUser) {
-        self.verticalGap.constant = 150;
+    NSPredicate * predicate = nil;
+    if (self.authorizingMode) {
+       predicate = [NSPredicate predicateWithFormat:@"any roles = %@",self.salonDocument.salon.managerRole];
     } else {
-        self.verticalGap.constant = 50;
+        predicate = [NSPredicate predicateWithFormat:@"isActive = YES AND self != %@",self.salonDocument.currentUser];
     }
+    self.usersArrayController.filterPredicate = predicate;
+    [self.employeeTable deselectAll:self];
+    [self.employeeTable reloadData];
+    [self.view.window makeFirstResponder:self.employeeTable];
+    self.selectedEmployee = nil;
 }
 @end
