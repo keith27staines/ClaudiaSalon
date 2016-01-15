@@ -124,6 +124,9 @@
     NSNumber * fee = [self calculateFeeForAmount:self.amount withFeePercentage:feePercent];
     [self recalculateNetAmountWithFee:fee];
 }
+-(void)recalculateFromCurrentAmount {
+    [self recalculateWithAmount:self.amount];
+}
 -(void)recalculateWithAmount:(NSNumber *)amount {
     if (self.isIncoming) {
         [self recalculateWithAmount:amount feePercent:self.account.transactionFeePercentageIncoming];

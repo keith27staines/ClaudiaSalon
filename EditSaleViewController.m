@@ -51,9 +51,9 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
     [self.nextStep setBezelStyle:NSRoundedBezelStyle];
     [self.doneButton setBezelStyle:NSRoundedBezelStyle];
     [self.cancelButton setBezelStyle:NSRoundedBezelStyle];
-    [self.selectCustomerViewController prepareForDisplayWithSalon:self.salonDocument];
-    [self.selectItemsViewController prepareForDisplayWithSalon:self.salonDocument];
-    [self.makePaymentViewController prepareForDisplayWithSalon:self.salonDocument];
+//    [self.selectCustomerViewController prepareForDisplayWithSalon:self.salonDocument];
+//    [self.selectItemsViewController prepareForDisplayWithSalon:self.salonDocument];
+//    [self.makePaymentViewController prepareForDisplayWithSalon:self.salonDocument];
 }
 
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument {
@@ -147,6 +147,7 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
         [self.viewToDisplay removeFromSuperview];
     }
     WizardStepViewController * wizardStepController = [self wizardStepController];
+    [wizardStepController prepareForDisplayWithSalon:self.salonDocument];
     [self addWizardStepViewFromController:wizardStepController];
 }
 -(void)addWizardStepViewFromController:(WizardStepViewController*)viewController {
@@ -253,9 +254,11 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
 }
 -(void)clear
 {
-    [self.selectCustomerViewController clear];
-    [self.selectItemsViewController clear];
-    [self.makePaymentViewController clear];
+    if (self.documentMoc) {
+        [self.selectCustomerViewController clear];
+        [self.selectItemsViewController clear];
+        [self.makePaymentViewController clear];
+    }
     if (self.editMode == EditModeCreate) {
         self.customerSelected = NO;
         self.itemsSelected = NO;
@@ -295,8 +298,11 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
                     // print receipt
                     self.receiptPrinterWindowController.sale = self.objectToEdit;
                     NSWindow * sheet = [self.receiptPrinterWindowController window];
-                    [NSApp beginSheet:sheet modalForWindow:[NSApp mainWindow]
-                        modalDelegate:[NSApp mainWindow] didEndSelector:NULL contextInfo:nil];
+                    [[NSApp mainWindow] beginSheet:sheet completionHandler:^(NSModalResponse returnCode) {
+                        
+                    }];
+//                    [NSApp beginSheet:sheet modalForWindow:[NSApp mainWindow]
+//                        modalDelegate:[NSApp mainWindow] didEndSelector:NULL contextInfo:nil];
                 }
             }
             break;

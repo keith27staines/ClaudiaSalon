@@ -30,7 +30,6 @@
 
 
 -(NSManagedObjectContext *)documentMoc {
-    NSAssert(self.salonDocument, @"Salon is nil");
     return self.salonDocument.managedObjectContext;
 }
 
@@ -56,7 +55,7 @@
     BOOL isAllowed = NO;
     Employee * employee = salonDocument.currentUser;
     if (!self.myView) {
-        self.myView = [self view];
+        self.myView = self.view;
     }
     if (employee) {
         isAllowed = [employee canPerformBusinessFunction:self.businessFunction verb:self.editModeVerb].boolValue;

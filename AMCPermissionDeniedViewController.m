@@ -14,6 +14,9 @@
 #import "AMCRolesMappingToScreen.h"
 
 @interface AMCPermissionDeniedViewController ()
+{
+    BusinessFunction * _businessFunction;
+}
 
 @property (weak) IBOutlet NSTextField *titleLabel;
 @property (weak) IBOutlet NSTextField *userNameLabel;
@@ -39,6 +42,15 @@
         [self.callingViewController performSelectorOnMainThread:cancelButton withObject:nil waitUntilDone:YES];
     }
     [self.callingViewController dismissController:self];
+}
+
+-(void)setBusinessFunction:(BusinessFunction *)businessFunction {
+    NSLog(@"New business function name is %@",businessFunction.functionName);
+    _businessFunction = businessFunction;
+}
+
+-(BusinessFunction *)businessFunction {
+    return _businessFunction;
 }
 - (IBAction)requestPermission:(id)sender {
     self.cancelRequestPermission = NO;

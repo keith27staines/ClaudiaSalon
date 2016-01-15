@@ -116,6 +116,7 @@
     NSUInteger i = 1;
     for (ServiceCategory * category in self.categories) {
         NSString * title = category.name;
+        NSLog(@"title:%@, index:%@",title,@(i));
         [self.categoryPopup insertItemWithTitle:title atIndex:i];
         i++;
     }
@@ -230,6 +231,9 @@
 }
 #pragma mark - WizardStepViewController
 -(void)clear {
+    if (!self.documentMoc) {
+        return;
+    }
     [self loadPopups];
     [self.servicesListTable deselectAll:self];
     [self.saleItemsTable deselectAll:self];

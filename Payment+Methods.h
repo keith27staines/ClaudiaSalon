@@ -17,6 +17,7 @@
 +(NSArray*)nonSalepaymentsBetweenStartDate:(NSDate*)startDate endDate:(NSDate*)endDate withMoc:(NSManagedObjectContext*)moc;
 -(NSString*)refundYNString;
 -(NSNumber*)calculateFeeForAmount:(NSNumber*)amount withFeePercentage:(NSNumber*)feePercent;
+-(void)recalculateFromCurrentAmount;
 -(void)recalculateNetAmountWithFee:(NSNumber *)fee;
 -(void)recalculateNetAmountWithFeePercentage:(NSNumber*)feePercent;
 @property (readonly) BOOL isReconciled;

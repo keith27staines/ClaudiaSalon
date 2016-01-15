@@ -48,6 +48,11 @@
 #import "Role+Methods.h"
 #import "BusinessFunction+Methods.h"
 #import "Permission+Methods.h"
+#import "Sale+Methods.h"
+#import "Payment+Methods.h"
+#import "Customer+Methods.h"
+#import "Appointment+Methods.h"
+#import "Account+Methods.h"
 // End imports for data fixes
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
@@ -137,6 +142,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         [rootServiceCategory addSubCategoriesObject:hairCategory];
         [rootServiceCategory addSubCategoriesObject:beautyCategory];
         for (ServiceCategory * category in [ServiceCategory allObjectsWithMoc:self.managedObjectContext]) {
+            NSLog(@"Service name = %@",category.name);
+            if ([category.name isEqualToString:@"Hair"] || [category.name isEqualToString:@"Beauty"]) {
+                continue;
+            }
             if (!category.parent && category != rootServiceCategory) {
                 if ([category isHairCategory]) {
                     category.parent = hairCategory;
@@ -228,7 +237,123 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
             }
         }
     }
+    
+    // Match sales to corresponding payments
+    NSArray * allPayments = [Payment allObjectsWithMoc:self.managedObjectContext];
+    NSMutableArray * unmatchedPayments = [NSMutableArray array];
+    for (Payment * payment in allPayments) {
+        if (!payment.sale && payment.paymentCategory.isSale.boolValue && !payment.voided.boolValue) {
+            [unmatchedPayments addObject:payment];
+        }
+    }
+    long matchedSales = 0;
+    BOOL matchFound = NO;
+    NSMutableArray * unmatchedSales = [NSMutableArray array];
+    for (Sale * sale in [Sale allObjectsWithMoc:self.managedObjectContext]) {
+        matchFound = NO;
+        if (sale.isQuote.boolValue) { continue; }
+        if (sale.voided.boolValue) { continue; }
+        if (sale.payments.count > 0) { continue; }
+        for (Payment * payment in [unmatchedPayments copy]) {
+            if ([self payment:payment matchesSale:sale]) {
+                // Match
+                matchedSales++;
+                [unmatchedPayments removeObject:payment];
+                matchFound = YES;
+                
+                // This line alters data!!!!!
+                [sale addPaymentsObject:payment];
+                break;
+            }
+        }
+        if (!matchFound) {
+            [unmatchedSales addObject:sale];
+        }
+    }
+    NSLog(@"Matched sales: %@.  Unmatched sales: %@",@(matchedSales),@(unmatchedSales.count));
+    for (Sale * sale in unmatchedSales) {
+        if (!sale.customer) {
+            sale.customer = self.salon.anonymousCustomer;
+        }
+        if (!sale.account) {
+            sale.account = self.salon.tillAccount;
+        }
+        [sale makePaymentInFull];
+    }
+    NSMutableArray * anonCustomers = [NSMutableArray array];
+    Customer * theAnonymousCustomer = self.salon.anonymousCustomer;
+    for (Customer * customer in [Customer allObjectsWithMoc:self.managedObjectContext]) {
+        NSString * firstName;
+        NSString * lastName;
+        if (!customer.firstName) {
+            firstName = @"0000";
+        } else {
+            firstName = [customer.firstName stringByAppendingString:@"0000"];
+        }
+        if (!customer.lastName) {
+            lastName = @"0000";
+        } else {
+            lastName = [customer.lastName stringByAppendingString:@"0000"];
+        }
+        if ([[firstName substringToIndex:4] isEqualToString:@"Anon"]) {
+            [anonCustomers addObject:customer];
+        }
+        if ([[firstName substringToIndex:1] isEqualToString:@"0"] && [[customer.phone substringToIndex:5] isEqualToString:@"00000"]) {
+            [anonCustomers addObject:customer];
+        }
+    }
+    
+    for (Customer * customer in anonCustomers) {
+        NSLog(@"Full name: %@",customer.fullName);
+        if (customer == self.salon.anonymousCustomer) {
+            continue;
+        }
+        for (Sale * sale in [customer.sales copy]) {
+            sale.customer = theAnonymousCustomer;
+        }
+        for (Appointment * appointment in [customer.appointments copy]) {
+            appointment.customer = self.salon.anonymousCustomer;
+        }
+        if (customer != self.salon.anonymousCustomer) {
+            [self.managedObjectContext deleteObject:customer];
+        }
+    }
+    
+    // Recalculate fees and net amount for all card payments
+    Account * paypal = self.salon.cardPaymentAccount;
+    if (paypal.transactionFeePercentageIncoming.doubleValue == 0) {
+        paypal.transactionFeePercentageIncoming = @0.0275;
+    }
+    for (Payment * payment in [Payment allObjectsWithMoc:self.managedObjectContext]) {
+        if (payment.amountNet.doubleValue == 0) {
+            [payment recalculateFromCurrentAmount];
+        }
+    }
 }
+
+-(BOOL)payment:(Payment*)payment matchesSale:(Sale*)sale {
+    if (!payment) { return NO; }
+    if (!sale) { return NO; }
+    if (payment.sale == sale) return YES;
+    if (![payment.direction isEqualToString:kAMCPaymentDirectionIn]) { return NO; };
+    if (payment.amount.doubleValue != sale.actualCharge.doubleValue) { return NO; }
+    long paymentDate = payment.paymentDate.timeIntervalSinceReferenceDate;
+    long saleDate = sale.lastUpdatedDate.timeIntervalSinceReferenceDate;
+    
+    if (sale.customer) {
+        if (![payment.payeeName isEqualToString:sale.customer.fullName]) {
+            return NO;
+        }
+        if (labs(paymentDate-saleDate)>24*3600) { return NO; }
+    } else {
+        if (![payment.payeeName isEqualToString:@"Customer"]) {
+            return NO;
+        }
+        if (labs(paymentDate-saleDate)>3600) { return NO; }
+    }
+    return YES;
+}
+
 -(NSString*)generateFunctionName:(BusinessFunction*)businessFunction {
     NSMutableString * friendlyName = [businessFunction.codeUnitName mutableCopy];
     [friendlyName replaceOccurrencesOfString:@"ViewController" withString:@"" options:0 range:NSMakeRange(0, friendlyName.length)];

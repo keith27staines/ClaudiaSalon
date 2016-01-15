@@ -858,9 +858,6 @@
 			children = (
 				53D69DF01A9B243C0004CE10 /* AMCViewController.h */,
 				53D69CE11A9B240C0004CE10 /* AMCViewController.m */,
-				53D4FCA51B3BF391009EBF70 /* AMCPermissionDeniedViewController.h */,
-				53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */,
-				53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */,
 			);
 			name = AMCViewController;
 			sourceTree = "<group>";
@@ -916,6 +913,17 @@
 				532377DB1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m */,
 			);
 			name = AMCMiniSaleEditor;
+			sourceTree = "<group>";
+		};
+		532D47961C4570340018A58E /* Permission denied view controller */ = {
+			isa = PBXGroup;
+			children = (
+				53D4FCA51B3BF391009EBF70 /* AMCPermissionDeniedViewController.h */,
+				53D4FCA61B3BF391009EBF70 /* AMCPermissionDeniedViewController.m */,
+				53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */,
+			);
+			name = "Permission denied view controller";
+			path = ..;
 			sourceTree = "<group>";
 		};
 		5330E2351AF8A8B40062FD93 /* AdvancePaymentView */ = {
@@ -1880,6 +1888,7 @@
 		53D4FCD31B4044A4009EBF70 /* Roles and Permissions */ = {
 			isa = PBXGroup;
 			children = (
+				532D47961C4570340018A58E /* Permission denied view controller */,
 				535191701B37F57700F8D37A /* Change User View Controller */,
 				53D4FCDB1B4053EB009EBF70 /* Role To Screen Mapping */,
 				53D4FCDA1B40538F009EBF70 /* Users Roles */,
