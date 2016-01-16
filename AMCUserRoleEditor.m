@@ -41,7 +41,7 @@
         self.editModeButton.title = @"View Mode";
     }
     [self.dataTable reloadData];
-    [self tableViewSelectionDidChange:nil];
+    [self tableViewSelectionDidChange];
 }
 - (IBAction)hasRoleChanged:(id)sender {
     NSButton * checkbox = (NSButton*)sender;
@@ -83,6 +83,9 @@
     return self.data[row];
 }
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
+    [self tableViewSelectionDidChange];
+}
+-(void)tableViewSelectionDidChange {
     if (self.selectedRole) {
         self.roleDescription.stringValue = self.selectedRole.fullDescription;
     } else {

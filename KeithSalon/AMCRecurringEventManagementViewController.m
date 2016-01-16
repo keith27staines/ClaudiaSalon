@@ -45,7 +45,7 @@
     [self loadAccountPopup];
     [self loadCategoryPopup];
     [self loadPeriodPopup];
-    [self tableViewSelectionDidChange:nil];
+    [self tableViewSelectionDidChange];
 }
 - (IBAction)addRecurringItem:(id)sender {
     RecurringItem * recurringItem = [NSEntityDescription insertNewObjectForEntityForName:@"RecurringItem" inManagedObjectContext:self.documentMoc];
@@ -91,6 +91,9 @@
     }
 }
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
+    [self tableViewSelectionDidChange];
+}
+-(void)tableViewSelectionDidChange {
     RecurringItem * recurringItem = [self selectedRecurringItem];
     if (recurringItem) {
         Payment * payment = recurringItem.paymentTemplate;

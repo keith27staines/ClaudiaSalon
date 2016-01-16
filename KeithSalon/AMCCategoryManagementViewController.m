@@ -82,7 +82,7 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
     [super prepareForDisplayWithSalon:salonDocument];
     self.titleLabel.stringValue = self.title;
     [self.treeView reloadData];
-    [self outlineViewSelectionDidChange:nil];
+    [self outlineViewSelectionDidChange];
 }
 #pragma mark - Actions
 - (IBAction)rightClickAddLeaf:(id)sender {
@@ -272,6 +272,9 @@ typedef NS_ENUM(NSInteger, MenuButtonTags) {
     return NO;
 }
 -(void)outlineViewSelectionDidChange:(NSNotification *)notification {
+    [self outlineViewSelectionDidChange];
+}
+-(void)outlineViewSelectionDidChange {
     NSInteger row = self.treeView.selectedRow;
     AMCTreeNode * selectedNode = [self.treeView itemAtRow:row];
     self.addButton.enabled= NO;
