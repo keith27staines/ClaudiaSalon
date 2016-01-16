@@ -21,7 +21,7 @@
 #import "AMCAssociatedNotesViewController.h"
 #import "AMCAppointmentViewer.h"
 
-@interface AMCSalesViewController () <NSTableViewDelegate, NSControlTextEditingDelegate, NSAnimationDelegate, AMCReceiptPrinterWindowControllerDelegate, EditObjectViewControllerDelegate, AMCQuickQuoteViewControllerDelegate>
+@interface AMCSalesViewController () <NSTableViewDelegate, NSControlTextEditingDelegate, NSAnimationDelegate, EditObjectViewControllerDelegate, AMCQuickQuoteViewControllerDelegate>
 {
     Sale * _selectedSale;
 }
@@ -178,10 +178,11 @@
 -(void)viewReceiptForSale:(Sale*)sale {
     if (!sale) return;
     self.receiptWindowController.sale = sale;
-    self.receiptWindowController.delegate = self;
     NSWindow * sheet = [self.receiptWindowController window];
-    [NSApp beginSheet:sheet modalForWindow:[NSApp mainWindow]
-        modalDelegate:[NSApp mainWindow] didEndSelector:NULL contextInfo:nil];
+    NSWindow * window = self.view.window;
+    [window beginSheet:sheet completionHandler:^(NSModalResponse returnCode) {
+    
+    }];
 }
 #pragma mark - Edit object detail methods
 -(void)presentAppointmentViewerOnTab:(AMCAppointmentViews)tab
@@ -215,6 +216,7 @@
     [self.saleArrayController rearrangeObjects];
     [self.salesTable reloadData];
     self.selectedSale = self.previouslySelectedSale;
+    [self configureForSelectedSale];
 }
 -(void)editObject:(id)object inMode:(EditMode)editMode withViewController:(EditObjectViewController*)viewController
 {
@@ -243,14 +245,10 @@
     }
 }
 -(void)editObjectViewController:(EditObjectViewController *)controller didEditObject:(id)object {
+    [self saleEditOperationComplete];
 }
 
-#pragma mark - AMCReceiptPrinterWindowControllerDelegate
--(void)receiptPrinter:(AMCReceiptWindowController *)receiptPrinter didFinishWithPrint:(BOOL)yn
-{
-    [self.receiptWindowController close];
-    [NSApp endSheet:receiptPrinter.window];
-}
+#pragma mark - AMCQuickQuoteViewController delegate
 
 -(void)quickQuoteViewControllerDidFinish:(AMCQuickQuoteViewController *)quickQuoteViewController {
     [self configureForSelectedSale];

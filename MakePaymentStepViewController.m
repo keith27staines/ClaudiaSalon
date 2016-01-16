@@ -162,7 +162,24 @@
     [self.amountGivenByCustomer.window makeFirstResponder:nil];
     [self applySale];
     NSWindow * sheet = [self.paymentCompleteWindowController window];
-    [NSApp beginSheet:sheet modalForWindow:self.view.window modalDelegate:self.view.window didEndSelector:NULL contextInfo:nil];
+    NSWindow * window = self.view.window;
+    [window beginSheet:sheet completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSModalResponseCancel) {
+            NSLog(@"The user cancelled and no payment was made");
+        } else {
+            NSLog(@"The user accepted the payment from the customer");
+            Sale * sale = [self sale];
+            sale.amountGivenByCustomer = @(self.amountGivenByCustomer.doubleValue);
+            sale.changeGiven = @([self calculateChange]);
+            sale.isQuote = @(NO);
+            [sale makePaymentInFull];
+            sale.lastUpdatedDate = [NSDate date];
+            if (self.paymentCompleteWindowController.printReceiptCheckbox.state == NSOnState) {
+                self.receiptRequired = YES;
+            }
+            [self.delegate wizardStep:self isValid:YES];
+        }
+    }];
 }
 
 - (IBAction)saveAsQuote:(id)sender {
@@ -222,22 +239,6 @@
     [self applySale];
 }
 #pragma mark - AMCPaymentCompleteWindowControllerDelegate
--(void)paymentCompleteController:(AMCPaymentCompleteWindowController *)controller didCompleteWithStatus:(BOOL)status
-{
-    if (status) {
-        Sale * sale = [self sale];
-        sale.amountGivenByCustomer = @(self.amountGivenByCustomer.doubleValue);
-        sale.changeGiven = @([self calculateChange]);
-        sale.isQuote = @(NO);
-        [sale makePaymentInFull];
-        sale.lastUpdatedDate = [NSDate date];
-        if (controller.printReceiptCheckbox.state == NSOnState) {
-            self.receiptRequired = YES;
-        }
-        [self.delegate wizardStep:self isValid:YES];
-    }
-}
-
 - (IBAction)cardCashSegmentedControlChanged:(id)sender {
     if (self.cardCashSegmentedControl.selectedSegment == 0) {
         self.sale.account = self.salonDocument.salon.tillAccount;

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MakePaymentStepViewController">
@@ -27,7 +30,7 @@
             <rect key="frame" x="0.0" y="0.0" width="1235" height="605"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rnp-BS-Yzd">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rnp-BS-Yzd">
                     <rect key="frame" x="18" y="552" width="446" height="33"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Price  before individual discounts:" id="7xb-yr-iQ4">
                         <font key="font" metaFont="system" size="27"/>
@@ -35,15 +38,18 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6bm-74-Eg9">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6bm-74-Eg9">
                     <rect key="frame" x="79" y="108" width="521" height="39"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="517" id="jI6-xE-MB3"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Enter amount given by customer:" id="fvR-Af-kiV">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HkG-7D-2di">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HkG-7D-2di">
                     <rect key="frame" x="79" y="29" width="521" height="39"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Change to return to customer:" id="wRV-Ya-pyP">
                         <font key="font" metaFont="system" size="27"/>
@@ -51,40 +57,55 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gdv-Pq-HPb">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gdv-Pq-HPb">
                     <rect key="frame" x="463" y="547" width="154" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="150" id="88A-9f-BIf"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="61q-tL-VwW">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ipo-aC-XGm">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ipo-aC-XGm">
                     <rect key="frame" x="639" y="547" width="425" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="421" id="KcW-JM-nmi"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Price after individual discounts:" id="xtI-Ih-bo3">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2i3-En-gXF">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2i3-En-gXF">
                     <rect key="frame" x="1068" y="547" width="157" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="153" id="dlL-Vh-VrV"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="jl8-y5-PFJ">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jJv-MA-thh">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jJv-MA-thh">
                     <rect key="frame" x="475" y="373" width="167" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="163" id="waZ-p4-gvn"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="1lE-Ma-Ea7">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kgV-if-JCE">
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kgV-if-JCE">
                     <rect key="frame" x="715" y="484" width="185" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="180" id="XVm-Qe-vsE"/>
+                    </constraints>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="BZc-F0-AmN" id="9BP-Ye-vmw">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -100,21 +121,25 @@
                         <action selector="extraDiscountChanged:" target="-2" id="XFi-La-kCV"/>
                     </connections>
                 </popUpButton>
-                <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="iBw-2K-VxA">
+                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="iBw-2K-VxA">
                     <rect key="frame" x="12" y="184" width="1211" height="5"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jja-Vf-uHa">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jja-Vf-uHa">
                     <rect key="frame" x="612" y="29" width="167" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="163" id="WDp-7y-Vyq"/>
+                        <constraint firstAttribute="height" constant="38" id="Zdd-50-qRm"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="8Lc-Ys-4Ep">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMv-Pq-pOI">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eMv-Pq-pOI">
                     <rect key="frame" x="839" y="28" width="200" height="41"/>
                     <buttonCell key="cell" type="smallSquare" title="Payment Complete " bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UaD-i5-yha">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -127,15 +152,19 @@ DQ
                         <action selector="paymentComplete:" target="-2" id="TDU-ZJ-4Cd"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rt7-2h-wGO">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rt7-2h-wGO">
                     <rect key="frame" x="67" y="373" width="360" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="38" id="87E-NT-9g1"/>
+                        <constraint firstAttribute="width" constant="356" id="e0K-WO-jRM"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Total discount for customer:" id="9QB-Sb-VnC">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ppQ-ex-mP2">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ppQ-ex-mP2">
                     <rect key="frame" x="709" y="373" width="360" height="38"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Advance payment:" id="jhY-fO-oPg">
                         <font key="font" metaFont="system" size="27"/>
@@ -143,28 +172,35 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="OTp-s3-VZx">
+                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="OTp-s3-VZx">
                     <rect key="frame" x="12" y="323" width="1211" height="5"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <box autoresizesSubviews="NO" fixedFrame="YES" boxType="custom" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="22T-eZ-9qn">
+                <box autoresizesSubviews="NO" boxType="custom" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="22T-eZ-9qn">
                     <rect key="frame" x="0.0" y="186" width="1235" height="140"/>
-                    <view key="contentView">
+                    <view key="contentView" id="tu5-WY-zxS">
                         <rect key="frame" x="1" y="1" width="1233" height="138"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WT3-3c-6lN">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WT3-3c-6lN">
                                 <rect key="frame" x="615" y="50" width="163" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="163" id="vQy-jY-gmZ"/>
+                                </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" drawsBackground="YES" id="4LI-SA-T7e">
                                     <font key="font" metaFont="system" size="27"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="14y-F8-wTs">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="14y-F8-wTs">
                                 <rect key="frame" x="121" y="50" width="495" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="495" id="Wvd-70-TpS"/>
+                                    <constraint firstAttribute="height" constant="38" id="aB4-rZ-EPG"/>
+                                </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Amount outstanding:" drawsBackground="YES" id="tVb-6C-oxW">
                                     <font key="font" metaFont="system" size="27"/>
                                     <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -172,20 +208,34 @@ DQ
                                 </textFieldCell>
                             </textField>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="14y-F8-wTs" firstAttribute="centerY" secondItem="tu5-WY-zxS" secondAttribute="centerY" id="98F-AA-hb1"/>
+                            <constraint firstItem="14y-F8-wTs" firstAttribute="firstBaseline" secondItem="WT3-3c-6lN" secondAttribute="firstBaseline" id="Fyd-6e-GQv"/>
+                            <constraint firstItem="14y-F8-wTs" firstAttribute="leading" secondItem="tu5-WY-zxS" secondAttribute="leading" constant="121" id="JTv-Lb-DwW"/>
+                            <constraint firstItem="WT3-3c-6lN" firstAttribute="leading" secondItem="tu5-WY-zxS" secondAttribute="leading" constant="615" id="nZM-kL-XMu"/>
+                            <constraint firstItem="WT3-3c-6lN" firstAttribute="baseline" secondItem="14y-F8-wTs" secondAttribute="baseline" id="npT-Bk-QcF"/>
+                        </constraints>
                     </view>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </box>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cas-tp-mWS">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cas-tp-mWS">
                     <rect key="frame" x="46" y="478" width="665" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="661" id="wmS-1U-XyK"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Apply additional discount to undiscounted items:" id="BSl-Ah-Bej">
                         <font key="font" metaFont="system" size="27"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N0f-DP-eTj">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="N0f-DP-eTj">
                     <rect key="frame" x="839" y="236" width="200" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="39" id="3OM-sD-zeO"/>
+                        <constraint firstAttribute="width" constant="200" id="G32-3c-F7f"/>
+                    </constraints>
                     <buttonCell key="cell" type="smallSquare" title="Save as Quote" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EaS-3B-9RJ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system" size="18"/>
@@ -194,8 +244,11 @@ DQ
                         <action selector="saveAsQuote:" target="-2" id="I1Y-1R-LOI"/>
                     </connections>
                 </button>
-                <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uCG-Sn-09s">
+                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uCG-Sn-09s">
                     <rect key="frame" x="880" y="121" width="123" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="119" id="0HC-X3-M82"/>
+                    </constraints>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="aML-ao-A6r">
                         <font key="font" metaFont="system"/>
                         <segments>
@@ -207,11 +260,14 @@ DQ
                         <action selector="cardCashSegmentedControlChanged:" target="-2" id="2J5-KZ-b4V"/>
                     </connections>
                 </segmentedControl>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fBy-0L-Io1" customClass="AMCCashEntryField">
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="fBy-0L-Io1" customClass="AMCCashEntryField">
                     <rect key="frame" x="614" y="110" width="184" height="46"/>
                 </customView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1VU-2x-JDf">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1VU-2x-JDf">
                     <rect key="frame" x="1080" y="373" width="145" height="38"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="141" id="ghC-kB-UUl"/>
+                    </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="£ Amount" placeholderString="" id="Csu-kE-Qxx">
                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="ovK-5P-jUX"/>
                         <font key="font" metaFont="system" size="27"/>
@@ -220,12 +276,71 @@ DQ
                     </textFieldCell>
                 </textField>
             </subviews>
+            <constraints>
+                <constraint firstItem="uCG-Sn-09s" firstAttribute="centerY" secondItem="fBy-0L-Io1" secondAttribute="centerY" id="1f0-za-eeJ"/>
+                <constraint firstItem="22T-eZ-9qn" firstAttribute="top" secondItem="rt7-2h-wGO" secondAttribute="bottom" constant="47" id="2C2-fP-FdW"/>
+                <constraint firstItem="ppQ-ex-mP2" firstAttribute="leading" secondItem="jJv-MA-thh" secondAttribute="trailing" constant="71" id="3qN-8Z-yxD"/>
+                <constraint firstItem="rnp-BS-Yzd" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="58G-YR-RkD"/>
+                <constraint firstItem="Jja-Vf-uHa" firstAttribute="baseline" secondItem="HkG-7D-2di" secondAttribute="baseline" id="5Xh-lI-PHM"/>
+                <constraint firstItem="rnp-BS-Yzd" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="6BR-ae-ufK"/>
+                <constraint firstItem="iBw-2K-VxA" firstAttribute="trailing" secondItem="OTp-s3-VZx" secondAttribute="trailing" id="6wZ-Jq-kcU"/>
+                <constraint firstItem="N0f-DP-eTj" firstAttribute="centerY" secondItem="22T-eZ-9qn" secondAttribute="centerY" id="75p-Jp-UF2"/>
+                <constraint firstItem="rnp-BS-Yzd" firstAttribute="baseline" secondItem="2i3-En-gXF" secondAttribute="firstBaseline" id="7LF-Xx-nrM"/>
+                <constraint firstItem="gdv-Pq-HPb" firstAttribute="leading" secondItem="rnp-BS-Yzd" secondAttribute="trailing" constant="3" id="7W1-zO-bYj"/>
+                <constraint firstAttribute="trailing" secondItem="OTp-s3-VZx" secondAttribute="trailing" constant="12" id="8PH-dX-SxC"/>
+                <constraint firstItem="2i3-En-gXF" firstAttribute="baseline" secondItem="ipo-aC-XGm" secondAttribute="baseline" id="Bck-U3-0DZ"/>
+                <constraint firstItem="cas-tp-mWS" firstAttribute="top" secondItem="gdv-Pq-HPb" secondAttribute="bottom" constant="31" id="D7R-sp-U0b"/>
+                <constraint firstItem="6bm-74-Eg9" firstAttribute="top" secondItem="22T-eZ-9qn" secondAttribute="bottom" constant="39" id="Dhn-1H-DvS"/>
+                <constraint firstItem="fBy-0L-Io1" firstAttribute="top" secondItem="iBw-2K-VxA" secondAttribute="bottom" constant="30" id="EfC-6h-QV3"/>
+                <constraint firstItem="ppQ-ex-mP2" firstAttribute="baseline" secondItem="1VU-2x-JDf" secondAttribute="baseline" id="F3E-KF-YnA"/>
+                <constraint firstItem="rt7-2h-wGO" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="69" id="Fj2-si-sXP"/>
+                <constraint firstItem="rnp-BS-Yzd" firstAttribute="baseline" secondItem="gdv-Pq-HPb" secondAttribute="firstBaseline" id="H63-dT-BgR"/>
+                <constraint firstItem="Jja-Vf-uHa" firstAttribute="centerY" secondItem="eMv-Pq-pOI" secondAttribute="centerY" id="Ibe-cb-dRd"/>
+                <constraint firstItem="OTp-s3-VZx" firstAttribute="trailing" secondItem="1VU-2x-JDf" secondAttribute="trailing" id="L8w-eB-5gM"/>
+                <constraint firstItem="Jja-Vf-uHa" firstAttribute="top" secondItem="fBy-0L-Io1" secondAttribute="bottom" constant="43" id="MkN-er-3B0"/>
+                <constraint firstItem="ipo-aC-XGm" firstAttribute="baseline" secondItem="gdv-Pq-HPb" secondAttribute="baseline" id="Od4-1c-Zzr"/>
+                <constraint firstItem="1VU-2x-JDf" firstAttribute="firstBaseline" secondItem="ppQ-ex-mP2" secondAttribute="firstBaseline" id="PJS-qb-Dky"/>
+                <constraint firstItem="jJv-MA-thh" firstAttribute="baseline" secondItem="rt7-2h-wGO" secondAttribute="baseline" id="R61-4t-r4h"/>
+                <constraint firstItem="eMv-Pq-pOI" firstAttribute="leading" secondItem="N0f-DP-eTj" secondAttribute="leading" id="RRP-uj-A69"/>
+                <constraint firstAttribute="bottom" secondItem="HkG-7D-2di" secondAttribute="bottom" constant="29" id="Rga-0G-eGo"/>
+                <constraint firstItem="ipo-aC-XGm" firstAttribute="leading" secondItem="gdv-Pq-HPb" secondAttribute="trailing" constant="26" id="Ugn-br-2xv"/>
+                <constraint firstItem="22T-eZ-9qn" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="Uhg-Bl-Vli"/>
+                <constraint firstItem="2i3-En-gXF" firstAttribute="leading" secondItem="ipo-aC-XGm" secondAttribute="trailing" constant="8" symbolic="YES" id="Vu0-ZU-WVP"/>
+                <constraint firstItem="kgV-if-JCE" firstAttribute="top" secondItem="ipo-aC-XGm" secondAttribute="bottom" constant="39" id="Y0y-fk-z4E"/>
+                <constraint firstItem="6bm-74-Eg9" firstAttribute="leading" secondItem="HkG-7D-2di" secondAttribute="leading" id="YlR-w5-Lsf"/>
+                <constraint firstItem="fBy-0L-Io1" firstAttribute="leading" secondItem="Jja-Vf-uHa" secondAttribute="leading" id="b9q-HT-s9c"/>
+                <constraint firstItem="kgV-if-JCE" firstAttribute="leading" secondItem="cas-tp-mWS" secondAttribute="trailing" constant="8" symbolic="YES" id="cQe-pn-9pM"/>
+                <constraint firstItem="6bm-74-Eg9" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="81" id="cnX-vs-dJP"/>
+                <constraint firstItem="1VU-2x-JDf" firstAttribute="trailing" secondItem="2i3-En-gXF" secondAttribute="trailing" id="cuP-h2-lWD"/>
+                <constraint firstItem="jJv-MA-thh" firstAttribute="baseline" secondItem="ppQ-ex-mP2" secondAttribute="baseline" id="dGR-ng-z17"/>
+                <constraint firstItem="N0f-DP-eTj" firstAttribute="top" secondItem="OTp-s3-VZx" secondAttribute="bottom" constant="49" id="dnE-qb-1Jv"/>
+                <constraint firstItem="22T-eZ-9qn" firstAttribute="top" secondItem="OTp-s3-VZx" secondAttribute="top" id="eXB-Ru-9YW"/>
+                <constraint firstItem="cas-tp-mWS" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="48" id="f6v-az-Syx"/>
+                <constraint firstItem="eMv-Pq-pOI" firstAttribute="top" secondItem="HkG-7D-2di" secondAttribute="top" id="g9o-2x-lSL"/>
+                <constraint firstItem="fBy-0L-Io1" firstAttribute="leading" secondItem="6bm-74-Eg9" secondAttribute="trailing" constant="16" id="gaS-rT-r9Y"/>
+                <constraint firstItem="jJv-MA-thh" firstAttribute="firstBaseline" secondItem="ppQ-ex-mP2" secondAttribute="firstBaseline" id="jq4-Ob-x6u"/>
+                <constraint firstItem="iBw-2K-VxA" firstAttribute="leading" secondItem="OTp-s3-VZx" secondAttribute="leading" id="kC2-6J-hW6"/>
+                <constraint firstItem="HkG-7D-2di" firstAttribute="top" secondItem="6bm-74-Eg9" secondAttribute="bottom" constant="40" id="kRI-H1-CDz"/>
+                <constraint firstItem="1VU-2x-JDf" firstAttribute="leading" secondItem="ppQ-ex-mP2" secondAttribute="trailing" constant="15" id="l6k-Tf-ZRA"/>
+                <constraint firstItem="22T-eZ-9qn" firstAttribute="bottom" secondItem="iBw-2K-VxA" secondAttribute="bottom" id="l72-CG-a6x"/>
+                <constraint firstItem="cas-tp-mWS" firstAttribute="top" secondItem="rnp-BS-Yzd" secondAttribute="bottom" constant="36" id="llm-W1-JXc"/>
+                <constraint firstItem="uCG-Sn-09s" firstAttribute="leading" secondItem="fBy-0L-Io1" secondAttribute="trailing" constant="84" id="mbN-B4-5OG"/>
+                <constraint firstItem="rt7-2h-wGO" firstAttribute="firstBaseline" secondItem="jJv-MA-thh" secondAttribute="firstBaseline" id="mfB-EV-Mqw"/>
+                <constraint firstItem="uCG-Sn-09s" firstAttribute="top" secondItem="22T-eZ-9qn" secondAttribute="bottom" constant="42" id="n8j-nf-Itr"/>
+                <constraint firstAttribute="trailing" secondItem="uCG-Sn-09s" secondAttribute="trailing" constant="234" id="oEz-ir-LEI"/>
+                <constraint firstItem="22T-eZ-9qn" firstAttribute="centerX" secondItem="OTp-s3-VZx" secondAttribute="centerX" id="ohw-3m-azN"/>
+                <constraint firstItem="eMv-Pq-pOI" firstAttribute="baseline" secondItem="Jja-Vf-uHa" secondAttribute="baseline" id="omk-hZ-Jcy"/>
+                <constraint firstItem="6bm-74-Eg9" firstAttribute="trailing" secondItem="HkG-7D-2di" secondAttribute="trailing" id="p6m-Lr-Q6Z"/>
+                <constraint firstItem="eMv-Pq-pOI" firstAttribute="leading" secondItem="Jja-Vf-uHa" secondAttribute="trailing" constant="62" id="pxE-aj-d8L"/>
+                <constraint firstItem="rnp-BS-Yzd" firstAttribute="baseline" secondItem="ipo-aC-XGm" secondAttribute="firstBaseline" id="qWv-aV-jxh"/>
+                <constraint firstItem="N0f-DP-eTj" firstAttribute="trailing" secondItem="eMv-Pq-pOI" secondAttribute="trailing" id="r4u-L2-3hV"/>
+                <constraint firstItem="OTp-s3-VZx" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="12" id="rSm-o1-gPe"/>
+                <constraint firstItem="rt7-2h-wGO" firstAttribute="top" secondItem="cas-tp-mWS" secondAttribute="bottom" constant="67" id="raH-cT-ZjK"/>
+                <constraint firstItem="cas-tp-mWS" firstAttribute="centerY" secondItem="kgV-if-JCE" secondAttribute="centerY" id="uf1-LL-DUZ"/>
+                <constraint firstItem="jJv-MA-thh" firstAttribute="leading" secondItem="rt7-2h-wGO" secondAttribute="trailing" constant="52" id="uf5-rS-Occ"/>
+            </constraints>
             <point key="canvasLocation" x="22.5" y="517.5"/>
         </customView>
-        <customObject id="OqP-uT-VRh" customClass="AMCPaymentCompleteWindowController">
-            <connections>
-                <outlet property="delegate" destination="-2" id="r6v-6o-ukT"/>
-            </connections>
-        </customObject>
+        <customObject id="OqP-uT-VRh" customClass="AMCPaymentCompleteWindowController"/>
     </objects>
 </document>

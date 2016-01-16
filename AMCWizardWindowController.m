@@ -137,8 +137,7 @@
 #pragma mark - Actions
 - (IBAction)cancelButtonClicked:(id)sender {
     self.cancelled = YES;
-    [self.delegate wizardWindowControllerDidFinish:self];
-    [self close];
+    [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseCancel];
 }
 - (IBAction)previousButtonClicked:(id)sender {
     [self selectWizardStep:self.selectedIndex - 1];
@@ -148,7 +147,6 @@
 }
 - (IBAction)doneButtonClicked:(id)sender {
     self.cancelled = NO;
-    [self.delegate wizardWindowControllerDidFinish:self];
-    [self close];
+    [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseOK];
 }
 @end

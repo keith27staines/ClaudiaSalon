@@ -44,7 +44,6 @@ NSTableViewDataSource,
 NSTableViewDelegate,
 NSPopoverDelegate,
 AMCAppointmentsViewDelegate,
-AMCWizardWindowControllerDelegate,
 NSAnimationDelegate>
 {
     NSArray * _appointments;
@@ -579,7 +578,6 @@ NSAnimationDelegate>
 -(void)showBookingWizardInMode:(EditMode)editMode {
     [self.salonDocument saveDocument:self];
     self.currentWizard = [[AMCWizardForNewAppointmentWindowController alloc] init];
-    self.currentWizard.delegate = self;
     self.currentWizard.editMode = editMode;
     if (editMode == EditModeCreate) {
         self.currentWizard.objectToManage = [Appointment newObjectWithMoc:self.documentMoc];
@@ -587,7 +585,26 @@ NSAnimationDelegate>
         self.currentWizard.objectToManage = [self selectedAppointment];
     }
     self.currentWizard.document = self.salonDocument;
-    [NSApp beginSheet:self.currentWizard.window modalForWindow:self.view.window modalDelegate:self.view.window didEndSelector:NULL contextInfo:nil];
+    NSWindow * window = self.view.window;
+    [window beginSheet:self.currentWizard.window completionHandler:^(NSModalResponse returnCode) {
+        NSLog(@"Closing!!");
+        NSManagedObjectContext * moc = self.documentMoc;
+        if (self.currentWizard.cancelled) {
+            if (self.currentWizard.editMode == EditModeCreate) {
+                Appointment * app = self.currentWizard.objectToManage;
+                app.sale.voided = @(YES);
+                [moc deleteObject:self.currentWizard.objectToManage];
+            } else {
+                [moc rollback];
+            }
+        } else {
+            [self.salonDocument saveDocument:self];
+            self.previouslySelectedAppointment = (Appointment*)self.currentWizard.objectToManage;
+        }
+        [self reloadData];
+        [self selectAppointment:self.previouslySelectedAppointment];
+        [self.view.window makeFirstResponder:self.appointmentsTable];
+    }];
 }
 -(void)convertAppointmentToQuote:(Appointment*)appointment {
     Sale * sale = appointment.sale;
@@ -607,27 +624,6 @@ NSAnimationDelegate>
     NSRect rowBounds = [self.appointmentsTable rectOfRow:row];
     NSRect colBounds = [self.appointmentsTable rectOfColumn:col];
     return NSIntersectionRect(rowBounds, colBounds);
-}
-#pragma mark - AMCWizardStepWindowControllerDelegate
--(void)wizardWindowControllerDidFinish:(AMCWizardWindowController *)controller
-{
-    [NSApp endSheet:self.currentWizard.window];
-    NSManagedObjectContext * moc = self.documentMoc;
-    if (self.currentWizard.cancelled) {
-        if (self.currentWizard.editMode == EditModeCreate) {
-            Appointment * app = self.currentWizard.objectToManage;
-            app.sale.voided = @(YES);
-            [moc deleteObject:self.currentWizard.objectToManage];
-        } else {
-            [moc rollback];
-        }
-    } else {
-        [self.salonDocument saveDocument:self];
-        self.previouslySelectedAppointment = (Appointment*)self.currentWizard.objectToManage;
-    }
-    [self reloadData];
-    [self selectAppointment:self.previouslySelectedAppointment];
-    [self.view.window makeFirstResponder:self.appointmentsTable];
 }
 #pragma mark - Actions
 -(IBAction)rightClickEditAction:(id)sender {

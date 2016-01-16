@@ -284,16 +284,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     Customer * theAnonymousCustomer = self.salon.anonymousCustomer;
     for (Customer * customer in [Customer allObjectsWithMoc:self.managedObjectContext]) {
         NSString * firstName;
-        NSString * lastName;
         if (!customer.firstName) {
             firstName = @"0000";
         } else {
             firstName = [customer.firstName stringByAppendingString:@"0000"];
-        }
-        if (!customer.lastName) {
-            lastName = @"0000";
-        } else {
-            lastName = [customer.lastName stringByAppendingString:@"0000"];
         }
         if ([[firstName substringToIndex:4] isEqualToString:@"Anon"]) {
             [anonCustomers addObject:customer];

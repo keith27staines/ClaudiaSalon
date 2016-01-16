@@ -116,7 +116,6 @@
     NSUInteger i = 1;
     for (ServiceCategory * category in self.categories) {
         NSString * title = category.name;
-        NSLog(@"title:%@, index:%@",title,@(i));
         [self.categoryPopup insertItemWithTitle:title atIndex:i];
         i++;
     }

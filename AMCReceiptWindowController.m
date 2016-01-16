@@ -41,12 +41,12 @@
 }
 - (IBAction)cancel:(id)sender {
     self.sale = nil;
-    [self.delegate receiptPrinter:self didFinishWithPrint:NO];
+    [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseCancel];
 }
 - (IBAction)printReceipt:(id)sender {
     [self.receiptView printReceipt];
     self.sale = nil;
-    [self.delegate receiptPrinter:self didFinishWithPrint:YES];
+    [self.window.sheetParent endSheet:self.window returnCode:NSModalResponseOK];
 }
 
 @end

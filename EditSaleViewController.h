@@ -12,7 +12,7 @@
 #import "AMCWizardStepDelegate.h"
 #import "AMCReceiptWindowController.h"
 
-@interface EditSaleViewController : EditObjectViewController <AMCWizardStepDelegate, AMCReceiptPrinterWindowControllerDelegate>
+@interface EditSaleViewController : EditObjectViewController <AMCWizardStepDelegate>
 
 
 @property (weak) IBOutlet NSButton *previousStep;

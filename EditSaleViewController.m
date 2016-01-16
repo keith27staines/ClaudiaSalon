@@ -268,13 +268,8 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
     [self.viewToDisplay removeFromSuperview];
     self.viewToDisplay = nil;
 }
-#pragma mark - AMCReceiptPrinterWindowControllerDelegate
--(void)receiptPrinter:(AMCReceiptWindowController *)receiptPrinter didFinishWithPrint:(BOOL)yn
-{
-    [NSApp endSheet:receiptPrinter.window];
-}
-#pragma mark - AMCWizardStepDelegate
 
+#pragma mark - AMCWizardStepDelegate
 - (void)wizardStep:(id)wizardStep isValid:(BOOL)validity
 {
     switch (self.currentStep) {
@@ -298,11 +293,15 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
                     // print receipt
                     self.receiptPrinterWindowController.sale = self.objectToEdit;
                     NSWindow * sheet = [self.receiptPrinterWindowController window];
-                    [[NSApp mainWindow] beginSheet:sheet completionHandler:^(NSModalResponse returnCode) {
-                        
+                    NSWindow * window = [NSApp mainWindow];
+                    [window beginSheet:sheet completionHandler:^(NSModalResponse returnCode) {
+                        if (returnCode == NSModalResponseCancel) {
+                            NSLog(@"User chose not to print the receipt after all");
+                        } else {
+                            NSLog(@"User chose to print the receipt");
+                        }
+                        vc.receiptRequired = NO;
                     }];
-//                    [NSApp beginSheet:sheet modalForWindow:[NSApp mainWindow]
-//                        modalDelegate:[NSApp mainWindow] didEndSelector:NULL contextInfo:nil];
                 }
             }
             break;

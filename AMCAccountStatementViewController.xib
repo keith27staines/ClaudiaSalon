@@ -50,16 +50,16 @@
                         <action selector="accountChanged:" target="-2" id="JXf-mi-YuN"/>
                     </connections>
                 </popUpButton>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LMe-di-zMb">
-                    <rect key="frame" x="18" y="691" width="189" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LMe-di-zMb">
+                    <rect key="frame" x="18" y="691" width="185" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Show statements for account:" id="kQu-dm-1QH">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j8i-ag-3OZ">
-                    <rect key="frame" x="555" y="13" width="73" height="32"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="j8i-ag-3OZ">
+                    <rect key="frame" x="555" y="13" width="72" height="32"/>
                     <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nRY-Ri-QZ6">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -301,8 +301,8 @@ DQ
                         </binding>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yLh-YS-jHM">
-                    <rect key="frame" x="716" y="649" width="208" height="32"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yLh-YS-jHM">
+                    <rect key="frame" x="716" y="649" width="203" height="32"/>
                     <buttonCell key="cell" type="push" title="Compare to statement" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VwX-Re-AQZ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -316,8 +316,8 @@ DQ
                         </binding>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k9b-Xf-CSA">
-                    <rect key="frame" x="716" y="608" width="208" height="32"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k9b-Xf-CSA">
+                    <rect key="frame" x="716" y="608" width="203" height="32"/>
                     <buttonCell key="cell" type="push" title="Create Reconciliation Point" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vya-uY-U81">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -351,8 +351,8 @@ DQ
                                     <action selector="recalculate:" target="-2" id="BNu-6I-fHb"/>
                                 </connections>
                             </button>
-                            <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Egi-wJ-EIO">
-                                <rect key="frame" x="162" y="73" width="20" height="20"/>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="Egi-wJ-EIO">
+                                <rect key="frame" x="165" y="73" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="etq-Ct-PPM"/>
                                     <constraint firstAttribute="width" constant="20" id="rzg-XO-2nd"/>
@@ -365,8 +365,8 @@ DQ
                                     <action selector="recalculate:" target="-2" id="UZv-2L-uQb"/>
                                 </connections>
                             </button>
-                            <datePicker verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XK7-H0-Bwb">
-                                <rect key="frame" x="62" y="72" width="95" height="27"/>
+                            <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XK7-H0-Bwb">
+                                <rect key="frame" x="61" y="72" width="99" height="27"/>
                                 <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="h0s-3M-nbY">
                                     <font key="font" metaFont="system"/>
                                     <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
@@ -377,24 +377,24 @@ DQ
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 </datePickerCell>
                             </datePicker>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vdj-df-orT">
-                                <rect key="frame" x="20" y="75" width="36" height="17"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vdj-df-orT">
+                                <rect key="frame" x="20" y="75" width="35" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="From" id="iC7-He-zxm">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2cz-XN-OKx">
-                                <rect key="frame" x="275" y="75" width="19" height="17"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2cz-XN-OKx">
+                                <rect key="frame" x="271" y="75" width="19" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="To" id="Wbf-Bb-too">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <datePicker verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3AE-7R-s5i">
-                                <rect key="frame" x="300" y="72" width="95" height="27"/>
+                            <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3AE-7R-s5i">
+                                <rect key="frame" x="296" y="72" width="99" height="27"/>
                                 <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="ygG-8L-wlX">
                                     <font key="font" metaFont="system"/>
                                     <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
@@ -405,16 +405,16 @@ DQ
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 </datePickerCell>
                             </datePicker>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NAy-jh-StQ">
-                                <rect key="frame" x="20" y="26" width="108" height="17"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NAy-jh-StQ">
+                                <rect key="frame" x="20" y="26" width="107" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Brought forward:" id="fb0-eV-5AH">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ady-rK-qEo">
-                                <rect key="frame" x="134" y="26" width="12" height="17"/>
+                            <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ady-rK-qEo">
+                                <rect key="frame" x="133" y="26" width="13" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="I6O-Wu-Vhg">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="AOA-lg-9Lp"/>
                                     <font key="font" metaFont="system"/>
@@ -431,8 +431,8 @@ DQ
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nuN-RX-ccO">
-                                <rect key="frame" x="268" y="26" width="93" height="17"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nuN-RX-ccO">
+                                <rect key="frame" x="270" y="26" width="91" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Carry forward:" id="wJo-mb-eRp">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -480,8 +480,8 @@ DQ
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
-                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yb5-9X-cKt">
-                    <rect key="frame" x="1012" y="631" width="113" height="32"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yb5-9X-cKt">
+                    <rect key="frame" x="1007" y="631" width="111" height="32"/>
                     <buttonCell key="cell" type="push" title="Check Fees" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mHf-gA-cJw">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>

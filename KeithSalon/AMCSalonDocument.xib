@@ -192,9 +192,9 @@
                     <toolbarItem implicitItemIdentifier="985A9B68-9E2C-4EAE-8CAD-ABE0A79BA481" label="" paletteLabel="" id="N06-ft-jtC">
                         <nil key="toolTip"/>
                         <size key="minSize" width="100" height="28"/>
-                        <size key="maxSize" width="100" height="28"/>
+                        <size key="maxSize" width="109" height="28"/>
                         <popUpButton key="view" verticalHuggingPriority="750" id="BMi-vh-Va5">
-                            <rect key="frame" x="0.0" y="14" width="100" height="28"/>
+                            <rect key="frame" x="0.0" y="14" width="109" height="28"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <popUpButtonCell key="cell" type="roundTextured" title="User name" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" autoenablesItems="NO" selectedItem="YZq-hi-zO4" id="ohL-dH-LnN">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -223,8 +223,8 @@
                         </popUpButton>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="B0414B8B-707C-40A9-899E-C94C611D5FA0" label="" paletteLabel="" tag="-1" image="UserIcon" id="Zed-Ij-tDH">
-                        <size key="minSize" width="48" height="48"/>
-                        <size key="maxSize" width="48" height="48"/>
+                        <size key="minSize" width="56" height="58"/>
+                        <size key="maxSize" width="56" height="58"/>
                         <connections>
                             <action selector="userIconClicked:" target="-1" id="JIP-vh-DCQ"/>
                         </connections>

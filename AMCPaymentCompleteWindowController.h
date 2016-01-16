@@ -10,12 +10,6 @@
 #import "AMCSalonDocument.h"
 @class AMCPaymentCompleteWindowController;
 
-@protocol AMCPaymentCompleteWindowControllerDelegate <NSObject>
-
--(void)paymentCompleteController:(AMCPaymentCompleteWindowController*)controller didCompleteWithStatus:(BOOL)status;
-
-@end
-
 @interface AMCPaymentCompleteWindowController : NSWindowController
 
 @property (weak) IBOutlet NSButton *printReceiptCheckbox;
@@ -29,8 +23,6 @@
 - (IBAction)completePaymentButtonClicked:(id)sender;
 
 @property BOOL state;
-
-@property (weak) IBOutlet id<AMCPaymentCompleteWindowControllerDelegate>delegate;
 
 
 @end

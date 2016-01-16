@@ -33,8 +33,6 @@
 -(void)closeWindowWithStatus:(BOOL)status
 {
     self.state = status;
-    [NSApp endSheet:self.window];
-    [self.window close];
-    [self.delegate paymentCompleteController:self didCompleteWithStatus:status];
+    [self.window.sheetParent endSheet:self.window returnCode:(status==NO?NSModalResponseCancel:NSModalResponseOK)];
 }
 @end

@@ -12,7 +12,7 @@
 #import "AMCPaymentCompleteWindowController.h"
 #import "AMCCashEntryField.h"
 
-@interface MakePaymentStepViewController : WizardStepViewController <NSControlTextEditingDelegate,NSTextFieldDelegate,AMCPaymentCompleteWindowControllerDelegate, AMCCashEntryDelegate>
+@interface MakePaymentStepViewController : WizardStepViewController <NSControlTextEditingDelegate,NSTextFieldDelegate, AMCCashEntryDelegate>
 
 @property (weak) IBOutlet NSTextField *costOfAllWithoutAdditionalDiscount;
 

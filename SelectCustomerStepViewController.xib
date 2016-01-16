@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SelectCustomerStepViewController">
@@ -25,7 +25,7 @@
             <rect key="frame" x="0.0" y="0.0" width="1230" height="509"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kOu-jL-1yY">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kOu-jL-1yY">
                     <rect key="frame" x="88" y="447" width="84" height="19"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Last Name" id="M39-MO-xjX">
                         <font key="font" metaFont="system" size="16"/>
@@ -33,7 +33,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jOV-cT-FNf">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jOV-cT-FNf">
                     <rect key="frame" x="120" y="410" width="52" height="19"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Phone" id="ila-gr-480">
                         <font key="font" metaFont="system" size="16"/>
@@ -41,7 +41,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AO7-4Y-SBU">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AO7-4Y-SBU">
                     <rect key="frame" x="127" y="373" width="45" height="19"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Email" id="yg5-RX-Ldh">
                         <font key="font" metaFont="system" size="16"/>
@@ -49,7 +49,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5dl-YV-0FC" userLabel="Month of birth popup">
+                <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5dl-YV-0FC" userLabel="Month of birth popup">
                     <rect key="frame" x="721" y="479" width="147" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="142" id="DmZ-c7-uCJ"/>
@@ -70,7 +70,7 @@
                         <action selector="monthChanged:" target="XuY-ET-kh3" id="aK2-vA-Iuj"/>
                     </connections>
                 </popUpButton>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sAj-y9-hpb" userLabel="Day of birth popup">
+                <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sAj-y9-hpb" userLabel="Day of birth popup">
                     <rect key="frame" x="721" y="442" width="81" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="76" id="EuV-mM-LuO"/>
@@ -90,7 +90,7 @@
                         <action selector="dayChanged:" target="XuY-ET-kh3" id="bIc-BU-OQY"/>
                     </connections>
                 </popUpButton>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dQY-mA-EZl">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dQY-mA-EZl">
                     <rect key="frame" x="608" y="484" width="109" height="19"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Month of birth" id="WCx-9b-g6i">
                         <font key="font" metaFont="system" size="16"/>
@@ -98,7 +98,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mvk-ga-u6w">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mvk-ga-u6w">
                     <rect key="frame" x="608" y="447" width="90" height="19"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Day of birth" id="xfu-9W-Bco">
                         <font key="font" metaFont="system" size="16"/>
@@ -157,11 +157,11 @@
                 <scrollView appearanceType="aqua" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKr-Fi-4qS">
                     <rect key="frame" x="0.0" y="0.0" width="1230" height="249"/>
                     <clipView key="contentView" id="x6N-YM-fi4">
-                        <rect key="frame" x="1" y="17" width="1193" height="276"/>
+                        <rect key="frame" x="1" y="0.0" width="1228" height="248"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="rhA-u2-aUd" id="PT1-BQ-vBd">
-                                <rect key="frame" x="0.0" y="0.0" width="1228" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1228" height="225"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -263,7 +263,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="rhA-u2-aUd">
-                        <rect key="frame" x="0.0" y="0.0" width="1193" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1228" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
@@ -278,7 +278,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aQa-RT-3X2">
+                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aQa-RT-3X2">
                     <rect key="frame" x="899" y="475" width="110" height="32"/>
                     <buttonCell key="cell" type="push" title="Clear filters" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KRv-E9-FLJ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -288,7 +288,7 @@
                         <action selector="clearButton:" target="-2" id="b9y-A0-XJt"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iv6-Es-xs4">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iv6-Es-xs4">
                     <rect key="frame" x="-2" y="484" width="174" height="19"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="170" id="5sC-8o-Lii"/>
@@ -299,7 +299,7 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6v5-5k-UOw">
+                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6v5-5k-UOw">
                     <rect key="frame" x="604" y="291" width="145" height="32"/>
                     <buttonCell key="cell" type="push" title="Create Customer" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yai-8c-KZO">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -309,7 +309,7 @@
                         <action selector="createCustomer:" target="-2" id="q70-gS-irw"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lfZ-ap-8vp">
+                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lfZ-ap-8vp">
                     <rect key="frame" x="604" y="367" width="216" height="32"/>
                     <buttonCell key="cell" type="push" title="Select anonymous customer" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="71X-xl-oW0">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
