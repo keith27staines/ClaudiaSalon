@@ -16,6 +16,7 @@
                 <outlet property="changeToReturn" destination="Jja-Vf-uHa" id="0KZ-2i-oAf"/>
                 <outlet property="costAfterIndividualDiscounts" destination="2i3-En-gXF" id="gPz-97-Heu"/>
                 <outlet property="costOfAllWithoutAdditionalDiscount" destination="gdv-Pq-HPb" id="Fo4-wP-hUB"/>
+                <outlet property="discountTypeSegmentedControl" destination="QkA-o2-gl5" id="u7d-dL-TGa"/>
                 <outlet property="paymentCompleteButton" destination="eMv-Pq-pOI" id="adc-dv-diK"/>
                 <outlet property="paymentCompleteWindowController" destination="OqP-uT-VRh" id="Ajo-eZ-ZYh"/>
                 <outlet property="saveAsQuoteButton" destination="N0f-DP-eTj" id="OEF-H5-csa"/>
@@ -275,6 +276,19 @@ DQ
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QkA-o2-gl5">
+                    <rect key="frame" x="920" y="485" width="168" height="24"/>
+                    <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="yv5-vt-xUL">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment label="% Amount"/>
+                            <segment label="£ Amount" selected="YES" tag="1"/>
+                        </segments>
+                    </segmentedCell>
+                    <connections>
+                        <action selector="discountTypeChanged:" target="-2" id="25c-Av-USc"/>
+                    </connections>
+                </segmentedControl>
             </subviews>
             <constraints>
                 <constraint firstItem="uCG-Sn-09s" firstAttribute="centerY" secondItem="fBy-0L-Io1" secondAttribute="centerY" id="1f0-za-eeJ"/>
@@ -331,11 +345,13 @@ DQ
                 <constraint firstItem="22T-eZ-9qn" firstAttribute="centerX" secondItem="OTp-s3-VZx" secondAttribute="centerX" id="ohw-3m-azN"/>
                 <constraint firstItem="eMv-Pq-pOI" firstAttribute="baseline" secondItem="Jja-Vf-uHa" secondAttribute="baseline" id="omk-hZ-Jcy"/>
                 <constraint firstItem="6bm-74-Eg9" firstAttribute="trailing" secondItem="HkG-7D-2di" secondAttribute="trailing" id="p6m-Lr-Q6Z"/>
+                <constraint firstItem="QkA-o2-gl5" firstAttribute="baseline" secondItem="kgV-if-JCE" secondAttribute="baseline" id="pPD-vF-QYE"/>
                 <constraint firstItem="eMv-Pq-pOI" firstAttribute="leading" secondItem="Jja-Vf-uHa" secondAttribute="trailing" constant="62" id="pxE-aj-d8L"/>
                 <constraint firstItem="rnp-BS-Yzd" firstAttribute="baseline" secondItem="ipo-aC-XGm" secondAttribute="firstBaseline" id="qWv-aV-jxh"/>
                 <constraint firstItem="N0f-DP-eTj" firstAttribute="trailing" secondItem="eMv-Pq-pOI" secondAttribute="trailing" id="r4u-L2-3hV"/>
                 <constraint firstItem="OTp-s3-VZx" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="12" id="rSm-o1-gPe"/>
                 <constraint firstItem="rt7-2h-wGO" firstAttribute="top" secondItem="cas-tp-mWS" secondAttribute="bottom" constant="67" id="raH-cT-ZjK"/>
+                <constraint firstItem="QkA-o2-gl5" firstAttribute="leading" secondItem="kgV-if-JCE" secondAttribute="trailing" constant="25" id="uIN-t7-xe2"/>
                 <constraint firstItem="cas-tp-mWS" firstAttribute="centerY" secondItem="kgV-if-JCE" secondAttribute="centerY" id="uf1-LL-DUZ"/>
                 <constraint firstItem="jJv-MA-thh" firstAttribute="leading" secondItem="rt7-2h-wGO" secondAttribute="trailing" constant="52" id="uf5-rS-Occ"/>
             </constraints>

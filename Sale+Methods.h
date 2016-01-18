@@ -25,4 +25,5 @@
 -(double)amountOutstanding;
 -(double)amountAdvanced;
 -(BOOL)isVoidable;
+-(void)convertToDiscountVersion2;
 @end

@@ -15,4 +15,5 @@
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 -(void)updatePrice;
 -(double)discountAmount;
+-(void)convertToDiscountVersion2;
 @end  

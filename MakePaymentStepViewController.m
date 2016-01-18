@@ -41,7 +41,8 @@
         loaded = YES;
         [self loadDiscountPopup];
         Sale * sale = [self sale];
-        [self.additionalDiscountPopup selectItemAtIndex:sale.discountType.integerValue];
+        [self.additionalDiscountPopup selectItemAtIndex:sale.discountValue.integerValue];
+        self.discountTypeSegmentedControl.selectedSegment = (sale.discountType.integerValue==AMCDiscountTypePercentage)?0:1;
         self.amountGivenByCustomer.delegate = self;
         self.amountGivenByCustomer.fontSize = 24;
         [self applySale];
@@ -53,16 +54,26 @@
 -(void)loadDiscountPopup
 {
     [self.additionalDiscountPopup removeAllItems];
-    for (int i = AMCDiscountMinimum; i<=AMCDiscountMaximum; i++) {
-        NSString * discountDescription = [AMCDiscountCalculator discountDescriptionforDiscount:i];
-        [self.additionalDiscountPopup insertItemWithTitle:discountDescription atIndex:i];
+    NSString * currencySymbol = @"£";
+    NSString * percentSymbol = @"%";
+    NSString * discountString = @"";
+    for (int i = 0; i <= 100; i++) {
+        if (self.discountTypeSegmentedControl.selectedSegment == 0) {
+            // Percent
+            discountString = [NSString stringWithFormat:@"%@ %@",@(i),percentSymbol];
+        } else {
+            // Absolute amount
+            discountString = [NSString stringWithFormat:@"%@ %@",currencySymbol,@(i)];
+        }
+        [self.additionalDiscountPopup insertItemWithTitle:discountString atIndex:i];
     }
     Sale * sale = [self sale];
-    [self.additionalDiscountPopup selectItemAtIndex:sale.discountType.integerValue];
+    [self.additionalDiscountPopup selectItemAtIndex:sale.discountValue.integerValue];
+    self.discountTypeSegmentedControl.selectedSegment = (sale.discountType.integerValue==AMCDiscountTypePercentage)?0:1;
 }
 - (IBAction)extraDiscountChanged:(id)sender {
     Sale * sale = [self sale];
-    sale.discountType = @(self.additionalDiscountPopup.indexOfSelectedItem);
+    sale.discountValue = @(self.additionalDiscountPopup.indexOfSelectedItem);
     [self applySale];
 }
 -(void)clear
@@ -70,6 +81,7 @@
     [self.additionalDiscountPopup selectItemAtIndex:0];
     self.costOfAllWithoutAdditionalDiscount.stringValue = @"";
     self.totalDiscount.stringValue = @"";
+    self.discountTypeSegmentedControl.selectedSegment = 1;
     self.totalToPay.stringValue = @"";
     self.alreadyPaid.doubleValue = 0;
     self.amountGivenByCustomer.doubleValue = 0;
@@ -245,6 +257,11 @@
     } else {
         self.sale.account = self.salonDocument.salon.cardPaymentAccount;
     }
+    [self applySale];
+}
+- (IBAction)discountTypeChanged:(id)sender {
+    Sale * sale = [self sale];
+    sale.discountType = @((self.discountTypeSegmentedControl.selectedSegment==0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
     [self applySale];
 }
 @end

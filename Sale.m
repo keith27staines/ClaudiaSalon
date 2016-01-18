@@ -2,8 +2,8 @@
 //  Sale.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 05/05/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 17/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import "Sale.h"
@@ -14,27 +14,8 @@
 #import "Payment.h"
 #import "SaleItem.h"
 
-
 @implementation Sale
 
-@dynamic actualCharge;
-@dynamic amountGivenByCustomer;
-@dynamic changeGiven;
-@dynamic chargeAfterIndividualDiscounts;
-@dynamic createdDate;
-@dynamic discountAmount;
-@dynamic discountType;
-@dynamic hidden;
-@dynamic isQuote;
-@dynamic lastUpdatedDate;
-@dynamic nominalCharge;
-@dynamic voided;
-@dynamic account;
-@dynamic customer;
-@dynamic fromAppointment;
-@dynamic notes;
-@dynamic payments;
-@dynamic saleItem;
-@dynamic advancePayment;
+// Insert code here to add functionality to your managed object subclass
 
 @end

@@ -56,6 +56,9 @@
 - (IBAction)showProductsInfo:(id)sender;
 - (IBAction)showDiscountInfo:(id)sender;
 - (IBAction)discountChanged:(id)sender;
+@property (weak) IBOutlet NSSegmentedControl *discountTypeSegmentedControl;
+- (IBAction)discountTypeChanged:(id)sender;
+
 @property (weak) IBOutlet NSBox *selectedSaleItemBox;
 @property (weak) IBOutlet NSBox *servicesBox;
 @property (weak) IBOutlet NSButton *refundButton;

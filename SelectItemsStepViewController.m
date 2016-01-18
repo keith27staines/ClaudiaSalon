@@ -124,8 +124,17 @@
 -(void)loadDiscountPopup
 {
     [self.discountPopup removeAllItems];
-    for (int i = AMCDiscountMinimum; i<=AMCDiscountMaximum; i++) {
-        NSString * discountDescription = [AMCDiscountCalculator discountDescriptionforDiscount:i];
+    for (int i = 0; i <= 100; i++) {
+        NSString * discountDescription;
+        NSString * percentSymbol = @"%";
+        NSString * currencySymbol = @"£";
+        if (self.discountTypeSegmentedControl.selectedSegment == 0) {
+            // Percent
+            discountDescription = [NSString stringWithFormat:@"%@ %@",@(i),percentSymbol];
+        } else {
+            // Absolute amount
+            discountDescription = [NSString stringWithFormat:@"%@ %@",currencySymbol,@(i)];
+        }
         [self.discountPopup insertItemWithTitle:discountDescription atIndex:i];
     }
 }
@@ -275,6 +284,29 @@
     [self updateTotal];
 }
 #pragma mark - Actions
+- (IBAction)totalInfoButtonClicked:(id)sender {
+    Sale * sale = self.sale;
+    AMCQuickQuoteViewController * vc = self.quickQuoteViewController;
+    vc.sale = sale;
+    [vc prepareForDisplayWithSalon:self.salonDocument];
+    [self presentViewController:vc asPopoverRelativeToRect:self.quickQuoteButton.bounds ofView:self.quickQuoteButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+}
+- (IBAction)refundButtonClicked:(id)sender {
+    AMCRefundViewController * vc = [AMCRefundViewController new];
+    vc.saleItem = [self selectedSaleItem];
+    [self presentViewController:vc asPopoverRelativeToRect:self.refundButton.bounds ofView:self.refundButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
+}
+-(void)popoverDidClose:(NSNotification *)notification
+{
+    [self saleItemWasSelected];
+}
+
+- (IBAction)discountTypeChanged:(id)sender {
+    SaleItem * saleItem = [self selectedSaleItem];
+    saleItem.discountType = @((self.discountTypeSegmentedControl.integerValue==0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
+    [self applyDiscount];
+    [self updateTotal];
+}
 - (IBAction)categoryChanged:(id)sender {
     NSManagedObjectContext * moc = self.documentMoc;
     NSEntityDescription * entityDescription = [NSEntityDescription entityForName:@"Service" inManagedObjectContext:moc];
@@ -361,6 +393,8 @@
 - (IBAction)showDiscountInfo:(id)sender {
 }
 - (IBAction)discountChanged:(id)sender {
+    SaleItem * saleItem = [self selectedSaleItem];
+    saleItem.discountValue = @([self.discountPopup indexOfSelectedItem]);
     [self applyDiscount];
     [self updateTotal];
 }
@@ -482,6 +516,7 @@
     self.chargePriceBeforeDiscount.stringValue = @"";
     self.chargePriceAfterDiscount.stringValue = @"£0.00";
     [self.discountPopup selectItemAtIndex:0];
+    self.discountTypeSegmentedControl.selectedSegment = 1;
     [self.priceSlider setEnabled:NO];
     [self.chargePriceBeforeDiscount setEnabled:NO];
 }
@@ -503,7 +538,9 @@
         } else {
             max = service.nominalCharge.doubleValue;
         }
-        [self.discountPopup selectItemAtIndex:saleItem.discountType.integerValue];
+        self.discountTypeSegmentedControl.selectedSegment = (saleItem.discountType.integerValue == AMCDiscountTypePercentage)?0:1;
+        [self loadDiscountPopup];
+        [self.discountPopup selectItemAtIndex:saleItem.discountValue.integerValue];
         BOOL enablePriceSlider = (self.enabled && (min < max));
         [self.priceSlider setEnabled:enablePriceSlider];
         [self.chargePriceBeforeDiscount setEnabled:YES];
@@ -577,30 +614,15 @@
 }
 -(void)applyDiscount
 {
+    [self loadDiscountPopup];
     SaleItem * saleItem = [self selectedSaleItem];
+    [self.discountPopup selectItemAtIndex:saleItem.discountValue.integerValue];
     double amount = saleItem.nominalCharge.doubleValue;
-    AMCDiscount discount = self.discountPopup.indexOfSelectedItem;
-    saleItem.discountType = @(discount);
-    double discountedPrice = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:discount undiscountedPrice:amount];
+    AMCDiscountType discountType = saleItem.discountType.integerValue;
+    double discountValue = saleItem.discountValue.integerValue;
+    double discountedPrice = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:discountType discountValue:discountValue undiscountedPrice:amount];
+    
     self.selectedSaleItem.actualCharge = @(discountedPrice);
     self.chargePriceAfterDiscount.stringValue = [NSString stringWithFormat:@"£%1.2f",discountedPrice];
 }
-- (IBAction)totalInfoButtonClicked:(id)sender {
-    Sale * sale = self.sale;
-    AMCQuickQuoteViewController * vc = self.quickQuoteViewController;
-    vc.sale = sale;
-    [vc prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewController:vc asPopoverRelativeToRect:self.quickQuoteButton.bounds ofView:self.quickQuoteButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
-}
-
-- (IBAction)refundButtonClicked:(id)sender {
-    AMCRefundViewController * vc = [AMCRefundViewController new];
-    vc.saleItem = [self selectedSaleItem];
-    [self presentViewController:vc asPopoverRelativeToRect:self.refundButton.bounds ofView:self.refundButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
-}
--(void)popoverDidClose:(NSNotification *)notification
-{
-    [self saleItemWasSelected];
-}
-
 @end

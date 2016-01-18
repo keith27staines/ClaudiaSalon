@@ -13,6 +13,7 @@
                 <outlet property="chargePriceBeforeDiscount" destination="gWm-Fi-Nc1" id="lyX-CJ-PkM"/>
                 <outlet property="deluxeImage" destination="xde-Na-92T" id="L4u-92-udz"/>
                 <outlet property="discountPopup" destination="Rfy-Ok-kSY" id="jAL-DS-RN9"/>
+                <outlet property="discountTypeSegmentedControl" destination="GZV-8K-KXL" id="NCI-uR-H5X"/>
                 <outlet property="hairLength" destination="w9Q-iO-xQR" id="oJA-ot-B0q"/>
                 <outlet property="maximumPrice" destination="lWZ-bW-PnT" id="s0c-fE-Ewk"/>
                 <outlet property="minimumPrice" destination="zbZ-67-g0x" id="H6n-ii-qcb"/>
@@ -93,26 +94,6 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rfy-Ok-kSY">
-                                <rect key="frame" x="286" y="100" width="166" height="26"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="161" id="LoS-1I-ewU"/>
-                                </constraints>
-                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="two-p8-5pO" id="93o-zX-YIP">
-                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="menu"/>
-                                    <menu key="menu" title="OtherViews" id="ZZ8-zT-1l1">
-                                        <items>
-                                            <menuItem title="Item 1" state="on" id="two-p8-5pO"/>
-                                            <menuItem title="Item 2" id="Vmz-rj-xgt"/>
-                                            <menuItem title="Item 3" id="REP-al-IJh"/>
-                                        </items>
-                                    </menu>
-                                </popUpButtonCell>
-                                <connections>
-                                    <action selector="discountChanged:" target="-2" id="XBa-be-kKK"/>
-                                </connections>
-                            </popUpButton>
                             <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="bSF-Ww-Lq0">
                                 <rect key="frame" x="14" y="72" width="640" height="5"/>
                                 <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -180,7 +161,41 @@
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rfy-Ok-kSY">
+                                <rect key="frame" x="286" y="100" width="76" height="26"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="two-p8-5pO" id="93o-zX-YIP">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" title="OtherViews" id="ZZ8-zT-1l1">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" id="two-p8-5pO"/>
+                                            <menuItem title="Item 2" id="Vmz-rj-xgt"/>
+                                            <menuItem title="Item 3" id="REP-al-IJh"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <action selector="discountChanged:" target="-2" id="XBa-be-kKK"/>
+                                </connections>
+                            </popUpButton>
+                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GZV-8K-KXL">
+                                <rect key="frame" x="397" y="101" width="181" height="24"/>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="U17-RZ-etU">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment label="% Discount"/>
+                                        <segment label="£ Discount" selected="YES" tag="1"/>
+                                    </segments>
+                                </segmentedCell>
+                                <connections>
+                                    <action selector="discountTypeChanged:" target="-2" id="lPE-5T-3Oy"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="GZV-8K-KXL" firstAttribute="baseline" secondItem="Rfy-Ok-kSY" secondAttribute="baseline" id="Ctg-iw-dGf"/>
+                            <constraint firstItem="GZV-8K-KXL" firstAttribute="leading" secondItem="Rfy-Ok-kSY" secondAttribute="trailing" constant="40" id="b0c-6I-sHY"/>
+                        </constraints>
                     </view>
                     <constraints>
                         <constraint firstItem="JIQ-bS-hV4" firstAttribute="leading" secondItem="bSF-Ww-Lq0" secondAttribute="leading" id="3I2-N3-4fG"/>

@@ -49,6 +49,7 @@
 #import "BusinessFunction+Methods.h"
 #import "Permission+Methods.h"
 #import "Sale+Methods.h"
+#import "SaleItem+Methods.h"
 #import "Payment+Methods.h"
 #import "Customer+Methods.h"
 #import "Appointment+Methods.h"
@@ -322,6 +323,58 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         if (payment.amountNet.doubleValue == 0) {
             [payment recalculateFromCurrentAmount];
         }
+    }
+    
+    // Change discount model
+    NSMutableArray * allSales = [[Sale allObjectsWithMoc:self.managedObjectContext] mutableCopy];
+    [allSales sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        Sale * sale1 = (Sale*)obj1;
+        Sale * sale2 = (Sale*)obj2;
+        if ([sale1.lastUpdatedDate isGreaterThan:sale2.lastUpdatedDate]) {
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        
+        if ([sale1.lastUpdatedDate isLessThan:sale2.lastUpdatedDate]) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    for (Sale * sale in allSales) {
+        if (sale.discountVersion.integerValue >=2) {
+            continue;
+        }
+//        long i = 0;
+//        NSLog(@"Old sale discount type   = %@",sale.discountType);
+//        NSLog(@"Old sale discount value  = %@",sale.discountValue);
+//        NSLog(@"Old sale discount amount = %@",sale.discountAmount);
+//        NSLog(@"Old sale actual charge   = %@",sale.actualCharge);
+//        NSLog(@"Old sale nominal charge  = %@",sale.nominalCharge);
+//        NSLog(@"Old sale charge after individual discounts = %@",sale.chargeAfterIndividualDiscounts);
+//        i = 0;
+//        for (SaleItem * saleItem in sale.saleItem) {
+//            NSLog(@"   Old sale item %@: Discount type   = %@",@(i),saleItem.discountType);
+//            NSLog(@"   Old sale item %@: Discount value  = %@",@(i),saleItem.discountValue);
+//            NSLog(@"   Old sale item %@: Discount amount = %@",@(i),@(saleItem.discountAmount));
+//            NSLog(@"   Old sale item %@: Actual charge   = %@",@(i),saleItem.actualCharge);
+//            NSLog(@"   Old sale item %@: Nominal charge  = %@",@(i),saleItem.nominalCharge);
+//            i++;
+//        }
+        [sale convertToDiscountVersion2];
+//        NSLog(@"New sale discount type = %@",sale.discountType);
+//        NSLog(@"New sale discount value = %@",sale.discountValue);
+//        NSLog(@"New sale discount amount = %@",sale.discountAmount);
+//        NSLog(@"New sale actual charge = %@",sale.actualCharge);
+//        NSLog(@"New sale nominal charge = %@",sale.nominalCharge);
+//        NSLog(@"New sale charge after individual discounts = %@",sale.chargeAfterIndividualDiscounts);
+//        i = 0;
+//        for (SaleItem * saleItem in sale.saleItem) {
+//            NSLog(@"   New sale item %@: Discount type   = %@",@(i),saleItem.discountType);
+//            NSLog(@"   New sale item %@: Discount value  = %@",@(i),saleItem.discountValue);
+//            NSLog(@"   New sale item %@: Discount amount = %@",@(i),@(saleItem.discountAmount));
+//            NSLog(@"   New sale item %@: Actual charge   = %@",@(i),saleItem.actualCharge);
+//            NSLog(@"   New sale item %@: Nominal charge  = %@",@(i),saleItem.nominalCharge);
+//            i++;
+//        }
     }
 }
 

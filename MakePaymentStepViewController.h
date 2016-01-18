@@ -21,6 +21,9 @@
 @property (weak) IBOutlet NSPopUpButton *additionalDiscountPopup;
 
 @property (weak) IBOutlet NSTextField *totalDiscount;
+- (IBAction)discountTypeChanged:(id)sender;
+
+@property (weak) IBOutlet NSSegmentedControl *discountTypeSegmentedControl;
 
 @property (weak) IBOutlet NSTextField *totalToPay;
 

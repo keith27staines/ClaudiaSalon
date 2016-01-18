@@ -245,7 +245,10 @@
     }
 }
 -(void)editObjectViewController:(EditObjectViewController *)controller didEditObject:(id)object {
-    [self saleEditOperationComplete];
+    if (controller == self.editSaleViewController) {
+        self.previouslySelectedSale = object;
+        [self saleEditOperationComplete];
+    }
 }
 
 #pragma mark - AMCQuickQuoteViewController delegate

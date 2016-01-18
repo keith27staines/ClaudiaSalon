@@ -213,23 +213,33 @@
     for (SaleItem * saleItem in self.saleItem) {
         saleItemNominalTotal += [AMCDiscountCalculator roundVeryCloseOrDown:saleItem.nominalCharge.doubleValue];
         saleItemActualTotal += [AMCDiscountCalculator roundVeryCloseOrDown:saleItem.actualCharge.doubleValue];
-        if (saleItem.discountType.integerValue == AMCDiscountNone) {
+        if (saleItem.discountType.integerValue == AMCDiscountTypeNone) {
             nonDiscountedItemTotal += [AMCDiscountCalculator roundVeryCloseOrDown:saleItem.nominalCharge.doubleValue];
         }
     }
-    double extraDiscount = 0.0;
-    double discountedExtra;
-    AMCDiscount extraDiscountType = self.discountType.integerValue;
-    if (extraDiscountType < AMCDiscountLowestPound ) {
-        discountedExtra = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:extraDiscountType undiscountedPrice:nonDiscountedItemTotal];
-        extraDiscount = [AMCDiscountCalculator calculateDiscountWithDiscountType:extraDiscountType onPrice:nonDiscountedItemTotal];
-    } else {
-        discountedExtra = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:extraDiscountType undiscountedPrice:saleItemActualTotal];
-        discountedExtra = [AMCDiscountCalculator roundVeryCloseOrDown:discountedExtra];
-        extraDiscount = saleItemActualTotal - discountedExtra;
+
+    double extraDiscountAmount = 0.0;
+    switch (self.discountType.integerValue) {
+        case AMCDiscountTypeNone:
+        {
+            extraDiscountAmount = 0.0;
+            break;
+        }
+        case AMCDiscountTypePercentage:
+        {
+            // Discount a percentage, but this acts only on the subtotal of the saleitems that haven't already had a discount applied
+            extraDiscountAmount = [AMCDiscountCalculator calculateDiscountWithDiscountType:AMCDiscountTypePercentage discountValue:self.discountValue.doubleValue onPrice:nonDiscountedItemTotal];
+            break;
+        }
+        case AMCDiscountTypeAbsoluteAmount:
+        {
+            // Discount an absolute amount on actual charge so far
+            extraDiscountAmount = [AMCDiscountCalculator calculateDiscountWithDiscountType:AMCDiscountTypeAbsoluteAmount discountValue:self.discountValue.doubleValue onPrice:saleItemActualTotal];
+            break;
+        }
     }
-    double actualCharge = saleItemActualTotal - extraDiscount;
-    double totalDiscount = saleItemNominalTotal - saleItemActualTotal + extraDiscount;
+    double actualCharge = saleItemActualTotal - extraDiscountAmount;
+    double totalDiscount = saleItemNominalTotal - saleItemActualTotal + extraDiscountAmount;
 
     self.nominalCharge = @(saleItemNominalTotal);
     self.actualCharge = @(actualCharge);
@@ -243,5 +253,15 @@
 -(double)roundDownPenny:(double)amount
 {
     return floor(amount * 100.0) / 100.0;
+}
+-(void)convertToDiscountVersion2 {
+    long discountVersion = self.discountVersion.integerValue;
+    if (discountVersion >= 2) { return; }
+    for (SaleItem * saleItem in self.saleItem) {
+        [saleItem convertToDiscountVersion2];
+    }
+    self.discountType = @([AMCDiscountCalculator discountTypeForVersion1Discount:self.discountType.integerValue]);
+    self.discountValue = @([AMCDiscountCalculator discountValueForVersion1Discount:self.discountType.integerValue]);
+    self.discountVersion = @2;
 }
 @end

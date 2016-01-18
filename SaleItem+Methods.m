@@ -35,13 +35,58 @@
     return nonAuditNotes;
 }
 -(void)updatePrice {
-    AMCDiscount discountType = self.discountType.integerValue;
-    double nominalPrice = self.nominalCharge.doubleValue;
-    double actualPrice = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:discountType undiscountedPrice:nominalPrice];
-    self.actualCharge = @(actualPrice);
+    switch (self.discountVersion.integerValue) {
+        case 0:
+        case 1:
+        {
+            AMCDiscount discountType = self.discountType.integerValue;
+            double nominalPrice = self.nominalCharge.doubleValue;
+            double actualPrice = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:discountType undiscountedPrice:nominalPrice];
+            self.actualCharge = @(actualPrice);
+            break;
+        }
+        case 2:
+        {
+            AMCDiscountType discountType = self.discountType.integerValue;
+            long discountValue = self.discountValue.integerValue;
+            double nominalPrice = self.nominalCharge.doubleValue;
+            double actualPrice = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:discountType discountValue:discountValue undiscountedPrice:nominalPrice];
+            self.actualCharge = @(actualPrice);
+        }
+        default:
+            NSAssert(NO, @"Don't know how to updatePrice for discount version %@",self.discountVersion);
+            break;
+    }
 }
 -(double)discountAmount {
-    return [AMCDiscountCalculator calculateDiscountWithDiscountType:self.discountType.integerValue onPrice:self.nominalCharge.doubleValue];
+    switch (self.discountVersion.integerValue) {
+        case 0:
+        case 1:
+        {
+            return [AMCDiscountCalculator calculateDiscountWithDiscountType:self.discountType.integerValue onPrice:self.nominalCharge.doubleValue];
+            break;
+        }
+        case 2:
+        {
+            return [AMCDiscountCalculator calculateDiscountWithDiscountType:self.discountType.integerValue discountValue:self.discountValue.doubleValue onPrice:self.nominalCharge.doubleValue];
+            break;
+        }
+        default:
+            NSAssert(NO,@"Don't know how to calculate discountAmount for discount version %@", self.discountVersion);
+            return 0;
+            break;
+    }
+}
+-(void)convertToDiscountVersion2 {
+    if (self.discountVersion.integerValue < 1) {
+        NSLog(@"Don't know how to convert this discount type");
+    }
+    if (self.discountVersion.integerValue >= 2) { return; }
+    AMCDiscountType discountType = [AMCDiscountCalculator discountTypeForVersion1Discount:self.discountType.integerValue];
+    double discountValue = [AMCDiscountCalculator discountValueForVersion1Discount:self.discountType.integerValue];
+    self.discountType = @(discountType);
+    self.discountValue = @(discountValue);
+    self.discountVersion = @2;
 }
 
 @end
