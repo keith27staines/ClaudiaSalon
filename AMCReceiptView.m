@@ -208,7 +208,7 @@
             NSUInteger discountThisItem = saleItemNominalCharge - saleItemActualCharge;
             if (discountThisItem > 0) {
                 individualDiscounts += discountThisItem;
-                discountDescr = [AMCDiscountCalculator discountDescriptionforDiscount:item.discountType.integerValue];
+                discountDescr = [AMCDiscountCalculator discountDescriptionforDiscountType:item.discountType.integerValue discountValue:item.discountValue.integerValue];
                 string1 = [NSString stringWithFormat:@"with %@ discount",discountDescr];
             } else {
                 totalUndiscounted += saleItemActualCharge;

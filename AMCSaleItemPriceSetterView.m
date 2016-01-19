@@ -40,10 +40,13 @@
     // Drawing code here.
 }
 - (IBAction)discountTypeChanged:(id)sender {
-    self.saleItem.discountType = @((self.discountTypeSegmentedControl.selectedSegment == 0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
+    long index = self.discountTypeSegmentedControl.selectedSegment;
+    NSLog(@"index = %@",@(index));
+    self.saleItem.discountType = @((index == 0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
     [self loadDiscountPopup];
-    [self updateFromSaleItem];
+    [self.discountPopup selectItemAtIndex:self.saleItem.discountValue.integerValue];
     [self.saleItem updatePrice];
+    [self updateFromSaleItem];
     [self.delegate saleItemPriceSetterView:self didUpdateSaleItem:self.saleItem];
 }
 
@@ -100,7 +103,6 @@
     NSPopUpButton * popup = self.discountPopup;
     [popup removeAllItems];
     for (int i = 0; i <= 100; i++) {
-        [popup removeAllItems];
         NSString * currencySymbol = @"£";
         NSString * percentSymbol = @"%";
         NSString * discountString = @"";

@@ -27,6 +27,7 @@
     
     sale.createdDate = rightNow;
     sale.lastUpdatedDate = rightNow;
+    sale.discountVersion = @2;
     sale.account = [Salon salonWithMoc:moc].tillAccount;
     return sale;
 }

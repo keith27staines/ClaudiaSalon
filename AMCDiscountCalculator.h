@@ -16,12 +16,10 @@ typedef NS_ENUM(NSInteger, AMCDiscountType) {
 };
 
 @interface AMCDiscountCalculator : NSObject
-+(double)calculateDiscountedPriceWithDiscountType:(AMCDiscount)discountType undiscountedPrice:(double)amount;
-+(double)calculateDiscountWithDiscountType:(AMCDiscount)discountType onPrice:(double)amount;
 +(double)calculateDiscountWithDiscountType:(AMCDiscountType)discountType discountValue:(double)value onPrice:(double)amount;
 +(double)calculateDiscountedPriceWithDiscountType:(AMCDiscountType)discountType discountValue:(double)value undiscountedPrice:(double)amount;
 
-+(NSString*)discountDescriptionforDiscount:(AMCDiscount)discountType;
++(NSString*)discountDescriptionforDiscountType:(AMCDiscountType)discountType discountValue:(long)value;
 +(double)roundVeryCloseOrUp:(double)amount;
 +(double)roundVeryCloseOrDown:(double)amount;
 +(AMCDiscountType)discountTypeForVersion1Discount:(AMCDiscount)discount;

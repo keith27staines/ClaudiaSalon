@@ -71,7 +71,7 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bia-bw-pGc">
                     <rect key="frame" x="4" y="93" width="655" height="17"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="SaleItem service name" drawsBackground="YES" id="n4d-3B-hy4">
-                        <font key="font" metaFont="systemSemibold" size="13"/>
+                        <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -89,8 +89,8 @@
                         <action selector="discountTypeChanged:" target="Hz6-mo-xeY" id="m6k-ri-0vC"/>
                     </connections>
                 </segmentedControl>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u08-0a-szI">
-                    <rect key="frame" x="322" y="66" width="87" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u08-0a-szI">
+                    <rect key="frame" x="324" y="66" width="87" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Item discount" drawsBackground="YES" id="v6n-dB-IQz">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -98,9 +98,9 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hVW-PW-q1P">
-                    <rect key="frame" x="324" y="10" width="222" height="17"/>
+                    <rect key="frame" x="324" y="10" width="228" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Item price after discount: £999.00" drawsBackground="YES" id="RwI-hh-hne">
-                        <font key="font" metaFont="systemSemibold" size="13"/>
+                        <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>

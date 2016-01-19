@@ -20,7 +20,8 @@
     SaleItem * _saleItem;
     double actualAmount;
     double nominalAmount;
-    AMCDiscount discountType;
+    AMCDiscountType discountType;
+    long discountValue;
     double minAmount;
     double maxAmount;
 }
@@ -51,6 +52,7 @@
         minAmount = floor(saleItem.minimumCharge.doubleValue);
         maxAmount = ceil(saleItem.maximumCharge.doubleValue);
         discountType = saleItem.discountType.integerValue;
+        discountValue = saleItem.discountValue.integerValue;
         [self displayAllPriceInformation];
     }
 }
@@ -85,12 +87,25 @@
     [self.delegate saleItemViewControllerDidFinish:self];
 }
 -(void)loadDiscountPopup {
-    [self.discountPopupButton removeAllItems];
-    for (int i = AMCDiscountMinimum; i<=AMCDiscountMaximum; i++) {
-        NSString * discountDescription = [AMCDiscountCalculator discountDescriptionforDiscount:i];
-        [self.discountPopupButton insertItemWithTitle:discountDescription atIndex:i];
+    NSPopUpButton * popup = self.discountPopupButton;
+    [popup removeAllItems];
+    for (int i = 0; i <= 100; i++) {
+        [popup removeAllItems];
+        NSString * currencySymbol = @"£";
+        NSString * percentSymbol = @"%";
+        NSString * discountString = @"";
+        SaleItem * saleItem = [self saleItem];
+        for (int i = 0; i <= 100; i++) {
+            if (saleItem.discountType.integerValue == AMCDiscountTypePercentage) {
+                // Percent
+                discountString = [NSString stringWithFormat:@"%@ %@",@(i),percentSymbol];
+            } else {
+                // Absolute amount
+                discountString = [NSString stringWithFormat:@"%@ %@",currencySymbol,@(i)];
+            }
+            [popup insertItemWithTitle:discountString atIndex:i];
+        }
     }
-    [self.discountPopupButton selectItemAtIndex:0];
 }
 -(void)displayPriceBeforeDiscount
 {
@@ -102,10 +117,10 @@
     self.priceBeforeDiscountLabel.stringValue = [@"£" stringByAppendingFormat:@"%@",@(nominalAmount)];
 }
 -(void)displayDiscountType {
-    [self.discountPopupButton selectItemAtIndex:discountType];
+    [self.discountPopupButton selectItemAtIndex:discountValue];
 }
 -(void)displayPriceAfterDiscount {
-    actualAmount = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:discountType undiscountedPrice:nominalAmount];
+    actualAmount = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:discountType discountValue:discountValue undiscountedPrice:nominalAmount];
     self.priceAfterDiscountLabel.stringValue = [NSString stringWithFormat:@"£%1.2f",actualAmount];
 }
 @end

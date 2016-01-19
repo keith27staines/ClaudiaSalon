@@ -29,12 +29,10 @@
 - (IBAction)removeServiceButtonClicked:(id)sender;
 @property (weak) IBOutlet NSButton *setAppointmentTimeButton;
 - (IBAction)setAppointmentTimeButtonClicked:(id)sender;
-
 @property (weak) IBOutlet NSButton *showNotesButton;
-@property (weak) IBOutlet NSButton *adjustSaleItemPriceButton;
 
 - (IBAction)showNotesButtonClicked:(id)sender;
-- (IBAction)showSaleItemPricePopover:(id)sender;
+//- (IBAction)showSaleItemPricePopover:(id)sender;
 @property (weak) IBOutlet NSTextField *priceTotalLabel;
 - (IBAction)quickQuoteButtonClicked:(id)sender;
 @property (weak) IBOutlet NSButton *quickQuoteButton;

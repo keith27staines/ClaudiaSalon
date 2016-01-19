@@ -339,7 +339,6 @@
 -(void)enableAddRemoveServiceButtons {
     [self.addServiceButton setEnabled:(self.servicesAvailableTable.selectedRow >=0)];
     [self.removeServiceButton setEnabled:(self.chosenServicesTable.selectedRow >=0)];
-    [self.adjustSaleItemPriceButton setEnabled:self.removeServiceButton.isEnabled];
 }
 -(void)enableSetAppointmentTimeButton {
     [self.setAppointmentTimeButton setEnabled:(self.appointmentSlotsTable.selectedRow>=0)];
@@ -585,20 +584,11 @@
     }
     [self.appointmentSlotsTable reloadData];
 }
-
 - (IBAction)showNotesButtonClicked:(id)sender {
     AMCAssociatedNotesViewController * vc = [AMCAssociatedNotesViewController new];
     vc.objectWithNotes = self.appointment;
     [vc prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewController:vc asPopoverRelativeToRect:self.showNotesButton.bounds ofView:self.showNotesButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
-}
-- (IBAction)showSaleItemPricePopover:(id)sender {
-    SaleItem * saleItem = [self selectedSaleItem];
-    if (!saleItem) return;
-    AMCSaleItemViewController * vc = [AMCSaleItemViewController new];
-    vc.saleItem = saleItem;
-    [vc prepareForDisplayWithSalon:self.salonDocument];
-    [self presentViewController:vc asPopoverRelativeToRect:self.adjustSaleItemPriceButton.bounds ofView:self.adjustSaleItemPriceButton preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorTransient];
 }
 - (IBAction)quickQuoteButtonClicked:(id)sender {
     Sale * sale = ((Appointment*)self.objectToManage).sale;

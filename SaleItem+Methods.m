@@ -17,6 +17,7 @@
     NSDate * rightNow = [NSDate date];
     saleItem.createdDate = rightNow;
     saleItem.lastUpdatedDate = rightNow;
+    saleItem.discountVersion = @2;
     return saleItem;
 }
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc {
@@ -39,10 +40,7 @@
         case 0:
         case 1:
         {
-            AMCDiscount discountType = self.discountType.integerValue;
-            double nominalPrice = self.nominalCharge.doubleValue;
-            double actualPrice = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:discountType undiscountedPrice:nominalPrice];
-            self.actualCharge = @(actualPrice);
+            NSAssert(NO, @"SaleItem has an obsolete version number, cannot update price");
             break;
         }
         case 2:
@@ -64,7 +62,8 @@
         case 0:
         case 1:
         {
-            return [AMCDiscountCalculator calculateDiscountWithDiscountType:self.discountType.integerValue onPrice:self.nominalCharge.doubleValue];
+            NSAssert(NO,@"Can't calculate discountAmount for saleItem with (obsolete) discountVersion = 1");
+            return 0;
             break;
         }
         case 2:
