@@ -52,6 +52,7 @@
             double nominalPrice = self.nominalCharge.doubleValue;
             double actualPrice = [AMCDiscountCalculator calculateDiscountedPriceWithDiscountType:discountType discountValue:discountValue undiscountedPrice:nominalPrice];
             self.actualCharge = @(actualPrice);
+            break;
         }
         default:
             NSAssert(NO, @"Don't know how to updatePrice for discount version %@",self.discountVersion);

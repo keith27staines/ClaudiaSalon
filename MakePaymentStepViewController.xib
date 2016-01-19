@@ -103,10 +103,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kgV-if-JCE">
-                    <rect key="frame" x="715" y="484" width="185" height="26"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="180" id="XVm-Qe-vsE"/>
-                    </constraints>
+                    <rect key="frame" x="715" y="484" width="76" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="BZc-F0-AmN" id="9BP-Ye-vmw">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -277,12 +274,12 @@ DQ
                     </textFieldCell>
                 </textField>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QkA-o2-gl5">
-                    <rect key="frame" x="920" y="485" width="168" height="24"/>
+                    <rect key="frame" x="811" y="485" width="181" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="yv5-vt-xUL">
                         <font key="font" metaFont="system"/>
                         <segments>
-                            <segment label="% Amount"/>
-                            <segment label="£ Amount" selected="YES" tag="1"/>
+                            <segment label="% Discount"/>
+                            <segment label="£ Discount" selected="YES" tag="1"/>
                         </segments>
                     </segmentedCell>
                     <connections>
@@ -355,7 +352,7 @@ DQ
                 <constraint firstItem="cas-tp-mWS" firstAttribute="centerY" secondItem="kgV-if-JCE" secondAttribute="centerY" id="uf1-LL-DUZ"/>
                 <constraint firstItem="jJv-MA-thh" firstAttribute="leading" secondItem="rt7-2h-wGO" secondAttribute="trailing" constant="52" id="uf5-rS-Occ"/>
             </constraints>
-            <point key="canvasLocation" x="22.5" y="517.5"/>
+            <point key="canvasLocation" x="42.5" y="273.5"/>
         </customView>
         <customObject id="OqP-uT-VRh" customClass="AMCPaymentCompleteWindowController"/>
     </objects>

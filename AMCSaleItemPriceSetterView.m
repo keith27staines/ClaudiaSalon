@@ -10,6 +10,8 @@
 #import "SaleItem+Methods.h"
 #import "Service+Methods.h"
 #import "Sale+Methods.h"
+#import "AMCDiscountCalculator.h"
+#import "AMCSalonDocument.h"
 
 @interface AMCSaleItemPriceSetterView()
 {
@@ -37,8 +39,16 @@
     
     // Drawing code here.
 }
+- (IBAction)discountTypeChanged:(id)sender {
+    self.saleItem.discountType = @((self.discountTypeSegmentedControl.selectedSegment == 0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
+    [self loadDiscountPopup];
+    [self updateFromSaleItem];
+    [self.saleItem updatePrice];
+    [self.delegate saleItemPriceSetterView:self didUpdateSaleItem:self.saleItem];
+}
+
 - (IBAction)discountChanged:(id)sender {
-    self.saleItem.discountType = @(self.discountPopup.indexOfSelectedItem);
+    self.saleItem.discountValue = @(self.discountPopup.indexOfSelectedItem);
     [self.saleItem updatePrice];
     [self.delegate saleItemPriceSetterView:self didUpdateSaleItem:self.saleItem];
 }
@@ -51,12 +61,19 @@
     self.nominalPriceLabel.stringValue = [NSString stringWithFormat:@"Price before discount: £%1.2f",price];
     [self.delegate saleItemPriceSetterView:self didUpdateSaleItem:self.saleItem];
 }
-
 -(SaleItem *)saleItem {
     return _saleItem;
 }
 -(void)setSaleItem:(SaleItem *)saleItem {
+    if (saleItem == _saleItem) {
+        return;
+    }
     _saleItem = saleItem;
+    [self loadDiscountPopup];
+    [self updateFromSaleItem];
+}
+-(void)updateFromSaleItem {
+    SaleItem * saleItem = self.saleItem;
     self.serviceNameLabel.stringValue = saleItem.service.name;
     double minPrice = saleItem.minimumCharge.doubleValue;
     double maxPrice = saleItem.maximumCharge.doubleValue;
@@ -69,16 +86,35 @@
     self.maximumPriceLabel.stringValue = [NSString stringWithFormat:@"£%1.2f",maxPrice];
     self.nominalPriceLabel.stringValue = [NSString stringWithFormat:@"Price before discount: £%1.2f",saleItem.nominalCharge.doubleValue];
     self.actualPriceLabel.stringValue  = [NSString stringWithFormat:@"Price after discount: £%1.2f",saleItem.actualCharge.doubleValue];
-    [self.discountPopup selectItemAtIndex:saleItem.discountType.integerValue];
+    [self.discountPopup selectItemAtIndex:saleItem.discountValue.integerValue];
+    self.discountTypeSegmentedControl.selectedSegment = (saleItem.discountType.integerValue==AMCDiscountTypePercentage)?0:1;
     BOOL isEditable = !saleItem.sale.voided.boolValue && saleItem.sale.isQuote.boolValue & !saleItem.sale.voided.boolValue;
     [self.discountPopup setEnabled:isEditable];
     [self.priceSlider setEnabled:isEditable];
-    [self setNeedsLayout:YES];
-    [self setNeedsDisplay:YES];
 }
 -(void)viewDidMoveToSuperview {
     [self setNeedsLayout:YES];
     [self setNeedsDisplay:YES];
 }
-
+-(void)loadDiscountPopup {
+    NSPopUpButton * popup = self.discountPopup;
+    [popup removeAllItems];
+    for (int i = 0; i <= 100; i++) {
+        [popup removeAllItems];
+        NSString * currencySymbol = @"£";
+        NSString * percentSymbol = @"%";
+        NSString * discountString = @"";
+        SaleItem * saleItem = self.saleItem;
+        for (int i = 0; i <= 100; i++) {
+            if (saleItem.discountType.integerValue == AMCDiscountTypePercentage) {
+                // Percent
+                discountString = [NSString stringWithFormat:@"%@ %@",@(i),percentSymbol];
+            } else {
+                // Absolute amount
+                discountString = [NSString stringWithFormat:@"%@ %@",currencySymbol,@(i)];
+            }
+            [popup insertItemWithTitle:discountString atIndex:i];
+        }
+    }
+}
 @end

@@ -57,8 +57,10 @@
     NSString * currencySymbol = @"£";
     NSString * percentSymbol = @"%";
     NSString * discountString = @"";
+    Sale * sale = [self sale];
+    self.discountTypeSegmentedControl.selectedSegment = (sale.discountType.integerValue==AMCDiscountTypePercentage)?0:1;
     for (int i = 0; i <= 100; i++) {
-        if (self.discountTypeSegmentedControl.selectedSegment == 0) {
+        if (sale.discountType.integerValue == AMCDiscountTypePercentage) {
             // Percent
             discountString = [NSString stringWithFormat:@"%@ %@",@(i),percentSymbol];
         } else {
@@ -67,13 +69,17 @@
         }
         [self.additionalDiscountPopup insertItemWithTitle:discountString atIndex:i];
     }
-    Sale * sale = [self sale];
     [self.additionalDiscountPopup selectItemAtIndex:sale.discountValue.integerValue];
-    self.discountTypeSegmentedControl.selectedSegment = (sale.discountType.integerValue==AMCDiscountTypePercentage)?0:1;
 }
 - (IBAction)extraDiscountChanged:(id)sender {
     Sale * sale = [self sale];
     sale.discountValue = @(self.additionalDiscountPopup.indexOfSelectedItem);
+    [self applySale];
+}
+- (IBAction)discountTypeChanged:(id)sender {
+    Sale * sale = [self sale];
+    sale.discountType = @((self.discountTypeSegmentedControl.selectedSegment==0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
+    [self loadDiscountPopup];
     [self applySale];
 }
 -(void)clear
@@ -129,7 +135,8 @@
         self.totalToPay.stringValue = [NSString stringWithFormat:@"£%1.2f",totalToPay];
         self.alreadyPaid.doubleValue = sale.amountAdvanced;
         self.amountGivenByCustomer.doubleValue = sale.amountGivenByCustomer.doubleValue;
-        [self.additionalDiscountPopup selectItemAtIndex:sale.discountType.integerValue];
+        [self.additionalDiscountPopup selectItemAtIndex:sale.discountValue.integerValue];
+        self.discountTypeSegmentedControl.selectedSegment = (sale.discountType.integerValue == AMCDiscountTypePercentage)?0:1;
         if (change >=0) {
             self.changeToReturn.stringValue = [NSString stringWithFormat:@"£%1.2f",change];
             
@@ -152,10 +159,6 @@
     double amountGiven = self.amountGivenByCustomer.doubleValue;
     return amountGiven - sale.amountOutstanding;
 }
--(AMCDiscount)extraDiscountType {
-    AMCDiscount discountType = self.additionalDiscountPopup.indexOfSelectedItem;
-    return discountType;
-}
 -(Sale*)sale
 {
     Sale * sale = [self.delegate wizardStepRequiresSale:self];
@@ -166,8 +169,8 @@
 }
 -(void)viewRevisited:(NSView *)view
 {
-    Sale * sale = [self sale];
-    [self.additionalDiscountPopup selectItemAtIndex:sale.discountType.integerValue];
+//    Sale * sale = [self sale];
+//    [self.additionalDiscountPopup selectItemAtIndex:sale.discountValue.integerValue];
     [self applySale];
 }
 - (IBAction)paymentComplete:(id)sender {
@@ -259,9 +262,5 @@
     }
     [self applySale];
 }
-- (IBAction)discountTypeChanged:(id)sender {
-    Sale * sale = [self sale];
-    sale.discountType = @((self.discountTypeSegmentedControl.selectedSegment==0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
-    [self applySale];
-}
+
 @end

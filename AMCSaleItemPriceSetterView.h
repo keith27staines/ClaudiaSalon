@@ -25,6 +25,10 @@
 
 @property (weak) IBOutlet NSSlider *priceSlider;
 @property (weak) IBOutlet NSPopUpButton *discountPopup;
+@property (weak) IBOutlet NSSegmentedControl *discountTypeSegmentedControl;
+- (IBAction)discountTypeChanged:(id)sender;
+
+
 - (IBAction)discountChanged:(id)sender;
 - (IBAction)priceChanged:(id)sender;
 
