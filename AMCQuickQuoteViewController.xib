@@ -119,13 +119,16 @@ DQ
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7j3-dK-Laa">
-                    <rect key="frame" x="154" y="122" width="76" height="26"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Tgh-up-Zfn" id="0Un-WS-DJL">
+                    <rect key="frame" x="143" y="122" width="87" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="82" id="QSe-0N-s2K"/>
+                    </constraints>
+                    <popUpButtonCell key="cell" type="push" title="£100.00" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Tgh-up-Zfn" id="0Un-WS-DJL">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="PEG-9h-acR">
                             <items>
-                                <menuItem title="Item 1" state="on" id="Tgh-up-Zfn"/>
+                                <menuItem title="£100.00" state="on" id="Tgh-up-Zfn"/>
                                 <menuItem title="Item 2" id="EuP-SL-dKs"/>
                                 <menuItem title="Item 3" id="y90-CR-L7p"/>
                             </items>
@@ -136,7 +139,7 @@ DQ
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fnq-aY-djZ">
-                    <rect key="frame" x="25" y="128" width="125" height="17"/>
+                    <rect key="frame" x="14" y="128" width="125" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Additional discount:" id="l56-6t-zcI">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -184,13 +187,13 @@ DQ
                     </textFieldCell>
                 </textField>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="EBH-EC-U0l">
-                    <rect key="frame" x="27" y="156" width="525" height="5"/>
+                    <rect key="frame" x="16" y="156" width="536" height="5"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="jQ7-b9-Qfq">
-                    <rect key="frame" x="27" y="108" width="525" height="5"/>
+                    <rect key="frame" x="16" y="108" width="536" height="5"/>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <font key="titleFont" metaFont="system"/>
