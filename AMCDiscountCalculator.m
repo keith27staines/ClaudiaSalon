@@ -12,62 +12,6 @@ static const double AMCSmallFractionOfPenny = 0.0001;
 
 @implementation AMCDiscountCalculator
 
-//+(double)calculateDiscountWithDiscountType:(AMCDiscount)discountType onPrice:(double)amount
-//{
-//    // Deprecated!!!
-//    double discount;
-//    switch (discountType) {
-//        case AMCDiscountNone:
-//            discount = 0;
-//            break;
-//        case AMCDiscount5pc:
-//            discount = 0.05 * amount;
-//            break;
-//        case AMCDiscount10pc:
-//            discount = 0.1 * amount;
-//            break;
-//        case AMCDiscount20pc:
-//            discount = 0.2 * amount;
-//            break;
-//        case AMCDiscount30pc:
-//            discount = 0.3 * amount;
-//            break;
-//        case AMCDiscount40pc:
-//            discount = 0.4 * amount;
-//            break;
-//        case AMCDiscount50pc:
-//            discount = 0.5 * amount;
-//            break;
-//        case AMCDiscount100pc:
-//            discount = amount;
-//            break;
-//        case AMCDiscount1Pound:
-//            discount = 1;
-//            break;
-//        case AMCDiscount2Pound:
-//            discount = 2;
-//            break;
-//        case AMCDiscount5Pound:
-//            discount = 5;
-//            break;
-//        case AMCDiscount10Pound:
-//            discount = 10;
-//            break;
-//        case AMCDiscount20Pound:
-//            discount = 20;
-//            break;
-//        case AMCDiscount50Pound:
-//            discount = 50;
-//            break;
-//    }
-//    return [self roundVeryCloseOrUp:discount];
-//}
-//+(double)calculateDiscountedPriceWithDiscountType:(AMCDiscount)discountType undiscountedPrice:(double)amount {
-//    // Deprecated!!!
-//    double discount = [self calculateDiscountWithDiscountType:discountType onPrice:amount];
-//    return [self roundVeryCloseOrDown:(amount - discount)];
-//}
-
 +(double)calculateDiscountWithDiscountType:(AMCDiscountType)discountType discountValue:(double)value onPrice:(double)amount {
     double discount = 0;
     switch (discountType) {

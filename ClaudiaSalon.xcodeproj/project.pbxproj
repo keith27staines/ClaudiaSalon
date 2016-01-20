@@ -412,6 +412,7 @@
 		535F6B5B1C4BEF9D003C3D40 /* Sale+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Sale+CoreDataProperties.m"; sourceTree = "<group>"; };
 		535F6B5C1C4BEF9D003C3D40 /* Sale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sale.h; sourceTree = "<group>"; };
 		535F6B5D1C4BEF9D003C3D40 /* Sale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sale.m; sourceTree = "<group>"; };
+		535F6B621C4E9BCF003C3D40 /* ClaudiasSalon 14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 14.xcdatamodel"; sourceTree = "<group>"; };
 		536E57CD1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCMatchingPaymentSelectorViewController.h; sourceTree = "<group>"; };
 		536E57CE1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCMatchingPaymentSelectorViewController.m; sourceTree = "<group>"; };
 		536E57CF1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCMatchingPaymentSelectorViewController.xib; sourceTree = "<group>"; };
@@ -2674,6 +2675,7 @@
 		5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				535F6B621C4E9BCF003C3D40 /* ClaudiasSalon 14.xcdatamodel */,
 				535F6B401C4BD0C4003C3D40 /* ClaudiasSalon 13.xcdatamodel */,
 				530D54791B25599C00F6C4FE /* ClaudiasSalon 12.xcdatamodel */,
 				533439001B0E1B3200E271D5 /* ClaudiasSalon 11.xcdatamodel */,
@@ -2688,7 +2690,7 @@
 				533054501AE4EA49007B1264 /* ClaudiasSalon 5.xcdatamodel */,
 				533054511AE4EA49007B1264 /* ClaudiasSalon.xcdatamodel */,
 			);
-			currentVersion = 535F6B401C4BD0C4003C3D40 /* ClaudiasSalon 13.xcdatamodel */;
+			currentVersion = 535F6B621C4E9BCF003C3D40 /* ClaudiasSalon 14.xcdatamodel */;
 			name = ClaudiasSalon.xcdatamodeld;
 			path = ../ClaudiasSalon.xcdatamodeld;
 			sourceTree = "<group>";
