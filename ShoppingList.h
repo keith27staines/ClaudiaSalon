@@ -2,8 +2,8 @@
 //  ShoppingList.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,20 +11,14 @@
 
 @class Payment, ShoppingListItem;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ShoppingList : NSManagedObject
 
-@property (nonatomic, retain) NSDate * createdDate;
-@property (nonatomic, retain) NSDate * shoppingDate;
-@property (nonatomic, retain) NSString * status;
-@property (nonatomic, retain) NSSet *items;
-@property (nonatomic, retain) Payment *payment;
-@end
-
-@interface ShoppingList (CoreDataGeneratedAccessors)
-
-- (void)addItemsObject:(ShoppingListItem *)value;
-- (void)removeItemsObject:(ShoppingListItem *)value;
-- (void)addItems:(NSSet *)values;
-- (void)removeItems:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "ShoppingList+CoreDataProperties.h"

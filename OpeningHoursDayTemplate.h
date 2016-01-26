@@ -2,8 +2,8 @@
 //  OpeningHoursDayTemplate.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,10 +11,14 @@
 
 @class IntervalDuringDay, OpeningHoursWeekTemplate;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface OpeningHoursDayTemplate : NSManagedObject
 
-@property (nonatomic, retain) NSString * dayName;
-@property (nonatomic, retain) IntervalDuringDay *intervalDuringDay;
-@property (nonatomic, retain) OpeningHoursWeekTemplate *openingHoursWeekTemplate;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "OpeningHoursDayTemplate+CoreDataProperties.h"

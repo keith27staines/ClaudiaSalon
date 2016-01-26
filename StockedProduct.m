@@ -2,8 +2,8 @@
 //  StockedProduct.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import "StockedProduct.h"
@@ -13,22 +13,8 @@
 #import "StockedCategory.h"
 #import "StockedItem.h"
 
-
 @implementation StockedProduct
 
-@dynamic barcode;
-@dynamic code;
-@dynamic createdDate;
-@dynamic currentStockLevel;
-@dynamic isConsumable;
-@dynamic lastUpdatedDate;
-@dynamic minimumStockTrigger;
-@dynamic name;
-@dynamic numberToBuy;
-@dynamic notes;
-@dynamic shoppingListItems;
-@dynamic stockedBrand;
-@dynamic stockedCategory;
-@dynamic stockedItems;
+// Insert code here to add functionality to your managed object subclass
 
 @end

@@ -11,7 +11,7 @@
 #import "Payment+Methods.h"
 #import "PaymentCategory+Methods.h"
 #import "AMCConstants.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 
 @interface AMCPaymentAmountViewController ()
 {

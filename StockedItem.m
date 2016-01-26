@@ -2,22 +2,16 @@
 //  StockedItem.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import "StockedItem.h"
 #import "Note.h"
 #import "StockedProduct.h"
 
-
 @implementation StockedItem
 
-@dynamic createdDate;
-@dynamic percentageRemaining;
-@dynamic purchaseDate;
-@dynamic useByDate;
-@dynamic notes;
-@dynamic stockedProduct;
+// Insert code here to add functionality to your managed object subclass
 
 @end

@@ -5,7 +5,7 @@
 //  Created by Keith Staines on 23/02/2015.
 //  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
 //
-
+#import "ClaudiaSalon-swift.h"
 #import "AppDelegate.h"
 #import "AMCConstants.h"
 #import "AMCWelcomeScreen.h"
@@ -14,6 +14,7 @@
 #import "AMCAutoCloseWindowController.h"
 #import "AMCPreferencesWindowController.h"
 #import "AMCCategoryManagementViewController.h"
+
 #define kSalonsDictionary @"kSalonsDictionary"
 #define kDefaultSalonPath @"kDefaultSalonPath"
 #define kShowWelcomeWindow @"kShowWelcomeWindow"
@@ -33,6 +34,8 @@
 @property NSTimer * autoCloseTimer;
 @property AMCAutoCloseWindowController * autoCloseWindowController;
 @property (weak) IBOutlet AMCPreferencesWindowController *preferencesWindowController;
+@property (weak) IBOutlet AMCBookingQueueManagerWindowController *bookingQueueManagerWindowController;
+
 
 @end
 
@@ -195,5 +198,11 @@
 }
 -(IBAction)showPreferencesWindow:(id)sender {
     [self.preferencesWindowController showWindow:self];
+}
+
+- (IBAction)showBookingQueueWindow:(id)sender {
+    AMCSalonDocument * currentSalon = [[NSDocumentController sharedDocumentController] currentDocument];
+    self.bookingQueueManagerWindowController.salonDocument = currentSalon;
+    [self.bookingQueueManagerWindowController showWindow:self];
 }
 @end

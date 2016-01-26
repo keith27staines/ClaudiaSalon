@@ -12,7 +12,7 @@
 #import "Payment+Methods.h"
 #import "AMCSalonDocument.h"
 #import "PaymentCategory+Methods.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 @interface AMCMoneyTransferViewController ()
 {
 

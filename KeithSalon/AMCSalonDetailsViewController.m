@@ -7,7 +7,7 @@
 //
 
 #import "AMCSalonDetailsViewController.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "Employee+Methods.h"
 #import "Account+Methods.h"
 #import "NSDate+AMCDate.h"

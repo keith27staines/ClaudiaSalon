@@ -2,32 +2,17 @@
 //  ServiceCategory.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 08/06/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import "ServiceCategory.h"
 #import "Note.h"
 #import "Salon.h"
 #import "Service.h"
-#import "ServiceCategory.h"
-
 
 @implementation ServiceCategory
 
-@dynamic createdDate;
-@dynamic hidden;
-@dynamic index;
-@dynamic lastUpdatedDate;
-@dynamic name;
-@dynamic selectable;
-@dynamic isSystemCategory;
-@dynamic isDefaultCategory;
-@dynamic notes;
-@dynamic service;
-@dynamic parent;
-@dynamic subCategories;
-@dynamic rootCategoryOfSalon;
-@dynamic salon;
+// Insert code here to add functionality to your managed object subclass
 
 @end

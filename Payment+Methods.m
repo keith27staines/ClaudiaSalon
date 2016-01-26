@@ -8,7 +8,7 @@
 
 #import "Payment+Methods.h"
 #import "AMCConstants.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "Account+Methods.h"
 
 @implementation Payment (Methods)

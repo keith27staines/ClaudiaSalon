@@ -2,7 +2,7 @@
 //  Sale+CoreDataProperties.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 17/01/2016.
+//  Created by Keith Staines on 26/01/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -20,13 +20,15 @@
 @dynamic createdDate;
 @dynamic discountAmount;
 @dynamic discountType;
+@dynamic discountValue;
+@dynamic discountVersion;
 @dynamic hidden;
 @dynamic isQuote;
 @dynamic lastUpdatedDate;
 @dynamic nominalCharge;
 @dynamic voided;
-@dynamic discountVersion;
-@dynamic discountValue;
+@dynamic bqMetadata;
+@dynamic bqNeedsCoreDataExport;
 @dynamic account;
 @dynamic advancePayment;
 @dynamic customer;

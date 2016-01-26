@@ -7,7 +7,7 @@
 //
 
 #import "Role+Methods.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "BusinessFunction+Methods.h"
 #import "Employee+Methods.h"
 #import "Permission+Methods.h"

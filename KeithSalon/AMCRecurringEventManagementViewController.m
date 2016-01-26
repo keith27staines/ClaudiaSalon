@@ -9,7 +9,7 @@
 #import "AMCRecurringEventManagementViewController.h"
 #import "RecurringItem+Methods.h"
 #import "Payment+Methods.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "Account+Methods.h"
 #import "PaymentCategory+Methods.h"
 

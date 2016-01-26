@@ -8,7 +8,7 @@
 
 #import "AMCAccountManagementViewController.h"
 #import "AMCSalonDocument.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "Account+Methods.h"
 
 @interface AMCAccountManagementViewController () <NSTableViewDelegate>

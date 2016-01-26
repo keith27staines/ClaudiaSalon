@@ -2,8 +2,8 @@
 //  PaymentCategory.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 10/06/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,32 +11,14 @@
 
 @class AccountingPaymentGroup, Payment, Salon;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PaymentCategory : NSManagedObject
 
-@property (nonatomic, retain) NSString * categoryName;
-@property (nonatomic, retain) NSDate * createdDate;
-@property (nonatomic, retain) NSString * fullDescription;
-@property (nonatomic, retain) NSNumber * isDefault;
-@property (nonatomic, retain) NSNumber * isDirectorsLoan;
-@property (nonatomic, retain) NSNumber * isManagersBudgetItem;
-@property (nonatomic, retain) NSNumber * isSalary;
-@property (nonatomic, retain) NSNumber * isSale;
-@property (nonatomic, retain) NSNumber * isStartupCost;
-@property (nonatomic, retain) NSNumber * isTransferBetweenAccounts;
-@property (nonatomic, retain) Salon *defaultCategoryForMoneyTransfers;
-@property (nonatomic, retain) Salon *defaultCategoryForPayments;
-@property (nonatomic, retain) Salon *defaultCategoryForSales;
-@property (nonatomic, retain) Salon *defaultCategoryForWages;
-@property (nonatomic, retain) NSSet *payments;
-@property (nonatomic, retain) AccountingPaymentGroup *expenditureAccountingGroup;
-@property (nonatomic, retain) AccountingPaymentGroup *incomeAccountingGroup;
-@end
-
-@interface PaymentCategory (CoreDataGeneratedAccessors)
-
-- (void)addPaymentsObject:(Payment *)value;
-- (void)removePaymentsObject:(Payment *)value;
-- (void)addPayments:(NSSet *)values;
-- (void)removePayments:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "PaymentCategory+CoreDataProperties.h"

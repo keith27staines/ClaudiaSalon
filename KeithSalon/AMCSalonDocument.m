@@ -31,7 +31,7 @@
 #import "AMCServiceCategoriesManagementViewController.h"
 #import "AMCFinancialAnalysisViewController.h"
 
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "Customer+Methods.h"
 #import "NSDate+AMCDate.h"
 #import "AMCSalonDetailsViewController.h"

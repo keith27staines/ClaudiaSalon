@@ -2,8 +2,8 @@
 //  StockedProduct.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,39 +11,14 @@
 
 @class Note, ShoppingListItem, StockedBrand, StockedCategory, StockedItem;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface StockedProduct : NSManagedObject
 
-@property (nonatomic, retain) NSString * barcode;
-@property (nonatomic, retain) NSString * code;
-@property (nonatomic, retain) NSDate * createdDate;
-@property (nonatomic, retain) NSNumber * currentStockLevel;
-@property (nonatomic, retain) NSNumber * isConsumable;
-@property (nonatomic, retain) NSDate * lastUpdatedDate;
-@property (nonatomic, retain) NSNumber * minimumStockTrigger;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSNumber * numberToBuy;
-@property (nonatomic, retain) NSSet *notes;
-@property (nonatomic, retain) NSSet *shoppingListItems;
-@property (nonatomic, retain) StockedBrand *stockedBrand;
-@property (nonatomic, retain) StockedCategory *stockedCategory;
-@property (nonatomic, retain) NSSet *stockedItems;
-@end
-
-@interface StockedProduct (CoreDataGeneratedAccessors)
-
-- (void)addNotesObject:(Note *)value;
-- (void)removeNotesObject:(Note *)value;
-- (void)addNotes:(NSSet *)values;
-- (void)removeNotes:(NSSet *)values;
-
-- (void)addShoppingListItemsObject:(ShoppingListItem *)value;
-- (void)removeShoppingListItemsObject:(ShoppingListItem *)value;
-- (void)addShoppingListItems:(NSSet *)values;
-- (void)removeShoppingListItems:(NSSet *)values;
-
-- (void)addStockedItemsObject:(StockedItem *)value;
-- (void)removeStockedItemsObject:(StockedItem *)value;
-- (void)addStockedItems:(NSSet *)values;
-- (void)removeStockedItems:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "StockedProduct+CoreDataProperties.h"

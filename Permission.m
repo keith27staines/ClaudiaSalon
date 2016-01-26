@@ -2,21 +2,16 @@
 //  Permission.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 27/06/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import "Permission.h"
 #import "BusinessFunction.h"
 #import "Role.h"
 
-
 @implementation Permission
 
-@dynamic viewAction;
-@dynamic editAction;
-@dynamic createAction;
-@dynamic role;
-@dynamic businessFunction;
+// Insert code here to add functionality to your managed object subclass
 
 @end

@@ -2,8 +2,8 @@
 //  StockedBrand.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,25 +11,14 @@
 
 @class Note, StockedProduct;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface StockedBrand : NSManagedObject
 
-@property (nonatomic, retain) NSString * brandName;
-@property (nonatomic, retain) NSDate * createdDate;
-@property (nonatomic, retain) NSString * shortBrandName;
-@property (nonatomic, retain) NSSet *notes;
-@property (nonatomic, retain) NSSet *stockedProducts;
-@end
-
-@interface StockedBrand (CoreDataGeneratedAccessors)
-
-- (void)addNotesObject:(Note *)value;
-- (void)removeNotesObject:(Note *)value;
-- (void)addNotes:(NSSet *)values;
-- (void)removeNotes:(NSSet *)values;
-
-- (void)addStockedProductsObject:(StockedProduct *)value;
-- (void)removeStockedProductsObject:(StockedProduct *)value;
-- (void)addStockedProducts:(NSSet *)values;
-- (void)removeStockedProducts:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "StockedBrand+CoreDataProperties.h"

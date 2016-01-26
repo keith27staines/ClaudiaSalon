@@ -7,7 +7,7 @@
 //
 
 #import "AMCCashBook.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "NSDate+AMCDate.h"
 #import "AMCAccountStatementItem.h"
 #import "Payment+Methods.h"

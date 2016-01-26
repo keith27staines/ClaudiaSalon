@@ -14,7 +14,7 @@
 #import "Service+Methods.h"
 #import "ServiceCategory+Methods.h"
 #import "NSDate+AMCDate.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 
 typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
     AMCReportingIntervalDaily,

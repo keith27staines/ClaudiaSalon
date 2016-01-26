@@ -7,7 +7,7 @@
 //
 
 #import "NSDate+AMCDate.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 
 @implementation NSDate (AMCDate)
 +(NSDate*)beginningOfDayOnDate:(NSDate*)date

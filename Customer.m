@@ -2,39 +2,18 @@
 //  Customer.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import "Customer.h"
 #import "Appointment.h"
 #import "Note.h"
 #import "Sale.h"
-
+#import "Salon.h"
 
 @implementation Customer
 
-@dynamic addressLine1;
-@dynamic addressLine2;
-@dynamic birthday;
-@dynamic createdDate;
-@dynamic dayOfBirth;
-@dynamic email;
-@dynamic firstName;
-@dynamic fullName;
-@dynamic hidden;
-@dynamic lastName;
-@dynamic lastUpdatedDate;
-@dynamic lastVisitDate;
-@dynamic monthOfBirth;
-@dynamic phone;
-@dynamic postcode;
-@dynamic saleType;
-@dynamic title;
-@dynamic uid;
-@dynamic appointments;
-@dynamic notes;
-@dynamic sales;
-@dynamic anonymousCustomerForSalon;
+// Insert code here to add functionality to your managed object subclass
 
 @end

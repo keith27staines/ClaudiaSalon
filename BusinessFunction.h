@@ -2,8 +2,8 @@
 //  BusinessFunction.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 28/06/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,19 +11,14 @@
 
 @class Permission;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface BusinessFunction : NSManagedObject
 
-@property (nonatomic, retain) NSString * codeUnitName;
-@property (nonatomic, retain) NSString * fullDescription;
-@property (nonatomic, retain) NSString * functionName;
-@property (nonatomic, retain) NSSet *permissions;
-@end
-
-@interface BusinessFunction (CoreDataGeneratedAccessors)
-
-- (void)addPermissionsObject:(Permission *)value;
-- (void)removePermissionsObject:(Permission *)value;
-- (void)addPermissions:(NSSet *)values;
-- (void)removePermissions:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "BusinessFunction+CoreDataProperties.h"

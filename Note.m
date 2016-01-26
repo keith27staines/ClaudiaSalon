@@ -2,8 +2,8 @@
 //  Note.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import "Note.h"
@@ -21,27 +21,8 @@
 #import "StockedItem.h"
 #import "StockedProduct.h"
 
-
 @implementation Note
 
-@dynamic createdDate;
-@dynamic isAuditNote;
-@dynamic lastUpdatedDate;
-@dynamic text;
-@dynamic title;
-@dynamic appointment;
-@dynamic createdBy;
-@dynamic customer;
-@dynamic employee;
-@dynamic payment;
-@dynamic product;
-@dynamic sale;
-@dynamic saleItem;
-@dynamic service;
-@dynamic serviceCategory;
-@dynamic stockedBrand;
-@dynamic stockedCategory;
-@dynamic stockedItem;
-@dynamic stockedType;
+// Insert code here to add functionality to your managed object subclass
 
 @end

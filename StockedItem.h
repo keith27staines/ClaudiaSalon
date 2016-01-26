@@ -2,8 +2,8 @@
 //  StockedItem.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,21 +11,14 @@
 
 @class Note, StockedProduct;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface StockedItem : NSManagedObject
 
-@property (nonatomic, retain) NSDate * createdDate;
-@property (nonatomic, retain) NSNumber * percentageRemaining;
-@property (nonatomic, retain) NSDate * purchaseDate;
-@property (nonatomic, retain) NSDate * useByDate;
-@property (nonatomic, retain) NSSet *notes;
-@property (nonatomic, retain) StockedProduct *stockedProduct;
-@end
-
-@interface StockedItem (CoreDataGeneratedAccessors)
-
-- (void)addNotesObject:(Note *)value;
-- (void)removeNotesObject:(Note *)value;
-- (void)addNotes:(NSSet *)values;
-- (void)removeNotes:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "StockedItem+CoreDataProperties.h"

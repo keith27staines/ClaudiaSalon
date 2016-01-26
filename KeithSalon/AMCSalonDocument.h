@@ -24,7 +24,7 @@
 #import "NSViewController+SalonMethods.h"
 #import "AMCConstants.h"
 #import "AMCViewController.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 
 @interface AMCSalonDocument : NSPersistentDocument 
 @property (readonly) Salon * salon;

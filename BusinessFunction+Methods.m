@@ -9,7 +9,7 @@
 #import "BusinessFunction+Methods.h"
 #import "Role+Methods.h"
 #import "Permission+Methods.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 @implementation BusinessFunction (Methods)
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];

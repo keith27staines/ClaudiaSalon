@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="BQDataExtractViewController" customModule="ClaudiaSalon" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="QSr-7L-hLU" id="jt5-Ju-GW3"/>
+                <outlet property="customerProgressIndicator" destination="b5G-tL-Oec" id="0bS-kW-TsK"/>
+                <outlet property="employeeProgressIndicator" destination="hAZ-Nd-cMf" id="ESM-au-fOZ"/>
+                <outlet property="extractStatus" destination="mnk-0d-N6O" id="gR0-U5-V9D"/>
+                <outlet property="serviceCategoryProgressIndicator" destination="Vxv-Vq-dB2" id="Yqe-Bi-nRB"/>
+                <outlet property="serviceProgressIndicator" destination="QHU-zC-EjD" id="24F-0c-Ahw"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="581" height="401"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rdz-5T-ghZ">
+                    <rect key="frame" x="14" y="277" width="135" height="32"/>
+                    <buttonCell key="cell" type="push" title="Perform extract" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="e5A-tz-BLa">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="performExtractButtonClicked:" target="-2" id="GJO-Jb-Den"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mnk-0d-N6O">
+                    <rect key="frame" x="6" y="108" width="557" height="17"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Multiline Label" id="OQa-1v-kAJ">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="b5G-tL-Oec">
+                    <rect key="frame" x="251" y="246" width="310" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="310" id="hz3-AU-mSb"/>
+                    </constraints>
+                </progressIndicator>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SZR-ra-Qgw">
+                    <rect key="frame" x="112" y="247" width="133" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Extracting customers" id="MYf-tR-sQO">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="hAZ-Nd-cMf">
+                    <rect key="frame" x="251" y="220" width="310" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="310" id="2fI-dD-5A3"/>
+                    </constraints>
+                </progressIndicator>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Y0D-Wl-bwt">
+                    <rect key="frame" x="148" y="222" width="97" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Extracting staff" id="cfb-1T-1qz">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="QHU-zC-EjD">
+                    <rect key="frame" x="251" y="195" width="310" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="310" id="wAC-mb-32H"/>
+                    </constraints>
+                </progressIndicator>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FEw-kV-HsE">
+                    <rect key="frame" x="125" y="197" width="120" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Extracting services" id="QiQ-Zj-zFt">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="Vxv-Vq-dB2">
+                    <rect key="frame" x="251" y="170" width="310" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="310" id="YsR-9P-VPj"/>
+                    </constraints>
+                </progressIndicator>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="stS-R0-qUN">
+                    <rect key="frame" x="64" y="172" width="181" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Extracting service categories" id="1yB-EC-ksz">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0B9-nn-exN">
+                    <rect key="frame" x="14" y="347" width="75" height="32"/>
+                    <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3QD-Xq-3Gz">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="resetDataExtract:" target="-2" id="NEN-eJ-Hbs"/>
+                    </connections>
+                </button>
+                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="6QC-7Q-hlY">
+                    <rect key="frame" x="20" y="327" width="541" height="5"/>
+                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <font key="titleFont" metaFont="system"/>
+                </box>
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="QSr-7L-hLU">
+                    <rect key="frame" x="20" y="20" width="16" height="16"/>
+                </progressIndicator>
+            </subviews>
+            <constraints>
+                <constraint firstItem="0B9-nn-exN" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="0ZP-VG-5XJ"/>
+                <constraint firstItem="6QC-7Q-hlY" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="16n-Iw-cHN"/>
+                <constraint firstItem="FEw-kV-HsE" firstAttribute="top" secondItem="Y0D-Wl-bwt" secondAttribute="bottom" constant="8" symbolic="YES" id="1Mg-BP-HVL"/>
+                <constraint firstItem="0B9-nn-exN" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="26" id="5FF-Dn-Gja"/>
+                <constraint firstItem="Y0D-Wl-bwt" firstAttribute="top" secondItem="SZR-ra-Qgw" secondAttribute="bottom" constant="8" symbolic="YES" id="6mt-Pc-gGk"/>
+                <constraint firstItem="QHU-zC-EjD" firstAttribute="centerY" secondItem="FEw-kV-HsE" secondAttribute="centerY" id="7PM-L5-oL7"/>
+                <constraint firstAttribute="trailing" secondItem="b5G-tL-Oec" secondAttribute="trailing" constant="20" id="8hF-NH-EmS"/>
+                <constraint firstAttribute="trailing" secondItem="6QC-7Q-hlY" secondAttribute="trailing" constant="20" symbolic="YES" id="Bh1-fu-g3u"/>
+                <constraint firstItem="stS-R0-qUN" firstAttribute="top" secondItem="FEw-kV-HsE" secondAttribute="bottom" constant="8" symbolic="YES" id="HBA-vz-ISL"/>
+                <constraint firstItem="stS-R0-qUN" firstAttribute="trailing" secondItem="FEw-kV-HsE" secondAttribute="trailing" id="JkA-hp-Fh3"/>
+                <constraint firstItem="b5G-tL-Oec" firstAttribute="centerY" secondItem="SZR-ra-Qgw" secondAttribute="centerY" id="NNN-Jf-vNg"/>
+                <constraint firstAttribute="bottom" secondItem="QSr-7L-hLU" secondAttribute="bottom" constant="20" id="Nvb-QY-g7i"/>
+                <constraint firstItem="Vxv-Vq-dB2" firstAttribute="centerY" secondItem="stS-R0-qUN" secondAttribute="centerY" id="Ott-5D-Q2f"/>
+                <constraint firstItem="Rdz-5T-ghZ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="Qhw-pt-Rd3"/>
+                <constraint firstItem="hAZ-Nd-cMf" firstAttribute="leading" secondItem="Y0D-Wl-bwt" secondAttribute="trailing" constant="8" id="RuN-8P-anz"/>
+                <constraint firstItem="6QC-7Q-hlY" firstAttribute="top" secondItem="0B9-nn-exN" secondAttribute="bottom" constant="24" id="Szr-7M-Cs4"/>
+                <constraint firstItem="QSr-7L-hLU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="U7C-q3-eiw"/>
+                <constraint firstItem="mnk-0d-N6O" firstAttribute="top" secondItem="stS-R0-qUN" secondAttribute="bottom" constant="47" id="W1G-d9-S28"/>
+                <constraint firstItem="b5G-tL-Oec" firstAttribute="leading" secondItem="SZR-ra-Qgw" secondAttribute="trailing" constant="8" id="XIN-uS-iqJ"/>
+                <constraint firstItem="hAZ-Nd-cMf" firstAttribute="centerY" secondItem="Y0D-Wl-bwt" secondAttribute="centerY" id="Xhi-Go-IcG"/>
+                <constraint firstItem="SZR-ra-Qgw" firstAttribute="trailing" secondItem="Y0D-Wl-bwt" secondAttribute="trailing" id="Zln-oM-BzT"/>
+                <constraint firstItem="Rdz-5T-ghZ" firstAttribute="top" secondItem="6QC-7Q-hlY" secondAttribute="bottom" constant="24" id="jgM-hw-Ynx"/>
+                <constraint firstItem="Y0D-Wl-bwt" firstAttribute="trailing" secondItem="FEw-kV-HsE" secondAttribute="trailing" id="l4E-8q-eFa"/>
+                <constraint firstItem="QHU-zC-EjD" firstAttribute="leading" secondItem="FEw-kV-HsE" secondAttribute="trailing" constant="8" id="paW-sv-xRb"/>
+                <constraint firstItem="SZR-ra-Qgw" firstAttribute="top" secondItem="Rdz-5T-ghZ" secondAttribute="bottom" constant="20" id="sqC-yC-Dge"/>
+                <constraint firstItem="mnk-0d-N6O" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="tFj-iZ-g3G"/>
+                <constraint firstAttribute="trailing" secondItem="mnk-0d-N6O" secondAttribute="trailing" constant="20" symbolic="YES" id="vRs-Gy-WPY"/>
+                <constraint firstItem="Vxv-Vq-dB2" firstAttribute="leading" secondItem="stS-R0-qUN" secondAttribute="trailing" constant="8" id="zwr-Se-syI"/>
+            </constraints>
+            <point key="canvasLocation" x="-1261.5" y="-258.5"/>
+        </customView>
+    </objects>
+</document>

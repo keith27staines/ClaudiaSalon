@@ -2,8 +2,8 @@
 //  Product.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,23 +11,14 @@
 
 @class Note, Service;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface Product : NSManagedObject
 
-@property (nonatomic, retain) NSString * brandName;
-@property (nonatomic, retain) NSDate * createdDate;
-@property (nonatomic, retain) NSNumber * hidden;
-@property (nonatomic, retain) NSDate * lastUpdatedDate;
-@property (nonatomic, retain) NSString * productType;
-@property (nonatomic, retain) NSNumber * selectable;
-@property (nonatomic, retain) NSSet *notes;
-@property (nonatomic, retain) Service *service;
-@end
-
-@interface Product (CoreDataGeneratedAccessors)
-
-- (void)addNotesObject:(Note *)value;
-- (void)removeNotesObject:(Note *)value;
-- (void)addNotes:(NSSet *)values;
-- (void)removeNotes:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "Product+CoreDataProperties.h"

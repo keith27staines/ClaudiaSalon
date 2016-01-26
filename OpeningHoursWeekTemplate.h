@@ -2,8 +2,8 @@
 //  OpeningHoursWeekTemplate.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,17 +11,14 @@
 
 @class OpeningHoursDayTemplate, Salon;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface OpeningHoursWeekTemplate : NSManagedObject
 
-@property (nonatomic, retain) NSSet *dayTemplates;
-@property (nonatomic, retain) Salon *salon;
-@end
-
-@interface OpeningHoursWeekTemplate (CoreDataGeneratedAccessors)
-
-- (void)addDayTemplatesObject:(OpeningHoursDayTemplate *)value;
-- (void)removeDayTemplatesObject:(OpeningHoursDayTemplate *)value;
-- (void)addDayTemplates:(NSSet *)values;
-- (void)removeDayTemplates:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "OpeningHoursWeekTemplate+CoreDataProperties.h"

@@ -2,51 +2,26 @@
 //  Salon.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 23/06/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 22/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+#import "Salon.h"
+#import "AMCConstants.h"
+@class AMCSalonDocument;
 @class Account, AccountingPaymentGroup, Customer, Employee, OpeningHoursWeekTemplate, PaymentCategory, Role, ServiceCategory;
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface Salon : NSManagedObject
 
-@property (nonatomic, retain) NSString * addressLine1;
-@property (nonatomic, retain) NSString * addressLine2;
-@property (nonatomic, retain) NSDate * firstDayOfTrading;
-@property (nonatomic, retain) NSNumber * firstDayOfWeek;
-@property (nonatomic, retain) NSString * fullDescription;
-@property (nonatomic, retain) NSString * phone;
-@property (nonatomic, retain) NSString * postcode;
-@property (nonatomic, retain) NSString * purpose;
-@property (nonatomic, retain) NSString * salonName;
-@property (nonatomic, retain) NSString * serviceEmail;
-@property (nonatomic, retain) NSDate * startOfAccountingYear;
-@property (nonatomic, retain) Customer *anonymousCustomer;
-@property (nonatomic, retain) Account *cardPaymentAccount;
-@property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForMoneyTransfers;
-@property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForPayments;
-@property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForSales;
-@property (nonatomic, retain) PaymentCategory *defaultPaymentCategoryForWages;
-@property (nonatomic, retain) AccountingPaymentGroup *expenditureOtherGroup;
-@property (nonatomic, retain) AccountingPaymentGroup *incomeOtherGroup;
-@property (nonatomic, retain) Employee *manager;
-@property (nonatomic, retain) OpeningHoursWeekTemplate *openingHoursWeekTemplate;
-@property (nonatomic, retain) Account *primaryBankAccount;
-@property (nonatomic, retain) AccountingPaymentGroup *rootAccountingGroup;
-@property (nonatomic, retain) AccountingPaymentGroup *rootExpenditureGroup;
-@property (nonatomic, retain) AccountingPaymentGroup *rootIncomeGroup;
-@property (nonatomic, retain) ServiceCategory *rootServiceCategory;
-@property (nonatomic, retain) ServiceCategory *serviceCategories;
-@property (nonatomic, retain) Account *tillAccount;
-@property (nonatomic, retain) Role *systemRole;
-@property (nonatomic, retain) Role *devSupportRole;
-@property (nonatomic, retain) Role *systemAdminRole;
-@property (nonatomic, retain) Role *accountantRole;
-@property (nonatomic, retain) Role *managerRole;
-@property (nonatomic, retain) Role *basicUserRole;
-@property (nonatomic, retain) Role *receptionistRole;
+// Insert code here to declare functionality of your managed object subclass
 
++(Salon*)salonWithMoc:(NSManagedObjectContext*)moc;
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "Salon+CoreDataProperties.h"

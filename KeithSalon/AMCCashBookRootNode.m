@@ -7,7 +7,7 @@
 //
 
 #import "AMCCashBookRootNode.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "AccountingPaymentGroup+Methods.h"
 
 @interface AMCCashBookRootNode()

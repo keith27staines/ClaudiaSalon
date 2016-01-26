@@ -2,8 +2,8 @@
 //  Appointment.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,29 +11,14 @@
 
 @class Customer, Note, Sale;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface Appointment : NSManagedObject
 
-@property (nonatomic, retain) NSDate * appointmentDate;
-@property (nonatomic, retain) NSDate * appointmentEndDate;
-@property (nonatomic, retain) NSNumber * bookedDuration;
-@property (nonatomic, retain) NSString * cancellationNote;
-@property (nonatomic, retain) NSNumber * cancellationType;
-@property (nonatomic, retain) NSNumber * cancelled;
-@property (nonatomic, retain) NSNumber * completed;
-@property (nonatomic, retain) NSString * completionNote;
-@property (nonatomic, retain) NSNumber * completionType;
-@property (nonatomic, retain) NSDate * createdDate;
-@property (nonatomic, retain) NSDate * lastUpdatedDate;
-@property (nonatomic, retain) Customer *customer;
-@property (nonatomic, retain) NSSet *notes;
-@property (nonatomic, retain) Sale *sale;
-@end
-
-@interface Appointment (CoreDataGeneratedAccessors)
-
-- (void)addNotesObject:(Note *)value;
-- (void)removeNotesObject:(Note *)value;
-- (void)addNotes:(NSSet *)values;
-- (void)removeNotes:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "Appointment+CoreDataProperties.h"

@@ -11,7 +11,7 @@
 #import "Payment+Methods.h"
 #import "Account+Methods.h"
 #import "AMCDiscountCalculator.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "Customer+Methods.h"
 
 

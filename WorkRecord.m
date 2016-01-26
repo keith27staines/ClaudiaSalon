@@ -2,29 +2,16 @@
 //  WorkRecord.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import "WorkRecord.h"
 #import "Employee.h"
 #import "Payment.h"
 
-
 @implementation WorkRecord
 
-@dynamic friday;
-@dynamic isTemplate;
-@dynamic monday;
-@dynamic saturday;
-@dynamic sunday;
-@dynamic thursday;
-@dynamic tuesday;
-@dynamic wednesday;
-@dynamic weekEndingDate;
-@dynamic bonuses;
-@dynamic employee;
-@dynamic wages;
-@dynamic workRecordTemplateForEmployee;
+// Insert code here to add functionality to your managed object subclass
 
 @end

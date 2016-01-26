@@ -7,7 +7,7 @@
 //
 
 #import "PaymentCategory+Methods.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 
 @implementation PaymentCategory (Methods)
 

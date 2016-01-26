@@ -2,8 +2,8 @@
 //  ShoppingListItem.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,11 +11,14 @@
 
 @class ShoppingList, StockedProduct;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ShoppingListItem : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * numberActuallyPurchased;
-@property (nonatomic, retain) NSNumber * numberToPurchase;
-@property (nonatomic, retain) ShoppingList *shoppingList;
-@property (nonatomic, retain) StockedProduct *stockedProduct;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "ShoppingListItem+CoreDataProperties.h"

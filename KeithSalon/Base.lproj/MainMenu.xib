@@ -13,6 +13,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="bookingQueueManagerWindowController" destination="QQe-1i-0Fe" id="64f-6p-Fn4"/>
                 <outlet property="preferencesWindowController" destination="n9F-wk-okW" id="CIb-f5-U7b"/>
                 <outlet property="welcomeScreenController" destination="DON-wV-skA" id="LGJ-Aj-HIe"/>
             </connections>
@@ -34,6 +35,12 @@
                             <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
                                 <connections>
                                     <action selector="showPreferencesWindow:" target="-1" id="wXL-gm-JdR"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Booking Queue Manager..." id="Um2-w9-XjV">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showBookingQueueWindow:" target="-1" id="Pos-lz-aqo"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
@@ -508,5 +515,6 @@
             </connections>
         </customObject>
         <customObject id="n9F-wk-okW" customClass="AMCPreferencesWindowController"/>
+        <customObject id="QQe-1i-0Fe" userLabel="BookingQueueWindowController" customClass="AMCBookingQueueManagerWindowController" customModule="ClaudiaSalon" customModuleProvider="target"/>
     </objects>
 </document>

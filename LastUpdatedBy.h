@@ -2,19 +2,21 @@
 //  LastUpdatedBy.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface LastUpdatedBy : NSManagedObject
 
-@property (nonatomic, retain) NSString * computerIdentity;
-@property (nonatomic, retain) NSDate * date;
-@property (nonatomic, retain) NSString * macAddress;
-@property (nonatomic, retain) NSString * userIdentity;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "LastUpdatedBy+CoreDataProperties.h"

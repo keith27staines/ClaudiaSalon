@@ -17,7 +17,7 @@
 #import "AMCReceiptView.h"
 #import "Account+Methods.h"
 #import "AMCSalonDocument.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "Payment+Methods.h"
 
 @interface MakePaymentStepViewController ()

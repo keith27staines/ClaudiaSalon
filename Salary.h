@@ -2,8 +2,8 @@
 //  Salary.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 31/03/2015.
-//  Copyright (c) 2015 ClaudiasSalon. All rights reserved.
+//  Created by Keith Staines on 25/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,16 +11,14 @@
 
 @class Employee;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface Salary : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * extraHoursRate;
-@property (nonatomic, retain) NSNumber * hourlyRate;
-@property (nonatomic, retain) NSNumber * nominalDaysPerWeek;
-@property (nonatomic, retain) NSNumber * nominalHoursPerDay;
-@property (nonatomic, retain) NSNumber * payByHour;
-@property (nonatomic, retain) NSNumber * percentage;
-@property (nonatomic, retain) NSDate * validFromDate;
-@property (nonatomic, retain) NSDate * validToDate;
-@property (nonatomic, retain) Employee *employee;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "Salary+CoreDataProperties.h"

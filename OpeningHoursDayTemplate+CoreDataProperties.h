@@ -1,0 +1,24 @@
+//
+//  OpeningHoursDayTemplate+CoreDataProperties.h
+//  ClaudiaSalon
+//
+//  Created by Keith Staines on 26/01/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
+//
+//  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
+//  to delete and recreate this implementation file for your updated model.
+//
+
+#import "OpeningHoursDayTemplate.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface OpeningHoursDayTemplate (CoreDataProperties)
+
+@property (nullable, nonatomic, retain) NSString *dayName;
+@property (nullable, nonatomic, retain) IntervalDuringDay *intervalDuringDay;
+@property (nullable, nonatomic, retain) OpeningHoursWeekTemplate *openingHoursWeekTemplate;
+
+@end
+
+NS_ASSUME_NONNULL_END

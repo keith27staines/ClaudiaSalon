@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AMCBookingQueueManagerViewController">
+            <connections>
+                <outlet property="dataExtractViewController" destination="zpy-HD-CXY" id="hIB-P5-Oqw"/>
+                <outlet property="navigationTabBar" destination="9w2-df-aSh" id="DaM-hN-Huj"/>
+                <outlet property="queueProcessorViewController" destination="KfT-7r-F9b" id="qsc-cb-19Y"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="767" height="517"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <tabView translatesAutoresizingMaskIntoConstraints="NO" id="9w2-df-aSh">
+                    <rect key="frame" x="13" y="10" width="741" height="493"/>
+                    <font key="font" metaFont="system"/>
+                    <tabViewItems>
+                        <tabViewItem label="Data Exract" identifier="DataExtract" id="L8M-iG-0Ap">
+                            <view key="view" id="8AE-Og-ezR">
+                                <rect key="frame" x="10" y="33" width="999" height="552"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                        </tabViewItem>
+                        <tabViewItem label="Queue Processor" identifier="QueueProcessor" id="gxG-n7-Qri">
+                            <view key="view" id="Uwh-6Q-BDH">
+                                <rect key="frame" x="10" y="33" width="721" height="447"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                        </tabViewItem>
+                    </tabViewItems>
+                    <connections>
+                        <outlet property="delegate" destination="-2" id="2Ye-5j-E7j"/>
+                    </connections>
+                </tabView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="9w2-df-aSh" secondAttribute="trailing" constant="20" id="0xV-Qy-4z8"/>
+                <constraint firstItem="9w2-df-aSh" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="Fjv-iJ-gIg"/>
+                <constraint firstItem="9w2-df-aSh" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="VTg-J8-VXm"/>
+                <constraint firstAttribute="bottom" secondItem="9w2-df-aSh" secondAttribute="bottom" constant="20" id="pXx-0j-zRe"/>
+            </constraints>
+            <point key="canvasLocation" x="345.5" y="173.5"/>
+        </customView>
+        <viewController id="zpy-HD-CXY" customClass="BQDataExtractViewController" customModule="ClaudiaSalon" customModuleProvider="target"/>
+        <viewController id="KfT-7r-F9b" customClass="BQQueueProcessorViewController" customModule="ClaudiaSalon" customModuleProvider="target"/>
+    </objects>
+</document>

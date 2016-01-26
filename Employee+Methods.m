@@ -11,7 +11,7 @@
 #import "Service+Methods.h"
 #import "NSDate+AMCDate.h"
 #import "WorkRecord+Methods.h"
-#import "Salon+Methods.h"
+#import "Salon.h"
 #import "Role+Methods.h"
 #import "BusinessFunction+Methods.h"
 
