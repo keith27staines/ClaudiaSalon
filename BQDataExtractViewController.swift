@@ -238,7 +238,7 @@ class BQDataExtractViewController: NSViewController {
                 let unarchiver = NSKeyedUnarchiver(forReadingWithData:metadata)
                 let serviceCategoryRecord = CKRecord(coder: unarchiver)!
                 let serviceCategoryReference = CKReference(record: serviceCategoryRecord, action: CKReferenceAction.DeleteSelf)
-                icloudService.parentCategory = serviceCategoryReference
+                icloudService.serviceCategory = serviceCategoryReference
                 icloudServiceRecords.append(ckRecord)
                 totalServicesToProcess++
             }
