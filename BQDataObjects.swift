@@ -166,7 +166,7 @@ public class ICloudService : ICloudRecord {
     var minPrice: Double?
     var maxPrice: Double?
     var nominalPrice: Double?
-    var parentCategory: CKReference?
+    var serviceCategory: CKReference?
     
     override init(managedObject: NSManagedObject) {
         super.init(managedObject: managedObject)
