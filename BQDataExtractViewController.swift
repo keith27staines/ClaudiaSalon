@@ -33,6 +33,7 @@ class BQDataExtractViewController: NSViewController {
     var coredataCustomersDictionary = [String:Customer]()
     var coredataEmployeeDictionary = [String:Employee]()
     var coredataServiceCategoriesDictionary = [String:ServiceCategory]()
+    var icloudServiceCategoryReferencesDictionary = [String:CKReference]()  // keyed by coredata objectID string
     var coredataServicesDictionary = [String:Service]()
 
     var cloudSalonRecord: CKRecord?
@@ -223,6 +224,9 @@ class BQDataExtractViewController: NSViewController {
         for serviceCategoryForExport in coredataServiceCategoriesNeedingExport() {
             let icloudServiceCategory = ICloudServiceCategory(managedObject: serviceCategoryForExport)
             let ckRecord = icloudServiceCategory.makeFirstCloudKitRecord(self.cloudSalonReference)
+            let objectID = serviceCategoryForExport.objectID.URIRepresentation().absoluteString
+            let serviceCategoryReference = CKReference(record: ckRecord, action: CKReferenceAction.DeleteSelf)
+            icloudServiceCategoryReferencesDictionary[objectID]=serviceCategoryReference
             icloudServiceCategoryRecords.append(ckRecord)
             totalServiceCategoriesToProcess++
         }
@@ -233,7 +237,9 @@ class BQDataExtractViewController: NSViewController {
         for serviceForExport in coredataServicesNeedingExport() {
             if let parentCategory = serviceForExport.serviceCategory {
                 let icloudService = ICloudService(managedObject: serviceForExport)
-                let ckRecord = icloudService.makeFirstCloudKitRecord(self.cloudSalonReference)
+                let objectID = parentCategory.objectID.URIRepresentation().absoluteString
+                let parentCategoryReference = icloudServiceCategoryReferencesDictionary[objectID]!
+                let ckRecord = icloudService.makeFirstCloudKitRecord(self.cloudSalonReference!, serviceCategory: parentCategoryReference)
                 let metadata = parentCategory.bqMetadata!
                 let unarchiver = NSKeyedUnarchiver(forReadingWithData:metadata)
                 let serviceCategoryRecord = CKRecord(coder: unarchiver)!

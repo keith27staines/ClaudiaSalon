@@ -178,6 +178,12 @@ public class ICloudService : ICloudRecord {
         self.maxPrice = coredataService.maximumCharge?.doubleValue
         self.nominalPrice = coredataService.nominalCharge?.doubleValue
     }
+    func makeFirstCloudKitRecord(parentSalon: CKReference, serviceCategory: CKReference) -> CKRecord {
+        let record = self.makeFirstCloudKitRecord(parentSalon)
+        record["serviceCategory"] = serviceCategory
+        return record
+    }
+    
     override func makeFirstCloudKitRecord(parentSalon: CKReference?) -> CKRecord {
         let record = CKRecord(recordType: self.recordType)
         record["cloudSalonRef"] = parentSalon
