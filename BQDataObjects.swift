@@ -17,10 +17,7 @@ func archiveMetadataForCKRecord(record: CKRecord) -> NSMutableData {
     archiver.finishEncoding()
     return archivedData
 }
-func unarchiveRecordFromMetadata(data: NSData) -> CKRecord? {
-    let coder = NSKeyedUnarchiver(forReadingWithData: data)
-    return CKRecord(coder: coder)
-}
+
 
 enum ICloudRecordType: String {
     case Salon = "iCloudSalon"
@@ -53,6 +50,17 @@ public class ICloudRecord {
     func fetchCoredataObject() {
         preconditionFailure("This method must be overridden")
     }
+    func unarchiveRecordFromMetadata(recordType: String, data: NSData?) {
+        if let metadata = data {
+            let coder = NSKeyedUnarchiver(forReadingWithData: metadata)
+            self.recordID = CKRecord(coder: coder)?.recordID
+            assert(self.recordType == recordType, "Record types don't match")
+        } else {
+            let recordName = NSUUID().UUIDString
+            self.recordType = recordType
+            self.recordID = CKRecordID(recordName: recordName)
+        }
+    }
 }
 
 public class ICloudSalon : ICloudRecord {
@@ -64,10 +72,7 @@ public class ICloudSalon : ICloudRecord {
         super.init(managedObject: managedObject)
         self.recordType = ICloudRecordType.Salon.rawValue
         let coredataSalon = managedObject as! Salon
-        if let metadata = coredataSalon.bqMetadata {
-            let ckRecord = unarchiveRecordFromMetadata(metadata)
-            self.recordID = ckRecord!.recordID
-        }
+        self.unarchiveRecordFromMetadata(self.recordType, data: coredataSalon.bqMetadata)
         self.name = coredataSalon.salonName
         self.addressLine1 = coredataSalon.addressLine1
         self.addressLine2 = coredataSalon.addressLine2
@@ -95,10 +100,7 @@ public class ICloudCustomer : ICloudRecord {
         super.init(managedObject: managedObject)
         self.recordType = ICloudRecordType.Customer.rawValue
         let coredataCustomer = managedObject as! Customer
-        if let metadata = coredataCustomer.bqMetadata {
-            let ckRecord = unarchiveRecordFromMetadata(metadata)
-            self.recordID = ckRecord!.recordID
-        }
+        self.unarchiveRecordFromMetadata(self.recordType, data: coredataCustomer.bqMetadata)
         self.firstName = coredataCustomer.firstName
         self.lastName = coredataCustomer.lastName
         self.phone = coredataCustomer.phone
@@ -124,10 +126,7 @@ public class ICloudEmployee : ICloudRecord {
         super.init(managedObject: managedObject)
         self.recordType = ICloudRecordType.Employee.rawValue
         let coredataEmployee = managedObject as! Employee
-        if let metadata = coredataEmployee.bqMetadata {
-            let ckRecord = unarchiveRecordFromMetadata(metadata)
-            self.recordID = ckRecord!.recordID
-        }
+        self.unarchiveRecordFromMetadata(self.recordType, data: coredataEmployee.bqMetadata)
         self.firstName = coredataEmployee.firstName
         self.lastName = coredataEmployee.lastName
     }
@@ -149,10 +148,7 @@ public class ICloudServiceCategory : ICloudRecord {
         super.init(managedObject: managedObject)
         self.recordType = ICloudRecordType.ServiceCategory.rawValue
         let coredataServiceCategory = managedObject as! ServiceCategory
-        if let metadata = coredataServiceCategory.bqMetadata {
-            let ckRecord = unarchiveRecordFromMetadata(metadata)
-            self.recordID = ckRecord!.recordID
-        }
+        self.unarchiveRecordFromMetadata(self.recordType, data: coredataServiceCategory.bqMetadata)
         self.name = coredataServiceCategory.name
     }
     override func makeFirstCloudKitRecord(parentSalon: CKReference?) -> CKRecord {
@@ -176,10 +172,7 @@ public class ICloudService : ICloudRecord {
         super.init(managedObject: managedObject)
         self.recordType = ICloudRecordType.Service.rawValue
         let coredataService = managedObject as! Service
-        if let metadata = coredataService.bqMetadata {
-            let ckRecord = unarchiveRecordFromMetadata(metadata)
-            self.recordID = ckRecord!.recordID
-        }
+        self.unarchiveRecordFromMetadata(self.recordType, data: coredataService.bqMetadata)
         self.name = coredataService.name
         self.minPrice = coredataService.minimumCharge?.doubleValue
         self.maxPrice = coredataService.maximumCharge?.doubleValue

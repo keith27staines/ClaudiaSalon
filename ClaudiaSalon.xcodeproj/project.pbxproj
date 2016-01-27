@@ -2101,12 +2101,12 @@
 		53D69BA61A9B22830004CE10 = {
 			isa = PBXGroup;
 			children = (
-				536B9DA71C4FDB9500F170EC /* Booking Queue */,
+				536B9DA41C4F98F900F170EC /* ClaudiaSalon-Bridging-Header.h */,
+				530D54A51B270C9300F6C4FE /* Property List.plist */,
 				536B9D171C4F88F100F170EC /* CloudKit.framework */,
 				53D4FC571B394339009EBF70 /* Foundation.framework */,
-				530D54A51B270C9300F6C4FE /* Property List.plist */,
+				536B9DA71C4FDB9500F170EC /* Booking Queue */,
 				53D69BB11A9B22830004CE10 /* ClaudiaSalon */,
-				536B9DA41C4F98F900F170EC /* ClaudiaSalon-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
