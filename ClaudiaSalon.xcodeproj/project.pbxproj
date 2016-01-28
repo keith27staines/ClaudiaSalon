@@ -31,6 +31,9 @@
 		5346C5971ABB2887005D4540 /* AMCTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5961ABB2887005D4540 /* AMCTreeNode.m */; };
 		5346C59A1ABFF6AC005D4540 /* AMCCashBookNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5991ABFF6AC005D4540 /* AMCCashBookNode.m */; };
 		534DFF681B0736970077F124 /* AMCRolloverButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 534DFF671B0736970077F124 /* AMCRolloverButton.m */; };
+		534F0AE61C5A13A500520214 /* BQExtractMaintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F0AE41C5A13A500520214 /* BQExtractMaintenance.swift */; };
+		534F0AE71C5A13A500520214 /* BQExtractMaintenance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534F0AE51C5A13A500520214 /* BQExtractMaintenance.xib */; };
+		534F0AEB1C5A2D0100520214 /* BQExtractModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F0AEA1C5A2D0100520214 /* BQExtractModel.swift */; };
 		535191691B36B60500F8D37A /* AMCPasswordEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 535191671B36B60500F8D37A /* AMCPasswordEditor.m */; };
 		5351916A1B36B60500F8D37A /* AMCPasswordEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535191681B36B60500F8D37A /* AMCPasswordEditor.xib */; };
 		5351916E1B37F56D00F8D37A /* AMCChangeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5351916C1B37F56D00F8D37A /* AMCChangeUserViewController.m */; };
@@ -380,6 +383,9 @@
 		5346C5991ABFF6AC005D4540 /* AMCCashBookNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBookNode.m; sourceTree = "<group>"; };
 		534DFF661B0736970077F124 /* AMCRolloverButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCRolloverButton.h; sourceTree = "<group>"; };
 		534DFF671B0736970077F124 /* AMCRolloverButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCRolloverButton.m; sourceTree = "<group>"; };
+		534F0AE41C5A13A500520214 /* BQExtractMaintenance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQExtractMaintenance.swift; sourceTree = "<group>"; };
+		534F0AE51C5A13A500520214 /* BQExtractMaintenance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BQExtractMaintenance.xib; sourceTree = "<group>"; };
+		534F0AEA1C5A2D0100520214 /* BQExtractModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQExtractModel.swift; sourceTree = "<group>"; };
 		535191661B36B60500F8D37A /* AMCPasswordEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPasswordEditor.h; sourceTree = "<group>"; };
 		535191671B36B60500F8D37A /* AMCPasswordEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPasswordEditor.m; sourceTree = "<group>"; };
 		535191681B36B60500F8D37A /* AMCPasswordEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPasswordEditor.xib; sourceTree = "<group>"; };
@@ -1153,6 +1159,8 @@
 				536B9DC21C50C2C400F170EC /* BQQueueProcessorViewController.xib */,
 				536B9DBD1C50C2A200F170EC /* BQDataExtractViewController.swift */,
 				536B9DBE1C50C2A200F170EC /* BQDataExtractViewController.xib */,
+				534F0AE41C5A13A500520214 /* BQExtractMaintenance.swift */,
+				534F0AE51C5A13A500520214 /* BQExtractMaintenance.xib */,
 			);
 			name = "View controllers for top level booking queue functiions";
 			sourceTree = "<group>";
@@ -1171,6 +1179,7 @@
 			isa = PBXGroup;
 			children = (
 				536B9DC71C50D8A300F170EC /* BQDataObjects.swift */,
+				534F0AEA1C5A2D0100520214 /* BQExtractModel.swift */,
 			);
 			name = "Booking Queue Model";
 			sourceTree = "<group>";
@@ -2479,6 +2488,7 @@
 				5346C58E1ABB074C005D4540 /* AMCPreferencesWindowController.xib in Resources */,
 				53D69C521A9B23B70004CE10 /* EditServiceCategoryViewController.xib in Resources */,
 				53D69C531A9B23B70004CE10 /* EditEmployeeViewController.xib in Resources */,
+				534F0AE71C5A13A500520214 /* BQExtractMaintenance.xib in Resources */,
 				53D69C291A9B23B60004CE10 /* AMCAssociatedNotesViewController.xib in Resources */,
 				5346C5941ABB2265005D4540 /* AMCCategoryManagementViewController.xib in Resources */,
 				53D69C351A9B23B70004CE10 /* AMCSaleItemViewController.xib in Resources */,
@@ -2692,6 +2702,7 @@
 				53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */,
 				535F0DF51AB2339A0035CFD8 /* AMCAutoCloseViewController.m in Sources */,
 				53D69D4D1A9B240C0004CE10 /* EditObjectViewController.m in Sources */,
+				534F0AE61C5A13A500520214 /* BQExtractMaintenance.swift in Sources */,
 				53D69BB81A9B22830004CE10 /* main.m in Sources */,
 				5346C5971ABB2887005D4540 /* AMCTreeNode.m in Sources */,
 				5351916E1B37F56D00F8D37A /* AMCChangeUserViewController.m in Sources */,
@@ -2723,6 +2734,7 @@
 				536B9E961C56077E00F170EC /* OpeningHoursDayTemplate.m in Sources */,
 				532377DD1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m in Sources */,
 				536B9E621C56077E00F170EC /* Product.m in Sources */,
+				534F0AEB1C5A2D0100520214 /* BQExtractModel.swift in Sources */,
 				53D69CF51A9B240C0004CE10 /* NSDate+AMCDate.m in Sources */,
 				536B9E761C56077E00F170EC /* ServiceCategory.m in Sources */,
 				53D69D511A9B240C0004CE10 /* WizardStepView.m in Sources */,

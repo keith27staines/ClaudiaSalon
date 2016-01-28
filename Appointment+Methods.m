@@ -89,6 +89,17 @@
     }
     return YES;
 }
++(NSArray*)appointmentsAfterDate:(NSDate*)date withMoc:(NSManagedObjectContext*)moc {
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Appointment" inManagedObjectContext:moc];
+    [fetchRequest setEntity:entity];
+    NSDate * startOfDay = [date beginningOfDay];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"appointmentDate >= %@", startOfDay];
+    [fetchRequest setPredicate:predicate];
+    NSError *error = nil;
+    NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
+    return fetchedObjects;
+}
 +(NSArray*)appointmentsOnDayOfDate:(NSDate*)date withMoc:(NSManagedObjectContext*)moc{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Appointment" inManagedObjectContext:moc];

@@ -13,6 +13,7 @@
 @interface Appointment (Methods) <AMCObjectWithNotesProtocol>
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
++(NSArray*)appointmentsAfterDate:(NSDate*)date withMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)appointmentsOnDayOfDate:(NSDate*)date withMoc:(NSManagedObjectContext*)moc;
 -(NSNumber*)expectedTimeRequired;
 -(NSUInteger)bookedDurationInMinutes;

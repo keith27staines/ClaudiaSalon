@@ -9,6 +9,8 @@
 import Foundation
 import CloudKit
 
+let appointmentExpiryTime = 33.0 * 3600.0 // 33 days in seconds
+
 func archiveMetadataForCKRecord(record: CKRecord) -> NSMutableData {
     let archivedData = NSMutableData()
     let archiver = NSKeyedArchiver(forWritingWithMutableData: archivedData)
@@ -38,6 +40,7 @@ public class ICloudRecord {
     var updateStamp: String?
     var coredataID: String?
     var cloudSalonRef: CKReference?
+    var isActive = true
     init() {
         
     }
@@ -80,6 +83,7 @@ public class ICloudSalon : ICloudRecord {
     }
     func makeFirstCloudkitRecord(parentSalon:CKReference?)-> CKRecord {
         let record = CKRecord(recordType: self.recordType)
+        record["isActive"] = true
         record["cloudSalonRef"] = nil
         record["needsExportToCoredata"] = false
         record["coredataID"] = coredataID
@@ -114,6 +118,7 @@ public class ICloudCustomer : ICloudRecord {
         record["firstName"] = firstName
         record["lastName"] = lastName
         record["phone"] = phone
+        record["isActive"] = true
         return record
     }
 }
@@ -129,6 +134,7 @@ public class ICloudEmployee : ICloudRecord {
         self.unarchiveRecordFromMetadata(self.recordType, data: coredataEmployee.bqMetadata)
         self.firstName = coredataEmployee.firstName
         self.lastName = coredataEmployee.lastName
+        self.isActive = (coredataEmployee.isActive?.boolValue == true ? true : false)
     }
     
     override func makeFirstCloudKitRecord(parentSalon: CKReference?) -> CKRecord {
@@ -138,6 +144,7 @@ public class ICloudEmployee : ICloudRecord {
         record["coredataID"] = coredataID
         record["firstName"] = firstName
         record["lastName"] = lastName
+        record["isActive"] = true
         return record
     }
 }
@@ -157,6 +164,7 @@ public class ICloudServiceCategory : ICloudRecord {
         record["needsExportToCoredata"] = false
         record["coredataID"] = coredataID
         record["name"] = name
+        record["isActive"] = true
         return record
     }
 }
@@ -192,11 +200,39 @@ public class ICloudService : ICloudRecord {
         record["minPrice"] = minPrice
         record["maxPrice"] = maxPrice
         record["nominalPrice"] = nominalPrice
+        record["isActive"] = true
         return record
     }
 }
 
+// MARK:- class ICloudAppointment
+class ICloudAppointment:ICloudRecord {
+    var customerReference: CKReference?
+    var appointmentDate: NSDate?
+    var expectedDuration: Double?
+    class func operationToDetermineExpiredAppointments(salonReference:CKReference) -> CKOperation {
+        let earliestNonExpired = NSDate().dateByAddingTimeInterval(-appointmentExpiryTime)
+        let expiredPredicate = NSPredicate(format: "appointmentDate < %@ and cloudSalonRef == ", earliestNonExpired,salonReference)
+        let expiredQuery = CKQuery(recordType: ICloudRecordType.Appointment.rawValue, predicate: expiredPredicate)
+        let expiredOperation = CKQueryOperation(query: expiredQuery)
+        expiredOperation.desiredKeys = ["recordID"]
+        return expiredOperation
+    }
+}
+
 // MARK:- Managed object extensions
+extension Appointment {
+    class func apointmentsNeedingExport(managedObjectContext:NSManagedObjectContext) -> [Appointment] {
+        let today = NSDate()
+        let earliest = today.dateByAddingTimeInterval(-appointmentExpiryTime)
+        let appointments = Appointment.appointmentsAfterDate(earliest, withMoc: managedObjectContext) as! [Appointment]
+        return appointments.sort({ (appointment1, appointment2) -> Bool in
+            let date1 = appointment1.appointmentDate!
+            let date2 = appointment2.appointmentDate!
+            return (date1.isLessThan(date2))
+        })
+    }
+}
 extension Customer {
     class func customersOrderedByFirstName(managedObjectContext:NSManagedObjectContext) -> [Customer] {
         let customers = Customer.allObjectsWithMoc(managedObjectContext) as! [Customer]
