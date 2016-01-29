@@ -11,26 +11,26 @@ import CloudKit
 
 let appointmentExpiryTime = 33.0 * 3600.0 // 33 days in seconds
 
-func archiveMetadataForCKRecord(record: CKRecord) -> NSMutableData {
-    let archivedData = NSMutableData()
-    let archiver = NSKeyedArchiver(forWritingWithMutableData: archivedData)
-    archiver.requiresSecureCoding = true
-    record.encodeSystemFieldsWithCoder(archiver)
-    archiver.finishEncoding()
-    return archivedData
+// MARK:- DiscountType enumeration
+enum DiscountType : Int {
+    case Percent = 0
+    case Amount = 1
 }
-
-
+// MARK:- ICloudRecordType enumeration
 enum ICloudRecordType: String {
     case Salon = "iCloudSalon"
     case Customer = "icloudCustomer"
     case ServiceCategory = "icloudServiceCategory"
     case Service = "iCloudService"
     case Employee = "icloudEmployee"
+    case Sale = "icloudSale"
     case SaleItem = "icloudSaleItem"
     case Appointment = "icloudAppointment"
 }
 
+
+
+// MARK:- abstract base class ICloudRecord
 public class ICloudRecord {
     var needsExortToCoredata = false
     var creationDate: NSDate?
@@ -41,17 +41,25 @@ public class ICloudRecord {
     var coredataID: String?
     var cloudSalonRef: CKReference?
     var isActive = true
-    init() {
-        
+    private init() {
+        assertionFailure("Not supported. Init from a managed object, CRRecord or CKReference instead")
     }
-    init(managedObject: NSManagedObject) {
+    private init(managedObject: NSManagedObject, parentSalon: Salon?) {
         self.coredataID = managedObject.objectID.URIRepresentation().absoluteString
+        if !managedObject.isKindOfClass(Salon) {
+            guard let salon = parentSalon else {
+                preconditionFailure("Parent salon is compulsory for any managed object that isn't itself of type Salon")
+                return
+            }
+            let cloudSalon = ICloudSalon(coredataSalon: salon)
+            self.cloudSalonRef = CKReference(recordID: cloudSalon.recordID!, action: CKReferenceAction.DeleteSelf)
+        }
     }
-    func makeFirstCloudKitRecord(parentSalon:CKReference?)->CKRecord {
-        preconditionFailure("This method must be overridden")
+    func makeFirstCloudKitRecord()->CKRecord {
+        preconditionFailure("This method must be overridden and must not call super")
     }
     func fetchCoredataObject() {
-        preconditionFailure("This method must be overridden")
+        preconditionFailure("This method must be overridden and must not call super")
     }
     func unarchiveRecordFromMetadata(recordType: String, data: NSData?) {
         if let metadata = data {
@@ -66,15 +74,18 @@ public class ICloudRecord {
     }
 }
 
+// MARK:- class ICloudSalon
 public class ICloudSalon : ICloudRecord {
     var name: String?
     var addressLine1: String?
     var addressLine2: String?
     var postcode: String?
-    override init(managedObject: NSManagedObject) {
-        super.init(managedObject: managedObject)
+    override init(managedObject: NSManagedObject, parentSalon: Salon?) {
+        preconditionFailure("Do not use this initializer")
+    }
+    init(coredataSalon: Salon) {
+        super.init(managedObject: coredataSalon, parentSalon: nil)
         self.recordType = ICloudRecordType.Salon.rawValue
-        let coredataSalon = managedObject as! Salon
         self.unarchiveRecordFromMetadata(self.recordType, data: coredataSalon.bqMetadata)
         self.name = coredataSalon.salonName
         self.addressLine1 = coredataSalon.addressLine1
@@ -99,20 +110,21 @@ public class ICloudCustomer : ICloudRecord {
     var firstName: String?
     var lastName: String?
     var phone: String?
-
-    override init(managedObject: NSManagedObject) {
-        super.init(managedObject: managedObject)
+    override init(managedObject: NSManagedObject, parentSalon: Salon?) {
+        preconditionFailure("Do not use this initializer")
+    }
+    init(coredataCustomer: Customer, parentSalon: Salon?) {
+        super.init(managedObject: coredataCustomer, parentSalon: parentSalon)
         self.recordType = ICloudRecordType.Customer.rawValue
-        let coredataCustomer = managedObject as! Customer
         self.unarchiveRecordFromMetadata(self.recordType, data: coredataCustomer.bqMetadata)
         self.firstName = coredataCustomer.firstName
         self.lastName = coredataCustomer.lastName
         self.phone = coredataCustomer.phone
     }
     
-    override func makeFirstCloudKitRecord(parentSalon: CKReference?) -> CKRecord {
+    override func makeFirstCloudKitRecord() -> CKRecord {
         let record = CKRecord(recordType: self.recordType)
-        record["cloudSalonRef"] = parentSalon
+        record["cloudSalonRef"] = cloudSalonRef
         record["needsExportToCoredata"] = false
         record["coredataID"] = coredataID
         record["firstName"] = firstName
@@ -126,20 +138,21 @@ public class ICloudCustomer : ICloudRecord {
 public class ICloudEmployee : ICloudRecord {
     var firstName: String?
     var lastName: String?
-
-    override init(managedObject: NSManagedObject) {
-        super.init(managedObject: managedObject)
+    override init(managedObject: NSManagedObject, parentSalon: Salon?) {
+        preconditionFailure("Do not use this initializer")
+    }
+    init(coredataEmployee: Employee, parentSalon: Salon) {
+        super.init(managedObject: coredataEmployee, parentSalon: parentSalon)
         self.recordType = ICloudRecordType.Employee.rawValue
-        let coredataEmployee = managedObject as! Employee
         self.unarchiveRecordFromMetadata(self.recordType, data: coredataEmployee.bqMetadata)
         self.firstName = coredataEmployee.firstName
         self.lastName = coredataEmployee.lastName
         self.isActive = (coredataEmployee.isActive?.boolValue == true ? true : false)
     }
     
-    override func makeFirstCloudKitRecord(parentSalon: CKReference?) -> CKRecord {
+    override func makeFirstCloudKitRecord() -> CKRecord {
         let record = CKRecord(recordType: self.recordType)
-        record["cloudSalonRef"] = parentSalon
+        record["cloudSalonRef"] = cloudSalonRef
         record["needsExportToCoredata"] = false
         record["coredataID"] = coredataID
         record["firstName"] = firstName
@@ -151,16 +164,18 @@ public class ICloudEmployee : ICloudRecord {
 // MARK:- class ICloudServiceCategory
 public class ICloudServiceCategory : ICloudRecord {
     var name: String?
-    override init(managedObject: NSManagedObject) {
-        super.init(managedObject: managedObject)
+    override init(managedObject: NSManagedObject, parentSalon: Salon?) {
+        preconditionFailure("Do not use this initializer")
+    }
+    init(coredataServiceCategory: ServiceCategory, parentSalon: Salon?) {
+        super.init(managedObject: coredataServiceCategory, parentSalon: parentSalon)
         self.recordType = ICloudRecordType.ServiceCategory.rawValue
-        let coredataServiceCategory = managedObject as! ServiceCategory
         self.unarchiveRecordFromMetadata(self.recordType, data: coredataServiceCategory.bqMetadata)
         self.name = coredataServiceCategory.name
     }
-    override func makeFirstCloudKitRecord(parentSalon: CKReference?) -> CKRecord {
+    override func makeFirstCloudKitRecord() -> CKRecord {
         let record = CKRecord(recordType: self.recordType)
-        record["cloudSalonRef"] = parentSalon
+        record["cloudSalonRef"] = cloudSalonRef
         record["needsExportToCoredata"] = false
         record["coredataID"] = coredataID
         record["name"] = name
@@ -174,27 +189,28 @@ public class ICloudService : ICloudRecord {
     var minPrice: Double?
     var maxPrice: Double?
     var nominalPrice: Double?
-    var serviceCategory: CKReference?
-    
-    override init(managedObject: NSManagedObject) {
-        super.init(managedObject: managedObject)
+    var serviceCategoryRef: CKReference?
+    override init(managedObject: NSManagedObject, parentSalon: Salon?) {
+        preconditionFailure("Do not use this initializer")
+    }
+    init(coredataService: Service, parentSalon: Salon?) {
+        super.init(managedObject: coredataService, parentSalon: parentSalon)
         self.recordType = ICloudRecordType.Service.rawValue
-        let coredataService = managedObject as! Service
         self.unarchiveRecordFromMetadata(self.recordType, data: coredataService.bqMetadata)
         self.name = coredataService.name
         self.minPrice = coredataService.minimumCharge?.doubleValue
         self.maxPrice = coredataService.maximumCharge?.doubleValue
         self.nominalPrice = coredataService.nominalCharge?.doubleValue
     }
-    func makeFirstCloudKitRecord(parentSalon: CKReference, serviceCategory: CKReference) -> CKRecord {
-        let record = self.makeFirstCloudKitRecord(parentSalon)
-        record["serviceCategory"] = serviceCategory
+    func makeFirstCloudKitRecord(parentSalon: CKReference, serviceCategoryRef: CKReference) -> CKRecord {
+        let record = self.makeFirstCloudKitRecord()
+        record["serviceCategoryRef"] = serviceCategoryRef
         return record
     }
     
-    override func makeFirstCloudKitRecord(parentSalon: CKReference?) -> CKRecord {
+    override func makeFirstCloudKitRecord() -> CKRecord {
         let record = CKRecord(recordType: self.recordType)
-        record["cloudSalonRef"] = parentSalon
+        record["cloudSalonRef"] = cloudSalonRef
         record["needsExportToCoredata"] = false
         record["coredataID"] = coredataID
         record["minPrice"] = minPrice
@@ -208,8 +224,42 @@ public class ICloudService : ICloudRecord {
 // MARK:- class ICloudAppointment
 class ICloudAppointment:ICloudRecord {
     var customerReference: CKReference?
-    var appointmentDate: NSDate?
+    var appointmentStartDate: NSDate?
+    var appointmentEndDate: NSDate?
     var expectedDuration: Double?
+    override init(managedObject: NSManagedObject, parentSalon: Salon?) {
+        preconditionFailure("Do not use this initializer")
+    }
+    init(coredataAppointment: Appointment, parentSalon: Salon?) {
+        super.init(managedObject: coredataAppointment, parentSalon: parentSalon)
+        self.recordType = ICloudRecordType.Appointment.rawValue
+        self.unarchiveRecordFromMetadata(self.recordType, data: coredataAppointment.bqMetadata)
+        self.appointmentStartDate = coredataAppointment.appointmentDate
+        self.appointmentEndDate = coredataAppointment.appointmentEndDate
+        self.expectedDuration = coredataAppointment.expectedTimeRequired().doubleValue
+        let coredataCustomer = coredataAppointment.customer!
+        let cloudCustomer = ICloudCustomer(managedObject: coredataCustomer, parentSalon: parentSalon)
+        self.customerReference = CKReference(recordID: cloudCustomer.recordID!, action: CKReferenceAction.None)
+    }
+    
+    func makeFirstCloudKitRecord(parentCustomer: CKRecord) -> CKRecord {
+        precondition(parentCustomer.recordType == ICloudRecordType.Customer.rawValue, "parentCustomer is not of record type Customer")
+        let record = self.makeFirstCloudKitRecord()
+        record["customerReference"] = CKReference(record: parentCustomer, action: CKReferenceAction.DeleteSelf)
+        return record
+    }
+    
+    override func makeFirstCloudKitRecord() -> CKRecord {
+        let record = CKRecord(recordType: self.recordType)
+        record["cloudSalonRef"] = cloudSalonRef
+        record["needsExportToCoredata"] = false
+        record["coredataID"] = coredataID
+        record["appointmentStartDate"] = appointmentStartDate
+        record["appointmentEndDate"] = appointmentEndDate
+        record["isActive"] = true
+        return record
+    }
+    
     class func operationToDetermineExpiredAppointments(salonReference:CKReference) -> CKOperation {
         let earliestNonExpired = NSDate().dateByAddingTimeInterval(-appointmentExpiryTime)
         let expiredPredicate = NSPredicate(format: "appointmentDate < %@ and cloudSalonRef == ", earliestNonExpired,salonReference)
@@ -219,10 +269,44 @@ class ICloudAppointment:ICloudRecord {
         return expiredOperation
     }
 }
+// MARK:- class ICloudSale
+class ICloudSale:ICloudRecord {
+    var customerReference: CKReference?
+    var appointmentReference: CKReference?
+    var discountVersion : Int?
+    var discountType : Int?
+    var discountValue : Int?
+    override init(managedObject: NSManagedObject, parentSalon: Salon?) {
+        preconditionFailure("Do not use this initializer")
+    }
+    init(coredataSale: Sale, parentSalon: Salon?) {
+        super.init(managedObject: coredataSale, parentSalon: parentSalon)
+        self.recordType = ICloudRecordType.Sale.rawValue
+        self.unarchiveRecordFromMetadata(self.recordType, data: coredataSale.bqMetadata)
+    }
+    
+    override func makeFirstCloudKitRecord() -> CKRecord {
+        let record = CKRecord(recordType: self.recordType)
+        record["cloudSalonRef"] = cloudSalonRef
+        record["needsExportToCoredata"] = false
+        record["coredataID"] = coredataID
+        record["isActive"] = true
+        return record
+    }
+}
+// MARK:- Helper functions
+func archiveMetadataForCKRecord(record: CKRecord) -> NSMutableData {
+    let archivedData = NSMutableData()
+    let archiver = NSKeyedArchiver(forWritingWithMutableData: archivedData)
+    archiver.requiresSecureCoding = true
+    record.encodeSystemFieldsWithCoder(archiver)
+    archiver.finishEncoding()
+    return archivedData
+}
 
 // MARK:- Managed object extensions
 extension Appointment {
-    class func apointmentsNeedingExport(managedObjectContext:NSManagedObjectContext) -> [Appointment] {
+    class func unexpiredAppointments(managedObjectContext:NSManagedObjectContext) -> [Appointment] {
         let today = NSDate()
         let earliest = today.dateByAddingTimeInterval(-appointmentExpiryTime)
         let appointments = Appointment.appointmentsAfterDate(earliest, withMoc: managedObjectContext) as! [Appointment]
