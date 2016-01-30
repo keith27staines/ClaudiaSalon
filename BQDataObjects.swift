@@ -240,8 +240,41 @@ class ICloudAppointment:ICloudRecord {
 }
 // MARK:- class ICloudSale
 class ICloudSale:ICloudRecord {
-    var customerReference: CKReference?
-    var appointmentReference: CKReference?
+    var parentCustomerReference: CKReference?
+    var parentAppointmentReference: CKReference?
+    var discountVersion : Int?
+    var discountType : Int?
+    var discountValue : Int?
+    override init(managedObject: NSManagedObject, parentSalon: Salon?) {
+        preconditionFailure("Do not use this initializer")
+    }
+    init(coredataSale: Sale, parentSalon: Salon?) {
+        super.init(managedObject: coredataSale, parentSalon: parentSalon)
+        self.recordType = ICloudRecordType.Sale.rawValue
+        self.unarchiveFromMetadata(self.recordType, metadata: coredataSale.bqMetadata)
+        // Assign this Sale's parent customer
+        let coredataCustomer = coredataSale.customer!
+        let cloudCustomer = ICloudCustomer(coredataCustomer: coredataCustomer, parentSalon: parentSalon)
+        self.parentCustomerReference = CKReference(recordID: cloudCustomer.recordID!, action: CKReferenceAction.None)
+        // Assign this Sale's parent appointment
+        let coredataAppointment = coredataSale.fromAppointment!
+        let cloudAppointment = ICloudAppointment(coredataAppointment: coredataAppointment, parentSalon: parentSalon)
+        self.parentAppointmentReference = CKReference(recordID: cloudAppointment.recordID!, action: CKReferenceAction.None)
+    }
+    override func makeFirstCloudKitRecord() -> CKRecord {
+        let record = makeFirstCloudKitRecordWithType(self.recordType)
+        record["parentCustomerReference"] = parentCustomerReference
+        record["parentAppointmentReference"] = parentAppointmentReference
+        record["discountVersion"] = discountVersion
+        record["discountType"] = discountType
+        record["discountValue"] = discountValue
+        return record
+    }
+}
+// MARK:- class ICloudSale
+class ICloudSaleItem: ICloudRecord {
+    var parentSaleReference: CKReference?
+    var serviceReference: CKReference?
     var discountVersion : Int?
     var discountType : Int?
     var discountValue : Int?
@@ -255,6 +288,11 @@ class ICloudSale:ICloudRecord {
     }
     override func makeFirstCloudKitRecord() -> CKRecord {
         let record = makeFirstCloudKitRecordWithType(self.recordType)
+        record["parentSaleReference"] = parentSaleReference
+        record["serviceReference"] = serviceReference
+        record["discountVersion"] = discountVersion
+        record["discountType"] = discountType
+        record["discountValue"] = discountValue
         return record
     }
 }
