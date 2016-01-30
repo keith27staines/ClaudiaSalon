@@ -70,7 +70,7 @@ class BQExtractModel {
             print("deleteAllIcloudData - No salon data to delete!")
             return
         }
-        let icloudSalon = ICloudSalon(managedObject: self.salonDocument.salon, parentSalon: nil)
+        let icloudSalon = ICloudSalon(coredataSalon: self.salonDocument.salon)
         publicDatabase.deleteRecordWithID(icloudSalon.recordID!, completionHandler: { (record, error) -> Void in
             if error != nil {
                 // Failed to delete the salon?
@@ -171,7 +171,7 @@ class BQExtractModel {
         totalCustomersToProcess = 0
         extractedCustomerCount = 0
         for customerForExport in coredataCustomersNeedingExport() {
-            let icloudCustomer = ICloudCustomer(managedObject: customerForExport, parentSalon: self.salonDocument.salon)
+            let icloudCustomer = ICloudCustomer(coredataCustomer: customerForExport, parentSalon: self.salonDocument.salon)
             let ckRecord = icloudCustomer.makeFirstCloudKitRecord()
             icloudCustomerRecords.append(ckRecord)
             totalCustomersToProcess++
@@ -183,7 +183,7 @@ class BQExtractModel {
         totalEmployeesToProcess = 0
         extractedEmployeesCount = 0
         for employeeForExport in coredataEmployeesNeedingExport() {
-            let icloudEmployee = ICloudEmployee(managedObject: employeeForExport, parentSalon: self.salonDocument.salon)
+            let icloudEmployee = ICloudEmployee(coredataEmployee: employeeForExport, parentSalon: self.salonDocument.salon)
             let ckRecord = icloudEmployee.makeFirstCloudKitRecord()
             icloudEmployeeRecords.append(ckRecord)
             totalEmployeesToProcess++
@@ -210,16 +210,9 @@ class BQExtractModel {
         totalServicesToProcess = 0
         extractedServicesCount = 0
         for serviceForExport in coredataServicesNeedingExport() {
-            if let parentCategory = serviceForExport.serviceCategory {
+            if let _ = serviceForExport.serviceCategory {
                 let icloudService = ICloudService(managedObject: serviceForExport, parentSalon: self.salonDocument.salon)
-                let objectID = parentCategory.objectID.URIRepresentation().absoluteString
-                let parentCategoryReference = icloudServiceCategoryReferencesDictionary[objectID]!
-                let ckRecord = icloudService.makeFirstCloudKitRecord(self.cloudSalonReference!, serviceCategory: parentCategoryReference)
-                let metadata = parentCategory.bqMetadata!
-                let unarchiver = NSKeyedUnarchiver(forReadingWithData:metadata)
-                let serviceCategoryRecord = CKRecord(coder: unarchiver)!
-                let serviceCategoryReference = CKReference(record: serviceCategoryRecord, action: CKReferenceAction.DeleteSelf)
-                icloudService.serviceCategory = serviceCategoryReference
+                let ckRecord = icloudService.makeFirstCloudKitRecord()
                 icloudServiceRecords.append(ckRecord)
                 totalServicesToProcess++
             }
@@ -293,7 +286,7 @@ class BQExtractModel {
     
     // MARK:- Create operation to extract top-level salon object
     func extractSalonOperation() -> CKModifyRecordsOperation {
-        let cloudSalon = ICloudSalon(managedObject: self.salonDocument.salon, parentSalon: nil)
+        let cloudSalon = ICloudSalon(coredataSalon: self.salonDocument.salon)
         cloudSalonRecord = cloudSalon.makeFirstCloudkitRecord(nil)
         let recordsToSave = [cloudSalonRecord!]
         let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
