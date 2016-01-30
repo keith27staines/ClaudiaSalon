@@ -66,7 +66,7 @@ public class ICloudRecord {
     func fetchCoredataObject() {
         preconditionFailure("This method must be overridden and must not call super")
     }
-    func unarchiveFromMetadata(recordType: String,metadata: NSData?) {
+    private func unarchiveFromMetadata(recordType: String,metadata: NSData?) {
         if let metadata = metadata {
             let coder = NSKeyedUnarchiver(forReadingWithData: metadata)
             guard let ckRecord = CKRecord(coder: coder) else {
