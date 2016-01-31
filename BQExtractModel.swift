@@ -31,18 +31,24 @@ class BQExtractModel {
     var extractedServiceCategoriesCount = 0
     var extractedServicesCount = 0
     var extractedAppointmentsCount = 0
+    var extractedSalesCount = 0
+    var extractedSaleItemsCount = 0
     
     var totalCustomersToProcess = 0
     var totalEmployeesToProcess = 0
     var totalServiceCategoriesToProcess = 0
     var totalServicesToProcess = 0
     var totalAppointmentsToProcess = 0
+    var totalSalesToProcess = 0
+    var totalSaleItemsToProcess = 0
     
     var allCoredataCustomers = [Customer]()
     var allCoredataEmployees = [Employee]()
     var allCoredataServiceCategories = [ServiceCategory]()
     var allCoredataServices = [Service]()
-    var allCoredataAppointments = [Appointment]()
+    var allUnexpiredCoredataAppointments = [Appointment]()
+    var allCoredataSales = [Sale]()
+    var allCoredataSaleItems = [SaleItem]()
     
     var coredataCustomersDictionary = [String:Customer]()
     var coredataEmployeeDictionary = [String:Employee]()
@@ -101,9 +107,17 @@ class BQExtractModel {
             service.bqNeedsCoreDataExport = NSNumber(bool: true)
             service.bqMetadata = nil
         }
-        for appointment in allCoredataAppointments {
+        for appointment in allUnexpiredCoredataAppointments {
             appointment.bqNeedsCoreDataExport = NSNumber(bool: true)
             appointment.bqMetadata = nil
+        }
+        for sale in allCoredataSales {
+            sale.bqNeedsCoreDataExport = NSNumber(bool: true)
+            sale.bqMetadata = nil
+        }
+        for saleItem in allCoredataSaleItems {
+            saleItem.bqNeedsCoreDataExport = NSNumber(bool: true)
+            saleItem.bqMetadata = nil
         }
     }
     
@@ -164,6 +178,21 @@ class BQExtractModel {
             return (service.bqNeedsCoreDataExport?.boolValue == true)
         })
     }
+    func coredataAppointmentsNeedingExport() -> [Appointment] {
+        return allUnexpiredCoredataAppointments.filter({ (appointment) -> Bool in
+            return (appointment.bqNeedsCoreDataExport?.boolValue == true)
+        })
+    }
+    func coredataSalesNeedingExport() -> [Sale] {
+        return allCoredataSales.filter({ (sale) -> Bool in
+            return (sale.bqNeedsCoreDataExport?.boolValue == true)
+        })
+    }
+    func coredataSaleItemsNeedingExport() -> [SaleItem] {
+        return allCoredataSaleItems.filter({ (saleItem) -> Bool in
+            return (saleItem.bqNeedsCoreDataExport?.boolValue == true)
+        })
+    }
     
     // MARK:- Make export records for coredata objects
     func makeExportRecordsForCoredataCustomers() -> [CKRecord] {
@@ -195,7 +224,7 @@ class BQExtractModel {
         totalServiceCategoriesToProcess = 0
         extractedServiceCategoriesCount = 0
         for serviceCategoryForExport in coredataServiceCategoriesNeedingExport() {
-            let icloudServiceCategory = ICloudServiceCategory(managedObject: serviceCategoryForExport, parentSalon: self.salonDocument.salon)
+            let icloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: serviceCategoryForExport, parentSalon: self.salonDocument.salon)
             let ckRecord = icloudServiceCategory.makeFirstCloudKitRecord()
             let objectID = serviceCategoryForExport.objectID.URIRepresentation().absoluteString
             let serviceCategoryReference = CKReference(record: ckRecord, action: CKReferenceAction.DeleteSelf)
@@ -211,13 +240,43 @@ class BQExtractModel {
         extractedServicesCount = 0
         for serviceForExport in coredataServicesNeedingExport() {
             if let _ = serviceForExport.serviceCategory {
-                let icloudService = ICloudService(managedObject: serviceForExport, parentSalon: self.salonDocument.salon)
+                let icloudService = ICloudService(coredataService: serviceForExport, parentSalon: self.salonDocument.salon)
                 let ckRecord = icloudService.makeFirstCloudKitRecord()
                 icloudServiceRecords.append(ckRecord)
                 totalServicesToProcess++
             }
         }
         return icloudServiceRecords
+    }
+    /** Output array will also include records for each appointment's child Sale and SaleItems */
+    func makeExportRecordsForCoredataAppoinments() -> [CKRecord] {
+        var icloudRecords = [CKRecord]()
+        totalAppointmentsToProcess = 0
+        totalSalesToProcess = 0
+        totalSaleItemsToProcess = 0
+        extractedAppointmentsCount = 0
+        extractedSalesCount = 0
+        extractedSaleItemsCount = 0
+        for appointmentForExport in coredataAppointmentsNeedingExport() {
+            let icloudAppointment = ICloudAppointment(coredataAppointment: appointmentForExport, parentSalon: self.salonDocument.salon)
+            let ckAppointmentRecord = icloudAppointment.makeFirstCloudKitRecord()
+            icloudRecords.append(ckAppointmentRecord)
+            totalAppointmentsToProcess++
+            // Add child Sale record
+            if let saleForExport = appointmentForExport.sale {
+                let icloudSale = ICloudSale(coredataSale: saleForExport, parentSalon: self.salonDocument.salon)
+                let ckSaleRecord = icloudSale.makeFirstCloudKitRecord()
+                icloudRecords.append(ckSaleRecord)
+                totalSalesToProcess++
+                for saleItemForExport in saleForExport.saleItem! {
+                    let icloudSaleItem = ICloudSaleItem(coredataSaleItem: saleItemForExport, parentSalon: self.salonDocument.salon)
+                    let ckSaleItemRecord = icloudSaleItem.makeFirstCloudKitRecord()
+                    icloudRecords.append(ckSaleItemRecord)
+                    totalSaleItemsToProcess++
+                }
+            }
+        }
+        return icloudRecords
     }
     
     // MARK:- prepare coredata objects for export
@@ -262,7 +321,7 @@ class BQExtractModel {
         }
     }
     func prepareAppointmentForCoredataExport(appointment: Appointment, requiresExport: Bool) {
-        appointment.bqNeedsCoreDataExport = NSNumber(bool: requiresExport)
+        appointment.bqNeedsCoreDataExport = NSNumber(bool: requiresExport);
         appointment.bqMetadata = nil
         appointment.sale?.bqNeedsCoreDataExport = NSNumber(bool: requiresExport)
         appointment.sale?.bqMetadata = nil
@@ -272,12 +331,9 @@ class BQExtractModel {
         }
     }
     func prepareAllAppointmentsForCoredataExport() {
-        for appointment in Appointment.allObjectsWithMoc(moc) as! [Appointment] {
-            prepareAppointmentForCoredataExport(appointment, requiresExport: false)
-        }
-        allCoredataAppointments = Appointment.unexpiredAppointments(moc)
+        allUnexpiredCoredataAppointments = Appointment.unexpiredAppointments(moc)
         coredataAppointmentsDictionary.removeAll()
-        for appointment in allCoredataAppointments {
+        for appointment in allUnexpiredCoredataAppointments {
             let uid = uidStringFromManagedObject(appointment)
             coredataAppointmentsDictionary[uid] = appointment
             prepareAppointmentForCoredataExport(appointment, requiresExport: true)
@@ -356,6 +412,13 @@ class BQExtractModel {
             }
         })
     }
+    func retryOperation(operation:CKModifyRecordsOperation, waitInterval:Double) {
+        let waitIntervalNanoseconds = Int64(waitInterval * 1000_000_000.0)
+        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, waitIntervalNanoseconds)
+        dispatch_after(dispatchTime, dispatch_get_main_queue()) { () -> Void in
+            self.publicDatabase.addOperation(operation)
+        }
+    }
     func saveRecordsOperation(customerRecords:[CKRecord]) -> CKModifyRecordsOperation {
         // Create the operation that we will return
         let saveOperation = CKModifyRecordsOperation(recordsToSave: customerRecords, recordIDsToDelete: nil)
@@ -368,7 +431,8 @@ class BQExtractModel {
         saveOperation.modifyRecordsCompletionBlock = { (saveRecords:[CKRecord]?,deleteRecordIDs:[CKRecordID]?,error:NSError?) in
             guard let recordsToSave = saveOperation.recordsToSave else { return }
             if let error = error {
-                if error.code == CKErrorCode.LimitExceeded.rawValue {
+                switch error.code {
+                case CKErrorCode.LimitExceeded.rawValue:
                     // Operation had too many records - need to recurse down to smaller operations
                     let n = recordsToSave.count / 2
                     var recordsA = [CKRecord]()
@@ -383,10 +447,27 @@ class BQExtractModel {
                     // Recurse with the smaller operations
                     let operationA = self.saveRecordsOperation(recordsA)
                     let operationB = self.saveRecordsOperation(recordsB)
-                    saveOperation.dependencies
                     self.publicDatabase.addOperation(operationA)
                     self.publicDatabase.addOperation(operationB)
-                } else {
+                case CKErrorCode.PartialFailure.rawValue:
+                    // TODO: Work out why this happens. One possibility is that a record has a reference to a parent object that has not yet been saved
+                    assertionFailure("We need to work out how to handle this")
+                    break
+                case CKErrorCode.ZoneBusy.rawValue,
+                     CKErrorCode.RequestRateLimited.rawValue,
+                     CKErrorCode.ServiceUnavailable.rawValue:
+                    // All these errors are transient and the operation can be retried after a suitable wait
+                    guard let retryAfter = error.userInfo["CKErrorRetryAfterKey"]?.doubleValue else {
+                        preconditionFailure("Expected a retry interval but none found in error's userinfo")
+                    }
+                    self.retryOperation(saveOperation, waitInterval: retryAfter)
+                    break
+                case CKErrorCode.NetworkFailure.rawValue:
+                    break
+                case CKErrorCode.NetworkUnavailable.rawValue:
+                    // TODO: call a retry mechanism?
+                    break
+                default:
                     assertionFailure("Unhandled error")
                 }
                 return

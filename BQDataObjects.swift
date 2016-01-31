@@ -44,8 +44,8 @@ public class ICloudRecord {
     }
     private init(recordType:String, managedObject: NSManagedObject, parentSalon: Salon?) {
         self.coredataID = managedObject.objectID.URIRepresentation().absoluteString
-        self.recordType = recordType
-        let metadata = managedObject.performSelector("bqMetadata") as! NSData?
+        self.recordType = recordType;
+        let metadata = self.metadataFromManagedObject(managedObject)
         unarchiveFromMetadata(metadata)
         if recordType != ICloudRecordType.Salon.rawValue {
             guard let salon = parentSalon else {
@@ -53,6 +53,36 @@ public class ICloudRecord {
             }
             let cloudSalon = ICloudSalon(coredataSalon: salon)
             self.parentSalonReference = CKReference(recordID: cloudSalon.recordID!, action: CKReferenceAction.DeleteSelf)
+        }
+    }
+    
+    /** metadataFromManagedObject hides a nasty cast that wouldn't
+        be necessary at all if we could only work out how to polymorphically 
+        extract bqMetadata from these classes. Tried to add an appropriate 
+        protocol to these classes but was defeated by compiler errors maybe 
+        associated with dynamically added properties that are required for NSManagedObject subclasses 
+     */
+    private func metadataFromManagedObject(managedObject:NSManagedObject) -> NSData? {
+        let className = managedObject.className
+        switch className {
+        case Salon.className():
+            return (managedObject as! Salon).bqMetadata
+        case Employee.className():
+            return (managedObject as! Employee).bqMetadata
+        case Customer.className():
+            return (managedObject as! Customer).bqMetadata
+        case ServiceCategory.className():
+            return (managedObject as! ServiceCategory).bqMetadata
+        case Service.className():
+            return (managedObject as! Service).bqMetadata
+        case Appointment.className():
+            return (managedObject as! Appointment).bqMetadata
+        case Sale.className():
+            return (managedObject as! Sale).bqMetadata
+        case SaleItem.className():
+            return (managedObject as! SaleItem).bqMetadata
+        default:
+            preconditionFailure("Cannot extract BQ metadata from class \(className)")
         }
     }
     func makeFirstCloudKitRecord()->CKRecord {
@@ -239,6 +269,7 @@ class ICloudSale:ICloudRecord {
         let coredataCustomer = coredataSale.customer!
         let cloudCustomer = ICloudCustomer(coredataCustomer: coredataCustomer, parentSalon: parentSalon)
         self.parentCustomerReference = CKReference(recordID: cloudCustomer.recordID!, action: CKReferenceAction.DeleteSelf)
+        
         // Assign this Sale's parent appointment
         let coredataAppointment = coredataSale.fromAppointment!
         let cloudAppointment = ICloudAppointment(coredataAppointment: coredataAppointment, parentSalon: parentSalon)
