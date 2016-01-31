@@ -53,7 +53,6 @@ class BQExtractModel {
     var coredataCustomersDictionary = [String:Customer]()
     var coredataEmployeeDictionary = [String:Employee]()
     var coredataServiceCategoriesDictionary = [String:ServiceCategory]()
-    var icloudServiceCategoryReferencesDictionary = [String:CKReference]()  // keyed by coredata objectID string
     var coredataServicesDictionary = [String:Service]()
     var coredataAppointmentsDictionary = [String:Appointment]()
     
@@ -152,7 +151,6 @@ class BQExtractModel {
             self.publicDatabase.addOperation(customersOperation)
             self.publicDatabase.addOperation(employeesOperation)
             self.publicDatabase.addOperation(serviceCategoriesOperation)
-            
         }
         self.publicDatabase.addOperation(salonOperation)
     }
@@ -226,9 +224,6 @@ class BQExtractModel {
         for serviceCategoryForExport in coredataServiceCategoriesNeedingExport() {
             let icloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: serviceCategoryForExport, parentSalon: self.salonDocument.salon)
             let ckRecord = icloudServiceCategory.makeFirstCloudKitRecord()
-            let objectID = serviceCategoryForExport.objectID.URIRepresentation().absoluteString
-            let serviceCategoryReference = CKReference(record: ckRecord, action: CKReferenceAction.DeleteSelf)
-            icloudServiceCategoryReferencesDictionary[objectID]=serviceCategoryReference
             icloudServiceCategoryRecords.append(ckRecord)
             totalServiceCategoriesToProcess++
         }
@@ -249,7 +244,7 @@ class BQExtractModel {
         return icloudServiceRecords
     }
     /** Output array will also include records for each appointment's child Sale and SaleItems */
-    func makeExportRecordsForCoredataAppoinments() -> [CKRecord] {
+    func makeExportRecordsForCoredataAppointments() -> [CKRecord] {
         var icloudRecords = [CKRecord]()
         totalAppointmentsToProcess = 0
         totalSalesToProcess = 0
@@ -320,6 +315,15 @@ class BQExtractModel {
             service.bqMetadata = nil
         }
     }
+    func prepareAllAppointmentsForCoredataExport() {
+        allUnexpiredCoredataAppointments = Appointment.unexpiredAppointments(moc)
+        coredataAppointmentsDictionary.removeAll()
+        for appointment in allUnexpiredCoredataAppointments {
+            let uid = uidStringFromManagedObject(appointment)
+            coredataAppointmentsDictionary[uid] = appointment
+            prepareAppointmentForCoredataExport(appointment, requiresExport: true)
+        }
+    }
     func prepareAppointmentForCoredataExport(appointment: Appointment, requiresExport: Bool) {
         appointment.bqNeedsCoreDataExport = NSNumber(bool: requiresExport);
         appointment.bqMetadata = nil
@@ -328,15 +332,6 @@ class BQExtractModel {
         for saleItem in appointment.sale!.saleItem! {
             saleItem.bqNeedsCoreDataExport = NSNumber(bool: requiresExport)
             saleItem.bqMetadata = nil
-        }
-    }
-    func prepareAllAppointmentsForCoredataExport() {
-        allUnexpiredCoredataAppointments = Appointment.unexpiredAppointments(moc)
-        coredataAppointmentsDictionary.removeAll()
-        for appointment in allUnexpiredCoredataAppointments {
-            let uid = uidStringFromManagedObject(appointment)
-            coredataAppointmentsDictionary[uid] = appointment
-            prepareAppointmentForCoredataExport(appointment, requiresExport: true)
         }
     }
     
@@ -382,12 +377,14 @@ class BQExtractModel {
                     coredataCustomer?.bqMetadata = metadata
                     self.extractedCustomerCount++
                     self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedCustomerCount, total: self.totalCustomersToProcess)
+                    
                 case ICloudRecordType.Employee.rawValue:
                     let coredataEmployee = self.coredataEmployeeDictionary[coredataID]
                     coredataEmployee?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataEmployee?.bqMetadata = metadata
                     self.extractedEmployeesCount++
                     self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedEmployeesCount, total: self.totalEmployeesToProcess)
+                    
                 case ICloudRecordType.ServiceCategory.rawValue:
                     let coredataServiceCategory = self.coredataServiceCategoriesDictionary[coredataID]
                     coredataServiceCategory?.bqNeedsCoreDataExport = NSNumber(bool: false)
@@ -400,13 +397,25 @@ class BQExtractModel {
                         let servicesOperation = self.saveRecordsOperation(serviceRecords)
                         self.publicDatabase.addOperation(servicesOperation)
                     }
+                    
                 case ICloudRecordType.Service.rawValue:
                     let coredataService = self.coredataServicesDictionary[coredataID]
                     coredataService?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataService?.bqMetadata = metadata
                     self.extractedServicesCount++
                     self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedServicesCount, total: self.totalServicesToProcess)
-                    
+                    if self.extractedServicesCount == self.totalServicesToProcess {
+                        let appointmentRecords = self.makeExportRecordsForCoredataAppointments()
+                        let appointmentOperation = self.saveRecordsOperation(appointmentRecords)
+                        self.publicDatabase.addOperation(appointmentOperation)
+                    }
+
+                case ICloudRecordType.Appointment.rawValue:
+                    let coredataAppointment = self.coredataAppointmentsDictionary[coredataID]
+                    coredataAppointment?.bqNeedsCoreDataExport = NSNumber(bool: false)
+                    coredataAppointment?.bqMetadata = metadata
+                    self.extractedAppointmentsCount++
+                    self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedAppointmentsCount, total: self.totalAppointmentsToProcess)
                 default: break
                 }
             }
@@ -429,11 +438,13 @@ class BQExtractModel {
         
         // All records complete
         saveOperation.modifyRecordsCompletionBlock = { (saveRecords:[CKRecord]?,deleteRecordIDs:[CKRecordID]?,error:NSError?) in
-            guard let recordsToSave = saveOperation.recordsToSave else { return }
+            guard let recordsToSave = saveOperation.recordsToSave else {
+                return
+            }
             if let error = error {
                 switch error.code {
                 case CKErrorCode.LimitExceeded.rawValue:
-                    // Operation had too many records - need to recurse down to smaller operations
+                    // Too many records - need to recurse down to smaller operations
                     let n = recordsToSave.count / 2
                     var recordsA = [CKRecord]()
                     var recordsB = [CKRecord]()
@@ -490,6 +501,7 @@ class BQExtractModel {
         if self.totalServiceCategoriesToProcess > self.extractedServiceCategoriesCount { return false }
         if self.totalServicesToProcess > self.extractedServicesCount { return false }
         if self.totalEmployeesToProcess > self.extractedEmployeesCount { return false }
+        if self.totalAppointmentsToProcess > self.extractedAppointmentsCount { return false }
         return true
     }
 }

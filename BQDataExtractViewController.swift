@@ -15,9 +15,14 @@ class BQDataExtractViewController: NSViewController, BQExtractModelDelegate {
     @IBOutlet weak var serviceCategoryProgressIndicator: NSProgressIndicator!
     @IBOutlet weak var serviceProgressIndicator: NSProgressIndicator!
     @IBOutlet weak var activityIndicator: NSProgressIndicator!
+   
+    @IBOutlet weak var appointmentProgressIndicator: NSProgressIndicator!
+    
+    
     @IBOutlet weak var extractStatus: NSTextField!
     var salonDocument: AMCSalonDocument!
     var extractModel : BQExtractModel!
+    var changeMonitor = BQChangeMonitor()
 
     // MARK:- UI functions
     override func viewDidLoad() {
@@ -63,6 +68,10 @@ class BQDataExtractViewController: NSViewController, BQExtractModelDelegate {
         serviceProgressIndicator.minValue = 0
         serviceProgressIndicator.maxValue = 100
         serviceProgressIndicator.doubleValue = 0
+        // Appointment
+        appointmentProgressIndicator.minValue = 0
+        appointmentProgressIndicator.maxValue = 100
+        appointmentProgressIndicator.doubleValue = 0
     }
 
     // MARK:- BQExtractModelDelegate Implementation
@@ -85,8 +94,8 @@ class BQDataExtractViewController: NSViewController, BQExtractModelDelegate {
             progressIndicator = serviceProgressIndicator
         case ICloudRecordType.ServiceCategory.rawValue:
             progressIndicator = serviceCategoryProgressIndicator
-        case ICloudRecordType.SaleItem.rawValue:
-            break
+        case ICloudRecordType.Appointment.rawValue:
+            progressIndicator = appointmentProgressIndicator
         case ICloudRecordType.Salon.rawValue:
             break
         default:

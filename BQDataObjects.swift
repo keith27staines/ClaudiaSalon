@@ -47,6 +47,7 @@ public class ICloudRecord {
         self.recordType = recordType;
         let metadata = self.metadataFromManagedObject(managedObject)
         unarchiveFromMetadata(metadata)
+        
         if recordType != ICloudRecordType.Salon.rawValue {
             guard let salon = parentSalon else {
                 preconditionFailure("Parent salon is compulsory for any managed object that isn't itself of type Salon")
@@ -201,6 +202,7 @@ public class ICloudService : ICloudRecord {
         self.minPrice = coredataService.minimumCharge?.doubleValue
         self.maxPrice = coredataService.maximumCharge?.doubleValue
         self.nominalPrice = coredataService.nominalCharge?.doubleValue
+
         // Assign this service's parent category
         let coredataServiceCategory = coredataService.serviceCategory!
         let cloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: coredataServiceCategory, parentSalon: parentSalon)
@@ -208,6 +210,7 @@ public class ICloudService : ICloudRecord {
     }    
     override func makeFirstCloudKitRecord() -> CKRecord {
         let record = makeFirstCloudKitRecordWithType(self.recordType)
+        record["name"] = name
         record["minPrice"] = minPrice
         record["maxPrice"] = maxPrice
         record["nominalPrice"] = nominalPrice
@@ -285,7 +288,7 @@ class ICloudSale:ICloudRecord {
         return record
     }
 }
-// MARK:- class ICloudSale
+// MARK:- class ICloudSaleItem
 class ICloudSaleItem: ICloudRecord {
     var parentSaleReference: CKReference?
     var serviceReference: CKReference?
@@ -295,7 +298,7 @@ class ICloudSaleItem: ICloudRecord {
     var actualCharge: Double?
     var nominalCharge: Double?
     init(coredataSaleItem: SaleItem, parentSalon: Salon?) {
-        super.init(recordType: ICloudRecordType.Sale.rawValue,managedObject: coredataSaleItem, parentSalon: parentSalon)
+        super.init(recordType: ICloudRecordType.SaleItem.rawValue,managedObject: coredataSaleItem, parentSalon: parentSalon)
         self.discountVersion = coredataSaleItem.discountVersion?.integerValue
         self.discountType = coredataSaleItem.discountType?.integerValue
         self.discountValue = coredataSaleItem.discountValue?.integerValue

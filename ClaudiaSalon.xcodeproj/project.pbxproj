@@ -150,6 +150,7 @@
 		53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */; };
 		53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE270A1AA317B200A1B3E4 /* AMCJobsColumnViewController.m */; };
 		53AE270E1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AE270B1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib */; };
+		53CD1E4A1C5EC52C00E09E6F /* BQChangeMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CD1E491C5EC52C00E09E6F /* BQChangeMonitor.swift */; };
 		53D325661A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D325651A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m */; };
 		53D325A51A9E390B00AFCDE4 /* AMCWelcomeScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D325A31A9E390B00AFCDE4 /* AMCWelcomeScreen.m */; };
 		53D325A61A9E390B00AFCDE4 /* AMCWelcomeScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D325A41A9E390B00AFCDE4 /* AMCWelcomeScreen.xib */; };
@@ -597,6 +598,7 @@
 		53AE27091AA317B200A1B3E4 /* AMCJobsColumnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCJobsColumnViewController.h; sourceTree = "<group>"; };
 		53AE270A1AA317B200A1B3E4 /* AMCJobsColumnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCJobsColumnViewController.m; sourceTree = "<group>"; };
 		53AE270B1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCJobsColumnViewController.xib; sourceTree = "<group>"; };
+		53CD1E491C5EC52C00E09E6F /* BQChangeMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQChangeMonitor.swift; sourceTree = "<group>"; };
 		53D325641A9B9D2300AFCDE4 /* NSViewController+SalonMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSViewController+SalonMethods.h"; sourceTree = "<group>"; };
 		53D325651A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSViewController+SalonMethods.m"; sourceTree = "<group>"; };
 		53D325671A9C5EE300AFCDE4 /* EditObjectViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditObjectViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -1180,6 +1182,7 @@
 			children = (
 				536B9DC71C50D8A300F170EC /* BQDataObjects.swift */,
 				534F0AEA1C5A2D0100520214 /* BQExtractModel.swift */,
+				53CD1E491C5EC52C00E09E6F /* BQChangeMonitor.swift */,
 			);
 			name = "Booking Queue Model";
 			sourceTree = "<group>";
@@ -2770,6 +2773,7 @@
 				53D69CF11A9B240C0004CE10 /* AMCSaleItemPriceSetterView.m in Sources */,
 				53D4FC501B3934A5009EBF70 /* Role+Methods.m in Sources */,
 				53D69D421A9B240C0004CE10 /* Account+Methods.m in Sources */,
+				53CD1E4A1C5EC52C00E09E6F /* BQChangeMonitor.swift in Sources */,
 				536B9E7B1C56077E00F170EC /* StockedProduct+CoreDataProperties.m in Sources */,
 				536B9E611C56077E00F170EC /* Product+CoreDataProperties.m in Sources */,
 				53D69D4B1A9B240C0004CE10 /* ObjectSelectorViewController.m in Sources */,
