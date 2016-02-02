@@ -34,13 +34,18 @@
     self.sale.discountType = @((self.discountTypeSegmentedControl.selectedSegment==0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
     [self loadDiscountPopup];
     [self updateFromSale];
+    [self prepareSaleForBQExport];
 }
 
 - (IBAction)additionalDiscountChanged:(id)sender {
     self.sale.discountValue = @(self.additionalDiscountPopupButton.indexOfSelectedItem);
     [self updateFromSale];
+    [self prepareSaleForBQExport];
 }
-
+- (void) prepareSaleForBQExport {
+    self.sale.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+    self.sale.lastUpdatedDate = [NSDate date];
+}
 -(Sale *)sale {
     return _sale;
 }
@@ -119,13 +124,12 @@
     AMCSaleItemPriceSetterView * view = (AMCSaleItemPriceSetterView*)[viewController view];
     view.delegate = self;
     view.saleItem = saleItem;
-//    [view setNeedsUpdateConstraints:YES];
-//    [view setNeedsDisplay:YES];
     return view;
 }
 #pragma mark - AMCSaleItemPriceSetterfViewController
 -(void)saleItemPriceSetterView:(AMCSaleItemPriceSetterView*)view didUpdateSaleItem:(SaleItem*)saleItem {
     [self updateFromSale];
+    [self prepareSaleForBQExport];
 }
 
 @end

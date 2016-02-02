@@ -8,6 +8,7 @@
 
 #import "AMCCustomersViewController.h"
 #import "AMCDayAndMonthPopupViewController.h"
+#import "Customer+Methods.h"
 
 @interface AMCCustomersViewController ()
 @property (weak) IBOutlet NSButton *clearFiltersButton;
@@ -125,5 +126,17 @@
         [predicateArray addObject:[NSPredicate predicateWithFormat:@"monthOfBirth = %@",@(self.birthdayPopupFilter.monthNumber)]];
     }
     return [NSCompoundPredicate andPredicateWithSubpredicates:predicateArray];
+}
+-(void)editObjectViewController:(EditObjectViewController *)controller didCompleteCreationOfObject:(id)object {
+    Customer *customer = (Customer*)object;
+    customer.lastUpdatedDate = [NSDate date];
+    customer.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+    [super editObjectViewController:controller didCompleteCreationOfObject:object];
+}
+-(void)editObjectViewController:(EditObjectViewController *)controller didEditObject:(id)object {
+    Customer *customer = (Customer*)object;
+    customer.lastUpdatedDate = [NSDate date];
+    customer.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+    [super editObjectViewController:controller didEditObject:object];
 }
 @end

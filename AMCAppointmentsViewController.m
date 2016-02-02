@@ -591,15 +591,18 @@ NSAnimationDelegate>
         NSManagedObjectContext * moc = self.documentMoc;
         if (self.currentWizard.cancelled) {
             if (self.currentWizard.editMode == EditModeCreate) {
-                Appointment * app = self.currentWizard.objectToManage;
-                app.sale.voided = @(YES);
+                Appointment * appointment = self.currentWizard.objectToManage;
+                appointment.sale.voided = @(YES);
                 [moc deleteObject:self.currentWizard.objectToManage];
             } else {
                 [moc rollback];
             }
         } else {
+            Appointment * appointment = self.currentWizard.objectToManage;
+            appointment.lastUpdatedDate = [NSDate date];
+            appointment.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
             [self.salonDocument saveDocument:self];
-            self.previouslySelectedAppointment = (Appointment*)self.currentWizard.objectToManage;
+            self.previouslySelectedAppointment = appointment;
         }
         [self reloadData];
         [self selectAppointment:self.previouslySelectedAppointment];
@@ -761,11 +764,15 @@ NSAnimationDelegate>
 -(void)dismissViewController:(NSViewController *)viewController {
     if (viewController == self.cancelAppointmentViewController) {
         if (!self.cancelAppointmentViewController.cancelled) {
+            self.cancelAppointmentViewController.appointment.lastUpdatedDate = [NSDate date];
+            self.cancelAppointmentViewController.appointment.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
             [self reloadData];
         }
     }
     if (viewController == self.completeAppointmentViewController) {
         if (!self.completeAppointmentViewController.cancelled) {
+            self.completeAppointmentViewController.appointment.lastUpdatedDate = [NSDate date];
+            self.completeAppointmentViewController.appointment.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
             [self reloadData];
             if (self.completeAppointmentViewController.appointment.completionType.integerValue == AMCompletionTypeCompletedWithConversionToQuote) {
                 [self convertAppointmentToQuote:self.completeAppointmentViewController.appointment];
@@ -773,6 +780,10 @@ NSAnimationDelegate>
         }
     }
     if (viewController == self.quickQuoteViewController) {
+        if (self.quickQuoteViewController.sale.bqNeedsCoreDataExport) {
+            self.quickQuoteViewController.sale.fromAppointment.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+            self.quickQuoteViewController.sale.lastUpdatedDate = [NSDate date];
+        }
         [self reloadData];
         [self selectAppointment:self.previouslySelectedAppointment];
         [self configureButtons];

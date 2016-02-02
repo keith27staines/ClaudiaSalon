@@ -42,4 +42,16 @@
         self.rightClickShowNotesMenuItem.enabled = YES;
     }
 }
+-(void)editObjectViewController:(EditObjectViewController *)controller didCompleteCreationOfObject:(id)object {
+    Service * serivce = (Service*)controller.objectToEdit;
+    serivce.lastUpdatedDate = [NSDate date];
+    serivce.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+    [super editObjectViewController:controller didCompleteCreationOfObject:object];
+}
+- (void)editObjectViewController:(EditObjectViewController *)controller didEditObject:(id)object {
+    Service * serivce = (Service*)controller.objectToEdit;
+    serivce.lastUpdatedDate = [NSDate date];
+    serivce.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+    [super editObjectViewController:controller didEditObject:object];
+}
 @end

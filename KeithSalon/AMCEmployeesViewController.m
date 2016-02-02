@@ -91,5 +91,16 @@
     [self.canDoViewController prepareForDisplayWithSalon:self.salonDocument];
     [self presentViewController:self.canDoViewController asPopoverRelativeToRect:rect ofView:self.dataTable preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorApplicationDefined];
 }
-
+-(void)editObjectViewController:(EditObjectViewController *)controller didCompleteCreationOfObject:(id)object {
+    Employee * employee = (Employee*)controller.objectToEdit;
+    employee.lastUpdatedDate = [NSDate date];
+    employee.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+    [super editObjectViewController:controller didCompleteCreationOfObject:object];
+}
+- (void)editObjectViewController:(EditObjectViewController *)controller didEditObject:(id)object {
+    Employee * employee = (Employee*)controller.objectToEdit;
+    employee.lastUpdatedDate = [NSDate date];
+    employee.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+    [super editObjectViewController:controller didEditObject:object];
+}
 @end

@@ -267,6 +267,7 @@
     customer.monthOfBirth = @(self.dayAndMonthPopupButtonsController.monthNumber);
 }
 
+
 -(void)dayAndMonthControllerDidUpdate:(AMCDayAndMonthPopupViewController *)dayAndMonthController
 {
     // Nothing to do here yet
