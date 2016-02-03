@@ -34,43 +34,48 @@ class BQChangeMonitor {
             })
         }
     }
-    func processRecordsForDeletion(deleteRecords:Set<CKRecordID>) {
+    func sendDeletedCoredataObjectsToBQDeletionQueue(deleteRecords:Set<CKRecordID>) {
         let database = publicDatabase
         let deleteOperation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: Array(deleteRecords))
         deleteOperation.modifyRecordsCompletionBlock = { (_,recordIDsToDelete,error)->Void in
             guard let recordIDsToDelete = recordIDsToDelete else { return }
+            var deletedRecordIDs = Set<CKRecordID>()
             if let error = error {
-                if error.errorType == CKErrorPartialFailure {
-                    // CKPartialErrorsByItemIDKey
+                if error.code == CKErrorCode.PartialFailure.rawValue {
+                    guard let failedDeletions = error.userInfo[CKPartialErrorsByItemIDKey] as! [CKRecordID:NSError]? else {
+                        return
+                    }
+//                    deletedRecordIDs = recordIDsToDelete.fil
+                    
+                    
+                } else {
+                    return
                 }
+            } else {
+                dispatch_sync(dispatch_get_main_queue(), {
+                    for recordID in deletedRecordIDs {
+                        self.recordsToDelete.remove(recordID)
+                    }
+                })
             }
-            let failedDeletions:Set<CKRecordID>
-            let deletedRecordIDs = recordIDsToDelete.filter({ (recordID) -> Bool in
-                return !failedDeletions.contains(recordID)
-            })
-            dispatch_sync(dispatch_get_main_queue(), {
-                for recordID in deletedRecordIDs {
-                    self.recordsToDelete.remove(recordID)
-                }
-            })
         }
         database.addOperation(deleteOperation)
     }
-    func sendDeletedCoredataObjectsToBQDeletionQueue(deletedRecords:Set<NSManagedObject>) {
-        for managedObject in deletedRecords {
-            guard let (metadata,_) = bqdataFromManagedObject(managedObject) else {
-                continue
-            }
-            guard metadata != nil else {
-                continue // If there is no metadata then there will be no matching record in the cloud so we are done
-            }
-            guard let record = ckRecordFromMetadata(metadata!) else {
-                print("Unable to decode cloudkit record from metadata in coredata object")
-                continue
-            }
-            recordsToDelete.insert(record.recordID)
-        }
-    }
+//    func sendDeletedCoredataObjectsToBQDeletionQueue(deletedRecords:Set<NSManagedObject>) {
+//        for managedObject in deletedRecords {
+//            guard let (metadata,_) = bqdataFromManagedObject(managedObject) else {
+//                continue
+//            }
+//            guard metadata != nil else {
+//                continue // If there is no metadata then there will be no matching record in the cloud so we are done
+//            }
+//            guard let record = ckRecordFromMetadata(metadata!) else {
+//                print("Unable to decode cloudkit record from metadata in coredata object")
+//                continue
+//            }
+//            recordsToDelete.insert(record.recordID)
+//        }
+//    }
     func ckRecordFromMetadata(metadata:NSData) -> CKRecord? {
         let unarchiver = NSKeyedUnarchiver(forReadingWithData: metadata)
         return CKRecord(coder: unarchiver)
@@ -105,9 +110,5 @@ class BQChangeMonitor {
         default:
             return nil
         }
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
