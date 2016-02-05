@@ -61,6 +61,16 @@
         <relationship name="notes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Note" inverseName="appointment" inverseEntity="Note" syncable="YES"/>
         <relationship name="sale" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Sale" inverseName="fromAppointment" inverseEntity="Sale" syncable="YES"/>
     </entity>
+    <entity name="BQExportDeletionRequest" representedClassName=".BQExportDeletionRequest" syncable="YES">
+        <attribute name="actionResult" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bqMetadata" attributeType="Binary" syncable="YES"/>
+        <attribute name="cloudRecordDeletionDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="cloudRecordName" attributeType="String" syncable="YES"/>
+        <attribute name="lastAttemptedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="lastErrorCode" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastErrorDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="managedObjectDeletionDate" attributeType="Date" syncable="YES"/>
+    </entity>
     <entity name="BusinessFunction" representedClassName="BusinessFunction" syncable="YES">
         <attribute name="codeUnitName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fullDescription" optional="YES" attributeType="String" syncable="YES"/>
@@ -477,6 +487,7 @@
         <element name="AccountingPaymentGroup" positionX="0" positionY="0" width="128" height="240"/>
         <element name="AccountReconciliation" positionX="0" positionY="0" width="128" height="90"/>
         <element name="Appointment" positionX="0" positionY="0" width="128" height="285"/>
+        <element name="BQExportDeletionRequest" positionX="9" positionY="153" width="128" height="165"/>
         <element name="BusinessFunction" positionX="0" positionY="0" width="128" height="105"/>
         <element name="CalendarDay" positionX="0" positionY="0" width="128" height="75"/>
         <element name="Customer" positionX="0" positionY="0" width="128" height="405"/>

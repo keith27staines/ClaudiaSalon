@@ -22,21 +22,22 @@ class BQDataExtractViewController: NSViewController, BQExtractModelDelegate {
     @IBOutlet weak var extractStatus: NSTextField!
     var salonDocument: AMCSalonDocument!
     var extractModel : BQExtractModel!
-    var changeMonitor = BQChangeMonitor()
+    var coredataExportController : BQCoredataExportController!
 
     // MARK:- UI functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
         self.activityIndicator.hidden = true
         self.extractStatus.stringValue = ""
         extractModel = BQExtractModel()
         extractModel.salonDocument = self.salonDocument
         extractModel.delegate = self
+        let moc = self.salonDocument.managedObjectContext!
+        let salon = self.salonDocument.salon
+        coredataExportController = BQCoredataExportController(managedObjectContext: moc, salon: salon, startImmediately: true)
     }
     
     @IBAction func resetDataExtract(sender: AnyObject) {
-        // Delete Salon (this should cascade deletes all the way down)
         self.activityIndicator.hidden = false
         self.activityIndicator.startAnimation(self)
         self.extractModel.resetDataExtract()

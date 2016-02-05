@@ -34,6 +34,9 @@
 		534F0AE61C5A13A500520214 /* BQExtractMaintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F0AE41C5A13A500520214 /* BQExtractMaintenance.swift */; };
 		534F0AE71C5A13A500520214 /* BQExtractMaintenance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 534F0AE51C5A13A500520214 /* BQExtractMaintenance.xib */; };
 		534F0AEB1C5A2D0100520214 /* BQExtractModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F0AEA1C5A2D0100520214 /* BQExtractModel.swift */; };
+		534F0AF41C61FC1700520214 /* BQExportDeletionRequest+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F0AF21C61FC1700520214 /* BQExportDeletionRequest+CoreDataProperties.swift */; };
+		534F0AF51C61FC1700520214 /* BQExportDeletionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F0AF31C61FC1700520214 /* BQExportDeletionRequest.swift */; };
+		534F0AF71C63C4C700520214 /* BQDeletionRequestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F0AF61C63C4C700520214 /* BQDeletionRequestList.swift */; };
 		535191691B36B60500F8D37A /* AMCPasswordEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 535191671B36B60500F8D37A /* AMCPasswordEditor.m */; };
 		5351916A1B36B60500F8D37A /* AMCPasswordEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535191681B36B60500F8D37A /* AMCPasswordEditor.xib */; };
 		5351916E1B37F56D00F8D37A /* AMCChangeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5351916C1B37F56D00F8D37A /* AMCChangeUserViewController.m */; };
@@ -150,7 +153,7 @@
 		53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */; };
 		53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE270A1AA317B200A1B3E4 /* AMCJobsColumnViewController.m */; };
 		53AE270E1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AE270B1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib */; };
-		53CD1E4A1C5EC52C00E09E6F /* BQChangeMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CD1E491C5EC52C00E09E6F /* BQChangeMonitor.swift */; };
+		53CD1E4A1C5EC52C00E09E6F /* BQCoredataExportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */; };
 		53D325661A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D325651A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m */; };
 		53D325A51A9E390B00AFCDE4 /* AMCWelcomeScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D325A31A9E390B00AFCDE4 /* AMCWelcomeScreen.m */; };
 		53D325A61A9E390B00AFCDE4 /* AMCWelcomeScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D325A41A9E390B00AFCDE4 /* AMCWelcomeScreen.xib */; };
@@ -387,6 +390,9 @@
 		534F0AE41C5A13A500520214 /* BQExtractMaintenance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQExtractMaintenance.swift; sourceTree = "<group>"; };
 		534F0AE51C5A13A500520214 /* BQExtractMaintenance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BQExtractMaintenance.xib; sourceTree = "<group>"; };
 		534F0AEA1C5A2D0100520214 /* BQExtractModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQExtractModel.swift; sourceTree = "<group>"; };
+		534F0AF21C61FC1700520214 /* BQExportDeletionRequest+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BQExportDeletionRequest+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		534F0AF31C61FC1700520214 /* BQExportDeletionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQExportDeletionRequest.swift; sourceTree = "<group>"; };
+		534F0AF61C63C4C700520214 /* BQDeletionRequestList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQDeletionRequestList.swift; sourceTree = "<group>"; };
 		535191661B36B60500F8D37A /* AMCPasswordEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPasswordEditor.h; sourceTree = "<group>"; };
 		535191671B36B60500F8D37A /* AMCPasswordEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPasswordEditor.m; sourceTree = "<group>"; };
 		535191681B36B60500F8D37A /* AMCPasswordEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPasswordEditor.xib; sourceTree = "<group>"; };
@@ -598,7 +604,7 @@
 		53AE27091AA317B200A1B3E4 /* AMCJobsColumnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCJobsColumnViewController.h; sourceTree = "<group>"; };
 		53AE270A1AA317B200A1B3E4 /* AMCJobsColumnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCJobsColumnViewController.m; sourceTree = "<group>"; };
 		53AE270B1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCJobsColumnViewController.xib; sourceTree = "<group>"; };
-		53CD1E491C5EC52C00E09E6F /* BQChangeMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQChangeMonitor.swift; sourceTree = "<group>"; };
+		53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQCoredataExportController.swift; sourceTree = "<group>"; };
 		53D325641A9B9D2300AFCDE4 /* NSViewController+SalonMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSViewController+SalonMethods.h"; sourceTree = "<group>"; };
 		53D325651A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSViewController+SalonMethods.m"; sourceTree = "<group>"; };
 		53D325671A9C5EE300AFCDE4 /* EditObjectViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditObjectViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -1147,8 +1153,8 @@
 		536B9DA71C4FDB9500F170EC /* Booking Queue */ = {
 			isa = PBXGroup;
 			children = (
-				536B9DC61C50D85800F170EC /* Booking Queue Model */,
 				536B9DC51C50C2F600F170EC /* Booking Queue Window Controller */,
+				536B9DC61C50D85800F170EC /* Booking Queue Model */,
 				536B9DB41C50BD4F00F170EC /* View controllers for top level booking queue functiions */,
 			);
 			name = "Booking Queue";
@@ -1182,7 +1188,8 @@
 			children = (
 				536B9DC71C50D8A300F170EC /* BQDataObjects.swift */,
 				534F0AEA1C5A2D0100520214 /* BQExtractModel.swift */,
-				53CD1E491C5EC52C00E09E6F /* BQChangeMonitor.swift */,
+				53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */,
+				534F0AF61C63C4C700520214 /* BQDeletionRequestList.swift */,
 			);
 			name = "Booking Queue Model";
 			sourceTree = "<group>";
@@ -2134,8 +2141,7 @@
 		53D69BB11A9B22830004CE10 /* ClaudiaSalon */ = {
 			isa = PBXGroup;
 			children = (
-				5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */,
-				53D69E031A9B6BE70004CE10 /* Data model objects */,
+				53D69E031A9B6BE70004CE10 /* Core data model objects */,
 				53D933AC1AC6B0B4001D6C64 /* Method Categories on Data Objects */,
 				530D54A41B26D58A00F6C4FE /* Framework  */,
 				530D54731B19A5E700F6C4FE /* Application objects */,
@@ -2191,9 +2197,12 @@
 			name = EditObjectViewController;
 			sourceTree = "<group>";
 		};
-		53D69E031A9B6BE70004CE10 /* Data model objects */ = {
+		53D69E031A9B6BE70004CE10 /* Core data model objects */ = {
 			isa = PBXGroup;
 			children = (
+				5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */,
+				534F0AF21C61FC1700520214 /* BQExportDeletionRequest+CoreDataProperties.swift */,
+				534F0AF31C61FC1700520214 /* BQExportDeletionRequest.swift */,
 				536B9DDF1C56077D00F170EC /* Product+CoreDataProperties.h */,
 				536B9DE01C56077D00F170EC /* Product+CoreDataProperties.m */,
 				536B9DE11C56077D00F170EC /* Product.h */,
@@ -2327,7 +2336,7 @@
 				536B9E5F1C56077E00F170EC /* Holiday.h */,
 				536B9E601C56077E00F170EC /* Holiday.m */,
 			);
-			name = "Data model objects";
+			name = "Core data model objects";
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -2597,6 +2606,7 @@
 				53D69D561A9B240C0004CE10 /* AMCReceiptView.m in Sources */,
 				53D69D1C1A9B240C0004CE10 /* AMCCancelAppointmentView.m in Sources */,
 				53D69D671A9B240C0004CE10 /* AMCViewController.m in Sources */,
+				534F0AF71C63C4C700520214 /* BQDeletionRequestList.swift in Sources */,
 				53D69CE91A9B240C0004CE10 /* AMCHoursWorkedOnDayViewController.m in Sources */,
 				530171851ACBD21F0047116D /* RecurringItem+Methods.m in Sources */,
 				536B9E8C1C56077E00F170EC /* Sale.m in Sources */,
@@ -2631,6 +2641,7 @@
 				53D69D611A9B240C0004CE10 /* EditEmployeeViewController.m in Sources */,
 				535F0DF71AB2339A0035CFD8 /* AMCAutoCloseWindowController.m in Sources */,
 				53D69D0C1A9B240C0004CE10 /* AMCBarcodeScanningViewController.m in Sources */,
+				534F0AF51C61FC1700520214 /* BQExportDeletionRequest.swift in Sources */,
 				536B9E841C56077E00F170EC /* LastUpdatedBy.m in Sources */,
 				53D69CEC1A9B240C0004CE10 /* AMCProductSelectorWindowController.m in Sources */,
 				536B9E711C56077E00F170EC /* Salary+CoreDataProperties.m in Sources */,
@@ -2701,6 +2712,7 @@
 				536B9E9E1C56077E00F170EC /* ShoppingList+CoreDataProperties.m in Sources */,
 				53D69D131A9B240C0004CE10 /* AMCReportsViewController.m in Sources */,
 				535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */,
+				534F0AF41C61FC1700520214 /* BQExportDeletionRequest+CoreDataProperties.swift in Sources */,
 				536B9E891C56077E00F170EC /* Note+CoreDataProperties.m in Sources */,
 				53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */,
 				535F0DF51AB2339A0035CFD8 /* AMCAutoCloseViewController.m in Sources */,
@@ -2773,7 +2785,7 @@
 				53D69CF11A9B240C0004CE10 /* AMCSaleItemPriceSetterView.m in Sources */,
 				53D4FC501B3934A5009EBF70 /* Role+Methods.m in Sources */,
 				53D69D421A9B240C0004CE10 /* Account+Methods.m in Sources */,
-				53CD1E4A1C5EC52C00E09E6F /* BQChangeMonitor.swift in Sources */,
+				53CD1E4A1C5EC52C00E09E6F /* BQCoredataExportController.swift in Sources */,
 				536B9E7B1C56077E00F170EC /* StockedProduct+CoreDataProperties.m in Sources */,
 				536B9E611C56077E00F170EC /* Product+CoreDataProperties.m in Sources */,
 				53D69D4B1A9B240C0004CE10 /* ObjectSelectorViewController.m in Sources */,
@@ -2907,6 +2919,7 @@
 				HEADER_SEARCH_PATHS = $SRCROOT;
 				INFOPLIST_FILE = KeithSalon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.ClaudiasSalon.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ClaudiaSalon;
 				PROVISIONING_PROFILE = "";
@@ -2929,6 +2942,7 @@
 				HEADER_SEARCH_PATHS = $SRCROOT;
 				INFOPLIST_FILE = KeithSalon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.ClaudiasSalon.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ClaudiaSalon;
 				PROVISIONING_PROFILE = "";
@@ -2980,8 +2994,7 @@
 				533054511AE4EA49007B1264 /* ClaudiasSalon.xcdatamodel */,
 			);
 			currentVersion = 535F6B621C4E9BCF003C3D40 /* ClaudiasSalon 14.xcdatamodel */;
-			name = ClaudiasSalon.xcdatamodeld;
-			path = ../ClaudiasSalon.xcdatamodeld;
+			path = ClaudiasSalon.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
