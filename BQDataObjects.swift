@@ -204,7 +204,9 @@ public class ICloudService : ICloudRecord {
         self.nominalPrice = coredataService.nominalCharge?.doubleValue
 
         // Assign this service's parent category
-        let coredataServiceCategory = coredataService.serviceCategory!
+        guard let coredataServiceCategory = coredataService.serviceCategory else {
+            return
+        }
         let cloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: coredataServiceCategory, parentSalon: parentSalon)
         self.parentCategoryReference = CKReference(recordID: cloudServiceCategory.recordID!, action: CKReferenceAction.DeleteSelf)
     }    
@@ -269,14 +271,16 @@ class ICloudSale:ICloudRecord {
         self.nominalCharge = coredataSale.nominalCharge?.doubleValue
         
         // Assign this Sale's parent customer
-        let coredataCustomer = coredataSale.customer!
-        let cloudCustomer = ICloudCustomer(coredataCustomer: coredataCustomer, parentSalon: parentSalon)
-        self.parentCustomerReference = CKReference(recordID: cloudCustomer.recordID!, action: CKReferenceAction.DeleteSelf)
+        if let coredataCustomer = coredataSale.customer {
+            let cloudCustomer = ICloudCustomer(coredataCustomer: coredataCustomer, parentSalon: parentSalon)
+            self.parentCustomerReference = CKReference(recordID: cloudCustomer.recordID!, action: CKReferenceAction.None)
+        }
         
         // Assign this Sale's parent appointment
-        let coredataAppointment = coredataSale.fromAppointment!
-        let cloudAppointment = ICloudAppointment(coredataAppointment: coredataAppointment, parentSalon: parentSalon)
-        self.parentAppointmentReference = CKReference(recordID: cloudAppointment.recordID!, action: CKReferenceAction.DeleteSelf)
+        if let coredataAppointment = coredataSale.fromAppointment {
+            let cloudAppointment = ICloudAppointment(coredataAppointment: coredataAppointment, parentSalon: parentSalon)
+            self.parentAppointmentReference = CKReference(recordID: cloudAppointment.recordID!, action: CKReferenceAction.DeleteSelf)            
+        }
     }
     override func makeFirstCloudKitRecord() -> CKRecord {
         let record = makeFirstCloudKitRecordWithType(self.recordType)
@@ -304,14 +308,16 @@ class ICloudSaleItem: ICloudRecord {
         self.discountValue = coredataSaleItem.discountValue?.integerValue
         self.actualCharge = coredataSaleItem.actualCharge?.doubleValue
         self.nominalCharge = coredataSaleItem.nominalCharge?.doubleValue
-        // Assign this SaleItem's parent appointment
-        let coredataSale = coredataSaleItem.sale!
-        let cloudSale = ICloudSale(coredataSale: coredataSale, parentSalon: parentSalon)
-        self.parentSaleReference = CKReference(recordID: cloudSale.recordID!, action: CKReferenceAction.DeleteSelf)
+        // Assign this SaleItem's parent sale
+        if let coredataSale = coredataSaleItem.sale {
+            let cloudSale = ICloudSale(coredataSale: coredataSale, parentSalon: parentSalon)
+            self.parentSaleReference = CKReference(recordID: cloudSale.recordID!, action: CKReferenceAction.DeleteSelf)
+        }
         // Assign this SaleItem's associated service
-        let coredataService = coredataSaleItem.service!
-        let cloudService = ICloudService(coredataService: coredataService, parentSalon: parentSalon)
-        self.serviceReference = CKReference(recordID: cloudService.recordID!, action: CKReferenceAction.None)
+        if let coredataService = coredataSaleItem.service {
+            let cloudService = ICloudService(coredataService: coredataService, parentSalon: parentSalon)
+            self.serviceReference = CKReference(recordID: cloudService.recordID!, action: CKReferenceAction.None)
+        }
     }
     override func makeFirstCloudKitRecord() -> CKRecord {
         let record = makeFirstCloudKitRecordWithType(self.recordType)
@@ -331,53 +337,4 @@ func archiveMetadataForCKRecord(record: CKRecord) -> NSMutableData {
     record.encodeSystemFieldsWithCoder(archiver)
     archiver.finishEncoding()
     return archivedData
-}
-// MARK:- NSManagedObject extensions
-extension Appointment {
-    class func unexpiredAppointments(managedObjectContext:NSManagedObjectContext) -> [Appointment] {
-        let today = NSDate()
-        let earliest = today.dateByAddingTimeInterval(-appointmentExpiryTime)
-        let appointments = Appointment.appointmentsAfterDate(earliest, withMoc: managedObjectContext) as! [Appointment]
-        return appointments.sort({ (appointment1, appointment2) -> Bool in
-            let date1 = appointment1.appointmentDate!
-            let date2 = appointment2.appointmentDate!
-            return (date1.isLessThan(date2))
-        })
-    }
-}
-extension Customer {
-    class func customersOrderedByFirstName(managedObjectContext:NSManagedObjectContext) -> [Customer] {
-        let customers = Customer.allObjectsWithMoc(managedObjectContext) as! [Customer]
-        let sortedCustomers = customers.sort { (customer1:Customer, customer2:Customer) -> Bool in
-            return (customer1.fullName!.lowercaseString < customer2.fullName!.lowercaseString)
-        }
-        return sortedCustomers
-    }
-}
-extension Employee {
-    class func employeesOrderedByFirstName(managedObjectContext:NSManagedObjectContext) -> [Employee] {
-        let employees = Employee.allObjectsWithMoc(managedObjectContext) as! [Employee]
-        let sortedEmployees = employees.sort { (employee1, employee2) -> Bool in
-            return (employee1.fullName().lowercaseString < employee2.fullName().lowercaseString)
-        }
-        return sortedEmployees
-    }
-}
-extension Service {
-    class func servicesOrderedByName(managedObjectContext: NSManagedObjectContext) -> [Service] {
-        let services = Service.allObjectsWithMoc(managedObjectContext) as! [Service]
-        let sortedServices = services.sort { (service1, service2) -> Bool in
-            return (service1.name!.lowercaseString < service2.name!.lowercaseString)
-        }
-        return sortedServices
-    }
-}
-extension ServiceCategory {
-    class func serviceCategoriesOrderedByName(managedObjectContext: NSManagedObjectContext) -> [ServiceCategory] {
-        let serviceCategories = ServiceCategory.allObjectsWithMoc(managedObjectContext) as! [ServiceCategory]
-        let sortedServiceCategories = serviceCategories.sort { (serviceCategory1, serviceCategory2) -> Bool in
-            return (serviceCategory1.name!.lowercaseString < serviceCategory2.name!.lowercaseString)
-        }
-        return sortedServiceCategories
-    }
 }

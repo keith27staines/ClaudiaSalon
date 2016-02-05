@@ -56,14 +56,15 @@ class BQCoredataExportController {
     private func runExportIteration() {
         weak var weakSelf = self
         if self.cancelled { return }
-        let nextRunTime = dispatch_time(DISPATCH_TIME_NOW, Int64(30 * NSEC_PER_SEC))
+        let nextRunTime = dispatch_time(DISPATCH_TIME_NOW, Int64(5 * NSEC_PER_SEC))
         dispatch_after(nextRunTime, dispatch_get_main_queue()) { () -> Void in
             if let strongSelf = weakSelf {
-                strongSelf.exportQueue.addOperation(self.exportOperation)
-                strongSelf.runExportIteration()
-                if !(strongSelf.exportOperation.executing || strongSelf.exportOperation.ready) {
+                if !(strongSelf.exportOperation.executing) {
+                    print("Enquing operation")
                     strongSelf.exportQueue.addOperation(strongSelf.exportOperation)
                 }
+                print("Scheduling next iteration")
+                strongSelf.runExportIteration()
             }
         }
     }
@@ -133,6 +134,9 @@ class BQExportModifiedCoredataOperation : NSOperation {
         if self.cancelled { return }
         let modifiedSaleItems = SaleItem.saleItemsMarkedForExport(self.managedObjectContext) as Set<SaleItem>
         for modifiedObject in modifiedSaleItems {
+            guard modifiedObject.sale?.fromAppointment != nil else {
+                continue
+            }
             let icloudObject = ICloudSaleItem(coredataSaleItem: modifiedObject, parentSalon: self.salon)
             let cloudRecord = icloudObject.makeFirstCloudKitRecord()
             recordsToSave.append(cloudRecord)
@@ -142,6 +146,9 @@ class BQExportModifiedCoredataOperation : NSOperation {
         if self.cancelled { return }
         let modifiedSales = Sale.salesMarkedForExport(self.managedObjectContext) as Set<Sale>
         for modifiedObject in modifiedSales {
+            guard modifiedObject.fromAppointment != nil else {
+                continue
+            }
             let icloudObject = ICloudSale(coredataSale: modifiedObject, parentSalon: self.salon)
             let cloudRecord = icloudObject.makeFirstCloudKitRecord()
             recordsToSave.append(cloudRecord)
@@ -271,161 +278,5 @@ class BQExportModifiedCoredataOperation : NSOperation {
         dispatch_after(dispatchTime, dispatch_get_main_queue()) { () -> Void in
             self.publicDatabase.addOperation(operation)
         }
-    }
-}
-
-// MARK:- Extensions on exportable managed objects
-extension Customer {
-    class func customersMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<Customer> {
-        let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
-        let fetchRequest = NSFetchRequest(entityName:"Customer")
-        fetchRequest.predicate = predicate
-        do {
-            let fetchedResults = try managedObjectContext.executeFetchRequest(fetchRequest)
-            return Set(fetchedResults as! [Customer])
-        } catch {
-            assertionFailure("Unable to fetch objects marked for export")
-            return Set<Customer>()
-        }
-    }
-}
-extension Employee {
-    class func employeesMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<Employee> {
-        let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
-        let fetchRequest = NSFetchRequest(entityName:"Employee")
-        fetchRequest.predicate = predicate
-        do {
-            let fetchedResults = try managedObjectContext.executeFetchRequest(fetchRequest)
-            return Set(fetchedResults as! [Employee])
-        } catch {
-            assertionFailure("Unable to fetch objects marked for export")
-            return Set<Employee>()
-        }
-    }
-}
-extension Service {
-    class func servicesMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<Service> {
-        let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
-        let fetchRequest = NSFetchRequest(entityName:"Service")
-        fetchRequest.predicate = predicate
-        do {
-            let fetchedResults = try managedObjectContext.executeFetchRequest(fetchRequest)
-            return Set(fetchedResults as! [Service])
-        } catch {
-            assertionFailure("Unable to fetch objects marked for export")
-            return Set<Service>()
-        }
-    }
-}
-extension ServiceCategory {
-    class func serviceCategoriesMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<ServiceCategory> {
-        let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
-        let fetchRequest = NSFetchRequest(entityName:"ServiceCategory")
-        fetchRequest.predicate = predicate
-        do {
-            let fetchedResults = try managedObjectContext.executeFetchRequest(fetchRequest)
-            return Set(fetchedResults as! [ServiceCategory])
-        } catch {
-            assertionFailure("Unable to fetch objects marked for export")
-            return Set<ServiceCategory>()
-        }
-    }
-}
-extension Appointment {
-    class func appointmentsMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<Appointment> {
-        let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
-        let fetchRequest = NSFetchRequest(entityName:"Appointment")
-        fetchRequest.predicate = predicate
-        do {
-            let fetchedResults = try managedObjectContext.executeFetchRequest(fetchRequest)
-            return Set(fetchedResults as! [Appointment])
-        } catch {
-            assertionFailure("Unable to fetch objects marked for export")
-            return Set<Appointment>()
-        }
-    }
-}
-extension SaleItem {
-    class func saleItemsMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<SaleItem> {
-        let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
-        let fetchRequest = NSFetchRequest(entityName:"SaleItem")
-        fetchRequest.predicate = predicate
-        do {
-            let fetchedResults = try managedObjectContext.executeFetchRequest(fetchRequest)
-            return Set(fetchedResults as! [SaleItem])
-        } catch {
-            assertionFailure("Unable to fetch objects marked for export")
-            return Set<SaleItem>()
-        }
-    }
-}
-extension Sale {
-    class func salesMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<Sale> {
-        let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
-        let fetchRequest = NSFetchRequest(entityName:"Sale")
-        fetchRequest.predicate = predicate
-        do {
-            let fetchedResults = try managedObjectContext.executeFetchRequest(fetchRequest)
-            return Set(fetchedResults as! [Sale])
-        } catch {
-            assertionFailure("Unable to fetch objects marked for export")
-            return Set<Sale>()
-        }
-    }
-}
-// MARK:- NSManagedObject extension
-extension NSManagedObject {
-    func markAsExported() {
-        switch self.className {
-        case "Salon":
-            let salon = self as! Salon
-            salon.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "Customer":
-            let customer = self as! Customer
-            customer.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "Employee":
-            let employee = self as! Employee
-            employee.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "Service":
-            let service = self as! Service
-            service.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "ServiceCategory":
-            let serviceCategory = self as! ServiceCategory
-            serviceCategory.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "Appointment":
-            let appointment = self as! Appointment
-            appointment.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "Sale":
-            let sale = self as! Sale
-            sale.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "SaleItem":
-            let saleItem = self as! SaleItem
-            saleItem.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        default:
-            break
-        }
-    }
-}
-// MARK:- NSManagedObjectContext extension
-extension NSManagedObjectContext {
-    func objectForIDString(coredataIDString:String) -> NSManagedObject {
-        guard let coordinator = self.persistentStoreCoordinator else {
-            preconditionFailure("The managed object context doesn't have a persistent store coordinator")
-        }
-        guard let uriRepresentation = NSURL(string: coredataIDString) else {
-            preconditionFailure("Unable to construct a URL from the string \(coredataIDString)")
-        }
-        guard let managedObjectID = coordinator.managedObjectIDForURIRepresentation(uriRepresentation) else {
-            preconditionFailure("The persistent store coordinate didn't return an objectID for the URL representation")
-        }
-        return self.objectWithID(managedObjectID)
     }
 }

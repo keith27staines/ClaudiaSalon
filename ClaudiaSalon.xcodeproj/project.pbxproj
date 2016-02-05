@@ -335,6 +335,7 @@
 		53D69E061A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69E051A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m */; };
 		53D934081AC71E1B001D6C64 /* AMCSalonDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D934061AC71E1B001D6C64 /* AMCSalonDetailsViewController.m */; };
 		53D934091AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D934071AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib */; };
+		53FA37361C6503430067136C /* BQCoredataObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */; };
 		53FFAF911AB220470078E9CC /* AMCEmployeeForServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */; };
 /* End PBXBuildFile section */
 
@@ -906,6 +907,7 @@
 		53D934051AC71E1B001D6C64 /* AMCSalonDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSalonDetailsViewController.h; sourceTree = "<group>"; };
 		53D934061AC71E1B001D6C64 /* AMCSalonDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSalonDetailsViewController.m; sourceTree = "<group>"; };
 		53D934071AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCSalonDetailsViewController.xib; sourceTree = "<group>"; };
+		53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQCoredataObjectExtensions.swift; sourceTree = "<group>"; };
 		53FFAF8F1AB220470078E9CC /* AMCEmployeeForServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCEmployeeForServiceSelector.h; sourceTree = "<group>"; };
 		53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCEmployeeForServiceSelector.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1190,6 +1192,7 @@
 				534F0AEA1C5A2D0100520214 /* BQExtractModel.swift */,
 				53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */,
 				534F0AF61C63C4C700520214 /* BQDeletionRequestList.swift */,
+				53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */,
 			);
 			name = "Booking Queue Model";
 			sourceTree = "<group>";
@@ -2708,6 +2711,7 @@
 				539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */,
 				53D4FCA81B3BF391009EBF70 /* AMCPermissionDeniedViewController.m in Sources */,
 				53D69D161A9B240C0004CE10 /* AMCFinancialAnalysisViewController.m in Sources */,
+				53FA37361C6503430067136C /* BQCoredataObjectExtensions.swift in Sources */,
 				534DFF681B0736970077F124 /* AMCRolloverButton.m in Sources */,
 				536B9E9E1C56077E00F170EC /* ShoppingList+CoreDataProperties.m in Sources */,
 				53D69D131A9B240C0004CE10 /* AMCReportsViewController.m in Sources */,

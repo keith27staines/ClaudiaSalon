@@ -90,34 +90,11 @@ class BQExtractModel {
     func prepareCoredataRecordsReadyForFirstExport() {
         self.salonDocument.salon.bqNeedsCoreDataExport = true
         self.salonDocument.salon.bqMetadata = nil;
-        for customer in allCoredataCustomers {
-            customer.bqNeedsCoreDataExport = NSNumber(bool: true)
-            customer.bqMetadata = nil
-        }
-        for employee in allCoredataEmployees {
-            employee.bqNeedsCoreDataExport = NSNumber(bool: true)
-            employee.bqMetadata = nil
-        }
-        for serviceCategory in allCoredataServiceCategories {
-            serviceCategory.bqNeedsCoreDataExport = NSNumber(bool: true)
-            serviceCategory.bqMetadata = nil
-        }
-        for service in allCoredataServices {
-            service.bqNeedsCoreDataExport = NSNumber(bool: true)
-            service.bqMetadata = nil
-        }
-        for appointment in allUnexpiredCoredataAppointments {
-            appointment.bqNeedsCoreDataExport = NSNumber(bool: true)
-            appointment.bqMetadata = nil
-        }
-        for sale in allCoredataSales {
-            sale.bqNeedsCoreDataExport = NSNumber(bool: true)
-            sale.bqMetadata = nil
-        }
-        for saleItem in allCoredataSaleItems {
-            saleItem.bqNeedsCoreDataExport = NSNumber(bool: true)
-            saleItem.bqMetadata = nil
-        }
+        self.prepareAllCustomersForCoredataExport()
+        self.prepareAllEmployeesForCoredataExport()
+        self.prepareAllServiceCategoriesForCoredataExport()
+        self.prepareAllServicesForCoredataExport()
+        self.prepareAllAppointmentsForCoredataExport()
     }
     
     // MARK:- Extract data

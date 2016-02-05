@@ -34,7 +34,7 @@ class BQDataExtractViewController: NSViewController, BQExtractModelDelegate {
         extractModel.delegate = self
         let moc = self.salonDocument.managedObjectContext!
         let salon = self.salonDocument.salon
-        coredataExportController = BQCoredataExportController(managedObjectContext: moc, salon: salon, startImmediately: true)
+//        coredataExportController = BQCoredataExportController(managedObjectContext: moc, salon: salon, startImmediately: true)
     }
     
     @IBAction func resetDataExtract(sender: AnyObject) {
