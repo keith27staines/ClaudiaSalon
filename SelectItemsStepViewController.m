@@ -410,6 +410,7 @@
         [self.saleItemsArray removeObjectAtIndex:row];
         [[self sale] removeSaleItemObject:saleItem];
         saleItem.service = nil;
+        saleItem.bqNeedsCoreDataExport = @(YES);
         [self.saleItemsTable deselectAll:self];
         [self.saleItemsTable reloadData];
         if (self.saleItemsArray.count == 0) {

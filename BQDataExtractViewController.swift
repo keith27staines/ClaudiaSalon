@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class BQDataExtractViewController: NSViewController, BQExtractModelDelegate {
+class BQDataExtractViewController: NSViewController, BQFirstExtractControllerDelegate {
     
     @IBOutlet weak var customerProgressIndicator: NSProgressIndicator!
     @IBOutlet weak var employeeProgressIndicator: NSProgressIndicator!
@@ -21,20 +21,16 @@ class BQDataExtractViewController: NSViewController, BQExtractModelDelegate {
     
     @IBOutlet weak var extractStatus: NSTextField!
     var salonDocument: AMCSalonDocument!
-    var extractModel : BQExtractModel!
-    var coredataExportController : BQCoredataExportController!
+    var extractModel : BQFirstExtractController!
 
     // MARK:- UI functions
     override func viewDidLoad() {
         super.viewDidLoad()
         self.activityIndicator.hidden = true
         self.extractStatus.stringValue = ""
-        extractModel = BQExtractModel()
+        extractModel = BQFirstExtractController()
         extractModel.salonDocument = self.salonDocument
         extractModel.delegate = self
-        let moc = self.salonDocument.managedObjectContext!
-        let salon = self.salonDocument.salon
-//        coredataExportController = BQCoredataExportController(managedObjectContext: moc, salon: salon, startImmediately: true)
     }
     
     @IBAction func resetDataExtract(sender: AnyObject) {

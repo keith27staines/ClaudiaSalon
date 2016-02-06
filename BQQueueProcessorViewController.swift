@@ -9,10 +9,28 @@
 import Cocoa
 
 class BQQueueProcessorViewController: NSViewController {
+    
     var salonDocument: AMCSalonDocument!
+    var coredataExportController : BQCoredataExportController!
+
+    // MARK:- Actions
+    @IBAction func runMaintenanceButtonClicked(sender: NSButton) {
+        switch sender.state {
+        case NSOffState:
+            self.coredataExportController.cancel()
+        case NSOnState:
+            self.coredataExportController.startExportIterations()
+        default:
+            break
+        }
+    }
+
+    // MARK:- NSViewController overrides
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        let moc = self.salonDocument.managedObjectContext!
+        let salon = self.salonDocument.salon
+        coredataExportController = BQCoredataExportController(managedObjectContext: moc, salon: salon, startImmediately: false)
     }
     
 }

@@ -1,5 +1,5 @@
 //
-//  BQExtractModel.swift
+//  BQFirstExtractController.swift
 //  ClaudiaSalon
 //
 //  Created by Keith Staines on 28/01/2016.
@@ -15,13 +15,13 @@ func uidStringFromManagedObject(managedObject:NSManagedObject) -> String {
 }
 
 // MARK:- class BQExtractModelDelegate
-protocol BQExtractModelDelegate {
+protocol BQFirstExtractControllerDelegate {
     func coredataRecordWasExtracted(sender:AnyObject, recordType:String, extractCount: Int, total: Int)
     func fullCoredataExtractWasCompleted(sender:AnyObject)
 }
-// MARK:- class BQExtractModel
-class BQExtractModel {
-    var delegate: BQExtractModelDelegate?
+// MARK:- class BQFirstExtractController
+class BQFirstExtractController {
+    var delegate: BQFirstExtractControllerDelegate?
     var salonDocument: AMCSalonDocument!
     let icloudContainer = CKContainer.defaultContainer()
     let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
@@ -95,6 +95,17 @@ class BQExtractModel {
         self.prepareAllServiceCategoriesForCoredataExport()
         self.prepareAllServicesForCoredataExport()
         self.prepareAllAppointmentsForCoredataExport()
+        var readyForExport = 0
+        var others = 0
+        for saleItem in SaleItem.allObjectsWithMoc(self.moc) as! [SaleItem] {
+            if saleItem.bqNeedsCoreDataExport!.boolValue == true {
+                readyForExport++
+            } else {
+                others++
+            }
+        }
+        print("Sale Items ready for export = \(readyForExport)")
+        print("Sale Items not needing export = \(others)")
     }
     
     // MARK:- Extract data
@@ -176,7 +187,7 @@ class BQExtractModel {
         extractedCustomerCount = 0
         for customerForExport in coredataCustomersNeedingExport() {
             let icloudCustomer = ICloudCustomer(coredataCustomer: customerForExport, parentSalon: self.salonDocument.salon)
-            let ckRecord = icloudCustomer.makeFirstCloudKitRecord()
+            let ckRecord = icloudCustomer.makeCloudKitRecord()
             icloudCustomerRecords.append(ckRecord)
             totalCustomersToProcess++
         }
@@ -188,7 +199,7 @@ class BQExtractModel {
         extractedEmployeesCount = 0
         for employeeForExport in coredataEmployeesNeedingExport() {
             let icloudEmployee = ICloudEmployee(coredataEmployee: employeeForExport, parentSalon: self.salonDocument.salon)
-            let ckRecord = icloudEmployee.makeFirstCloudKitRecord()
+            let ckRecord = icloudEmployee.makeCloudKitRecord()
             icloudEmployeeRecords.append(ckRecord)
             totalEmployeesToProcess++
         }
@@ -200,7 +211,7 @@ class BQExtractModel {
         extractedServiceCategoriesCount = 0
         for serviceCategoryForExport in coredataServiceCategoriesNeedingExport() {
             let icloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: serviceCategoryForExport, parentSalon: self.salonDocument.salon)
-            let ckRecord = icloudServiceCategory.makeFirstCloudKitRecord()
+            let ckRecord = icloudServiceCategory.makeCloudKitRecord()
             icloudServiceCategoryRecords.append(ckRecord)
             totalServiceCategoriesToProcess++
         }
@@ -213,7 +224,7 @@ class BQExtractModel {
         for serviceForExport in coredataServicesNeedingExport() {
             if let _ = serviceForExport.serviceCategory {
                 let icloudService = ICloudService(coredataService: serviceForExport, parentSalon: self.salonDocument.salon)
-                let ckRecord = icloudService.makeFirstCloudKitRecord()
+                let ckRecord = icloudService.makeCloudKitRecord()
                 icloudServiceRecords.append(ckRecord)
                 totalServicesToProcess++
             }
@@ -231,18 +242,18 @@ class BQExtractModel {
         extractedSaleItemsCount = 0
         for appointmentForExport in coredataAppointmentsNeedingExport() {
             let icloudAppointment = ICloudAppointment(coredataAppointment: appointmentForExport, parentSalon: self.salonDocument.salon)
-            let ckAppointmentRecord = icloudAppointment.makeFirstCloudKitRecord()
+            let ckAppointmentRecord = icloudAppointment.makeCloudKitRecord()
             icloudRecords.append(ckAppointmentRecord)
             totalAppointmentsToProcess++
             // Add child Sale record
             if let saleForExport = appointmentForExport.sale {
                 let icloudSale = ICloudSale(coredataSale: saleForExport, parentSalon: self.salonDocument.salon)
-                let ckSaleRecord = icloudSale.makeFirstCloudKitRecord()
+                let ckSaleRecord = icloudSale.makeCloudKitRecord()
                 icloudRecords.append(ckSaleRecord)
                 totalSalesToProcess++
                 for saleItemForExport in saleForExport.saleItem! {
                     let icloudSaleItem = ICloudSaleItem(coredataSaleItem: saleItemForExport, parentSalon: self.salonDocument.salon)
-                    let ckSaleItemRecord = icloudSaleItem.makeFirstCloudKitRecord()
+                    let ckSaleItemRecord = icloudSaleItem.makeCloudKitRecord()
                     icloudRecords.append(ckSaleItemRecord)
                     totalSaleItemsToProcess++
                 }

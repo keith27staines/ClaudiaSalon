@@ -45,7 +45,7 @@ public class ICloudRecord {
     private init(recordType:String, managedObject: NSManagedObject, parentSalon: Salon?) {
         self.coredataID = managedObject.objectID.URIRepresentation().absoluteString
         self.recordType = recordType;
-        let metadata = self.metadataFromManagedObject(managedObject)
+        let metadata = managedObject.bqdata?.metadata
         unarchiveFromMetadata(metadata)
         
         if recordType != ICloudRecordType.Salon.rawValue {
@@ -57,39 +57,10 @@ public class ICloudRecord {
         }
     }
     
-    /** metadataFromManagedObject hides a nasty cast that wouldn't
-        be necessary at all if we could only work out how to polymorphically 
-        extract bqMetadata from these classes. Tried to add an appropriate 
-        protocol to these classes but was defeated by compiler errors maybe 
-        associated with dynamically added properties that are required for NSManagedObject subclasses 
-     */
-    private func metadataFromManagedObject(managedObject:NSManagedObject) -> NSData? {
-        let className = managedObject.className
-        switch className {
-        case Salon.className():
-            return (managedObject as! Salon).bqMetadata
-        case Employee.className():
-            return (managedObject as! Employee).bqMetadata
-        case Customer.className():
-            return (managedObject as! Customer).bqMetadata
-        case ServiceCategory.className():
-            return (managedObject as! ServiceCategory).bqMetadata
-        case Service.className():
-            return (managedObject as! Service).bqMetadata
-        case Appointment.className():
-            return (managedObject as! Appointment).bqMetadata
-        case Sale.className():
-            return (managedObject as! Sale).bqMetadata
-        case SaleItem.className():
-            return (managedObject as! SaleItem).bqMetadata
-        default:
-            preconditionFailure("Cannot extract BQ metadata from class \(className)")
-        }
-    }
-    func makeFirstCloudKitRecord()->CKRecord {
+    func makeCloudKitRecord()->CKRecord {
         preconditionFailure("This method must be overridden and must not call super")
     }
-    private func makeFirstCloudKitRecordWithType(recordType:String)-> CKRecord {
+    private func makeCloudKitRecordWithType(recordType:String)-> CKRecord {
         let record = CKRecord(recordType: self.recordType)
         record["parentSalonReference"] = parentSalonReference
         record["needsExportToCoredata"] = false
@@ -131,7 +102,7 @@ public class ICloudSalon : ICloudRecord {
         self.postcode = coredataSalon.postcode
     }
     func makeFirstCloudkitRecord(parentSalon:CKReference?)-> CKRecord {
-        let record = makeFirstCloudKitRecordWithType(self.recordType)
+        let record = makeCloudKitRecordWithType(self.recordType)
         record["name"] = name
         record["addressLine1"] = addressLine1
         record["addressLine2"] = addressLine2
@@ -150,8 +121,8 @@ public class ICloudCustomer : ICloudRecord {
         self.lastName = coredataCustomer.lastName
         self.phone = coredataCustomer.phone
     }
-    override func makeFirstCloudKitRecord() -> CKRecord {
-        let record = makeFirstCloudKitRecordWithType(self.recordType)
+    override func makeCloudKitRecord() -> CKRecord {
+        let record = makeCloudKitRecordWithType(self.recordType)
         record["firstName"] = firstName
         record["lastName"] = lastName
         record["phone"] = phone
@@ -168,8 +139,8 @@ public class ICloudEmployee : ICloudRecord {
         self.lastName = coredataEmployee.lastName
         self.isActive = (coredataEmployee.isActive?.boolValue == true ? true : false)
     }
-    override func makeFirstCloudKitRecord() -> CKRecord {
-        let record = makeFirstCloudKitRecordWithType(self.recordType)
+    override func makeCloudKitRecord() -> CKRecord {
+        let record = makeCloudKitRecordWithType(self.recordType)
         record["firstName"] = firstName
         record["lastName"] = lastName
         return record
@@ -182,8 +153,8 @@ public class ICloudServiceCategory : ICloudRecord {
         super.init(recordType:ICloudRecordType.ServiceCategory.rawValue,managedObject: coredataServiceCategory, parentSalon: parentSalon)
         self.name = coredataServiceCategory.name
     }
-    override func makeFirstCloudKitRecord() -> CKRecord {
-        let record = makeFirstCloudKitRecordWithType(self.recordType)
+    override func makeCloudKitRecord() -> CKRecord {
+        let record = makeCloudKitRecordWithType(self.recordType)
         record["name"] = name
         return record
     }
@@ -203,15 +174,14 @@ public class ICloudService : ICloudRecord {
         self.maxPrice = coredataService.maximumCharge?.doubleValue
         self.nominalPrice = coredataService.nominalCharge?.doubleValue
 
-        // Assign this service's parent category
-        guard let coredataServiceCategory = coredataService.serviceCategory else {
-            return
+        // Assign this service's associated category
+        if let coredataServiceCategory = coredataService.serviceCategory {
+            let cloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: coredataServiceCategory, parentSalon: parentSalon)
+            self.parentCategoryReference = CKReference(recordID: cloudServiceCategory.recordID!, action: CKReferenceAction.None)
         }
-        let cloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: coredataServiceCategory, parentSalon: parentSalon)
-        self.parentCategoryReference = CKReference(recordID: cloudServiceCategory.recordID!, action: CKReferenceAction.DeleteSelf)
-    }    
-    override func makeFirstCloudKitRecord() -> CKRecord {
-        let record = makeFirstCloudKitRecordWithType(self.recordType)
+    }
+    override func makeCloudKitRecord() -> CKRecord {
+        let record = makeCloudKitRecordWithType(self.recordType)
         record["name"] = name
         record["minPrice"] = minPrice
         record["maxPrice"] = maxPrice
@@ -237,8 +207,8 @@ class ICloudAppointment:ICloudRecord {
         let cloudCustomer = ICloudCustomer(coredataCustomer: coredataCustomer, parentSalon: parentSalon)
         self.parentCustomerReference = CKReference(recordID: cloudCustomer.recordID!, action: CKReferenceAction.DeleteSelf)
     }
-    override func makeFirstCloudKitRecord() -> CKRecord {
-        let record = makeFirstCloudKitRecordWithType(self.recordType)
+    override func makeCloudKitRecord() -> CKRecord {
+        let record = makeCloudKitRecordWithType(self.recordType)
         record["appointmentStartDate"] = appointmentStartDate
         record["appointmentEndDate"] = appointmentEndDate
         record["parentCustomerReference"] = parentCustomerReference
@@ -282,8 +252,8 @@ class ICloudSale:ICloudRecord {
             self.parentAppointmentReference = CKReference(recordID: cloudAppointment.recordID!, action: CKReferenceAction.DeleteSelf)            
         }
     }
-    override func makeFirstCloudKitRecord() -> CKRecord {
-        let record = makeFirstCloudKitRecordWithType(self.recordType)
+    override func makeCloudKitRecord() -> CKRecord {
+        let record = makeCloudKitRecordWithType(self.recordType)
         record["parentCustomerReference"] = parentCustomerReference
         record["parentAppointmentReference"] = parentAppointmentReference
         record["discountVersion"] = discountVersion
@@ -312,15 +282,19 @@ class ICloudSaleItem: ICloudRecord {
         if let coredataSale = coredataSaleItem.sale {
             let cloudSale = ICloudSale(coredataSale: coredataSale, parentSalon: parentSalon)
             self.parentSaleReference = CKReference(recordID: cloudSale.recordID!, action: CKReferenceAction.DeleteSelf)
+        } else {
+            self.parentSaleReference = nil
         }
         // Assign this SaleItem's associated service
         if let coredataService = coredataSaleItem.service {
             let cloudService = ICloudService(coredataService: coredataService, parentSalon: parentSalon)
             self.serviceReference = CKReference(recordID: cloudService.recordID!, action: CKReferenceAction.None)
+        } else {
+            self.serviceReference = nil
         }
     }
-    override func makeFirstCloudKitRecord() -> CKRecord {
-        let record = makeFirstCloudKitRecordWithType(self.recordType)
+    override func makeCloudKitRecord() -> CKRecord {
+        let record = makeCloudKitRecordWithType(self.recordType)
         record["parentSaleReference"] = parentSaleReference
         record["serviceReference"] = serviceReference
         record["discountVersion"] = discountVersion

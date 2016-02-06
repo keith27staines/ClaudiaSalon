@@ -18,8 +18,9 @@ class BQCoredataExportController {
     let managedObjectContext:NSManagedObjectContext!
     let salon:Salon!
     let deletionRequestList:BQDeletionRequestList
-    var cancelled = true
-    var nextRunTime = dispatch_time(DISPATCH_TIME_NOW, Int64(30 * NSEC_PER_SEC))
+
+    private var cancelled = true
+    private var nextRunTime = DISPATCH_TIME_NOW
     
     init(managedObjectContext:NSManagedObjectContext, salon:Salon, startImmediately:Bool) {
         self.salon = salon
@@ -42,7 +43,7 @@ class BQCoredataExportController {
             self.startExportIterations()
         }
     }
-    /** Start iterating new export operations. Safe to call this twice because subsequent calls have no effect unless cancelled has been set after first call */
+    /** Start iterating new export operations. Safe to call this multiple times because subsequent calls have no effect unless cancelled has been set (usually by a call to cancel) after the first call */
     func startExportIterations() {
         if !self.cancelled {
             // already running
@@ -51,7 +52,9 @@ class BQCoredataExportController {
         self.cancelled = false
         self.runExportIteration()
     }
-
+    func cancel() {
+        self.cancelled = true
+    }
     /** adds the export operation to the export queue and then calls itself until either the cancelled property becomes true or self is nil */
     private func runExportIteration() {
         weak var weakSelf = self
@@ -91,15 +94,22 @@ class BQExportModifiedCoredataOperation : NSOperation {
         if self.cancelled { return }
         publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
 
-        var recordIDsToDelete = [CKRecordID]()
         var recordsToSave = [CKRecord]()
+        
+        // Export the salon itself if required
+        if salon.bqNeedsCoreDataExport?.boolValue == true {
+            let icloudSalon = ICloudSalon(coredataSalon: salon)
+            let cloudRecord = icloudSalon.makeCloudKitRecord()
+            self.saveModifiedRecordsToCloud([cloudRecord])
+            return
+        }
         
         // Gather all modifed customers
         if self.cancelled { return }
         let modifiedCustomers = Customer.customersMarkedForExport(self.managedObjectContext) as Set<Customer>
         for modifiedObject in modifiedCustomers {
             let icloudObject = ICloudCustomer(coredataCustomer: modifiedObject, parentSalon: self.salon)
-            let cloudRecord = icloudObject.makeFirstCloudKitRecord()
+            let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
         }
 
@@ -108,7 +118,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
         let modifiedServiceCategories = ServiceCategory.serviceCategoriesMarkedForExport(self.managedObjectContext) as Set<ServiceCategory>
         for modifiedObject in modifiedServiceCategories {
             let icloudObject = ICloudServiceCategory(coredataServiceCategory: modifiedObject, parentSalon: self.salon)
-            let cloudRecord = icloudObject.makeFirstCloudKitRecord()
+            let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
         }
         
@@ -117,7 +127,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
         let modifiedServices = Service.servicesMarkedForExport(self.managedObjectContext) as Set<Service>
         for modifiedObject in modifiedServices {
             let icloudObject = ICloudService(coredataService: modifiedObject, parentSalon: self.salon)
-            let cloudRecord = icloudObject.makeFirstCloudKitRecord()
+            let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
         }
         
@@ -126,7 +136,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
         let modifiedEmployees = Employee.employeesMarkedForExport(self.managedObjectContext) as Set<Employee>
         for modifiedObject in modifiedEmployees {
             let icloudObject = ICloudEmployee(coredataEmployee: modifiedObject, parentSalon: self.salon)
-            let cloudRecord = icloudObject.makeFirstCloudKitRecord()
+            let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
         }
         
@@ -138,7 +148,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
                 continue
             }
             let icloudObject = ICloudSaleItem(coredataSaleItem: modifiedObject, parentSalon: self.salon)
-            let cloudRecord = icloudObject.makeFirstCloudKitRecord()
+            let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
         }
         
@@ -150,7 +160,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
                 continue
             }
             let icloudObject = ICloudSale(coredataSale: modifiedObject, parentSalon: self.salon)
-            let cloudRecord = icloudObject.makeFirstCloudKitRecord()
+            let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
         }
         
@@ -159,7 +169,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
         let modifiedAppointments = Appointment.appointmentsMarkedForExport(self.managedObjectContext) as Set<Appointment>
         for modifiedObject in modifiedAppointments {
             let icloudObject = ICloudAppointment(coredataAppointment: modifiedObject, parentSalon: self.salon)
-            let cloudRecord = icloudObject.makeFirstCloudKitRecord()
+            let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
         }
         
@@ -167,12 +177,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
         self.saveModifiedRecordsToCloud(recordsToSave)
         
         // Gather records that must be deleted in icloud because their corresponding coredata objects have already been deleted
-        let recordDeletionRequests = deletionRequestList.fetchAllPendingRequests()
-        for deletionRequest in recordDeletionRequests {
-            let recordID = deletionRequest.cloudkitRecordFromEmbeddedMetadata()!.recordID
-            recordIDsToDelete.append(recordID)
-        }
-        self.deleteRecordIDsFromCloud(recordIDsToDelete)
+        self.deletionRequestList.processList()        
     }
     
     // MARK:- Save records to cloud
@@ -228,47 +233,6 @@ class BQExportModifiedCoredataOperation : NSOperation {
     
         // Actually submit the operation
         self.publicDatabase.addOperation(saveRecordsOperation)
-    }
-    
-    // MARK:- Delete recordIDs from cloud
-    func deleteRecordIDsFromCloud(recordIDsForDeletion:[CKRecordID]) {
-        let deleteRecordsFromCloudOperation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: recordIDsForDeletion)
-        deleteRecordsFromCloudOperation.modifyRecordsCompletionBlock = { (_,recordIDsToDelete,error)->Void in
-            guard let recordIDsToDelete = recordIDsToDelete else {
-                return
-            }
-            let attemptedDeletions = Set(recordIDsToDelete)
-            var failedDeletions = Set<CKRecordID>()
-            var failedDeletionsDictionary: [CKRecordID:NSError]?
-            if let error = error {
-                switch error {
-                case CKErrorCode.LimitExceeded.rawValue:
-                    // Need to recurse down to smaller operation
-                    assertionFailure("Need to recurse down to smaller operation")
-                    break
-                case error.code == CKErrorCode.PartialFailure.rawValue:
-                    failedDeletionsDictionary = error.userInfo[CKPartialErrorsByItemIDKey] as! [CKRecordID:NSError]?
-                    failedDeletions = Set(failedDeletionsDictionary!.keys)
-                case error.userInfo["CKErrorRetryAfterKey"] != nil:
-                    // Transient failure - can retry this operation after a suitable delay
-                    let retryAfter = error.userInfo["CKErrorRetryAfterKey"]!.doubleValue
-                    self.retryOperation(deleteRecordsFromCloudOperation, waitInterval: retryAfter)
-                default:
-                    // Operation failed unrecoverably so nothing we can do except maybe figure out why
-                    assertionFailure("Operation failed unrecoverably so nothing we can do except maybe figure out why")
-                    return
-                }
-            }
-            // get the successes (successes = attempts - failures) and inform the deletion request list about the successes
-            let successfullyDeleted = attemptedDeletions.subtract(failedDeletions)
-            self.deletionRequestList.requestsSucceeded(successfullyDeleted)
-            
-            // Inform the deletion request list about any failures
-            if let failedDeletionsDictionary = failedDeletionsDictionary {
-                self.deletionRequestList.requestsFailed(failedDeletionsDictionary)
-            }
-        }
-        self.publicDatabase.addOperation(deleteRecordsFromCloudOperation)
     }
     
     // MARK:- Retry operation
