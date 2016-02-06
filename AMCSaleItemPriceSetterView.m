@@ -41,18 +41,24 @@
 }
 - (IBAction)discountTypeChanged:(id)sender {
     long index = self.discountTypeSegmentedControl.selectedSegment;
-    NSLog(@"index = %@",@(index));
     self.saleItem.discountType = @((index == 0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
     [self loadDiscountPopup];
     [self.discountPopup selectItemAtIndex:self.saleItem.discountValue.integerValue];
     [self.saleItem updatePrice];
     [self updateFromSaleItem];
+    self.saleItem.bqNeedsCoreDataExport = @YES;
+    self.saleItem.sale.bqNeedsCoreDataExport = @YES;
     [self.delegate saleItemPriceSetterView:self didUpdateSaleItem:self.saleItem];
 }
 
 - (IBAction)discountChanged:(id)sender {
+    long index = self.discountTypeSegmentedControl.selectedSegment;
+    self.saleItem.discountType = @((index == 0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
     self.saleItem.discountValue = @(self.discountPopup.indexOfSelectedItem);
     [self.saleItem updatePrice];
+    [self updateFromSaleItem];
+    self.saleItem.bqNeedsCoreDataExport = @YES;
+    self.saleItem.sale.bqNeedsCoreDataExport = @YES;
     [self.delegate saleItemPriceSetterView:self didUpdateSaleItem:self.saleItem];
 }
 

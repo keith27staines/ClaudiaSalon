@@ -308,6 +308,7 @@
 -(void)updateTotal {
     Sale * sale = self.appointment.sale;
     [sale updatePriceFromSaleItems];
+    sale.bqNeedsCoreDataExport = @YES;
     self.priceTotalLabel.stringValue = [NSString stringWithFormat:@"Total = £%1.2f",sale.actualCharge.doubleValue];
 }
 - (void)didPresentErrorWithRecovery:(BOOL)recover contextInfo:(void *)info {
@@ -552,6 +553,8 @@
     [self.chosenServices removeObject:saleItem];
     [self.chosenServicesTable reloadData];
     [self updateTotal];
+    self.appointment.sale.bqNeedsCoreDataExport = @YES;
+    saleItem.bqNeedsCoreDataExport = @YES;
     [self.delegate wizardStepControllerDidChangeState:self];
 }
 - (IBAction)setAppointmentTimeButtonClicked:(id)sender {

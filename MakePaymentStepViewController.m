@@ -73,14 +73,17 @@
 }
 - (IBAction)extraDiscountChanged:(id)sender {
     Sale * sale = [self sale];
+    sale.discountType = @((self.discountTypeSegmentedControl.selectedSegment==0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
     sale.discountValue = @(self.additionalDiscountPopup.indexOfSelectedItem);
     [self applySale];
+    sale.bqNeedsCoreDataExport =@YES;
 }
 - (IBAction)discountTypeChanged:(id)sender {
     Sale * sale = [self sale];
     sale.discountType = @((self.discountTypeSegmentedControl.selectedSegment==0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
     [self loadDiscountPopup];
     [self applySale];
+    sale.bqNeedsCoreDataExport =@YES;
 }
 -(void)clear
 {

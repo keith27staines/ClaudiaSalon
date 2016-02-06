@@ -38,6 +38,7 @@
 }
 
 - (IBAction)additionalDiscountChanged:(id)sender {
+    self.sale.discountType = @((self.discountTypeSegmentedControl.selectedSegment==0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
     self.sale.discountValue = @(self.additionalDiscountPopupButton.indexOfSelectedItem);
     [self updateFromSale];
     [self prepareSaleForBQExport];

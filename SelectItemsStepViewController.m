@@ -300,13 +300,6 @@
 {
     [self saleItemWasSelected];
 }
-
-- (IBAction)discountTypeChanged:(id)sender {
-    SaleItem * saleItem = [self selectedSaleItem];
-    saleItem.discountType = @((self.discountTypeSegmentedControl.integerValue==0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
-    [self applyDiscount];
-    [self updateTotal];
-}
 - (IBAction)categoryChanged:(id)sender {
     NSManagedObjectContext * moc = self.documentMoc;
     NSEntityDescription * entityDescription = [NSEntityDescription entityForName:@"Service" inManagedObjectContext:moc];
@@ -394,9 +387,12 @@
 }
 - (IBAction)discountChanged:(id)sender {
     SaleItem * saleItem = [self selectedSaleItem];
+    saleItem.discountType = @((self.discountTypeSegmentedControl.integerValue==0)?AMCDiscountTypePercentage:AMCDiscountTypeAbsoluteAmount);
     saleItem.discountValue = @([self.discountPopup indexOfSelectedItem]);
     [self applyDiscount];
     [self updateTotal];
+    saleItem.bqNeedsCoreDataExport = @YES;
+    saleItem.sale.bqNeedsCoreDataExport=@YES;
 }
 -(void)updateTotal {
     [self.sale updatePriceFromSaleItems];
@@ -410,7 +406,6 @@
         [self.saleItemsArray removeObjectAtIndex:row];
         [[self sale] removeSaleItemObject:saleItem];
         saleItem.service = nil;
-        saleItem.bqNeedsCoreDataExport = @(YES);
         [self.saleItemsTable deselectAll:self];
         [self.saleItemsTable reloadData];
         if (self.saleItemsArray.count == 0) {
@@ -418,6 +413,8 @@
             [self clearPriceAndDiscount];
         }
         [self updateTotal];
+        saleItem.bqNeedsCoreDataExport = @(YES);
+        saleItem.sale.bqNeedsCoreDataExport = @YES;
     }
 }
 #pragma mark - Helpers

@@ -189,7 +189,7 @@
                                     </segments>
                                 </segmentedCell>
                                 <connections>
-                                    <action selector="discountTypeChanged:" target="-2" id="lPE-5T-3Oy"/>
+                                    <action selector="discountChanged:" target="-2" id="U7d-BM-y1D"/>
                                 </connections>
                             </segmentedControl>
                         </subviews>
