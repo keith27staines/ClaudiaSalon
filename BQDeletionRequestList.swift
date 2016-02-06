@@ -15,8 +15,17 @@ class BQDeletionRequestList {
     let managedObjectContext:NSManagedObjectContext
     var deleteOperation: CKModifyRecordsOperation!
     lazy var publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
-    var activeOperations = 0
-    
+    private (set) var activeOperationCount = 0
+    private let synchronisationQueue = dispatch_queue_create("com.keithstaines.claudiassalon", DISPATCH_QUEUE_SERIAL)
+    func incrementActiveOperationCount() {
+        dispatch_sync(synchronisationQueue) {self.activeOperationCount++}
+    }
+    func decrementActiveOperationCount() {
+        dispatch_sync(synchronisationQueue) {self.activeOperationCount--}
+    }
+    func zeroActiveOperationCount() {
+        dispatch_sync(synchronisationQueue) {self.activeOperationCount-- }
+    }
     init(managedObjectContext:NSManagedObjectContext) {
         self.managedObjectContext = managedObjectContext
         self.requestListDictionary = [String:BQExportDeletionRequest]()
@@ -26,10 +35,10 @@ class BQDeletionRequestList {
     
     // MARK:- Process the list
     func processList() {
-        if self.activeOperations > 0 {
+        if self.activeOperationCount > 0 {
             return
         }
-        self.activeOperations++
+        self.incrementActiveOperationCount()
         self.deleteOperation.recordIDsToDelete = nil
         var recordIDsToDelete = [CKRecordID]()
         for (_,deletionRequest) in self.requestListDictionary {
@@ -43,7 +52,7 @@ class BQDeletionRequestList {
     private func makeDeleteOperation() -> CKModifyRecordsOperation {
         let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: nil)
         operation.completionBlock = {
-            dispatch_sync(dispatch_get_main_queue(), {self.activeOperations--})
+            self.decrementActiveOperationCount()
         }
         operation.modifyRecordsCompletionBlock = { (_,recordIDsToDelete,error)->Void in
             guard let recordIDsToDelete = recordIDsToDelete else {
@@ -91,7 +100,7 @@ class BQDeletionRequestList {
         let waitIntervalNanoseconds = Int64(waitInterval * 1000_000_000.0)
         let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, waitIntervalNanoseconds)
         dispatch_after(dispatchTime, dispatch_get_main_queue()) { () -> Void in
-            dispatch_sync(dispatch_get_main_queue(), {self.activeOperations++})
+            self.incrementActiveOperationCount()
             self.publicDatabase.addOperation(operation)
         }
     }
