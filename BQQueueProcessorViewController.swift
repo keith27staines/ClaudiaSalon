@@ -30,7 +30,7 @@ class BQQueueProcessorViewController: NSViewController {
         super.viewDidLoad()
         let moc = self.salonDocument.managedObjectContext!
         let salon = self.salonDocument.salon
-        coredataExportController = BQCoredataExportController(managedObjectContext: moc, salon: salon, startImmediately: false)
+        coredataExportController = BQCoredataExportController(parentManagedObjectContext: moc, salon: salon, startImmediately: false)
     }
     
 }

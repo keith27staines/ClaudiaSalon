@@ -14,14 +14,14 @@ class BQExportDeletionRequest: NSManagedObject {
     
     // Insert code here to add functionality to your managed object subclass
     
-    func failWithError(error:NSError) {
+    func failedWithError(error:NSError) {
         // The cloud record wasn't deleted for some reason
         self.lastAttemptedDate = NSDate()
         self.lastErrorCode = error.code
         self.lastErrorDescription = error.description
         self.actionResult = "Retry needed"
     }
-    func deletionSucceeded() {
+    func succeeded() {
         // Request for icloud deletion was successful so delete this deletion request as it is no longer needed
         self.managedObjectContext?.deleteObject(self)
     }

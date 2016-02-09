@@ -11,51 +11,78 @@ import CloudKit
 
 // MARK:- Class BQDeletionRequestList
 class BQDeletionRequestList {
+    private let privateDispatchQueue = dispatch_queue_create("com.AMCAldebaron.BQDeletionRequestList", DISPATCH_QUEUE_SERIAL)
+
     var requestListDictionary:[String:BQExportDeletionRequest]
-    let managedObjectContext:NSManagedObjectContext
-    var deleteOperation: CKModifyRecordsOperation!
+    let parentManagedObjectContext: NSManagedObjectContext
+    var deleteOperations = Set<CKModifyRecordsOperation>()
     lazy var publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
-    private (set) var activeOperationCount = 0
-    private let synchronisationQueue = dispatch_queue_create("com.keithstaines.claudiassalon", DISPATCH_QUEUE_SERIAL)
-    func incrementActiveOperationCount() {
-        dispatch_sync(synchronisationQueue) {self.activeOperationCount++}
-    }
-    func decrementActiveOperationCount() {
-        dispatch_sync(synchronisationQueue) {self.activeOperationCount--}
-    }
-    func zeroActiveOperationCount() {
-        dispatch_sync(synchronisationQueue) {self.activeOperationCount-- }
-    }
-    init(managedObjectContext:NSManagedObjectContext) {
-        self.managedObjectContext = managedObjectContext
+    let activeOperationCounter = AMCThreadSafeCounter(initialValue: 0)
+    
+    // MARK:- Initialiser and deinit
+    init(parentManagedObjectContext:NSManagedObjectContext) {
+        self.parentManagedObjectContext = parentManagedObjectContext
         self.requestListDictionary = [String:BQExportDeletionRequest]()
-        self.deleteOperation = self.makeDeleteOperation()
         self.loadRequestListDictionary()
+        
+        // Monitor new deletions from coredata
+        NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextObjectsDidChangeNotification, object: self.parentManagedObjectContext, queue: NSOperationQueue.mainQueue()) { notification in
+            // Managed objects just-deleted from the parent managed object (these changed being driven by user interaction) must be added to a deletion list for later removal from icloud
+            if let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] {
+                let deletedManagedObjects = deletedObjects as! Set<NSManagedObject>
+                self.addCloudDeletionRequestsForLocallyDeletedObjects(deletedManagedObjects)
+            }
+        }
     }
     
-    // MARK:- Process the list
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    // MARK:- Start and stop processing
     func processList() {
-        if self.activeOperationCount > 0 {
+        let maxRecordsToDelete = 200
+        if self.activeOperationCounter.count > 0 {
             return
         }
-        self.incrementActiveOperationCount()
-        self.deleteOperation.recordIDsToDelete = nil
+        self.activeOperationCounter.increment()
         var recordIDsToDelete = [CKRecordID]()
         for (_,deletionRequest) in self.requestListDictionary {
             let recordID = deletionRequest.cloudkitRecordFromEmbeddedMetadata()!.recordID
             recordIDsToDelete.append(recordID)
+            if recordIDsToDelete.count > maxRecordsToDelete {
+                // We don't want to lock up the interface if there are huge numbers of records to delete
+                break
+            }
         }
-        self.deleteOperation.recordIDsToDelete = recordIDsToDelete
-        self.publicDatabase.addOperation(self.deleteOperation)
+        let deleteOperation = self.makeDeleteOperation(recordIDsToDelete)
+        self.activeOperationCounter.increment()
+        self.publicDatabase.addOperation(deleteOperation)
     }
-    // MARK:- Delete recordIDs from cloud
-    private func makeDeleteOperation() -> CKModifyRecordsOperation {
-        let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: nil)
-        operation.completionBlock = {
-            self.decrementActiveOperationCount()
+    
+    func cancel() {
+        dispatch_sync(self.privateDispatchQueue) {
+            for operation in self.deleteOperations {
+                if operation.executing || operation.ready {
+                    operation.cancel()
+                }
+            }
         }
+    }
+    
+    // MARK:- Delete recordIDs from cloud
+    private func makeDeleteOperation(recordIDsToDelete:[CKRecordID]) -> CKModifyRecordsOperation {
+
+        let operation = CKModifyRecordsOperation(recordsToSave: nil, recordIDsToDelete: recordIDsToDelete)
+        
+        operation.completionBlock = {
+            self.activeOperationCounter.decrement()
+            dispatch_sync(self.privateDispatchQueue) {self.deleteOperations.remove(operation)}
+        }
+        
         operation.modifyRecordsCompletionBlock = { (_,recordIDsToDelete,error)->Void in
             guard let recordIDsToDelete = recordIDsToDelete else {
+                self.activeOperationCounter.decrement()
                 return
             }
             let attemptedDeletions = Set(recordIDsToDelete)
@@ -64,34 +91,60 @@ class BQDeletionRequestList {
             if let error = error {
                 switch error {
                 case CKErrorCode.LimitExceeded.rawValue:
-                    // Need to recurse down to smaller operation
-                    // Remember to increment activeOperationCount like so...
-                    // dispatch_sync(dispatch_get_main_queue(), {self.activeOperations++})
-                    // for each spawned operation
-                    assertionFailure("Need to recurse down to smaller operation")
-                    break
+                    /* This operation was "too big", so recurse down to 
+                       ever smaller operations until they succeed or 
+                       fail for a different reason
+                    */
+                    
+                    // Divide the recordIDs array into two halves
+                    let n = recordIDsToDelete.count / 2
+                    var firstHalfRecords = [CKRecordID]()
+                    var secondHalfRecords = [CKRecordID]()
+                    for index in recordIDsToDelete.indices {
+                        if index <= n {
+                            firstHalfRecords.append(recordIDsToDelete[index])
+                        } else {
+                            secondHalfRecords.append(recordIDsToDelete[index])
+                        }
+                    }
+                    // Spool new operations for first half
+                    let firsHalfOperation = self.makeDeleteOperation(firstHalfRecords)
+                    self.activeOperationCounter.increment()
+                    self.publicDatabase.addOperation(firsHalfOperation)
+
+                    // Spool new operation for second half
+                    let secondHalfOperation = self.makeDeleteOperation(secondHalfRecords)
+                    self.activeOperationCounter.increment()
+                    self.publicDatabase.addOperation(secondHalfOperation)
+                    return
                 case error.code == CKErrorCode.PartialFailure.rawValue:
+                    // Get into about the failed deletions, further processing is deferred...
                     failedDeletionsDictionary = error.userInfo[CKPartialErrorsByItemIDKey] as! [CKRecordID:NSError]?
                     failedDeletions = Set(failedDeletionsDictionary!.keys)
                 case error.userInfo["CKErrorRetryAfterKey"] != nil:
-                    // Transient failure - can retry this operation after a suitable delay
+                    // Transient failure - can retry this operation after a suitable delay. In our sense, this operation remains active during the wait and retry, so this is the only case where we don't change the activeOperation counter
                     let retryAfter = error.userInfo["CKErrorRetryAfterKey"]!.doubleValue
                     self.retryOperation(operation, waitInterval: retryAfter)
+                    return
                 default:
                     // Operation failed unrecoverably so nothing we can do except maybe figure out why
-                    assertionFailure("Operation failed unrecoverably so nothing we can do except maybe figure out why")
+                    assertionFailure("Operation failed unrecoverably so nothing we can do unless we can figure out why")
                     return
                 }
             }
-            // get the successes (successes = attempts - failures) and inform the deletion request list about the successes
+            
+            // If we get to here, we either completely succeeded or partially succeeded.
+            
+            // First we process the successes (successes = attempts - failures).
             let successfullyDeleted = attemptedDeletions.subtract(failedDeletions)
             self.requestsSucceeded(successfullyDeleted)
             
-            // Inform the deletion request list about any failures
+            // Now the failures...
             if let failedDeletionsDictionary = failedDeletionsDictionary {
                 self.requestsFailed(failedDeletionsDictionary)
             }
         }
+        dispatch_sync(self.privateDispatchQueue) {self.deleteOperations.insert(operation)}
         return operation
     }
     
@@ -99,8 +152,8 @@ class BQDeletionRequestList {
     private func retryOperation(operation:CKModifyRecordsOperation, waitInterval:Double) {
         let waitIntervalNanoseconds = Int64(waitInterval * 1000_000_000.0)
         let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, waitIntervalNanoseconds)
-        dispatch_after(dispatchTime, dispatch_get_main_queue()) { () -> Void in
-            self.incrementActiveOperationCount()
+        dispatch_after(dispatchTime, self.privateDispatchQueue) { () -> Void in
+            self.activeOperationCounter.increment()
             self.publicDatabase.addOperation(operation)
         }
     }
@@ -108,6 +161,8 @@ class BQDeletionRequestList {
     // MARK:- Add new  deletion requests
     func addCloudDeletionRequestsForLocallyDeletedObjects(deletedObjects:Set<NSManagedObject>) {
         for deletedObject in deletedObjects {
+            // Skip deleted deletionRequests to avoid horrible unwanted recursion
+            if deletedObject.isKindOfClass(BQExportDeletionRequest) { continue }
             self.addCloudDeletionRequestForLocallyDeletedObject(deletedObject)
         }
     }
@@ -118,22 +173,22 @@ class BQDeletionRequestList {
     }
     //MARK:- Notify successes and failures
     func requestsSucceeded(successfullyDeleted:Set<CKRecordID>) {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        dispatch_async(self.privateDispatchQueue) { () -> Void in
             for recordID in successfullyDeleted {
                 let recordName = recordID.recordName
                 if let request = self.requestListDictionary[recordName] {
-                    request.deletionSucceeded()
+                    request.succeeded()
                 }
                 self.requestListDictionary[recordName] = nil
             }
         }
     }
     func requestsFailed(failed:[CKRecordID:NSError]) {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        dispatch_async(self.privateDispatchQueue) { () -> Void in
             for (recordID,error) in failed {
                 let recordName = recordID.recordName
                 if let request = self.requestListDictionary[recordName] {
-                    request.failWithError(error)
+                    request.failedWithError(error)
                 }
             }
         }
@@ -142,7 +197,7 @@ class BQDeletionRequestList {
     func fetchAllRequests() -> Set<BQExportDeletionRequest> {
         let fetchRequest = NSFetchRequest(entityName: "BQExportDeletionRequest")
         do {
-            let fetchResults = (try managedObjectContext.executeFetchRequest(fetchRequest)) as! [BQExportDeletionRequest]
+            let fetchResults = (try self.parentManagedObjectContext.executeFetchRequest(fetchRequest)) as! [BQExportDeletionRequest]
             return Set(fetchResults)
         } catch {
             return Set<BQExportDeletionRequest>()
@@ -165,21 +220,25 @@ class BQDeletionRequestList {
     
     // MARK:- Private helper functions
     private func addCloudDeletionRequestsForRecordWithMetadata(metadata:NSData) -> BQExportDeletionRequest {
-        let request = NSEntityDescription.insertNewObjectForEntityForName("BQExportDeletionRequest", inManagedObjectContext: managedObjectContext) as! BQExportDeletionRequest
+        let request = NSEntityDescription.insertNewObjectForEntityForName("BQExportDeletionRequest", inManagedObjectContext: self.parentManagedObjectContext) as! BQExportDeletionRequest
         let record = NSManagedObject.cloudkitRecordFromMetadata(metadata)
         request.cloudRecordName = record!.recordID.recordName
         request.managedObjectDeletionDate = NSDate()
         request.bqMetadata = metadata
         request.actionResult = "Pending"
-        self.requestListDictionary[request.cloudRecordName!] = request
+        dispatch_sync(self.privateDispatchQueue) {
+            self.requestListDictionary[request.cloudRecordName!] = request
+        }
         return request
     }
 
     private func loadRequestListDictionary() {
         self.requestListDictionary.removeAll()
         let allRequests = self.fetchAllRequests()
-        for request in allRequests {
-            self.requestListDictionary[request.cloudRecordName!] = request
+        dispatch_sync(self.privateDispatchQueue) {
+            for request in allRequests {
+                self.requestListDictionary[request.cloudRecordName!] = request
+            }
         }
     }
 }

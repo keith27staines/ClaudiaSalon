@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E33e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCPermissionsForRoleEditor">
@@ -25,7 +26,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sFH-ZY-gvl">
-                    <rect key="frame" x="18" y="677" width="186" height="23"/>
+                    <rect key="frame" x="18" y="677" width="183" height="23"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Permissions for Role:" id="P53-HP-Agb">
                         <font key="font" metaFont="system" size="19"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -33,7 +34,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rgJ-85-iHu">
-                    <rect key="frame" x="379" y="13" width="73" height="32"/>
+                    <rect key="frame" x="380" y="13" width="72" height="32"/>
                     <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="SyE-Nw-hOU">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -43,7 +44,7 @@
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fZu-3x-42x">
-                    <rect key="frame" x="208" y="675" width="161" height="26"/>
+                    <rect key="frame" x="205" y="675" width="161" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="156" id="GbG-Du-uAC"/>
                     </constraints>
@@ -94,7 +95,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <button tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="1X7-Yh-Krc">
-                                                        <rect key="frame" x="594" y="12" width="51" height="18"/>
+                                                        <rect key="frame" x="594" y="12" width="52" height="18"/>
                                                         <buttonCell key="cell" type="check" title="View" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="ZcE-DC-ebB">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -114,7 +115,7 @@
                                                         </connections>
                                                     </button>
                                                     <button tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="aeC-Kc-rMq">
-                                                        <rect key="frame" x="660" y="12" width="47" height="18"/>
+                                                        <rect key="frame" x="661" y="12" width="46" height="18"/>
                                                         <buttonCell key="cell" type="check" title="Edit" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8Rq-Qt-BqN">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -175,7 +176,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="joM-vg-YJw"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="72Z-0m-Y83">
-                        <rect key="frame" x="1" y="117.46504271030426" width="237" height="16"/>
+                        <rect key="frame" x="1" y="117" width="237" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="fUn-0g-BWb">
@@ -184,7 +185,7 @@
                     </scroller>
                 </scrollView>
                 <button horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BWp-TD-Oeb">
-                    <rect key="frame" x="368" y="667" width="39" height="38"/>
+                    <rect key="frame" x="365" y="667" width="39" height="38"/>
                     <buttonCell key="cell" type="round" bezelStyle="circular" image="NSInfo" imagePosition="above" alignment="left" borderStyle="border" imageScaling="proportionallyDown" id="z9H-8e-m3t">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="label"/>

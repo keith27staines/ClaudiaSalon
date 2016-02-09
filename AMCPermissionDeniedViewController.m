@@ -17,6 +17,7 @@
 {
     BusinessFunction * _businessFunction;
 }
+@property (weak) IBOutlet NSButton *okButton;
 
 @property (weak) IBOutlet NSTextField *titleLabel;
 @property (weak) IBOutlet NSTextField *userNameLabel;
@@ -34,7 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do view setup here.
+    self.okButton.hidden = !self.callingViewController.permissionDeniedNeedsOKButton;
 }
 -(void)dismissController:(id)sender {
     SEL cancelButton = NSSelectorFromString(@"cancelButton:");
@@ -45,7 +46,6 @@
 }
 
 -(void)setBusinessFunction:(BusinessFunction *)businessFunction {
-    NSLog(@"New business function name is %@",businessFunction.functionName);
     _businessFunction = businessFunction;
 }
 

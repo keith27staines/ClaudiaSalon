@@ -11,34 +11,28 @@ import Foundation
 import CloudKit
 import CoreData
 
+// MARK:- Class BQCoredataExportController
 class BQCoredataExportController {
-    let namePrefix = "BQCoredataExporter"
-    let exportOperation:BQExportModifiedCoredataOperation
+    let iterationWaitForSeconds: UInt64 = 5
+    private let synchronisationQueue = dispatch_queue_create("com.AMCAldebaron.BQCoredataExportController", DISPATCH_QUEUE_SERIAL)
+
+    let namePrefix = "BQCoredataExportController"
     let exportQueue:NSOperationQueue
-    let managedObjectContext:NSManagedObjectContext!
+    let parentManagedObjectContext:NSManagedObjectContext!
     let salon:Salon!
     let deletionRequestList:BQDeletionRequestList
+    private let activeOperationsCounter = AMCThreadSafeCounter(initialValue: 0)
 
     private var cancelled = true
     private var nextRunTime = DISPATCH_TIME_NOW
     
-    init(managedObjectContext:NSManagedObjectContext, salon:Salon, startImmediately:Bool) {
+    init(parentManagedObjectContext:NSManagedObjectContext, salon:Salon, startImmediately:Bool) {
         self.salon = salon
-        self.managedObjectContext = managedObjectContext
+        self.parentManagedObjectContext = parentManagedObjectContext
         exportQueue = NSOperationQueue()
         exportQueue.name = namePrefix + "Queue"
-        deletionRequestList = BQDeletionRequestList(managedObjectContext: self.managedObjectContext)
-        exportOperation = BQExportModifiedCoredataOperation(managedObjectContext: self.managedObjectContext, salon: self.salon, deletionRequestList: deletionRequestList)
-        exportOperation.name = namePrefix + "BQExportOperation"
-
-        NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextObjectsDidChangeNotification, object: nil, queue: exportQueue) { notification in
-            // Managed objects just-deleted from the managed object context must be added to a deletion list for later removal from icloud
-            if let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] {
-                let deletedManagedObjects = deletedObjects as! Set<NSManagedObject>
-                self.deletionRequestList.addCloudDeletionRequestsForLocallyDeletedObjects(deletedManagedObjects)
-            }
-        }
-        
+        deletionRequestList = BQDeletionRequestList(parentManagedObjectContext: self.parentManagedObjectContext)
+                
         if startImmediately {
             self.startExportIterations()
         }
@@ -50,48 +44,67 @@ class BQCoredataExportController {
             return
         }
         self.cancelled = false
-        self.runExportIteration()
+        self.runExportIterationAfterWait(iterationWaitForSeconds)
     }
     func cancel() {
         self.cancelled = true
+        for operation in self.exportQueue.operations {
+            operation.cancel()
+        }
+        self.deletionRequestList.cancel()
     }
+
     /** adds the export operation to the export queue and then calls itself until either the cancelled property becomes true or self is nil */
-    private func runExportIteration() {
+    private func runExportIterationAfterWait(waitForSeconds:UInt64) {
         weak var weakSelf = self
         if self.cancelled { return }
-        let nextRunTime = dispatch_time(DISPATCH_TIME_NOW, Int64(5 * NSEC_PER_SEC))
-        dispatch_after(nextRunTime, dispatch_get_main_queue()) { () -> Void in
+        let nextRunTime = dispatch_time(DISPATCH_TIME_NOW, Int64(waitForSeconds * NSEC_PER_SEC))
+        dispatch_after(nextRunTime, synchronisationQueue) {
             if let strongSelf = weakSelf {
-                if !(strongSelf.exportOperation.executing) {
-                    print("Enquing operation")
-                    strongSelf.exportQueue.addOperation(strongSelf.exportOperation)
+                // First, handle any deletions
+                print("Initiate processing of deletion request list")
+                self.deletionRequestList.processList()
+                
+                // Next, handle any insertions or modifications
+                if strongSelf.activeOperationsCounter.count == 0 {
+                    print("Enquing new modify records operation")
+                    let newOperation = BQExportModifiedCoredataOperation(parentManagedObjectContext: strongSelf.parentManagedObjectContext, salon: strongSelf.salon, activeOperationsCounter:self.activeOperationsCounter)
+                    newOperation.completionBlock = {
+                        self.activeOperationsCounter.decrement()
+                    }
+                    self.activeOperationsCounter.increment()
+                    strongSelf.exportQueue.addOperation(newOperation)
                 }
                 print("Scheduling next iteration")
-                strongSelf.runExportIteration()
+                strongSelf.runExportIterationAfterWait(waitForSeconds)
             }
         }
     }
 }
 
+// MARK:- Class BQExportModifiedCoredataOperation
 class BQExportModifiedCoredataOperation : NSOperation {
-    let managedObjectContext:NSManagedObjectContext
+    private let synchronisationQueue = dispatch_queue_create("com.AMCAldebaron.BQExportModifiedCoredataOperation", DISPATCH_QUEUE_SERIAL)
+    let parentManagedObjectContext: NSManagedObjectContext
     let modifedCoredata = Set<NSManagedObject>()
     let salon:Salon
-    let deletionRequestList:BQDeletionRequestList
     var publicDatabase:CKDatabase!
+    let activeOperationsCounter: AMCThreadSafeCounter
     
-    init(managedObjectContext:NSManagedObjectContext, salon:Salon, deletionRequestList:BQDeletionRequestList) {
-        self.managedObjectContext = managedObjectContext
-        self.deletionRequestList = deletionRequestList
+    init(parentManagedObjectContext:NSManagedObjectContext, salon:Salon, activeOperationsCounter:AMCThreadSafeCounter) {
+        self.parentManagedObjectContext = parentManagedObjectContext
         self.salon = salon
+        self.activeOperationsCounter = activeOperationsCounter
         super.init()
         self.name = "BQExportModifiedCoredataOperation"
         self.qualityOfService = .Background
     }
-    
+
     // MARK:- Main function for this operation
     override func main() {
         if self.cancelled { return }
+        let privateManagedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        privateManagedObjectContext.parentContext = parentManagedObjectContext
         publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
 
         var recordsToSave = [CKRecord]()
@@ -100,13 +113,13 @@ class BQExportModifiedCoredataOperation : NSOperation {
         if salon.bqNeedsCoreDataExport?.boolValue == true {
             let icloudSalon = ICloudSalon(coredataSalon: salon)
             let cloudRecord = icloudSalon.makeCloudKitRecord()
-            self.saveModifiedRecordsToCloud([cloudRecord])
+            self.saveModifiedRecordsToCloud([cloudRecord],privateManagedContext: privateManagedObjectContext)
             return
         }
         
         // Gather all modifed customers
         if self.cancelled { return }
-        let modifiedCustomers = Customer.customersMarkedForExport(self.managedObjectContext) as Set<Customer>
+        let modifiedCustomers = Customer.customersMarkedForExport(privateManagedObjectContext) as Set<Customer>
         for modifiedObject in modifiedCustomers {
             let icloudObject = ICloudCustomer(coredataCustomer: modifiedObject, parentSalon: self.salon)
             let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -115,7 +128,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
 
         // Gather all modifed Service categories
         if self.cancelled { return }
-        let modifiedServiceCategories = ServiceCategory.serviceCategoriesMarkedForExport(self.managedObjectContext) as Set<ServiceCategory>
+        let modifiedServiceCategories = ServiceCategory.serviceCategoriesMarkedForExport(privateManagedObjectContext) as Set<ServiceCategory>
         for modifiedObject in modifiedServiceCategories {
             let icloudObject = ICloudServiceCategory(coredataServiceCategory: modifiedObject, parentSalon: self.salon)
             let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -124,7 +137,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
         
         // Gather all modified Services
         if self.cancelled { return }
-        let modifiedServices = Service.servicesMarkedForExport(self.managedObjectContext) as Set<Service>
+        let modifiedServices = Service.servicesMarkedForExport(privateManagedObjectContext) as Set<Service>
         for modifiedObject in modifiedServices {
             let icloudObject = ICloudService(coredataService: modifiedObject, parentSalon: self.salon)
             let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -133,7 +146,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
         
         // Gather all modified Employees
         if self.cancelled { return }
-        let modifiedEmployees = Employee.employeesMarkedForExport(self.managedObjectContext) as Set<Employee>
+        let modifiedEmployees = Employee.employeesMarkedForExport(privateManagedObjectContext) as Set<Employee>
         for modifiedObject in modifiedEmployees {
             let icloudObject = ICloudEmployee(coredataEmployee: modifiedObject, parentSalon: self.salon)
             let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -142,7 +155,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
         
         // Gather all modified SaleItems
         if self.cancelled { return }
-        let modifiedSaleItems = SaleItem.saleItemsMarkedForExport(self.managedObjectContext) as Set<SaleItem>
+        let modifiedSaleItems = SaleItem.saleItemsMarkedForExport(privateManagedObjectContext) as Set<SaleItem>
         for modifiedObject in modifiedSaleItems {
             guard modifiedObject.sale?.fromAppointment != nil else {
                 continue
@@ -154,7 +167,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
         
         // Gather all modified Sales
         if self.cancelled { return }
-        let modifiedSales = Sale.salesMarkedForExport(self.managedObjectContext) as Set<Sale>
+        let modifiedSales = Sale.salesMarkedForExport(privateManagedObjectContext) as Set<Sale>
         for modifiedObject in modifiedSales {
             guard modifiedObject.fromAppointment != nil else {
                 continue
@@ -166,7 +179,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
         
         // Gather all modified Appointments
         if self.cancelled { return }
-        let modifiedAppointments = Appointment.appointmentsMarkedForExport(self.managedObjectContext) as Set<Appointment>
+        let modifiedAppointments = Appointment.appointmentsMarkedForExport(privateManagedObjectContext) as Set<Appointment>
         for modifiedObject in modifiedAppointments {
             let icloudObject = ICloudAppointment(coredataAppointment: modifiedObject, parentSalon: self.salon)
             let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -174,14 +187,12 @@ class BQExportModifiedCoredataOperation : NSOperation {
         }
         
         // Now save the modified records
-        self.saveModifiedRecordsToCloud(recordsToSave)
-        
-        // Gather records that must be deleted in icloud because their corresponding coredata objects have already been deleted
-        self.deletionRequestList.processList()        
+        if self.cancelled { return }
+        self.saveModifiedRecordsToCloud(recordsToSave,privateManagedContext: privateManagedObjectContext)
     }
     
     // MARK:- Save records to cloud
-    private func saveModifiedRecordsToCloud(saveRecords:[CKRecord]?) {
+    private func saveModifiedRecordsToCloud(saveRecords:[CKRecord]?,privateManagedContext:NSManagedObjectContext) {
         guard let saveRecords = saveRecords where saveRecords.count > 0 else {
             return
         }
@@ -205,11 +216,11 @@ class BQExportModifiedCoredataOperation : NSOperation {
                 }
                 return
             }
-            let managedObject = self.managedObjectContext.objectForIDString(coredataID as! String)
+            let managedObject = privateManagedContext.objectForIDString(coredataID as! String)
             managedObject.markAsExported()
         }
         
-        // Set the completion block
+        // Set the records completion block
         saveRecordsOperation.modifyRecordsCompletionBlock = {(saveRecords, deleteRecords, error)-> Void in
             if let error = error {
                 switch error {
@@ -219,6 +230,11 @@ class BQExportModifiedCoredataOperation : NSOperation {
                     break
                 case error.code == CKErrorCode.PartialFailure.rawValue:
                     print(error)
+                    do {
+                        try privateManagedContext.save()
+                    } catch {
+                        fatalError("Failure to save context: \(error)")
+                    }
                 case error.userInfo["CKErrorRetryAfterKey"] != nil:
                     // Transient failure - can retry this operation after a suitable delay
                     let retryAfter = error.userInfo["CKErrorRetryAfterKey"]!.doubleValue
@@ -230,8 +246,14 @@ class BQExportModifiedCoredataOperation : NSOperation {
                 }
             }
         }
+        
+        // Set the completion block
+        saveRecordsOperation.completionBlock = {
+            self.activeOperationsCounter.decrement()
+        }
     
         // Actually submit the operation
+        self.activeOperationsCounter.increment()
         self.publicDatabase.addOperation(saveRecordsOperation)
     }
     
@@ -239,8 +261,10 @@ class BQExportModifiedCoredataOperation : NSOperation {
     func retryOperation(operation:CKModifyRecordsOperation, waitInterval:Double) {
         let waitIntervalNanoseconds = Int64(waitInterval * 1000_000_000.0)
         let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, waitIntervalNanoseconds)
-        dispatch_after(dispatchTime, dispatch_get_main_queue()) { () -> Void in
+        dispatch_after(dispatchTime, self.synchronisationQueue) { () -> Void in
+            self.activeOperationsCounter.increment()
             self.publicDatabase.addOperation(operation)
         }
     }
+    
 }

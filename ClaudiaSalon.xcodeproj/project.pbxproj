@@ -147,6 +147,7 @@
 		539D2DF11B18430400761711 /* AMCServiceCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DEF1B18430400761711 /* AMCServiceCategoriesViewController.m */; };
 		539D2DF21B18430400761711 /* AMCServiceCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */; };
 		539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DF51B18434400761711 /* AMCEmployeesViewController.m */; };
+		53A9F0E31C672DC7001E1618 /* AMCThreadSafeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */; };
 		53AE26D11AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */; };
 		53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */; };
 		53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE270A1AA317B200A1B3E4 /* AMCJobsColumnViewController.m */; };
@@ -595,6 +596,7 @@
 		539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCServiceCategoriesViewController.xib; sourceTree = "<group>"; };
 		539D2DF41B18434400761711 /* AMCEmployeesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCEmployeesViewController.h; sourceTree = "<group>"; };
 		539D2DF51B18434400761711 /* AMCEmployeesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCEmployeesViewController.m; sourceTree = "<group>"; };
+		53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMCThreadSafeCounter.swift; sourceTree = "<group>"; };
 		53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeeForServiceSelector.xib; sourceTree = "<group>"; };
 		53AE27071AA317B200A1B3E4 /* AMCJobsColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCJobsColumnView.h; sourceTree = "<group>"; };
 		53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCJobsColumnView.m; sourceTree = "<group>"; };
@@ -1182,6 +1184,7 @@
 			children = (
 				536B9DC71C50D8A300F170EC /* BQDataObjects.swift */,
 				53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */,
+				53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */,
 			);
 			name = "Booking Queue Model";
 			sourceTree = "<group>";
@@ -2718,6 +2721,7 @@
 				53D69D591A9B240C0004CE10 /* MakePaymentStepViewController.m in Sources */,
 				53D4FCAD1B3D904D009EBF70 /* AMCRolesMappingToScreen.m in Sources */,
 				539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */,
+				53A9F0E31C672DC7001E1618 /* AMCThreadSafeCounter.swift in Sources */,
 				53D4FCA81B3BF391009EBF70 /* AMCPermissionDeniedViewController.m in Sources */,
 				53D69D161A9B240C0004CE10 /* AMCFinancialAnalysisViewController.m in Sources */,
 				53FA37361C6503430067136C /* BQCoredataObjectExtensions.swift in Sources */,
