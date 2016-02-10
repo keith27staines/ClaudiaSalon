@@ -11,9 +11,6 @@
 #import "AMCSalonDocument.h"
 @interface AMCWizardStepBookAppointmentForCustomerViewController : AMCWizardStepViewController 
 
-@property (weak) IBOutlet NSPopUpButton *serviceCategoryPopup;
-- (IBAction)serviceCategoryChanged:(id)sender;
-@property (weak) IBOutlet NSTableView *servicesAvailableTable;
 @property (weak) IBOutlet NSTableView *chosenServicesTable;
 @property (weak) IBOutlet NSTableView *appointmentSlotsTable;
 
@@ -32,7 +29,7 @@
 @property (weak) IBOutlet NSButton *showNotesButton;
 
 - (IBAction)showNotesButtonClicked:(id)sender;
-//- (IBAction)showSaleItemPricePopover:(id)sender;
+
 @property (weak) IBOutlet NSTextField *priceTotalLabel;
 - (IBAction)quickQuoteButtonClicked:(id)sender;
 @property (weak) IBOutlet NSButton *quickQuoteButton;

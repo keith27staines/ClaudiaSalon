@@ -20,16 +20,14 @@
 #import "AMCJobsColumnView.h"
 #import "AMCQuickQuoteViewController.h"
 #import "ClaudiaSalon-swift.h"
-@interface SelectItemsStepViewController() <AMCJobsColumnViewDelegate>
+@interface SelectItemsStepViewController() <AMCJobsColumnViewDelegate, AMCServiceCategoryPopupControllerDelegate>
 {
-    NSMutableArray * _services;
-    NSMutableArray * _categories;
+//    NSMutableArray * _services;
+//    NSMutableArray * _categories;
     NSMutableArray * _saleItemsArray;
     AMCEmployeeForServiceSelector * _employeeForServiceViewController;
 }
 @property (strong) IBOutlet AMCServiceCategoryPopupController *serviceCategoryPopupController;
-@property NSMutableArray * categories;
-@property NSMutableArray * services;
 @property (weak,readonly) Sale * sale;
 @property (readonly) NSMutableArray * saleItemsArray;
 @property (readonly) BOOL enabled;
@@ -41,6 +39,13 @@
 -(NSString *)nibName
 {
     return @"SelectItemsStepViewController";
+}
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    self.serviceCategoryPopupController.delegate = self;
+}
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 #pragma mark popup loaders
 -(void)loadPopups
@@ -120,11 +125,7 @@
 #pragma mark - NSTableViewDataSource
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    if (tableView == self.servicesListTable) {
-        return self.services.count;
-    } else {
-        return self.saleItemsArray.count;
-    }
+    return self.saleItemsArray.count;
 }
 -(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     if (tableView == self.saleItemsTable) {
@@ -136,14 +137,6 @@
             view.representedObject = saleItem;
             view.textField.stringValue = saleItem.service.displayText;
             [self loadEmployeePopup:view.stylistPopup forSaleItem:saleItem];
-            return view;
-        }
-    }
-    if (tableView == self.servicesListTable) {
-        if ([tableColumn.identifier isEqualToString:@"serviceName"]) {
-            Service * service = self.services[row];
-            NSTableCellView * view = [tableView makeViewWithIdentifier:@"serviceView" owner:self];
-            view.textField.stringValue = service.displayText;
             return view;
         }
     }
@@ -173,29 +166,41 @@
 -(void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors
 {
     NSArray * newDescriptors = [tableView sortDescriptors];
-    if (tableView == self.servicesListTable) {
-        [self.services sortUsingDescriptors:newDescriptors];
-        [self.servicesListTable reloadData];
-    } else {
-        [self.saleItemsArray sortUsingDescriptors:newDescriptors];
-        [self.saleItemsTable reloadData];
-    }
+    [self.saleItemsArray sortUsingDescriptors:newDescriptors];
+    [self.saleItemsTable reloadData];
+
 }
 #pragma mark - NSTableViewDelegate
 -(void)tableViewSelectionDidChange:(NSNotification *)notification
 {
-    if (notification.object == self.servicesListTable) {
-        [self serviceListItemWasSelected];
-    } else {
-        [self saleItemWasSelected];
-    }
-    [self.addSelectedServiceButton setEnabled:(self.servicesListTable.selectedRow >=0) && self.enabled];
+    [self saleItemWasSelected];
     [self.removeSaleItemButton setEnabled:(self.saleItemsTable.selectedRow >=0) && self.enabled];
 }
 -(BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row
 {
     return NO;
 }
+#pragma mark - AMCServiceCategoryPopupControllerDelegate
+-(void)serviceChanged:(Service *)service
+{
+    if (service) {
+        [self.servicesBox setHidden:NO];
+        self.nameOfService.stringValue = service.displayText;
+        self.nominalPriceOrPriceRange.stringValue = [self priceRangeStringFromMinimumPrice:service.minimumCharge maximumPrice:service.maximumCharge nominalCharge:service.nominalCharge];
+        if (service.hairLength.integerValue == 0) {
+            self.hairLength.stringValue = @"Not applicable";
+        } else {
+            self.hairLength.stringValue = service.hairLengthDescription;
+        }
+        [self.deluxeImage setHidden:!service.deluxe.boolValue];
+        [self.addSelectedServiceButton setEnabled:self.enabled];
+        self.servicesBox.hidden = NO;
+    } else {
+        [self.addSelectedServiceButton setEnabled:NO];
+        self.servicesBox.hidden = YES;
+    }
+}
+
 #pragma mark - NSViewController
 -(NSView *)view
 {
@@ -227,7 +232,6 @@
     [self.saleItemsTable reloadData];
     [self.categoryPopup selectItemAtIndex:0];
     [self categoryChanged:self];
-    [self.addSelectedServiceButton setEnabled:NO];
     [self.removeSaleItemButton setEnabled:NO];
     [self.discountPopup setEnabled:NO];
     [self.nameOfService setEditable:NO];
@@ -251,11 +255,10 @@
 #pragma mark - WizardStepViewDelegate
 -(void)viewRevisited:(NSView *)view
 {
-    NSInteger row = self.servicesListTable.selectedRow;
-    if (row < 0) {
+    Service * service = self.serviceCategoryPopupController.selectedService;
+    if (!service) {
         [self.deluxeImage setHidden:YES];
     } else {
-        Service * service = self.services[row];
         [self.deluxeImage setHidden:!service.deluxe.boolValue];
     }
     [self.delegate wizardStep:self isValid:self.isValid];
@@ -279,27 +282,6 @@
     [self saleItemWasSelected];
 }
 - (IBAction)categoryChanged:(id)sender {
-    NSManagedObjectContext * moc = self.documentMoc;
-    NSEntityDescription * entityDescription = [NSEntityDescription entityForName:@"Service" inManagedObjectContext:moc];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate;
-    if (self.categoryPopup.indexOfSelectedItem == 0) {
-        predicate = nil;
-    } else {
-        ServiceCategory * category = self.categories[self.categoryPopup.indexOfSelectedItem-1];
-        predicate = [NSPredicate predicateWithFormat:@"serviceCategory = %@",category];
-    }
-    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
-    [request setEntity:entityDescription];
-    [request setPredicate:predicate];
-    [request setSortDescriptors:@[sort]];
-    NSError *error = nil;
-    self.services = [[moc executeFetchRequest:request error:&error] mutableCopy];
-    
-    if (!self.services) {
-        self.services = [@[] mutableCopy];
-    }
-    [self.servicesListTable reloadData];
     [self.servicesListTable deselectAll:self];
     [self.servicesBox setHidden:YES];
 }
@@ -320,10 +302,9 @@
     [self updateTotal];
 }
 - (IBAction)addSaleItemFromSelectedService:(id)sender {
-    NSInteger row = self.servicesListTable.selectedRow;
     NSButton * button = sender;
-    if (row >= 0) {
-        Service * service = self.services[row];
+    Service * service = self.serviceCategoryPopupController.selectedService;
+    if (service) {
         self.employeeForServiceViewController.service = service;
         [self.employeeForServiceViewController prepareForDisplayWithSalon:self.salonDocument];
         [self presentViewController:self.employeeForServiceViewController asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorApplicationDefined];
@@ -344,7 +325,6 @@
     Sale * sale = [self.delegate wizardStepRequiresSale:self];
     SaleItem * saleItem = [self newSaleItem];
     saleItem.service = service;
-//    NSAssert(employee, @"Employee is set to nil");
     saleItem.performedBy = employee;
     [sale addSaleItemObject:saleItem];
     [self.saleItemsArray addObject:saleItem];
@@ -417,26 +397,6 @@
     }
     return _saleItemsArray;
 }
--(void)serviceListItemWasSelected
-{
-    NSInteger row = self.servicesListTable.selectedRow;
-    if (row >= 0) {
-        [self.servicesBox setHidden:NO];
-        Service * service = self.services[row];
-    
-        self.nameOfService.stringValue = service.displayText;
-        self.nominalPriceOrPriceRange.stringValue = [self priceRangeStringFromMinimumPrice:service.minimumCharge maximumPrice:service.maximumCharge nominalCharge:service.nominalCharge];
-        if (service.hairLength.integerValue == 0) {
-            self.hairLength.stringValue = @"Not applicable";
-        } else {
-            self.hairLength.stringValue = service.hairLengthDescription;
-        }
-        [self.deluxeImage setHidden:!service.deluxe.boolValue];
-        [self.addSelectedServiceButton setEnabled:self.enabled];
-    } else {
-        [self.addSelectedServiceButton setEnabled:NO];
-    }
-}
 -(void)saleItemWasSelected
 {
     SaleItem * selectedSaleItem = [self selectedSaleItem];
@@ -488,7 +448,6 @@
 {
     self.minimumPrice.stringValue = @"£0";
     self.maximumPrice.stringValue = @"£0";
-    self.nominalPriceOrPriceRange.stringValue = @"£0";
     self.chargePriceBeforeDiscount.stringValue = @"";
     self.chargePriceAfterDiscount.stringValue = @"£0.00";
     [self.discountPopup selectItemAtIndex:0];

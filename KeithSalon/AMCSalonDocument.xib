@@ -232,7 +232,8 @@
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="8st-gg-pmT"/>
+                    <toolbarItem reference="7oS-Ii-ebJ"/>
+                    <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="amc-Kh-hfA"/>
                     <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="IZp-bX-nji"/>
@@ -248,7 +249,7 @@
                     <toolbarItem reference="7oS-Ii-ebJ"/>
                 </defaultToolbarItems>
             </toolbar>
-            <point key="canvasLocation" x="-566.5" y="-2112"/>
+            <point key="canvasLocation" x="-397.5" y="-2102"/>
         </window>
         <customObject id="WNJ-WT-lCg" customClass="AMCServicesViewController"/>
         <customObject id="TVM-zP-UFW" userLabel="Service Categories View Controller" customClass="AMCServiceCategoriesViewController"/>

@@ -19,8 +19,7 @@
                 <outlet property="priceTotalLabel" destination="BMQ-Bq-ewi" id="T9Q-sE-DQc"/>
                 <outlet property="quickQuoteButton" destination="8fW-61-S0I" id="Ctp-FJ-FMW"/>
                 <outlet property="removeServiceButton" destination="HOC-Ff-37i" id="zW9-ya-q1a"/>
-                <outlet property="serviceCategoryPopup" destination="ypa-9A-KdN" id="PG7-N5-nym"/>
-                <outlet property="servicesAvailableTable" destination="rjM-fv-waV" id="uY6-3Y-wba"/>
+                <outlet property="serviceCategoryPopupController" destination="K4G-F2-Yte" id="dKF-EY-xhk"/>
                 <outlet property="setAppointmentTimeButton" destination="3mJ-LT-5HN" id="jyw-9g-6dI"/>
                 <outlet property="setDateTimeButton" destination="8yO-Zx-jY0" id="GU6-pu-OoQ"/>
                 <outlet property="showBusyView" destination="uAh-v0-VDW" id="ACO-c8-bgX"/>
@@ -35,8 +34,8 @@
             <rect key="frame" x="0.0" y="0.0" width="1067" height="593"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <datePicker verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="29W-Hr-6zy">
-                    <rect key="frame" x="741" y="445" width="139" height="148"/>
+                <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="29W-Hr-6zy">
+                    <rect key="frame" x="739" y="445" width="139" height="148"/>
                     <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerStyle="clockAndCalendar" id="f1j-1Y-IbR">
                         <font key="font" metaFont="system" size="16"/>
                         <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
@@ -120,8 +119,8 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YSZ-0d-lI1">
-                    <rect key="frame" x="92" y="571" width="387" height="22"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YSZ-0d-lI1">
+                    <rect key="frame" x="91" y="571" width="387" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="383" id="4y4-He-1F5"/>
                         <constraint firstAttribute="height" constant="22" id="UVy-gv-jbx"/>
@@ -132,8 +131,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xCW-or-vl5">
-                    <rect key="frame" x="616" y="572" width="119" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xCW-or-vl5">
+                    <rect key="frame" x="616" y="572" width="117" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Appointment date:" id="tub-hq-WQH">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -176,7 +175,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView identifier="serviceName" id="FKr-a0-GKF">
+                                            <tableCellView identifier="serviceView" id="FKr-a0-GKF">
                                                 <rect key="frame" x="1" y="1" width="531" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
@@ -196,10 +195,6 @@
                                         </prototypeCellViews>
                                     </tableColumn>
                                 </tableColumns>
-                                <connections>
-                                    <outlet property="dataSource" destination="-2" id="tON-42-k17"/>
-                                    <outlet property="delegate" destination="-2" id="a3G-sT-yIb"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -344,22 +339,22 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ypa-9A-KdN">
-                    <rect key="frame" x="230" y="519" width="339" height="26"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Kp0-yf-BA0" id="0eS-wl-nch">
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ypa-9A-KdN">
+                    <rect key="frame" x="363" y="519" width="206" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="Jku-AI-6mq"/>
+                    </constraints>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Kp0-yf-BA0" id="0eS-wl-nch">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="oaV-yx-Qia">
                             <items>
-                                <menuItem title="Item 1" state="on" id="Kp0-yf-BA0"/>
+                                <menuItem title="Item 1" state="on" hidden="YES" id="Kp0-yf-BA0"/>
                                 <menuItem title="Item 2" id="IBK-vs-XDG"/>
                                 <menuItem title="Item 3" id="NYg-JG-pp8"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
-                    <connections>
-                        <action selector="serviceCategoryChanged:" target="-2" id="R5V-Oi-QjA"/>
-                    </connections>
                 </popUpButton>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gXj-NB-qaD">
                     <rect key="frame" x="20" y="213" width="32" height="32"/>
@@ -375,24 +370,24 @@
                         <action selector="addServiceButtonClicked:" target="-2" id="iIG-nH-Zpm"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nIq-4X-6cz">
-                    <rect key="frame" x="18" y="525" width="208" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Choose services for appointment" id="mLP-cI-WTg">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nIq-4X-6cz">
+                    <rect key="frame" x="18" y="525" width="342" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Services" id="mLP-cI-WTg">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mv1-ob-Nhq">
-                    <rect key="frame" x="18" y="179" width="243" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mv1-ob-Nhq">
+                    <rect key="frame" x="18" y="179" width="238" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Booked services and assigned stylists " id="7LS-Ml-3bp">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3mJ-LT-5HN">
-                    <rect key="frame" x="764" y="23" width="173" height="32"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3mJ-LT-5HN">
+                    <rect key="frame" x="764" y="23" width="171" height="32"/>
                     <buttonCell key="cell" type="push" title="Set appointment time" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BC3-Ru-xiJ">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -401,24 +396,24 @@
                         <action selector="setAppointmentTimeButtonClicked:" target="-2" id="xUh-cU-b3h"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xqb-ZC-wiI">
-                    <rect key="frame" x="20" y="572" width="68" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xqb-ZC-wiI">
+                    <rect key="frame" x="20" y="572" width="67" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Time now:" id="PIp-gf-fXc">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BMQ-Bq-ewi">
-                    <rect key="frame" x="82" y="32" width="38" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BMQ-Bq-ewi">
+                    <rect key="frame" x="82" y="32" width="37" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="RPb-H0-e7x">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8fW-61-S0I">
-                    <rect key="frame" x="129" y="28" width="24" height="24"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="8fW-61-S0I">
+                    <rect key="frame" x="128" y="28" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="UHg-YQ-4I7"/>
                         <constraint firstAttribute="width" constant="24" id="xQE-ui-C5P"/>
@@ -431,8 +426,8 @@
                         <action selector="quickQuoteButtonClicked:" target="-2" id="9Dh-er-FKg"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aYQ-So-0lh">
-                    <rect key="frame" x="616" y="531" width="45" height="27"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aYQ-So-0lh">
+                    <rect key="frame" x="616" y="531" width="44" height="27"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="27" id="ahh-1Y-aKa"/>
                     </constraints>
@@ -442,8 +437,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qDm-GF-I9q">
-                    <rect key="frame" x="616" y="509" width="45" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qDm-GF-I9q">
+                    <rect key="frame" x="616" y="509" width="44" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="6nf-OP-F8l"/>
                     </constraints>
@@ -467,8 +462,8 @@
                         <action selector="showBusyButtonClicked:" target="-2" id="TEU-pu-GbV"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bTk-8s-hFS">
-                    <rect key="frame" x="453" y="32" width="43" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bTk-8s-hFS">
+                    <rect key="frame" x="453" y="32" width="44" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="¤ 0.00" id="EHJ-si-2Ae">
                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="wrx-7h-DJ8">
                             <real key="minimum" value="0.0"/>
@@ -506,8 +501,8 @@
                         <action selector="showBookingViewButtonClicked:" target="-2" id="aTi-pd-QZu"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pTp-1M-5LH">
-                    <rect key="frame" x="496" y="23" width="76" height="32"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pTp-1M-5LH">
+                    <rect key="frame" x="497" y="23" width="75" height="32"/>
                     <buttonCell key="cell" type="push" title="Edit..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vso-h0-meo">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -516,8 +511,8 @@
                         <action selector="advancePaymentButtonClicked:" target="-2" id="ncH-x0-ZwC"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QQY-8U-Lwx">
-                    <rect key="frame" x="326" y="32" width="119" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QQY-8U-Lwx">
+                    <rect key="frame" x="329" y="32" width="116" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Advance payment:" id="PwB-gX-QEh">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -596,9 +591,16 @@
                 <constraint firstItem="QQY-8U-Lwx" firstAttribute="centerY" secondItem="bTk-8s-hFS" secondAttribute="centerY" id="vSN-KI-B7J"/>
                 <constraint firstItem="xCW-or-vl5" firstAttribute="baseline" secondItem="Xqb-ZC-wiI" secondAttribute="baseline" id="yZA-xn-mU5"/>
             </constraints>
-            <point key="canvasLocation" x="213.5" y="-228.5"/>
+            <point key="canvasLocation" x="-49.5" y="-356.5"/>
         </customView>
         <viewController id="LzK-jX-GrI" customClass="AMCAdvancePayment"/>
+        <customObject id="K4G-F2-Yte" customClass="AMCServiceCategoryPopupController" customModule="ClaudiaSalon" customModuleProvider="target">
+            <connections>
+                <outlet property="categoryLabel" destination="nIq-4X-6cz" id="IZ9-Gf-1Y4"/>
+                <outlet property="popupButton" destination="ypa-9A-KdN" id="Ot6-l9-nEL"/>
+                <outlet property="servicesTable" destination="rjM-fv-waV" id="YPe-UW-ixc"/>
+            </connections>
+        </customObject>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
@@ -607,6 +609,6 @@
         <image name="NSQuickLookTemplate" width="19" height="12"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
         <image name="NoteIcon" width="48" height="48"/>
-        <image name="TimeLineIcon" width="48" height="48"/>
+        <image name="TimeLineIcon" width="32" height="32"/>
     </resources>
 </document>

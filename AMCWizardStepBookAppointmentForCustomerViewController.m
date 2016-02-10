@@ -24,24 +24,22 @@
 #import "AMCEmployeeForServiceSelector.h"
 #import "AMCAdvancePayment.h"
 #import "Payment+Methods.h"
+#import "ClaudiaSalon-swift.h"
 
-@interface AMCWizardStepBookAppointmentForCustomerViewController () <NSTableViewDataSource, NSTableViewDelegate, AMCJobsColumnViewDelegate>
+@interface AMCWizardStepBookAppointmentForCustomerViewController () <NSTableViewDataSource, NSTableViewDelegate, AMCJobsColumnViewDelegate, AMCServiceCategoryPopupControllerDelegate>
 {
-    NSMutableArray * _categories;
-    NSMutableArray * _availableServices;
     NSMutableArray * _chosenServices;
     AMCEmployeeForServiceSelector * _staffForServiceViewController;
     AMCQuickQuoteViewController * _quickQuoteViewController;
 }
 @property (readonly) Appointment * appointment;
-@property NSMutableArray * categories;
-@property NSMutableArray * availableServices;
 @property NSMutableArray * chosenServices;
 @property NSTimer * timer;
 @property NSArray * appointmentsOnSelectedDay;
 @property (readonly) AMCEmployeeForServiceSelector * staffForServiceViewController;
 @property (readonly) AMCQuickQuoteViewController * quickQuoteViewController;
 @property (strong) IBOutlet AMCAdvancePayment *advancePaymentViewController;
+@property (strong) IBOutlet AMCServiceCategoryPopupController *serviceCategoryPopupController;
 
 @end
 
@@ -57,6 +55,11 @@
 }
 -(void)dealloc {
     [self.timer invalidate];
+}
+
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    self.serviceCategoryPopupController.delegate = self;
 }
 #pragma mark - Overrides we must implement here
 -(NSString *)nibName {
@@ -75,8 +78,6 @@
 -(void)resetToObject {
     Appointment * appointment = self.appointment;
     if (appointment) {
-        [self loadServicesAvailableInCategory];
-        [self.servicesAvailableTable reloadData];
         [self loadSaleItems];
         [self.chosenServicesTable reloadData];
         if ([self.appointment.appointmentDate isEqualToDate:[NSDate distantPast]]) {
@@ -203,14 +204,6 @@
         return nil;
     }
 }
--(Service*)selectedService {
-    NSInteger selectedRow = self.servicesAvailableTable.selectedRow;
-    if (selectedRow >= 0) {
-        return self.availableServices[selectedRow];
-    } else {
-        return nil;
-    }
-}
 -(NSString*)stringForDate:(NSDate*)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -219,55 +212,7 @@
 }
 -(void)loadCategoryPopup
 {
-    NSManagedObjectContext * moc = self.documentMoc;
-    NSEntityDescription * entityDescription = [NSEntityDescription entityForName:@"ServiceCategory" inManagedObjectContext:moc];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:entityDescription];
-    
-    // Set predicate and sort orderings...
-    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"selectable == %@",@(YES)];
-    [request setPredicate:predicate];
-    [request setSortDescriptors:@[sort]];
-    NSError *error = nil;
-    self.categories = [[moc executeFetchRequest:request error:&error] mutableCopy];
-    
-    if (!self.categories) {
-        self.categories = [@[] mutableCopy];
-    }
-    [self.serviceCategoryPopup removeAllItems];
-    [self.serviceCategoryPopup insertItemWithTitle:@"All Categories" atIndex:0];
-    NSUInteger i = 1;
-    for (ServiceCategory * category in self.categories) {
-        NSString * title = category.name;
-        [self.serviceCategoryPopup insertItemWithTitle:title atIndex:i];
-        i++;
-    }
-    [self serviceCategoryChanged:self.serviceCategoryPopup];
-}
-- (void)loadServicesAvailableInCategory {
-    NSManagedObjectContext * moc = self.documentMoc;
-    NSEntityDescription * entityDescription = [NSEntityDescription entityForName:@"Service" inManagedObjectContext:moc];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate;
-    if (self.serviceCategoryPopup.indexOfSelectedItem == 0) {
-        predicate = nil;
-    } else {
-        ServiceCategory * category = self.categories[self.serviceCategoryPopup.indexOfSelectedItem-1];
-        predicate = [NSPredicate predicateWithFormat:@"serviceCategory = %@",category];
-    }
-    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
-    [request setEntity:entityDescription];
-    [request setPredicate:predicate];
-    [request setSortDescriptors:@[sort]];
-    NSError *error = nil;
-    self.availableServices = [[moc executeFetchRequest:request error:&error] mutableCopy];
-    
-    if (!self.availableServices) {
-        self.availableServices = [NSMutableArray array];
-    }
-    [self.servicesAvailableTable reloadData];
-    [self.servicesAvailableTable deselectAll:self];
+    [self.serviceCategoryPopupController refreshListWithRootCategory:self.salonDocument.salon.rootServiceCategory];
 }
 - (void)loadSaleItems {
     self.chosenServices = [[self.appointment.sale.saleItem allObjects] mutableCopy];
@@ -324,11 +269,12 @@
     [self.view.window makeFirstResponder:self.chosenServicesTable];
     [[self selectedSaleItem] setPerformedBy:stylist];
 }
+#pragma mark - AMCServiceCategoryPopupControllerDelegate
+-(void)serviceChanged:(Service *)service {
+    [self enableAddRemoveServiceButtons];
+}
 #pragma mark - NSTableViewDataSource
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    if (tableView == self.servicesAvailableTable) {
-        return self.availableServices.count;
-    }
     if (tableView == self.chosenServicesTable) {
         return self.chosenServices.count;
     }
@@ -338,32 +284,14 @@
     return 0;
 }
 -(void)enableAddRemoveServiceButtons {
-    [self.addServiceButton setEnabled:(self.servicesAvailableTable.selectedRow >=0)];
+    [self.addServiceButton setEnabled:self.serviceCategoryPopupController.hasSelectedService];
     [self.removeServiceButton setEnabled:(self.chosenServicesTable.selectedRow >=0)];
 }
 -(void)enableSetAppointmentTimeButton {
     [self.setAppointmentTimeButton setEnabled:(self.appointmentSlotsTable.selectedRow>=0)];
 }
 #pragma mark - NSTableViewDelegate
--(id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    if (tableView == self.servicesAvailableTable) {
-        Service * service = self.availableServices[row];
-        if ([tableColumn.identifier isEqualToString:@"serviceName"]) {
-            return service.name;
-        }
-    }
-    return nil;
-}
 -(NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    if (tableView == self.servicesAvailableTable) {
-        Service * service = self.availableServices[row];
-        if ([tableColumn.identifier isEqualToString:@"serviceName"]) {
-            NSTableCellView * view;
-            view = [tableView makeViewWithIdentifier:@"serviceName" owner:self];
-            view.textField.stringValue = service.name;
-            return view;
-        }
-    }
     if (tableView == self.chosenServicesTable) {
         SaleItem * saleItem = self.chosenServices[row];
         if ([tableColumn.identifier isEqualToString:@"serviceName"]) {
@@ -487,9 +415,6 @@
     return YES;
 }
 #pragma mark - Actions
-- (IBAction)serviceCategoryChanged:(id)sender {
-    [self loadServicesAvailableInCategory];
-}
 - (IBAction)setDateTimeToNowButtonClicked:(id)sender {
     self.datePicker.dateValue = [NSDate date];
     [self datePickerChanged:self];
@@ -506,7 +431,7 @@
 }
 - (IBAction)addServiceButtonClicked:(id)sender {
     NSButton * button = sender;
-    Service * service =self.selectedService;
+    Service * service = self.serviceCategoryPopupController.selectedService;
     AMCEmployeeForServiceSelector * vc = self.staffForServiceViewController;
     vc.service = service;
     [vc prepareForDisplayWithSalon:self.salonDocument];
