@@ -29,9 +29,9 @@ class BQCoredataExportController {
     init(parentManagedObjectContext:NSManagedObjectContext, salon:Salon, startImmediately:Bool) {
         self.salon = salon
         self.parentManagedObjectContext = parentManagedObjectContext
-        exportQueue = NSOperationQueue()
-        exportQueue.name = namePrefix + "Queue"
-        deletionRequestList = BQDeletionRequestList(parentManagedObjectContext: self.parentManagedObjectContext)
+        self.exportQueue = NSOperationQueue()
+        self.exportQueue.name = namePrefix + "Queue"
+        self.deletionRequestList = BQDeletionRequestList(parentManagedObjectContext: self.parentManagedObjectContext)
                 
         if startImmediately {
             self.startExportIterations()
@@ -90,6 +90,7 @@ class BQExportModifiedCoredataOperation : NSOperation {
     let salon:Salon
     var publicDatabase:CKDatabase!
     let activeOperationsCounter: AMCThreadSafeCounter
+    var exportedRecords = Set<String>()
     
     init(parentManagedObjectContext:NSManagedObjectContext, salon:Salon, activeOperationsCounter:AMCThreadSafeCounter) {
         self.parentManagedObjectContext = parentManagedObjectContext
@@ -106,15 +107,13 @@ class BQExportModifiedCoredataOperation : NSOperation {
         let privateManagedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         privateManagedObjectContext.parentContext = parentManagedObjectContext
         publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
-
         var recordsToSave = [CKRecord]()
         
         // Export the salon itself if required
         if salon.bqNeedsCoreDataExport?.boolValue == true {
             let icloudSalon = ICloudSalon(coredataSalon: salon)
             let cloudRecord = icloudSalon.makeCloudKitRecord()
-            self.saveModifiedRecordsToCloud([cloudRecord],privateManagedContext: privateManagedObjectContext)
-            return
+            recordsToSave.append(cloudRecord)
         }
         
         // Gather all modifed customers
@@ -188,15 +187,11 @@ class BQExportModifiedCoredataOperation : NSOperation {
         
         // Now save the modified records
         if self.cancelled { return }
-        self.saveModifiedRecordsToCloud(recordsToSave,privateManagedContext: privateManagedObjectContext)
-    }
-    
-    // MARK:- Save records to cloud
-    private func saveModifiedRecordsToCloud(saveRecords:[CKRecord]?,privateManagedContext:NSManagedObjectContext) {
-        guard let saveRecords = saveRecords where saveRecords.count > 0 else {
+
+        if recordsToSave.count == 0 {
             return
         }
-        let saveRecordsOperation = CKModifyRecordsOperation(recordsToSave: saveRecords, recordIDsToDelete: nil)
+        let saveRecordsOperation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
         saveRecordsOperation.savePolicy = .ChangedKeys
         
         // set the per-record block
@@ -216,10 +211,9 @@ class BQExportModifiedCoredataOperation : NSOperation {
                 }
                 return
             }
-            let managedObject = privateManagedContext.objectForIDString(coredataID as! String)
-            managedObject.markAsExported()
+            self.exportedRecords.insert(coredataID as! String)
         }
-        
+
         // Set the records completion block
         saveRecordsOperation.modifyRecordsCompletionBlock = {(saveRecords, deleteRecords, error)-> Void in
             if let error = error {
@@ -230,11 +224,6 @@ class BQExportModifiedCoredataOperation : NSOperation {
                     break
                 case error.code == CKErrorCode.PartialFailure.rawValue:
                     print(error)
-                    do {
-                        try privateManagedContext.save()
-                    } catch {
-                        fatalError("Failure to save context: \(error)")
-                    }
                 case error.userInfo["CKErrorRetryAfterKey"] != nil:
                     // Transient failure - can retry this operation after a suitable delay
                     let retryAfter = error.userInfo["CKErrorRetryAfterKey"]!.doubleValue

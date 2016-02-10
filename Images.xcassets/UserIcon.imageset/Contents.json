@@ -2,18 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "User-32.png"
+      "filename" : "Office-Girl-icon.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "User-64.png"
+      "filename" : "Office-Girl-icon-1.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "User-128.png"
+      "filename" : "User-128.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

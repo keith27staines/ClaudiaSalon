@@ -28,6 +28,7 @@
                 <outlet property="removeSaleItemButton" destination="5EF-1j-APn" id="oxH-6Z-L5M"/>
                 <outlet property="saleItemsTable" destination="wOH-5g-PX7" id="Hvr-gc-67j"/>
                 <outlet property="selectedSaleItemBox" destination="Tmh-Wz-j3r" id="FMO-jN-ixA"/>
+                <outlet property="serviceCategoryPopupController" destination="b5D-Zg-cld" id="hTt-Qe-TXN"/>
                 <outlet property="servicesListTable" destination="CaO-iE-lmQ" id="ewG-du-Cpn"/>
                 <outlet property="totalLabel" destination="Dyd-ln-2d1" id="Qhh-3S-7qa"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
@@ -455,13 +456,13 @@
                     </scroller>
                 </scrollView>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jIR-78-TCG">
-                    <rect key="frame" x="78" y="533" width="341" height="26"/>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="JJR-bL-VM0" id="bfd-Fl-JKs">
+                    <rect key="frame" x="77" y="533" width="342" height="26"/>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="JJR-bL-VM0" id="bfd-Fl-JKs">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="cWy-UB-DuK">
                             <items>
-                                <menuItem title="Item 1" state="on" id="JJR-bL-VM0"/>
+                                <menuItem title="Item 1" state="on" hidden="YES" id="JJR-bL-VM0"/>
                                 <menuItem title="Item 2" id="yOv-B9-4v7"/>
                                 <menuItem title="Item 3" id="IRF-G1-SPa"/>
                             </items>
@@ -483,6 +484,7 @@
                     </buttonCell>
                     <connections>
                         <action selector="addSaleItemFromSelectedService:" target="-2" id="k8p-Tx-kJB"/>
+                        <binding destination="b5D-Zg-cld" name="enabled" keyPath="self.hasSelection" id="ZeP-P2-5Qt"/>
                     </connections>
                 </button>
                 <box autoresizesSubviews="NO" title="Service Details" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="nzy-U8-rit">
@@ -630,9 +632,16 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="8Z3-7P-pY2"/>
             </connections>
-            <point key="canvasLocation" x="830" y="34.5"/>
+            <point key="canvasLocation" x="524" y="-150.5"/>
         </customView>
         <viewController id="ZUq-mE-Bnj" customClass="AMCQuickQuoteViewController"/>
+        <customObject id="b5D-Zg-cld" customClass="AMCServiceCategoryPopupController" customModule="ClaudiaSalon" customModuleProvider="target">
+            <connections>
+                <outlet property="popupButton" destination="jIR-78-TCG" id="pfB-M3-xsA"/>
+                <outlet property="servicesTable" destination="CaO-iE-lmQ" id="osc-BQ-qZC"/>
+            </connections>
+        </customObject>
+        <userDefaultsController representsSharedInstance="YES" id="kPC-m9-1F0"/>
     </objects>
     <resources>
         <image name="GoldStarIcon" width="102.40000152587891" height="102.40000152587891"/>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E33e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCSalonDocument">
@@ -60,7 +61,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="1389" height="820"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <tabView identifier="appointments" appearanceType="aqua" translatesAutoresizingMaskIntoConstraints="NO" id="dts-cm-2bm">
                         <rect key="frame" x="-7" y="-10" width="1403" height="824"/>
@@ -136,9 +137,9 @@
                         <button key="view" id="hBb-ps-OFU">
                             <rect key="frame" x="15" y="14" width="48" height="48"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="TimeLineIcon" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="IHs-40-di8">
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="TimeLineIcon" imagePosition="only" alignment="center" controlSize="small" imageScaling="proportionallyDown" inset="2" id="IHs-40-di8">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                         </button>
                         <connections>
@@ -152,9 +153,9 @@
                         <button key="view" id="vTq-FA-tXz">
                             <rect key="frame" x="4" y="14" width="48" height="48"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="CoinsIcon" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="k4W-jo-suy">
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="CoinsIcon" imagePosition="overlaps" alignment="center" controlSize="small" imageScaling="proportionallyDown" inset="2" id="k4W-jo-suy">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                         </button>
                         <connections>
@@ -165,14 +166,14 @@
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="7oS-Ii-ebJ"/>
                     <toolbarItem implicitItemIdentifier="4EB76DBC-3FE8-48FB-98A4-B69DADC1C79E" label="Pay Salaries" paletteLabel="Pay Salaries" image="PaySalary" id="4ku-0m-mPp">
                         <nil key="toolTip"/>
-                        <size key="minSize" width="48" height="48"/>
+                        <size key="minSize" width="32" height="32"/>
                         <size key="maxSize" width="48" height="48"/>
                         <button key="view" id="AMH-O3-exX">
                             <rect key="frame" x="12" y="14" width="48" height="48"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PaySalary" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="npS-KV-Pb2">
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="PaySalary" imagePosition="only" alignment="center" controlSize="small" imageScaling="proportionallyUpOrDown" inset="2" id="npS-KV-Pb2">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
+                                <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                         </button>
                         <connections>
@@ -231,14 +232,15 @@
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="7oS-Ii-ebJ"/>
+                    <toolbarItem reference="8st-gg-pmT"/>
                     <toolbarItem reference="amc-Kh-hfA"/>
                     <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="IZp-bX-nji"/>
+                    <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="4ku-0m-mPp"/>
                     <toolbarItem reference="7oS-Ii-ebJ"/>
-                    <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="FIF-Al-kU4"/>
+                    <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="Jka-uK-Hc8"/>
                     <toolbarItem reference="8st-gg-pmT"/>
                     <toolbarItem reference="Zed-Ij-tDH"/>
@@ -288,8 +290,8 @@
         <image name="BarChart" width="32" height="32"/>
         <image name="CoinsIcon" width="48" height="48"/>
         <image name="NSFolder" width="32" height="32"/>
-        <image name="PaySalary" width="128" height="128"/>
-        <image name="TimeLineIcon" width="48" height="48"/>
-        <image name="UserIcon" width="24" height="24"/>
+        <image name="PaySalary" width="32" height="32"/>
+        <image name="TimeLineIcon" width="32" height="32"/>
+        <image name="UserIcon" width="32" height="32"/>
     </resources>
 </document>

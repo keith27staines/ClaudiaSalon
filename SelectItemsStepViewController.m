@@ -19,7 +19,7 @@
 #import "AMCJobsColumnViewController.h"
 #import "AMCJobsColumnView.h"
 #import "AMCQuickQuoteViewController.h"
-
+#import "ClaudiaSalon-swift.h"
 @interface SelectItemsStepViewController() <AMCJobsColumnViewDelegate>
 {
     NSMutableArray * _services;
@@ -27,6 +27,7 @@
     NSMutableArray * _saleItemsArray;
     AMCEmployeeForServiceSelector * _employeeForServiceViewController;
 }
+@property (strong) IBOutlet AMCServiceCategoryPopupController *serviceCategoryPopupController;
 @property NSMutableArray * categories;
 @property NSMutableArray * services;
 @property (weak,readonly) Sale * sale;
@@ -95,31 +96,8 @@
 }
 -(void)loadCategoryPopup
 {
-    NSManagedObjectContext * moc = self.documentMoc;
-    NSEntityDescription * entityDescription = [NSEntityDescription entityForName:@"ServiceCategory" inManagedObjectContext:moc];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:entityDescription];
-    
-    // Set predicate and sort orderings...
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"selectable == %@",@(YES)];
-    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    [request setSortDescriptors:@[sort]];
-    [request setPredicate:predicate];
-    NSError *error = nil;
-    self.categories = [[moc executeFetchRequest:request error:&error] mutableCopy];
-
-    if (!self.categories) {
-        self.categories = [@[] mutableCopy];
-    }
-    [self.categoryPopup removeAllItems];
-    [self.categoryPopup insertItemWithTitle:@"All Categories" atIndex:0];
-    NSUInteger i = 1;
-    for (ServiceCategory * category in self.categories) {
-        NSString * title = category.name;
-        [self.categoryPopup insertItemWithTitle:title atIndex:i];
-        i++;
-    }
-    [self categoryChanged:self.categoryPopup];
+    ServiceCategory * root = self.salonDocument.salon.rootServiceCategory;
+    [self.serviceCategoryPopupController refreshListWithRootCategory:root];
 }
 -(void)loadDiscountPopup
 {

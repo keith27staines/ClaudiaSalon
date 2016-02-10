@@ -135,6 +135,7 @@
 		5381C5E51B2DF22200E99946 /* AMCCashBookRootNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381C5E41B2DF22200E99946 /* AMCCashBookRootNode.m */; };
 		5381C5FC1B308C8500E99946 /* AMCAppointmentViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381C5FA1B308C8500E99946 /* AMCAppointmentViewer.m */; };
 		5381C5FD1B308C8500E99946 /* AMCAppointmentViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5381C5FB1B308C8500E99946 /* AMCAppointmentViewer.xib */; };
+		53877F591C6B283E009314A6 /* AMCServiceCategoryPopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53877F581C6B283E009314A6 /* AMCServiceCategoryPopupController.swift */; };
 		5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */; };
 		5393EA321AD26100009B336C /* AMCBankStatementReconciliationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */; };
 		5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5393EA341AD2CBE7009B336C /* AMCStatementParser.m */; };
@@ -577,6 +578,7 @@
 		5381C5FA1B308C8500E99946 /* AMCAppointmentViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAppointmentViewer.m; sourceTree = "<group>"; };
 		5381C5FB1B308C8500E99946 /* AMCAppointmentViewer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAppointmentViewer.xib; sourceTree = "<group>"; };
 		5382E8DD1B033F5E00B65C75 /* ClaudiasSalon 10.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 10.xcdatamodel"; sourceTree = "<group>"; };
+		53877F581C6B283E009314A6 /* AMCServiceCategoryPopupController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMCServiceCategoryPopupController.swift; sourceTree = "<group>"; };
 		5393EA2E1AD26100009B336C /* AMCBankStatementReconciliationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCBankStatementReconciliationViewController.h; sourceTree = "<group>"; };
 		5393EA2F1AD26100009B336C /* AMCBankStatementReconciliationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCBankStatementReconciliationViewController.m; sourceTree = "<group>"; };
 		5393EA301AD26100009B336C /* AMCBankStatementReconciliationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCBankStatementReconciliationViewController.xib; sourceTree = "<group>"; };
@@ -2046,6 +2048,7 @@
 				53AE26FA1AA311E800A1B3E4 /* Combined Day and Month Popup View Controller */,
 				534DFF661B0736970077F124 /* AMCRolloverButton.h */,
 				534DFF671B0736970077F124 /* AMCRolloverButton.m */,
+				53877F581C6B283E009314A6 /* AMCServiceCategoryPopupController.swift */,
 			);
 			name = "Helper view controllers";
 			path = ..;
@@ -2601,6 +2604,7 @@
 				536B9E821C56077E00F170EC /* Appointment.m in Sources */,
 				53D69D0E1A9B240C0004CE10 /* AMCShoppingListPrintViewController.m in Sources */,
 				536B9E691C56077E00F170EC /* IntervalDuringDay+CoreDataProperties.m in Sources */,
+				53877F591C6B283E009314A6 /* AMCServiceCategoryPopupController.swift in Sources */,
 				536B9EA11C56077E00F170EC /* Holiday.m in Sources */,
 				53D4FC531B39363D009EBF70 /* BusinessFunction+Methods.m in Sources */,
 				53D69D4F1A9B240C0004CE10 /* EditSaleViewController.m in Sources */,
