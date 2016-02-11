@@ -270,6 +270,9 @@ typedef NS_ENUM(NSUInteger, CreateSaleStep)
 }
 
 #pragma mark - AMCWizardStepDelegate
+-(void)requestMoveToNextStep:(WizardStepViewController *)wizardStep {
+    [self nextStep:wizardStep];
+}
 - (void)wizardStep:(id)wizardStep isValid:(BOOL)validity
 {
     switch (self.currentStep) {

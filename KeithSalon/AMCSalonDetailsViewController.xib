@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCSalonDetailsViewController">
@@ -35,7 +36,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PSJ-m1-Hj1">
-                    <rect key="frame" x="319" y="13" width="73" height="32"/>
+                    <rect key="frame" x="320" y="13" width="72" height="32"/>
                     <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7XF-fo-u3g">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -45,7 +46,7 @@
                     </connections>
                 </button>
                 <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KH9-Pi-70S">
-                    <rect key="frame" x="281" y="325" width="150" height="24"/>
+                    <rect key="frame" x="281" y="325" width="149" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="EtX-o4-h87">
                         <font key="font" metaFont="system"/>
                         <segments>
@@ -84,7 +85,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IaU-Nx-kGb">
-                    <rect key="frame" x="134" y="162" width="514" height="22"/>
+                    <rect key="frame" x="132" y="162" width="516" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Address Line 1" drawsBackground="YES" id="CGl-02-B2c">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -95,7 +96,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ONj-4W-WoR">
-                    <rect key="frame" x="134" y="78" width="96" height="22"/>
+                    <rect key="frame" x="132" y="78" width="96" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="96" id="yna-QE-17o"/>
                     </constraints>
@@ -123,7 +124,7 @@
                     </connections>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lFB-Z6-p76">
-                    <rect key="frame" x="132" y="21" width="185" height="26"/>
+                    <rect key="frame" x="130" y="21" width="185" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="180" id="4Rn-zi-5pB"/>
                     </constraints>
@@ -143,7 +144,7 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Zd-Kl-w2o">
-                    <rect key="frame" x="58" y="27" width="58" height="17"/>
+                    <rect key="frame" x="56" y="27" width="58" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Manager" id="dyE-7V-VDQ">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -151,7 +152,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SwT-os-Fpn">
-                    <rect key="frame" x="134" y="120" width="514" height="22"/>
+                    <rect key="frame" x="132" y="120" width="516" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Address Line 2" drawsBackground="YES" id="qTh-dA-rZS">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -162,7 +163,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZGX-Sk-34n">
-                    <rect key="frame" x="134" y="203" width="514" height="22"/>
+                    <rect key="frame" x="132" y="203" width="516" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="ZHs-5a-9ha"/>
                     </constraints>
@@ -176,7 +177,7 @@
                     </connections>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="43z-7f-4qz">
-                    <rect key="frame" x="18" y="205" width="98" height="17"/>
+                    <rect key="frame" x="18" y="206" width="96" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Salon name" id="bSR-ye-XhZ">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -184,7 +185,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MMR-HO-oe4">
-                    <rect key="frame" x="20" y="164" width="96" height="17"/>
+                    <rect key="frame" x="22" y="165" width="92" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Address Line 1" id="wBn-gb-uy7">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -192,7 +193,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tCE-cz-dES">
-                    <rect key="frame" x="20" y="122" width="96" height="17"/>
+                    <rect key="frame" x="20" y="123" width="94" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Address Line 2" id="bqh-MC-xwo">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -200,7 +201,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="avR-nb-8Us">
-                    <rect key="frame" x="53" y="80" width="63" height="17"/>
+                    <rect key="frame" x="53" y="81" width="61" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Postcode" id="HnY-sa-9EI">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -208,7 +209,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RYQ-t5-No1">
-                    <rect key="frame" x="386" y="80" width="44" height="17"/>
+                    <rect key="frame" x="387" y="81" width="43" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Phone" id="F1V-sq-Qsk">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -216,7 +217,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6YH-0q-bmL">
-                    <rect key="frame" x="348" y="27" width="38" height="17"/>
+                    <rect key="frame" x="349" y="27" width="37" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Email" id="Ixt-ez-2Zx">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -307,7 +308,7 @@
                     </connections>
                 </popUpButton>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9E1-h9-5Qq">
-                    <rect key="frame" x="20" y="208" width="108" height="17"/>
+                    <rect key="frame" x="20" y="208" width="106" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Accounting year:" id="8a0-xf-Ic2">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -315,11 +316,11 @@
                     </textFieldCell>
                 </textField>
                 <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pOK-NZ-4wy">
-                    <rect key="frame" x="20" y="179" width="95" height="27"/>
+                    <rect key="frame" x="20" y="179" width="99" height="27"/>
                     <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="QS1-LV-BwJ">
                         <font key="font" metaFont="system"/>
                         <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
-                            <!--1982-02-12 16:00:00 +0000-->
+                            <!--1982-02-12 08:00:00 -0800-->
                             <timeZone key="timeZone" name="US/Pacific"/>
                         </calendarDate>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -330,7 +331,7 @@
                     </connections>
                 </datePicker>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rs0-EA-WLC">
-                    <rect key="frame" x="484" y="208" width="96" height="17"/>
+                    <rect key="frame" x="484" y="208" width="95" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Week starts on" id="jcX-0F-ixj">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -338,7 +339,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZTr-Ug-4dH">
-                    <rect key="frame" x="221" y="208" width="125" height="17"/>
+                    <rect key="frame" x="225" y="208" width="123" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="First day of trading:" id="eSp-oD-x7i">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -346,11 +347,11 @@
                     </textFieldCell>
                 </textField>
                 <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fp0-ux-IBh">
-                    <rect key="frame" x="223" y="179" width="95" height="27"/>
+                    <rect key="frame" x="227" y="179" width="99" height="27"/>
                     <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="KeJ-fT-pwh">
                         <font key="font" metaFont="system"/>
                         <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
-                            <!--1982-02-12 16:00:00 +0000-->
+                            <!--1982-02-12 08:00:00 -0800-->
                             <timeZone key="timeZone" name="US/Pacific"/>
                         </calendarDate>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -486,11 +487,11 @@
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="29" horizontalPageScroll="10" verticalLineScroll="29" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d28-CX-fAo">
                     <rect key="frame" x="20" y="38" width="631" height="208"/>
                     <clipView key="contentView" id="RFZ-Y1-Gjk">
-                        <rect key="frame" x="1" y="17" width="238" height="117"/>
+                        <rect key="frame" x="1" y="0.0" width="629" height="207"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="27" rowSizeStyle="automatic" headerView="mp8-PC-Sh1" viewBased="YES" id="nVa-dP-SQH">
-                                <rect key="frame" x="0.0" y="0.0" width="629" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="629" height="184"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -576,7 +577,7 @@
                                                 <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="k9l-fd-A22">
                                                     <font key="font" metaFont="system"/>
                                                     <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
-                                                        <!--1982-02-12 16:00:00 +0000-->
+                                                        <!--1982-02-12 08:00:00 -0800-->
                                                         <timeZone key="timeZone" name="US/Pacific"/>
                                                     </calendarDate>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -605,7 +606,7 @@
                                                 <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="fXS-qk-dQA">
                                                     <font key="font" metaFont="system"/>
                                                     <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
-                                                        <!--1982-02-12 16:00:00 +0000-->
+                                                        <!--1982-02-12 08:00:00 -0800-->
                                                         <timeZone key="timeZone" name="US/Pacific"/>
                                                     </calendarDate>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -624,7 +625,7 @@
                         <constraint firstAttribute="height" constant="208" id="C3c-cW-jKx"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="HJz-Rw-pvP">
-                        <rect key="frame" x="1" y="115.96605050563812" width="234" height="16"/>
+                        <rect key="frame" x="1" y="115" width="234" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="6V5-Jz-xfx">
@@ -632,12 +633,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="mp8-PC-Sh1">
-                        <rect key="frame" x="0.0" y="0.0" width="238" height="17"/>
+                        <rect key="frame" x="0.0" y="0.0" width="629" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FAa-WR-OoJ">
-                    <rect key="frame" x="551" y="4" width="106" height="32"/>
+                    <rect key="frame" x="553" y="4" width="104" height="32"/>
                     <buttonCell key="cell" type="push" title="Holidays..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0j8-hn-MeI">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>

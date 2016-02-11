@@ -13,5 +13,5 @@
 
 -(Sale*)wizardStepRequiresSale:(WizardStepViewController *)wizardStep;
 -(void)wizardStep:(WizardStepViewController*)wizardStep isValid:(BOOL)validity;
-
+-(void)requestMoveToNextStep:(WizardStepViewController *)wizardStep;
 @end

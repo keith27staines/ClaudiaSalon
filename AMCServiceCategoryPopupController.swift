@@ -84,8 +84,20 @@ class AMCServiceCategoryPopupController : NSObject, NSTableViewDelegate, NSTable
         self.popupButton.removeAllItems()
         self.popupButton.addItemWithTitle("Select a Category")
         self.popupButton.autoenablesItems = false
-        for subCategory in self.rootServiceCategory.subCategories! {
-            self.popupButton.menu?.addItem(menuItemFromCategory(subCategory))
+        if let rootSubCategories = self.rootServiceCategory.subCategories {
+            var rootSubCategoriesArray = Array(rootSubCategories)
+            rootSubCategoriesArray.sortInPlace() { (category1, category2) -> Bool in
+                if category1.isSystemCategory?.boolValue == true && category2.isSystemCategory?.boolValue == false {
+                    return true
+                }
+                if category1.isSystemCategory?.boolValue == false && category2.isSystemCategory?.boolValue == true {
+                    return false
+                }
+                return (category1.name < category2.name)
+            }
+            for subCategory in self.rootServiceCategory.subCategories! {
+                self.popupButton.menu?.addItem(menuItemFromCategory(subCategory))
+            }
         }
         self.selectedCategory = rootServiceCategory
     }

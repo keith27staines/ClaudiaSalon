@@ -75,6 +75,11 @@
     [self.view.window makeFirstResponder:self.customersTable];
     self.sale.customer = self.salonDocument.anonymousCustomer;
     [self applyEditMode:self.editMode];
+    // Next line trials automatically moving on from select customer screen if the user uses the "select anonymous customer" button.
+    // Result of this simple delay is effective but not smooth. Really need a proper transition
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self.delegate requestMoveToNextStep:self];
+//    });
 }
 
 -(void)applyEditMode:(EditMode)editMode

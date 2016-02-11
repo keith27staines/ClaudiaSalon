@@ -89,7 +89,7 @@
     self.autoShutdownDate = date;
 }
 -(NSDate*)defaultAutoShutdownTimeForDate:(NSDate*)date {
-    return [[date beginningOfDay] dateByAddingTimeInterval:(20 + 0.0/60.0) * 3600];
+    return [[date beginningOfDay] dateByAddingTimeInterval:(23 + 59.0/60.0) * 3600];
 }
 - (void)documentController:(NSDocumentController *)docController  didCloseAll: (BOOL)didCloseAll contextInfo:(void *)contextInfo {
 
