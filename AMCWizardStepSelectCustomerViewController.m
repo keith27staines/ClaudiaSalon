@@ -43,9 +43,9 @@
 }
 -(void)selectCustomer:(Customer*)customer {
     NSInteger row = [self.customers indexOfObject:customer];
-    if (row >= 0 && row != NSNotFound && row != self.customersTable.selectedRow) {
-        [self.customersTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+    if (row >= 0 && row != NSNotFound) {
         [self.view.window makeFirstResponder:self.customersTable];
+        [self.customersTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
     } else {
         [self.customersTable deselectAll:self];
     }
@@ -87,7 +87,6 @@
     self.objectToManage = self.salonDocument.anonymousCustomer;
     [self reloadData];
     [self selectCustomer:self.customer];
-    [self.delegate wizardStepControllerDidChangeState:self];
 }
 
 -(IBAction)createCustomer:(id)sender {

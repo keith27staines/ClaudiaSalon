@@ -64,10 +64,17 @@
     if (row < 0 || row == NSNotFound) {
         return;
     }
+    [self.employeeTable selectRowIndexes:[NSIndexSet indexSetWithIndex:row] byExtendingSelection:NO];
+}
+-(void)tableViewSelectionDidChange:(NSNotification *)notification {
+    NSInteger row = self.employeeTable.selectedRow;
+    if (row < 0 || row == NSNotFound) {
+        return;
+    }
     self.selectedEmployee = self.usersArrayController.arrangedObjects[row];
     [self showGetSelectedUsersPassword];
-
 }
+
 -(void)showGetSelectedUsersPassword {
     if (self.currentViewController != self.passwordViewController) {
         self.titleLabel.stringValue = @"Enter Password";

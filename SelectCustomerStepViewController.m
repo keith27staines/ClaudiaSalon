@@ -72,6 +72,7 @@
     }
 }
 - (IBAction)selectAnonymousCustomer:(id)sender {
+    [self.view.window makeFirstResponder:self.customersTable];
     self.sale.customer = self.salonDocument.anonymousCustomer;
     [self applyEditMode:self.editMode];
 }
