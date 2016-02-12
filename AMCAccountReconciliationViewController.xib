@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCAccountReconciliationViewController">
@@ -211,6 +211,16 @@
                         <action selector="dateForBalanceChanged:" target="-2" id="jtQ-g7-Zqy"/>
                     </connections>
                 </datePicker>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AUD-jl-k8B">
+                    <rect key="frame" x="233" y="13" width="72" height="32"/>
+                    <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5X2-Sw-DNx">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="dismissController:" target="-2" id="nh1-Kb-95m"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="be7-qd-QTl" firstAttribute="baseline" secondItem="CX3-ef-fWd" secondAttribute="baseline" id="0Ll-O6-fs0"/>
@@ -229,6 +239,7 @@
                 <constraint firstItem="3CI-Pu-FlU" firstAttribute="top" secondItem="16y-jw-zbX" secondAttribute="bottom" constant="40" id="ZTm-Hq-GTZ"/>
                 <constraint firstItem="CX3-ef-fWd" firstAttribute="top" secondItem="jPK-YO-bXe" secondAttribute="bottom" constant="20" id="au4-dx-x1I"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="UN7-D4-8Id" secondAttribute="trailing" constant="20" id="czM-aZ-KRN"/>
+                <constraint firstItem="AUD-jl-k8B" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="239" id="eeQ-gm-vGf"/>
                 <constraint firstAttribute="centerX" secondItem="16y-jw-zbX" secondAttribute="centerX" id="fkH-dS-1EA"/>
                 <constraint firstItem="16y-jw-zbX" firstAttribute="top" secondItem="be7-qd-QTl" secondAttribute="bottom" constant="40" id="g7G-7C-ms3"/>
                 <constraint firstItem="C05-rW-tpz" firstAttribute="leading" secondItem="CX3-ef-fWd" secondAttribute="trailing" constant="40" id="gb8-iM-Ilu"/>
@@ -237,6 +248,7 @@
                 <constraint firstItem="jPK-YO-bXe" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" id="lKY-B3-WJA"/>
                 <constraint firstItem="5Qr-T6-RFp" firstAttribute="top" secondItem="3CI-Pu-FlU" secondAttribute="bottom" constant="8" id="nnI-vU-k6F"/>
                 <constraint firstItem="4rN-EG-F9e" firstAttribute="height" secondItem="1bC-Cj-XhW" secondAttribute="height" id="rme-XN-JDN"/>
+                <constraint firstAttribute="bottom" secondItem="AUD-jl-k8B" secondAttribute="bottom" constant="20" symbolic="YES" id="wae-Ht-NZc"/>
                 <constraint firstItem="3CI-Pu-FlU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="24" id="x7U-pv-Md3"/>
                 <constraint firstItem="UN7-D4-8Id" firstAttribute="baseline" secondItem="jPK-YO-bXe" secondAttribute="baseline" id="yFo-4g-rkU"/>
                 <constraint firstItem="jPK-YO-bXe" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="znH-0b-DkE"/>

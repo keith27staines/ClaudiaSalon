@@ -188,31 +188,19 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     // Roles
     if ([Role allObjectsWithMoc:self.managedObjectContext].count == 0) {
         self.salon.systemRole       = [Role newObjectWithMoc:self.managedObjectContext];
-        self.salon.systemAdminRole  = [Role newObjectWithMoc:self.managedObjectContext];
-        self.salon.devSupportRole   = [Role newObjectWithMoc:self.managedObjectContext];
         self.salon.managerRole      = [Role newObjectWithMoc:self.managedObjectContext];
-        self.salon.accountantRole   = [Role newObjectWithMoc:self.managedObjectContext];
         self.salon.receptionistRole = [Role newObjectWithMoc:self.managedObjectContext];
         self.salon.basicUserRole    = [Role newObjectWithMoc:self.managedObjectContext];
         self.salon.systemRole.name       = @"System";
-        self.salon.systemAdminRole.name  = @"System Administrator";
-        self.salon.devSupportRole.name   = @"Dev";
         self.salon.managerRole.name      = @"Manager";
-        self.salon.accountantRole.name   = @"Accountant";
         self.salon.receptionistRole.name = @"Receptionist";
         self.salon.basicUserRole.name    = @"Basic User";
         self.salon.systemRole.fullDescription       = @"All-powerful role reserved for system-generated events. Do not give this role to any user";
-        self.salon.systemAdminRole.fullDescription  = @"System Administrators have the permissions required to configure the application";
-        self.salon.devSupportRole.fullDescription   = @"Developers have access to functions that allow them to investigate and debug problems";
         self.salon.managerRole.fullDescription      = @"Managers have access to all business functions but not to technical functions";
-        self.salon.accountantRole.fullDescription   = @"Accountants have access to financial functions but not to day-to-day business functions";
         self.salon.receptionistRole.fullDescription = @"Receptionists have permissions that allow them to take appointments and enter sales";
         self.salon.basicUserRole.fullDescription    = @"Basic Users can view appointments and sales";
         self.salon.systemRole.isSystemRole          = @YES;
-        self.salon.systemAdminRole.isSystemRole     = @YES;
-        self.salon.devSupportRole.isSystemRole      = @YES;
         self.salon.managerRole.isSystemRole         = @YES;
-        self.salon.accountantRole.isSystemRole      = @YES;
         self.salon.receptionistRole.isSystemRole    = @YES;
         self.salon.basicUserRole.isSystemRole       = @YES;
         [self.salon.manager addRolesObject:self.salon.managerRole];
@@ -225,7 +213,14 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     }
     NSArray * viewControllerClasses = subclasses([AMCViewController class]);
     BusinessFunction * businessFunction = nil;
-
+    
+    for (Class class in viewControllerClasses) {
+        NSString * className = NSStringFromClass(class);
+        
+        businessFunction = [BusinessFunction fetchBusinessFunctionWithCodeUnitName:className inMoc:self.managedObjectContext];
+        [self.managedObjectContext deleteObject:businessFunction];
+    }
+    
     for (Class class in viewControllerClasses) {
         NSString * className = NSStringFromClass(class);
         
@@ -526,11 +521,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.mainViewController presentViewControllerAsSheet:vc];
 }
 - (IBAction)showMoneyInTill:(id)sender {
-    NSButton * button = sender;
     AMCAccountReconciliationViewController * vc = (AMCAccountReconciliationViewController*)self.accountBalanceViewController;
     vc.account = self.salon.tillAccount;
     [vc prepareForDisplayWithSalon:self];
-    [self.mainViewController presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMaxYEdge behavior:NSPopoverBehaviorTransient];
+    [self.mainViewController presentViewControllerAsSheet:vc];
 }
 - (IBAction)paySalaries:(id)sender {
     [self.salaryPaymentViewController prepareForDisplayWithSalon:self];
