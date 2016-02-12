@@ -15,13 +15,7 @@
 #import "ServiceCategory+Methods.h"
 #import "NSDate+AMCDate.h"
 #import "Salon.h"
-
-typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
-    AMCReportingIntervalDaily,
-    AMCReportingIntervalWeekly,
-    AMCReportingIntervalMonthly,
-    AMCReportingIntervalYearly,
-};
+#import "ClaudiaSalon-Swift.h"
 
 @interface AMCReportsViewController ()
 {
@@ -29,6 +23,8 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
 }
 @property NSMutableArray * categories;
 @property (readonly) NSMutableArray * reportData;
+@property NSOperationQueue * workQueue;
+@property AMCReportWorkerOperation * workerOperation;
 @end
 
 @implementation AMCReportsViewController
@@ -44,6 +40,17 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
 -(NSString *)nibName
 {
     return @"AMCReportsViewController";
+}
+-(void)dismissController:(id)sender  {
+    [self.workQueue cancelAllOperations];
+    [super dismissController:sender];
+}
+-(void)viewDidLoad {
+    self.workQueue = [[NSOperationQueue alloc] init];
+    self.workQueue.qualityOfService = NSQualityOfServiceUserInteractive;
+}
+-(void)viewDidDisappear {
+    [self.workQueue cancelAllOperations];
 }
 #pragma mark - "PermissionDenied" Delegate
 -(BOOL)permissionDeniedNeedsOKButton {
@@ -63,12 +70,16 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
 }
 -(void)reloadData
 {
+    if (self.workerOperation) {
+        [self.workerOperation cancel];
+    }
     _reportData = nil;
+    [self loadReportDataPlaceholders];
     [self.reportTable reloadData];
+    [self loadReportDataDetail];
 }
--(NSMutableArray*)reportData
-{
-    
+
+-(NSMutableArray*)loadReportDataPlaceholders {
     if (_reportData) return _reportData;
     _reportData = [NSMutableArray array];
     NSDate * startDate = [self currentPeriodStartDate];
@@ -79,40 +90,36 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
     double hairTotal = 0;
     double beautyTotal = 0;
     while ([endDate isGreaterThan:earliestDate]) {
-        NSArray * sales = [self salesAtOrAfter:startDate before:endDate];
-        NSArray * payments = [self paymentsAtOrAfter:startDate before:endDate];
-        salesTotal = 0;
-        paymentsTotal = 0;
-        hairTotal = 0;
-        beautyTotal = 0;
-        for (Sale * sale in sales) {
-            if (sale.voided.boolValue || sale.isQuote.boolValue) continue;
-            salesTotal += sale.actualCharge.doubleValue;
-            for (SaleItem * saleItem in sale.saleItem) {
-                Service * service = saleItem.service;
-                if (service.serviceCategory.isHairCategory) {
-                    hairTotal += saleItem.actualCharge.doubleValue;
-                } else {
-                    beautyTotal += saleItem.actualCharge.doubleValue;
-                }
-            }
-        }
-        for (Payment * payment in payments) {
-            if (payment.voided.boolValue || payment.sale) continue;
-            if (payment.paymentCategory != self.salonDocument.salon.defaultPaymentCategoryForSales) {
-                if (payment.isOutgoing) {
-                    paymentsTotal += payment.amount.doubleValue;
-                } else {
-                    paymentsTotal -= payment.amount.doubleValue;
-                }
-            }
-        }
         NSDictionary * data = @{@"date": startDate,@"hairCategories":@(hairTotal), @"beautyCategories":@(beautyTotal) ,@"allCategories":@(salesTotal), @"payments": @(paymentsTotal), @"profits":@(salesTotal - paymentsTotal)};
         [_reportData addObject:data];
         startDate = [self previousStartDate:startDate];
         endDate = [self endDateFromStartDate:startDate];
     }
+    startDate = [self currentPeriodStartDate];
+    endDate = [self endDateFromStartDate:startDate];
     return _reportData;
+}
+-(void)loadReportDataDetail {
+    id strongSelf = self;
+    NSDate * startDate = [self currentPeriodStartDate];
+    NSDate * endDate = [self endDateFromStartDate:startDate];
+    NSDate * earliestDate = [self earliestDate];
+
+    self.workerOperation = [[AMCReportWorkerOperation alloc] initWithStartDate:startDate endDate:endDate earliestDate:earliestDate parentMoc:self.salonDocument.managedObjectContext reportingInterval:self.reportingInterval];
+    
+    self.workerOperation.subIntervalCompletionBlock = ^void(NSInteger row, NSDictionary*dictionary){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [strongSelf updateRow:row withDictionary:dictionary];
+        });
+    };
+    [self.workQueue addOperation:self.workerOperation];
+}
+-(void)updateRow:(NSInteger)row withDictionary:(NSDictionary*)dictionary {
+    if (self.workerOperation.cancelled) return;
+    _reportData[row] = dictionary;
+    NSRange columnRange = NSMakeRange(0, 7);
+    NSIndexSet * columnsSet = [NSIndexSet indexSetWithIndexesInRange:columnRange];
+    [self.reportTable reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:row] columnIndexes:columnsSet];
 }
 -(NSArray*)paymentsAtOrAfter:(NSDate*)after before:(NSDate*)before
 {
@@ -360,3 +367,4 @@ typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
     [self.weekStartPopop selectItemAtIndex:self.salonDocument.salon.firstDayOfWeek.doubleValue-1];
 }
 @end
+

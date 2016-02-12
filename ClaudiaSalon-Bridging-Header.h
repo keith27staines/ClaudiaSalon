@@ -12,3 +12,5 @@
 #import "Service+methods.h"
 #import "SaleItem+methods.h"
 #import "ServiceCategory+methods.h"
+#import "Payment+Methods.h"
+#import "AMCReportsViewController.h"

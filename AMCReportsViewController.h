@@ -9,6 +9,14 @@
 #import <Cocoa/Cocoa.h>
 #import "AMCReportsView.h"
 #import "AMCSalonDocument.h"
+
+typedef NS_ENUM(NSUInteger, AMCReportingInterval) {
+    AMCReportingIntervalDaily,
+    AMCReportingIntervalWeekly,
+    AMCReportingIntervalMonthly,
+    AMCReportingIntervalYearly,
+};
+
 @interface AMCReportsViewController : AMCViewController <AMCRecportsViewDelegate, NSTableViewDataSource, NSTableViewDelegate>
 
 @property (weak) IBOutlet NSPopUpButtonCell *reportPeriodPopup;
