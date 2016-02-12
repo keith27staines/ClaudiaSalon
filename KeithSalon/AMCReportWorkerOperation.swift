@@ -18,18 +18,20 @@ class AMCReportWorkerOperation : NSOperation {
     var beautyTotal = 0.0
     var subIntervalCompletionBlock: ((row:Int,dictionary:[String:NSObject])->Void)?
     let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-    let moc:NSManagedObjectContext
     let reportingInterval:AMCReportingInterval
+    let parentMoc:NSManagedObjectContext
+    var moc:NSManagedObjectContext?
     
     init(startDate:NSDate, endDate:NSDate, earliestDate:NSDate, parentMoc:NSManagedObjectContext,reportingInterval:AMCReportingInterval) {
         self.startDate = startDate
         self.endDate = endDate
         self.earliestDate = earliestDate
-        self.moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        self.moc.persistentStoreCoordinator = parentMoc.persistentStoreCoordinator
+        self.parentMoc = parentMoc
         self.reportingInterval = reportingInterval
     }
     override func main() {
+        self.moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        self.moc!.persistentStoreCoordinator = parentMoc.persistentStoreCoordinator
         var row = 0
         while endDate.isGreaterThan(earliestDate) {
             if self.cancelled { return }
@@ -115,7 +117,7 @@ class AMCReportWorkerOperation : NSOperation {
         let predicate = NSPredicate(format:"createdDate >= %@ and createdDate < %@", after,before)
         fetchRequest.predicate = predicate
         do {
-            let fetchedObjects = try self.moc.executeFetchRequest(fetchRequest) as! Array<Sale>
+            let fetchedObjects = try self.moc!.executeFetchRequest(fetchRequest) as! Array<Sale>
             return fetchedObjects.sort({ (sale1, sale2) -> Bool in
                 return (sale1.createdDate!.isLessThan(sale2.createdDate))
             })
@@ -128,7 +130,7 @@ class AMCReportWorkerOperation : NSOperation {
         let predicate = NSPredicate(format:"paymentDate >= %@ and paymentDate < %@", after,before)
         fetchRequest.predicate = predicate
         do {
-            let fetchedObjects = try self.moc.executeFetchRequest(fetchRequest) as! Array<Payment>
+            let fetchedObjects = try self.moc!.executeFetchRequest(fetchRequest) as! Array<Payment>
             return fetchedObjects.sort({ (payment1, payment2) -> Bool in
                 return (payment1.paymentDate!.isLessThan(payment2.paymentDate))
             })
