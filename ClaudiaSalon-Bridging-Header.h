@@ -14,3 +14,4 @@
 #import "ServiceCategory+methods.h"
 #import "Payment+Methods.h"
 #import "AMCReportsViewController.h"
+#import "AMCServiceTableCellViewMac.h"

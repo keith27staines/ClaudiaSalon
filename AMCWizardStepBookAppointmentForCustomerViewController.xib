@@ -175,20 +175,38 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView identifier="serviceView" id="FKr-a0-GKF">
+                                            <tableCellView identifier="serviceView" id="FKr-a0-GKF" customClass="AMCServiceTableCellViewMac">
                                                 <rect key="frame" x="1" y="1" width="531" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M3f-mC-yil">
-                                                        <rect key="frame" x="0.0" y="0.0" width="531" height="17"/>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="M3f-mC-yil">
+                                                        <rect key="frame" x="0.0" y="0.0" width="97" height="17"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="A3N-TV-ibO">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
+                                                    <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mzg-Jo-tc5">
+                                                        <rect key="frame" x="101" y="0.0" width="430" height="17"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" alignment="right" title="£10" id="Aum-BQ-LnB">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="M3f-mC-yil" firstAttribute="leading" secondItem="FKr-a0-GKF" secondAttribute="leading" constant="2" id="4Ul-jp-oJb"/>
+                                                    <constraint firstItem="Mzg-Jo-tc5" firstAttribute="leading" secondItem="M3f-mC-yil" secondAttribute="trailing" constant="8" symbolic="YES" id="5fq-bi-MLw"/>
+                                                    <constraint firstItem="Mzg-Jo-tc5" firstAttribute="bottom" secondItem="M3f-mC-yil" secondAttribute="bottom" id="7Wd-hz-ieP"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Mzg-Jo-tc5" secondAttribute="trailing" constant="2" id="GLv-0d-VkE"/>
+                                                    <constraint firstItem="Mzg-Jo-tc5" firstAttribute="top" secondItem="M3f-mC-yil" secondAttribute="top" id="LSc-3g-UCV"/>
+                                                    <constraint firstItem="M3f-mC-yil" firstAttribute="top" secondItem="FKr-a0-GKF" secondAttribute="top" id="yz5-jY-1xx"/>
+                                                </constraints>
                                                 <connections>
+                                                    <outlet property="price" destination="Mzg-Jo-tc5" id="8u2-sI-WAr"/>
+                                                    <outlet property="serviceName" destination="M3f-mC-yil" id="60j-DP-UPg"/>
                                                     <outlet property="textField" destination="M3f-mC-yil" id="i8i-jB-KYO"/>
                                                 </connections>
                                             </tableCellView>

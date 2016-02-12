@@ -146,8 +146,9 @@ class AMCServiceCategoryPopupController : NSObject, NSTableViewDelegate, NSTable
                 return nil
             }
             let service = self.services[row]
-            let view = tableView.makeViewWithIdentifier("serviceView", owner: self) as! NSTableCellView
-            view.textField?.stringValue = service.displayText()
+            let view = tableView.makeViewWithIdentifier("serviceView", owner: self) as! AMCServiceTableCellViewMac
+            view.serviceName?.stringValue = service.displayText()
+            view.price?.stringValue = "£\(service.nominalCharge!)"
             return view
         default:
             return nil

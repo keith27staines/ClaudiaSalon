@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCAccountReconciliationViewController">
@@ -25,32 +26,32 @@
             <rect key="frame" x="0.0" y="0.0" width="527" height="395"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jPK-YO-bXe">
-                    <rect key="frame" x="18" y="356" width="246" height="19"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Reconcile account friendly name" id="gEM-5m-4j2">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jPK-YO-bXe">
+                    <rect key="frame" x="18" y="356" width="113" height="19"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Select account" id="gEM-5m-4j2">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CX3-ef-fWd">
-                    <rect key="frame" x="20" y="319" width="74" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CX3-ef-fWd">
+                    <rect key="frame" x="20" y="319" width="71" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Bank name" id="2Ug-hc-dxN">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C05-rW-tpz">
-                    <rect key="frame" x="130" y="319" width="63" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C05-rW-tpz">
+                    <rect key="frame" x="127" y="319" width="62" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="sort code" id="yCD-a1-Mst">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="be7-qd-QTl">
-                    <rect key="frame" x="229" y="319" width="105" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="be7-qd-QTl">
+                    <rect key="frame" x="225" y="319" width="103" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="account number" id="tDH-n2-Qbs">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -58,7 +59,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="16y-jw-zbX">
-                    <rect key="frame" x="189" y="260" width="150" height="19"/>
+                    <rect key="frame" x="191" y="260" width="147" height="19"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Expected balance:" id="wrI-dm-xqy">
                         <font key="font" metaFont="systemBold" size="16"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -146,8 +147,8 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3CI-Pu-FlU">
-                    <rect key="frame" x="22" y="203" width="189" height="17"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3CI-Pu-FlU">
+                    <rect key="frame" x="22" y="203" width="184" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Account Reconciliation Points" id="cfc-jn-zkJ">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -168,8 +169,8 @@
                         <action selector="addReconciliationButtonClicked:" target="-2" id="0jb-gn-N1A"/>
                     </connections>
                 </button>
-                <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UN7-D4-8Id">
-                    <rect key="frame" x="280" y="351" width="73" height="26"/>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UN7-D4-8Id">
+                    <rect key="frame" x="147" y="351" width="76" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="mBk-am-zBm" id="K9v-B7-XNu">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -196,7 +197,7 @@
                     </connections>
                 </button>
                 <datePicker verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aS0-k3-JbA">
-                    <rect key="frame" x="79" y="258" width="95" height="27"/>
+                    <rect key="frame" x="77" y="258" width="99" height="27"/>
                     <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="AKk-s2-W29">
                         <font key="font" metaFont="system"/>
                         <calendarDate key="date" timeIntervalSinceReferenceDate="-595929600" calendarFormat="%Y-%m-%d %H:%M:%S %z">
@@ -223,6 +224,7 @@
                 <constraint firstItem="4rN-EG-F9e" firstAttribute="top" secondItem="5Qr-T6-RFp" secondAttribute="bottom" constant="5" id="PKm-wv-kr9"/>
                 <constraint firstItem="5Qr-T6-RFp" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="22" id="Pe3-Cu-sxK"/>
                 <constraint firstItem="4rN-EG-F9e" firstAttribute="leading" secondItem="5Qr-T6-RFp" secondAttribute="leading" id="R88-TA-8gs"/>
+                <constraint firstItem="aS0-k3-JbA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="RlI-1X-aYi"/>
                 <constraint firstItem="UN7-D4-8Id" firstAttribute="leading" secondItem="jPK-YO-bXe" secondAttribute="trailing" constant="20" id="VGh-Y0-qDa"/>
                 <constraint firstItem="3CI-Pu-FlU" firstAttribute="top" secondItem="16y-jw-zbX" secondAttribute="bottom" constant="40" id="ZTm-Hq-GTZ"/>
                 <constraint firstItem="CX3-ef-fWd" firstAttribute="top" secondItem="jPK-YO-bXe" secondAttribute="bottom" constant="20" id="au4-dx-x1I"/>

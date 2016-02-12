@@ -16,6 +16,7 @@
 		530D546F1B18D3E100F6C4FE /* AMCEmployeesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 530D546E1B18D3E100F6C4FE /* AMCEmployeesViewController.xib */; };
 		530D54771B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D54761B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m */; };
 		530D54A61B270C9300F6C4FE /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 530D54A51B270C9300F6C4FE /* Property List.plist */; };
+		530D62571C6DCFCB0064794B /* AMCServiceTableCellViewMac.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D62561C6DCFCB0064794B /* AMCServiceTableCellViewMac.m */; };
 		531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25521AB80E5100EB3472 /* AMCCashBook.m */; };
 		531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25561AB960F600EB3472 /* AMCCashBookViewController.m */; };
 		531B25591AB960F600EB3472 /* AMCCashBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531B25571AB960F600EB3472 /* AMCCashBookViewController.xib */; };
@@ -356,6 +357,8 @@
 		530D54761B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSalonDocumentWindow.m; sourceTree = "<group>"; };
 		530D54791B25599C00F6C4FE /* ClaudiasSalon 12.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 12.xcdatamodel"; sourceTree = "<group>"; };
 		530D54A51B270C9300F6C4FE /* Property List.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
+		530D62551C6DCFCB0064794B /* AMCServiceTableCellViewMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCServiceTableCellViewMac.h; sourceTree = "<group>"; };
+		530D62561C6DCFCB0064794B /* AMCServiceTableCellViewMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCServiceTableCellViewMac.m; sourceTree = "<group>"; };
 		53146BFC1AB225EC003B7658 /* ClaudiaSalon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = ClaudiaSalon.entitlements; path = ../ClaudiaSalon.entitlements; sourceTree = "<group>"; };
 		531B25511AB80E5100EB3472 /* AMCCashBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBook.h; sourceTree = "<group>"; };
 		531B25521AB80E5100EB3472 /* AMCCashBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBook.m; sourceTree = "<group>"; };
@@ -1614,6 +1617,8 @@
 				53D69BF41A9B23B60004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.xib */,
 				53D69D881A9B243B0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.h */,
 				53D69C791A9B240B0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.m */,
+				530D62551C6DCFCB0064794B /* AMCServiceTableCellViewMac.h */,
+				530D62561C6DCFCB0064794B /* AMCServiceTableCellViewMac.m */,
 			);
 			name = "Appointment Select Services and Time Slot";
 			sourceTree = "<group>";
@@ -2614,6 +2619,7 @@
 				53D69D171A9B240C0004CE10 /* AMCEntityViewController.m in Sources */,
 				530171211ACA80170047116D /* AMCAccountManagementViewController.m in Sources */,
 				53D69D521A9B240C0004CE10 /* SelectCustomerStepViewController.m in Sources */,
+				530D62571C6DCFCB0064794B /* AMCServiceTableCellViewMac.m in Sources */,
 				536B9E6E1C56077E00F170EC /* Role.m in Sources */,
 				536B9E7E1C56077E00F170EC /* WorkRecord.m in Sources */,
 				536B9E9C1C56077E00F170EC /* RecurringItem+CoreDataProperties.m in Sources */,
