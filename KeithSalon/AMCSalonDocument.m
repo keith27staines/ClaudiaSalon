@@ -97,6 +97,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property (weak) IBOutlet NSMenuItem *switchUserMenuIem;
 @property (weak) IBOutlet NSToolbarItem *toolbarUserPhotoItem;
 
+@property (strong) IBOutlet AMCAccountReconciliationViewController *accountBalanceViewController;
 @end
 
 @implementation AMCSalonDocument
@@ -526,16 +527,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 }
 - (IBAction)showMoneyInTill:(id)sender {
     NSButton * button = sender;
-    self.requestPasswordWindowController.callingWindow = self.windowForSheet;
-    NSWindow * window = [self.requestPasswordWindowController window];
-    [self.windowForSheet beginSheet:window completionHandler:^(NSModalResponse returnCode) {
-        if ([self.requestPasswordWindowController.state isEqualToString:@"ok"]) {
-            AMCAccountReconciliationViewController*vc = [AMCAccountReconciliationViewController new];
-            vc.account = self.salon.tillAccount;
-            [vc prepareForDisplayWithSalon:self];
-            [self.mainViewController presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMaxYEdge behavior:NSPopoverBehaviorTransient];
-        }
-    }];
+    AMCAccountReconciliationViewController * vc = (AMCAccountReconciliationViewController*)self.accountBalanceViewController;
+    vc.account = self.salon.tillAccount;
+    [vc prepareForDisplayWithSalon:self];
+    [self.mainViewController presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMaxYEdge behavior:NSPopoverBehaviorTransient];
 }
 - (IBAction)paySalaries:(id)sender {
     [self.salaryPaymentViewController prepareForDisplayWithSalon:self];
