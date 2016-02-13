@@ -50,7 +50,15 @@
 }
 -(void)reloadRolePopup {
     [self.roleSelector removeAllItems];
-    for (Role * role in [Role allObjectsWithMoc:self.salonDocument.managedObjectContext]) {
+    NSArray * roles = [Role allObjectsWithMoc:self.salonDocument.managedObjectContext];
+    roles = [roles sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        Role * role1 = obj1;
+        Role * role2 = obj2;
+        NSString * name1 = role1.name.lowercaseString;
+        NSString * name2 = role2.name.lowercaseString;
+        return ([name1 isGreaterThanOrEqualTo:name2])?YES:NO;
+    }];
+    for (Role * role in roles) {
         NSMenuItem * item = [[NSMenuItem alloc] init];
         item.representedObject = role;
         item.title = role.name;
@@ -65,8 +73,15 @@
     }
 }
 -(void)reloadTableData {
-
-    self.permissions = [[self.selectedRole.permissions allObjects] mutableCopy];
+    NSArray * permissions = [self.selectedRole.permissions allObjects];
+    permissions = [permissions sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        Permission * permission1 = obj1;
+        Permission * permission2 = obj2;
+        NSString * name1 = permission1.businessFunction.functionName.lowercaseString;
+        NSString * name2 = permission2.businessFunction.functionName.lowercaseString;
+        return ([name1 isGreaterThanOrEqualTo:name2])?YES:NO;
+    }];
+    self.permissions = [permissions mutableCopy];
     [self.permissionsTable reloadData];
 }
 - (IBAction)roleChanged:(id)sender {

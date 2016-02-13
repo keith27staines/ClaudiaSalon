@@ -61,6 +61,11 @@
             }
             break;
     }
+    self.filteredRoles = [[self.filteredRoles sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        Role * role1 = obj1;
+        Role * role2 = obj2;
+        return ([role1.name isGreaterThan:role2.name])?YES:NO;
+    }] mutableCopy];
     self.rolePermissionDictionaries = [NSMutableArray array];
     for (Role * role in self.filteredRoles) {
         Permission * permission = [role permissionForBusinessFunction:self.mappedBusinessFunction];

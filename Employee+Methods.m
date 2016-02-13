@@ -153,7 +153,7 @@
 }
 -(NSNumber*)canPerformBusinessFunction:(BusinessFunction*)businessFunction verb:(NSString*)verb {
     for (Role * role in self.roles) {
-        if ([role allowsBusinessFunction:businessFunction verb:verb]) {
+        if ([role allowsBusinessFunction:businessFunction verb:verb].boolValue) {
             return @YES;
         }
     }

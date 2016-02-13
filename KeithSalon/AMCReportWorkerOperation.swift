@@ -51,16 +51,22 @@ class AMCReportWorkerOperation : NSOperation {
                     guard let service = saleItem.service else {
                         continue
                     }
+                    let saleAmount = saleItem.actualCharge!.doubleValue
+                    salesTotal += saleAmount
                     if service.serviceCategory!.isHairCategory() {
-                        hairTotal += saleItem.actualCharge!.doubleValue
+                        hairTotal += saleAmount
                     } else {
-                        beautyTotal += saleItem.actualCharge!.doubleValue
+                        beautyTotal += saleAmount
                     }
                 }
             }
             for payment in payments {
                 if self.cancelled { return }
-                guard !payment.voided!.boolValue && payment.sale != nil else {
+                //guard !payment.voided!.boolValue && payment.sale != nil else {
+                guard payment.voided!.boolValue != true else {
+                    continue
+                }
+                guard payment.sale == nil else {
                     continue
                 }
                 if payment.isOutgoing.boolValue {

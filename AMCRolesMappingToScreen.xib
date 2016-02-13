@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCRolesMappingToScreen">
@@ -92,7 +93,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <button horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="Ruo-JR-M7B">
-                                                        <rect key="frame" x="0.0" y="4" width="102" height="18"/>
+                                                        <rect key="frame" x="0.0" y="4" width="103" height="18"/>
                                                         <buttonCell key="cell" type="check" title="View" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="mTy-Ei-cc5">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -102,7 +103,7 @@
                                                         </connections>
                                                     </button>
                                                     <button horizontalHuggingPriority="251" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="8HB-sb-nm0">
-                                                        <rect key="frame" x="118" y="4" width="47" height="18"/>
+                                                        <rect key="frame" x="119" y="4" width="46" height="18"/>
                                                         <buttonCell key="cell" type="check" title="Edit" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4tS-m2-Gqc">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -159,7 +160,7 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="135" id="ovb-Iv-HGo"/>
                     </constraints>
                     <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="d74-mW-jTa">
-                        <rect key="frame" x="1" y="117.49841725826263" width="237" height="16"/>
+                        <rect key="frame" x="1" y="117" width="237" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Jc6-zm-QxR">
@@ -168,7 +169,7 @@
                     </scroller>
                 </scrollView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bI2-mN-Awm">
-                    <rect key="frame" x="18" y="465" width="147" height="23"/>
+                    <rect key="frame" x="18" y="465" width="145" height="23"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Code Unit Name" id="sRq-in-Ew5">
                         <font key="font" metaFont="system" size="19"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -176,7 +177,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IFV-QT-buI">
-                    <rect key="frame" x="457" y="13" width="73" height="32"/>
+                    <rect key="frame" x="458" y="13" width="72" height="32"/>
                     <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JuM-kI-hzj">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -189,7 +190,7 @@ DQ
                     </connections>
                 </button>
                 <segmentedControl verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="5DX-wm-Xbz">
-                    <rect key="frame" x="19" y="406" width="233" height="20"/>
+                    <rect key="frame" x="19" y="406" width="228" height="20"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="RGx-Ek-QM4">
                         <font key="font" metaFont="cellTitle"/>
                         <segments>
@@ -208,7 +209,7 @@ DQ
                     <font key="titleFont" metaFont="system"/>
                 </box>
                 <segmentedControl verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="pj7-qd-twq">
-                    <rect key="frame" x="446" y="464" width="100" height="24"/>
+                    <rect key="frame" x="445" y="464" width="101" height="24"/>
                     <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="NMF-CI-d3X">
                         <font key="font" metaFont="system"/>
                         <segments>
@@ -221,7 +222,7 @@ DQ
                     </connections>
                 </segmentedControl>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4CY-Hq-tEk">
-                    <rect key="frame" x="14" y="13" width="146" height="32"/>
+                    <rect key="frame" x="14" y="13" width="142" height="32"/>
                     <buttonCell key="cell" type="push" title="Add Role to User" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rcP-Kg-Gjt">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -231,7 +232,7 @@ DQ
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bRg-sN-jH7">
-                    <rect key="frame" x="188" y="13" width="187" height="32"/>
+                    <rect key="frame" x="184" y="13" width="183" height="32"/>
                     <buttonCell key="cell" type="push" title="Remove Role from User" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ymh-ut-ud8">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -241,7 +242,7 @@ DQ
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FYL-Ah-bhk">
-                    <rect key="frame" x="201" y="463" width="73" height="26"/>
+                    <rect key="frame" x="199" y="463" width="76" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="MIj-rd-Lh2" id="OQQ-h3-zKR">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -294,7 +295,7 @@ DQ
             <rect key="frame" x="0.0" y="0.0" width="358" height="73"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NqU-XC-F2d">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NqU-XC-F2d">
                     <rect key="frame" x="142" y="45" width="74" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Role name" id="7TB-Fz-1cr">
                         <font key="font" metaFont="systemBold"/>
