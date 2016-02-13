@@ -64,6 +64,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     Salon * _salon;
     OpeningHoursWeekTemplate * _openingHoursWeekTemplate;
     Employee * _currentUser;
+    NSManagedObjectContext * _moc;
 }
 
 @property (weak) IBOutlet AMCRequestPasswordWindowController *requestPasswordWindowController;
@@ -119,6 +120,14 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         [NSTimer scheduledTimerWithTimeInterval:3600 target:self selector:@selector(processRecurringEvents:) userInfo:nil repeats:YES];
     }
     return _salon;
+}
+-(NSManagedObjectContext *)managedObjectContext {
+    if (!_moc) {
+        NSManagedObjectContext * man = [super managedObjectContext];
+        _moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        _moc.persistentStoreCoordinator = man.persistentStoreCoordinator;
+    }
+    return _moc;
 }
 -(IBAction)showRolesToCodeUnitMapping:(id)sender {
     [self.selectedViewController showRolesToCodeUnitMapping:self];

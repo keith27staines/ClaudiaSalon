@@ -31,61 +31,64 @@ class AMCReportWorkerOperation : NSOperation {
     }
     override func main() {
         self.moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        self.moc!.persistentStoreCoordinator = parentMoc.persistentStoreCoordinator
-        var row = 0
-        while endDate.isGreaterThan(earliestDate) {
-            if self.cancelled { return }
-            let sales = self.salesBetween(startDate, before: endDate)
-            if self.cancelled { return }
-            let payments = self.paymentsBetween(startDate, before: endDate)
-            salesTotal = 0
-            paymentsTotal = 0
-            hairTotal = 0
-            beautyTotal = 0
-            for sale in sales {
+        self.moc?.parentContext = self.parentMoc
+        //self.moc!.persistentStoreCoordinator = parentMoc.persistentStoreCoordinator
+        self.moc!.performBlockAndWait {
+            var row = 0
+            while self.endDate.isGreaterThan(self.earliestDate) {
                 if self.cancelled { return }
-                guard !sale.voided!.boolValue && !sale.isQuote!.boolValue else {
-                 continue
-                }
-                for saleItem in sale.saleItem! {
-                    guard let service = saleItem.service else {
+                let sales = self.salesBetween(self.startDate, before: self.endDate)
+                if self.cancelled { return }
+                let payments = self.paymentsBetween(self.startDate, before: self.endDate)
+                self.salesTotal = 0
+                self.paymentsTotal = 0
+                self.hairTotal = 0
+                self.beautyTotal = 0
+                for sale in sales {
+                    if self.cancelled { return }
+                    guard !sale.voided!.boolValue && !sale.isQuote!.boolValue else {
                         continue
                     }
-                    let saleAmount = saleItem.actualCharge!.doubleValue
-                    salesTotal += saleAmount
-                    if service.serviceCategory!.isHairCategory() {
-                        hairTotal += saleAmount
-                    } else {
-                        beautyTotal += saleAmount
+                    for saleItem in sale.saleItem! {
+                        guard let service = saleItem.service else {
+                            continue
+                        }
+                        let saleAmount = saleItem.actualCharge!.doubleValue
+                        self.salesTotal += saleAmount
+                        if service.serviceCategory!.isHairCategory() {
+                            self.hairTotal += saleAmount
+                        } else {
+                            self.beautyTotal += saleAmount
+                        }
                     }
                 }
+                for payment in payments {
+                    if self.cancelled { return }
+                    //guard !payment.voided!.boolValue && payment.sale != nil else {
+                    guard payment.voided!.boolValue != true else {
+                        continue
+                    }
+                    guard payment.sale == nil else {
+                        continue
+                    }
+                    if payment.isOutgoing.boolValue {
+                        self.paymentsTotal += payment.amount!.doubleValue
+                    } else {
+                        self.paymentsTotal -= payment.amount!.doubleValue
+                    }
+                }
+                let dictionary = ["date": self.startDate,"hairCategories":self.hairTotal, "beautyCategories":self.beautyTotal ,"allCategories":self.salesTotal, "payments":self.paymentsTotal, "profits":(self.salesTotal - self.paymentsTotal)]
+                
+                if let subIntervalBlock = self.subIntervalCompletionBlock {
+                    if self.cancelled {
+                        return
+                    }
+                    subIntervalBlock(row: row, dictionary: dictionary)
+                }
+                self.startDate = self.previousStartDate(self.startDate)
+                self.endDate = self.endDateFromStartDate(self.startDate)
+                row++;
             }
-            for payment in payments {
-                if self.cancelled { return }
-                //guard !payment.voided!.boolValue && payment.sale != nil else {
-                guard payment.voided!.boolValue != true else {
-                    continue
-                }
-                guard payment.sale == nil else {
-                    continue
-                }
-                if payment.isOutgoing.boolValue {
-                    paymentsTotal += payment.amount!.doubleValue
-                } else {
-                    paymentsTotal -= payment.amount!.doubleValue
-                }
-            }
-            let dictionary = ["date": startDate,"hairCategories":hairTotal, "beautyCategories":beautyTotal ,"allCategories":salesTotal, "payments":paymentsTotal, "profits":(salesTotal - paymentsTotal)]
-            
-            if let subIntervalBlock = self.subIntervalCompletionBlock {
-                if self.cancelled {
-                    return
-                }
-                subIntervalBlock(row: row, dictionary: dictionary)
-            }
-            startDate = self.previousStartDate(startDate)
-            endDate = self.endDateFromStartDate(startDate)
-            row++;
         }
     }
     func previousStartDate(startDate:NSDate) -> NSDate {

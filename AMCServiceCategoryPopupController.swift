@@ -95,7 +95,7 @@ class AMCServiceCategoryPopupController : NSObject, NSTableViewDelegate, NSTable
                 }
                 return (category1.name < category2.name)
             }
-            for subCategory in self.rootServiceCategory.subCategories! {
+            for subCategory in rootSubCategoriesArray {
                 self.popupButton.menu?.addItem(menuItemFromCategory(subCategory))
             }
         }
