@@ -21,8 +21,4 @@ class BQExportDeletionRequest: NSManagedObject {
         self.lastErrorDescription = error.description
         self.actionResult = "Retry needed"
     }
-    func succeeded() {
-        // Request for icloud deletion was successful so delete this deletion request as it is no longer needed
-        self.managedObjectContext?.deleteObject(self)
-    }
 }

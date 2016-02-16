@@ -11,6 +11,7 @@ import CloudKit
 
 // MARK:- Class BQDeletionRequestList
 class BQDeletionRequestList {
+    let maxRecordsToDeleteInBatch = 200
     private let privateDispatchQueue = dispatch_queue_create("com.AMCAldebaron.BQDeletionRequestList", DISPATCH_QUEUE_SERIAL)
 
     var requestListDictionary:[String:BQExportDeletionRequest]
@@ -18,11 +19,16 @@ class BQDeletionRequestList {
     var deleteOperations = Set<CKModifyRecordsOperation>()
     lazy var publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
     let activeOperationCounter = AMCThreadSafeCounter(initialValue: 0)
+    var privateManagedObjectContext:NSManagedObjectContext!
     
     // MARK:- Initialiser and deinit
     init(parentManagedObjectContext:NSManagedObjectContext) {
         self.parentManagedObjectContext = parentManagedObjectContext
         self.requestListDictionary = [String:BQExportDeletionRequest]()
+        dispatch_sync(self.privateDispatchQueue) {
+            self.privateManagedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+            self.privateManagedObjectContext.parentContext = self.parentManagedObjectContext
+        }
         self.loadRequestListDictionary()
         
         // Monitor new deletions from coredata
@@ -40,24 +46,26 @@ class BQDeletionRequestList {
     }
     
     // MARK:- Start and stop processing
+    
+    /** processList() starts the processing of the items recorded in the coredata deletionRequest entity. The objects are examined for bqMetadata and if found, the corresponding object in iCloud is deleted. Finally, the deletion request is deleted */
     func processList() {
-        let maxRecordsToDelete = 200
-        if self.activeOperationCounter.count > 0 {
-            return
-        }
-        self.activeOperationCounter.increment()
-        var recordIDsToDelete = [CKRecordID]()
-        for (_,deletionRequest) in self.requestListDictionary {
-            let recordID = deletionRequest.cloudkitRecordFromEmbeddedMetadata()!.recordID
-            recordIDsToDelete.append(recordID)
-            if recordIDsToDelete.count > maxRecordsToDelete {
-                // We don't want to lock up the interface if there are huge numbers of records to delete
-                break
+        dispatch_sync(self.privateDispatchQueue) {
+            if self.activeOperationCounter.count > 0 {
+                return
             }
+            self.activeOperationCounter.increment()
+            var recordIDsToDelete = [CKRecordID]()
+            for (_,deletionRequest) in self.requestListDictionary {
+                let recordID = deletionRequest.cloudkitRecordFromEmbeddedMetadata()!.recordID
+                recordIDsToDelete.append(recordID)
+                if recordIDsToDelete.count > self.maxRecordsToDeleteInBatch {
+                    // We don't want to lock up the interface if there are huge numbers of records to delete
+                    break
+                }
+            }
+            let deleteOperation = self.makeDeleteOperation(recordIDsToDelete)
+            self.publicDatabase.addOperation(deleteOperation)
         }
-        let deleteOperation = self.makeDeleteOperation(recordIDsToDelete)
-        self.activeOperationCounter.increment()
-        self.publicDatabase.addOperation(deleteOperation)
     }
     
     func cancel() {
@@ -82,7 +90,6 @@ class BQDeletionRequestList {
         
         operation.modifyRecordsCompletionBlock = { (_,recordIDsToDelete,error)->Void in
             guard let recordIDsToDelete = recordIDsToDelete else {
-                self.activeOperationCounter.decrement()
                 return
             }
             let attemptedDeletions = Set(recordIDsToDelete)
@@ -173,18 +180,27 @@ class BQDeletionRequestList {
     }
     //MARK:- Notify successes and failures
     func requestsSucceeded(successfullyDeleted:Set<CKRecordID>) {
-        dispatch_async(self.privateDispatchQueue) { () -> Void in
+        dispatch_sync(self.privateDispatchQueue) {
             for recordID in successfullyDeleted {
                 let recordName = recordID.recordName
                 if let request = self.requestListDictionary[recordName] {
-                    request.succeeded()
+                    self.privateManagedObjectContext.performBlockAndWait() {
+                        self.privateManagedObjectContext.deleteObject(request)
+                    }
                 }
                 self.requestListDictionary[recordName] = nil
+            }
+            self.privateManagedObjectContext.performBlockAndWait() {
+                do {
+                    try self.privateManagedObjectContext.save()
+                } catch {
+                    // What to do now?
+                }
             }
         }
     }
     func requestsFailed(failed:[CKRecordID:NSError]) {
-        dispatch_async(self.privateDispatchQueue) { () -> Void in
+        dispatch_async(self.privateDispatchQueue) {
             for (recordID,error) in failed {
                 let recordName = recordID.recordName
                 if let request = self.requestListDictionary[recordName] {
@@ -193,7 +209,9 @@ class BQDeletionRequestList {
             }
         }
     }
+    
     // MARK:- Fetching deletion requests
+    /** only call fetchAllRequests on the main thread */
     func fetchAllRequests() -> Set<BQExportDeletionRequest> {
         let fetchRequest = NSFetchRequest(entityName: "BQExportDeletionRequest")
         do {
@@ -203,6 +221,7 @@ class BQDeletionRequestList {
             return Set<BQExportDeletionRequest>()
         }
     }
+    /** Only call fetchAllPendingRequests on the main thread */
     func fetchAllPendingRequests() -> Set<BQExportDeletionRequest> {
         let pendingRequests = self.fetchAllRequests().filter({ (request) -> Bool in
             if request.actionResult == "Pending" || request.actionResult == "Retry" {
@@ -213,12 +232,15 @@ class BQDeletionRequestList {
         })
         return Set(pendingRequests)
     }
+    /** Only call fetchAllPendingRequests on the main thread */
     func fetchAllFailedRequests() -> Set<BQExportDeletionRequest> {
         let failedRequests = self.fetchAllRequests().filter { $0.lastErrorCode != nil }
         return Set(failedRequests)
     }
     
     // MARK:- Private helper functions
+    
+    /** addCloudDeletionRequestsForRecordWithMetadata: must be called from the main thread */
     private func addCloudDeletionRequestsForRecordWithMetadata(metadata:NSData) -> BQExportDeletionRequest {
         let request = NSEntityDescription.insertNewObjectForEntityForName("BQExportDeletionRequest", inManagedObjectContext: self.parentManagedObjectContext) as! BQExportDeletionRequest
         let record = NSManagedObject.cloudkitRecordFromMetadata(metadata)
@@ -233,9 +255,17 @@ class BQDeletionRequestList {
     }
 
     private func loadRequestListDictionary() {
-        self.requestListDictionary.removeAll()
-        let allRequests = self.fetchAllRequests()
-        dispatch_sync(self.privateDispatchQueue) {
+        let moc = self.privateManagedObjectContext
+        moc.performBlockAndWait() {
+            self.requestListDictionary.removeAll()
+            let fetchRequest = NSFetchRequest(entityName: "BQExportDeletionRequest")
+            var allRequests: Set<BQExportDeletionRequest>
+            do {
+                let fetchResults = (try moc.executeFetchRequest(fetchRequest)) as! [BQExportDeletionRequest]
+                allRequests = Set(fetchResults)
+            } catch {
+                allRequests = Set<BQExportDeletionRequest>()
+            }
             for request in allRequests {
                 self.requestListDictionary[request.cloudRecordName!] = request
             }
