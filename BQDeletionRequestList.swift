@@ -50,10 +50,7 @@ class BQDeletionRequestList {
     /** processList() starts the processing of the items recorded in the coredata deletionRequest entity. The objects are examined for bqMetadata and if found, the corresponding object in iCloud is deleted. Finally, the deletion request is deleted */
     func processList() {
         dispatch_sync(self.privateDispatchQueue) {
-            if self.activeOperationCounter.count > 0 {
-                return
-            }
-            self.activeOperationCounter.increment()
+            if !self.activeOperationCounter.incrementIfZero() { return }
             var recordIDsToDelete = [CKRecordID]()
             for (_,deletionRequest) in self.requestListDictionary {
                 let recordID = deletionRequest.cloudkitRecordFromEmbeddedMetadata()!.recordID

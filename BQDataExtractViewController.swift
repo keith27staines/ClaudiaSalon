@@ -28,8 +28,7 @@ class BQDataExtractViewController: NSViewController, BQFirstExtractControllerDel
         super.viewDidLoad()
         self.activityIndicator.hidden = true
         self.extractStatus.stringValue = ""
-        extractModel = BQFirstExtractController()
-        extractModel.salonDocument = self.salonDocument
+        extractModel = BQFirstExtractController(salonDocument:self.salonDocument)
         extractModel.delegate = self
     }
     

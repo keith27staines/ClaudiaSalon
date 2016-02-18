@@ -522,8 +522,7 @@
 -(SaleItem*)newSaleItem
 {
     NSManagedObjectContext * moc = self.documentMoc;
-    SaleItem * saleItem = [NSEntityDescription insertNewObjectForEntityForName:@"SaleItem" inManagedObjectContext:moc];
-    saleItem = [SaleItem newObjectWithMoc:moc];
+    SaleItem * saleItem = [SaleItem newObjectWithMoc:moc];
     saleItem.nominalCharge = @(-1);
     return saleItem;
 }

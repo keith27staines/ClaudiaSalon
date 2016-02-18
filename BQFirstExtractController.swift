@@ -23,9 +23,11 @@ protocol BQFirstExtractControllerDelegate {
 class BQFirstExtractController {
     var delegate: BQFirstExtractControllerDelegate?
     var salonDocument: AMCSalonDocument!
+    var salon: Salon!
+    var salonID: NSManagedObjectID!
     let icloudContainer = CKContainer.defaultContainer()
     let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
-    
+    private let synchronisationQueue = dispatch_queue_create("com.AMCAldebaron.BQCoredataExportController", DISPATCH_QUEUE_SERIAL)
     var extractedCustomerCount = 0
     var extractedEmployeesCount = 0
     var extractedServiceCategoriesCount = 0
@@ -58,8 +60,20 @@ class BQFirstExtractController {
     
     var cloudSalonRecord: CKRecord?
     var cloudSalonReference: CKReference?
-    var moc: NSManagedObjectContext! {
-        return self.salonDocument.managedObjectContext
+    let parentManagedObjectContext:NSManagedObjectContext
+    var moc: NSManagedObjectContext!
+    
+    init(salonDocument:AMCSalonDocument) {
+        self.salonDocument = salonDocument
+        self.parentManagedObjectContext = salonDocument.managedObjectContext!
+        self.salonID = salonDocument.salon.objectID
+        dispatch_sync(self.synchronisationQueue) {
+            self.moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+            self.moc.parentContext = self.parentManagedObjectContext
+            self.moc.performBlockAndWait() {
+                self.salon = self.moc.objectWithID(self.salonID) as! Salon
+            }
+        }
     }
     
     // MARK: Prepare coredata for clean extract
@@ -75,7 +89,7 @@ class BQFirstExtractController {
             print("deleteAllIcloudData - No salon data to delete!")
             return
         }
-        let icloudSalon = ICloudSalon(coredataSalon: self.salonDocument.salon)
+        let icloudSalon = ICloudSalon(coredataSalon: self.salon)
         publicDatabase.deleteRecordWithID(icloudSalon.recordID!, completionHandler: { (record, error) -> Void in
             if error != nil {
                 // Failed to delete the salon?
@@ -186,7 +200,7 @@ class BQFirstExtractController {
         totalCustomersToProcess = 0
         extractedCustomerCount = 0
         for customerForExport in coredataCustomersNeedingExport() {
-            let icloudCustomer = ICloudCustomer(coredataCustomer: customerForExport, parentSalon: self.salonDocument.salon)
+            let icloudCustomer = ICloudCustomer(coredataCustomer: customerForExport, parentSalonID: self.salonID)
             let ckRecord = icloudCustomer.makeCloudKitRecord()
             icloudCustomerRecords.append(ckRecord)
             totalCustomersToProcess++
@@ -198,7 +212,7 @@ class BQFirstExtractController {
         totalEmployeesToProcess = 0
         extractedEmployeesCount = 0
         for employeeForExport in coredataEmployeesNeedingExport() {
-            let icloudEmployee = ICloudEmployee(coredataEmployee: employeeForExport, parentSalon: self.salonDocument.salon)
+            let icloudEmployee = ICloudEmployee(coredataEmployee: employeeForExport, parentSalonID: self.salonID)
             let ckRecord = icloudEmployee.makeCloudKitRecord()
             icloudEmployeeRecords.append(ckRecord)
             totalEmployeesToProcess++
@@ -210,7 +224,7 @@ class BQFirstExtractController {
         totalServiceCategoriesToProcess = 0
         extractedServiceCategoriesCount = 0
         for serviceCategoryForExport in coredataServiceCategoriesNeedingExport() {
-            let icloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: serviceCategoryForExport, parentSalon: self.salonDocument.salon)
+            let icloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: serviceCategoryForExport, parentSalonID: self.salonID)
             let ckRecord = icloudServiceCategory.makeCloudKitRecord()
             icloudServiceCategoryRecords.append(ckRecord)
             totalServiceCategoriesToProcess++
@@ -223,7 +237,7 @@ class BQFirstExtractController {
         extractedServicesCount = 0
         for serviceForExport in coredataServicesNeedingExport() {
             if let _ = serviceForExport.serviceCategory {
-                let icloudService = ICloudService(coredataService: serviceForExport, parentSalon: self.salonDocument.salon)
+                let icloudService = ICloudService(coredataService: serviceForExport, parentSalonID: self.salonID)
                 let ckRecord = icloudService.makeCloudKitRecord()
                 icloudServiceRecords.append(ckRecord)
                 totalServicesToProcess++
@@ -241,18 +255,18 @@ class BQFirstExtractController {
         extractedSalesCount = 0
         extractedSaleItemsCount = 0
         for appointmentForExport in coredataAppointmentsNeedingExport() {
-            let icloudAppointment = ICloudAppointment(coredataAppointment: appointmentForExport, parentSalon: self.salonDocument.salon)
+            let icloudAppointment = ICloudAppointment(coredataAppointment: appointmentForExport, parentSalonID: self.salonID)
             let ckAppointmentRecord = icloudAppointment.makeCloudKitRecord()
             icloudRecords.append(ckAppointmentRecord)
             totalAppointmentsToProcess++
             // Add child Sale record
             if let saleForExport = appointmentForExport.sale {
-                let icloudSale = ICloudSale(coredataSale: saleForExport, parentSalon: self.salonDocument.salon)
+                let icloudSale = ICloudSale(coredataSale: saleForExport, parentSalonID: self.salonID)
                 let ckSaleRecord = icloudSale.makeCloudKitRecord()
                 icloudRecords.append(ckSaleRecord)
                 totalSalesToProcess++
                 for saleItemForExport in saleForExport.saleItem! {
-                    let icloudSaleItem = ICloudSaleItem(coredataSaleItem: saleItemForExport, parentSalon: self.salonDocument.salon)
+                    let icloudSaleItem = ICloudSaleItem(coredataSaleItem: saleItemForExport, parentSalonID: self.salonID)
                     let ckSaleItemRecord = icloudSaleItem.makeCloudKitRecord()
                     icloudRecords.append(ckSaleItemRecord)
                     totalSaleItemsToProcess++
@@ -325,7 +339,7 @@ class BQFirstExtractController {
     
     // MARK:- Create operation to extract top-level salon object
     func extractSalonOperation() -> CKModifyRecordsOperation {
-        let cloudSalon = ICloudSalon(coredataSalon: self.salonDocument.salon)
+        let cloudSalon = ICloudSalon(coredataSalon: self.salon)
         cloudSalonRecord = cloudSalon.makeFirstCloudkitRecord(nil)
         let recordsToSave = [cloudSalonRecord!]
         let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)

@@ -95,8 +95,6 @@
         startDate = [self previousStartDate:startDate];
         endDate = [self endDateFromStartDate:startDate];
     }
-    startDate = [self currentPeriodStartDate];
-    endDate = [self endDateFromStartDate:startDate];
     return _reportData;
 }
 -(void)loadReportDataDetail {

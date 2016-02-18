@@ -17,6 +17,7 @@
 		530D54771B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D54761B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m */; };
 		530D54A61B270C9300F6C4FE /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 530D54A51B270C9300F6C4FE /* Property List.plist */; };
 		530D62571C6DCFCB0064794B /* AMCServiceTableCellViewMac.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D62561C6DCFCB0064794B /* AMCServiceTableCellViewMac.m */; };
+		530D62591C75B0A60064794B /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530D62581C75B0A60064794B /* CloudKit.framework */; };
 		531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25521AB80E5100EB3472 /* AMCCashBook.m */; };
 		531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25561AB960F600EB3472 /* AMCCashBookViewController.m */; };
 		531B25591AB960F600EB3472 /* AMCCashBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531B25571AB960F600EB3472 /* AMCCashBookViewController.xib */; };
@@ -358,6 +359,7 @@
 		530D54A51B270C9300F6C4FE /* Property List.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Property List.plist"; sourceTree = "<group>"; };
 		530D62551C6DCFCB0064794B /* AMCServiceTableCellViewMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCServiceTableCellViewMac.h; sourceTree = "<group>"; };
 		530D62561C6DCFCB0064794B /* AMCServiceTableCellViewMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCServiceTableCellViewMac.m; sourceTree = "<group>"; };
+		530D62581C75B0A60064794B /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		53146BFC1AB225EC003B7658 /* ClaudiaSalon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = ClaudiaSalon.entitlements; path = ../ClaudiaSalon.entitlements; sourceTree = "<group>"; };
 		531B25511AB80E5100EB3472 /* AMCCashBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBook.h; sourceTree = "<group>"; };
 		531B25521AB80E5100EB3472 /* AMCCashBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBook.m; sourceTree = "<group>"; };
@@ -920,6 +922,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				530D62591C75B0A60064794B /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2144,6 +2147,7 @@
 		53D69BA61A9B22830004CE10 = {
 			isa = PBXGroup;
 			children = (
+				530D62581C75B0A60064794B /* CloudKit.framework */,
 				536B9DA41C4F98F900F170EC /* ClaudiaSalon-Bridging-Header.h */,
 				530D54A51B270C9300F6C4FE /* Property List.plist */,
 				53D4FC571B394339009EBF70 /* Foundation.framework */,
@@ -2468,7 +2472,7 @@
 								enabled = 1;
 							};
 							com.apple.iCloud = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
