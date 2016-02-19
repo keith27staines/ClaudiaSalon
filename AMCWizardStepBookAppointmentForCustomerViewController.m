@@ -93,7 +93,7 @@
             self.advancePaymentLabel.objectValue = @(0);
         }
     }
-    [self updateTotal];
+    [self displayTotal];
 }
 -(Appointment*)appointment {
     return (Appointment*)self.objectToManage;
@@ -250,11 +250,15 @@
 //        }
 //    }
 }
+-(void)displayTotal {
+    Sale * sale = self.appointment.sale;
+    self.priceTotalLabel.stringValue = [NSString stringWithFormat:@"Total = £%1.2f",sale.actualCharge.doubleValue];
+}
 -(void)updateTotal {
     Sale * sale = self.appointment.sale;
     [sale updatePriceFromSaleItems];
     sale.bqNeedsCoreDataExport = @YES;
-    self.priceTotalLabel.stringValue = [NSString stringWithFormat:@"Total = £%1.2f",sale.actualCharge.doubleValue];
+    [self displayTotal];
 }
 - (void)didPresentErrorWithRecovery:(BOOL)recover contextInfo:(void *)info {
     if (recover == NO) { // Recovery did not succeed, or no recovery attempted.
@@ -478,8 +482,6 @@
     [self.chosenServices removeObject:saleItem];
     [self.chosenServicesTable reloadData];
     [self updateTotal];
-    self.appointment.sale.bqNeedsCoreDataExport = @YES;
-    saleItem.bqNeedsCoreDataExport = @YES;
     [self.delegate wizardStepControllerDidChangeState:self];
 }
 - (IBAction)setAppointmentTimeButtonClicked:(id)sender {
