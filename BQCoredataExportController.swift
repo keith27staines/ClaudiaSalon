@@ -363,8 +363,12 @@ extension BQExportModifiedCoredataOperation {
         let modifiedSaleItems = SaleItem.saleItemsMarkedForExport(moc) as Set<SaleItem>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedSaleItems {
-            guard let _ = modifiedObject.sale?.fromAppointment else {
-                continue
+            // Exclude stand-alone sales. Only sales connected to appointments are of interest
+            if let sale = modifiedObject.sale {
+                if sale.fromAppointment == nil {
+                    // This is a stand-alone sale, not connected to an appointment
+                    continue
+                }
             }
             dispatch_sync(self.synchronisationQueue) {
                 let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
