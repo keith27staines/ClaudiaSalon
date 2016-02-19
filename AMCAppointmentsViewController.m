@@ -576,6 +576,7 @@ NSAnimationDelegate>
     return _searchFilteredAppointments;
 }
 -(void)showBookingWizardInMode:(EditMode)editMode {
+    NSMutableSet * saleItemSet = [NSMutableSet set];
     [self.salonDocument saveDocument:self];
     self.currentWizard = [[AMCWizardForNewAppointmentWindowController alloc] init];
     self.currentWizard.editMode = editMode;
@@ -583,26 +584,34 @@ NSAnimationDelegate>
         self.currentWizard.objectToManage = [Appointment newObjectWithMoc:self.documentMoc];
     } else {
         self.currentWizard.objectToManage = [self selectedAppointment];
+        [saleItemSet unionSet:self.selectedAppointment.sale.saleItem];
     }
     self.currentWizard.document = self.salonDocument;
     NSWindow * window = self.view.window;
     [window beginSheet:self.currentWizard.window completionHandler:^(NSModalResponse returnCode) {
         NSLog(@"Closing!!");
         NSManagedObjectContext * moc = self.documentMoc;
+        Appointment * appointment = self.currentWizard.objectToManage;
         if (self.currentWizard.cancelled) {
             if (self.currentWizard.editMode == EditModeCreate) {
-                Appointment * appointment = self.currentWizard.objectToManage;
                 appointment.sale.voided = @(YES);
                 [moc deleteObject:self.currentWizard.objectToManage];
             } else {
                 [moc rollback];
+                appointment = nil;
             }
         } else {
-            Appointment * appointment = self.currentWizard.objectToManage;
+            self.previouslySelectedAppointment = appointment;
+        }
+        if (appointment) {
             appointment.lastUpdatedDate = [NSDate date];
             appointment.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+            [saleItemSet unionSet:appointment.sale.saleItem];
+            appointment.sale.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+            for (SaleItem * saleItem in saleItemSet) {
+                saleItem.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+            }
             [self.salonDocument saveDocument:self];
-            self.previouslySelectedAppointment = appointment;
         }
         [self reloadData];
         [self selectAppointment:self.previouslySelectedAppointment];
