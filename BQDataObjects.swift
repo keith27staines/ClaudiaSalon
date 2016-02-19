@@ -108,7 +108,7 @@ public class ICloudSalon : ICloudRecord {
             self.postcode = coredataSalon.postcode
         }
     }
-    func makeFirstCloudkitRecord(parentSalon:CKReference?)-> CKRecord {
+    override func makeCloudKitRecord() -> CKRecord {
         let record = makeCloudKitRecordWithType(self.recordType)
         record["name"] = name
         record["addressLine1"] = addressLine1

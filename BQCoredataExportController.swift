@@ -13,6 +13,7 @@ import CoreData
 
 // MARK:- Class BQCoredataExportController
 class BQCoredataExportController {
+    private (set) var salonDocument:AMCSalonDocument!
     private (set) var salon:Salon!
     private (set) var parentManagedObjectContext:NSManagedObjectContext!
     private (set) var cancelled = true
@@ -22,12 +23,13 @@ class BQCoredataExportController {
     private let namePrefix = "BQCoredataExportController"
     private let exportQueue:NSOperationQueue
     private let deletionRequestList:BQDeletionRequestList
-    private let activeOperationsCounter = AMCThreadSafeCounter(initialValue: 0)
+    private let activeOperationsCounter = AMCThreadSafeCounter(name:"Export Operations Counter",initialValue: 0)
     private var nextRunTime = DISPATCH_TIME_NOW
     
-    init(parentManagedObjectContext:NSManagedObjectContext, salon:Salon, startImmediately:Bool) {
-        self.salon = salon
-        self.parentManagedObjectContext = parentManagedObjectContext
+    init(salonDocument:AMCSalonDocument, startImmediately:Bool) {
+        self.salonDocument = salonDocument
+        self.salon = salonDocument.salon
+        self.parentManagedObjectContext = self.salonDocument.managedObjectContext
         self.exportQueue = NSOperationQueue()
         self.exportQueue.name = namePrefix + "Queue"
         self.deletionRequestList = BQDeletionRequestList(parentManagedObjectContext: self.parentManagedObjectContext)
@@ -59,23 +61,25 @@ class BQCoredataExportController {
         let nextRunTime = dispatch_time(DISPATCH_TIME_NOW, Int64(waitForSeconds * NSEC_PER_SEC))
         dispatch_after(nextRunTime, synchronisationQueue) {
             if let strongSelf = weakSelf {
-                defer {
-                    print("Scheduling next iteration in \(waitForSeconds) seconds")
-                    strongSelf.runExportIterationAfterWait(waitForSeconds)
-                }
-                // Handle deletions
-                if strongSelf.activeOperationsCounter.count > 0 { return }
-                print("Initiate processing of deletion request list")
-                self.deletionRequestList.processList()
-                
-                // Handle insertions or modifications
+
+                // Only continue processing if we can "gain the lock"
                 if strongSelf.activeOperationsCounter.incrementIfZero() {
-                    print("Enquing new modify records operation")
-                    let moc = strongSelf.parentManagedObjectContext
-                    let newOperation = BQExportModifiedCoredataOperation(parentManagedObjectContext: moc, salonID: strongSelf.salon.objectID, activeOperationsCounter:self.activeOperationsCounter)
-                    newOperation.completionBlock = { self.activeOperationsCounter.decrement() }
+                    print("Running export iteration")
+                    
+                    // Handle deletions
+                    //self.deletionRequestList.processList()
+                
+                    // Handle insertions or modifications
+                    let salonDocument = strongSelf.salonDocument
+                    let newOperation = BQExportModifiedCoredataOperation(salonDocument: salonDocument, activeOperationsCounter:self.activeOperationsCounter)
+                    newOperation.completionBlock = {
+                        self.activeOperationsCounter.decrement()
+                    }
                     strongSelf.exportQueue.addOperation(newOperation)
                 }
+                
+                print("Scheduling next iteration in \(waitForSeconds) seconds")
+                strongSelf.runExportIterationAfterWait(waitForSeconds)
             }
         }
     }
@@ -89,13 +93,20 @@ private class BQExportModifiedCoredataOperation : NSOperation {
     private let salonID:NSManagedObjectID
     private var publicDatabase:CKDatabase!
     private let activeOperationsCounter: AMCThreadSafeCounter
-    private var exportedRecords = Set<String>()
-    
-    init(parentManagedObjectContext:NSManagedObjectContext, salonID:NSManagedObjectID, activeOperationsCounter:AMCThreadSafeCounter) {
-        self.parentManagedObjectContext = parentManagedObjectContext
-        self.salonID = salonID
+    private var exportedRecordsWithErrors = [String:NSError?]()
+    private var privateMoc: NSManagedObjectContext?
+    private var coredataObjectsNeedingExport = [String:NSManagedObject]()
+    private let salonDocument:AMCSalonDocument
+
+    init(salonDocument:AMCSalonDocument, activeOperationsCounter:AMCThreadSafeCounter) {
+        self.salonDocument = salonDocument
+        self.parentManagedObjectContext = salonDocument.managedObjectContext!
         self.activeOperationsCounter = activeOperationsCounter
+        self.salonID = NSManagedObjectID()
         super.init()
+        self.parentManagedObjectContext.performBlockAndWait() {
+            self.salonID = self.salonDocument.salon.objectID
+        }
         self.name = "BQExportModifiedCoredataOperation"
         self.qualityOfService = .Background
     }
@@ -105,34 +116,65 @@ private class BQExportModifiedCoredataOperation : NSOperation {
         if self.cancelled { return }
         var recordsToSave = [CKRecord]()
         publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
-        let moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        self.privateMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        let moc = self.privateMoc!
         moc.parentContext = parentManagedObjectContext
         moc.performBlockAndWait {
             recordsToSave = self.prepareCoredataObjectsForExportIfRequired(moc)
         }
+        if recordsToSave.count == 0 {
+            return
+        }
         
         // Now create an operation to send the modified records to the cloud
-        if self.cancelled || recordsToSave.count == 0 { return }
-        let saveRecordsOperation = self.modifyRecordsOperation(moc, recordsToSave: recordsToSave)
+        if self.cancelled { return }
+        let saveRecordsOperation = self.modifyRecordsOperation(recordsToSave)
+        saveRecordsOperation.completionBlock = self.saveRecordsOperationComplete
         
         // Actually submit the operation
         self.activeOperationsCounter.increment()
         self.publicDatabase.addOperation(saveRecordsOperation)
     }
+    func saveRecordsOperationComplete() -> Void {
+        if let privateMoc = self.privateMoc {
+            privateMoc.performBlockAndWait() {
+                for (coredataID,error) in self.exportedRecordsWithErrors {
+                    let managedObject = self.coredataObjectsNeedingExport[coredataID]!
+                    if error == nil {
+                        managedObject.markAsExported()
+                    } else {
+                        print("managed object failed to export with error \(error)")
+                    }
+                }
+                do {
+                    if privateMoc.hasChanges {
+                        try privateMoc.save()
+                        dispatch_sync(dispatch_get_main_queue()) {
+                            self.salonDocument.saveDocument(self)
+                        }
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
+        self.activeOperationsCounter.decrement()
+    }
     
     // MARK:- Retry operation
-    func retryOperation(operation:CKModifyRecordsOperation, waitInterval:Double) {
-        let waitIntervalNanoseconds = Int64(waitInterval * 1000_000_000.0)
+    func retryOperationOnPublicDatabase(operation:CKModifyRecordsOperation, waitInterval:Double) {
+        let waitIntervalNanoseconds = Int64(waitInterval * 1_000_000_000.0)
         let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, waitIntervalNanoseconds)
         dispatch_after(dispatchTime, self.synchronisationQueue) { () -> Void in
             self.activeOperationsCounter.increment()
             self.publicDatabase.addOperation(operation)
         }
     }
-    
 }
+
+// MARK:- create a CKModifyRecordsOperation to update the cloud
 extension BQExportModifiedCoredataOperation {
-    private func modifyRecordsOperation(moc:NSManagedObjectContext, recordsToSave:[CKRecord]) -> CKModifyRecordsOperation {
+    private func modifyRecordsOperation(recordsToSave:[CKRecord]) -> CKModifyRecordsOperation {
         let saveRecordsOperation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
         saveRecordsOperation.savePolicy = .ChangedKeys
         
@@ -141,58 +183,81 @@ extension BQExportModifiedCoredataOperation {
             guard let record = record else {
                 return
             }
-            guard let coredataID = record["coredataID"] else {
-                assertionFailure("This record was expected to have a coredata id but none found")
-                return
+            guard let coredataID = record["coredataID"] as? String  else {
+                fatalError("This record was expected to have a coredata id but none found")
             }
-            if let error = error {
-                switch error {
-                default:
-                    // Operation failed unrecoverably so nothing we can do except maybe figure out why
-                    print("Operation failed unrecoverably so nothing we can do except maybe figure out why")
-                }
-                return
+            dispatch_sync(self.synchronisationQueue) {
+                self.exportedRecordsWithErrors[coredataID] = error
             }
-            self.exportedRecords.insert(coredataID as! String)
         }
         
         // Set the records completion block
         saveRecordsOperation.modifyRecordsCompletionBlock = {(saveRecords, deleteRecords, error)-> Void in
             if let error = error {
-                switch error {
+                switch error.code {
                 case CKErrorCode.LimitExceeded.rawValue:
-                    // Need to recurse down to smaller operation
-                    assertionFailure("Need to recurse down to smaller operation")
-                    break
-                case error.code == CKErrorCode.PartialFailure.rawValue:
+                    /* This operation was "too big", so recurse down to
+                    ever smaller operations until they succeed or
+                    fail for a different reason
+                    */
+                    
+                    // Divide the recordIDs array into two halves
+                    guard let records = saveRecordsOperation.recordsToSave else {
+                        preconditionFailure("Expected records not to be nil")
+                    }
+                    let n = records.count / 2
+                    var firstHalfRecords = [CKRecord]()
+                    var secondHalfRecords = [CKRecord]()
+                    for index in records.indices {
+                        if index <= n {
+                            firstHalfRecords.append(records[index])
+                        } else {
+                            secondHalfRecords.append(records[index])
+                        }
+                    }
+                    // new operations for first half of records
+                    let firstHalfOperation = self.modifyRecordsOperation(firstHalfRecords)
+                    firstHalfOperation.completionBlock = self.saveRecordsOperationComplete
+                    
+                    // new operation for second half
+                    let secondHalfOperation = self.modifyRecordsOperation(secondHalfRecords)
+                    secondHalfOperation.completionBlock = self.saveRecordsOperationComplete
+                    secondHalfOperation.addDependency(firstHalfOperation)
+
+                    // add the sub operations to the queue
+                    self.activeOperationsCounter.increment()
+                    self.publicDatabase.addOperation(firstHalfOperation)
+                    self.activeOperationsCounter.increment()
+                    self.publicDatabase.addOperation(secondHalfOperation)
+                    return
+                case CKErrorCode.PartialFailure.rawValue:
                     print(error)
-                case error.userInfo["CKErrorRetryAfterKey"] != nil:
+                case CKErrorCode.ZoneBusy.rawValue,
+                CKErrorCode.RequestRateLimited.rawValue,
+                CKErrorCode.ServiceUnavailable.rawValue:
                     // Transient failure - can retry this operation after a suitable delay
                     let retryAfter = error.userInfo["CKErrorRetryAfterKey"]!.doubleValue
-                    self.retryOperation(saveRecordsOperation, waitInterval: retryAfter)
+                    self.retryOperationOnPublicDatabase(saveRecordsOperation, waitInterval: retryAfter)
                 default:
-                    // Operation failed unrecoverably so nothing we can do except maybe figure out why
-                    assertionFailure("Operation failed unrecoverably so nothing we can do except maybe figure out why")
-                    return
+                    // Operation failed unrecoverably so nothing we can do except figure out the cause
+                    fatalError("saveRecordsOperation failed unrecoverably")
                 }
             }
         }
-
-        // Set the completion block
-        saveRecordsOperation.completionBlock = {
-            self.activeOperationsCounter.decrement()
-        }
-
         return saveRecordsOperation
     }
 }
+// MARK:- prepare modified coredata objects for export to cloud
 extension BQExportModifiedCoredataOperation {
     private func prepareCoredataObjectsForExportIfRequired(moc:NSManagedObjectContext) -> [CKRecord] {
         var recordsToSave = [CKRecord]()
         
         // Export the salon itself if required
         if self.cancelled { return recordsToSave}
-        recordsToSave.append(self.prepareSalonForExportIfRequired(moc, salonID:self.salonID))
+        recordsToSave.appendContentsOf(self.prepareSalonForExportIfRequired(moc, salonID:self.salonID))
+        if recordsToSave.count > 0 {
+            return recordsToSave
+        }
         
         // Gather all modifed customers
         if self.cancelled { return recordsToSave}
@@ -225,20 +290,30 @@ extension BQExportModifiedCoredataOperation {
         return recordsToSave
     }
     
-    private func prepareSalonForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> CKRecord {
+    private func prepareSalonForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
+        var recordsToSave = [CKRecord]()
         var cloudRecord: CKRecord?
         let salon = moc.objectWithID(self.salonID) as! Salon
         if salon.bqNeedsCoreDataExport?.boolValue == true {
+            dispatch_sync(self.synchronisationQueue) {
+                let coredataID = salon.objectID.URIRepresentation().absoluteString
+                self.coredataObjectsNeedingExport[coredataID] = salon
+            }
             let icloudSalon = ICloudSalon(coredataSalon: salon)
             cloudRecord = icloudSalon.makeCloudKitRecord()
+            recordsToSave.append(cloudRecord!)
         }
-        return cloudRecord!
+        return recordsToSave
     }
     
     private func prepareCustomersForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
         let modifiedCustomers = Customer.customersMarkedForExport(moc) as Set<Customer>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedCustomers {
+            dispatch_sync(self.synchronisationQueue) {
+                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
+                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+            }
             let icloudObject = ICloudCustomer(coredataCustomer: modifiedObject, parentSalonID: self.salonID)
             let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
@@ -249,6 +324,10 @@ extension BQExportModifiedCoredataOperation {
         let modifiedCategories = ServiceCategory.serviceCategoriesMarkedForExport(moc) as Set<ServiceCategory>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedCategories {
+            dispatch_sync(self.synchronisationQueue) {
+                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
+                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+            }
             let icloudObject = ICloudServiceCategory(coredataServiceCategory: modifiedObject, parentSalonID: salonID)
             let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
@@ -259,6 +338,10 @@ extension BQExportModifiedCoredataOperation {
         let modifiedServices = Service.servicesMarkedForExport(moc) as Set<Service>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedServices {
+            dispatch_sync(self.synchronisationQueue) {
+                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
+                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+            }
             let icloudObject = ICloudService(coredataService: modifiedObject, parentSalonID: salonID)
             let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
@@ -269,6 +352,10 @@ extension BQExportModifiedCoredataOperation {
         let modifiedEmployees = Employee.employeesMarkedForExport(moc) as Set<Employee>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedEmployees {
+            dispatch_sync(self.synchronisationQueue) {
+                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
+                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+            }
             let icloudObject = ICloudEmployee(coredataEmployee: modifiedObject, parentSalonID: salonID)
             let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
@@ -281,6 +368,10 @@ extension BQExportModifiedCoredataOperation {
         for modifiedObject in modifiedSaleItems {
             guard let _ = modifiedObject.sale?.fromAppointment else {
                 continue
+            }
+            dispatch_sync(self.synchronisationQueue) {
+                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
+                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
             }
             let icloudObject = ICloudSaleItem(coredataSaleItem: modifiedObject, parentSalonID: salonID)
             let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -295,6 +386,10 @@ extension BQExportModifiedCoredataOperation {
             guard let _ = modifiedObject.fromAppointment else {
                 continue
             }
+            dispatch_sync(self.synchronisationQueue) {
+                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
+                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+            }
             let icloudObject = ICloudSale(coredataSale: modifiedObject, parentSalonID: salonID)
             let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)
@@ -305,6 +400,10 @@ extension BQExportModifiedCoredataOperation {
         let modifiedAppointments = Appointment.appointmentsMarkedForExport(moc) as Set<Appointment>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedAppointments {
+            dispatch_sync(self.synchronisationQueue) {
+                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
+                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+            }
             let icloudObject = ICloudAppointment(coredataAppointment: modifiedObject, parentSalonID: salonID)
             let cloudRecord = icloudObject.makeCloudKitRecord()
             recordsToSave.append(cloudRecord)

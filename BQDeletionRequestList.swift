@@ -18,7 +18,7 @@ class BQDeletionRequestList {
     let parentManagedObjectContext: NSManagedObjectContext
     var deleteOperations = Set<CKModifyRecordsOperation>()
     lazy var publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
-    let activeOperationCounter = AMCThreadSafeCounter(initialValue: 0)
+    let activeOperationCounter = AMCThreadSafeCounter(name:"Delete operations counter",initialValue: 0)
     var privateManagedObjectContext:NSManagedObjectContext!
     
     // MARK:- Initialiser and deinit
@@ -94,17 +94,17 @@ class BQDeletionRequestList {
             var failedDeletionsDictionary: [CKRecordID:NSError]?
             if let error = error {
                 switch error {
-                case CKErrorCode.LimitExceeded.rawValue:
+                case error.code == CKErrorCode.LimitExceeded.rawValue:
                     /* This operation was "too big", so recurse down to 
                        ever smaller operations until they succeed or 
                        fail for a different reason
                     */
                     
                     // Divide the recordIDs array into two halves
-                    let n = recordIDsToDelete.count / 2
+                    let n = operation.recordIDsToDelete!.count / 2
                     var firstHalfRecords = [CKRecordID]()
                     var secondHalfRecords = [CKRecordID]()
-                    for index in recordIDsToDelete.indices {
+                    for index in operation.recordIDsToDelete!.indices {
                         if index <= n {
                             firstHalfRecords.append(recordIDsToDelete[index])
                         } else {
@@ -148,7 +148,7 @@ class BQDeletionRequestList {
                 self.requestsFailed(failedDeletionsDictionary)
             }
         }
-        dispatch_sync(self.privateDispatchQueue) {self.deleteOperations.insert(operation)}
+        self.deleteOperations.insert(operation)
         return operation
     }
     

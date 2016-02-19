@@ -102,20 +102,27 @@ class BQFirstExtractController {
     
     // Prepare coredata records for extract
     func prepareCoredataRecordsReadyForFirstExport() {
-        self.salonDocument.salon.bqNeedsCoreDataExport = true
-        self.salonDocument.salon.bqMetadata = nil;
-        self.prepareAllCustomersForCoredataExport()
-        self.prepareAllEmployeesForCoredataExport()
-        self.prepareAllServiceCategoriesForCoredataExport()
-        self.prepareAllServicesForCoredataExport()
-        self.prepareAllAppointmentsForCoredataExport()
         var readyForExport = 0
         var others = 0
-        for saleItem in SaleItem.allObjectsWithMoc(self.moc) as! [SaleItem] {
-            if saleItem.bqNeedsCoreDataExport!.boolValue == true {
-                readyForExport++
-            } else {
-                others++
+        self.moc.performBlockAndWait() {
+            self.salonDocument.salon.bqNeedsCoreDataExport = true
+            self.salonDocument.salon.bqMetadata = nil;
+            self.prepareAllCustomersForCoredataExport()
+            self.prepareAllEmployeesForCoredataExport()
+            self.prepareAllServiceCategoriesForCoredataExport()
+            self.prepareAllServicesForCoredataExport()
+            self.prepareAllAppointmentsForCoredataExport()
+            for saleItem in SaleItem.allObjectsWithMoc(self.moc) as! [SaleItem] {
+                if saleItem.bqNeedsCoreDataExport!.boolValue == true {
+                    readyForExport++
+                } else {
+                    others++
+                }
+            }
+            do {
+                try self.moc.save()
+            } catch {
+                print(error)
             }
         }
         print("Sale Items ready for export = \(readyForExport)")
@@ -340,7 +347,7 @@ class BQFirstExtractController {
     // MARK:- Create operation to extract top-level salon object
     func extractSalonOperation() -> CKModifyRecordsOperation {
         let cloudSalon = ICloudSalon(coredataSalon: self.salon)
-        cloudSalonRecord = cloudSalon.makeFirstCloudkitRecord(nil)
+        cloudSalonRecord = cloudSalon.makeCloudKitRecord()
         let recordsToSave = [cloudSalonRecord!]
         let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
         operation.modifyRecordsCompletionBlock = { (saveRecords:[CKRecord]?,deleteRecordIDs:[CKRecordID]?,error:NSError?) in

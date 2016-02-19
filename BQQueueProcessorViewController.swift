@@ -28,9 +28,7 @@ class BQQueueProcessorViewController: NSViewController {
     // MARK:- NSViewController overrides
     override func viewDidLoad() {
         super.viewDidLoad()
-        let moc = self.salonDocument.managedObjectContext!
-        let salon = self.salonDocument.salon
-        coredataExportController = BQCoredataExportController(parentManagedObjectContext: moc, salon: salon, startImmediately: false)
+        coredataExportController = BQCoredataExportController(salonDocument: self.salonDocument, startImmediately: false)
     }
     
 }
