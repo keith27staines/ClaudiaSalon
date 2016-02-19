@@ -95,8 +95,10 @@ public class ICloudRecord {
             let archiver = NSKeyedArchiver(forWritingWithMutableData: metadata)
             ckRec.encodeSystemFieldsWithCoder(archiver)
             archiver.finishEncoding()
-            coredataObject.managedObjectContext?.performBlockAndWait() {
+            let moc = coredataObject.managedObjectContext!
+            moc.performBlockAndWait() {
                 coredataObject.setbqdata(metadata)
+                try! moc.save()
             }
         }
     }
