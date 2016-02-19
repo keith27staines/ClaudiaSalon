@@ -9,7 +9,7 @@
 import Cocoa
 
 class BQQueueProcessorViewController: NSViewController {
-    
+    // Yah
     var salonDocument: AMCSalonDocument!
     var coredataExportController : BQCoredataExportController!
 
