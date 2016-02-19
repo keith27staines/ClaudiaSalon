@@ -227,6 +227,37 @@ extension NSManagedObject {
     func cloudkitRecordFromEmbeddedMetadata()->CKRecord? {
         return NSManagedObject.cloudkitRecordFromMetadata(self.bqdata?.metadata)
     }
+    func setbqdata(data:NSData) {
+        let className = self.className
+        switch className {
+        case Salon.className():
+            let salon = self as! Salon
+            salon.bqMetadata = data
+        case Employee.className():
+            let employee = self as! Employee
+            employee.bqMetadata = data
+        case Customer.className():
+            let customer = self as! Customer
+            customer.bqMetadata = data
+        case ServiceCategory.className():
+            let serviceCategory = self as! ServiceCategory
+            serviceCategory.bqMetadata = data
+        case Service.className():
+            let service = self as! Service
+            service.bqMetadata = data
+        case Appointment.className():
+            let appointment = self as! Appointment
+            appointment.bqMetadata = data
+        case Sale.className():
+            let sale = self as! Sale
+            sale.bqMetadata = data
+        case SaleItem.className():
+            let saleItem = self as! SaleItem
+            saleItem.bqMetadata = data
+        default:
+            break
+        }
+    }
     var bqdata:(metadata:NSData?,bqNeedsExport:Bool)? {
         let className = self.className
         switch className {

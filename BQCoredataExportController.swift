@@ -258,6 +258,10 @@ extension BQExportModifiedCoredataOperation {
         if recordsToSave.count > 0 {
             return recordsToSave
         }
+
+        // Gather all modified Employees
+        if self.cancelled { return recordsToSave}
+        recordsToSave.appendContentsOf(self.prepareEmployeesForExportIfRequired(moc, salonID: self.salonID))
         
         // Gather all modifed customers
         if self.cancelled { return recordsToSave}
@@ -270,10 +274,6 @@ extension BQExportModifiedCoredataOperation {
         // Gather all modified Services
         if self.cancelled { return recordsToSave}
         recordsToSave.appendContentsOf(self.prepareServicesForExportIfRequired(moc, salonID: self.salonID))
-        
-        // Gather all modified Employees
-        if self.cancelled { return recordsToSave}
-        recordsToSave.appendContentsOf(self.prepareEmployeesForExportIfRequired(moc, salonID: self.salonID))
         
         // Gather all modified SaleItems
         if self.cancelled { return recordsToSave}

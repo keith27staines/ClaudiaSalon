@@ -48,7 +48,7 @@ public class ICloudRecord {
             self.coredataID = managedObject.objectID.URIRepresentation().absoluteString
             self.recordType = recordType;
             let metadata = managedObject.bqdata?.metadata
-            self.unarchiveFromMetadata(metadata)
+            self.unarchiveCloudRecordMetadataFromdata(metadata, coredataObject: managedObject)
             
             if recordType != ICloudRecordType.Salon.rawValue {
                 guard let parentSalon = managedObject.managedObjectContext!.objectWithID(parentSalonID!) as? Salon else {
@@ -60,11 +60,13 @@ public class ICloudRecord {
         }
     }
     
-    func makeCloudKitRecord()->CKRecord {
-        preconditionFailure("This method must be overridden and must not call super")
-    }
-    private func makeCloudKitRecordWithType(recordType:String)-> CKRecord {
-        let record = CKRecord(recordType: self.recordType)
+    private func makeCloudKitRecord()-> CKRecord {
+        let record:CKRecord
+        if let recordID = self.recordID {
+            record = CKRecord(recordType: self.recordType, recordID: recordID)
+        } else {
+            record = CKRecord(recordType: self.recordType)
+        }
         record["parentSalonReference"] = parentSalonReference
         record["needsExportToCoredata"] = false
         record["coredataID"] = coredataID
@@ -74,9 +76,9 @@ public class ICloudRecord {
     func fetchCoredataObject() {
         preconditionFailure("This method must be overridden and must not call super")
     }
-    private func unarchiveFromMetadata(metadata: NSData?) {
-        if let metadata = metadata {
-            let coder = NSKeyedUnarchiver(forReadingWithData: metadata)
+    private func unarchiveCloudRecordMetadataFromdata(data: NSData?,coredataObject:NSManagedObject) {
+        if let data = data {
+            let coder = NSKeyedUnarchiver(forReadingWithData: data)
             guard let ckRecord = CKRecord(coder: coder) else {
                 preconditionFailure("The CKRecord metadata could not be decoded")
             }
@@ -88,6 +90,14 @@ public class ICloudRecord {
             // No metadata, so create from scratch
             let recordName = NSUUID().UUIDString
             self.recordID = CKRecordID(recordName: recordName)
+            let ckRec = CKRecord(recordType: self.recordType, recordID: self.recordID!)
+            let metadata = NSMutableData()
+            let archiver = NSKeyedArchiver(forWritingWithMutableData: metadata)
+            ckRec.encodeSystemFieldsWithCoder(archiver)
+            archiver.finishEncoding()
+            coredataObject.managedObjectContext?.performBlockAndWait() {
+                coredataObject.setbqdata(metadata)
+            }
         }
     }
 }
@@ -109,7 +119,7 @@ public class ICloudSalon : ICloudRecord {
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
-        let record = makeCloudKitRecordWithType(self.recordType)
+        let record = super.makeCloudKitRecord()
         record["name"] = name
         record["addressLine1"] = addressLine1
         record["addressLine2"] = addressLine2
@@ -133,7 +143,7 @@ public class ICloudCustomer : ICloudRecord {
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
-        let record = makeCloudKitRecordWithType(self.recordType)
+        let record = super.makeCloudKitRecord()
         record["firstName"] = firstName
         record["lastName"] = lastName
         record["phone"] = phone
@@ -155,7 +165,7 @@ public class ICloudEmployee : ICloudRecord {
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
-        let record = makeCloudKitRecordWithType(self.recordType)
+        let record = super.makeCloudKitRecord()
         record["firstName"] = firstName
         record["lastName"] = lastName
         return record
@@ -173,7 +183,7 @@ public class ICloudServiceCategory : ICloudRecord {
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
-        let record = makeCloudKitRecordWithType(self.recordType)
+        let record = super.makeCloudKitRecord()
         record["name"] = name
         return record
     }
@@ -204,7 +214,7 @@ public class ICloudService : ICloudRecord {
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
-        let record = makeCloudKitRecordWithType(self.recordType)
+        let record = super.makeCloudKitRecord()
         record["name"] = name
         record["minPrice"] = minPrice
         record["maxPrice"] = maxPrice
@@ -237,7 +247,7 @@ class ICloudAppointment:ICloudRecord {
         
     }
     override func makeCloudKitRecord() -> CKRecord {
-        let record = makeCloudKitRecordWithType(self.recordType)
+        let record = super.makeCloudKitRecord()
         record["appointmentStartDate"] = appointmentStartDate
         record["appointmentEndDate"] = appointmentEndDate
         record["parentCustomerReference"] = parentCustomerReference
@@ -286,7 +296,7 @@ class ICloudSale:ICloudRecord {
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
-        let record = makeCloudKitRecordWithType(self.recordType)
+        let record = super.makeCloudKitRecord()
         record["parentCustomerReference"] = parentCustomerReference
         record["parentAppointmentReference"] = parentAppointmentReference
         record["discountVersion"] = discountVersion
@@ -331,7 +341,7 @@ class ICloudSaleItem: ICloudRecord {
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
-        let record = makeCloudKitRecordWithType(self.recordType)
+        let record = super.makeCloudKitRecord()
         record["parentSaleReference"] = parentSaleReference
         record["serviceReference"] = serviceReference
         record["discountVersion"] = discountVersion

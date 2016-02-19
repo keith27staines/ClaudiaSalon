@@ -79,7 +79,7 @@ class BQFirstExtractController {
     // MARK: Prepare coredata for clean extract
     func resetDataExtract() {
         // Delete Salon (this should cascade deletes all the way down)
-        deleteAllIcloudData()
+        //deleteAllIcloudData()
         prepareCoredataRecordsReadyForFirstExport()
     }
 
@@ -104,29 +104,35 @@ class BQFirstExtractController {
     func prepareCoredataRecordsReadyForFirstExport() {
         var readyForExport = 0
         var others = 0
-        self.moc.performBlockAndWait() {
-            self.salonDocument.salon.bqNeedsCoreDataExport = true
-            self.salonDocument.salon.bqMetadata = nil;
-            self.prepareAllCustomersForCoredataExport()
-            self.prepareAllEmployeesForCoredataExport()
-            self.prepareAllServiceCategoriesForCoredataExport()
-            self.prepareAllServicesForCoredataExport()
-            self.prepareAllAppointmentsForCoredataExport()
-            for saleItem in SaleItem.allObjectsWithMoc(self.moc) as! [SaleItem] {
-                if saleItem.bqNeedsCoreDataExport!.boolValue == true {
-                    readyForExport++
-                } else {
-                    others++
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+            self.moc.performBlockAndWait() {
+                self.salonDocument.salon.bqNeedsCoreDataExport = true
+                self.salonDocument.salon.bqMetadata = nil;
+                self.prepareAllCustomersForCoredataExport()
+                self.prepareAllEmployeesForCoredataExport()
+                self.prepareAllServiceCategoriesForCoredataExport()
+                self.prepareAllServicesForCoredataExport()
+                self.prepareAllAppointmentsForCoredataExport()
+                for saleItem in SaleItem.allObjectsWithMoc(self.moc) as! [SaleItem] {
+                    if saleItem.bqNeedsCoreDataExport!.boolValue == true {
+                        readyForExport++
+                    } else {
+                        others++
+                    }
+                }
+                do {
+                    try self.moc.save()
+                } catch {
+                    print("Unable to save moc \(error)")
+                }
+                dispatch_sync(dispatch_get_main_queue()) {
+                    self.salonDocument.saveDocument(self)
+                    print("Sale Items ready for export = \(readyForExport)")
+                    print("Sale Items not needing export = \(others)")
+                    print("reset finished")
                 }
             }
-            do {
-                try self.moc.save()
-            } catch {
-                print(error)
-            }
         }
-        print("Sale Items ready for export = \(readyForExport)")
-        print("Sale Items not needing export = \(others)")
     }
     
     // MARK:- Extract data
