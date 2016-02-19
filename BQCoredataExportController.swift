@@ -61,15 +61,13 @@ class BQCoredataExportController {
         let nextRunTime = dispatch_time(DISPATCH_TIME_NOW, Int64(waitForSeconds * NSEC_PER_SEC))
         dispatch_after(nextRunTime, synchronisationQueue) {
             if let strongSelf = weakSelf {
-
-                // Only continue processing if we can "gain the lock"
+                
+                // Handle deletions
+                self.deletionRequestList.processList()
+                
+                // Handle modifications - only process if we can "gain the lock"
                 if strongSelf.activeOperationsCounter.incrementIfZero() {
                     print("Running export iteration")
-                    
-                    // Handle deletions
-                    //self.deletionRequestList.processList()
-                
-                    // Handle insertions or modifications
                     let salonDocument = strongSelf.salonDocument
                     let newOperation = BQExportModifiedCoredataOperation(salonDocument: salonDocument, activeOperationsCounter:self.activeOperationsCounter)
                     newOperation.completionBlock = {
@@ -77,7 +75,6 @@ class BQCoredataExportController {
                     }
                     strongSelf.exportQueue.addOperation(newOperation)
                 }
-                
                 print("Scheduling next iteration in \(waitForSeconds) seconds")
                 strongSelf.runExportIterationAfterWait(waitForSeconds)
             }
