@@ -245,7 +245,6 @@
 -(void)updateTotal {
     Sale * sale = self.appointment.sale;
     [sale updatePriceFromSaleItems];
-    sale.bqNeedsCoreDataExport = @YES;
     [self displayTotal];
 }
 - (void)didPresentErrorWithRecovery:(BOOL)recover contextInfo:(void *)info {

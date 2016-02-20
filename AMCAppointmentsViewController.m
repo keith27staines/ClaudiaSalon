@@ -584,7 +584,9 @@ NSAnimationDelegate>
         self.currentWizard.objectToManage = [Appointment newObjectWithMoc:self.documentMoc];
     } else {
         self.currentWizard.objectToManage = [self selectedAppointment];
-        [saleItemSet unionSet:self.selectedAppointment.sale.saleItem];
+        for (SaleItem * saleItem in self.selectedAppointment.sale.saleItem) {
+            [saleItemSet addObject:saleItem.objectID];
+        }
     }
     self.currentWizard.document = self.salonDocument;
     NSWindow * window = self.view.window;
@@ -604,13 +606,9 @@ NSAnimationDelegate>
             self.previouslySelectedAppointment = appointment;
         }
         if (appointment) {
-            appointment.lastUpdatedDate = [NSDate date];
-            appointment.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
-            [saleItemSet unionSet:appointment.sale.saleItem];
-            appointment.sale.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
-            for (SaleItem * saleItem in saleItemSet) {
-                saleItem.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
-            }
+            NSManagedObjectContext*moc = self.salonDocument.managedObjectContext;
+            [Appointment markAppointmentForExportInMoc:moc appointmentID:appointment.objectID];
+            [SaleItem markSaleItemsForExportInMoc:moc saleItemIDs:saleItemSet];
             [self.salonDocument saveDocument:self];
         }
         [self reloadData];
@@ -769,19 +767,21 @@ NSAnimationDelegate>
     [self appointmentSelectionChanged];
     [self saleItemSelectionChanged];
 }
-
+-(void)markAppointmentForExport:(Appointment*)appointment {
+    NSManagedObjectID * appointmentID = appointment.objectID;
+    NSManagedObjectContext * moc = self.salonDocument.managedObjectContext;
+    [Appointment markAppointmentForExportInMoc:moc appointmentID:appointmentID];
+}
 -(void)dismissViewController:(NSViewController *)viewController {
     if (viewController == self.cancelAppointmentViewController) {
         if (!self.cancelAppointmentViewController.cancelled) {
-            self.cancelAppointmentViewController.appointment.lastUpdatedDate = [NSDate date];
-            self.cancelAppointmentViewController.appointment.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+            [self markAppointmentForExport:self.cancelAppointmentViewController.appointment];
             [self reloadData];
         }
     }
     if (viewController == self.completeAppointmentViewController) {
         if (!self.completeAppointmentViewController.cancelled) {
-            self.completeAppointmentViewController.appointment.lastUpdatedDate = [NSDate date];
-            self.completeAppointmentViewController.appointment.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+            [self markAppointmentForExport:self.completeAppointmentViewController.appointment];
             [self reloadData];
             if (self.completeAppointmentViewController.appointment.completionType.integerValue == AMCompletionTypeCompletedWithConversionToQuote) {
                 [self convertAppointmentToQuote:self.completeAppointmentViewController.appointment];
@@ -790,8 +790,7 @@ NSAnimationDelegate>
     }
     if (viewController == self.quickQuoteViewController) {
         if (self.quickQuoteViewController.sale.bqNeedsCoreDataExport) {
-            self.quickQuoteViewController.sale.fromAppointment.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
-            self.quickQuoteViewController.sale.lastUpdatedDate = [NSDate date];
+            [self markAppointmentForExport:self.quickQuoteViewController.sale.fromAppointment];
         }
         [self reloadData];
         [self selectAppointment:self.previouslySelectedAppointment];
