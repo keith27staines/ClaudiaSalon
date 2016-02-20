@@ -13,6 +13,7 @@
 @interface SaleItem (Methods) <AMCObjectWithNotesProtocol>
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
++(void)markSaleItemsForExportInMoc:(NSManagedObjectContext*)parentMoc saleItemIDs:(NSSet*)saleItemIDs;
 -(void)updatePrice;
 -(double)discountAmount;
 -(void)convertToDiscountVersion2;

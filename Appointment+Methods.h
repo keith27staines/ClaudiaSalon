@@ -15,6 +15,7 @@
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)appointmentsAfterDate:(NSDate*)date withMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)appointmentsOnDayOfDate:(NSDate*)date withMoc:(NSManagedObjectContext*)moc;
++(void)markAppointmentForExportInMoc:(NSManagedObjectContext*)parentMoc appointmentID:(NSManagedObjectID*)appointmentID;
 -(NSNumber*)expectedTimeRequired;
 -(NSUInteger)bookedDurationInMinutes;
 -(BOOL)conflictsWithAppointment:(Appointment*)otherAppointment;
