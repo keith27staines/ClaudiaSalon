@@ -95,8 +95,10 @@ public class ICloudRecord {
             let archiver = NSKeyedArchiver(forWritingWithMutableData: metadata)
             ckRec.encodeSystemFieldsWithCoder(archiver)
             archiver.finishEncoding()
-            coredataObject.managedObjectContext?.performBlockAndWait() {
+            let moc = coredataObject.managedObjectContext!
+            moc.performBlockAndWait() {
                 coredataObject.setbqdata(metadata)
+                try! moc.save()
             }
         }
     }
@@ -230,6 +232,9 @@ class ICloudAppointment:ICloudRecord {
     var appointmentStartDate: NSDate?
     var appointmentEndDate: NSDate?
     var expectedDuration: Double?
+    var cancellationType = 0
+    var cancelled = false
+    var completed = false
     init(coredataAppointment: Appointment, parentSalonID: NSManagedObjectID) {
         
         super.init(recordType:ICloudRecordType.Appointment.rawValue,managedObject: coredataAppointment, parentSalonID: parentSalonID)
@@ -238,6 +243,9 @@ class ICloudAppointment:ICloudRecord {
             self.appointmentStartDate = coredataAppointment.appointmentDate
             self.appointmentEndDate = coredataAppointment.appointmentEndDate
             self.expectedDuration = coredataAppointment.expectedTimeRequired().doubleValue
+            self.cancelled = coredataAppointment.cancelled?.boolValue ?? false
+            self.completed = coredataAppointment.completed?.boolValue ?? false
+            self.cancellationType = coredataAppointment.cancellationType?.integerValue ?? 0
             
             // Assign this Appointment's parent customer
             let coredataCustomer = coredataAppointment.customer!
@@ -251,6 +259,9 @@ class ICloudAppointment:ICloudRecord {
         record["appointmentStartDate"] = appointmentStartDate
         record["appointmentEndDate"] = appointmentEndDate
         record["parentCustomerReference"] = parentCustomerReference
+        record["cancelled"] = cancelled
+        record["cancellationType"] = cancellationType
+        record["completed"] = completed
         return record
     }
     class func operationToDetermineExpiredAppointments(salonReference:CKReference) -> CKOperation {

@@ -72,8 +72,8 @@
 }
 -(BOOL)isValid {
     return ([self.appointment.appointmentDate isGreaterThan:[NSDate distantPast]] &&
-             self.appointment.bookedDuration.integerValue > 0 &&
-             self.appointment.sale.saleItem.count > 0);
+            self.appointment.bookedDuration.integerValue > 0 &&
+            self.appointment.sale.saleItem.count > 0);
 }
 -(void)resetToObject {
     Appointment * appointment = self.appointment;
@@ -237,18 +237,10 @@
             [popup selectItem:item];
         }
     }
-    
-//    Employee * stylist = saleItem.performedBy;
-//    if (popup.itemArray.count) {
-//        if ([stylist.canDo containsObject:saleItem.service]) {
-//            NSMenu * menu = popup.menu;
-//            NSUInteger index = [menu indexOfItemWithRepresentedObject:stylist];
-//            NSMenuItem * menuItem = [menu itemAtIndex:index];
-//            [popup selectItem:menuItem];
-//        } else {
-//            [popup selectItemAtIndex:0];
-//        }
-//    }
+}
+-(void)displayTotal {
+    Sale * sale = self.appointment.sale;
+    self.priceTotalLabel.stringValue = [NSString stringWithFormat:@"Total = £%1.2f",sale.actualCharge.doubleValue];
 }
 -(void)displayTotal {
     Sale * sale = self.appointment.sale;
@@ -343,10 +335,10 @@
         [m setMinimumIntegerDigits:2];
         [m setMaximumFractionDigits:0];
         NSString * basicText = [NSString stringWithFormat:@"%@.%@ – %@.%@ ",
-                           [h stringFromNumber:@([self hourFromRow:row])],
-                           [m stringFromNumber:@([self minuteFromRow:row])],
-                           [h stringFromNumber:@([self hourFromRow:row+1])],
-                           [m stringFromNumber:@([self minuteFromRow:row+1])]];
+                                [h stringFromNumber:@([self hourFromRow:row])],
+                                [m stringFromNumber:@([self minuteFromRow:row])],
+                                [h stringFromNumber:@([self hourFromRow:row+1])],
+                                [m stringFromNumber:@([self minuteFromRow:row+1])]];
         NSString * text = [basicText copy];
         if ([appointmentsInSlot containsObject:self.appointment]) {
             if (appointmentsInSlot.count == 1) {
@@ -495,7 +487,7 @@
             NSString * messageText = @"";
             if (conflictingAppointments.count == 1) {
                 messageText = [NSString stringWithFormat:@"Be careful! A possibly conflicting appointment already exists"];
-
+                
             } else {
                 messageText = [NSString stringWithFormat:@"Be careful! %@ possibly conflicting appointments already exist",@(conflictingAppointments.count)];
             }

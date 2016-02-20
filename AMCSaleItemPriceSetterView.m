@@ -46,8 +46,6 @@
     [self.discountPopup selectItemAtIndex:self.saleItem.discountValue.integerValue];
     [self.saleItem updatePrice];
     [self updateFromSaleItem];
-    self.saleItem.bqNeedsCoreDataExport = @YES;
-    self.saleItem.sale.bqNeedsCoreDataExport = @YES;
     [self.delegate saleItemPriceSetterView:self didUpdateSaleItem:self.saleItem];
 }
 
@@ -57,8 +55,6 @@
     self.saleItem.discountValue = @(self.discountPopup.indexOfSelectedItem);
     [self.saleItem updatePrice];
     [self updateFromSaleItem];
-    self.saleItem.bqNeedsCoreDataExport = @YES;
-    self.saleItem.sale.bqNeedsCoreDataExport = @YES;
     [self.delegate saleItemPriceSetterView:self didUpdateSaleItem:self.saleItem];
 }
 

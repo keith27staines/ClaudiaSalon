@@ -26,6 +26,25 @@
     array = [moc executeFetchRequest:fetch error:nil];
     return array;
 }
++(void)markSaleItemsForExportInMoc:(NSManagedObjectContext*)parentMoc saleItemIDs:(NSSet*)saleItemIDs {
+    NSManagedObjectContext * privateMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    privateMoc.parentContext = parentMoc;
+    [privateMoc performBlockAndWait:^{
+        for (NSManagedObjectID * saleItemID in saleItemIDs) {
+            SaleItem * saleItem = [privateMoc objectWithID:saleItemID];
+            if (saleItem) {
+                NSDate * rightNow = [NSDate date];
+                saleItem.lastUpdatedDate = rightNow;
+                saleItem.bqNeedsCoreDataExport = @YES;
+                NSError * error;
+                [privateMoc save:(&error)];
+                if (error) {
+                    NSAssert(@"Error while marking saleItem for export: %@",error.description);
+                }
+            }
+        }
+    }];
+}
 -(NSSet*)nonAuditNotes {
     NSMutableSet * nonAuditNotes = [NSMutableSet set];
     for (Note * note in self.notes) {

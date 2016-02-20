@@ -112,6 +112,29 @@
     NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
     return fetchedObjects;
 }
++(void)markAppointmentForExportInMoc:(NSManagedObjectContext*)parentMoc appointmentID:(NSManagedObjectID*)appointmentID {
+    NSManagedObjectContext * privateMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    privateMoc.parentContext = parentMoc;
+    [privateMoc performBlockAndWait:^{
+        Appointment * appointment = [privateMoc objectWithID:appointmentID];
+        if (appointment) {
+            NSDate * rightNow = [NSDate date];
+            appointment.lastUpdatedDate = rightNow;
+            appointment.sale.lastUpdatedDate = rightNow;
+            appointment.bqNeedsCoreDataExport = @YES;
+            appointment.sale.bqNeedsCoreDataExport = @YES;
+            for (SaleItem * saleItem in appointment.sale.saleItem) {
+                saleItem.lastUpdatedDate = rightNow;
+                saleItem.bqNeedsCoreDataExport = @YES;
+            }
+            NSError * error;
+            [privateMoc save:(&error)];
+            if (error) {
+                NSAssert(@"Error while marking appointment for export: %@",error.description);
+            }
+        }
+    }];
+}
 -(NSArray*)conflictingAppointments {
     // As a good start, fetch all appointments on same day as these will be the only potential conflicts
     NSArray * potentialConflicts = [Appointment appointmentsOnDayOfDate:self.appointmentDate withMoc:self.managedObjectContext];

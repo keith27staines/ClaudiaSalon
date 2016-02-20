@@ -9,8 +9,10 @@
 import Foundation
 import CloudKit
 
+
 // MARK:- Class BQDeletionRequestList
 class BQDeletionRequestList {
+    private static var loadRequestListOnceToken: dispatch_once_t = 0
     let maxRecordsToDeleteInBatch = 200
     private let privateDispatchQueue = dispatch_queue_create("com.AMCAldebaron.BQDeletionRequestList", DISPATCH_QUEUE_SERIAL)
 
@@ -29,16 +31,6 @@ class BQDeletionRequestList {
             self.privateManagedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
             self.privateManagedObjectContext.parentContext = self.parentManagedObjectContext
         }
-        self.loadRequestListDictionary()
-        
-        // Monitor new deletions from coredata
-        NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextObjectsDidChangeNotification, object: self.parentManagedObjectContext, queue: NSOperationQueue.mainQueue()) { notification in
-            // Managed objects just-deleted from the parent managed object (these changed being driven by user interaction) must be added to a deletion list for later removal from icloud
-            if let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] {
-                let deletedManagedObjects = deletedObjects as! Set<NSManagedObject>
-                self.addCloudDeletionRequestsForLocallyDeletedObjects(deletedManagedObjects)
-            }
-        }
     }
     
     deinit {
@@ -49,7 +41,20 @@ class BQDeletionRequestList {
     
     /** processList() starts the processing of the items recorded in the coredata deletionRequest entity. The objects are examined for bqMetadata and if found, the corresponding object in iCloud is deleted. Finally, the deletion request is deleted */
     func processList() {
-        dispatch_sync(self.privateDispatchQueue) {
+        dispatch_async(self.privateDispatchQueue) {
+            dispatch_once(&BQDeletionRequestList.loadRequestListOnceToken) {
+                // Load the deletion request dictionary and set up notifications to keep synchronised with coredata
+                self.loadRequestListDictionary()
+                
+                // Monitor new deletions from coredata
+                NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextObjectsDidChangeNotification, object: self.parentManagedObjectContext, queue: NSOperationQueue.mainQueue()) { notification in
+                    // Managed objects just-deleted from the parent managed object (these changed being driven by user interaction) must be added to a deletion list for later removal from icloud
+                    if let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] {
+                        let deletedManagedObjects = deletedObjects as! Set<NSManagedObject>
+                        self.addCloudDeletionRequestsForLocallyDeletedObjects(deletedManagedObjects)
+                    }
+                }
+            }
             if !self.activeOperationCounter.incrementIfZero() { return }
             var recordIDsToDelete = [CKRecordID]()
             for (_,deletionRequest) in self.requestListDictionary {
@@ -86,7 +91,7 @@ class BQDeletionRequestList {
         }
         
         operation.modifyRecordsCompletionBlock = { (_,recordIDsToDelete,error)->Void in
-            guard let recordIDsToDelete = recordIDsToDelete else {
+            guard let recordIDsToDelete = recordIDsToDelete where recordIDsToDelete.count > 0 else {
                 return
             }
             let attemptedDeletions = Set(recordIDsToDelete)
