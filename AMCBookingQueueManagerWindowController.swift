@@ -11,7 +11,7 @@ import Cocoa
 class AMCBookingQueueManagerWindowController: NSWindowController {
 
     let bookingViewController = AMCBookingQueueManagerViewController()
-    var salonDocument: AMCSalonDocument!
+    weak var salonDocument: AMCSalonDocument!
     convenience init() {
         self.init(windowNibName:"AMCBookingQueueManagerWindowController")
     }

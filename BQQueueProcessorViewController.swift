@@ -10,7 +10,7 @@ import Cocoa
 
 class BQQueueProcessorViewController: NSViewController {
 
-    var salonDocument: AMCSalonDocument!
+    weak var salonDocument: AMCSalonDocument!
     var coredataExportController : BQCoredataExportController!
 
     // MARK:- Actions
