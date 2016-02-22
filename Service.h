@@ -8,15 +8,24 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+#import "AMCObjectWithNotesProtocol.h"
+#import "AMCTreeNode.h"
 @class Employee, Note, Product, SaleItem, ServiceCategory;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Service : NSManagedObject
 
-// Insert code here to declare functionality of your managed object subclass
 
+@interface Service:NSManagedObject <AMCObjectWithNotesProtocol,AMCTreeNode>
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
+
+-(NSString*)displayText;
+
+// "" (for not applicable), short, medium, long
+@property (copy,readonly) NSString * hairLengthDescription;
+@property (copy,readonly) NSString * deluxeDescription;
+@property id<AMCTreeNode> parentNode;
 @end
 
 NS_ASSUME_NONNULL_END

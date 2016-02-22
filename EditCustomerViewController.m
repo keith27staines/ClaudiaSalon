@@ -7,10 +7,10 @@
 //
 
 #import "EditCustomerViewController.h"
-#import "Customer+Methods.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
-#import "Payment+Methods.h"
+#import "Customer.h"
+#import "Sale.h"
+#import "SaleItem.h"
+#import "Payment.h"
 #import "AMCConstants.h"
 #import "AMCSalonDocument.h"
 #import "NSDate+AMCDate.h"

@@ -7,8 +7,9 @@
 //
 
 #import "AMCCashBookViewController.h"
-#import "Account+Methods.h"
+#import "Account.h"
 #import "AMCCashBook.h"
+#import "AMCSalonDocument.h"
 
 @interface AMCCashBookViewController () <NSTableViewDataSource, NSTableViewDelegate>
 @property (weak) IBOutlet NSTextField *accountNameLabel;

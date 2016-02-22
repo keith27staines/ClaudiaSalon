@@ -8,15 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+#import "AMCObjectWithNotesProtocol.h"
 @class Employee, Note, Payment, Sale, Service;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SaleItem : NSManagedObject
-
-// Insert code here to declare functionality of your managed object subclass
-
+@interface SaleItem : NSManagedObject <AMCObjectWithNotesProtocol>
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
++(void)markSaleItemsForExportInMoc:(NSManagedObjectContext*)parentMoc saleItemIDs:(NSSet*)saleItemIDs;
+-(void)updatePrice;
+-(double)discountAmount;
+-(void)convertToDiscountVersion2;
 @end
 
 NS_ASSUME_NONNULL_END

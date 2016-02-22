@@ -7,10 +7,10 @@
 //
 
 #import "AMCRolesMappingToScreen.h"
-#import "Role+Methods.h"
-#import "BusinessFunction+Methods.h"
-#import "Permission+Methods.h"
-#import "Employee+Methods.h"
+#import "Role.h"
+#import "BusinessFunction.h"
+#import "Permission.h"
+#import "Employee.h"
 
 @interface AMCRolesMappingToScreen () <NSTableViewDataSource, NSTableViewDelegate>
 

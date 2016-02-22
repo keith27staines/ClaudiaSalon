@@ -172,7 +172,7 @@
     NSError *error = nil;
     NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
-        [NSApp presentError:error];
+        NSLog(@"Unexpected error: %@",error);
     }
     NSAssert(fetchedObjects.count < 2, @"0 or 1 items expected");
     if (fetchedObjects.count == 0 || fetchedObjects[0]==product) {

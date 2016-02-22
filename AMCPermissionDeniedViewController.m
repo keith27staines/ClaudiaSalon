@@ -7,9 +7,9 @@
 //
 
 #import "AMCPermissionDeniedViewController.h"
-#import "Employee+Methods.h"
-#import "BusinessFunction+Methods.h"
-#import "Role+Methods.h"
+#import "Employee.h"
+#import "BusinessFunction.h"
+#import "Role.h"
 #import "AMCChangeUserViewController.h"
 #import "AMCRolesMappingToScreen.h"
 

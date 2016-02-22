@@ -7,12 +7,12 @@
 //
 
 #import "AMCBookingRowView.h"
-#import "Appointment+Methods.h"
-#import "Customer+Methods.h"
-#import "Service+Methods.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
-#import "Employee+Methods.h"
+#import "Appointment.h"
+#import "Customer.h"
+#import "Service.h"
+#import "Sale.h"
+#import "SaleItem.h"
+#import "Employee.h"
 
 @interface AMCBookingRowView()
 {

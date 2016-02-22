@@ -7,12 +7,12 @@
 //
 
 #import "AMCAccountStatementItem.h"
-#import "Sale+Methods.h"
-#import "Payment+Methods.h"
-#import "Customer+Methods.h"
-#import "Employee+Methods.h"
-#import "PaymentCategory+Methods.h"
-#import "Account+Methods.h"
+#import "Sale.h"
+#import "Payment.h"
+#import "Customer.h"
+#import "Employee.h"
+#import "PaymentCategory.h"
+#import "Account.h"
 
 @interface AMCAccountStatementItem()
 {

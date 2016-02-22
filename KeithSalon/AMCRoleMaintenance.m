@@ -8,10 +8,10 @@
 @class AMCPermissionsForRoleEditor;
 
 #import "AMCRoleMaintenance.h"
-#import "Permission+Methods.h"
-#import "BusinessFunction+Methods.h"
-#import "Employee+Methods.h"
-#import "Role+Methods.h"
+#import "Permission.h"
+#import "BusinessFunction.h"
+#import "Employee.h"
+#import "Role.h"
 #import "AMCPermissionsForRoleEditor.h"
 
 @interface AMCRoleMaintenance () <NSTableViewDataSource, NSTableViewDelegate, NSTextDelegate>

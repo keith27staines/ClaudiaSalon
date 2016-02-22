@@ -7,9 +7,9 @@
 //
 
 #import "EditSaleViewController.h"
-#import "Customer+Methods.h"
-#import "Sale+Methods.h"
-#import "Payment+Methods.h"
+#import "Customer.h"
+#import "Sale.h"
+#import "Payment.h"
 #import "MakePaymentStepViewController.h"
 #import "AMCReceiptWindowController.h"
 #import "AMCSalonDocument.h"

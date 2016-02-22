@@ -10,10 +10,10 @@
 #import "Salon.h"
 #import "NSDate+AMCDate.h"
 #import "AMCAccountStatementItem.h"
-#import "Payment+Methods.h"
-#import "PaymentCategory+Methods.h"
+#import "Payment.h"
+#import "PaymentCategory.h"
 #import "AMCCashBookRootNode.h"
-#import "Account+Methods.h"
+#import "Account.h"
 
 @interface AMCCashBook()
 {

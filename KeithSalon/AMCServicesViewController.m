@@ -7,7 +7,7 @@
 //
 
 #import "AMCServicesViewController.h"
-#import "Service+Methods.h"
+#import "Service.h"
 
 @interface AMCServicesViewController ()
 @property (weak) IBOutlet NSMenuItem *addServiceMenuItem;

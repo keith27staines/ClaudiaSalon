@@ -7,10 +7,10 @@
 //
 
 #import "AMCAdvancePayment.h"
-#import "Appointment+Methods.h"
-#import "Sale+Methods.h"
-#import "Payment+Methods.h"
-#import "Account+Methods.h"
+#import "Appointment.h"
+#import "Sale.h"
+#import "Payment.h"
+#import "Account.h"
 
 @interface AMCAdvancePayment ()
 @property (weak) IBOutlet NSTextField *amountTotalLabel;

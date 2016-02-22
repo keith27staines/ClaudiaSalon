@@ -7,8 +7,8 @@
 //
 
 #import "AMCServiceCategoriesManagementViewController.h"
-#import "ServiceCategory+Methods.h"
-#import "Service+Methods.h"
+#import "ServiceCategory.h"
+#import "Service.h"
 #import "EditServiceCategoryViewController.h"
 #import "EditServiceViewController.h"
 

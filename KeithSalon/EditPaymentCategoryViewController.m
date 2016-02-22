@@ -7,7 +7,7 @@
 //
 
 #import "EditPaymentCategoryViewController.h"
-#import "PaymentCategory+Methods.h"
+#import "PaymentCategory.h"
 #import "AMCConstants.h"
 #import "AMCSalonDocument.h"
 

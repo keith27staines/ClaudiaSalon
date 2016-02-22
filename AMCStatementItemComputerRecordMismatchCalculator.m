@@ -9,8 +9,8 @@
 #import "AMCStatementItemComputerRecordMismatchCalculator.h"
 #import "NSDate+AMCDate.h"
 #import "AMCAccountStatementItem.h"
-#import "Payment+Methods.h"
-#import "Sale+Methods.h"
+#import "Payment.h"
+#import "Sale.h"
 
 @implementation AMCStatementItemComputerRecordMismatchCalculator
 

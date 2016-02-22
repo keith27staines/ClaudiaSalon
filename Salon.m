@@ -16,14 +16,13 @@
 #import "Role.h"
 #import "ServiceCategory.h"
 #import "Salon.h"
-#import "AppDelegate.h"
 #import "LastUpdatedBy.h"
 #import "OpeningHoursWeekTemplate.h"
 #import "OpeningHoursDayTemplate.h"
 #import "IntervalDuringDay.h"
 #import "NSDate+AMCDate.h"
-#import "Account+Methods.h"
-#import "PaymentCategory+Methods.h"
+#import "Account.h"
+#import "PaymentCategory.h"
 
 @implementation Salon
 

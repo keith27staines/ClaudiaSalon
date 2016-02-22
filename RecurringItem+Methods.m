@@ -7,8 +7,8 @@
 //
 
 #import "RecurringItem+Methods.h"
-#import "Payment+Methods.h"
-#import "Account+Methods.h"
+#import "Payment.h"
+#import "Account.h"
 
 @implementation RecurringItem (Methods)
 

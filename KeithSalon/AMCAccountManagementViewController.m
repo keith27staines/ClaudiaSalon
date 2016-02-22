@@ -9,7 +9,7 @@
 #import "AMCAccountManagementViewController.h"
 #import "AMCSalonDocument.h"
 #import "Salon.h"
-#import "Account+Methods.h"
+#import "Account.h"
 
 @interface AMCAccountManagementViewController () <NSTableViewDelegate>
 @property (strong) IBOutlet NSArrayController *accountArrayController;

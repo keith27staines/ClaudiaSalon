@@ -7,7 +7,7 @@
 //
 
 #import "AMCAccountReconciliationViewController.h"
-#import "Account+Methods.h"
+#import "Account.h"
 #import "AccountReconciliation+Methods.h"
 #import "NSDate+AMCDate.h"
 

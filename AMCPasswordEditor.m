@@ -7,7 +7,7 @@
 //
 
 #import "AMCPasswordEditor.h"
-#import "Employee+Methods.h"
+#import "Employee.h"
 
 @interface AMCPasswordEditor () <NSTextFieldDelegate>
 @property (weak) IBOutlet NSButton *doneButton;

@@ -7,7 +7,7 @@
 //
 
 #import "StockedItem+Methods.h"
-#import "Note+Methods.h"
+#import "Note.h"
 
 @implementation StockedItem (Methods)
 

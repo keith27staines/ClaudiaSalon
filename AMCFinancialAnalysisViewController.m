@@ -8,11 +8,11 @@
 
 #import "AMCFinancialAnalysisViewController.h"
 #import "PaymentCategory.h"
-#import "Payment+Methods.h"
-#import "PaymentCategory+Methods.h"
-#import "Sale+Methods.h"
-#import "Account+Methods.h"
-#import "Customer+Methods.h"
+#import "Payment.h"
+#import "PaymentCategory.h"
+#import "Sale.h"
+#import "Account.h"
+#import "Customer.h"
 #import "NSDate+AMCDate.h"
 #import "AMCConstants.h"
 #import "EditPaymentViewController.h"
@@ -288,7 +288,7 @@
     NSError *error = nil;
     NSArray * sales = [moc executeFetchRequest:fetchRequest error:&error];
     if (sales == nil) {
-        [NSApp presentError:error];
+        NSLog(@"Unexpected error: %@",error);
     }
     return sales;
 }
@@ -314,7 +314,7 @@
     NSError *error = nil;
     NSArray * payments = [moc executeFetchRequest:fetchRequest error:&error];
     if (self.data == nil) {
-        [NSApp presentError:error];
+        NSLog(@"Unexpected error: %@",error);
     }
     return payments;
 }
@@ -357,7 +357,7 @@
     NSError *error = nil;
     NSArray * payments = [moc executeFetchRequest:fetchRequest error:&error];
     if (payments == nil) {
-        [NSApp presentError:error];
+        NSLog(@"Unexpected error: %@",error);
     }
     double balance = 0;
     double paymentsIn = 0;

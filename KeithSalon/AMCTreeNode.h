@@ -11,7 +11,7 @@
 #import <CoreData/CoreData.h>
 
 @protocol AMCTreeNode <NSObject>
-@required
+@optional
 @property (readonly) id<AMCTreeNode> rootNode;
 @property id<AMCTreeNode> parentNode;
 @property (copy) NSString * name;

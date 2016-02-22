@@ -7,22 +7,22 @@
 //
 
 #import "Note.h"
-#import "Appointment.h"
-#import "Customer.h"
-#import "Employee.h"
-#import "Payment.h"
-#import "Product.h"
-#import "Sale.h"
-#import "SaleItem.h"
-#import "Service.h"
-#import "ServiceCategory.h"
-#import "StockedBrand.h"
-#import "StockedCategory.h"
-#import "StockedItem.h"
-#import "StockedProduct.h"
 
 @implementation Note
-
-// Insert code here to add functionality to your managed object subclass
-
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc
+{
+    Note * note = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:moc];
+    NSDate * rightNow = [NSDate date];
+    note.createdDate = rightNow;
+    note.lastUpdatedDate = rightNow;
+    note.title = @"";
+    note.text = @"";
+    return note;
+}
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc {
+    NSArray * array = nil;
+    NSFetchRequest * fetch = [NSFetchRequest fetchRequestWithEntityName:@"Note"];
+    array = [moc executeFetchRequest:fetch error:nil];
+    return array;
+}
 @end

@@ -7,12 +7,12 @@
 //
 
 #import "AMCStaffBusyView.h"
-#import "Employee+Methods.h"
-#import "Appointment+Methods.h"
-#import "Service+Methods.h"
-#import "SaleItem+Methods.h"
-#import "Customer+Methods.h"
-#import "Sale+Methods.h"
+#import "Employee.h"
+#import "Appointment.h"
+#import "Service.h"
+#import "SaleItem.h"
+#import "Customer.h"
+#import "Sale.h"
 #import "NSDate+AMCDate.h" 
 
 typedef NS_ENUM(NSInteger, AMCEmployeeUtilisation) {

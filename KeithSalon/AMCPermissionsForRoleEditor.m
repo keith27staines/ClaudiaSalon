@@ -7,9 +7,9 @@
 //
 
 #import "AMCPermissionsForRoleEditor.h"
-#import "Role+Methods.h"
-#import "Permission+Methods.h"
-#import "BusinessFunction+Methods.h"
+#import "Role.h"
+#import "Permission.h"
+#import "BusinessFunction.h"
 #import "AMCSalonDocument.h"
 
 @interface AMCPermissionsForRoleEditor () <NSTableViewDelegate, NSTableViewDataSource>

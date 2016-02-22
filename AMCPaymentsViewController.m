@@ -9,16 +9,16 @@
 #import "AMCPaymentsViewController.h"
 #import "AMCMoneyTransferViewController.h"
 
-#import "Payment+Methods.h"
-#import "Sale+Methods.h"
-#import "Customer+Methods.h"
-#import "Account+Methods.h"
+#import "Payment.h"
+#import "Sale.h"
+#import "Customer.h"
+#import "Account.h"
 #import "AMCConstants.h"
 #import "NSDate+AMCDate.h"
 
 #import "PaymentCategory.h"
-#import "WorkRecord+Methods.h"
-#import "Employee+Methods.h"
+#import "WorkRecord.h"
+#import "Employee.h"
 #import "AMCSalonDocument.h"
 
 #import "EditEmployeeViewController.h"
@@ -182,7 +182,7 @@
     NSError *error = nil;
     NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
-        [NSApp presentError:error];
+        NSLog(@"Unexpected error: %@",error);
     }
 
     NSMenu * menu = self.paymentCategoryPopup.menu;
@@ -295,14 +295,14 @@
 - (IBAction)tillPaymentClicked:(id)sender {
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
     Account * account = self.salonDocument.salon.tillAccount;
-    Payment * payment = [account makePaymentWithAmount:@(0) date:[NSDate date] category:nil direction:kAMCPaymentDirectionOut payeeName:@"" reason:@""];
+    Payment * payment = [account makePaymentWithAmount:@(0) date:[NSDate date] direction:kAMCPaymentDirectionOut payeeName:@"" reason:@""];
     [self reloadData];
     [self editObject:payment forSalon:self.salonDocument inMode:EditModeCreate withViewController:self.editObjectViewController];
 }
 - (IBAction)bankPaymentClicked:(id)sender {
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
     Account * account = self.salonDocument.salon.primaryBankAccount;
-    Payment * payment = [account makePaymentWithAmount:@(0) date:[NSDate date] category:nil direction:kAMCPaymentDirectionOut payeeName:@"" reason:@""];
+    Payment * payment = [account makePaymentWithAmount:@(0) date:[NSDate date] direction:kAMCPaymentDirectionOut payeeName:@"" reason:@""];
     [self reloadData];
     [self editObject:payment forSalon:self.salonDocument inMode:EditModeCreate withViewController:self.editObjectViewController];
 }

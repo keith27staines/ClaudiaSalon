@@ -7,8 +7,8 @@
 //
 
 #import "AMCEmployeeForServiceSelector.h"
-#import "Employee+Methods.h"
-#import "Service+Methods.h"
+#import "Employee.h"
+#import "Service.h"
 @interface AMCEmployeeForServiceSelector ()
 
 @property (weak) IBOutlet NSTextField *serviceNameTextField;

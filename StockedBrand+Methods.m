@@ -7,7 +7,7 @@
 //
 
 #import "StockedBrand+Methods.h"
-#import "Note+Methods.h"
+#import "Note.h"
 
 @implementation StockedBrand (Methods)
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc

@@ -8,10 +8,10 @@
 
 #import "AMCMoneyTransferViewController.h"
 #import "AMCConstants.h"
-#import "Account+Methods.h"
-#import "Payment+Methods.h"
+#import "Account.h"
+#import "Payment.h"
 #import "AMCSalonDocument.h"
-#import "PaymentCategory+Methods.h"
+#import "PaymentCategory.h"
 #import "Salon.h"
 @interface AMCMoneyTransferViewController ()
 {

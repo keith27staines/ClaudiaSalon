@@ -13,10 +13,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BusinessFunction : NSManagedObject
-
-// Insert code here to declare functionality of your managed object subclass
-
+@interface BusinessFunction: NSManagedObject
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(BusinessFunction*)fetchBusinessFunctionWithCodeUnitName:(NSString*)name inMoc:(NSManagedObjectContext*)moc;
+-(NSArray*)mappedRoles;
 @end
 
 NS_ASSUME_NONNULL_END

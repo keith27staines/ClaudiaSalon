@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AMCSalonDocument.h"
+//#import "AMCSalonDocument.h"
 #import "Note.h"
 
 @protocol AMCObjectWithNotesProtocol <NSObject>
+@optional
 -(void)addNotesObject:(Note*)note;
 -(void)removeNotesObject:(Note*)note;
 -(NSSet*)notes;

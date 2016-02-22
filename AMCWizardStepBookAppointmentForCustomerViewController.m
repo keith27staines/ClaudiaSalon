@@ -7,12 +7,12 @@
 //
 
 #import "AMCWizardStepBookAppointmentForCustomerViewController.h"
-#import "Appointment+Methods.h"
-#import "ServiceCategory+Methods.h"
-#import "Service+Methods.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
-#import "Employee+Methods.h"
+#import "Appointment.h"
+#import "ServiceCategory.h"
+#import "Service.h"
+#import "Sale.h"
+#import "SaleItem.h"
+#import "Employee.h"
 #import "AMCJobsColumnView.h"
 #import "AMCJobsColumnViewController.h"
 #import "AMCSaleItemViewController.h"
@@ -23,7 +23,7 @@
 #import "AMCStaffBusyViewController.h"
 #import "AMCEmployeeForServiceSelector.h"
 #import "AMCAdvancePayment.h"
-#import "Payment+Methods.h"
+#import "Payment.h"
 #import "ClaudiaSalon-swift.h"
 
 @interface AMCWizardStepBookAppointmentForCustomerViewController () <NSTableViewDataSource, NSTableViewDelegate, AMCJobsColumnViewDelegate, AMCServiceCategoryPopupControllerDelegate>

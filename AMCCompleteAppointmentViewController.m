@@ -8,10 +8,10 @@
 
 #import "AMCCompleteAppointmentViewController.h"
 #import "AMCConstants.h"
-#import "Appointment+Methods.h"
+#import "Appointment.h"
 #import "AMCAppointmentCompletionBoilerPlate.h"
 #import "AMCAppointmentCompletionBoilerPlate.h"
-#import "Note+Methods.h"
+#import "Note.h"
 #import "AMCSalonDocument.h"
 
 @interface AMCCompleteAppointmentViewController ()

@@ -10,9 +10,11 @@
 #import "AMCStatementParser.h"
 #import "AMCAccountStatementItem.h"
 #import "NSDate+AMCDate.h"
-#import "Payment+Methods.h"
+#import "Payment.h"
 #import "AMCMatchingPaymentSelectorViewController.h"
 #import "AMCStatementItemComputerRecordMismatchCalculator.h"
+#import "AMCConstants.h"
+#import "AMCSalonDocument.h"
 
 @interface AMCBankStatementReconciliationViewController () <NSTableViewDataSource, NSTableViewDelegate, NSMenuDelegate>
 {
@@ -191,7 +193,7 @@
                 error = nil;
                 csv = [NSString stringWithContentsOfURL:fileURL encoding:NSASCIIStringEncoding error:&error];
                 if (!csv && error) {
-                    [NSApp presentError:error];
+                    NSLog(@"Unexpected error: %@",error);
                 }
             }
             

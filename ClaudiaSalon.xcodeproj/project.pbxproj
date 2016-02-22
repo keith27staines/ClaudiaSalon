@@ -159,8 +159,6 @@
 		53D325661A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D325651A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m */; };
 		53D325A51A9E390B00AFCDE4 /* AMCWelcomeScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D325A31A9E390B00AFCDE4 /* AMCWelcomeScreen.m */; };
 		53D325A61A9E390B00AFCDE4 /* AMCWelcomeScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D325A41A9E390B00AFCDE4 /* AMCWelcomeScreen.xib */; };
-		53D4FC501B3934A5009EBF70 /* Role+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC4F1B3934A5009EBF70 /* Role+Methods.m */; };
-		53D4FC531B39363D009EBF70 /* BusinessFunction+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC521B39363D009EBF70 /* BusinessFunction+Methods.m */; };
 		53D4FC971B3997BF009EBF70 /* AMCUserRoleEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC951B3997BF009EBF70 /* AMCUserRoleEditor.m */; };
 		53D4FC981B3997BF009EBF70 /* AMCUserRoleEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FC961B3997BF009EBF70 /* AMCUserRoleEditor.xib */; };
 		53D4FC9C1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FC9A1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.m */; };
@@ -169,7 +167,6 @@
 		53D4FCA91B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FCA71B3BF391009EBF70 /* AMCPermissionDeniedViewController.xib */; };
 		53D4FCAD1B3D904D009EBF70 /* AMCRolesMappingToScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCAB1B3D904D009EBF70 /* AMCRolesMappingToScreen.m */; };
 		53D4FCAE1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FCAC1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib */; };
-		53D4FCCC1B3EF688009EBF70 /* Permission+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCCB1B3EF688009EBF70 /* Permission+Methods.m */; };
 		53D4FCD71B4044FB009EBF70 /* AMCRoleMaintenance.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D4FCD51B4044FB009EBF70 /* AMCRoleMaintenance.m */; };
 		53D4FCD81B4044FB009EBF70 /* AMCRoleMaintenance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D4FCD61B4044FB009EBF70 /* AMCRoleMaintenance.xib */; };
 		53D69BB61A9B22830004CE10 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69BB51A9B22830004CE10 /* AppDelegate.m */; };
@@ -282,25 +279,12 @@
 		53D69D1C1A9B240C0004CE10 /* AMCCancelAppointmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C961A9B240C0004CE10 /* AMCCancelAppointmentView.m */; };
 		53D69D1D1A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C971A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m */; };
 		53D69D1E1A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C981A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m */; };
-		53D69D371A9B240C0004CE10 /* PaymentCategory+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB11A9B240C0004CE10 /* PaymentCategory+Methods.m */; };
-		53D69D381A9B240C0004CE10 /* Appointment+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB21A9B240C0004CE10 /* Appointment+Methods.m */; };
-		53D69D391A9B240C0004CE10 /* Employee+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB31A9B240C0004CE10 /* Employee+Methods.m */; };
-		53D69D3A1A9B240C0004CE10 /* Sale+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB41A9B240C0004CE10 /* Sale+Methods.m */; };
-		53D69D3B1A9B240C0004CE10 /* SaleItem+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB51A9B240C0004CE10 /* SaleItem+Methods.m */; };
 		53D69D3C1A9B240C0004CE10 /* Product+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB61A9B240C0004CE10 /* Product+Methods.m */; };
-		53D69D3D1A9B240C0004CE10 /* Service+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB71A9B240C0004CE10 /* Service+Methods.m */; };
-		53D69D3E1A9B240C0004CE10 /* ServiceCategory+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB81A9B240C0004CE10 /* ServiceCategory+Methods.m */; };
-		53D69D3F1A9B240C0004CE10 /* Customer+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB91A9B240C0004CE10 /* Customer+Methods.m */; };
-		53D69D401A9B240C0004CE10 /* Payment+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CBA1A9B240C0004CE10 /* Payment+Methods.m */; };
-		53D69D411A9B240C0004CE10 /* Note+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CBB1A9B240C0004CE10 /* Note+Methods.m */; };
-		53D69D421A9B240C0004CE10 /* Account+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CBC1A9B240C0004CE10 /* Account+Methods.m */; };
 		53D69D431A9B240C0004CE10 /* AccountReconciliation+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CBD1A9B240C0004CE10 /* AccountReconciliation+Methods.m */; };
 		53D69D451A9B240C0004CE10 /* StockedBrand+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CBF1A9B240C0004CE10 /* StockedBrand+Methods.m */; };
 		53D69D461A9B240C0004CE10 /* StockedProduct+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CC01A9B240C0004CE10 /* StockedProduct+Methods.m */; };
 		53D69D471A9B240C0004CE10 /* StockedItem+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CC11A9B240C0004CE10 /* StockedItem+Methods.m */; };
 		53D69D481A9B240C0004CE10 /* StockedCategory+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CC21A9B240C0004CE10 /* StockedCategory+Methods.m */; };
-		53D69D491A9B240C0004CE10 /* WorkRecord+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CC31A9B240C0004CE10 /* WorkRecord+Methods.m */; };
-		53D69D4A1A9B240C0004CE10 /* Salary+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CC41A9B240C0004CE10 /* Salary+Methods.m */; };
 		53D69D4B1A9B240C0004CE10 /* ObjectSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CC51A9B240C0004CE10 /* ObjectSelectorViewController.m */; };
 		53D69D4C1A9B240C0004CE10 /* ProductSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CC61A9B240C0004CE10 /* ProductSelectorViewController.m */; };
 		53D69D4D1A9B240C0004CE10 /* EditObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CC71A9B240C0004CE10 /* EditObjectViewController.m */; };
@@ -338,6 +322,37 @@
 		53D934081AC71E1B001D6C64 /* AMCSalonDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D934061AC71E1B001D6C64 /* AMCSalonDetailsViewController.m */; };
 		53D934091AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D934071AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib */; };
 		53FA37361C6503430067136C /* BQCoredataObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */; };
+		53FDCA3E1C79A591006B4002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA3D1C79A591006B4002 /* AppDelegate.swift */; };
+		53FDCA431C79A591006B4002 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA421C79A591006B4002 /* MasterViewController.swift */; };
+		53FDCA451C79A591006B4002 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA441C79A591006B4002 /* DetailViewController.swift */; };
+		53FDCA481C79A591006B4002 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53FDCA461C79A591006B4002 /* Main.storyboard */; };
+		53FDCA4A1C79A591006B4002 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53FDCA491C79A591006B4002 /* Assets.xcassets */; };
+		53FDCA4D1C79A591006B4002 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53FDCA4B1C79A591006B4002 /* LaunchScreen.storyboard */; };
+		53FDCA541C79A5BA006B4002 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53FDCA531C79A5BA006B4002 /* CloudKit.framework */; };
+		53FDCA561C79AE4E006B4002 /* ClaudiasSalon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */; };
+		53FDCA581C79AF4D006B4002 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA571C79AF4D006B4002 /* CoreData.swift */; };
+		53FDCA591C79BF75006B4002 /* Appointment+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E201C56077D00F170EC /* Appointment+CoreDataProperties.m */; };
+		53FDCA5A1C79BF75006B4002 /* Appointment.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E221C56077D00F170EC /* Appointment.m */; };
+		53FDCA641C7A06DA006B4002 /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E361C56077E00F170EC /* Sale.m */; };
+		53FDCA661C7A081A006B4002 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E1E1C56077D00F170EC /* Customer.m */; };
+		53FDCA681C7A094F006B4002 /* SaleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DEA1C56077D00F170EC /* SaleItem.m */; };
+		53FDCA6A1C7A0D3D006B4002 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DF61C56077D00F170EC /* Employee.m */; };
+		53FDCA6C1C7A1138006B4002 /* ServiceCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E0A1C56077D00F170EC /* ServiceCategory.m */; };
+		53FDCA6E1C7A116E006B4002 /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DCE1C52842300F170EC /* Salon.m */; };
+		53FDCA721C7A11FD006B4002 /* Holiday.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E601C56077E00F170EC /* Holiday.m */; };
+		53FDCA731C7A12FB006B4002 /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E421C56077E00F170EC /* Service.m */; };
+		53FDCA741C7A13BB006B4002 /* BusinessFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E3E1C56077E00F170EC /* BusinessFunction.m */; };
+		53FDCA781C7A6E3F006B4002 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E321C56077D00F170EC /* Note.m */; };
+		53FDCA7D1C7A7621006B4002 /* Permission.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E2A1C56077D00F170EC /* Permission.m */; };
+		53FDCA7E1C7A7625006B4002 /* Role.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DFA1C56077D00F170EC /* Role.m */; };
+		53FDCA7F1C7A762A006B4002 /* Salary.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E021C56077D00F170EC /* Salary.m */; };
+		53FDCA801C7A762E006B4002 /* WorkRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E1A1C56077D00F170EC /* WorkRecord.m */; };
+		53FDCA811C7A7638006B4002 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DE61C56077D00F170EC /* Account.m */; };
+		53FDCA821C7A763C006B4002 /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E541C56077E00F170EC /* Payment.m */; };
+		53FDCA831C7A77A2006B4002 /* AMCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C5D1A9B240B0004CE10 /* AMCConstants.m */; };
+		53FDCA841C7A7849006B4002 /* NSDate+AMCDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C6F1A9B240B0004CE10 /* NSDate+AMCDate.m */; };
+		53FDCA861C7A7965006B4002 /* PaymentCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E3A1C56077E00F170EC /* PaymentCategory.m */; };
+		53FDCA871C7A79E7006B4002 /* AMCDiscountCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CD41A9B240C0004CE10 /* AMCDiscountCalculator.m */; };
 		53FFAF911AB220470078E9CC /* AMCEmployeeForServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */; };
 /* End PBXBuildFile section */
 
@@ -618,10 +633,6 @@
 		53D325A21A9E390B00AFCDE4 /* AMCWelcomeScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCWelcomeScreen.h; sourceTree = "<group>"; };
 		53D325A31A9E390B00AFCDE4 /* AMCWelcomeScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCWelcomeScreen.m; sourceTree = "<group>"; };
 		53D325A41A9E390B00AFCDE4 /* AMCWelcomeScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCWelcomeScreen.xib; sourceTree = "<group>"; };
-		53D4FC4E1B3934A5009EBF70 /* Role+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Role+Methods.h"; sourceTree = "<group>"; };
-		53D4FC4F1B3934A5009EBF70 /* Role+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Role+Methods.m"; sourceTree = "<group>"; };
-		53D4FC511B39363D009EBF70 /* BusinessFunction+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BusinessFunction+Methods.h"; sourceTree = "<group>"; };
-		53D4FC521B39363D009EBF70 /* BusinessFunction+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BusinessFunction+Methods.m"; sourceTree = "<group>"; };
 		53D4FC571B394339009EBF70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		53D4FC941B3997BF009EBF70 /* AMCUserRoleEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCUserRoleEditor.h; sourceTree = "<group>"; };
 		53D4FC951B3997BF009EBF70 /* AMCUserRoleEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCUserRoleEditor.m; sourceTree = "<group>"; };
@@ -635,8 +646,6 @@
 		53D4FCAA1B3D904D009EBF70 /* AMCRolesMappingToScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCRolesMappingToScreen.h; sourceTree = "<group>"; };
 		53D4FCAB1B3D904D009EBF70 /* AMCRolesMappingToScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCRolesMappingToScreen.m; sourceTree = "<group>"; };
 		53D4FCAC1B3D904D009EBF70 /* AMCRolesMappingToScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCRolesMappingToScreen.xib; sourceTree = "<group>"; };
-		53D4FCCA1B3EF688009EBF70 /* Permission+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Permission+Methods.h"; sourceTree = "<group>"; };
-		53D4FCCB1B3EF688009EBF70 /* Permission+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Permission+Methods.m"; sourceTree = "<group>"; };
 		53D4FCD41B4044FB009EBF70 /* AMCRoleMaintenance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCRoleMaintenance.h; sourceTree = "<group>"; };
 		53D4FCD51B4044FB009EBF70 /* AMCRoleMaintenance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCRoleMaintenance.m; sourceTree = "<group>"; };
 		53D4FCD61B4044FB009EBF70 /* AMCRoleMaintenance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCRoleMaintenance.xib; sourceTree = "<group>"; };
@@ -700,7 +709,7 @@
 		53D69C181A9B23B60004CE10 /* AMCStaffBusyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCStaffBusyViewController.xib; sourceTree = "<group>"; };
 		53D69C191A9B23B60004CE10 /* AMCStaffCanDoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCStaffCanDoViewController.xib; sourceTree = "<group>"; };
 		53D69C1A1A9B23B60004CE10 /* AMCMoneyTransferViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AMCMoneyTransferViewController.xib; path = ../AMCMoneyTransferViewController.xib; sourceTree = "<group>"; };
-		53D69C5D1A9B240B0004CE10 /* AMCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMCConstants.m; path = ../AMCConstants.m; sourceTree = "<group>"; };
+		53D69C5D1A9B240B0004CE10 /* AMCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCConstants.m; sourceTree = "<group>"; };
 		53D69C5F1A9B240B0004CE10 /* AMCSalaryEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSalaryEditorViewController.m; sourceTree = "<group>"; };
 		53D69C601A9B240B0004CE10 /* AMCPaymentAmountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPaymentAmountViewController.m; sourceTree = "<group>"; };
 		53D69C611A9B240B0004CE10 /* AMCSalaryPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSalaryPaymentViewController.m; sourceTree = "<group>"; };
@@ -715,7 +724,7 @@
 		53D69C6B1A9B240B0004CE10 /* AMCSaleItemPriceSetterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSaleItemPriceSetterView.m; sourceTree = "<group>"; };
 		53D69C6D1A9B240B0004CE10 /* AMCDayAndMonthPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCDayAndMonthPopupViewController.m; sourceTree = "<group>"; };
 		53D69C6E1A9B240B0004CE10 /* AMCStorePopulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCStorePopulator.m; sourceTree = "<group>"; };
-		53D69C6F1A9B240B0004CE10 /* NSDate+AMCDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+AMCDate.m"; path = "../NSDate+AMCDate.m"; sourceTree = "<group>"; };
+		53D69C6F1A9B240B0004CE10 /* NSDate+AMCDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+AMCDate.m"; sourceTree = "<group>"; };
 		53D69C701A9B240B0004CE10 /* AMCAssociatedNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAssociatedNotesViewController.m; sourceTree = "<group>"; };
 		53D69C711A9B240B0004CE10 /* AMCNoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCNoteViewController.m; sourceTree = "<group>"; };
 		53D69C721A9B240B0004CE10 /* AMCNoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCNoteView.m; sourceTree = "<group>"; };
@@ -753,25 +762,12 @@
 		53D69C961A9B240C0004CE10 /* AMCCancelAppointmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCancelAppointmentView.m; sourceTree = "<group>"; };
 		53D69C971A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAppointmentCompletionBoilerPlate.m; sourceTree = "<group>"; };
 		53D69C981A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCompleteAppointmentViewController.m; sourceTree = "<group>"; };
-		53D69CB11A9B240C0004CE10 /* PaymentCategory+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PaymentCategory+Methods.m"; sourceTree = "<group>"; };
-		53D69CB21A9B240C0004CE10 /* Appointment+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Appointment+Methods.m"; sourceTree = "<group>"; };
-		53D69CB31A9B240C0004CE10 /* Employee+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Employee+Methods.m"; sourceTree = "<group>"; };
-		53D69CB41A9B240C0004CE10 /* Sale+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Sale+Methods.m"; sourceTree = "<group>"; };
-		53D69CB51A9B240C0004CE10 /* SaleItem+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SaleItem+Methods.m"; sourceTree = "<group>"; };
 		53D69CB61A9B240C0004CE10 /* Product+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Product+Methods.m"; sourceTree = "<group>"; };
-		53D69CB71A9B240C0004CE10 /* Service+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Service+Methods.m"; sourceTree = "<group>"; };
-		53D69CB81A9B240C0004CE10 /* ServiceCategory+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ServiceCategory+Methods.m"; sourceTree = "<group>"; };
-		53D69CB91A9B240C0004CE10 /* Customer+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Customer+Methods.m"; sourceTree = "<group>"; };
-		53D69CBA1A9B240C0004CE10 /* Payment+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Payment+Methods.m"; sourceTree = "<group>"; };
-		53D69CBB1A9B240C0004CE10 /* Note+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Note+Methods.m"; sourceTree = "<group>"; };
-		53D69CBC1A9B240C0004CE10 /* Account+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Account+Methods.m"; sourceTree = "<group>"; };
 		53D69CBD1A9B240C0004CE10 /* AccountReconciliation+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AccountReconciliation+Methods.m"; sourceTree = "<group>"; };
 		53D69CBF1A9B240C0004CE10 /* StockedBrand+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "StockedBrand+Methods.m"; sourceTree = "<group>"; };
 		53D69CC01A9B240C0004CE10 /* StockedProduct+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "StockedProduct+Methods.m"; sourceTree = "<group>"; };
 		53D69CC11A9B240C0004CE10 /* StockedItem+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "StockedItem+Methods.m"; sourceTree = "<group>"; };
 		53D69CC21A9B240C0004CE10 /* StockedCategory+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "StockedCategory+Methods.m"; sourceTree = "<group>"; };
-		53D69CC31A9B240C0004CE10 /* WorkRecord+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WorkRecord+Methods.m"; sourceTree = "<group>"; };
-		53D69CC41A9B240C0004CE10 /* Salary+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Salary+Methods.m"; sourceTree = "<group>"; };
 		53D69CC51A9B240C0004CE10 /* ObjectSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjectSelectorViewController.m; sourceTree = "<group>"; };
 		53D69CC61A9B240C0004CE10 /* ProductSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductSelectorViewController.m; sourceTree = "<group>"; };
 		53D69CC71A9B240C0004CE10 /* EditObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditObjectViewController.m; sourceTree = "<group>"; };
@@ -800,7 +796,7 @@
 		53D69CDF1A9B240C0004CE10 /* AMCStaffCanDoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCStaffCanDoViewController.m; sourceTree = "<group>"; };
 		53D69CE01A9B240C0004CE10 /* AMCMoneyTransferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AMCMoneyTransferViewController.m; path = ../AMCMoneyTransferViewController.m; sourceTree = "<group>"; };
 		53D69CE11A9B240C0004CE10 /* AMCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCViewController.m; sourceTree = "<group>"; };
-		53D69D6C1A9B243B0004CE10 /* AMCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AMCConstants.h; path = ../AMCConstants.h; sourceTree = "<group>"; };
+		53D69D6C1A9B243B0004CE10 /* AMCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCConstants.h; sourceTree = "<group>"; };
 		53D69D6E1A9B243B0004CE10 /* AMCSalaryEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSalaryEditorViewController.h; sourceTree = "<group>"; };
 		53D69D6F1A9B243B0004CE10 /* AMCPaymentAmountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPaymentAmountViewController.h; sourceTree = "<group>"; };
 		53D69D701A9B243B0004CE10 /* AMCSalaryPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSalaryPaymentViewController.h; sourceTree = "<group>"; };
@@ -815,7 +811,7 @@
 		53D69D7A1A9B243B0004CE10 /* AMCSaleItemPriceSetterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSaleItemPriceSetterView.h; sourceTree = "<group>"; };
 		53D69D7C1A9B243B0004CE10 /* AMCDayAndMonthPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCDayAndMonthPopupViewController.h; sourceTree = "<group>"; };
 		53D69D7D1A9B243B0004CE10 /* AMCStorePopulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCStorePopulator.h; sourceTree = "<group>"; };
-		53D69D7E1A9B243B0004CE10 /* NSDate+AMCDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+AMCDate.h"; path = "../NSDate+AMCDate.h"; sourceTree = "<group>"; };
+		53D69D7E1A9B243B0004CE10 /* NSDate+AMCDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+AMCDate.h"; sourceTree = "<group>"; };
 		53D69D7F1A9B243B0004CE10 /* AMCAssociatedNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCAssociatedNotesViewController.h; sourceTree = "<group>"; };
 		53D69D801A9B243B0004CE10 /* AMCNoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCNoteViewController.h; sourceTree = "<group>"; };
 		53D69D811A9B243B0004CE10 /* AMCNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCNoteView.h; sourceTree = "<group>"; };
@@ -853,26 +849,13 @@
 		53D69DA51A9B243C0004CE10 /* AMCCancelAppointmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCancelAppointmentView.h; sourceTree = "<group>"; };
 		53D69DA61A9B243C0004CE10 /* AMCAppointmentCompletionBoilerPlate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCAppointmentCompletionBoilerPlate.h; sourceTree = "<group>"; };
 		53D69DA71A9B243C0004CE10 /* AMCCompleteAppointmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCompleteAppointmentViewController.h; sourceTree = "<group>"; };
-		53D69DC01A9B243C0004CE10 /* PaymentCategory+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PaymentCategory+Methods.h"; sourceTree = "<group>"; };
-		53D69DC11A9B243C0004CE10 /* Appointment+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Appointment+Methods.h"; sourceTree = "<group>"; };
-		53D69DC21A9B243C0004CE10 /* Employee+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Employee+Methods.h"; sourceTree = "<group>"; };
-		53D69DC31A9B243C0004CE10 /* Sale+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sale+Methods.h"; sourceTree = "<group>"; };
-		53D69DC41A9B243C0004CE10 /* SaleItem+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SaleItem+Methods.h"; sourceTree = "<group>"; };
 		53D69DC51A9B243C0004CE10 /* Product+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Product+Methods.h"; sourceTree = "<group>"; };
-		53D69DC61A9B243C0004CE10 /* Service+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Service+Methods.h"; sourceTree = "<group>"; };
-		53D69DC71A9B243C0004CE10 /* ServiceCategory+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ServiceCategory+Methods.h"; sourceTree = "<group>"; };
-		53D69DC81A9B243C0004CE10 /* Customer+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Customer+Methods.h"; sourceTree = "<group>"; };
-		53D69DC91A9B243C0004CE10 /* Payment+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Payment+Methods.h"; sourceTree = "<group>"; };
 		53D69DCA1A9B243C0004CE10 /* AMCObjectWithNotesProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCObjectWithNotesProtocol.h; sourceTree = "<group>"; };
-		53D69DCB1A9B243C0004CE10 /* Note+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Note+Methods.h"; sourceTree = "<group>"; };
-		53D69DCC1A9B243C0004CE10 /* Account+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Account+Methods.h"; sourceTree = "<group>"; };
 		53D69DCD1A9B243C0004CE10 /* AccountReconciliation+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AccountReconciliation+Methods.h"; sourceTree = "<group>"; };
 		53D69DCF1A9B243C0004CE10 /* StockedBrand+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StockedBrand+Methods.h"; sourceTree = "<group>"; };
 		53D69DD01A9B243C0004CE10 /* StockedProduct+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StockedProduct+Methods.h"; sourceTree = "<group>"; };
 		53D69DD11A9B243C0004CE10 /* StockedItem+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StockedItem+Methods.h"; sourceTree = "<group>"; };
 		53D69DD21A9B243C0004CE10 /* StockedCategory+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StockedCategory+Methods.h"; sourceTree = "<group>"; };
-		53D69DD31A9B243C0004CE10 /* WorkRecord+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WorkRecord+Methods.h"; sourceTree = "<group>"; };
-		53D69DD41A9B243C0004CE10 /* Salary+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Salary+Methods.h"; sourceTree = "<group>"; };
 		53D69DD51A9B243C0004CE10 /* ObjectSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectSelectorViewController.h; sourceTree = "<group>"; };
 		53D69DD61A9B243C0004CE10 /* ProductSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductSelectorViewController.h; sourceTree = "<group>"; };
 		53D69DD71A9B243C0004CE10 /* EditObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditObjectViewController.h; sourceTree = "<group>"; };
@@ -913,6 +896,18 @@
 		53D934061AC71E1B001D6C64 /* AMCSalonDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSalonDetailsViewController.m; sourceTree = "<group>"; };
 		53D934071AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCSalonDetailsViewController.xib; sourceTree = "<group>"; };
 		53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQCoredataObjectExtensions.swift; sourceTree = "<group>"; };
+		53FDCA3B1C79A591006B4002 /* ClaudiaSalonIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudiaSalonIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		53FDCA3D1C79A591006B4002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		53FDCA421C79A591006B4002 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		53FDCA441C79A591006B4002 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		53FDCA471C79A591006B4002 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		53FDCA491C79A591006B4002 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		53FDCA4C1C79A591006B4002 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		53FDCA4E1C79A591006B4002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53FDCA521C79A5B0006B4002 /* ClaudiaSalonIOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = ClaudiaSalonIOS.entitlements; sourceTree = "<group>"; };
+		53FDCA531C79A5BA006B4002 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
+		53FDCA571C79AF4D006B4002 /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		53FDCA5F1C79C952006B4002 /* ClaudiaSalonIOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ClaudiaSalonIOS-Bridging-Header.h"; sourceTree = "<group>"; };
 		53FFAF8F1AB220470078E9CC /* AMCEmployeeForServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCEmployeeForServiceSelector.h; sourceTree = "<group>"; };
 		53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCEmployeeForServiceSelector.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -923,6 +918,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				530D62591C75B0A60064794B /* CloudKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53FDCA381C79A591006B4002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53FDCA541C79A5BA006B4002 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1016,8 +1019,6 @@
 		530D54A41B26D58A00F6C4FE /* Framework  */ = {
 			isa = PBXGroup;
 			children = (
-				53D69D6C1A9B243B0004CE10 /* AMCConstants.h */,
-				53D69C5D1A9B240B0004CE10 /* AMCConstants.m */,
 				53AE26FB1AA3122500A1B3E4 /* Base classes */,
 				53D325691A9C623500AFCDE4 /* Protocols */,
 				53D325631A9B9CD300AFCDE4 /* Categories on Cocoa classes */,
@@ -1991,8 +1992,6 @@
 		53D325631A9B9CD300AFCDE4 /* Categories on Cocoa classes */ = {
 			isa = PBXGroup;
 			children = (
-				53D69D7E1A9B243B0004CE10 /* NSDate+AMCDate.h */,
-				53D69C6F1A9B240B0004CE10 /* NSDate+AMCDate.m */,
 				53D69E041A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.h */,
 				53D69E051A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m */,
 				53D325641A9B9D2300AFCDE4 /* NSViewController+SalonMethods.h */,
@@ -2073,7 +2072,6 @@
 				53AE26CA1AA1B49400A1B3E4 /* Complete Appointment */,
 				53AE26C91AA1B3AB00A1B3E4 /* Cancel Appointment */,
 				53AE26F71AA3112400A1B3E4 /* Staff busy View */,
-				53AE26F81AA3118000A1B3E4 /* Discount Calculator */,
 			);
 			name = Appointments;
 			path = ..;
@@ -2147,12 +2145,15 @@
 		53D69BA61A9B22830004CE10 = {
 			isa = PBXGroup;
 			children = (
+				53FDCA551C79AE37006B4002 /* Shared code */,
+				53FDCA531C79A5BA006B4002 /* CloudKit.framework */,
 				530D62581C75B0A60064794B /* CloudKit.framework */,
 				536B9DA41C4F98F900F170EC /* ClaudiaSalon-Bridging-Header.h */,
 				530D54A51B270C9300F6C4FE /* Property List.plist */,
 				53D4FC571B394339009EBF70 /* Foundation.framework */,
 				536B9DA71C4FDB9500F170EC /* Booking Queue */,
-				53D69BB11A9B22830004CE10 /* ClaudiaSalon */,
+				53D69BB11A9B22830004CE10 /* ClaudiaSalonMac */,
+				53FDCA3C1C79A591006B4002 /* ClaudiaSalonIOS */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2160,12 +2161,13 @@
 			isa = PBXGroup;
 			children = (
 				53D69BAF1A9B22830004CE10 /* ClaudiaSalon.app */,
+				53FDCA3B1C79A591006B4002 /* ClaudiaSalonIOS.app */,
 			);
 			name = "Xcode Products";
 			path = ..;
 			sourceTree = "<group>";
 		};
-		53D69BB11A9B22830004CE10 /* ClaudiaSalon */ = {
+		53D69BB11A9B22830004CE10 /* ClaudiaSalonMac */ = {
 			isa = PBXGroup;
 			children = (
 				53D69E031A9B6BE70004CE10 /* Core data model objects */,
@@ -2175,7 +2177,7 @@
 				53D69BB21A9B22830004CE10 /* Supporting Files */,
 				53D3256C1A9C6E5A00AFCDE4 /* Helper view controllers */,
 			);
-			name = ClaudiaSalon;
+			name = ClaudiaSalonMac;
 			path = KeithSalon;
 			sourceTree = "<group>";
 		};
@@ -2226,7 +2228,6 @@
 		53D69E031A9B6BE70004CE10 /* Core data model objects */ = {
 			isa = PBXGroup;
 			children = (
-				5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */,
 				534F0AF21C61FC1700520214 /* BQExportDeletionRequest+CoreDataProperties.swift */,
 				534F0AF31C61FC1700520214 /* BQExportDeletionRequest.swift */,
 				53D69DC51A9B243C0004CE10 /* Product+Methods.h */,
@@ -2235,18 +2236,6 @@
 				536B9DE01C56077D00F170EC /* Product+CoreDataProperties.m */,
 				536B9DE11C56077D00F170EC /* Product.h */,
 				536B9DE21C56077D00F170EC /* Product.m */,
-				53D69DCC1A9B243C0004CE10 /* Account+Methods.h */,
-				53D69CBC1A9B240C0004CE10 /* Account+Methods.m */,
-				536B9DE31C56077D00F170EC /* Account+CoreDataProperties.h */,
-				536B9DE41C56077D00F170EC /* Account+CoreDataProperties.m */,
-				536B9DE51C56077D00F170EC /* Account.h */,
-				536B9DE61C56077D00F170EC /* Account.m */,
-				53D69DC41A9B243C0004CE10 /* SaleItem+Methods.h */,
-				53D69CB51A9B240C0004CE10 /* SaleItem+Methods.m */,
-				536B9DE71C56077D00F170EC /* SaleItem+CoreDataProperties.h */,
-				536B9DE81C56077D00F170EC /* SaleItem+CoreDataProperties.m */,
-				536B9DE91C56077D00F170EC /* SaleItem.h */,
-				536B9DEA1C56077D00F170EC /* SaleItem.m */,
 				53D69DCF1A9B243C0004CE10 /* StockedBrand+Methods.h */,
 				53D69CBF1A9B240C0004CE10 /* StockedBrand+Methods.m */,
 				536B9DEB1C56077D00F170EC /* StockedBrand+CoreDataProperties.h */,
@@ -2257,42 +2246,18 @@
 				536B9DF01C56077D00F170EC /* IntervalDuringDay+CoreDataProperties.m */,
 				536B9DF11C56077D00F170EC /* IntervalDuringDay.h */,
 				536B9DF21C56077D00F170EC /* IntervalDuringDay.m */,
-				53D69DC21A9B243C0004CE10 /* Employee+Methods.h */,
-				53D69CB31A9B240C0004CE10 /* Employee+Methods.m */,
-				536B9DF31C56077D00F170EC /* Employee+CoreDataProperties.h */,
-				536B9DF41C56077D00F170EC /* Employee+CoreDataProperties.m */,
-				536B9DF51C56077D00F170EC /* Employee.h */,
-				536B9DF61C56077D00F170EC /* Employee.m */,
-				53D4FC4E1B3934A5009EBF70 /* Role+Methods.h */,
-				53D4FC4F1B3934A5009EBF70 /* Role+Methods.m */,
-				536B9DF71C56077D00F170EC /* Role+CoreDataProperties.h */,
-				536B9DF81C56077D00F170EC /* Role+CoreDataProperties.m */,
-				536B9DF91C56077D00F170EC /* Role.h */,
-				536B9DFA1C56077D00F170EC /* Role.m */,
 				53D69DD21A9B243C0004CE10 /* StockedCategory+Methods.h */,
 				53D69CC21A9B240C0004CE10 /* StockedCategory+Methods.m */,
 				536B9DFB1C56077D00F170EC /* StockedCategory+CoreDataProperties.h */,
 				536B9DFC1C56077D00F170EC /* StockedCategory+CoreDataProperties.m */,
 				536B9DFD1C56077D00F170EC /* StockedCategory.h */,
 				536B9DFE1C56077D00F170EC /* StockedCategory.m */,
-				53D69DD41A9B243C0004CE10 /* Salary+Methods.h */,
-				53D69CC41A9B240C0004CE10 /* Salary+Methods.m */,
-				536B9DFF1C56077D00F170EC /* Salary+CoreDataProperties.h */,
-				536B9E001C56077D00F170EC /* Salary+CoreDataProperties.m */,
-				536B9E011C56077D00F170EC /* Salary.h */,
-				536B9E021C56077D00F170EC /* Salary.m */,
 				53D69DD11A9B243C0004CE10 /* StockedItem+Methods.h */,
 				53D69CC11A9B240C0004CE10 /* StockedItem+Methods.m */,
 				536B9E031C56077D00F170EC /* StockedItem+CoreDataProperties.h */,
 				536B9E041C56077D00F170EC /* StockedItem+CoreDataProperties.m */,
 				536B9E051C56077D00F170EC /* StockedItem.h */,
 				536B9E061C56077D00F170EC /* StockedItem.m */,
-				53D69DC71A9B243C0004CE10 /* ServiceCategory+Methods.h */,
-				53D69CB81A9B240C0004CE10 /* ServiceCategory+Methods.m */,
-				536B9E071C56077D00F170EC /* ServiceCategory+CoreDataProperties.h */,
-				536B9E081C56077D00F170EC /* ServiceCategory+CoreDataProperties.m */,
-				536B9E091C56077D00F170EC /* ServiceCategory.h */,
-				536B9E0A1C56077D00F170EC /* ServiceCategory.m */,
 				5381C5BA1B2812D700E99946 /* AccountingPaymentGroup+Methods.h */,
 				5381C5BB1B2812D700E99946 /* AccountingPaymentGroup+Methods.m */,
 				536B9E0B1C56077D00F170EC /* AccountingPaymentGroup+CoreDataProperties.h */,
@@ -2309,70 +2274,16 @@
 				536B9E141C56077D00F170EC /* StockedProduct+CoreDataProperties.m */,
 				536B9E151C56077D00F170EC /* StockedProduct.h */,
 				536B9E161C56077D00F170EC /* StockedProduct.m */,
-				53D69DD31A9B243C0004CE10 /* WorkRecord+Methods.h */,
-				53D69CC31A9B240C0004CE10 /* WorkRecord+Methods.m */,
-				536B9E171C56077D00F170EC /* WorkRecord+CoreDataProperties.h */,
-				536B9E181C56077D00F170EC /* WorkRecord+CoreDataProperties.m */,
-				536B9E191C56077D00F170EC /* WorkRecord.h */,
-				536B9E1A1C56077D00F170EC /* WorkRecord.m */,
-				53D69DC81A9B243C0004CE10 /* Customer+Methods.h */,
-				53D69CB91A9B240C0004CE10 /* Customer+Methods.m */,
-				536B9E1B1C56077D00F170EC /* Customer+CoreDataProperties.h */,
-				536B9E1C1C56077D00F170EC /* Customer+CoreDataProperties.m */,
-				536B9E1D1C56077D00F170EC /* Customer.h */,
-				536B9E1E1C56077D00F170EC /* Customer.m */,
-				53D69DC11A9B243C0004CE10 /* Appointment+Methods.h */,
-				53D69CB21A9B240C0004CE10 /* Appointment+Methods.m */,
-				536B9E1F1C56077D00F170EC /* Appointment+CoreDataProperties.h */,
-				536B9E201C56077D00F170EC /* Appointment+CoreDataProperties.m */,
-				536B9E211C56077D00F170EC /* Appointment.h */,
-				536B9E221C56077D00F170EC /* Appointment.m */,
 				536B9E231C56077D00F170EC /* LastUpdatedBy+CoreDataProperties.h */,
 				536B9E241C56077D00F170EC /* LastUpdatedBy+CoreDataProperties.m */,
 				536B9E251C56077D00F170EC /* LastUpdatedBy.h */,
 				536B9E261C56077D00F170EC /* LastUpdatedBy.m */,
-				53D4FCCA1B3EF688009EBF70 /* Permission+Methods.h */,
-				53D4FCCB1B3EF688009EBF70 /* Permission+Methods.m */,
-				536B9E271C56077D00F170EC /* Permission+CoreDataProperties.h */,
-				536B9E281C56077D00F170EC /* Permission+CoreDataProperties.m */,
-				536B9E291C56077D00F170EC /* Permission.h */,
-				536B9E2A1C56077D00F170EC /* Permission.m */,
 				53D69DCD1A9B243C0004CE10 /* AccountReconciliation+Methods.h */,
 				53D69CBD1A9B240C0004CE10 /* AccountReconciliation+Methods.m */,
 				536B9E2B1C56077D00F170EC /* AccountReconciliation+CoreDataProperties.h */,
 				536B9E2C1C56077D00F170EC /* AccountReconciliation+CoreDataProperties.m */,
 				536B9E2D1C56077D00F170EC /* AccountReconciliation.h */,
 				536B9E2E1C56077D00F170EC /* AccountReconciliation.m */,
-				53D69DCB1A9B243C0004CE10 /* Note+Methods.h */,
-				53D69CBB1A9B240C0004CE10 /* Note+Methods.m */,
-				536B9E2F1C56077D00F170EC /* Note+CoreDataProperties.h */,
-				536B9E301C56077D00F170EC /* Note+CoreDataProperties.m */,
-				536B9E311C56077D00F170EC /* Note.h */,
-				536B9E321C56077D00F170EC /* Note.m */,
-				53D69DC31A9B243C0004CE10 /* Sale+Methods.h */,
-				53D69CB41A9B240C0004CE10 /* Sale+Methods.m */,
-				536B9E331C56077E00F170EC /* Sale+CoreDataProperties.h */,
-				536B9E341C56077E00F170EC /* Sale+CoreDataProperties.m */,
-				536B9E351C56077E00F170EC /* Sale.h */,
-				536B9E361C56077E00F170EC /* Sale.m */,
-				53D69DC01A9B243C0004CE10 /* PaymentCategory+Methods.h */,
-				53D69CB11A9B240C0004CE10 /* PaymentCategory+Methods.m */,
-				536B9E371C56077E00F170EC /* PaymentCategory+CoreDataProperties.h */,
-				536B9E381C56077E00F170EC /* PaymentCategory+CoreDataProperties.m */,
-				536B9E391C56077E00F170EC /* PaymentCategory.h */,
-				536B9E3A1C56077E00F170EC /* PaymentCategory.m */,
-				53D4FC511B39363D009EBF70 /* BusinessFunction+Methods.h */,
-				53D4FC521B39363D009EBF70 /* BusinessFunction+Methods.m */,
-				536B9E3B1C56077E00F170EC /* BusinessFunction+CoreDataProperties.h */,
-				536B9E3C1C56077E00F170EC /* BusinessFunction+CoreDataProperties.m */,
-				536B9E3D1C56077E00F170EC /* BusinessFunction.h */,
-				536B9E3E1C56077E00F170EC /* BusinessFunction.m */,
-				53D69DC61A9B243C0004CE10 /* Service+Methods.h */,
-				53D69CB71A9B240C0004CE10 /* Service+Methods.m */,
-				536B9E3F1C56077E00F170EC /* Service+CoreDataProperties.h */,
-				536B9E401C56077E00F170EC /* Service+CoreDataProperties.m */,
-				536B9E411C56077E00F170EC /* Service.h */,
-				536B9E421C56077E00F170EC /* Service.m */,
 				536B9E431C56077E00F170EC /* ShoppingListItem+CoreDataProperties.h */,
 				536B9E441C56077E00F170EC /* ShoppingListItem+CoreDataProperties.m */,
 				536B9E451C56077E00F170EC /* ShoppingListItem.h */,
@@ -2381,20 +2292,10 @@
 				536B9E481C56077E00F170EC /* OpeningHoursDayTemplate+CoreDataProperties.m */,
 				536B9E491C56077E00F170EC /* OpeningHoursDayTemplate.h */,
 				536B9E4A1C56077E00F170EC /* OpeningHoursDayTemplate.m */,
-				536B9E4B1C56077E00F170EC /* Salon+CoreDataProperties.h */,
-				536B9E4C1C56077E00F170EC /* Salon+CoreDataProperties.m */,
-				536B9DCD1C52842300F170EC /* Salon.h */,
-				536B9DCE1C52842300F170EC /* Salon.m */,
 				536B9E4D1C56077E00F170EC /* CalendarDay+CoreDataProperties.h */,
 				536B9E4E1C56077E00F170EC /* CalendarDay+CoreDataProperties.m */,
 				536B9E4F1C56077E00F170EC /* CalendarDay.h */,
 				536B9E501C56077E00F170EC /* CalendarDay.m */,
-				53D69DC91A9B243C0004CE10 /* Payment+Methods.h */,
-				53D69CBA1A9B240C0004CE10 /* Payment+Methods.m */,
-				536B9E511C56077E00F170EC /* Payment+CoreDataProperties.h */,
-				536B9E521C56077E00F170EC /* Payment+CoreDataProperties.m */,
-				536B9E531C56077E00F170EC /* Payment.h */,
-				536B9E541C56077E00F170EC /* Payment.m */,
 				530171831ACBD21F0047116D /* RecurringItem+Methods.h */,
 				530171841ACBD21F0047116D /* RecurringItem+Methods.m */,
 				536B9E551C56077E00F170EC /* RecurringItem+CoreDataProperties.h */,
@@ -2405,10 +2306,6 @@
 				536B9E5A1C56077E00F170EC /* ShoppingList+CoreDataProperties.m */,
 				536B9E5B1C56077E00F170EC /* ShoppingList.h */,
 				536B9E5C1C56077E00F170EC /* ShoppingList.m */,
-				536B9E5D1C56077E00F170EC /* Holiday+CoreDataProperties.h */,
-				536B9E5E1C56077E00F170EC /* Holiday+CoreDataProperties.m */,
-				536B9E5F1C56077E00F170EC /* Holiday.h */,
-				536B9E601C56077E00F170EC /* Holiday.m */,
 			);
 			name = "Core data model objects";
 			path = ..;
@@ -2422,6 +2319,292 @@
 				53D934071AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib */,
 			);
 			name = "Salon details";
+			sourceTree = "<group>";
+		};
+		53FDCA3C1C79A591006B4002 /* ClaudiaSalonIOS */ = {
+			isa = PBXGroup;
+			children = (
+				53FDCA5F1C79C952006B4002 /* ClaudiaSalonIOS-Bridging-Header.h */,
+				53FDCA3D1C79A591006B4002 /* AppDelegate.swift */,
+				53FDCA891C7A7B47006B4002 /* Models */,
+				53FDCA8B1C7A7BC1006B4002 /* View Controllers */,
+				53FDCA8A1C7A7B70006B4002 /* Supporting files */,
+			);
+			path = ClaudiaSalonIOS;
+			sourceTree = "<group>";
+		};
+		53FDCA551C79AE37006B4002 /* Shared code */ = {
+			isa = PBXGroup;
+			children = (
+				53D69D6C1A9B243B0004CE10 /* AMCConstants.h */,
+				53D69C5D1A9B240B0004CE10 /* AMCConstants.m */,
+				53AE26F81AA3118000A1B3E4 /* Discount Calculator */,
+				53FDCA881C7A7A00006B4002 /* NSDate extensions */,
+				53FDCA611C79CF8E006B4002 /* Coredata  */,
+			);
+			name = "Shared code";
+			sourceTree = "<group>";
+		};
+		53FDCA611C79CF8E006B4002 /* Coredata  */ = {
+			isa = PBXGroup;
+			children = (
+				5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */,
+				53FDCA851C7A78BF006B4002 /* PaymentCategory */,
+				53FDCA7C1C7A75AD006B4002 /* Permission */,
+				53FDCA7B1C7A7503006B4002 /* Role */,
+				53FDCA7A1C7A7445006B4002 /* Salary */,
+				53FDCA791C7A7355006B4002 /* WorkRecord */,
+				53FDCA771C7A6B54006B4002 /* Note */,
+				53FDCA761C7A1B23006B4002 /* Account */,
+				53FDCA751C7A17C5006B4002 /* Payment */,
+				53FDCA701C7A11A7006B4002 /* BusinessFunction */,
+				53FDCA6F1C7A1197006B4002 /* Service */,
+				53FDCA711C7A11BF006B4002 /* Holiday */,
+				53FDCA6D1C7A115C006B4002 /* Salon */,
+				53FDCA6B1C7A0D5D006B4002 /* ServiceCategory */,
+				53FDCA691C7A09AF006B4002 /* Employee */,
+				53FDCA671C7A086F006B4002 /* SaleItem */,
+				53FDCA651C7A070D006B4002 /* Customer */,
+				53FDCA631C7A0575006B4002 /* Sale */,
+				53FDCA621C7A056A006B4002 /* Appointment */,
+			);
+			name = "Coredata ";
+			sourceTree = "<group>";
+		};
+		53FDCA621C7A056A006B4002 /* Appointment */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E1F1C56077D00F170EC /* Appointment+CoreDataProperties.h */,
+				536B9E201C56077D00F170EC /* Appointment+CoreDataProperties.m */,
+				536B9E211C56077D00F170EC /* Appointment.h */,
+				536B9E221C56077D00F170EC /* Appointment.m */,
+			);
+			name = Appointment;
+			sourceTree = "<group>";
+		};
+		53FDCA631C7A0575006B4002 /* Sale */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E331C56077E00F170EC /* Sale+CoreDataProperties.h */,
+				536B9E341C56077E00F170EC /* Sale+CoreDataProperties.m */,
+				536B9E351C56077E00F170EC /* Sale.h */,
+				536B9E361C56077E00F170EC /* Sale.m */,
+			);
+			name = Sale;
+			sourceTree = "<group>";
+		};
+		53FDCA651C7A070D006B4002 /* Customer */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E1B1C56077D00F170EC /* Customer+CoreDataProperties.h */,
+				536B9E1C1C56077D00F170EC /* Customer+CoreDataProperties.m */,
+				536B9E1D1C56077D00F170EC /* Customer.h */,
+				536B9E1E1C56077D00F170EC /* Customer.m */,
+			);
+			name = Customer;
+			sourceTree = "<group>";
+		};
+		53FDCA671C7A086F006B4002 /* SaleItem */ = {
+			isa = PBXGroup;
+			children = (
+				536B9DE71C56077D00F170EC /* SaleItem+CoreDataProperties.h */,
+				536B9DE81C56077D00F170EC /* SaleItem+CoreDataProperties.m */,
+				536B9DE91C56077D00F170EC /* SaleItem.h */,
+				536B9DEA1C56077D00F170EC /* SaleItem.m */,
+			);
+			name = SaleItem;
+			sourceTree = "<group>";
+		};
+		53FDCA691C7A09AF006B4002 /* Employee */ = {
+			isa = PBXGroup;
+			children = (
+				536B9DF31C56077D00F170EC /* Employee+CoreDataProperties.h */,
+				536B9DF41C56077D00F170EC /* Employee+CoreDataProperties.m */,
+				536B9DF51C56077D00F170EC /* Employee.h */,
+				536B9DF61C56077D00F170EC /* Employee.m */,
+			);
+			name = Employee;
+			sourceTree = "<group>";
+		};
+		53FDCA6B1C7A0D5D006B4002 /* ServiceCategory */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E071C56077D00F170EC /* ServiceCategory+CoreDataProperties.h */,
+				536B9E081C56077D00F170EC /* ServiceCategory+CoreDataProperties.m */,
+				536B9E091C56077D00F170EC /* ServiceCategory.h */,
+				536B9E0A1C56077D00F170EC /* ServiceCategory.m */,
+			);
+			name = ServiceCategory;
+			sourceTree = "<group>";
+		};
+		53FDCA6D1C7A115C006B4002 /* Salon */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E4B1C56077E00F170EC /* Salon+CoreDataProperties.h */,
+				536B9E4C1C56077E00F170EC /* Salon+CoreDataProperties.m */,
+				536B9DCD1C52842300F170EC /* Salon.h */,
+				536B9DCE1C52842300F170EC /* Salon.m */,
+			);
+			name = Salon;
+			sourceTree = "<group>";
+		};
+		53FDCA6F1C7A1197006B4002 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E3F1C56077E00F170EC /* Service+CoreDataProperties.h */,
+				536B9E401C56077E00F170EC /* Service+CoreDataProperties.m */,
+				536B9E411C56077E00F170EC /* Service.h */,
+				536B9E421C56077E00F170EC /* Service.m */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		53FDCA701C7A11A7006B4002 /* BusinessFunction */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E3B1C56077E00F170EC /* BusinessFunction+CoreDataProperties.h */,
+				536B9E3C1C56077E00F170EC /* BusinessFunction+CoreDataProperties.m */,
+				536B9E3D1C56077E00F170EC /* BusinessFunction.h */,
+				536B9E3E1C56077E00F170EC /* BusinessFunction.m */,
+			);
+			name = BusinessFunction;
+			sourceTree = "<group>";
+		};
+		53FDCA711C7A11BF006B4002 /* Holiday */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E5D1C56077E00F170EC /* Holiday+CoreDataProperties.h */,
+				536B9E5E1C56077E00F170EC /* Holiday+CoreDataProperties.m */,
+				536B9E5F1C56077E00F170EC /* Holiday.h */,
+				536B9E601C56077E00F170EC /* Holiday.m */,
+			);
+			name = Holiday;
+			sourceTree = "<group>";
+		};
+		53FDCA751C7A17C5006B4002 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E511C56077E00F170EC /* Payment+CoreDataProperties.h */,
+				536B9E521C56077E00F170EC /* Payment+CoreDataProperties.m */,
+				536B9E531C56077E00F170EC /* Payment.h */,
+				536B9E541C56077E00F170EC /* Payment.m */,
+			);
+			name = Payment;
+			sourceTree = "<group>";
+		};
+		53FDCA761C7A1B23006B4002 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				536B9DE31C56077D00F170EC /* Account+CoreDataProperties.h */,
+				536B9DE41C56077D00F170EC /* Account+CoreDataProperties.m */,
+				536B9DE51C56077D00F170EC /* Account.h */,
+				536B9DE61C56077D00F170EC /* Account.m */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		53FDCA771C7A6B54006B4002 /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E2F1C56077D00F170EC /* Note+CoreDataProperties.h */,
+				536B9E301C56077D00F170EC /* Note+CoreDataProperties.m */,
+				536B9E311C56077D00F170EC /* Note.h */,
+				536B9E321C56077D00F170EC /* Note.m */,
+			);
+			name = Note;
+			sourceTree = "<group>";
+		};
+		53FDCA791C7A7355006B4002 /* WorkRecord */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E171C56077D00F170EC /* WorkRecord+CoreDataProperties.h */,
+				536B9E181C56077D00F170EC /* WorkRecord+CoreDataProperties.m */,
+				536B9E191C56077D00F170EC /* WorkRecord.h */,
+				536B9E1A1C56077D00F170EC /* WorkRecord.m */,
+			);
+			name = WorkRecord;
+			sourceTree = "<group>";
+		};
+		53FDCA7A1C7A7445006B4002 /* Salary */ = {
+			isa = PBXGroup;
+			children = (
+				536B9DFF1C56077D00F170EC /* Salary+CoreDataProperties.h */,
+				536B9E001C56077D00F170EC /* Salary+CoreDataProperties.m */,
+				536B9E011C56077D00F170EC /* Salary.h */,
+				536B9E021C56077D00F170EC /* Salary.m */,
+			);
+			name = Salary;
+			sourceTree = "<group>";
+		};
+		53FDCA7B1C7A7503006B4002 /* Role */ = {
+			isa = PBXGroup;
+			children = (
+				536B9DF71C56077D00F170EC /* Role+CoreDataProperties.h */,
+				536B9DF81C56077D00F170EC /* Role+CoreDataProperties.m */,
+				536B9DF91C56077D00F170EC /* Role.h */,
+				536B9DFA1C56077D00F170EC /* Role.m */,
+			);
+			name = Role;
+			sourceTree = "<group>";
+		};
+		53FDCA7C1C7A75AD006B4002 /* Permission */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E271C56077D00F170EC /* Permission+CoreDataProperties.h */,
+				536B9E281C56077D00F170EC /* Permission+CoreDataProperties.m */,
+				536B9E291C56077D00F170EC /* Permission.h */,
+				536B9E2A1C56077D00F170EC /* Permission.m */,
+			);
+			name = Permission;
+			sourceTree = "<group>";
+		};
+		53FDCA851C7A78BF006B4002 /* PaymentCategory */ = {
+			isa = PBXGroup;
+			children = (
+				536B9E371C56077E00F170EC /* PaymentCategory+CoreDataProperties.h */,
+				536B9E381C56077E00F170EC /* PaymentCategory+CoreDataProperties.m */,
+				536B9E391C56077E00F170EC /* PaymentCategory.h */,
+				536B9E3A1C56077E00F170EC /* PaymentCategory.m */,
+			);
+			name = PaymentCategory;
+			sourceTree = "<group>";
+		};
+		53FDCA881C7A7A00006B4002 /* NSDate extensions */ = {
+			isa = PBXGroup;
+			children = (
+				53D69D7E1A9B243B0004CE10 /* NSDate+AMCDate.h */,
+				53D69C6F1A9B240B0004CE10 /* NSDate+AMCDate.m */,
+			);
+			name = "NSDate extensions";
+			sourceTree = "<group>";
+		};
+		53FDCA891C7A7B47006B4002 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				53FDCA571C79AF4D006B4002 /* CoreData.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		53FDCA8A1C7A7B70006B4002 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				53FDCA491C79A591006B4002 /* Assets.xcassets */,
+				53FDCA521C79A5B0006B4002 /* ClaudiaSalonIOS.entitlements */,
+				53FDCA4E1C79A591006B4002 /* Info.plist */,
+			);
+			name = "Supporting files";
+			sourceTree = "<group>";
+		};
+		53FDCA8B1C7A7BC1006B4002 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				53FDCA421C79A591006B4002 /* MasterViewController.swift */,
+				53FDCA441C79A591006B4002 /* DetailViewController.swift */,
+				53FDCA461C79A591006B4002 /* Main.storyboard */,
+				53FDCA4B1C79A591006B4002 /* LaunchScreen.storyboard */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2442,6 +2625,23 @@
 			name = ClaudiaSalon;
 			productName = KeithSalon;
 			productReference = 53D69BAF1A9B22830004CE10 /* ClaudiaSalon.app */;
+			productType = "com.apple.product-type.application";
+		};
+		53FDCA3A1C79A591006B4002 /* ClaudiaSalonIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53FDCA511C79A591006B4002 /* Build configuration list for PBXNativeTarget "ClaudiaSalonIOS" */;
+			buildPhases = (
+				53FDCA371C79A591006B4002 /* Sources */,
+				53FDCA381C79A591006B4002 /* Frameworks */,
+				53FDCA391C79A591006B4002 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ClaudiaSalonIOS;
+			productName = ClaudiaSalonIOS;
+			productReference = 53FDCA3B1C79A591006B4002 /* ClaudiaSalonIOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2467,6 +2667,18 @@
 							};
 						};
 					};
+					53FDCA3A1C79A591006B4002 = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = Q4783BNZ95;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = 53D69BAA1A9B22830004CE10 /* Build configuration list for PBXProject "ClaudiaSalon" */;
@@ -2483,6 +2695,7 @@
 			projectRoot = "";
 			targets = (
 				53D69BAE1A9B22830004CE10 /* ClaudiaSalon */,
+				53FDCA3A1C79A591006B4002 /* ClaudiaSalonIOS */,
 			);
 		};
 /* End PBXProject section */
@@ -2590,6 +2803,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		53FDCA391C79A591006B4002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53FDCA4D1C79A591006B4002 /* LaunchScreen.storyboard in Resources */,
+				53FDCA4A1C79A591006B4002 /* Assets.xcassets in Resources */,
+				53FDCA481C79A591006B4002 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2605,7 +2828,6 @@
 				536B9E691C56077E00F170EC /* IntervalDuringDay+CoreDataProperties.m in Sources */,
 				53877F591C6B283E009314A6 /* AMCServiceCategoryPopupController.swift in Sources */,
 				536B9EA11C56077E00F170EC /* Holiday.m in Sources */,
-				53D4FC531B39363D009EBF70 /* BusinessFunction+Methods.m in Sources */,
 				53D69D4F1A9B240C0004CE10 /* EditSaleViewController.m in Sources */,
 				53D69D171A9B240C0004CE10 /* AMCEntityViewController.m in Sources */,
 				530171211ACA80170047116D /* AMCAccountManagementViewController.m in Sources */,
@@ -2620,7 +2842,6 @@
 				536B9E921C56077E00F170EC /* Service.m in Sources */,
 				536B9E881C56077E00F170EC /* AccountReconciliation.m in Sources */,
 				53D69CFB1A9B240C0004CE10 /* AMCWizardStepViewController.m in Sources */,
-				53D69D391A9B240C0004CE10 /* Employee+Methods.m in Sources */,
 				5381C5E51B2DF22200E99946 /* AMCCashBookRootNode.m in Sources */,
 				53D69D561A9B240C0004CE10 /* AMCReceiptView.m in Sources */,
 				53D69D1C1A9B240C0004CE10 /* AMCCancelAppointmentView.m in Sources */,
@@ -2668,14 +2889,12 @@
 				53D69D581A9B240C0004CE10 /* AMCPaymentCompleteWindowController.m in Sources */,
 				53D69D551A9B240C0004CE10 /* SelectItemsStepViewController.m in Sources */,
 				533054521AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld in Sources */,
-				53D69D3D1A9B240C0004CE10 /* Service+Methods.m in Sources */,
 				53D69D651A9B240C0004CE10 /* AMCStaffCanDoViewController.m in Sources */,
 				536B9E9D1C56077E00F170EC /* RecurringItem.m in Sources */,
 				536B9E861C56077E00F170EC /* Permission.m in Sources */,
 				53D69D051A9B240C0004CE10 /* AMCBookingRowViewController.m in Sources */,
 				536B9E6B1C56077E00F170EC /* Employee+CoreDataProperties.m in Sources */,
 				53D69CF81A9B240C0004CE10 /* AMCNoteView.m in Sources */,
-				53D69D3E1A9B240C0004CE10 /* ServiceCategory+Methods.m in Sources */,
 				536B9DB21C4FDFAF00F170EC /* AMCBookingQueueManagerWindowController.swift in Sources */,
 				536B9E6A1C56077E00F170EC /* IntervalDuringDay.m in Sources */,
 				53D69CED1A9B240C0004CE10 /* AMCCashEntryField.m in Sources */,
@@ -2683,11 +2902,9 @@
 				536B9E941C56077E00F170EC /* ShoppingListItem.m in Sources */,
 				53D69D1E1A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m in Sources */,
 				536B9E901C56077E00F170EC /* BusinessFunction.m in Sources */,
-				53D69D491A9B240C0004CE10 /* WorkRecord+Methods.m in Sources */,
 				536B9E8E1C56077E00F170EC /* PaymentCategory.m in Sources */,
 				53D69D531A9B240C0004CE10 /* AMCRefundViewController.m in Sources */,
 				5346C59A1ABFF6AC005D4540 /* AMCCashBookNode.m in Sources */,
-				53D69D411A9B240C0004CE10 /* Note+Methods.m in Sources */,
 				53D69D181A9B240C0004CE10 /* AMCPaymentCategoryListViewController.m in Sources */,
 				5381C5D51B2DD7B300E99946 /* EditPaymentCategoryViewController.m in Sources */,
 				536B9E731C56077E00F170EC /* StockedItem+CoreDataProperties.m in Sources */,
@@ -2703,7 +2920,6 @@
 				53D69D0F1A9B240C0004CE10 /* AMCShoppingListPrintView.m in Sources */,
 				536B9E851C56077E00F170EC /* Permission+CoreDataProperties.m in Sources */,
 				539D2DDD1B15FC9A00761711 /* AMCSalesViewController.m in Sources */,
-				53D69D381A9B240C0004CE10 /* Appointment+Methods.m in Sources */,
 				53D69D101A9B240C0004CE10 /* AMCStockedCategoryMaintenanceViewController.m in Sources */,
 				536B9E661C56077E00F170EC /* SaleItem.m in Sources */,
 				536B9E9B1C56077E00F170EC /* Payment.m in Sources */,
@@ -2715,7 +2931,6 @@
 				531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */,
 				536B9E781C56077E00F170EC /* AccountingPaymentGroup.m in Sources */,
 				5381C5DB1B2DDC6700E99946 /* EditAccountancyGroupViewController.m in Sources */,
-				53D4FCCC1B3EF688009EBF70 /* Permission+Methods.m in Sources */,
 				53D69D5C1A9B240C0004CE10 /* EditCustomerViewController.m in Sources */,
 				53D69D5D1A9B240C0004CE10 /* EditPaymentViewController.m in Sources */,
 				536B9E811C56077E00F170EC /* Appointment+CoreDataProperties.m in Sources */,
@@ -2753,12 +2968,10 @@
 				536B9E701C56077E00F170EC /* StockedCategory.m in Sources */,
 				53D69D1D1A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m in Sources */,
 				53D69D041A9B240C0004CE10 /* AMCBookingRowView.m in Sources */,
-				53D69D371A9B240C0004CE10 /* PaymentCategory+Methods.m in Sources */,
 				53D4FCD71B4044FB009EBF70 /* AMCRoleMaintenance.m in Sources */,
 				531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */,
 				536B9E641C56077E00F170EC /* Account.m in Sources */,
 				53D69CE71A9B240C0004CE10 /* AMCSalaryPaymentViewController.m in Sources */,
-				53D69D401A9B240C0004CE10 /* Payment+Methods.m in Sources */,
 				53D4FC971B3997BF009EBF70 /* AMCUserRoleEditor.m in Sources */,
 				53D69CF61A9B240C0004CE10 /* AMCAssociatedNotesViewController.m in Sources */,
 				539D2DEB1B1842D400761711 /* AMCServicesViewController.m in Sources */,
@@ -2786,10 +2999,8 @@
 				530D54771B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m in Sources */,
 				5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */,
 				536B9E871C56077E00F170EC /* AccountReconciliation+CoreDataProperties.m in Sources */,
-				53D69D4A1A9B240C0004CE10 /* Salary+Methods.m in Sources */,
 				53D69D141A9B240C0004CE10 /* AMCReportsView.m in Sources */,
 				5381C5FC1B308C8500E99946 /* AMCAppointmentViewer.m in Sources */,
-				53D69D3B1A9B240C0004CE10 /* SaleItem+Methods.m in Sources */,
 				53D4FC9C1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.m in Sources */,
 				536B9E8B1C56077E00F170EC /* Sale+CoreDataProperties.m in Sources */,
 				53D69D071A9B240C0004CE10 /* AMCSalaryCalculator.m in Sources */,
@@ -2804,8 +3015,6 @@
 				536B9E771C56077E00F170EC /* AccountingPaymentGroup+CoreDataProperties.m in Sources */,
 				535191691B36B60500F8D37A /* AMCPasswordEditor.m in Sources */,
 				53D69CF11A9B240C0004CE10 /* AMCSaleItemPriceSetterView.m in Sources */,
-				53D4FC501B3934A5009EBF70 /* Role+Methods.m in Sources */,
-				53D69D421A9B240C0004CE10 /* Account+Methods.m in Sources */,
 				53CD1E4A1C5EC52C00E09E6F /* BQCoredataExportController.swift in Sources */,
 				536B9E7B1C56077E00F170EC /* StockedProduct+CoreDataProperties.m in Sources */,
 				536B9E611C56077E00F170EC /* Product+CoreDataProperties.m in Sources */,
@@ -2815,7 +3024,6 @@
 				53D69D601A9B240C0004CE10 /* EditServiceCategoryViewController.m in Sources */,
 				53D69D571A9B240C0004CE10 /* AMCReceiptWindowController.m in Sources */,
 				536B9E9F1C56077E00F170EC /* ShoppingList.m in Sources */,
-				53D69D3A1A9B240C0004CE10 /* Sale+Methods.m in Sources */,
 				536B9E831C56077E00F170EC /* LastUpdatedBy+CoreDataProperties.m in Sources */,
 				536B9E991C56077E00F170EC /* CalendarDay.m in Sources */,
 				536B9DBF1C50C2A200F170EC /* BQDataExtractViewController.swift in Sources */,
@@ -2826,13 +3034,46 @@
 				53D325A51A9E390B00AFCDE4 /* AMCWelcomeScreen.m in Sources */,
 				53D69D461A9B240C0004CE10 /* StockedProduct+Methods.m in Sources */,
 				53D69CFC1A9B240C0004CE10 /* AMCWizardStepView.m in Sources */,
-				53D69D3F1A9B240C0004CE10 /* Customer+Methods.m in Sources */,
 				53D69D091A9B240C0004CE10 /* AMCSaleItemView.m in Sources */,
 				53D69D0B1A9B240C0004CE10 /* AMCRequestPasswordWindowController.m in Sources */,
 				53D69D5F1A9B240C0004CE10 /* EditProductViewController.m in Sources */,
 				536B9E8A1C56077E00F170EC /* Note.m in Sources */,
 				536B9E931C56077E00F170EC /* ShoppingListItem+CoreDataProperties.m in Sources */,
 				53D69CE51A9B240C0004CE10 /* AMCSalaryEditorViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53FDCA371C79A591006B4002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53FDCA3E1C79A591006B4002 /* AppDelegate.swift in Sources */,
+				53FDCA781C7A6E3F006B4002 /* Note.m in Sources */,
+				53FDCA661C7A081A006B4002 /* Customer.m in Sources */,
+				53FDCA821C7A763C006B4002 /* Payment.m in Sources */,
+				53FDCA7F1C7A762A006B4002 /* Salary.m in Sources */,
+				53FDCA841C7A7849006B4002 /* NSDate+AMCDate.m in Sources */,
+				53FDCA5A1C79BF75006B4002 /* Appointment.m in Sources */,
+				53FDCA801C7A762E006B4002 /* WorkRecord.m in Sources */,
+				53FDCA831C7A77A2006B4002 /* AMCConstants.m in Sources */,
+				53FDCA6E1C7A116E006B4002 /* Salon.m in Sources */,
+				53FDCA681C7A094F006B4002 /* SaleItem.m in Sources */,
+				53FDCA871C7A79E7006B4002 /* AMCDiscountCalculator.m in Sources */,
+				53FDCA7D1C7A7621006B4002 /* Permission.m in Sources */,
+				53FDCA811C7A7638006B4002 /* Account.m in Sources */,
+				53FDCA731C7A12FB006B4002 /* Service.m in Sources */,
+				53FDCA431C79A591006B4002 /* MasterViewController.swift in Sources */,
+				53FDCA591C79BF75006B4002 /* Appointment+CoreDataProperties.m in Sources */,
+				53FDCA561C79AE4E006B4002 /* ClaudiasSalon.xcdatamodeld in Sources */,
+				53FDCA721C7A11FD006B4002 /* Holiday.m in Sources */,
+				53FDCA6C1C7A1138006B4002 /* ServiceCategory.m in Sources */,
+				53FDCA451C79A591006B4002 /* DetailViewController.swift in Sources */,
+				53FDCA6A1C7A0D3D006B4002 /* Employee.m in Sources */,
+				53FDCA641C7A06DA006B4002 /* Sale.m in Sources */,
+				53FDCA581C79AF4D006B4002 /* CoreData.swift in Sources */,
+				53FDCA7E1C7A7625006B4002 /* Role.m in Sources */,
+				53FDCA861C7A7965006B4002 /* PaymentCategory.m in Sources */,
+				53FDCA741C7A13BB006B4002 /* BusinessFunction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2845,6 +3086,22 @@
 				53D69BC51A9B22830004CE10 /* Base */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		53FDCA461C79A591006B4002 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				53FDCA471C79A591006B4002 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		53FDCA4B1C79A591006B4002 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				53FDCA4C1C79A591006B4002 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2972,6 +3229,51 @@
 			};
 			name = Release;
 		};
+		53FDCA4F1C79A591006B4002 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ClaudiaSalonIOS/ClaudiaSalonIOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ClaudiaSalonIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.KeithStaines.ClaudiaSalonIOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "ClaudiaSalonIOS/ClaudiaSalonIOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				"SWIFT_OPTIMIZATION_LEVEL[arch=*]" = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		53FDCA501C79A591006B4002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ClaudiaSalonIOS/ClaudiaSalonIOS.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ClaudiaSalonIOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.KeithStaines.ClaudiaSalonIOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "ClaudiaSalonIOS/ClaudiaSalonIOS-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2992,6 +3294,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		53FDCA511C79A591006B4002 /* Build configuration list for PBXNativeTarget "ClaudiaSalonIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53FDCA4F1C79A591006B4002 /* Debug */,
+				53FDCA501C79A591006B4002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 

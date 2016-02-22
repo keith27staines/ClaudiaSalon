@@ -9,7 +9,7 @@
 @class WorkRecord, Salary, Employee, Payment;
 
 #import <Foundation/Foundation.h>
-#import "AMCSalonDocument.h"
+
 @interface AMCSalaryCalculator : NSObject
 
 +(BOOL)doesIntervalOfWorkRecord:(WorkRecord*)workRecord overlapSalary:(Salary*)salary;

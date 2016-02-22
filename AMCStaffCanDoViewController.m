@@ -7,8 +7,8 @@
 //
 
 #import "AMCStaffCanDoViewController.h"
-#import "Service+Methods.h"
-#import "Employee+Methods.h"
+#import "Service.h"
+#import "Employee.h"
 
 @interface AMCStaffCanDoViewController ()
 {

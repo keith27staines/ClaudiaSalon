@@ -8,15 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
+#import "AMCObjectWithNotesProtocol.h"
 @class Appointment, Note, Sale, Salon;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Customer : NSManagedObject
-
-// Insert code here to declare functionality of your managed object subclass
-
+@interface Customer : NSManagedObject <AMCObjectWithNotesProtocol>
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
+-(NSNumber*)totalMoneySpent;
+-(NSNumber*)totalMoneyRefunded;
+-(NSNumber*)numberOfPreviousVisits;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -8,15 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "ServiceCategory.h"
+#import "AMCObjectWithNotesProtocol.h"
+#import "AMCTreeNode.h"
 
 @class Note, Salon, Service;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ServiceCategory : NSManagedObject
 
-// Insert code here to declare functionality of your managed object subclass
-
+@interface ServiceCategory: NSManagedObject <AMCObjectWithNotesProtocol, AMCTreeNode>
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
+-(BOOL)isHairCategory;
 @end
 
 NS_ASSUME_NONNULL_END

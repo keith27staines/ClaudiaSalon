@@ -7,9 +7,9 @@
 //
 
 #import "EditPaymentViewController.h"
-#import "Payment+Methods.h"
-#import "PaymentCategory+Methods.h"
-#import "Account+Methods.h"
+#import "Payment.h"
+#import "PaymentCategory.h"
+#import "Account.h"
 #import "AMCSalonDocument.h"
 @interface EditPaymentViewController ()
 {

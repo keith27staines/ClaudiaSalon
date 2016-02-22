@@ -7,11 +7,11 @@
 //
 
 #import "AMCSalaryCalculator.h"
-#import "Salary+Methods.h"
-#import "WorkRecord+Methods.h"
-#import "Employee+Methods.h"
+#import "Salary.h"
+#import "WorkRecord.h"
+#import "Employee.h"
 #import "NSDate+AMCDate.h"
-#import "Payment+Methods.h"
+#import "Payment.h"
 
 @implementation AMCSalaryCalculator
 

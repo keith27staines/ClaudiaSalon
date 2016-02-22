@@ -8,7 +8,7 @@
 
 #import "AMCEmployeesViewController.h"
 #import "AMCStaffCanDoViewController.h"
-#import "Employee+Methods.h"
+#import "Employee.h"
 
 @interface AMCEmployeesViewController ()
 @property (strong) IBOutlet AMCStaffCanDoViewController *canDoViewController;

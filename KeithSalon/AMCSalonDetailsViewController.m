@@ -8,9 +8,10 @@
 
 #import "AMCSalonDetailsViewController.h"
 #import "Salon.h"
-#import "Employee+Methods.h"
-#import "Account+Methods.h"
+#import "Employee.h"
+#import "Account.h"
 #import "NSDate+AMCDate.h"
+#import "AMCSalonDocument.h"
 
 @interface AMCSalonDetailsViewController ()
 {

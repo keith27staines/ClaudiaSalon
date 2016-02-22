@@ -7,11 +7,11 @@
 //
 
 #import "AMCAppointmentViewer.h"
-#import "Appointment+Methods.h"
-#import "Sale+Methods.h"
-#import "Customer+Methods.h"
-#import "Employee+Methods.h"
-#import "SaleItem+Methods.h"
+#import "Appointment.h"
+#import "Sale.h"
+#import "Customer.h"
+#import "Employee.h"
+#import "SaleItem.h"
 #import "AMCQuickQuoteViewController.h"
 
 @interface AMCAppointmentViewer ()
