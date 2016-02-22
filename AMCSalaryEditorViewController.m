@@ -7,9 +7,9 @@
 //
 @class AMCHoursWorkedEachDayOfWeekViewController;
 #import "AMCSalaryEditorViewController.h"
-#import "Employee+Methods.h"
-#import "WorkRecord+Methods.h"
-#import "Salary+Methods.h"
+#import "Employee.h"
+#import "WorkRecord.h"
+#import "Salary.h"
 #import "AMCHoursWorkedEachDayOfWeekViewController.h"
 #import "AMCHoursWorkedOnDayViewController.h"
 #import "AMCSalaryCalculator.h"

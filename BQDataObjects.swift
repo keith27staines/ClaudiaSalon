@@ -44,10 +44,11 @@ public class ICloudRecord {
     }
     private init(recordType:String, managedObject: NSManagedObject, parentSalonID: NSManagedObjectID?) {
         managedObject.managedObjectContext!.performBlockAndWait() {
-
+            
             self.coredataID = managedObject.objectID.URIRepresentation().absoluteString
             self.recordType = recordType;
-            let metadata = managedObject.bqdata?.metadata
+            let bqObject = managedObject as! BQExportable
+            let metadata = bqObject.bqMetadata
             self.unarchiveCloudRecordMetadataFromdata(metadata, coredataObject: managedObject)
             
             if recordType != ICloudRecordType.Salon.rawValue {
@@ -97,7 +98,8 @@ public class ICloudRecord {
             archiver.finishEncoding()
             let moc = coredataObject.managedObjectContext!
             moc.performBlockAndWait() {
-                coredataObject.setbqdata(metadata)
+                let bqObject = coredataObject as! BQExportable
+                bqObject.bqMetadata = metadata
                 try! moc.save()
             }
         }

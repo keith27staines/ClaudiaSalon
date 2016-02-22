@@ -7,7 +7,7 @@
 //
 
 #import "AMCReceiptWindowController.h"
-#import "Sale+Methods.h"
+#import "Sale.h"
 #import <Quartz/Quartz.h>
 
 @interface AMCReceiptWindowController ()

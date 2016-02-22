@@ -8,10 +8,11 @@
 
 #import "AMCRecurringEventManagementViewController.h"
 #import "RecurringItem+Methods.h"
-#import "Payment+Methods.h"
+#import "Payment.h"
 #import "Salon.h"
-#import "Account+Methods.h"
-#import "PaymentCategory+Methods.h"
+#import "Account.h"
+#import "PaymentCategory.h"
+#import "AMCSalonDocument.h"
 
 @interface AMCRecurringEventManagementViewController () <NSTableViewDelegate>
 @property (strong) IBOutlet NSArrayController *arrayController;

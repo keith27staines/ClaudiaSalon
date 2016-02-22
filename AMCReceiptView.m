@@ -7,12 +7,12 @@
 //
 
 #import "AMCReceiptView.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
-#import "Customer+Methods.h"
-#import "Payment+Methods.h"
-#import "Employee+Methods.h"
-#import "Service+Methods.h"
+#import "Sale.h"
+#import "SaleItem.h"
+#import "Customer.h"
+#import "Payment.h"
+#import "Employee.h"
+#import "Service.h"
 #import "AMCDiscountCalculator.h"
 
 

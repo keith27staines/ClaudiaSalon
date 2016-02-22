@@ -7,7 +7,7 @@
 //
 
 #import "AMCBookingViewController.h"
-#import "Appointment+Methods.h"
+#import "Appointment.h"
 #import "AMCBookingRowViewController.h"
 #import "AMCBookingRowView.h"
 #import "NSDate+AMCDate.h"

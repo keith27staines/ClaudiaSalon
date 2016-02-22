@@ -7,7 +7,7 @@
 //
 
 #import "AMCDayAndMonthPopupViewController.h"
-
+#import "NSDate+AMCDate.h"
 @interface AMCDayAndMonthPopupViewController ()
 {
     NSUInteger _monthNumber;
@@ -28,8 +28,8 @@
 - (IBAction)monthChanged:(NSPopUpButton *)sender {
     _monthNumber = [self.monthPopupButton indexOfSelectedItem];
     [self loadDayOfMonthPopupForMonthNumber:_monthNumber];
-    if (_dayNumber > [self daysInMonth:_monthNumber]) {
-        _dayNumber = [self daysInMonth:_monthNumber];
+    if (_dayNumber > [NSDate daysInMonth:_monthNumber]) {
+        _dayNumber = [NSDate daysInMonth:_monthNumber];
     }
     [self.dayPopupButton selectItemAtIndex:_dayNumber];
     [self.delegate dayAndMonthControllerDidUpdate:self];
@@ -46,7 +46,7 @@
     NSAssert(monthNumber >=0 && monthNumber < 13, @"Month number out of range");
     [self.monthPopupButton selectItemAtIndex:monthNumber];
     [self loadDayOfMonthPopupForMonthNumber:monthNumber];
-    if (dayNumber > [self daysInMonth:monthNumber]) {
+    if (dayNumber > [NSDate daysInMonth:monthNumber]) {
         dayNumber = 0;
     }
     [self.dayPopupButton selectItemAtIndex:dayNumber];
@@ -61,106 +61,106 @@
 {
     return _enabled;
 }
--(NSString *)monthName
-{
-    return [self monthNameFromNumber:self.monthNumber];
-}
--(NSString*)monthNameFromNumber:(NSUInteger)number {
-    return [[self class] monthNameFromNumber:number];
-}
-+(NSString*)monthNameFromNumber:(NSUInteger)number
-{
-    switch (number) {
-        case 1:
-            return @"January";
-            break;
-        case 2:
-            return @"February";
-            break;
-        case 3:
-            return @"March";
-            break;
-        case 4:
-            return @"April";
-            break;
-        case 5:
-            return @"May";
-            break;
-        case 6:
-            return @"June";
-            break;
-        case 7:
-            return @"July";
-            break;
-        case 8:
-            return @"August";
-            break;
-        case 9:
-            return @"September";
-            break;
-        case 10:
-            return @"October";
-            break;
-        case 11:
-            return @"November";
-            break;
-        case 12:
-            return @"December";
-        default:
-            return @"Month";
-            break;
-    }
-}
-
--(NSUInteger)daysInMonth:(NSUInteger)monthNumber
-{
-    switch (monthNumber) {
-        case 0:
-            return 0;
-        case 1:
-            return 31;
-            break;
-        case 2:
-            return 28;
-            break;
-        case 3:
-            return 31;
-            break;
-        case 4:
-            return 30;
-            break;
-        case 5:
-            return 31;
-            break;
-        case 6:
-            return 30;
-            break;
-        case 7:
-            return 31;
-            break;
-        case 8:
-            return 31;
-            break;
-        case 9:
-            return 30;
-            break;
-        case 10:
-            return 31;
-            break;
-        case 11:
-            return 30;
-            break;
-        case 12:
-            return 31;
-            break;
-    }
-    return 0;
-}
+//-(NSString *)monthName
+//{
+//    return [self monthNameFromNumber:self.monthNumber];
+//}
+//-(NSString*)monthNameFromNumber:(NSUInteger)number {
+//    return [[self class] monthNameFromNumber:number];
+//}
+//+(NSString*)monthNameFromNumber:(NSUInteger)number
+//{
+//    switch (number) {
+//        case 1:
+//            return @"January";
+//            break;
+//        case 2:
+//            return @"February";
+//            break;
+//        case 3:
+//            return @"March";
+//            break;
+//        case 4:
+//            return @"April";
+//            break;
+//        case 5:
+//            return @"May";
+//            break;
+//        case 6:
+//            return @"June";
+//            break;
+//        case 7:
+//            return @"July";
+//            break;
+//        case 8:
+//            return @"August";
+//            break;
+//        case 9:
+//            return @"September";
+//            break;
+//        case 10:
+//            return @"October";
+//            break;
+//        case 11:
+//            return @"November";
+//            break;
+//        case 12:
+//            return @"December";
+//        default:
+//            return @"Month";
+//            break;
+//    }
+//}
+//
+//-(NSUInteger)daysInMonth:(NSUInteger)monthNumber
+//{
+//    switch (monthNumber) {
+//        case 0:
+//            return 0;
+//        case 1:
+//            return 31;
+//            break;
+//        case 2:
+//            return 28;
+//            break;
+//        case 3:
+//            return 31;
+//            break;
+//        case 4:
+//            return 30;
+//            break;
+//        case 5:
+//            return 31;
+//            break;
+//        case 6:
+//            return 30;
+//            break;
+//        case 7:
+//            return 31;
+//            break;
+//        case 8:
+//            return 31;
+//            break;
+//        case 9:
+//            return 30;
+//            break;
+//        case 10:
+//            return 31;
+//            break;
+//        case 11:
+//            return 30;
+//            break;
+//        case 12:
+//            return 31;
+//            break;
+//    }
+//    return 0;
+//}
 -(void)loadMonthPopupButton
 {
     [self.monthPopupButton removeAllItems];
     for (int i = 0; i < 13; i++) {
-        NSString * title = [self monthNameFromNumber:i];
+        NSString * title = [NSDate monthNameFromNumber:i];
         [self.monthPopupButton insertItemWithTitle:title atIndex:i];
     }
     [self.monthPopupButton selectItemAtIndex:0];
@@ -169,7 +169,7 @@
 {
     NSUInteger currentlySelectedDay = [self.dayPopupButton indexOfSelectedItem];
     [self.dayPopupButton removeAllItems];
-    NSUInteger daysInMonth = [self daysInMonth:monthNumber];
+    NSUInteger daysInMonth = [NSDate daysInMonth:monthNumber];
     NSString * title;
     for (int i = 0; i <= daysInMonth; i++) {
         if (i==0) {

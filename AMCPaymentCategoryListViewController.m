@@ -7,7 +7,7 @@
 //
 
 #import "AMCPaymentCategoryListViewController.h"
-#import "PaymentCategory+Methods.h"
+#import "PaymentCategory.h"
 
 @interface AMCPaymentCategoryListViewController ()
 @property (weak) IBOutlet NSTableView *dataTable;

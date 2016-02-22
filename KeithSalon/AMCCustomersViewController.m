@@ -8,7 +8,7 @@
 
 #import "AMCCustomersViewController.h"
 #import "AMCDayAndMonthPopupViewController.h"
-#import "Customer+Methods.h"
+#import "Customer.h"
 
 @interface AMCCustomersViewController ()
 @property (weak) IBOutlet NSButton *clearFiltersButton;

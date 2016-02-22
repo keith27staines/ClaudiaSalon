@@ -176,7 +176,8 @@ class BQDeletionRequestList {
         }
     }
     func addCloudDeletionRequestForLocallyDeletedObject(deletedObject:NSManagedObject) {
-        if let metadata = deletedObject.bqdata?.metadata {
+        let bqObject = deletedObject as! BQExportable
+        if let metadata = bqObject.bqMetadata  {
             self.addCloudDeletionRequestsForRecordWithMetadata(metadata)
         }
     }

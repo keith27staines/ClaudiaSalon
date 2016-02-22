@@ -8,7 +8,7 @@
 
 #import "AMCCategoryManagementViewController.h"
 #import "AMCSalonDocument.h"
-#import "PaymentCategory+Methods.h"
+#import "PaymentCategory.h"
 #import "EditObjectViewController.h"
 #import "AMCCashBookNode.h"
 

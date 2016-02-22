@@ -8,7 +8,7 @@
 
 #import "EditEmployeeViewController.h"
 #import "AppDelegate.h"
-#import "Employee+Methods.h"
+#import "Employee.h"
 #import "AMCSalaryEditorViewController.h"
 #import "AMCSalonDocument.h"
 #import "AMCPasswordEditor.h"

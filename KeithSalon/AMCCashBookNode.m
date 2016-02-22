@@ -7,7 +7,7 @@
 //
 
 #import "AMCCashBookNode.h"
-#import "PaymentCategory+Methods.h"
+#import "PaymentCategory.h"
 #import "AccountingPaymentGroup+Methods.h"
 
 @interface AMCCashBookNode()

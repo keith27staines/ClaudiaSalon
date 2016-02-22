@@ -9,7 +9,7 @@
 import Cocoa
 
 class AMCBookingQueueManagerViewController: NSViewController, NSTabViewDelegate {
-    var salonDocument: AMCSalonDocument!
+    weak var salonDocument: AMCSalonDocument!
     @IBOutlet weak var navigationTabBar: NSTabView!
 
     @IBOutlet var dataExtractViewController: BQDataExtractViewController!

@@ -7,9 +7,9 @@
 //
 
 #import "AMCSaleItemPriceSetterView.h"
-#import "SaleItem+Methods.h"
-#import "Service+Methods.h"
-#import "Sale+Methods.h"
+#import "SaleItem.h"
+#import "Service.h"
+#import "Sale.h"
 #import "AMCDiscountCalculator.h"
 #import "AMCSalonDocument.h"
 

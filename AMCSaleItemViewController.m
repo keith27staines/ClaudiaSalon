@@ -8,11 +8,11 @@
 
 #import "AMCSaleItemViewController.h"
 #import "AMCConstants.h"
-#import "SaleItem+Methods.h"
-#import "Sale+Methods.h"
-#import "Service+Methods.h"
-#import "Customer+Methods.h"
-#import "Employee+Methods.h"
+#import "SaleItem.h"
+#import "Sale.h"
+#import "Service.h"
+#import "Customer.h"
+#import "Employee.h"
 #import "AMCDiscountCalculator.h"
 
 @interface AMCSaleItemViewController ()

@@ -9,10 +9,10 @@
 #import "AMCViewController.h"
 #import "AMCSalonDocument.h"
 #import "AMCPermissionDeniedViewController.h"
-#import "Role+Methods.h"
-#import "Employee+Methods.h"
+#import "Role.h"
+#import "Employee.h"
 #import "AMCRolesMappingToScreen.h"
-#import "BusinessFunction+Methods.h"
+#import "BusinessFunction.h"
 
 @interface AMCViewController ()
 {

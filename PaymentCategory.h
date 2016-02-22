@@ -14,9 +14,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PaymentCategory : NSManagedObject
-
-// Insert code here to declare functionality of your managed object subclass
-
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
 @end
 
 NS_ASSUME_NONNULL_END

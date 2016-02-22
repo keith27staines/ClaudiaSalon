@@ -11,14 +11,17 @@
 
 @class Employee, Payment;
 
-NS_ASSUME_NONNULL_BEGIN
+@interface WorkRecord: NSManagedObject
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
+@property (readonly) NSNumber * totalHoursForWeek;
+@property (readonly) NSNumber * daysWorked;
+@property (copy) NSDictionary * hoursWorkedDictionary;
+@property (readonly, copy) NSDate * weekBeginningDate;
 
-@interface WorkRecord : NSManagedObject
-
-// Insert code here to declare functionality of your managed object subclass
+-(NSNumber*)hoursForDay:(NSString*)dayName;
+-(void)setHours:(NSNumber*) hours forDay:(NSString*)dayName;
 
 @end
-
-NS_ASSUME_NONNULL_END
 
 #import "WorkRecord+CoreDataProperties.h"

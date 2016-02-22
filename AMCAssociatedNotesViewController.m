@@ -7,7 +7,7 @@
 //
 
 #import "AMCAssociatedNotesViewController.h"
-#import "Note+Methods.h"
+#import "Note.h"
 #import "AMCNoteViewController.h"
 #import "AMCNoteView.h"
 

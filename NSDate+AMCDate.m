@@ -21,6 +21,23 @@
     NSDate * beginningOfDay = [NSDate beginningOfDayOnDate:date];
     return [beginningOfDay dateByAddingTimeInterval:24*3600];
 }
+-(BOOL)isGreaterThan:(NSDate*)otherDate {
+    NSComparisonResult result = [self compare:otherDate];
+    return (result == NSOrderedDescending);
+}
+-(BOOL)isLessThan:(NSDate*)otherDate {
+    NSComparisonResult result = [self compare:otherDate];
+    return (result == NSOrderedAscending);
+}
+-(BOOL)isGreaterThanOrEqualTo:(NSDate*)otherDate {
+    NSComparisonResult result = [self compare:otherDate];
+    return (result == NSOrderedDescending || result == NSOrderedSame);
+}
+-(BOOL)isLessThanOrEqualTo:(NSDate*)otherDate {
+    NSComparisonResult result = [self compare:otherDate];
+    return (result == NSOrderedAscending || result == NSOrderedSame);
+}
+
 -(NSDate *)beginningOfDay
 {
     return [NSDate beginningOfDayOnDate:self];
@@ -141,4 +158,99 @@
     [components setMonth:components.month+1];
     return [[[gregorian dateFromComponents:components] beginningOfDay] dateByAddingTimeInterval:-1];
 }
+
+/** month number is one based (i.e, January = 1) */
++(NSString*)monthNameFromNumber:(NSUInteger)number
+{
+    switch (number) {
+        case 1:
+            return @"January";
+            break;
+        case 2:
+            return @"February";
+            break;
+        case 3:
+            return @"March";
+            break;
+        case 4:
+            return @"April";
+            break;
+        case 5:
+            return @"May";
+            break;
+        case 6:
+            return @"June";
+            break;
+        case 7:
+            return @"July";
+            break;
+        case 8:
+            return @"August";
+            break;
+        case 9:
+            return @"September";
+            break;
+        case 10:
+            return @"October";
+            break;
+        case 11:
+            return @"November";
+            break;
+        case 12:
+            return @"December";
+        default:
+            return @"Month";
+            break;
+    }
+}
+
+/** month number is one based (i.e, January = 1) */
++(NSUInteger)daysInMonth:(NSUInteger)monthNumber
+{
+    switch (monthNumber) {
+        case 0:
+            return 0;
+        case 1:
+            return 31;
+            break;
+        case 2:
+            return 28;
+            break;
+        case 3:
+            return 31;
+            break;
+        case 4:
+            return 30;
+            break;
+        case 5:
+            return 31;
+            break;
+        case 6:
+            return 30;
+            break;
+        case 7:
+            return 31;
+            break;
+        case 8:
+            return 31;
+            break;
+        case 9:
+            return 30;
+            break;
+        case 10:
+            return 31;
+            break;
+        case 11:
+            return 30;
+            break;
+        case 12:
+            return 31;
+            break;
+    }
+    return 0;
+}
+
+
+
+
 @end

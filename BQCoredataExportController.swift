@@ -136,9 +136,9 @@ private class BQExportModifiedCoredataOperation : NSOperation {
         if let privateMoc = self.privateMoc {
             privateMoc.performBlockAndWait() {
                 for (coredataID,error) in self.exportedRecordsWithErrors {
-                    let managedObject = self.coredataObjectsNeedingExport[coredataID]!
+                    let managedObject = self.coredataObjectsNeedingExport[coredataID]! as! BQExportable
                     if error == nil {
-                        managedObject.markAsExported()
+                        managedObject.bqNeedsCoreDataExport = NSNumber(bool: false)
                     } else {
                         print("managed object failed to export with error \(error)")
                     }

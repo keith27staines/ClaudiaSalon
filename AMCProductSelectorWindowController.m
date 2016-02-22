@@ -106,7 +106,7 @@
     NSError *error = nil;
     self.filteredObjects = [moc executeFetchRequest:fetchRequest error:&error];
     if (self.filteredObjects == nil) {
-        [NSApp presentError:error];
+        NSLog(@"Unexpected error: %@",error);
     }
     [self applySearchFilter];
     self.displayedObjects = [self.displayedObjects sortedArrayUsingDescriptors:self.dataTable.sortDescriptors];

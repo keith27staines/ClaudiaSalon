@@ -13,10 +13,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Note : NSManagedObject
-
-// Insert code here to declare functionality of your managed object subclass
-
+@interface Note: NSManagedObject
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 @end
 
 NS_ASSUME_NONNULL_END

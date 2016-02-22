@@ -11,15 +11,15 @@
 #import "AMCSalaryPaymentViewController.h"
 #import "AMCHoursWorkedEachDayOfWeekViewController.h"
 #import "AMCHoursWorkedOnDayViewController.h"
-#import "WorkRecord+Methods.h"
+#import "WorkRecord.h"
 #import "Salary.h"
-#import "Employee+Methods.h"
-#import "Payment+Methods.h"
-#import "Account+Methods.h"
-#import "PaymentCategory+Methods.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
-#import "Service+Methods.h"
+#import "Employee.h"
+#import "Payment.h"
+#import "Account.h"
+#import "PaymentCategory.h"
+#import "Sale.h"
+#import "SaleItem.h"
+#import "Service.h"
 #import "NSDate+AMCDate.h"
 #import "AMCSalaryCalculator.h"
 #import "AMCPaymentAmountViewController.h"
@@ -273,7 +273,7 @@
         NSError *error = nil;
         _employees = [moc executeFetchRequest:fetchRequest error:&error];
         if (_employees == nil) {
-            [NSApp presentError:error];
+            NSLog(@"Unexpected error: %@",error);
         }
     }
     return _employees;

@@ -7,7 +7,7 @@
 //
 
 #import "StockedProduct+Methods.h"
-#import "Note+Methods.h"
+#import "Note.h"
 #import "StockedProduct+Methods.h"
 #import "StockedCategory+Methods.h"
 
@@ -68,7 +68,7 @@
     NSError *error = nil;
     NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
-        [NSApp presentError:error];
+        NSLog(@"Unexpected error: %@",error);
     }
     if (fetchedObjects.count == 0) {
         return nil;

@@ -8,7 +8,6 @@
 @class Salon;
 
 #import <Foundation/Foundation.h>
-#import "AMCSalonDocument.h"
 @interface NSDate (AMCDate)
 +(NSDate*)beginningOfDayOnDate:(NSDate*)date;
 +(NSDate*)endOfDayOnDate:(NSDate*)date;
@@ -30,4 +29,13 @@
 -(NSDate*)lastDayOfSalonWeek:(Salon*)salon;
 -(NSDate*)firstDayOfWeekWithFirstDay:(NSInteger)numberOfFirstDayInWeek;
 -(NSDate*)lastDayOfWeekWithFirstDay:(NSInteger)numberOfFirstDayInWeek;
+-(BOOL)isGreaterThan:(NSDate*)otherDate;
+-(BOOL)isLessThan:(NSDate*)otherDate;
+-(BOOL)isGreaterThanOrEqualTo:(NSDate*)otherDate;
+-(BOOL)isLessThanOrEqualTo:(NSDate*)otherDate;
+
++(NSString*)monthNameFromNumber:(NSUInteger)number;
+
++(NSUInteger)daysInMonth:(NSUInteger)monthNumber;
+
 @end

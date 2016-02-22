@@ -10,7 +10,7 @@
 
 #import "AMCHoursWorkedEachDayOfWeekViewController.h"
 #import "AMCHoursWorkedOnDayViewController.h"
-#import "WorkRecord+Methods.h"
+#import "WorkRecord.h"
 #import "NSDate+AMCDate.h"
 
 @interface AMCHoursWorkedEachDayOfWeekViewController ()

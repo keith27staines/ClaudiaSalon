@@ -10,69 +10,23 @@ import Foundation
 import CoreData
 import CloudKit
 
-// MARK:- NSManagedObject extension
-extension NSManagedObject {
-    func markAsExported() {
-        switch self.className {
-        case "Salon":
-            let salon = self as! Salon
-            salon.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "Customer":
-            let customer = self as! Customer
-            customer.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "Employee":
-            let employee = self as! Employee
-            employee.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "Service":
-            let service = self as! Service
-            service.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "ServiceCategory":
-            let serviceCategory = self as! ServiceCategory
-            serviceCategory.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "Appointment":
-            let appointment = self as! Appointment
-            appointment.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "Sale":
-            let sale = self as! Sale
-            sale.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        case "SaleItem":
-            let saleItem = self as! SaleItem
-            saleItem.bqNeedsCoreDataExport = NSNumber(bool: false)
-            break
-        default:
-            break
-        }
-    }
-}
-// MARK:- NSManagedObjectContext extension
-extension NSManagedObjectContext {
-    func objectForIDString(coredataIDString:String) -> NSManagedObject {
-        guard let coordinator = self.persistentStoreCoordinator else {
-            preconditionFailure("The managed object context doesn't have a persistent store coordinator")
-        }
-        guard let uriRepresentation = NSURL(string: coredataIDString) else {
-            preconditionFailure("Unable to construct a URL from the string \(coredataIDString)")
-        }
-        guard let managedObjectID = coordinator.managedObjectIDForURIRepresentation(uriRepresentation) else {
-            preconditionFailure("The persistent store coordinate didn't return an objectID for the URL representation")
-        }
-        return self.objectWithID(managedObjectID)
-    }
+@objc
+protocol BQExportable: class {
+    var bqNeedsCoreDataExport: NSNumber? { get set }
+    var bqMetadata: NSData? { get set }
 }
 
+extension BQExportable {
 
+}
 
-////////////////
+// MARK:- Salon
+extension Salon : BQExportable {
+    
+}
 
 // MARK:- Appointment
-extension Appointment {
+extension Appointment : BQExportable {
     class func unexpiredAppointments(managedObjectContext:NSManagedObjectContext) -> [Appointment] {
         let today = NSDate()
         let earliest = today.dateByAddingTimeInterval(-appointmentExpiryTime)
@@ -97,7 +51,7 @@ extension Appointment {
     }
 }
 // MARK:- Customer
-extension Customer {
+extension Customer : BQExportable {
     class func customersOrderedByFirstName(managedObjectContext:NSManagedObjectContext) -> [Customer] {
         let customers = Customer.allObjectsWithMoc(managedObjectContext) as! [Customer]
         let sortedCustomers = customers.sort { (customer1:Customer, customer2:Customer) -> Bool in
@@ -119,7 +73,7 @@ extension Customer {
     }
 }
 // MARK:- Employee
-extension Employee {
+extension Employee : BQExportable {
     class func employeesOrderedByFirstName(managedObjectContext:NSManagedObjectContext) -> [Employee] {
         let employees = Employee.allObjectsWithMoc(managedObjectContext) as! [Employee]
         let sortedEmployees = employees.sort { (employee1, employee2) -> Bool in
@@ -141,7 +95,7 @@ extension Employee {
     }
 }
 // MARK:- Service
-extension Service {
+extension Service : BQExportable {
     class func servicesOrderedByName(managedObjectContext: NSManagedObjectContext) -> [Service] {
         let services = Service.allObjectsWithMoc(managedObjectContext) as! [Service]
         let sortedServices = services.sort { (service1, service2) -> Bool in
@@ -163,7 +117,7 @@ extension Service {
     }
 }
 // MARK:- ServiceCategory
-extension ServiceCategory {
+extension ServiceCategory : BQExportable {
     class func serviceCategoriesOrderedByName(managedObjectContext: NSManagedObjectContext) -> [ServiceCategory] {
         let serviceCategories = ServiceCategory.allObjectsWithMoc(managedObjectContext) as! [ServiceCategory]
         let sortedServiceCategories = serviceCategories.sort { (serviceCategory1, serviceCategory2) -> Bool in
@@ -185,7 +139,7 @@ extension ServiceCategory {
     }
 }
 // MARK:- SaleItem
-extension SaleItem {
+extension SaleItem : BQExportable {
     class func saleItemsMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<SaleItem> {
         let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
         let fetchRequest = NSFetchRequest(entityName:"SaleItem")
@@ -200,7 +154,7 @@ extension SaleItem {
     }
 }
 // MARK:- Sale
-extension Sale {
+extension Sale : BQExportable {
     class func salesMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<Sale> {
         let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
         let fetchRequest = NSFetchRequest(entityName:"Sale")
@@ -225,68 +179,26 @@ extension NSManagedObject {
         return CKRecord(coder: unarchiver)
     }
     func cloudkitRecordFromEmbeddedMetadata()->CKRecord? {
-        return NSManagedObject.cloudkitRecordFromMetadata(self.bqdata?.metadata)
-    }
-    func setbqdata(data:NSData) {
-        let className = self.className
-        switch className {
-        case Salon.className():
-            let salon = self as! Salon
-            salon.bqMetadata = data
-        case Employee.className():
-            let employee = self as! Employee
-            employee.bqMetadata = data
-        case Customer.className():
-            let customer = self as! Customer
-            customer.bqMetadata = data
-        case ServiceCategory.className():
-            let serviceCategory = self as! ServiceCategory
-            serviceCategory.bqMetadata = data
-        case Service.className():
-            let service = self as! Service
-            service.bqMetadata = data
-        case Appointment.className():
-            let appointment = self as! Appointment
-            appointment.bqMetadata = data
-        case Sale.className():
-            let sale = self as! Sale
-            sale.bqMetadata = data
-        case SaleItem.className():
-            let saleItem = self as! SaleItem
-            saleItem.bqMetadata = data
-        default:
-            break
+        if let bqObject = self as? BQExportable {
+            return NSManagedObject.cloudkitRecordFromMetadata(bqObject.bqMetadata)
         }
-    }
-    var bqdata:(metadata:NSData?,bqNeedsExport:Bool)? {
-        let className = self.className
-        switch className {
-        case Salon.className():
-            let salon = self as! Salon
-            return (salon.bqMetadata,salon.bqNeedsCoreDataExport!.boolValue)
-        case Employee.className():
-            let employee = self as! Employee
-            return (employee.bqMetadata,employee.bqNeedsCoreDataExport!.boolValue)
-        case Customer.className():
-            let customer = self as! Customer
-            return (customer.bqMetadata,customer.bqNeedsCoreDataExport!.boolValue)
-        case ServiceCategory.className():
-            let serviceCategory = self as! ServiceCategory
-            return (serviceCategory.bqMetadata,serviceCategory.bqNeedsCoreDataExport!.boolValue)
-        case Service.className():
-            let service = self as! Service
-            return (service.bqMetadata,service.bqNeedsCoreDataExport!.boolValue)
-        case Appointment.className():
-            let appointment = self as! Appointment
-            return (appointment.bqMetadata,appointment.bqNeedsCoreDataExport!.boolValue)
-        case Sale.className():
-            let sale = self as! Sale
-            return (sale.bqMetadata,sale.bqNeedsCoreDataExport!.boolValue)
-        case SaleItem.className():
-            let saleItem = self as! SaleItem
-            return (saleItem.bqMetadata,saleItem.bqNeedsCoreDataExport!.boolValue)
-        default:
-            return nil
-        }
+        return nil;
     }
 }
+// MARK:- NSManagedObjectContext extension
+extension NSManagedObjectContext {
+    func objectForIDString(coredataIDString:String) -> NSManagedObject {
+        guard let coordinator = self.persistentStoreCoordinator else {
+            preconditionFailure("The managed object context doesn't have a persistent store coordinator")
+        }
+        guard let uriRepresentation = NSURL(string: coredataIDString) else {
+            preconditionFailure("Unable to construct a URL from the string \(coredataIDString)")
+        }
+        guard let managedObjectID = coordinator.managedObjectIDForURIRepresentation(uriRepresentation) else {
+            preconditionFailure("The persistent store coordinate didn't return an objectID for the URL representation")
+        }
+        return self.objectWithID(managedObjectID)
+    }
+}
+
+

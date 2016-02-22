@@ -8,7 +8,7 @@
 
 #import "EditServiceViewController.h"
 #import "AMCConstants.h"
-#import "Service+Methods.h"
+#import "Service.h"
 #import "Product+Methods.h"
 #import "ObjectSelectorViewController.h"
 #import "AMCSalonDocument.h"

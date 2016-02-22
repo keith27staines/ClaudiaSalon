@@ -7,7 +7,7 @@
 //
 
 #import "AMCServiceSelectorViewController.h"
-#import "ServiceCategory+Methods.h"
+#import "ServiceCategory.h"
 #import "Service.h"
 
 @interface AMCServiceSelectorViewController ()

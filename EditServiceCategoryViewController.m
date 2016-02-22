@@ -7,7 +7,7 @@
 //
 
 #import "EditServiceCategoryViewController.h"
-#import "ServiceCategory+Methods.h"
+#import "ServiceCategory.h"
 #import "AMCConstants.h"
 #import "AMCSalonDocument.h"
 

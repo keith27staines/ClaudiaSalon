@@ -9,8 +9,8 @@
 #import "AMCWizardForNewAppointmentWindowController.h"
 #import "AMCWizardStepSelectCustomerViewController.h"
 #import "AMCWizardStepBookAppointmentForCustomerViewController.h"
-#import "Appointment+Methods.h"
-#import "Sale+Methods.h"
+#import "Appointment.h"
+#import "Sale.h"
 
 typedef NS_ENUM(NSUInteger, AMCWizardStepsMakeAppointment) {
     AMCWizardStepsMakeAppointmentSelectCustomer = 0,

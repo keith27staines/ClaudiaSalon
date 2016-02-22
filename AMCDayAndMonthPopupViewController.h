@@ -18,8 +18,6 @@
 
 @interface AMCDayAndMonthPopupViewController : NSObject
 
-+(NSString*)monthNameFromNumber:(NSUInteger)number;
-
 @property (weak) IBOutlet id<AMCDayAndMonthPopupViewControllerDelegate>delegate;
 @property (weak) IBOutlet NSPopUpButton * monthPopupButton;
 @property (weak) IBOutlet NSPopUpButton * dayPopupButton;

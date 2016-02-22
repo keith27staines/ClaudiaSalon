@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Keith Staines. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "AMCSalonDocument.h"
+#import <Foundation/Foundation.h>
+#import "AMCConstants.h"
 
 typedef NS_ENUM(NSInteger, AMCDiscountType) {
     AMCDiscountTypeNone = 0,

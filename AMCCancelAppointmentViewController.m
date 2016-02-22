@@ -8,10 +8,10 @@
 
 #import "AMCCancelAppointmentViewController.h"
 #import "AMCConstants.h"
-#import "Appointment+Methods.h"
-#import "Customer+Methods.h"
+#import "Appointment.h"
+#import "Customer.h"
 #import "AMCAppointmentCompletionBoilerPlate.h"
-#import "Note+Methods.h"
+#import "Note.h"
 #import "NSDate+AMCDate.h"
 #import "AMCSalonDocument.h"
 

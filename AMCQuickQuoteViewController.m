@@ -7,10 +7,10 @@
 //
 
 #import "AMCQuickQuoteViewController.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
-#import "Service+Methods.h"
-#import "Customer+Methods.h"
+#import "Sale.h"
+#import "SaleItem.h"
+#import "Service.h"
+#import "Customer.h"
 #import "AMCConstants.h"
 #import "AMCSaleItemPriceSetterView.h"
 #import "AMCSaleItemPriceSetterViewController.h"

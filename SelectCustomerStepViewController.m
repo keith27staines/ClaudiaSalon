@@ -8,9 +8,10 @@
 
 #import "SelectCustomerStepViewController.h"
 #import "AMCConstants.h"
-#import "Sale+Methods.h"
-#import "Customer+Methods.h"
+#import "Sale.h"
+#import "Customer.h"
 #import "AMCSalonDocument.h"
+#import "NSDate+AMCDate.h"
 
 @interface SelectCustomerStepViewController ()
 {
@@ -286,7 +287,7 @@
         if (monthNumber == 0) {
             return @"";
         } else {
-            return [AMCDayAndMonthPopupViewController monthNameFromNumber:monthNumber];
+            return [NSDate monthNameFromNumber:monthNumber];
         }
     }
     if ([tableColumn.identifier isEqualToString:@"dayOfBirth"]) {

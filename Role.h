@@ -9,14 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Employee, Permission, Salon;
+@class Employee, Permission, Salon, BusinessFunction;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Role : NSManagedObject
-
-// Insert code here to declare functionality of your managed object subclass
-
+@interface Role: NSManagedObject
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
+-(NSNumber*)allowsBusinessFunction:(BusinessFunction*)function verb:(NSString*)verb;
+-(Permission*)permissionForBusinessFunction:(BusinessFunction*)function;
 @end
 
 NS_ASSUME_NONNULL_END

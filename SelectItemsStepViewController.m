@@ -7,11 +7,11 @@
 //
 
 #import "SelectItemsStepViewController.h"
-#import "ServiceCategory+Methods.h"
-#import "Service+Methods.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
-#import "Employee+Methods.h"
+#import "ServiceCategory.h"
+#import "Service.h"
+#import "Sale.h"
+#import "SaleItem.h"
+#import "Employee.h"
 #import "AMCConstants.h"
 #import "AMCDiscountCalculator.h"
 #import "AMCRefundViewController.h"

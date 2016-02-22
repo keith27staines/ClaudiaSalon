@@ -9,16 +9,16 @@
 #import "MakePaymentStepViewController.h"
 #import "AMCConstants.h"
 #import "AMCDiscountCalculator.h"
-#import "Service+Methods.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
+#import "Service.h"
+#import "Sale.h"
+#import "SaleItem.h"
 #import "AMCPaymentFormatter.h"
 #import "AMCReceiptWindowController.h"
 #import "AMCReceiptView.h"
-#import "Account+Methods.h"
+#import "Account.h"
 #import "AMCSalonDocument.h"
 #import "Salon.h"
-#import "Payment+Methods.h"
+#import "Payment.h"
 
 @interface MakePaymentStepViewController ()
 {

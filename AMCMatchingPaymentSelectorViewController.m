@@ -8,8 +8,9 @@
 
 #import "AMCMatchingPaymentSelectorViewController.h"
 #import "AMCAccountStatementItem.h"
-#import "Payment+Methods.h"
-#import "Sale+Methods.h"
+#import "Payment.h"
+#import "Sale.h"
+#import "AMCConstants.h"
 
 @interface AMCMatchingPaymentSelectorViewController ()
 @property (weak) IBOutlet NSTextField *statementDateLabel;

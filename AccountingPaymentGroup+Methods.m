@@ -8,7 +8,7 @@
 
 #import "AccountingPaymentGroup+Methods.h"
 #import "Salon.h"
-#import "PaymentCategory+Methods.h"
+#import "PaymentCategory.h"
 
 @implementation AccountingPaymentGroup (Methods)
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc {
@@ -22,7 +22,7 @@
     NSError *error = nil;
     NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
     if (fetchedObjects == nil) {
-        [NSApp presentError:error];
+        NSLog(@"Unexpected error: %@",error);
     }
     return fetchedObjects;
 }

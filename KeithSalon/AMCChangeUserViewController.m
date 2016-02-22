@@ -7,7 +7,8 @@
 //
 
 #import "AMCChangeUserViewController.h"
-#import "Employee+Methods.h"
+#import "Employee.h"
+#import "AMCSalonDocument.h"
 
 @interface AMCChangeUserViewController () <NSTableViewDelegate>
 @property (strong) IBOutlet NSArrayController *usersArrayController;

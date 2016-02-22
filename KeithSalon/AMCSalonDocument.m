@@ -32,7 +32,7 @@
 #import "AMCFinancialAnalysisViewController.h"
 
 #import "Salon.h"
-#import "Customer+Methods.h"
+#import "Customer.h"
 #import "NSDate+AMCDate.h"
 #import "AMCSalonDetailsViewController.h"
 #import "RecurringItem+Methods.h"
@@ -41,19 +41,19 @@
 #import "AMCRoleMaintenance.h"
 
 // Imports required for data fixes
-#import "ServiceCategory+Methods.h"
+#import "ServiceCategory.h"
 #import "AccountingPaymentGroup+Methods.h"
-#import "PaymentCategory+Methods.h"
-#import "Employee+Methods.h"
-#import "Role+Methods.h"
-#import "BusinessFunction+Methods.h"
-#import "Permission+Methods.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
-#import "Payment+Methods.h"
-#import "Customer+Methods.h"
-#import "Appointment+Methods.h"
-#import "Account+Methods.h"
+#import "PaymentCategory.h"
+#import "Employee.h"
+#import "Role.h"
+#import "BusinessFunction.h"
+#import "Permission.h"
+#import "Sale.h"
+#import "SaleItem.h"
+#import "Payment.h"
+#import "Customer.h"
+#import "Appointment.h"
+#import "Account.h"
 // End imports for data fixes
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";

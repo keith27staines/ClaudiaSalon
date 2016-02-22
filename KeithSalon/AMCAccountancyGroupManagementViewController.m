@@ -7,7 +7,7 @@
 //
 
 #import "AMCAccountancyGroupManagementViewController.h"
-#import "PaymentCategory+Methods.h"
+#import "PaymentCategory.h"
 #import "AccountingPaymentGroup+Methods.h"
 #import "AMCCashBookRootNode.h"
 #import "EditPaymentCategoryViewController.h"

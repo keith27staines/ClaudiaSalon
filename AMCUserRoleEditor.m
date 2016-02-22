@@ -7,9 +7,9 @@
 //
 
 #import "AMCUserRoleEditor.h"
-#import "Role+Methods.h"
+#import "Role.h"
 
-#import "Employee+Methods.h"
+#import "Employee.h"
 
 @interface AMCUserRoleEditor () <NSTableViewDelegate, NSTableViewDataSource>
 @property (weak) IBOutlet NSButton *hasRoleCheckbox;

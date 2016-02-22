@@ -7,11 +7,11 @@
 //
 
 #import "AMCSalesViewController.h"
-#import "Sale+Methods.h"
-#import "Appointment+Methods.h"
-#import "Customer+Methods.h"
+#import "Sale.h"
+#import "Appointment.h"
+#import "Customer.h"
 #import "AMCSalonDocument.h"
-#import "Account+Methods.h"
+#import "Account.h"
 #import "AMCCancelAppointmentViewController.h"
 #import "AMCCompleteAppointmentViewController.h"
 #import "AMCReceiptWindowController.h"

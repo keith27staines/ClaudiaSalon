@@ -8,15 +8,27 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "AMCObjectWithNotesProtocol.h"
 
 @class Account, Note, PaymentCategory, RecurringItem, Sale, SaleItem, ShoppingList, WorkRecord;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Payment : NSManagedObject
-
-// Insert code here to declare functionality of your managed object subclass
-
+@interface Payment: NSManagedObject <AMCObjectWithNotesProtocol>
++(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
++(NSArray*)paymentsBetweenStartDate:(NSDate*)startDate endDate:(NSDate*)endDate withMoc:(NSManagedObjectContext*)moc;
++(NSArray*)nonSalepaymentsBetweenStartDate:(NSDate*)startDate endDate:(NSDate*)endDate withMoc:(NSManagedObjectContext*)moc;
+-(NSString*)refundYNString;
+-(NSNumber*)calculateFeeForAmount:(NSNumber*)amount withFeePercentage:(NSNumber*)feePercent;
+-(void)recalculateFromCurrentAmount;
+-(void)recalculateNetAmountWithFee:(NSNumber *)fee;
+-(void)recalculateNetAmountWithFeePercentage:(NSNumber*)feePercent;
+@property (readonly) BOOL isReconciled;
+@property (readonly) BOOL isIncoming;
+@property (readonly) BOOL isOutgoing;
+@property (readonly) NSNumber * signedAmount;
+@property (readonly) NSNumber * signedAmountNet;
 @end
 
 NS_ASSUME_NONNULL_END

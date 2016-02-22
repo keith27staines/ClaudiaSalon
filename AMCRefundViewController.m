@@ -7,12 +7,12 @@
 //
 
 #import "AMCRefundViewController.h"
-#import "Account+Methods.h"
-#import "Sale+Methods.h"
-#import "SaleItem+Methods.h"
-#import "Customer+Methods.h"
-#import "Payment+Methods.h"
-#import "Service+Methods.h"
+#import "Account.h"
+#import "Sale.h"
+#import "SaleItem.h"
+#import "Customer.h"
+#import "Payment.h"
+#import "Service.h"
 #import "AMCSalonDocument.h"
 
 @interface AMCRefundViewController ()
@@ -38,7 +38,6 @@
     Account * account = self.saleItem.sale.account;
     Payment * payment = [account makePaymentWithAmount:@(self.actualSumToRefund.doubleValue)
                                                   date:[NSDate date]
-                                              category:nil
                                              direction:kAMCPaymentDirectionOut
                                              payeeName:self.saleItem.sale.customer.fullName
                                                 reason:self.refundReason.stringValue];
