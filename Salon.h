@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "Salon.h"
-#import "AMCConstants.h"
+
 @class AMCSalonDocument;
 @class Account, AccountingPaymentGroup, Customer, Employee, OpeningHoursWeekTemplate, PaymentCategory, Role, ServiceCategory;
 

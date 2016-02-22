@@ -321,6 +321,7 @@
 		53D69E061A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69E051A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m */; };
 		53D934081AC71E1B001D6C64 /* AMCSalonDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D934061AC71E1B001D6C64 /* AMCSalonDetailsViewController.m */; };
 		53D934091AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53D934071AC71E1B001D6C64 /* AMCSalonDetailsViewController.xib */; };
+		53EBB3CB1C7B194000BBDC46 /* BQCoredataObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */; };
 		53FA37361C6503430067136C /* BQCoredataObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */; };
 		53FDCA3E1C79A591006B4002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA3D1C79A591006B4002 /* AppDelegate.swift */; };
 		53FDCA431C79A591006B4002 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA421C79A591006B4002 /* MasterViewController.swift */; };
@@ -353,6 +354,9 @@
 		53FDCA841C7A7849006B4002 /* NSDate+AMCDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C6F1A9B240B0004CE10 /* NSDate+AMCDate.m */; };
 		53FDCA861C7A7965006B4002 /* PaymentCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E3A1C56077E00F170EC /* PaymentCategory.m */; };
 		53FDCA871C7A79E7006B4002 /* AMCDiscountCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CD41A9B240C0004CE10 /* AMCDiscountCalculator.m */; };
+		53FDCA8F1C7AE77B006B4002 /* CloudSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA8E1C7AE77B006B4002 /* CloudSynchronizer.swift */; };
+		53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DC71C50D8A300F170EC /* BQDataObjects.swift */; };
+		53FDCA931C7AFCF2006B4002 /* AMCThreadSafeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */; };
 		53FFAF911AB220470078E9CC /* AMCEmployeeForServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */; };
 /* End PBXBuildFile section */
 
@@ -908,6 +912,7 @@
 		53FDCA531C79A5BA006B4002 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		53FDCA571C79AF4D006B4002 /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		53FDCA5F1C79C952006B4002 /* ClaudiaSalonIOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ClaudiaSalonIOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		53FDCA8E1C7AE77B006B4002 /* CloudSynchronizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSynchronizer.swift; sourceTree = "<group>"; };
 		53FFAF8F1AB220470078E9CC /* AMCEmployeeForServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCEmployeeForServiceSelector.h; sourceTree = "<group>"; };
 		53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCEmployeeForServiceSelector.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1161,9 +1166,7 @@
 		536B9DA71C4FDB9500F170EC /* Booking Queue */ = {
 			isa = PBXGroup;
 			children = (
-				536B9DC51C50C2F600F170EC /* Booking Queue Window Controller */,
-				536B9DC61C50D85800F170EC /* Booking Queue Model */,
-				536B9DB41C50BD4F00F170EC /* View controllers for top level booking queue functiions */,
+				536B9DC61C50D85800F170EC /* Model Controllers */,
 			);
 			name = "Booking Queue";
 			sourceTree = "<group>";
@@ -1187,14 +1190,15 @@
 			name = "Booking Queue Window Controller";
 			sourceTree = "<group>";
 		};
-		536B9DC61C50D85800F170EC /* Booking Queue Model */ = {
+		536B9DC61C50D85800F170EC /* Model Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				536B9DC71C50D8A300F170EC /* BQDataObjects.swift */,
 				53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */,
 				53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */,
+				53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */,
 			);
-			name = "Booking Queue Model";
+			name = "Model Controllers";
 			sourceTree = "<group>";
 		};
 		536B9DDB1C5381D300F170EC /* Window Controller */ = {
@@ -1335,7 +1339,6 @@
 		53A9F0E01C65DFC1001E1618 /* Extract Maintenance */ = {
 			isa = PBXGroup;
 			children = (
-				53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */,
 				534F0AF61C63C4C700520214 /* BQDeletionRequestList.swift */,
 				536B9DC11C50C2C400F170EC /* BQQueueProcessorViewController.swift */,
 				536B9DC21C50C2C400F170EC /* BQQueueProcessorViewController.xib */,
@@ -1346,7 +1349,6 @@
 		53A9F0E11C65DFD6001E1618 /* First Extract */ = {
 			isa = PBXGroup;
 			children = (
-				534F0AEA1C5A2D0100520214 /* BQFirstExtractController.swift */,
 				536B9DBD1C50C2A200F170EC /* BQDataExtractViewController.swift */,
 				536B9DBE1C50C2A200F170EC /* BQDataExtractViewController.xib */,
 			);
@@ -1989,6 +1991,13 @@
 			name = "Jobs Column";
 			sourceTree = "<group>";
 		};
+		53CE37121C7B213600395111 /* AutoGeneratedCode */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AutoGeneratedCode;
+			sourceTree = "<group>";
+		};
 		53D325631A9B9CD300AFCDE4 /* Categories on Cocoa classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -2145,13 +2154,13 @@
 		53D69BA61A9B22830004CE10 = {
 			isa = PBXGroup;
 			children = (
+				53CE37121C7B213600395111 /* AutoGeneratedCode */,
 				53FDCA551C79AE37006B4002 /* Shared code */,
 				53FDCA531C79A5BA006B4002 /* CloudKit.framework */,
 				530D62581C75B0A60064794B /* CloudKit.framework */,
 				536B9DA41C4F98F900F170EC /* ClaudiaSalon-Bridging-Header.h */,
 				530D54A51B270C9300F6C4FE /* Property List.plist */,
 				53D4FC571B394339009EBF70 /* Foundation.framework */,
-				536B9DA71C4FDB9500F170EC /* Booking Queue */,
 				53D69BB11A9B22830004CE10 /* ClaudiaSalonMac */,
 				53FDCA3C1C79A591006B4002 /* ClaudiaSalonIOS */,
 			);
@@ -2170,6 +2179,7 @@
 		53D69BB11A9B22830004CE10 /* ClaudiaSalonMac */ = {
 			isa = PBXGroup;
 			children = (
+				53FDCA901C7AFC79006B4002 /* BookingQueueMac */,
 				53D69E031A9B6BE70004CE10 /* Core data model objects */,
 				530D54A41B26D58A00F6C4FE /* Framework  */,
 				530D54731B19A5E700F6C4FE /* Application objects */,
@@ -2338,6 +2348,7 @@
 			children = (
 				53D69D6C1A9B243B0004CE10 /* AMCConstants.h */,
 				53D69C5D1A9B240B0004CE10 /* AMCConstants.m */,
+				536B9DA71C4FDB9500F170EC /* Booking Queue */,
 				53AE26F81AA3118000A1B3E4 /* Discount Calculator */,
 				53FDCA881C7A7A00006B4002 /* NSDate extensions */,
 				53FDCA611C79CF8E006B4002 /* Coredata  */,
@@ -2581,6 +2592,7 @@
 		53FDCA891C7A7B47006B4002 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				53FDCA8E1C7AE77B006B4002 /* CloudSynchronizer.swift */,
 				53FDCA571C79AF4D006B4002 /* CoreData.swift */,
 			);
 			name = Models;
@@ -2605,6 +2617,25 @@
 				53FDCA4B1C79A591006B4002 /* LaunchScreen.storyboard */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		53FDCA901C7AFC79006B4002 /* BookingQueueMac */ = {
+			isa = PBXGroup;
+			children = (
+				53FDCA941C7AFD1A006B4002 /* Model controllers */,
+				536B9DB41C50BD4F00F170EC /* View controllers for top level booking queue functiions */,
+				536B9DC51C50C2F600F170EC /* Booking Queue Window Controller */,
+			);
+			name = BookingQueueMac;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		53FDCA941C7AFD1A006B4002 /* Model controllers */ = {
+			isa = PBXGroup;
+			children = (
+				534F0AEA1C5A2D0100520214 /* BQFirstExtractController.swift */,
+			);
+			name = "Model controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3061,6 +3092,8 @@
 				53FDCA871C7A79E7006B4002 /* AMCDiscountCalculator.m in Sources */,
 				53FDCA7D1C7A7621006B4002 /* Permission.m in Sources */,
 				53FDCA811C7A7638006B4002 /* Account.m in Sources */,
+				53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */,
+				53EBB3CB1C7B194000BBDC46 /* BQCoredataObjectExtensions.swift in Sources */,
 				53FDCA731C7A12FB006B4002 /* Service.m in Sources */,
 				53FDCA431C79A591006B4002 /* MasterViewController.swift in Sources */,
 				53FDCA591C79BF75006B4002 /* Appointment+CoreDataProperties.m in Sources */,
@@ -3074,6 +3107,8 @@
 				53FDCA7E1C7A7625006B4002 /* Role.m in Sources */,
 				53FDCA861C7A7965006B4002 /* PaymentCategory.m in Sources */,
 				53FDCA741C7A13BB006B4002 /* BusinessFunction.m in Sources */,
+				53FDCA8F1C7AE77B006B4002 /* CloudSynchronizer.swift in Sources */,
+				53FDCA931C7AFCF2006B4002 /* AMCThreadSafeCounter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3302,6 +3337,7 @@
 				53FDCA501C79A591006B4002 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
