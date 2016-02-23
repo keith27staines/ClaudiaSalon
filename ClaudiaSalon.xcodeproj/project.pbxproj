@@ -27,6 +27,8 @@
 		5330E2391AF8A8F40062FD93 /* AMCAdvancePayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330E2371AF8A8F40062FD93 /* AMCAdvancePayment.m */; };
 		5330E23A1AF8A8F40062FD93 /* AMCAdvancePayment.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5330E2381AF8A8F40062FD93 /* AMCAdvancePayment.xib */; };
 		533A53991C6D3BCE001BC79F /* AMCReportWorkerOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533A53981C6D3BCE001BC79F /* AMCReportWorkerOperation.swift */; };
+		533A8FD51C7CC0A4000CA54F /* BQCoredataImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533A8FD41C7CC0A4000CA54F /* BQCoredataImportController.swift */; };
+		533A8FD61C7CC0A4000CA54F /* BQCoredataImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533A8FD41C7CC0A4000CA54F /* BQCoredataImportController.swift */; };
 		5346C58D1ABB074C005D4540 /* AMCPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C58B1ABB074C005D4540 /* AMCPreferencesWindowController.m */; };
 		5346C58E1ABB074C005D4540 /* AMCPreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5346C58C1ABB074C005D4540 /* AMCPreferencesWindowController.xib */; };
 		5346C5931ABB2265005D4540 /* AMCCategoryManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5911ABB2265005D4540 /* AMCCategoryManagementViewController.m */; };
@@ -401,6 +403,7 @@
 		5330E23B1AF8B1720062FD93 /* ClaudiasSalon 9.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 9.xcdatamodel"; sourceTree = "<group>"; };
 		533439001B0E1B3200E271D5 /* ClaudiasSalon 11.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 11.xcdatamodel"; sourceTree = "<group>"; };
 		533A53981C6D3BCE001BC79F /* AMCReportWorkerOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMCReportWorkerOperation.swift; sourceTree = "<group>"; };
+		533A8FD41C7CC0A4000CA54F /* BQCoredataImportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQCoredataImportController.swift; sourceTree = "<group>"; };
 		5346C58A1ABB074C005D4540 /* AMCPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPreferencesWindowController.h; sourceTree = "<group>"; };
 		5346C58B1ABB074C005D4540 /* AMCPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPreferencesWindowController.m; sourceTree = "<group>"; };
 		5346C58C1ABB074C005D4540 /* AMCPreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPreferencesWindowController.xib; sourceTree = "<group>"; };
@@ -1197,6 +1200,7 @@
 				53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */,
 				53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */,
 				53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */,
+				533A8FD41C7CC0A4000CA54F /* BQCoredataImportController.swift */,
 			);
 			name = "Model Controllers";
 			sourceTree = "<group>";
@@ -2941,6 +2945,7 @@
 				536B9E731C56077E00F170EC /* StockedItem+CoreDataProperties.m in Sources */,
 				536B9E6C1C56077E00F170EC /* Employee.m in Sources */,
 				536B9E741C56077E00F170EC /* StockedItem.m in Sources */,
+				533A8FD51C7CC0A4000CA54F /* BQCoredataImportController.swift in Sources */,
 				53D69D431A9B240C0004CE10 /* AccountReconciliation+Methods.m in Sources */,
 				536B9E911C56077E00F170EC /* Service+CoreDataProperties.m in Sources */,
 				536B9E791C56077E00F170EC /* OpeningHoursWeekTemplate+CoreDataProperties.m in Sources */,
@@ -3078,6 +3083,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				533A8FD61C7CC0A4000CA54F /* BQCoredataImportController.swift in Sources */,
 				53FDCA3E1C79A591006B4002 /* AppDelegate.swift in Sources */,
 				53FDCA781C7A6E3F006B4002 /* Note.m in Sources */,
 				53FDCA661C7A081A006B4002 /* Customer.m in Sources */,
