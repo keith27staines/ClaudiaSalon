@@ -8,10 +8,13 @@
 
 import Foundation
 import CloudKit
+import CoreData
 
 class BQCoredataImportController {
+    
     let salonCloudID = "F30B020F-D5BD-4DA8-BBBF-C2A6F76AB2CA"
     let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
+    let coredata = Coredata.sharedInstance
     
     func fetchCloudAppointments() {
         let queryOperation = self.queryOperationForAppointments()
@@ -40,7 +43,10 @@ class BQCoredataImportController {
     }
     func appointmentRecordDownloaded(appointmentRecord:CKRecord) {
         
-        
+        //
+        coredata.managedObjectContext.performBlock() {
+            
+        }
     }
     
 }

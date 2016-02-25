@@ -36,7 +36,6 @@ public class ICloudRecord {
     var recordType: String = BQRecordTypeUnknown
     var modifiedDate: NSDate?
     var updateStamp: String?
-    var coredataID: String?
     var parentSalonReference: CKReference?
     var isActive = true
     private init() {
@@ -44,10 +43,8 @@ public class ICloudRecord {
     }
     private init(recordType:String, managedObject: NSManagedObject, parentSalonID: NSManagedObjectID?) {
         managedObject.managedObjectContext!.performBlockAndWait() {
-            
-            self.coredataID = managedObject.objectID.URIRepresentation().absoluteString
-            self.recordType = recordType;
             let bqObject = managedObject as! BQExportable
+            self.recordType = recordType;
             let metadata = bqObject.bqMetadata
             self.unarchiveCloudRecordMetadataFromdata(metadata, coredataObject: managedObject)
             
@@ -70,7 +67,6 @@ public class ICloudRecord {
         }
         record["parentSalonReference"] = parentSalonReference
         record["needsExportToCoredata"] = false
-        record["coredataID"] = coredataID
         record["isActive"] = true
         return record
     }
@@ -100,6 +96,7 @@ public class ICloudRecord {
             moc.performBlockAndWait() {
                 let bqObject = coredataObject as! BQExportable
                 bqObject.bqMetadata = metadata
+                bqObject.bqCloudID = recordName
                 try! moc.save()
             }
         }

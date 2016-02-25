@@ -14,6 +14,7 @@ import CloudKit
 protocol BQExportable: class {
     var bqNeedsCoreDataExport: NSNumber? { get set }
     var bqMetadata: NSData? { get set }
+    var bqCloudID: String? { get set }
 }
 
 extension BQExportable {
@@ -186,19 +187,19 @@ extension NSManagedObject {
     }
 }
 // MARK:- NSManagedObjectContext extension
-extension NSManagedObjectContext {
-    func objectForIDString(coredataIDString:String) -> NSManagedObject {
-        guard let coordinator = self.persistentStoreCoordinator else {
-            preconditionFailure("The managed object context doesn't have a persistent store coordinator")
-        }
-        guard let uriRepresentation = NSURL(string: coredataIDString) else {
-            preconditionFailure("Unable to construct a URL from the string \(coredataIDString)")
-        }
-        guard let managedObjectID = coordinator.managedObjectIDForURIRepresentation(uriRepresentation) else {
-            preconditionFailure("The persistent store coordinate didn't return an objectID for the URL representation")
-        }
-        return self.objectWithID(managedObjectID)
-    }
-}
+//extension NSManagedObjectContext {
+//    func objectForIDString(coredataIDString:String) -> NSManagedObject {
+//        guard let coordinator = self.persistentStoreCoordinator else {
+//            preconditionFailure("The managed object context doesn't have a persistent store coordinator")
+//        }
+//        guard let uriRepresentation = NSURL(string: coredataIDString) else {
+//            preconditionFailure("Unable to construct a URL from the string \(coredataIDString)")
+//        }
+//        guard let managedObjectID = coordinator.managedObjectIDForURIRepresentation(uriRepresentation) else {
+//            preconditionFailure("The persistent store coordinate didn't return an objectID for the URL representation")
+//        }
+//        return self.objectWithID(managedObjectID)
+//    }
+//}
 
 

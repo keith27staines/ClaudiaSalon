@@ -135,8 +135,8 @@ private class BQExportModifiedCoredataOperation : NSOperation {
     func saveRecordsOperationComplete() -> Void {
         if let privateMoc = self.privateMoc {
             privateMoc.performBlockAndWait() {
-                for (coredataID,error) in self.exportedRecordsWithErrors {
-                    let managedObject = self.coredataObjectsNeedingExport[coredataID]! as! BQExportable
+                for (cloudID,error) in self.exportedRecordsWithErrors {
+                    let managedObject = self.coredataObjectsNeedingExport[cloudID]! as! BQExportable
                     if error == nil {
                         managedObject.bqNeedsCoreDataExport = NSNumber(bool: false)
                     } else {
@@ -180,11 +180,9 @@ extension BQExportModifiedCoredataOperation {
             guard let record = record else {
                 return
             }
-            guard let coredataID = record["coredataID"] as? String  else {
-                fatalError("This record was expected to have a coredata id but none found")
-            }
             dispatch_sync(self.synchronisationQueue) {
-                self.exportedRecordsWithErrors[coredataID] = error
+                let cloudID = record.recordID.recordName
+                self.exportedRecordsWithErrors[cloudID] = error
             }
         }
         
@@ -293,12 +291,12 @@ extension BQExportModifiedCoredataOperation {
         let salon = moc.objectWithID(self.salonID) as! Salon
         if salon.bqNeedsCoreDataExport?.boolValue == true {
             dispatch_sync(self.synchronisationQueue) {
-                let coredataID = salon.objectID.URIRepresentation().absoluteString
-                self.coredataObjectsNeedingExport[coredataID] = salon
+                let icloudSalon = ICloudSalon(coredataSalon: salon)
+                let cloudID = salon.bqCloudID!
+                self.coredataObjectsNeedingExport[cloudID] = salon
+                cloudRecord = icloudSalon.makeCloudKitRecord()
+                recordsToSave.append(cloudRecord!)
             }
-            let icloudSalon = ICloudSalon(coredataSalon: salon)
-            cloudRecord = icloudSalon.makeCloudKitRecord()
-            recordsToSave.append(cloudRecord!)
         }
         return recordsToSave
     }
@@ -308,12 +306,12 @@ extension BQExportModifiedCoredataOperation {
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedCustomers {
             dispatch_sync(self.synchronisationQueue) {
-                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
-                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+                let icloudObject = ICloudCustomer(coredataCustomer: modifiedObject, parentSalonID: self.salonID)
+                let cloudID = modifiedObject.bqCloudID!
+                self.coredataObjectsNeedingExport[cloudID] = modifiedObject
+                let cloudRecord = icloudObject.makeCloudKitRecord()
+                recordsToSave.append(cloudRecord)
             }
-            let icloudObject = ICloudCustomer(coredataCustomer: modifiedObject, parentSalonID: self.salonID)
-            let cloudRecord = icloudObject.makeCloudKitRecord()
-            recordsToSave.append(cloudRecord)
         }
         return recordsToSave
     }
@@ -322,12 +320,12 @@ extension BQExportModifiedCoredataOperation {
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedCategories {
             dispatch_sync(self.synchronisationQueue) {
-                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
-                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+                let icloudObject = ICloudServiceCategory(coredataServiceCategory: modifiedObject, parentSalonID: salonID)
+                let cloudID = modifiedObject.bqCloudID!
+                self.coredataObjectsNeedingExport[cloudID] = modifiedObject
+                let cloudRecord = icloudObject.makeCloudKitRecord()
+                recordsToSave.append(cloudRecord)
             }
-            let icloudObject = ICloudServiceCategory(coredataServiceCategory: modifiedObject, parentSalonID: salonID)
-            let cloudRecord = icloudObject.makeCloudKitRecord()
-            recordsToSave.append(cloudRecord)
         }
         return recordsToSave
     }
@@ -336,12 +334,12 @@ extension BQExportModifiedCoredataOperation {
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedServices {
             dispatch_sync(self.synchronisationQueue) {
-                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
-                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+                let icloudObject = ICloudService(coredataService: modifiedObject, parentSalonID: salonID)
+                let cloudID = modifiedObject.bqCloudID!
+                self.coredataObjectsNeedingExport[cloudID] = modifiedObject
+                let cloudRecord = icloudObject.makeCloudKitRecord()
+                recordsToSave.append(cloudRecord)
             }
-            let icloudObject = ICloudService(coredataService: modifiedObject, parentSalonID: salonID)
-            let cloudRecord = icloudObject.makeCloudKitRecord()
-            recordsToSave.append(cloudRecord)
         }
         return recordsToSave
     }
@@ -350,12 +348,12 @@ extension BQExportModifiedCoredataOperation {
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedEmployees {
             dispatch_sync(self.synchronisationQueue) {
-                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
-                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+                let icloudObject = ICloudEmployee(coredataEmployee: modifiedObject, parentSalonID: salonID)
+                let cloudID = modifiedObject.bqCloudID!
+                self.coredataObjectsNeedingExport[cloudID] = modifiedObject
+                let cloudRecord = icloudObject.makeCloudKitRecord()
+                recordsToSave.append(cloudRecord)
             }
-            let icloudObject = ICloudEmployee(coredataEmployee: modifiedObject, parentSalonID: salonID)
-            let cloudRecord = icloudObject.makeCloudKitRecord()
-            recordsToSave.append(cloudRecord)
         }
         return recordsToSave
     }
@@ -371,12 +369,12 @@ extension BQExportModifiedCoredataOperation {
                 }
             }
             dispatch_sync(self.synchronisationQueue) {
-                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
-                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+                let icloudObject = ICloudSaleItem(coredataSaleItem: modifiedObject, parentSalonID: salonID)
+                let cloudID = modifiedObject.bqCloudID!
+                self.coredataObjectsNeedingExport[cloudID] = modifiedObject
+                let cloudRecord = icloudObject.makeCloudKitRecord()
+                recordsToSave.append(cloudRecord)
             }
-            let icloudObject = ICloudSaleItem(coredataSaleItem: modifiedObject, parentSalonID: salonID)
-            let cloudRecord = icloudObject.makeCloudKitRecord()
-            recordsToSave.append(cloudRecord)
         }
         return recordsToSave
     }
@@ -388,12 +386,12 @@ extension BQExportModifiedCoredataOperation {
                 continue
             }
             dispatch_sync(self.synchronisationQueue) {
-                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
-                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+                let icloudObject = ICloudSale(coredataSale: modifiedObject, parentSalonID: salonID)
+                let cloudID = modifiedObject.bqCloudID!
+                self.coredataObjectsNeedingExport[cloudID] = modifiedObject
+                let cloudRecord = icloudObject.makeCloudKitRecord()
+                recordsToSave.append(cloudRecord)
             }
-            let icloudObject = ICloudSale(coredataSale: modifiedObject, parentSalonID: salonID)
-            let cloudRecord = icloudObject.makeCloudKitRecord()
-            recordsToSave.append(cloudRecord)
         }
         return recordsToSave
     }
@@ -402,12 +400,12 @@ extension BQExportModifiedCoredataOperation {
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedAppointments {
             dispatch_sync(self.synchronisationQueue) {
-                let coredataID = modifiedObject.objectID.URIRepresentation().absoluteString
-                self.coredataObjectsNeedingExport[coredataID] = modifiedObject
+                let icloudObject = ICloudAppointment(coredataAppointment: modifiedObject, parentSalonID: salonID)
+                let cloudID = modifiedObject.bqCloudID!
+                self.coredataObjectsNeedingExport[cloudID] = modifiedObject
+                let cloudRecord = icloudObject.makeCloudKitRecord()
+                recordsToSave.append(cloudRecord)
             }
-            let icloudObject = ICloudAppointment(coredataAppointment: modifiedObject, parentSalonID: salonID)
-            let cloudRecord = icloudObject.makeCloudKitRecord()
-            recordsToSave.append(cloudRecord)
         }
         return recordsToSave
     }

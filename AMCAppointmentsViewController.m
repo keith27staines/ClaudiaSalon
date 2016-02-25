@@ -576,7 +576,7 @@ NSAnimationDelegate>
     return _searchFilteredAppointments;
 }
 -(void)showBookingWizardInMode:(EditMode)editMode {
-    NSMutableSet * saleItemSet = [NSMutableSet set];
+    NSMutableSet * saleItemIDsSet = [NSMutableSet set];
     [self.salonDocument saveDocument:self];
     self.currentWizard = [[AMCWizardForNewAppointmentWindowController alloc] init];
     self.currentWizard.editMode = editMode;
@@ -584,7 +584,9 @@ NSAnimationDelegate>
         self.currentWizard.objectToManage = [Appointment newObjectWithMoc:self.documentMoc];
     } else {
         self.currentWizard.objectToManage = [self selectedAppointment];
-        [saleItemSet unionSet:self.selectedAppointment.sale.saleItem];
+        for (SaleItem * saleItem in self.selectedAppointment.sale.saleItem) {
+            [saleItemIDsSet addObject:saleItem.objectID];
+        }
     }
     self.currentWizard.document = self.salonDocument;
     NSWindow * window = self.view.window;
@@ -604,19 +606,17 @@ NSAnimationDelegate>
             self.previouslySelectedAppointment = appointment;
         }
         if (appointment) {
-            appointment.lastUpdatedDate = [NSDate date];
+            NSDate * rightNow = [NSDate date];
+            appointment.lastUpdatedDate = rightNow;
             appointment.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
-            [saleItemSet unionSet:appointment.sale.saleItem];
             appointment.sale.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
-            for (SaleItem * saleItem in saleItemSet) {
-                saleItem.bqNeedsCoreDataExport = [NSNumber numberWithBool:YES];
+            appointment.sale.lastUpdatedDate = rightNow;
+            for (SaleItem * saleItem in appointment.sale.saleItem) {
+                [saleItemIDsSet addObject:saleItem.objectID];
             }
-            [self.salonDocument saveDocument:self];
-        }
-        if (appointment) {
             NSManagedObjectContext*moc = self.salonDocument.managedObjectContext;
             [Appointment markAppointmentForExportInMoc:moc appointmentID:appointment.objectID];
-            [SaleItem markSaleItemsForExportInMoc:moc saleItemIDs:saleItemSet];
+            [SaleItem markSaleItemsForExportInMoc:moc saleItemIDs:saleItemIDsSet];
             [self.salonDocument saveDocument:self];
         }
         [self reloadData];

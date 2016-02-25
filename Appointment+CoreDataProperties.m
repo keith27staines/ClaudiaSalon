@@ -2,7 +2,7 @@
 //  Appointment+CoreDataProperties.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/01/2016.
+//  Created by Keith Staines on 24/02/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -16,6 +16,8 @@
 @dynamic appointmentDate;
 @dynamic appointmentEndDate;
 @dynamic bookedDuration;
+@dynamic bqMetadata;
+@dynamic bqNeedsCoreDataExport;
 @dynamic cancellationNote;
 @dynamic cancellationType;
 @dynamic cancelled;
@@ -24,8 +26,7 @@
 @dynamic completionType;
 @dynamic createdDate;
 @dynamic lastUpdatedDate;
-@dynamic bqMetadata;
-@dynamic bqNeedsCoreDataExport;
+@dynamic bqCloudID;
 @dynamic customer;
 @dynamic notes;
 @dynamic sale;

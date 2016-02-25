@@ -242,10 +242,6 @@
     Sale * sale = self.appointment.sale;
     self.priceTotalLabel.stringValue = [NSString stringWithFormat:@"Total = £%1.2f",sale.actualCharge.doubleValue];
 }
--(void)displayTotal {
-    Sale * sale = self.appointment.sale;
-    self.priceTotalLabel.stringValue = [NSString stringWithFormat:@"Total = £%1.2f",sale.actualCharge.doubleValue];
-}
 -(void)updateTotal {
     Sale * sale = self.appointment.sale;
     [sale updatePriceFromSaleItems];

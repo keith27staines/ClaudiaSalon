@@ -2,7 +2,7 @@
 //  Employee+CoreDataProperties.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/01/2016.
+//  Created by Keith Staines on 24/02/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -17,6 +17,8 @@
 @dynamic addressLine2;
 @dynamic basicHourlyRate;
 @dynamic basicHoursPerWeek;
+@dynamic bqMetadata;
+@dynamic bqNeedsCoreDataExport;
 @dynamic createdDate;
 @dynamic dayOfBirth;
 @dynamic email;
@@ -34,8 +36,7 @@
 @dynamic postcode;
 @dynamic startingDate;
 @dynamic uid;
-@dynamic bqMetadata;
-@dynamic bqNeedsCoreDataExport;
+@dynamic bqCloudID;
 @dynamic canDo;
 @dynamic holidays;
 @dynamic manages;

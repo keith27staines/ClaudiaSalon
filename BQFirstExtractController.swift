@@ -383,25 +383,25 @@ class BQFirstExtractController {
         }
         NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
             if let recordType = record?.recordType {
-                let coredataID = record!["coredataID"] as! String
+                let cloudID = record!.recordID.recordName
                 let metadata = archiveMetadataForCKRecord(record!)
                 switch recordType {
                 case ICloudRecordType.Customer.rawValue:
-                    let coredataCustomer = self.coredataCustomersDictionary[coredataID]
+                    let coredataCustomer = self.coredataCustomersDictionary[cloudID]
                     coredataCustomer?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataCustomer?.bqMetadata = metadata
                     self.extractedCustomerCount++
                     self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedCustomerCount, total: self.totalCustomersToProcess)
                     
                 case ICloudRecordType.Employee.rawValue:
-                    let coredataEmployee = self.coredataEmployeeDictionary[coredataID]
+                    let coredataEmployee = self.coredataEmployeeDictionary[cloudID]
                     coredataEmployee?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataEmployee?.bqMetadata = metadata
                     self.extractedEmployeesCount++
                     self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedEmployeesCount, total: self.totalEmployeesToProcess)
                     
                 case ICloudRecordType.ServiceCategory.rawValue:
-                    let coredataServiceCategory = self.coredataServiceCategoriesDictionary[coredataID]
+                    let coredataServiceCategory = self.coredataServiceCategoriesDictionary[cloudID]
                     coredataServiceCategory?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataServiceCategory?.bqMetadata = metadata
                     self.extractedServiceCategoriesCount++
@@ -414,7 +414,7 @@ class BQFirstExtractController {
                     }
                     
                 case ICloudRecordType.Service.rawValue:
-                    let coredataService = self.coredataServicesDictionary[coredataID]
+                    let coredataService = self.coredataServicesDictionary[cloudID]
                     coredataService?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataService?.bqMetadata = metadata
                     self.extractedServicesCount++
@@ -426,7 +426,7 @@ class BQFirstExtractController {
                     }
 
                 case ICloudRecordType.Appointment.rawValue:
-                    let coredataAppointment = self.coredataAppointmentsDictionary[coredataID]
+                    let coredataAppointment = self.coredataAppointmentsDictionary[cloudID]
                     coredataAppointment?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataAppointment?.bqMetadata = metadata
                     self.extractedAppointmentsCount++
