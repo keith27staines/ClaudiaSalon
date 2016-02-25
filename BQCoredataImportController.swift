@@ -13,8 +13,17 @@ import CoreData
 class BQCoredataImportController {
     
     let salonCloudID = "A845885F-958A-4CE3-A729-42F08EA9238F"
-    let publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
+    let publicDatabase: CKDatabase
     let coredata = Coredata.sharedInstance
+    let parentSalonRecordID:CKRecordID
+    let parentSalonReference:CKReference
+    
+    init() {
+        parentSalonRecordID = CKRecordID(recordName: salonCloudID)
+        parentSalonReference = CKReference(recordID: parentSalonRecordID, action: .None)
+        let container = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon")
+        publicDatabase = container.publicCloudDatabase
+    }
     
     func fetchCloudAppointments() {
         let queryOperation = self.queryOperationForAppointments()
@@ -22,7 +31,7 @@ class BQCoredataImportController {
     }
     func queryOperationForAppointments()->CKQueryOperation {
         let earliestDate = NSDate().dateByAddingTimeInterval(-30*24*3600);
-        let predicate = NSPredicate(format: "appointmentStartDate >= %@", earliestDate)
+        let predicate = NSPredicate(format: "appointmentStartDate >= %@ AND parentSalonReference = %@", earliestDate,self.parentSalonReference)
         let query = CKQuery(recordType: "Appointment", predicate: predicate)
         let queryOperation = CKQueryOperation(query: query)
         queryOperation.recordFetchedBlock = {  record in
@@ -45,17 +54,16 @@ class BQCoredataImportController {
         let cloudID = appointmentRecord.recordID.recordName
         let moc = coredata.backgroundContext
         coredata.managedObjectContext.performBlock() {
-            if let appointment = Appointment.fetchAppointmentForCloudID(cloudID, moc: moc) {
-                
+            var appointment = Appointment.fetchAppointmentForCloudID(cloudID, moc: moc)
+            if let appointment = appointment {
+                appointment.updateFromCloudRecord(appointmentRecord)
             } else {
-                
+                appointment = Appointment.makeAppointmentFromCloudRecord(appointmentRecord, moc: moc)
             }
-
-            
+            self.coredata.saveContext()
         }
     }
 }
-
 extension Appointment {
     class func fetchAppointmentForCloudID(cloudID:String, moc:NSManagedObjectContext) -> Appointment? {
         let fetchRequest = NSFetchRequest(entityName: "Appointment")
@@ -64,8 +72,14 @@ extension Appointment {
         let appointments = try! moc.executeFetchRequest(fetchRequest)
         return appointments.first as! Appointment?
     }
-    class func makeAppointmentFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) {
-        
+    class func makeAppointmentFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> Appointment {
+        let entity = NSEntityDescription()
+        entity.name = "Appointment"
+        precondition(record.recordType == "icloudAppointment", "Unable to create an appointment from this record \(record)")
+        let appointment = NSManagedObject(entity: entity, insertIntoManagedObjectContext: moc) as! Appointment
+        appointment.appointmentDate = record["appointmentStartDate"] as? NSDate!
+        appointment.appointmentEndDate = record["appointmentEndDate"] as? NSDate!
+        return appointment
     }
     func updateFromCloudRecord(record:CKRecord) {
         guard record.recordType == "" else {

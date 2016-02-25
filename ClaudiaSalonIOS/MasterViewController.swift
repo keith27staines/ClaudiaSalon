@@ -20,6 +20,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         return salon
     }()
 
+    lazy var importController:BQCoredataImportController = {
+        let importer = BQCoredataImportController()
+        return importer
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,6 +40,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        let importer = self.importController
+        importer.fetchCloudAppointments()
     }
 
     override func didReceiveMemoryWarning() {
@@ -131,7 +140,7 @@ extension MasterViewController {
         fetchRequest.fetchBatchSize = 20
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "timeStamp", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "appointmentDate", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
