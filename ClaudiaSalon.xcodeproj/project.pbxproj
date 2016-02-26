@@ -52,6 +52,8 @@
 		535F0DF61AB2339A0035CFD8 /* AMCAutoCloseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DF11AB2339A0035CFD8 /* AMCAutoCloseViewController.xib */; };
 		535F0DF71AB2339A0035CFD8 /* AMCAutoCloseWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DF31AB2339A0035CFD8 /* AMCAutoCloseWindowController.m */; };
 		535F0DF81AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DF41AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib */; };
+		536118FB1C803DA000758CF4 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536118FA1C803DA000758CF4 /* Cloud.swift */; };
+		536118FC1C803DA000758CF4 /* Cloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536118FA1C803DA000758CF4 /* Cloud.swift */; };
 		536B9DAA1C4FDD0100F170EC /* AMCBookingQueueManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DA81C4FDD0100F170EC /* AMCBookingQueueManagerViewController.swift */; };
 		536B9DAB1C4FDD0100F170EC /* AMCBookingQueueManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 536B9DA91C4FDD0100F170EC /* AMCBookingQueueManagerViewController.xib */; };
 		536B9DB21C4FDFAF00F170EC /* AMCBookingQueueManagerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DB01C4FDFAF00F170EC /* AMCBookingQueueManagerWindowController.swift */; };
@@ -439,6 +441,7 @@
 		535F0DF41AB2339A0035CFD8 /* AMCAutoCloseWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAutoCloseWindowController.xib; sourceTree = "<group>"; };
 		535F6B401C4BD0C4003C3D40 /* ClaudiasSalon 13.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 13.xcdatamodel"; sourceTree = "<group>"; };
 		535F6B621C4E9BCF003C3D40 /* ClaudiasSalon 14.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 14.xcdatamodel"; sourceTree = "<group>"; };
+		536118FA1C803DA000758CF4 /* Cloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cloud.swift; sourceTree = "<group>"; };
 		536B9DA41C4F98F900F170EC /* ClaudiaSalon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ClaudiaSalon-Bridging-Header.h"; sourceTree = "<group>"; };
 		536B9DA81C4FDD0100F170EC /* AMCBookingQueueManagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMCBookingQueueManagerViewController.swift; sourceTree = "<group>"; };
 		536B9DA91C4FDD0100F170EC /* AMCBookingQueueManagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCBookingQueueManagerViewController.xib; sourceTree = "<group>"; };
@@ -1201,6 +1204,7 @@
 				53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */,
 				53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */,
 				533A8FD41C7CC0A4000CA54F /* BQCoredataImportController.swift */,
+				536118FA1C803DA000758CF4 /* Cloud.swift */,
 			);
 			name = "Model Controllers";
 			sourceTree = "<group>";
@@ -2731,6 +2735,7 @@
 				53D69D1C1A9B240C0004CE10 /* AMCCancelAppointmentView.m in Sources */,
 				53D69D671A9B240C0004CE10 /* AMCViewController.m in Sources */,
 				534F0AF71C63C4C700520214 /* BQDeletionRequestList.swift in Sources */,
+				536118FB1C803DA000758CF4 /* Cloud.swift in Sources */,
 				53D69CE91A9B240C0004CE10 /* AMCHoursWorkedOnDayViewController.m in Sources */,
 				530171851ACBD21F0047116D /* RecurringItem+Methods.m in Sources */,
 				536B9E8C1C56077E00F170EC /* Sale.m in Sources */,
@@ -2944,6 +2949,7 @@
 				53FDCA6E1C7A116E006B4002 /* Salon.m in Sources */,
 				53FDCA681C7A094F006B4002 /* SaleItem.m in Sources */,
 				53FDCA871C7A79E7006B4002 /* AMCDiscountCalculator.m in Sources */,
+				536118FC1C803DA000758CF4 /* Cloud.swift in Sources */,
 				53FDCA7D1C7A7621006B4002 /* Permission.m in Sources */,
 				53FDCA811C7A7638006B4002 /* Account.m in Sources */,
 				53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */,

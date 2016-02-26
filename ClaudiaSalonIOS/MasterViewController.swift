@@ -119,7 +119,7 @@ extension MasterViewController {
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
         let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
-        cell.textLabel!.text = appointment.customer?.fullName ?? "No customer"
+        cell.textLabel!.text = "appointment starts:\(appointment.appointmentDate) ; ends:\(appointment.appointmentEndDate)"
     }
 }
 
