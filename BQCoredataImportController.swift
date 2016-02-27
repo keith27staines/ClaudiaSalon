@@ -76,9 +76,49 @@ class BQCoredataImportController {
                 appointment = Appointment.makeAppointmentFromCloudRecord(appointmentRecord, moc: moc)
             }
             self.coredata.saveContext()
+            self.filloutAppointment(appointment!,appointmentRecord: appointmentRecord)
         }
     }
 }
+
+extension BQCoredataImportController {
+    func filloutAppointment(appointment:Appointment, appointmentRecord:CKRecord) {
+        let customerRef = appointmentRecord["parentCustomerReference"] as! CKReference
+        let customerID = customerRef.recordID
+        self.publicDatabase.fetchRecordWithID(customerID) { customerRecord, error in
+            appointment.managedObjectContext?.performBlockAndWait() {
+                if error != nil {
+                    print("Unresolved error fetching customer from cloud \(error)")
+                } else {
+                    appointment.customer = Customer.makeCustomerFromCloudRecord(customerRecord!)
+                }
+            }
+        }
+    }
+}
+
+extension Customer {
+    class func makeCustomerFromCloudRecord(record:CKRecord) -> Customer {
+        var customer: Customer!
+        let moc = Coredata.sharedInstance.backgroundContext
+        moc.performBlockAndWait() {
+            precondition(record.recordType == "icloudCustomer", "Unable to create a customer from this record \(record)")
+            customer = Customer.newObjectWithMoc(moc)
+            customer.bqCloudID = record.recordID.recordName
+            let data = NSMutableData()
+            let coder = NSKeyedArchiver(forWritingWithMutableData: data)
+            record.encodeSystemFieldsWithCoder(coder)
+            coder.finishEncoding()
+            customer.bqMetadata = data
+            customer.bqNeedsCoreDataExport = record["needsExportToCoredata"] as! Bool
+            customer.firstName = record["firstName"] as? String
+            customer.lastName = record["lastName"] as? String
+            customer.phone = record["phone"] as? String
+        }
+        return customer
+    }
+}
+
 extension Appointment {
     class func fetchAppointmentForCloudID(cloudID:String, moc:NSManagedObjectContext) -> Appointment? {
         let fetchRequest = NSFetchRequest(entityName: "Appointment")
