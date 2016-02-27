@@ -34,6 +34,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            self.tableView.rowHeight = UITableViewAutomaticDimension
         }
     }
 
@@ -116,10 +117,16 @@ extension MasterViewController {
             }
         }
     }
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 70
+    }
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
+        guard let appointmentCell = cell as? AppointmentViewCellTableViewCell else {
+            return
+        }
         let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
-        cell.textLabel!.text = "appointment starts:\(appointment.appointmentDate) ; ends:\(appointment.appointmentEndDate)"
+        appointmentCell.appointment = appointment
     }
 }
 

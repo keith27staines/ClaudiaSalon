@@ -23,7 +23,7 @@ class BQCoredataImportController {
         parentSalonReference = CKReference(recordID: parentSalonRecordID, action: .None)
         let container = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon")
         publicDatabase = container.publicCloudDatabase
-        //self.deleteAllCoredataAppointments()
+        self.deleteAllCoredataAppointments()
     }
     func deleteAllCoredataAppointments() {
         let fetchRequest = NSFetchRequest(entityName: "Appointment")
@@ -68,7 +68,7 @@ class BQCoredataImportController {
     func processDownloadedAppointment(appointmentRecord:CKRecord) {
         let cloudID = appointmentRecord.recordID.recordName
         let moc = coredata.backgroundContext
-        coredata.managedObjectContext.performBlock() {
+        coredata.backgroundContext.performBlock() {
             var appointment = Appointment.fetchAppointmentForCloudID(cloudID, moc: moc)
             if let appointment = appointment {
                 appointment.updateFromCloudRecord(appointmentRecord)
@@ -88,17 +88,23 @@ extension Appointment {
         return appointments.first as! Appointment?
     }
     class func makeAppointmentFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> Appointment {
-        precondition(record.recordType == "icloudAppointment", "Unable to create an appointment from this record \(record)")
-        let appointment = Appointment.newObjectWithMoc(moc)
-        appointment.bqCloudID = record.recordID.recordName
-        let data = NSMutableData()
-        let coder = NSKeyedArchiver(forWritingWithMutableData: data)
-        record.encodeSystemFieldsWithCoder(coder)
-        coder.finishEncoding()
-        appointment.bqMetadata = data
-        appointment.bqNeedsCoreDataExport = record["needsExportToCoredata"] as! Bool
-        appointment.appointmentDate = record["appointmentStartDate"] as? NSDate!
-        appointment.appointmentEndDate = record["appointmentEndDate"] as? NSDate!
+        var appointment:Appointment!
+        moc.performBlockAndWait { () -> Void in
+            precondition(record.recordType == "icloudAppointment", "Unable to create an appointment from this record \(record)")
+            appointment = Appointment.newObjectWithMoc(moc)
+            appointment.bqCloudID = record.recordID.recordName
+            let data = NSMutableData()
+            let coder = NSKeyedArchiver(forWritingWithMutableData: data)
+            record.encodeSystemFieldsWithCoder(coder)
+            coder.finishEncoding()
+            appointment.bqMetadata = data
+            appointment.bqNeedsCoreDataExport = record["needsExportToCoredata"] as! Bool
+            let startDate = record["appointmentStartDate"] as! NSDate
+            let endDate = record["appointmentEndDate"] as! NSDate
+            let bookedDuration = endDate.timeIntervalSinceDate(startDate)
+            appointment.appointmentDate = startDate
+            appointment.bookedDuration = bookedDuration
+        }
         return appointment
     }
     func updateFromCloudRecord(record:CKRecord) {
