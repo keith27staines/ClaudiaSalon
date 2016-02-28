@@ -25,6 +25,9 @@ class BQCoredataImportController {
         publicDatabase = container.publicCloudDatabase
         self.deleteAllCoredataAppointments()
     }
+    func save() {
+        self.coredata.saveContext()
+    }
     func deleteAllCoredataAppointments() {
         let fetchRequest = NSFetchRequest(entityName: "Appointment")
         let yesPredicate = NSPredicate(value: true)
@@ -91,6 +94,7 @@ extension BQCoredataImportController {
                     print("Unresolved error fetching customer from cloud \(error)")
                 } else {
                     appointment.customer = Customer.makeCustomerFromCloudRecord(customerRecord!)
+                    self.save()
                 }
             }
         }
