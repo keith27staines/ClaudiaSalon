@@ -454,6 +454,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [newStoreOptions setObject:[NSNumber numberWithBool:YES] forKey:NSInferMappingModelAutomaticallyOption];
     
     BOOL result = [super configurePersistentStoreCoordinatorForURL:url ofType:fileType modelConfiguration:configuration storeOptions:newStoreOptions error:error];
+    super.managedObjectContext = self.managedObjectContext;
     [self salon];
     return result;
 }
