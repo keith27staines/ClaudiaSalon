@@ -12,11 +12,11 @@ import CoreData
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     private var _fetchedResultsController: NSFetchedResultsController? = nil
 
-    var detailViewController: DetailViewController? = nil
-    lazy var managedObjectContext: NSManagedObjectContext = Coredata.sharedInstance.managedObjectContext
+    var appointmentViewController: AppointmentDetailViewController? = nil
+    lazy var managedObjectContext: NSManagedObjectContext = Coredata.sharedInstance.backgroundContext
 
     lazy var salon:Salon = {
-        let salon = Salon(moc: Coredata.sharedInstance.managedObjectContext)
+        let salon = Salon(moc: Coredata.sharedInstance.backgroundContext)
         return salon
     }()
 
@@ -33,7 +33,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            self.appointmentViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? AppointmentDetailViewController
             self.tableView.rowHeight = UITableViewAutomaticDimension
         }
     }
@@ -55,15 +55,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     func insertNewObject(sender: AnyObject) {
         let context = self.fetchedResultsController.managedObjectContext
-        let appointment = Appointment.newObjectWithMoc(context)
-        appointment.customer = self.salon.anonymousCustomer
-        appointment.sale?.customer = self.salon.anonymousCustomer
-
-        // Save the context.
-        do {
-            try context.save()
-        } catch {
-            fatalError("Unresolved error \(error)")
+        context.performBlockAndWait() {
+            let appointment = Appointment.newObjectWithMoc(context)
+            appointment.customer = self.salon.anonymousCustomer
+            appointment.sale?.customer = self.salon.anonymousCustomer
+            try! context.save()
         }
     }
 
@@ -73,7 +69,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
             let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-                let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+                let controller = (segue.destinationViewController as! UINavigationController).topViewController as! AppointmentDetailViewController
                 controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
@@ -83,7 +79,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 }
 
 extension MasterViewController {
-    // MARK: - Table View
+    // MARK: - Table View Data Source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.fetchedResultsController.sections?.count ?? 0
@@ -109,7 +105,6 @@ extension MasterViewController {
         if editingStyle == .Delete {
             let context = self.fetchedResultsController.managedObjectContext
             context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
-            
             do {
                 try context.save()
             } catch {
@@ -117,16 +112,19 @@ extension MasterViewController {
             }
         }
     }
+
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 70
     }
     
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
         guard let appointmentCell = cell as? AppointmentViewCellTableViewCell else {
-            return
+            preconditionFailure("Cell is not an AppointmentViewCellTableViewCell")
         }
         let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
-        appointmentCell.appointment = appointment
+        appointment.managedObjectContext!.performBlock() {
+            appointmentCell.appointment = appointment
+        }
     }
 }
 
@@ -167,36 +165,47 @@ extension MasterViewController {
     }
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.beginUpdates()
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            self.tableView.beginUpdates()
+        }
     }
     
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        switch type {
-        case .Insert:
-            self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-        case .Delete:
-            self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-        default:
-            return
+        
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            switch type {
+            case .Insert:
+                self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            case .Delete:
+                self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            default:
+                return
+            }
         }
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        switch type {
-        case .Insert:
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-        case .Delete:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-        case .Update:
-            self.configureCell(tableView.cellForRowAtIndexPath(indexPath!)!, atIndexPath: indexPath!)
-        case .Move:
-            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            switch type {
+            case .Insert:
+                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            case .Delete:
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            case .Update:
+                if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
+                    self.configureCell(cell, atIndexPath: indexPath!)
+                }
+            case .Move:
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            }
         }
     }
-    
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.tableView.endUpdates()
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            self.tableView.endUpdates()
+        }
     }
     
     /*

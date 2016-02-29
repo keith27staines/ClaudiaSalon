@@ -80,7 +80,8 @@ class Coredata {
                 }
             }
         }
-        self.managedObjectContext.performBlock {
+
+        self.managedObjectContext.performBlockAndWait() {
             if self.managedObjectContext.hasChanges {
                 do {
                     try self.managedObjectContext.save()
