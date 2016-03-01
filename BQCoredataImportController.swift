@@ -104,6 +104,98 @@ extension BQCoredataImportController {
             self.counter.decrement()
         }
     }
+    
+    func fillAppointmentDetailsOperations(appointment:Appointment, appointmentRecord:CKRecord) -> [NSOperation] {
+        let customerOperation = CustomerForAppointmentOperation(appointment: appointment, appointmentRecord: appointmentRecord)
+        let saleOperation = SaleForAppointmentOperation(appointment: appointment, appointmentRecord: appointmentRecord)
+        let saleItemsOperation = SaleItemsForSaleOperation()
+        saleItemsOperation.addDependency(saleOperation)
+        saleOperation.addDependency(customerOperation)
+        return [customerOperation,saleOperation,saleItemsOperation]
+    }
+}
+
+class SaleItemsForSaleOperation: NSOperation {
+    private (set) var saleItems = [SaleItem]()
+    
+}
+//class SaleForAppointmentOperation: NSOperation {
+//    var error: NSError?
+//    let appointment:Appointment
+//    let appointmentRecord:CKRecord
+//    private (set) var customerRecord: CKRecord?
+//    private (set) var customer: Customer?
+//    
+//    var appointmentRecord: CKRecord? {
+//        willSet {
+//            self.willChangeValueForKey("ready")
+//        }
+//        didSet {
+//            let predicate = NSPredicate(format: "recordID == %@", appointmentRecord!.recordID)
+//            self.query = CKQuery(recordType: "icloudCustomer", predicate: predicate)
+//            self.didChangeValueForKey("ready")
+//        }
+//    }
+//    
+//    override var ready: Bool {
+//        return super.ready && self.appointmentRecord != nil
+//    }
+//    
+//    init(appointment:Appointment,appointmentRecord:CKRecord) {
+//        super.init()
+//        super.recordFetchedBlock = { record in
+//            self.customerRecord = record
+//        }
+//        self.queryCompletionBlock  = { (queryCursor, error) in
+//            guard error == nil else {
+//                self.error = error
+//                assertionFailure("error while fetching appointment's customer \(error)")
+//                return
+//            }
+//        }
+//    }
+//}
+
+protocol AppointmentBuilder {
+    var error: NSError? { get }
+    var appointment: Appointment? { get }
+}
+
+class CustomerForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
+    var error: NSError?
+    private (set) var appointment:Appointment?
+    private (set) var appointmentRecord:CKRecord
+    private (set) var customerRecord: CKRecord?
+    private (set) var customer: Customer?
+    private var queryOperation: CKQueryOperation
+    
+    init(appointment:Appointment, appointmentRecord:CKRecord) {
+        self.appointment = appointment
+        self.appointmentRecord = appointmentRecord
+        let customerRef = appointmentRecord["parentCustomerReference"] as! CKReference
+        let predicate = NSPredicate(format: "recordID == ", customerRef.recordID)
+        super.init()
+        query = CKQuery(recordType: "iCloudCustomer", predicate: predicate)
+        super.recordFetchedBlock = { record in
+            self.customerRecord = record
+            let moc = Coredata.sharedInstance.backgroundContext
+            moc.performBlockAndWait() {
+                if let customer = Customer.fetchCustomerForCloudID(record.recordID.recordName, moc: moc) {
+                    
+                }
+                self.appointment?.customer = customer
+            }
+        }
+        self.queryCompletionBlock  = { (queryCursor, error) in
+            guard error == nil else {
+                self.error = error
+                assertionFailure("error while fetching appointment's customer \(error)")
+                return
+            }
+        }
+    }
+    
+    var publicDatabase: CKDatabase = { CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon").publicCloudDatabase }()
 }
 
 extension Customer {
@@ -124,6 +216,9 @@ extension Customer {
             customer.phone = record["phone"] as? String
         }
         return customer
+    }
+    class func fetchCustomerForCloudID(cloudID:String, moc:NSManagedObjectContext ) -> Customer? {
+        
     }
 }
 
