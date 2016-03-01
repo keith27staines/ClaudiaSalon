@@ -15,15 +15,21 @@ protocol BQExportable: class {
     var bqNeedsCoreDataExport: NSNumber? { get set }
     var bqMetadata: NSData? { get set }
     var bqCloudID: String? { get set }
+    var lastUpdatedDate: NSDate? { get set }
+    var managedObjectContext:NSManagedObjectContext? { get }
 }
 
 extension BQExportable {
-
+    func setBQDataFromRecord(record:CKRecord) {
+        self.managedObjectContext!.performBlockAndWait() {
+            self.bqCloudID = record.recordID.recordName
+            self.bqMetadata = record.metadataFromRecord()
+        }
+    }
 }
 
 // MARK:- Salon
 extension Salon : BQExportable {
-    
 }
 
 // MARK:- Appointment

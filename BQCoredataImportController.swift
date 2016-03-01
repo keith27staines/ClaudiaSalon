@@ -25,7 +25,7 @@ class BQCoredataImportController {
         parentSalonReference = CKReference(recordID: parentSalonRecordID, action: .None)
         let container = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon")
         publicDatabase = container.publicCloudDatabase
-        //self.deleteAllCoredataAppointments()
+        self.deleteAllCoredataAppointments()
     }
     func deleteAllCoredataAppointments() {
         let fetchRequest = NSFetchRequest(entityName: "Appointment")
@@ -76,42 +76,29 @@ class BQCoredataImportController {
         let cloudID = appointmentRecord.recordID.recordName
         let moc = coredata.backgroundContext
         moc.performBlock() {
-            var appointment = Appointment.fetchAppointmentForCloudID(cloudID, moc: moc)
+            var appointment = Appointment.fetchForCloudID(cloudID, moc: moc)
             if let appointment = appointment {
                 appointment.updateFromCloudRecordIfNeeded(appointmentRecord)
             } else {
-                appointment = Appointment.makeAppointmentFromCloudRecord(appointmentRecord, moc: moc)
+                appointment = Appointment.makeFromCloudRecord(appointmentRecord, moc: moc)
             }
-            self.filloutAppointment(appointment!,appointmentRecord: appointmentRecord,moc: moc)
+            let fillOperations = self.fillAppointmentDetailsOperations(appointment!, appointmentRecord: appointmentRecord)
+            for operation in fillOperations {
+                self.publicDatabase.addOperation(operation)
+            }
         }
     }
 }
 
 extension BQCoredataImportController {
-    func filloutAppointment(appointment:Appointment, appointmentRecord:CKRecord, moc:NSManagedObjectContext) {
-        let customerRef = appointmentRecord["parentCustomerReference"] as! CKReference
-        let customerID = customerRef.recordID
-        self.counter.increment()
-        self.publicDatabase.fetchRecordWithID(customerID) { customerRecord, error in
-            moc.performBlockAndWait() {
-                if error != nil {
-                    print("Unresolved error fetching customer from cloud \(error)")
-                } else {
-                    appointment.customer = Customer.makeCustomerFromCloudRecord(customerRecord!,moc: moc)
-                }
-                try! moc.save()
-            }
-            self.counter.decrement()
-        }
-    }
-    
-    func fillAppointmentDetailsOperations(appointment:Appointment, appointmentRecord:CKRecord) -> [NSOperation] {
+    func fillAppointmentDetailsOperations(appointment:Appointment, appointmentRecord:CKRecord) -> [CKQueryOperation] {
         let customerOperation = CustomerForAppointmentOperation(appointment: appointment, appointmentRecord: appointmentRecord)
-        let saleOperation = SaleForAppointmentOperation(appointment: appointment, appointmentRecord: appointmentRecord)
-        let saleItemsOperation = SaleItemsForSaleOperation()
-        saleItemsOperation.addDependency(saleOperation)
-        saleOperation.addDependency(customerOperation)
-        return [customerOperation,saleOperation,saleItemsOperation]
+        //let saleOperation = SaleForAppointmentOperation(appointment: appointment, appointmentRecord: appointmentRecord)
+        //let saleItemsOperation = SaleItemsForSaleOperation()
+        //saleItemsOperation.addDependency(saleOperation)
+        //saleOperation.addDependency(customerOperation)
+        //return [customerOperation,saleOperation,saleItemsOperation]
+        return [customerOperation]
     }
 }
 
@@ -167,23 +154,25 @@ class CustomerForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
     private (set) var appointmentRecord:CKRecord
     private (set) var customerRecord: CKRecord?
     private (set) var customer: Customer?
-    private var queryOperation: CKQueryOperation
     
     init(appointment:Appointment, appointmentRecord:CKRecord) {
         self.appointment = appointment
         self.appointmentRecord = appointmentRecord
         let customerRef = appointmentRecord["parentCustomerReference"] as! CKReference
-        let predicate = NSPredicate(format: "recordID == ", customerRef.recordID)
+        let predicate = NSPredicate(format: "recordID == %@", customerRef.recordID)
         super.init()
         query = CKQuery(recordType: "iCloudCustomer", predicate: predicate)
         super.recordFetchedBlock = { record in
             self.customerRecord = record
             let moc = Coredata.sharedInstance.backgroundContext
             moc.performBlockAndWait() {
-                if let customer = Customer.fetchCustomerForCloudID(record.recordID.recordName, moc: moc) {
-                    
+                if let customer = Customer.fetchForCloudID(record.recordID.recordName, moc: moc) {
+                    customer.updateFromCloudRecordIfNeeded(record)
+                    appointment.customer = customer
+                } else {
+                    appointment.customer = Customer.makeFromCloudRecord(record, moc: moc)
                 }
-                self.appointment?.customer = customer
+                try! moc.save()
             }
         }
         self.queryCompletionBlock  = { (queryCursor, error) in
@@ -194,36 +183,79 @@ class CustomerForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
             }
         }
     }
-    
     var publicDatabase: CKDatabase = { CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon").publicCloudDatabase }()
+}
+extension BQExportable {
+    func doesNeedUpdateFromCloud(cloudRecord:CKRecord) -> Bool {
+        guard let metadata = self.bqMetadata else {
+            return true // We have never been initialised with any data from the cloud
+        }
+        let decoder = NSKeyedUnarchiver(forReadingWithData: metadata)
+        guard let _ = CKRecord(coder: decoder) else {
+            print("Unable to decode the cloud record from the supplied metadata")
+            return true
+        }
+        if cloudRecord.modificationDate!.isGreaterThan(self.lastUpdatedDate!) {
+            return true
+        }
+        return false  // We don't need to update ourself as we are more recent
+    }
+    func updateFromCloudRecordIfNeeded(record:CKRecord) {
+        if self.doesNeedUpdateFromCloud(record) {
+            self.updateFromCloudRecord(record)
+        }
+    }
+    func updateFromCloudRecord(record:CKRecord) {
+        fatalError("Subclasses must override this")
+    }
+}
+extension CKRecord {
+    func metadataFromRecord() -> NSData {
+        let data = NSMutableData()
+        let coder = NSKeyedArchiver(forWritingWithMutableData: data)
+        self.encodeSystemFieldsWithCoder(coder)
+        coder.finishEncoding()
+        return data
+    }
 }
 
 extension Customer {
-    class func makeCustomerFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> Customer {
+    class func makeFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> Customer {
         var customer: Customer!
         moc.performBlockAndWait() {
             precondition(record.recordType == "icloudCustomer", "Unable to create a customer from this record \(record)")
             customer = Customer.newObjectWithMoc(moc)
-            customer.bqCloudID = record.recordID.recordName
-            let data = NSMutableData()
-            let coder = NSKeyedArchiver(forWritingWithMutableData: data)
-            record.encodeSystemFieldsWithCoder(coder)
-            coder.finishEncoding()
-            customer.bqMetadata = data
-            customer.bqNeedsCoreDataExport = record["needsExportToCoredata"] as! Bool
-            customer.firstName = record["firstName"] as? String
-            customer.lastName = record["lastName"] as? String
-            customer.phone = record["phone"] as? String
+            customer.updateFromCloudRecord(record)
         }
         return customer
     }
-    class func fetchCustomerForCloudID(cloudID:String, moc:NSManagedObjectContext ) -> Customer? {
-        
+    class func fetchForCloudID(cloudID:String, moc:NSManagedObjectContext ) -> Customer? {
+        let fetchRequest = NSFetchRequest(entityName: "Customer")
+        let predicate = NSPredicate(format: "bqCloudID = %@", cloudID)
+        fetchRequest.predicate = predicate
+        var customers = [AnyObject]()
+        moc.performBlockAndWait() {
+            customers = try! moc.executeFetchRequest(fetchRequest)
+        }
+        return customers.first as! Customer?
+    }
+    func updateFromCloudRecord(record:CKRecord) {
+        guard record.recordType == "icloudCustomer" else {
+            assertionFailure("customer cannot be updated from recordType \(record.recordType)")
+            return
+        }
+        self.managedObjectContext?.performBlockAndWait() {
+            self.setBQDataFromRecord(record)
+            self.bqNeedsCoreDataExport = NSNumber(bool: false)
+            self.firstName = record["firstName"] as? String
+            self.lastName = record["lastName"] as? String
+            self.phone = record["phone"] as? String
+        }
     }
 }
 
 extension Appointment {
-    class func fetchAppointmentForCloudID(cloudID:String, moc:NSManagedObjectContext) -> Appointment? {
+    class func fetchForCloudID(cloudID:String, moc:NSManagedObjectContext) -> Appointment? {
         let fetchRequest = NSFetchRequest(entityName: "Appointment")
         let predicate = NSPredicate(format: "bqCloudID = %@", cloudID)
         fetchRequest.predicate = predicate
@@ -233,57 +265,29 @@ extension Appointment {
         }
         return appointments.first as! Appointment?
     }
-    class func makeAppointmentFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> Appointment {
+    class func makeFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> Appointment {
         var appointment:Appointment!
         moc.performBlockAndWait { () -> Void in
             precondition(record.recordType == "icloudAppointment", "Unable to create an appointment from this record \(record)")
             appointment = Appointment.newObjectWithMoc(moc)
-            appointment.bqCloudID = record.recordID.recordName
-            let data = NSMutableData()
-            let coder = NSKeyedArchiver(forWritingWithMutableData: data)
-            record.encodeSystemFieldsWithCoder(coder)
-            coder.finishEncoding()
-            appointment.bqMetadata = data
-            appointment.bqNeedsCoreDataExport = record["needsExportToCoredata"] as! Bool
-            let startDate = record["appointmentStartDate"] as! NSDate
-            let endDate = record["appointmentEndDate"] as! NSDate
-            let bookedDuration = endDate.timeIntervalSinceDate(startDate)
-            appointment.appointmentDate = startDate
-            appointment.bookedDuration = bookedDuration
+            appointment.updateFromCloudRecord(record)
         }
         return appointment
-    }
-    func updateFromCloudRecordIfNeeded(record:CKRecord) {
-        guard self.doesNeedUpdateFromCloud(record) else {
-            return
-        }
-        self.updateFromCloudRecord(record)
     }
     func updateFromCloudRecord(record:CKRecord) {
         guard record.recordType == "icloudAppointment" else {
             assertionFailure("appointment cannot be updated from recordType \(record.recordType)")
             return
         }
-        if let startDate = record["appointmentStartDate"] as? NSDate {
+        let startDate = record["appointmentStartDate"] as! NSDate
+        let endDate = record["appointmentEndDate"] as! NSDate
+        let bookedDuration = endDate.timeIntervalSinceDate(startDate)
+        self.managedObjectContext?.performBlockAndWait() {
+            self.setBQDataFromRecord(record)
+            self.bqNeedsCoreDataExport = NSNumber(bool: false)
             self.appointmentDate = startDate
+            self.bookedDuration = bookedDuration
         }
-        if let endDate = record["appointmentEndDate"] as? NSDate {
-            self.appointmentEndDate = endDate
-        }
-    }
-    func doesNeedUpdateFromCloud(record:CKRecord) -> Bool {
-        precondition(record.recordType == "icloudAppointment", "Cloud record \(record.recordType) doesn't match icloudAppointment")
-        guard let metadata = self.bqMetadata else {
-            return true // We have never been initialised with any data from the cloud
-        }
-        let decoder = NSKeyedUnarchiver(forReadingWithData: metadata)
-        guard let _ = CKRecord(coder: decoder) else {
-            preconditionFailure("Unable to decode the cloud record from the supplied metadata")
-        }
-        if record.modificationDate!.isGreaterThan(self.lastUpdatedDate!) {
-            return true
-        }
-        return false  // We don't need to update ourself as we are more recent
     }
 }
 

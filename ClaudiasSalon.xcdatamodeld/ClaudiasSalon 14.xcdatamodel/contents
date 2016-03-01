@@ -350,6 +350,7 @@
         <attribute name="firstDayOfTrading" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="firstDayOfWeek" attributeType="Integer 32" defaultValueString="1" syncable="YES"/>
         <attribute name="fullDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="postcode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="purpose" optional="YES" attributeType="String" syncable="YES"/>
@@ -515,7 +516,7 @@
         <element name="Salary" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Sale" positionX="0" positionY="0" width="128" height="405"/>
         <element name="SaleItem" positionX="0" positionY="0" width="128" height="300"/>
-        <element name="Salon" positionX="0" positionY="0" width="128" height="615"/>
+        <element name="Salon" positionX="0" positionY="0" width="128" height="630"/>
         <element name="Service" positionX="0" positionY="0" width="128" height="345"/>
         <element name="ServiceCategory" positionX="0" positionY="0" width="128" height="300"/>
         <element name="ShoppingList" positionX="0" positionY="0" width="128" height="120"/>
