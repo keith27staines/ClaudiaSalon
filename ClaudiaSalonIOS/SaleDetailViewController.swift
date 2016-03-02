@@ -110,7 +110,7 @@ extension SaleDetailViewController {
         let fetchRequest = NSFetchRequest()
         let entity = NSEntityDescription.entityForName("SaleItem", inManagedObjectContext: self.managedObjectContext)
         fetchRequest.entity = entity
-        let predicate = NSPredicate(value: true) //NSPredicate(format: "sale = %@", self.sale.objectID)
+        let predicate = NSPredicate(format: "sale = %@", self.sale)
         fetchRequest.predicate = predicate
         let sortDescriptor = NSSortDescriptor(key: "actualCharge", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
