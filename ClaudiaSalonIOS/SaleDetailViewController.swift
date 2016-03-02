@@ -1,85 +1,53 @@
 //
-//  MasterViewController.swift
-//  ClaudiaSalonIOS
+//  SaleDetailViewController.swift
+//  ClaudiaSalon
 //
-//  Created by Keith Staines on 21/02/2016.
+//  Created by Keith Staines on 02/03/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
+
 
 import UIKit
 import CoreData
 
-class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class SaleDetailViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+    
+    var sale:Sale!
     private var _fetchedResultsController: NSFetchedResultsController? = nil
-
-    var appointmentViewController: AppointmentDetailViewController? = nil
     lazy var managedObjectContext: NSManagedObjectContext = Coredata.sharedInstance.backgroundContext
 
-    lazy var salon:Salon = {
-        let salon = Salon(moc: Coredata.sharedInstance.backgroundContext)
-        return salon
-    }()
-
-    lazy var importController:BQCoredataImportController = {
-        let importer = BQCoredataImportController()
-        return importer
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        self.navigationItem.leftBarButtonItem = self.editButtonItem()
-
+        
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.appointmentViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? AppointmentDetailViewController
-            self.tableView.rowHeight = UITableViewAutomaticDimension
-        }
+        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
-
+    
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        let importer = self.importController
-        importer.fetchCloudAppointments()
+        try! self.managedObjectContext.save()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     func insertNewObject(sender: AnyObject) {
         let context = self.fetchedResultsController.managedObjectContext
         context.performBlockAndWait() {
-            let appointment = Appointment.newObjectWithMoc(context)
-            appointment.customer = self.salon.anonymousCustomer
-            appointment.sale?.customer = self.salon.anonymousCustomer
-            try! context.save()
+            let saleItem = SaleItem.newObjectWithMoc(context)
+            saleItem.sale = self.sale
         }
-    }
-
-    // MARK: - Segues
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showDetail" {
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-            let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-                let controller = (segue.destinationViewController as! UINavigationController).topViewController as! AppointmentDetailViewController
-                controller.detailItem = object
-                controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
-                controller.navigationItem.leftItemsSupplementBackButton = true
-            }
-        }
-    }
+    }    
 }
 
-extension MasterViewController {
+extension SaleDetailViewController {
     // MARK: - Table View Data Source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -97,6 +65,15 @@ extension MasterViewController {
         return cell
     }
     
+    func configureCell(cell:UITableViewCell, atIndexPath:NSIndexPath) {
+        guard let cell = cell as? SaleDetailCellTableViewCell else {
+            return
+        }
+        guard let saleItem = self.fetchedResultsController.objectAtIndexPath(atIndexPath) as? SaleItem else {
+            return
+        }
+        cell.updatedWithSaleItem(saleItem)
+    }
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
@@ -113,23 +90,16 @@ extension MasterViewController {
             }
         }
     }
-
+    
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 70
     }
-    
-    func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
-        guard let appointmentCell = cell as? AppointmentViewCellTableViewCell else {
-            preconditionFailure("Cell is not an AppointmentViewCellTableViewCell")
-        }
-        let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
-        appointment.managedObjectContext!.performBlock() {
-            appointmentCell.appointment = appointment
-        }
-    }
+
 }
 
-extension MasterViewController {
+
+
+extension SaleDetailViewController {
     // MARK: - Fetched results controller
     
     var fetchedResultsController: NSFetchedResultsController {
@@ -138,21 +108,19 @@ extension MasterViewController {
         }
         
         let fetchRequest = NSFetchRequest()
-        // Edit the entity name as appropriate.
-        let entity = NSEntityDescription.entityForName("Appointment", inManagedObjectContext: self.managedObjectContext)
+        let entity = NSEntityDescription.entityForName("SaleItem", inManagedObjectContext: self.managedObjectContext)
         fetchRequest.entity = entity
-        
+        let predicate = NSPredicate(value: true) //NSPredicate(format: "sale = %@", self.sale.objectID)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = NSSortDescriptor(key: "actualCharge", ascending: false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
         
-        // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "appointmentDate", ascending: false)
-        
-        fetchRequest.sortDescriptors = [sortDescriptor]
-        
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: "Master")
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: "SaleDetail")
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         
@@ -203,6 +171,7 @@ extension MasterViewController {
             }
         }
     }
+
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
             self.tableView.endUpdates()

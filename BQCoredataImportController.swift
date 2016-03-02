@@ -105,11 +105,6 @@ extension BQCoredataImportController {
     }
 }
 
-class SaleItemsOperation: NSOperation {
-    private (set) var saleItems = [SaleItem]()
-    
-}
-
 protocol AppointmentBuilder {
     var error: NSError? { get }
     var appointment: Appointment? { get }
@@ -145,6 +140,60 @@ class SaleForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
                 self.error = error
                 assertionFailure("error while fetching appointment's customer \(error)")
                 return
+            }
+        }
+    }
+}
+class SaleItemsForSaleOperation : CKQueryOperation, AppointmentBuilder {
+    var error: NSError?
+    private (set) var appointment:Appointment?
+    private (set) var sale:Sale
+    private (set) var saleRecord: CKRecord?
+    private var saleItemsFromCloud = Set<SaleItem>()
+    private let synchQueue = NSOperationQueue()
+    private let moc: NSManagedObjectContext
+    
+    init(sale:Sale) {
+        self.sale = sale
+        self.moc = sale.managedObjectContext!
+        super.init()
+
+        self.moc.performBlockAndWait() {
+            self.appointment = sale.fromAppointment
+            self.saleRecord = sale.cloudkitRecordFromEmbeddedMetadata()
+        }
+        guard let saleRecord = self.saleRecord else {
+            return
+        }
+        let saleRef = CKReference(record: saleRecord, action: .None)
+        let predicate = NSPredicate(format: "parentSaleReference == %@", saleRef)
+        query = CKQuery(recordType: "iCloudSaleItem", predicate: predicate)
+        super.recordFetchedBlock = { record in
+            self.moc.performBlockAndWait() {
+                if let saleItem = SaleItem.fetchForCloudID(record.recordID.recordName, moc: self.moc) {
+                    saleItem.updateFromCloudRecordIfNeeded(record)
+                    self.synchQueue.addOperationWithBlock() { self.saleItemsFromCloud.insert(saleItem) }
+                } else {
+                    let saleItem = SaleItem.makeFromCloudRecord(record, moc: self.moc)
+                    self.synchQueue.addOperationWithBlock() { self.saleItemsFromCloud.insert(saleItem) }
+                }
+            }
+        }
+        self.queryCompletionBlock  = { (queryCursor, error) in
+            guard error == nil else {
+                self.error = error
+                assertionFailure("error while fetching saleItems \(error)")
+                return
+            }
+            self.moc.performBlockAndWait() {
+                let currentItems = self.sale.saleItem!
+                self.sale.removeSaleItem(currentItems)
+                self.sale.addSaleItem(self.saleItemsFromCloud)
+                let removedSet = currentItems.subtract(self.saleItemsFromCloud)
+                for removed in removedSet {
+                    self.moc.deleteObject(removed)
+                }
+                try! self.moc.save()
             }
         }
     }
@@ -262,7 +311,45 @@ extension Sale {
         }
     }
 }
-
+extension SaleItem {
+    class func makeFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> SaleItem {
+        var saleItem: SaleItem!
+        moc.performBlockAndWait() {
+            precondition(record.recordType == "icloudSaleItem", "Unable to create a SaleItem from this record \(record)")
+            saleItem = SaleItem.newObjectWithMoc(moc)
+            saleItem.updateFromCloudRecord(record)
+        }
+        return saleItem
+    }
+    class func fetchForCloudID(cloudID:String, moc:NSManagedObjectContext ) -> SaleItem? {
+        let fetchRequest = NSFetchRequest(entityName: "SaleItem")
+        let predicate = NSPredicate(format: "bqCloudID = %@", cloudID)
+        fetchRequest.predicate = predicate
+        var customers = [AnyObject]()
+        moc.performBlockAndWait() {
+            customers = try! moc.executeFetchRequest(fetchRequest)
+        }
+        return customers.first as! SaleItem?
+    }
+    func updateFromCloudRecord(record:CKRecord) {
+        guard record.recordType == "icloudSaleItem" else {
+            assertionFailure("saleItem cannot be updated from recordType \(record.recordType)")
+            return
+        }
+        self.managedObjectContext?.performBlockAndWait() {
+            self.setBQDataFromRecord(record)
+            self.bqNeedsCoreDataExport = NSNumber(bool: false)
+            self.actualCharge = record["actualCharge"] as? NSNumber
+            self.nominalCharge = record["nominalCharge"] as? NSNumber
+            self.discountType = record["discountType"] as? NSNumber
+            self.discountValue = record["discountValue"] as? NSNumber
+            self.discountVersion = record["discountVersion"] as? NSNumber
+            self.maximumCharge = record["maximumCharge"] as? NSNumber
+            self.minimumCharge = record["minimumCharge"] as? NSNumber
+            self.nominalCharge = record["nominalCharge"] as? NSNumber
+        }
+    }
+}
 
 extension Customer {
     class func makeFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> Customer {

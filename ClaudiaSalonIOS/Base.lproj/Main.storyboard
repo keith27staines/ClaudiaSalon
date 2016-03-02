@@ -216,6 +216,9 @@
                                                 <constraint firstItem="krO-f6-SEg" firstAttribute="leading" secondItem="6po-Y4-3db" secondAttribute="leading" id="vfr-Qg-ttV"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="L5M-um-Wk2" kind="show" identifier="saleItems" id="Fl0-Iv-uJG"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -242,7 +245,56 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0s3-X8-eQK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="674" y="129"/>
+            <point key="canvasLocation" x="814" y="327"/>
+        </scene>
+        <!--Sale items-->
+        <scene sceneID="XIv-si-UfE">
+            <objects>
+                <tableViewController id="L5M-um-Wk2" customClass="SaleDetailViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="98" sectionHeaderHeight="28" sectionFooterHeight="28" id="jd0-0s-Zde">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="1200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="98" id="zah-et-0Lr" customClass="SaleDetailCellTableViewCell" customModule="ClaudiaSalonIOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="98"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zah-et-0Lr" id="O3F-3L-dg1">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="97"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actual price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qaf-fP-uGm">
+                                            <rect key="frame" x="70" y="28" width="438" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Qaf-fP-uGm" firstAttribute="leading" secondItem="O3F-3L-dg1" secondAttribute="leadingMargin" constant="62" id="CQn-Fp-QvK"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Qaf-fP-uGm" secondAttribute="bottom" constant="40" id="Okp-Iu-qsT"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Qaf-fP-uGm" secondAttribute="trailing" constant="84" id="OyC-Jb-idh"/>
+                                        <constraint firstItem="Qaf-fP-uGm" firstAttribute="top" secondItem="O3F-3L-dg1" secondAttribute="topMargin" constant="20" id="vEY-h8-5GC"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="actualPrice" destination="Qaf-fP-uGm" id="Jxj-Ji-MDU"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="L5M-um-Wk2" id="pxR-ga-Q7Q"/>
+                            <outlet property="delegate" destination="L5M-um-Wk2" id="irJ-SA-tiU"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Sale items" id="wx3-cP-XxO"/>
+                    <connections>
+                        <outlet property="tableView" destination="jd0-0s-Zde" id="V5X-XV-Fgx"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="28x-Y6-vtD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1564" y="327"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">
@@ -348,7 +400,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="966" y="-674"/>
+            <point key="canvasLocation" x="914" y="-836"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">

@@ -47,6 +47,8 @@
 		5351916F1B37F56D00F8D37A /* AMCChangeUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */; };
 		5353EE611C86E88800D09B98 /* BQCoredataImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533A8FD41C7CC0A4000CA54F /* BQCoredataImportController.swift */; };
 		5353EE621C86E8BF00D09B98 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA571C79AF4D006B4002 /* CoreData.swift */; };
+		5353EE641C8766E400D09B98 /* SaleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5353EE631C8766E400D09B98 /* SaleDetailViewController.swift */; };
+		5353EE661C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5353EE651C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift */; };
 		535F0DEC1AB232CB0035CFD8 /* AMCAccountStatementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */; };
 		535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */; };
 		535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */; };
@@ -433,6 +435,8 @@
 		5351916B1B37F56D00F8D37A /* AMCChangeUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCChangeUserViewController.h; sourceTree = "<group>"; };
 		5351916C1B37F56D00F8D37A /* AMCChangeUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCChangeUserViewController.m; sourceTree = "<group>"; };
 		5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCChangeUserViewController.xib; sourceTree = "<group>"; };
+		5353EE631C8766E400D09B98 /* SaleDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaleDetailViewController.swift; sourceTree = "<group>"; };
+		5353EE651C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaleDetailCellTableViewCell.swift; sourceTree = "<group>"; };
 		535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAccountStatementViewController.xib; sourceTree = "<group>"; };
 		535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementItem.m; sourceTree = "<group>"; };
 		535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementViewController.m; sourceTree = "<group>"; };
@@ -1160,6 +1164,40 @@
 				5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */,
 			);
 			name = "Change User View Controller";
+			sourceTree = "<group>";
+		};
+		5353EE671C876ACA00D09B98 /* Sale Detail */ = {
+			isa = PBXGroup;
+			children = (
+				5353EE631C8766E400D09B98 /* SaleDetailViewController.swift */,
+				5353EE651C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift */,
+			);
+			name = "Sale Detail";
+			sourceTree = "<group>";
+		};
+		5353EE681C876B2400D09B98 /* Appointment Table */ = {
+			isa = PBXGroup;
+			children = (
+				53FDCA421C79A591006B4002 /* MasterViewController.swift */,
+				53E2B9901C81CF0700F8F963 /* AppointmentViewCellTableViewCell.swift */,
+			);
+			name = "Appointment Table";
+			sourceTree = "<group>";
+		};
+		5353EE691C876B5300D09B98 /* Launch screen */ = {
+			isa = PBXGroup;
+			children = (
+				53FDCA4B1C79A591006B4002 /* LaunchScreen.storyboard */,
+			);
+			name = "Launch screen";
+			sourceTree = "<group>";
+		};
+		5353EE6A1C876B6D00D09B98 /* Appointment Detail */ = {
+			isa = PBXGroup;
+			children = (
+				53FDCA441C79A591006B4002 /* AppointmentDetailViewController.swift */,
+			);
+			name = "Appointment Detail";
 			sourceTree = "<group>";
 		};
 		535F0DE61AB232B10035CFD8 /* Account Statement */ = {
@@ -2482,12 +2520,12 @@
 		53FDCA8B1C7A7BC1006B4002 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				53FDCA421C79A591006B4002 /* MasterViewController.swift */,
-				53FDCA441C79A591006B4002 /* AppointmentDetailViewController.swift */,
-				53FDCA461C79A591006B4002 /* Main.storyboard */,
-				53E2B9901C81CF0700F8F963 /* AppointmentViewCellTableViewCell.swift */,
-				53FDCA4B1C79A591006B4002 /* LaunchScreen.storyboard */,
 				535FEA731C8436730041D272 /* AppointmentFormatter.swift */,
+				5353EE691C876B5300D09B98 /* Launch screen */,
+				53FDCA461C79A591006B4002 /* Main.storyboard */,
+				5353EE681C876B2400D09B98 /* Appointment Table */,
+				5353EE6A1C876B6D00D09B98 /* Appointment Detail */,
+				5353EE671C876ACA00D09B98 /* Sale Detail */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2959,6 +2997,7 @@
 				533A8FD61C7CC0A4000CA54F /* BQCoredataImportController.swift in Sources */,
 				53FDCA3E1C79A591006B4002 /* AppDelegate.swift in Sources */,
 				53FDCA781C7A6E3F006B4002 /* Note.m in Sources */,
+				5353EE661C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift in Sources */,
 				53FDCA661C7A081A006B4002 /* Customer.m in Sources */,
 				535FEA751C8436730041D272 /* AppointmentFormatter.swift in Sources */,
 				53FDCA821C7A763C006B4002 /* Payment.m in Sources */,
@@ -2976,6 +3015,7 @@
 				53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */,
 				53EBB3CB1C7B194000BBDC46 /* BQCoredataObjectExtensions.swift in Sources */,
 				53FDCA731C7A12FB006B4002 /* Service.m in Sources */,
+				5353EE641C8766E400D09B98 /* SaleDetailViewController.swift in Sources */,
 				53FDCA431C79A591006B4002 /* MasterViewController.swift in Sources */,
 				53FDCA591C79BF75006B4002 /* Appointment+CoreDataProperties.m in Sources */,
 				53FDCA721C7A11FD006B4002 /* Holiday.m in Sources */,

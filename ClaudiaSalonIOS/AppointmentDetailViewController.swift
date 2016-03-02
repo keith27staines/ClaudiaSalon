@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CloudKit
 
 class AppointmentDetailViewController: UITableViewController {
 
@@ -93,6 +94,23 @@ class AppointmentDetailViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "saleItems" {
+            guard let vc = segue.destinationViewController as? SaleDetailViewController else {
+                fatalError("Unexpected destination controller")
+            }
+            guard let appointment = detailItem as? Appointment else {
+                fatalError("detail item is not an appointment")
+            }
+            guard let sale = appointment.sale else {
+                fatalError("appointment doesn't have a sale")
+            }
+            let container = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon")
+            let publicDatabase = container.publicCloudDatabase
+            let saleItemOperation = SaleItemsForSaleOperation(sale: sale)
+            publicDatabase.addOperation(saleItemOperation)
+            vc.sale = appointment.sale
+        }
+    }
 }
 
