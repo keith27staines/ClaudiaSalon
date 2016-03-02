@@ -276,21 +276,29 @@ class ICloudAppointment:ICloudRecord {
 class ICloudSale:ICloudRecord {
     var parentCustomerReference: CKReference?
     var parentAppointmentReference: CKReference?
+    var actualCharge :Double? = 0.0
+    var nominalCharge :Double? = 0.0
     var discountVersion : Int?
     var discountType : Int?
     var discountValue :Int? = 0
-    var actualCharge :Double? = 0.0
-    var nominalCharge :Double? = 0.0
+    var discountAmount: Double? = 0.0
+    var hidden: Bool? = false
+    var isQuote: Bool? = false
+    var voided:Bool? = false
     init(coredataSale: Sale, parentSalonID: NSManagedObjectID) {
         
         super.init(recordType: ICloudRecordType.Sale.rawValue,managedObject: coredataSale, parentSalonID: parentSalonID)
         
         coredataSale.managedObjectContext!.performBlockAndWait() {
+            self.actualCharge = coredataSale.actualCharge?.doubleValue
+            self.nominalCharge = coredataSale.nominalCharge?.doubleValue
             self.discountVersion = coredataSale.discountVersion?.integerValue
             self.discountType = coredataSale.discountType?.integerValue
             self.discountValue = coredataSale.discountValue?.integerValue
-            self.actualCharge = coredataSale.actualCharge?.doubleValue
-            self.nominalCharge = coredataSale.nominalCharge?.doubleValue
+            self.discountAmount = coredataSale.discountAmount?.doubleValue
+            self.isQuote = coredataSale.isQuote?.boolValue
+            self.hidden = coredataSale.hidden?.boolValue
+            self.voided = coredataSale.voided?.boolValue
             
             // Assign this Sale's parent customer
             if let coredataCustomer = coredataSale.customer {
@@ -309,9 +317,15 @@ class ICloudSale:ICloudRecord {
         let record = super.makeCloudKitRecord()
         record["parentCustomerReference"] = parentCustomerReference
         record["parentAppointmentReference"] = parentAppointmentReference
+        record["actualCharge"] = actualCharge
+        record["nominalCharge"] = nominalCharge
         record["discountVersion"] = discountVersion
         record["discountType"] = discountType
         record["discountValue"] = discountValue
+        record["discountAmount"] = discountAmount
+        record["isQuote"] = isQuote
+        record["hidden"] = hidden
+        record["voided"] = voided
         return record
     }
 }

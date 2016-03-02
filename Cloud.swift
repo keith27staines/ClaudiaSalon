@@ -15,7 +15,7 @@ enum CloudError: ErrorType {
 
 public class Cloud {
     
-    let salonCloudID = "A845885F-958A-4CE3-A729-42F08EA9238F"
+    let salonCloudID = "CB57BD99-2696-4F34-80D5-F9EFDAF7D39E"
     let publicDatabase: CKDatabase!
     
     init?() {

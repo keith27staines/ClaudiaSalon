@@ -45,6 +45,8 @@
 		5351916A1B36B60500F8D37A /* AMCPasswordEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535191681B36B60500F8D37A /* AMCPasswordEditor.xib */; };
 		5351916E1B37F56D00F8D37A /* AMCChangeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5351916C1B37F56D00F8D37A /* AMCChangeUserViewController.m */; };
 		5351916F1B37F56D00F8D37A /* AMCChangeUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */; };
+		5353EE611C86E88800D09B98 /* BQCoredataImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533A8FD41C7CC0A4000CA54F /* BQCoredataImportController.swift */; };
+		5353EE621C86E8BF00D09B98 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA571C79AF4D006B4002 /* CoreData.swift */; };
 		535F0DEC1AB232CB0035CFD8 /* AMCAccountStatementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */; };
 		535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */; };
 		535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */; };
@@ -2763,6 +2765,7 @@
 				53D934081AC71E1B001D6C64 /* AMCSalonDetailsViewController.m in Sources */,
 				536B9DD11C52842300F170EC /* Salon.m in Sources */,
 				536B9E721C56077E00F170EC /* Salary.m in Sources */,
+				5353EE611C86E88800D09B98 /* BQCoredataImportController.swift in Sources */,
 				53D69DFF1A9B41B60004CE10 /* AMCSalonDocument.m in Sources */,
 				53D69D1B1A9B240C0004CE10 /* AMCCancelAppointmentViewController.m in Sources */,
 				5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */,
@@ -2894,6 +2897,7 @@
 				536B9E7A1C56077E00F170EC /* OpeningHoursWeekTemplate.m in Sources */,
 				536B9EA01C56077E00F170EC /* Holiday+CoreDataProperties.m in Sources */,
 				53D69D4C1A9B240C0004CE10 /* ProductSelectorViewController.m in Sources */,
+				5353EE621C86E8BF00D09B98 /* CoreData.swift in Sources */,
 				53D69D031A9B240C0004CE10 /* AMCBookingViewController.m in Sources */,
 				536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */,
 				536E57D01AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m in Sources */,

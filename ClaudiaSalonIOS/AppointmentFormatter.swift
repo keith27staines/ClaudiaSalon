@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class AppointmentFormatter {
     let appointment:Appointment
     init(appointment:Appointment) {

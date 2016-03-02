@@ -26,7 +26,7 @@
             <objects>
                 <tableViewController id="tob-Wa-e8m" customClass="AppointmentDetailViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="1Xn-0O-neQ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
@@ -155,6 +155,70 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Sale" id="h7i-J6-y1t">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="148" id="DXr-E1-3sV">
+                                        <rect key="frame" x="0.0" y="438" width="600" height="148"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DXr-E1-3sV" id="iXX-gT-CgY">
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="147"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6po-Y4-3db">
+                                                    <rect key="frame" x="257" y="52" width="39" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DbX-qS-Za4">
+                                                    <rect key="frame" x="190" y="85" width="47" height="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4wb-Cc-eQx">
+                                                    <rect key="frame" x="257" y="81" width="29" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actual charge" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7rG-9M-pIj">
+                                                    <rect key="frame" x="164" y="114" width="73" height="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3P-S5-Wie">
+                                                    <rect key="frame" x="210" y="56" width="27" height="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£90" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="krO-f6-SEg">
+                                                    <rect key="frame" x="257" y="110" width="32" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="6po-Y4-3db" firstAttribute="centerY" secondItem="A3P-S5-Wie" secondAttribute="centerY" id="E5O-Qj-55R"/>
+                                                <constraint firstItem="A3P-S5-Wie" firstAttribute="trailing" secondItem="DbX-qS-Za4" secondAttribute="trailing" id="JPj-uA-7vq"/>
+                                                <constraint firstItem="4wb-Cc-eQx" firstAttribute="centerY" secondItem="DbX-qS-Za4" secondAttribute="centerY" id="Kd2-lT-W0K"/>
+                                                <constraint firstItem="krO-f6-SEg" firstAttribute="centerY" secondItem="7rG-9M-pIj" secondAttribute="centerY" id="cPm-Qt-Bh7"/>
+                                                <constraint firstItem="7rG-9M-pIj" firstAttribute="trailing" secondItem="DbX-qS-Za4" secondAttribute="trailing" id="hWe-Z5-dfD"/>
+                                                <constraint firstItem="6po-Y4-3db" firstAttribute="leading" secondItem="A3P-S5-Wie" secondAttribute="trailing" constant="20" id="hzQ-GU-nFZ"/>
+                                                <constraint firstItem="4wb-Cc-eQx" firstAttribute="top" secondItem="6po-Y4-3db" secondAttribute="bottom" constant="8" id="iij-md-L5Z"/>
+                                                <constraint firstItem="krO-f6-SEg" firstAttribute="top" secondItem="4wb-Cc-eQx" secondAttribute="bottom" constant="8" id="quP-16-Lh3"/>
+                                                <constraint firstItem="A3P-S5-Wie" firstAttribute="top" secondItem="iXX-gT-CgY" secondAttribute="topMargin" constant="48" id="teJ-xF-SsN"/>
+                                                <constraint firstItem="4wb-Cc-eQx" firstAttribute="leading" secondItem="6po-Y4-3db" secondAttribute="leading" id="uso-AY-BA3"/>
+                                                <constraint firstItem="A3P-S5-Wie" firstAttribute="centerX" secondItem="iXX-gT-CgY" secondAttribute="centerX" constant="-60" id="vL9-HY-dqE"/>
+                                                <constraint firstItem="krO-f6-SEg" firstAttribute="leading" secondItem="6po-Y4-3db" secondAttribute="leading" id="vfr-Qg-ttV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="tob-Wa-e8m" id="H4w-fq-g1o"/>
@@ -162,11 +226,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Appointment" id="lxY-70-JXz"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="1200"/>
                     <connections>
+                        <outlet property="actualCharge" destination="krO-f6-SEg" id="OzR-u0-Nly"/>
                         <outlet property="appointmentDate" destination="yfK-Nh-vF9" id="E1b-wv-gg8"/>
                         <outlet property="customerFullName" destination="ZpQ-hT-ZWm" id="nWS-OV-tcm"/>
+                        <outlet property="discountAmount" destination="4wb-Cc-eQx" id="pgj-fG-bRR"/>
                         <outlet property="duration" destination="FnL-0K-nLr" id="BeB-3I-csS"/>
                         <outlet property="finishTime" destination="ka0-F6-qAk" id="WDf-kt-p5a"/>
+                        <outlet property="nominalCharge" destination="6po-Y4-3db" id="Op3-Sc-cwu"/>
                         <outlet property="phone" destination="31i-cW-wdc" id="PEs-1o-rNt"/>
                         <outlet property="startTime" destination="xIN-WK-ht6" id="Dof-YG-K3c"/>
                     </connections>
