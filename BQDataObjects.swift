@@ -9,7 +9,7 @@
 import Foundation
 import CloudKit
 
-let appointmentExpiryTime = 33.0 * 3600.0 // 33 days in seconds
+let appointmentExpiryTime = 33.0 * 24 * 3600.0 // 33 days in seconds
 let BQRecordTypeUnknown = "RecordTypeUnknown"
 
 // MARK:- DiscountType enumeration
@@ -38,9 +38,11 @@ public class ICloudRecord {
     var updateStamp: String?
     var parentSalonReference: CKReference?
     var isActive = true
+    
     private init() {
         assertionFailure("Not supported. Init from a managed object, CRRecord or CKReference instead")
     }
+    
     private init(recordType:String, managedObject: NSManagedObject, parentSalonID: NSManagedObjectID?) {
         managedObject.managedObjectContext!.performBlockAndWait() {
             let bqObject = managedObject as! BQExportable
@@ -73,6 +75,7 @@ public class ICloudRecord {
     func fetchCoredataObject() {
         preconditionFailure("This method must be overridden and must not call super")
     }
+    
     private func unarchiveCloudRecordMetadataFromdata(data: NSData?,coredataObject:NSManagedObject) {
         if let data = data {
             let coder = NSKeyedUnarchiver(forReadingWithData: data)
@@ -102,6 +105,7 @@ public class ICloudRecord {
         }
     }
 }
+
 // MARK:- class ICloudSalon
 public class ICloudSalon : ICloudRecord {
     var name: String?
@@ -338,6 +342,9 @@ class ICloudSaleItem: ICloudRecord {
     var discountValue : Int?
     var actualCharge: Double?
     var nominalCharge: Double?
+    var maximumCharge:Double?
+    var minimumCharge:Double?
+    
     init(coredataSaleItem: SaleItem, parentSalonID: NSManagedObjectID) {
         
         super.init(recordType: ICloudRecordType.SaleItem.rawValue, managedObject: coredataSaleItem, parentSalonID: parentSalonID)
@@ -348,6 +355,9 @@ class ICloudSaleItem: ICloudRecord {
             self.discountValue = coredataSaleItem.discountValue?.integerValue
             self.actualCharge = coredataSaleItem.actualCharge?.doubleValue
             self.nominalCharge = coredataSaleItem.nominalCharge?.doubleValue
+            self.maximumCharge = coredataSaleItem.maximumCharge?.doubleValue
+            self.minimumCharge = coredataSaleItem.minimumCharge?.doubleValue
+            
             // Assign this SaleItem's parent sale
             if let coredataSale = coredataSaleItem.sale {
                 let cloudSale = ICloudSale(coredataSale: coredataSale, parentSalonID: parentSalonID)
@@ -371,6 +381,10 @@ class ICloudSaleItem: ICloudRecord {
         record["discountVersion"] = discountVersion
         record["discountType"] = discountType
         record["discountValue"] = discountValue
+        record["actualCharge"] = actualCharge
+        record["nominalCharge"] = nominalCharge
+        record["maximumCharge"] = maximumCharge
+        record["minimumCharge"] = minimumCharge
         return record
     }
 }

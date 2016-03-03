@@ -109,7 +109,7 @@ class AppointmentDetailViewController: UITableViewController {
             let publicDatabase = container.publicCloudDatabase
             let saleItemOperation = SaleItemsForSaleOperation(sale: sale)
             publicDatabase.addOperation(saleItemOperation)
-            vc.sale = appointment.sale
+            vc.saleID = appointment.sale?.objectID
         }
     }
 }

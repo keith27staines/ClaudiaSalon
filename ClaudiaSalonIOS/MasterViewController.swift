@@ -60,7 +60,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             let appointment = Appointment.newObjectWithMoc(context)
             appointment.customer = self.salon.anonymousCustomer
             appointment.sale?.customer = self.salon.anonymousCustomer
-            try! context.save()
+            Coredata.sharedInstance.saveContext()
         }
     }
 
@@ -106,11 +106,7 @@ extension MasterViewController {
         if editingStyle == .Delete {
             let context = self.fetchedResultsController.managedObjectContext
             context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
-            do {
-                try context.save()
-            } catch {
-                fatalError("Unresolved error  \(error)")
-            }
+            Coredata.sharedInstance.saveContext()
         }
     }
 

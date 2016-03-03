@@ -12,10 +12,17 @@ import CoreData
 
 class SaleDetailViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
-    var sale:Sale!
+    var saleID:NSManagedObjectID!
     private var _fetchedResultsController: NSFetchedResultsController? = nil
     lazy var managedObjectContext: NSManagedObjectContext = Coredata.sharedInstance.backgroundContext
-
+    lazy var sale:Sale = {
+        var sale:Sale?
+        let moc = self.managedObjectContext
+        moc.performBlockAndWait() {
+            sale = moc.objectWithID(self.saleID) as? Sale
+        }
+       return sale!
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,7 +37,7 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        try! self.managedObjectContext.save()
+        Coredata.sharedInstance.saveContext()
     }
     
     override func didReceiveMemoryWarning() {
@@ -83,11 +90,7 @@ extension SaleDetailViewController {
         if editingStyle == .Delete {
             let context = self.fetchedResultsController.managedObjectContext
             context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
-            do {
-                try context.save()
-            } catch {
-                fatalError("Unresolved error  \(error)")
-            }
+            Coredata.sharedInstance.saveContext()
         }
     }
     
@@ -110,7 +113,7 @@ extension SaleDetailViewController {
         let fetchRequest = NSFetchRequest()
         let entity = NSEntityDescription.entityForName("SaleItem", inManagedObjectContext: self.managedObjectContext)
         fetchRequest.entity = entity
-        let predicate = NSPredicate(format: "sale = %@", self.sale)
+        let predicate = NSPredicate(format: "sale = %@", self.saleID)
         fetchRequest.predicate = predicate
         let sortDescriptor = NSSortDescriptor(key: "actualCharge", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -120,7 +123,7 @@ extension SaleDetailViewController {
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: "SaleDetail")
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         

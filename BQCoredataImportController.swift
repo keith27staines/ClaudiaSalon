@@ -12,7 +12,7 @@ import CoreData
 
 class BQCoredataImportController {
     
-    let salonCloudID = "2C9BE77C-3809-45C0-BD72-80F615AD569B"
+    let salonCloudID = "2D642176-52D3-4EE3-A296-C64AF47AF9E6"
     let publicDatabase: CKDatabase
     let coredata = Coredata.sharedInstance
     let parentSalonRecordID:CKRecordID
@@ -132,7 +132,7 @@ class SaleForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
                 } else {
                     appointment.sale = Sale.makeFromCloudRecord(record, moc: moc)
                 }
-                try! moc.save()
+                Coredata.sharedInstance.saveContext()
             }
         }
         self.queryCompletionBlock  = { (queryCursor, error) in
@@ -193,7 +193,7 @@ class SaleItemsForSaleOperation : CKQueryOperation, AppointmentBuilder {
                 for removed in removedSet {
                     self.moc.deleteObject(removed)
                 }
-                try! self.moc.save()
+                Coredata.sharedInstance.saveContext()
             }
         }
     }
@@ -229,8 +229,7 @@ class CustomerForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
                 assertionFailure("error while fetching appointment's customer \(error)")
                 return
             }
-            let moc = Coredata.sharedInstance.backgroundContext
-            try! moc.save()
+            Coredata.sharedInstance.saveContext()
         }
     }
 }

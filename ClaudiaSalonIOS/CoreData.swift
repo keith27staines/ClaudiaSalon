@@ -77,7 +77,7 @@ class Coredata {
                     try self.backgroundContext.save()
                 } catch {
                     let nserror = error as NSError
-                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                    fatalError("Unresolved error while saving context \(nserror), \(nserror.userInfo)")
                 }
             }
         }
@@ -88,7 +88,7 @@ class Coredata {
                     try self.managedObjectContext.save()
                 } catch {
                     let nserror = error as NSError
-                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                    fatalError("Unresolved error while saving context \(nserror), \(nserror.userInfo)")
                 }
             }
         }

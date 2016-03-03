@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E49a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E56a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H1p-Uh-vWS">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -251,34 +251,110 @@
         <scene sceneID="XIv-si-UfE">
             <objects>
                 <tableViewController id="L5M-um-Wk2" customClass="SaleDetailViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="98" sectionHeaderHeight="28" sectionFooterHeight="28" id="jd0-0s-Zde">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="223" sectionHeaderHeight="28" sectionFooterHeight="28" id="jd0-0s-Zde">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="98" id="zah-et-0Lr" customClass="SaleDetailCellTableViewCell" customModule="ClaudiaSalonIOS" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="98"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="223" id="zah-et-0Lr" customClass="SaleDetailCellTableViewCell" customModule="ClaudiaSalonIOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="223"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zah-et-0Lr" id="O3F-3L-dg1">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="97"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="222"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Actual price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qaf-fP-uGm">
-                                            <rect key="frame" x="70" y="28" width="438" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Before discount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qaf-fP-uGm">
+                                            <rect key="frame" x="240" y="46" width="121" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Cwn-JY-MWs">
+                                            <rect key="frame" x="9" y="8" width="582" height="31"/>
+                                            <connections>
+                                                <action selector="amountBeforeChanged:" destination="zah-et-0Lr" eventType="valueChanged" id="tfs-zx-40V"/>
+                                            </connections>
+                                        </slider>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Min = " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hd-YS-Wie">
+                                            <rect key="frame" x="11" y="46" width="48" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max =" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fmo-AD-VSY">
+                                            <rect key="frame" x="541" y="46" width="48" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="48L-86-bce">
+                                            <rect key="frame" x="200" y="90" width="201" height="29"/>
+                                            <segments>
+                                                <segment title="Discount by %"/>
+                                                <segment title="Discount by £"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="discountTypeChanged:" destination="zah-et-0Lr" eventType="valueChanged" id="nfH-rF-miH"/>
+                                            </connections>
+                                        </segmentedControl>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JMK-2G-3Uz">
+                                            <rect key="frame" x="200" y="135" width="89" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfS-A5-XDy">
+                                            <rect key="frame" x="112" y="135" width="68" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="oxx-51-ysv">
+                                            <rect key="frame" x="307" y="131" width="94" height="29"/>
+                                            <connections>
+                                                <action selector="discountStepperChanged:" destination="zah-et-0Lr" eventType="valueChanged" id="ych-zw-DRX"/>
+                                            </connections>
+                                        </stepper>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="After discount" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hbe-bv-8gZ">
+                                            <rect key="frame" x="246" y="186" width="109" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Qaf-fP-uGm" firstAttribute="leading" secondItem="O3F-3L-dg1" secondAttribute="leadingMargin" constant="62" id="CQn-Fp-QvK"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Qaf-fP-uGm" secondAttribute="bottom" constant="40" id="Okp-Iu-qsT"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Qaf-fP-uGm" secondAttribute="trailing" constant="84" id="OyC-Jb-idh"/>
-                                        <constraint firstItem="Qaf-fP-uGm" firstAttribute="top" secondItem="O3F-3L-dg1" secondAttribute="topMargin" constant="20" id="vEY-h8-5GC"/>
+                                        <constraint firstItem="hbe-bv-8gZ" firstAttribute="centerX" secondItem="O3F-3L-dg1" secondAttribute="centerX" id="1AV-OD-XGS"/>
+                                        <constraint firstItem="0hd-YS-Wie" firstAttribute="leading" secondItem="Cwn-JY-MWs" secondAttribute="leading" id="5K3-tq-dKA"/>
+                                        <constraint firstItem="48L-86-bce" firstAttribute="top" secondItem="Qaf-fP-uGm" secondAttribute="bottom" constant="23" id="6rs-MO-GXU"/>
+                                        <constraint firstItem="JMK-2G-3Uz" firstAttribute="baseline" secondItem="bfS-A5-XDy" secondAttribute="baseline" id="BI2-K7-gUA"/>
+                                        <constraint firstItem="Fmo-AD-VSY" firstAttribute="centerY" secondItem="0hd-YS-Wie" secondAttribute="centerY" id="CcV-dA-wMP"/>
+                                        <constraint firstItem="oxx-51-ysv" firstAttribute="leading" secondItem="JMK-2G-3Uz" secondAttribute="trailing" constant="18" id="D0c-JZ-5gF"/>
+                                        <constraint firstItem="Fmo-AD-VSY" firstAttribute="trailing" secondItem="Cwn-JY-MWs" secondAttribute="trailing" id="Fkf-Gz-j5S"/>
+                                        <constraint firstItem="JMK-2G-3Uz" firstAttribute="leading" secondItem="bfS-A5-XDy" secondAttribute="trailing" constant="20" id="JEQ-d4-8Nh"/>
+                                        <constraint firstItem="JMK-2G-3Uz" firstAttribute="leading" secondItem="48L-86-bce" secondAttribute="leading" id="NPz-7e-I4a"/>
+                                        <constraint firstItem="Cwn-JY-MWs" firstAttribute="top" secondItem="O3F-3L-dg1" secondAttribute="topMargin" id="PRH-55-noJ"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="hbe-bv-8gZ" secondAttribute="bottom" constant="7" id="QFa-AH-Ga0"/>
+                                        <constraint firstItem="48L-86-bce" firstAttribute="centerX" secondItem="O3F-3L-dg1" secondAttribute="centerX" id="Zlv-Ck-w4N"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Cwn-JY-MWs" secondAttribute="trailing" constant="3" id="ajP-Fd-RgQ"/>
+                                        <constraint firstItem="Qaf-fP-uGm" firstAttribute="centerX" secondItem="O3F-3L-dg1" secondAttribute="centerX" id="bPl-In-a87"/>
+                                        <constraint firstItem="oxx-51-ysv" firstAttribute="trailing" secondItem="48L-86-bce" secondAttribute="trailing" id="ccu-Rq-fKe"/>
+                                        <constraint firstItem="hbe-bv-8gZ" firstAttribute="top" secondItem="oxx-51-ysv" secondAttribute="bottom" constant="26" id="hKQ-K1-13K"/>
+                                        <constraint firstItem="Cwn-JY-MWs" firstAttribute="leading" secondItem="O3F-3L-dg1" secondAttribute="leadingMargin" constant="3" id="itL-ea-mrv"/>
+                                        <constraint firstItem="0hd-YS-Wie" firstAttribute="top" secondItem="Cwn-JY-MWs" secondAttribute="bottom" constant="8" id="tz5-FP-D3y"/>
+                                        <constraint firstItem="oxx-51-ysv" firstAttribute="top" secondItem="48L-86-bce" secondAttribute="bottom" constant="13" id="urA-mh-BR8"/>
+                                        <constraint firstItem="Qaf-fP-uGm" firstAttribute="centerY" secondItem="0hd-YS-Wie" secondAttribute="centerY" id="yUl-lu-bHl"/>
+                                        <constraint firstItem="oxx-51-ysv" firstAttribute="centerY" secondItem="bfS-A5-XDy" secondAttribute="centerY" id="ynS-7f-ab1"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="actualPrice" destination="Qaf-fP-uGm" id="Jxj-Ji-MDU"/>
+                                    <outlet property="afterDiscountLabel" destination="hbe-bv-8gZ" id="wyN-5k-XUQ"/>
+                                    <outlet property="amountSlider" destination="Cwn-JY-MWs" id="vJM-3a-aHI"/>
+                                    <outlet property="beforeDiscountLabel" destination="Qaf-fP-uGm" id="GPY-sE-nSv"/>
+                                    <outlet property="discountStepper" destination="oxx-51-ysv" id="Ldf-VQ-bZC"/>
+                                    <outlet property="discountTypeSegmentedControl" destination="48L-86-bce" id="Zgr-b4-8od"/>
+                                    <outlet property="discountValueLabel" destination="JMK-2G-3Uz" id="J0U-4w-4z8"/>
+                                    <outlet property="maxLabel" destination="Fmo-AD-VSY" id="1hQ-YZ-A3F"/>
+                                    <outlet property="minLabel" destination="0hd-YS-Wie" id="b4q-OC-ns0"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
