@@ -187,13 +187,15 @@ class SaleItemsForSaleOperation : CKQueryOperation, AppointmentBuilder {
             }
             self.moc.performBlockAndWait() {
                 let currentItems = self.sale.saleItem!
-                self.sale.removeSaleItem(currentItems)
-                self.sale.addSaleItem(self.saleItemsFromCloud)
-                let removedSet = currentItems.subtract(self.saleItemsFromCloud)
-                for removed in removedSet {
-                    self.moc.deleteObject(removed)
+                for saleItem in currentItems {
+                    if !self.saleItemsFromCloud.contains(saleItem) {
+                        self.sale.removeSaleItemObject(saleItem)
+                        self.moc.deleteObject(saleItem)
+                    }
                 }
-                Coredata.sharedInstance.saveContext()
+                for saleItem in self.saleItemsFromCloud {
+                    self.sale.addSaleItemObject(saleItem)
+                }
             }
         }
     }

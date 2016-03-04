@@ -10,8 +10,10 @@
 import UIKit
 import CoreData
 
-class SaleDetailViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    
+
+
+class SaleDetailViewController: UITableViewController, NSFetchedResultsControllerDelegate, SaleItemUpdateReceiver {
+    var delegate:SaleItemUpdateReceiver?
     var saleID:NSManagedObjectID!
     private var _fetchedResultsController: NSFetchedResultsController? = nil
     lazy var managedObjectContext: NSManagedObjectContext = Coredata.sharedInstance.backgroundContext
@@ -37,7 +39,6 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        Coredata.sharedInstance.saveContext()
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,7 +52,10 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
             let saleItem = SaleItem.newObjectWithMoc(context)
             saleItem.sale = self.sale
         }
-    }    
+    }
+    func saleItemWasUpdated(saleItem: SaleItem) {
+        self.delegate?.saleItemWasUpdated(saleItem)
+    }
 }
 
 extension SaleDetailViewController {
@@ -79,7 +83,8 @@ extension SaleDetailViewController {
         guard let saleItem = self.fetchedResultsController.objectAtIndexPath(atIndexPath) as? SaleItem else {
             return
         }
-        cell.updatedWithSaleItem(saleItem)
+        cell.delegate = self
+        cell.updateWithSaleItem(saleItem)
     }
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -99,8 +104,6 @@ extension SaleDetailViewController {
     }
 
 }
-
-
 
 extension SaleDetailViewController {
     // MARK: - Fetched results controller

@@ -7,9 +7,12 @@
 //
 
 import UIKit
+protocol SaleItemUpdateReceiver: class {
+    func saleItemWasUpdated(saleItem:SaleItem)
+}
 
 class SaleDetailCellTableViewCell: UITableViewCell {
-
+    weak var delegate:SaleItemUpdateReceiver?
     private var saleItem:SaleItem?
     private var discountType:NSNumber?
     private var discountValue:NSNumber?
@@ -35,7 +38,8 @@ class SaleDetailCellTableViewCell: UITableViewCell {
     }
     
     @IBAction func amountBeforeChanged(sender: UISlider) {
-        self.beforeDiscount = NSNumber(float: sender.value)
+        let rounded = round(sender.value)
+        self.beforeDiscount = NSNumber(float: rounded)
         self.updateSaleItem()
     }
     
@@ -47,11 +51,13 @@ class SaleDetailCellTableViewCell: UITableViewCell {
             saleItem.discountType = self.discountType
             saleItem.discountValue = self.discountValue
             saleItem.updatePrice()
-            Coredata.sharedInstance.saveContext()
+            saleItem.sale!.updatePriceFromSaleItems()
+            self.updateWithSaleItem(saleItem)
+            self.delegate?.saleItemWasUpdated(saleItem)
         }
     }
     
-    func updatedWithSaleItem(saleItem:SaleItem) {
+    func updateWithSaleItem(saleItem:SaleItem) {
         self.saleItem = saleItem
         self.saleItem?.managedObjectContext?.performBlock() {
             self.beforeDiscount = self.saleItem?.nominalCharge
@@ -76,7 +82,11 @@ class SaleDetailCellTableViewCell: UITableViewCell {
                     segmentIndex = 0
                 }
                 self.discountTypeSegmentedControl.selectedSegmentIndex = segmentIndex
-                self.discountValueLabel.text = self.stringForCurrencyAmount(self.discountValue) ?? " "
+                if segmentIndex == 0 {
+                    self.discountValueLabel.text = self.discountValue!.stringValue + "%"
+                } else {
+                    self.discountValueLabel.text = self.stringForCurrencyAmount(self.discountValue) ?? " "
+                }
                 self.discountStepper.value = self.discountValue!.doubleValue
                 self.minLabel.text = self.stringForCurrencyAmount(min)
                 self.maxLabel.text = self.stringForCurrencyAmount(max)

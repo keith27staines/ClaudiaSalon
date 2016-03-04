@@ -9,7 +9,7 @@
 import UIKit
 import CloudKit
 
-class AppointmentDetailViewController: UITableViewController {
+class AppointmentDetailViewController: UITableViewController,SaleItemUpdateReceiver {
 
     @IBOutlet weak var customerFullName: UILabel!
     
@@ -32,6 +32,16 @@ class AppointmentDetailViewController: UITableViewController {
         didSet {
             // Update the view.
             self.configureView()
+        }
+    }
+    
+    func saleItemWasUpdated(saleItem:SaleItem) {
+        saleItem.managedObjectContext?.performBlock() {
+            saleItem.sale?.updatePriceFromSaleItems()
+            Coredata.sharedInstance.saveContext()
+            NSOperationQueue.mainQueue().addOperationWithBlock() {
+                self.configureView()
+            }
         }
     }
 
@@ -60,7 +70,6 @@ class AppointmentDetailViewController: UITableViewController {
         self.customerFullName.text = fullName
         self.phone.text = phone
         
-
         // Configure appointment info
         let appointmentFormatter = AppointmentFormatter(appointment: appointment)
         self.appointmentDate.text = appointmentFormatter.verboseAppointmentDayString
@@ -99,6 +108,7 @@ class AppointmentDetailViewController: UITableViewController {
             guard let vc = segue.destinationViewController as? SaleDetailViewController else {
                 fatalError("Unexpected destination controller")
             }
+            vc.delegate = self
             guard let appointment = detailItem as? Appointment else {
                 fatalError("detail item is not an appointment")
             }
@@ -109,8 +119,30 @@ class AppointmentDetailViewController: UITableViewController {
             let publicDatabase = container.publicCloudDatabase
             let saleItemOperation = SaleItemsForSaleOperation(sale: sale)
             publicDatabase.addOperation(saleItemOperation)
-            vc.saleID = appointment.sale?.objectID
+            vc.saleID = appointment.sale!.objectID
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
