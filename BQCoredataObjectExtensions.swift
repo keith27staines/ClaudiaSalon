@@ -26,6 +26,16 @@ extension BQExportable {
             self.bqMetadata = record.metadataFromRecord()
         }
     }
+    func cloudRecordFromMetadata() -> CKRecord? {
+        guard let metadata = self.bqMetadata else {
+            return nil
+        }
+        let coder = NSKeyedUnarchiver(forReadingWithData: metadata)
+        guard let ckRecord = CKRecord(coder: coder) else {
+            return nil
+        }
+        return ckRecord
+    }
 }
 
 // MARK:- Salon

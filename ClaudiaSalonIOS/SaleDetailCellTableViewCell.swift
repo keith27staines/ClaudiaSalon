@@ -18,6 +18,7 @@ class SaleDetailCellTableViewCell: UITableViewCell {
     private var discountValue:NSNumber?
     private var beforeDiscount:NSNumber?
     
+    @IBOutlet weak var serviceByEmployeeLabel: UILabel!
     @IBOutlet weak var maxLabel: UILabel!
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var beforeDiscountLabel: UILabel!
@@ -46,7 +47,7 @@ class SaleDetailCellTableViewCell: UITableViewCell {
     func updateSaleItem() {
         let saleItem = self.saleItem!
         let moc = saleItem.managedObjectContext!
-        moc.performBlockAndWait() {
+        moc.performBlock() {
             saleItem.nominalCharge = self.beforeDiscount
             saleItem.discountType = self.discountType
             saleItem.discountValue = self.discountValue
@@ -66,8 +67,17 @@ class SaleDetailCellTableViewCell: UITableViewCell {
             self.discountValue = self.saleItem?.discountValue
             let min = self.saleItem?.minimumCharge
             let max = self.saleItem?.maximumCharge
+            var serviceByEmployee:String = "Service by Employee"
+            if let service = self.saleItem?.service {
+                serviceByEmployee = service.name ?? ""
+                if let employee = self.saleItem?.performedBy {
+                    serviceByEmployee += " by " + employee.fullName()
+                }
+            }
+            
             NSOperationQueue.mainQueue().addOperationWithBlock() {
                 let hideSlider = max?.doubleValue == min?.doubleValue
+                self.serviceByEmployeeLabel.text = serviceByEmployee
                 self.minLabel.hidden = hideSlider
                 self.maxLabel.hidden = hideSlider
                 self.amountSlider.hidden = hideSlider
@@ -75,8 +85,8 @@ class SaleDetailCellTableViewCell: UITableViewCell {
                 self.amountSlider.minimumValue = min?.floatValue ?? 0
                 self.amountSlider.maximumValue = max?.floatValue ?? 0
                 self.amountSlider.value = self.beforeDiscount?.floatValue ?? 0
-                self.beforeDiscountLabel.text = "Before discount " + self.stringForCurrencyAmount(self.beforeDiscount)!
-                self.afterDiscountLabel.text = "After discount " + self.stringForCurrencyAmount(afterDiscount)!
+                self.beforeDiscountLabel.text = "Price before discount " + self.stringForCurrencyAmount(self.beforeDiscount)!
+                self.afterDiscountLabel.text = "Price after discount " + self.stringForCurrencyAmount(afterDiscount)!
                 var segmentIndex = self.discountType!.integerValue - 1
                 if segmentIndex < 0 {
                     segmentIndex = 0

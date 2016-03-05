@@ -72,14 +72,14 @@ class Coredata {
     
     func saveContext () {
         self.backgroundContext.performBlockAndWait {
-            if self.backgroundContext.hasChanges {
+            //if self.backgroundContext.hasChanges {
                 do {
                     try self.backgroundContext.save()
                 } catch {
                     let nserror = error as NSError
                     fatalError("Unresolved error while saving context \(nserror), \(nserror.userInfo)")
                 }
-            }
+            //}
         }
 
         self.managedObjectContext.performBlockAndWait() {

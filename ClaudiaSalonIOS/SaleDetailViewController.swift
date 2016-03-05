@@ -14,17 +14,24 @@ import CoreData
 
 class SaleDetailViewController: UITableViewController, NSFetchedResultsControllerDelegate, SaleItemUpdateReceiver {
     var delegate:SaleItemUpdateReceiver?
-    var saleID:NSManagedObjectID!
+    var saleID:NSManagedObjectID! {
+        didSet {
+            self._sale = nil
+        }
+    }
     private var _fetchedResultsController: NSFetchedResultsController? = nil
     lazy var managedObjectContext: NSManagedObjectContext = Coredata.sharedInstance.backgroundContext
-    lazy var sale:Sale = {
-        var sale:Sale?
-        let moc = self.managedObjectContext
-        moc.performBlockAndWait() {
-            sale = moc.objectWithID(self.saleID) as? Sale
+    var _sale:Sale?
+    var sale:Sale {
+        if self._sale == nil {
+            let moc = self.managedObjectContext
+            moc.performBlockAndWait() {
+                self._sale = moc.objectWithID(self.saleID) as? Sale
+            }
+            self.tableView.reloadData()
         }
-       return sale!
-    }()
+       return _sale!
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -100,7 +107,7 @@ extension SaleDetailViewController {
     }
     
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 70
+        return 224
     }
 
 }
