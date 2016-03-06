@@ -287,16 +287,23 @@ extension BQExportModifiedCoredataOperation {
     
     private func prepareSalonForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
         var recordsToSave = [CKRecord]()
-        var cloudRecord: CKRecord?
+        var cloudSalonRecord: CKRecord?
         let salon = moc.objectWithID(self.salonID) as! Salon
-        if salon.bqNeedsCoreDataExport?.boolValue == true {
-            dispatch_sync(self.synchronisationQueue) {
-                let icloudSalon = ICloudSalon(coredataSalon: salon)
-                let cloudID = salon.bqCloudID!
-                self.coredataObjectsNeedingExport[cloudID] = salon
-                cloudRecord = icloudSalon.makeCloudKitRecord()
-                recordsToSave.append(cloudRecord!)
-            }
+        moc.performBlockAndWait() {
+            let anonCustomer = salon.anonymousCustomer
+            if salon.bqNeedsCoreDataExport?.boolValue == true {
+                dispatch_sync(self.synchronisationQueue) {
+                    let icloudSalon = ICloudSalon(coredataSalon: salon)
+                    var cloudID = salon.bqCloudID!
+                    self.coredataObjectsNeedingExport[cloudID] = salon
+                    cloudSalonRecord = icloudSalon.makeCloudKitRecord()
+                    recordsToSave.append(cloudSalonRecord!)
+                    cloudID = anonCustomer!.bqCloudID!
+                    self.coredataObjectsNeedingExport[cloudID] = salon
+                    let cloudCustomer = ICloudCustomer(coredataCustomer: anonCustomer!, parentSalonID: salon.objectID)
+                    recordsToSave.append(cloudCustomer.makeCloudKitRecord())
+                }
+            }            
         }
         return recordsToSave
     }

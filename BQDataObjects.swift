@@ -44,7 +44,8 @@ public class ICloudRecord {
     }
     
     private init(recordType:String, managedObject: NSManagedObject, parentSalonID: NSManagedObjectID?) {
-        managedObject.managedObjectContext!.performBlockAndWait() {
+        let moc = managedObject.managedObjectContext!
+        moc.performBlockAndWait() {
             let bqObject = managedObject as! BQExportable
             self.recordType = recordType;
             let metadata = bqObject.bqMetadata
@@ -54,8 +55,15 @@ public class ICloudRecord {
                 guard let parentSalon = managedObject.managedObjectContext!.objectWithID(parentSalonID!) as? Salon else {
                     preconditionFailure("Parent salon is compulsory for any managed object that isn't itself of type Salon")
                 }
-                let cloudSalon = ICloudSalon(coredataSalon: parentSalon)
-                self.parentSalonReference = CKReference(recordID: cloudSalon.recordID!, action: CKReferenceAction.DeleteSelf)
+                guard let parentSalonID = parentSalonID else {
+                    let cloudSalon = ICloudSalon(coredataSalon: parentSalon)
+                    self.parentSalonReference = CKReference(recordID: cloudSalon.recordID!, action: CKReferenceAction.DeleteSelf)
+                    return
+                }
+                let salon = moc.objectWithID(parentSalonID) as! Salon
+                let cloudID = salon.bqCloudID!
+                let recordID = CKRecordID(recordName: cloudID)
+                self.parentSalonReference = CKReference(recordID: recordID, action: CKReferenceAction.DeleteSelf)
             }
         }
     }
@@ -112,6 +120,8 @@ public class ICloudSalon : ICloudRecord {
     var addressLine1: String?
     var addressLine2: String?
     var postcode: String?
+    var anonymousCustomerReference:CKReference?
+    
     init(coredataSalon: Salon) {
         
         super.init(recordType: ICloudRecordType.Salon.rawValue, managedObject: coredataSalon, parentSalonID: nil)
@@ -121,6 +131,12 @@ public class ICloudSalon : ICloudRecord {
             self.addressLine1 = coredataSalon.addressLine1
             self.addressLine2 = coredataSalon.addressLine2
             self.postcode = coredataSalon.postcode
+            if let anonymousCustomer = coredataSalon.anonymousCustomer {
+                let iCloudCustomer = ICloudCustomer(coredataCustomer: anonymousCustomer, parentSalonID: coredataSalon.objectID)
+                let anonymousRecordID = iCloudCustomer.makeCloudKitRecord().recordID
+                self.anonymousCustomerReference = CKReference(recordID: anonymousRecordID, action: CKReferenceAction.None)
+            }
+            
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
@@ -129,6 +145,7 @@ public class ICloudSalon : ICloudRecord {
         record["addressLine1"] = addressLine1
         record["addressLine2"] = addressLine2
         record["postcode"] = postcode
+        record["anonymousCustomerReference"] = anonymousCustomerReference
         return record
     }
 }
@@ -337,6 +354,7 @@ class ICloudSale:ICloudRecord {
 class ICloudSaleItem: ICloudRecord {
     var parentSaleReference: CKReference?
     var serviceReference: CKReference?
+    var employeeReference: CKReference?
     var discountVersion : Int?
     var discountType : Int?
     var discountValue : Int?
@@ -372,6 +390,13 @@ class ICloudSaleItem: ICloudRecord {
             } else {
                 self.serviceReference = nil
             }
+            // Assign this SalItem's associated employee
+            if let coredataEmployee = coredataSaleItem.performedBy {
+                let cloudService = ICloudEmployee(coredataEmployee: coredataEmployee, parentSalonID: parentSalonID)
+                self.employeeReference = CKReference(recordID: cloudService.recordID!, action: CKReferenceAction.None)
+            } else {
+                self.employeeReference = nil
+            }
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
@@ -385,6 +410,7 @@ class ICloudSaleItem: ICloudRecord {
         record["nominalCharge"] = nominalCharge
         record["maximumCharge"] = maximumCharge
         record["minimumCharge"] = minimumCharge
+        record["employeeReference"] = employeeReference
         return record
     }
 }

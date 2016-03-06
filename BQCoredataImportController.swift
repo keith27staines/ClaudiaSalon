@@ -14,7 +14,7 @@ class BQCoredataImportController {
     
     static let publicDatabase = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon").publicCloudDatabase
     
-    let salonCloudID = "2D642176-52D3-4EE3-A296-C64AF47AF9E6"
+    let salonCloudID = "44736040-37E7-46B0-AAAB-8EA90A6C99C4"
     let publicDatabase: CKDatabase
     let coredata = Coredata.sharedInstance
     let parentSalonRecordID:CKRecordID
@@ -192,33 +192,35 @@ class ServiceForSaleItem : CKQueryOperation, AppointmentBuilder {
 class EmployeeForSaleItem : CKQueryOperation, AppointmentBuilder {
     var error: NSError?
     private (set) var appointment:Appointment?
-    private (set) var serviceRecord:CKRecord?
+    private (set) var employeeRecord:CKRecord?
     
-    init(saleItem:SaleItem) {
+    init(saleItem:SaleItem,saleItemRecord:CKRecord) {
         self.appointment = saleItem.sale?.fromAppointment
-        let saleItemRecord = saleItem.cloudRecordFromMetadata()!
-        let serviceRef = CKReference(record: saleItemRecord, action: .None)
-        let predicate = NSPredicate(format: "serviceReference == %@", serviceRef)
         super.init()
-        query = CKQuery(recordType: "iCloudService", predicate: predicate)
-        self.recordFetchedBlock = { serviceRecord in
-            self.serviceRecord = serviceRecord
-            let moc = saleItem.managedObjectContext!
-            moc.performBlockAndWait() {
-                if let service = Service.fetchForCloudID(serviceRecord.recordID.recordName, moc: moc) {
-                    service.updateFromCloudRecordIfNeeded(serviceRecord)
-                    saleItem.service = service
-                } else {
-                    saleItem.service = Service.makeFromCloudRecord(serviceRecord, moc: moc)
-                }
-                Coredata.sharedInstance.saveContext()
-            }
-        }
         self.queryCompletionBlock  = { (queryCursor, error) in
             guard error == nil else {
                 self.error = error
                 assertionFailure("error while fetching service for saleItem \(error)")
                 return
+            }
+        }
+        let employeeRef = saleItemRecord["employeeReference"] as? CKReference
+        guard let employeeID = employeeRef?.recordID else {
+            return
+        }
+        let predicate = NSPredicate(format: "recordID == %@", employeeID)
+        query = CKQuery(recordType: "iCloudEmployee", predicate: predicate)
+        self.recordFetchedBlock = { employeeRecord in
+            self.employeeRecord = employeeRecord
+            let moc = saleItem.managedObjectContext!
+            moc.performBlockAndWait() {
+                if let employee = Employee.fetchForCloudID(employeeRecord.recordID.recordName, moc: moc) {
+                    employee.updateFromCloudRecordIfNeeded(employeeRecord)
+                    saleItem.performedBy = employee
+                } else {
+                    saleItem.performedBy = Employee.makeFromCloudRecord(employeeRecord, moc: moc)
+                }
+                Coredata.sharedInstance.saveContext()
             }
         }
     }
@@ -253,11 +255,13 @@ class SaleItemsForSaleOperation : CKQueryOperation, AppointmentBuilder {
                 if let saleItem = SaleItem.fetchForCloudID(record.recordID.recordName, moc: self.moc) {
                     saleItem.updateFromCloudRecordIfNeeded(record)
                     self.synchQueue.addOperationWithBlock() { self.saleItemsFromCloud.insert(saleItem) }
-                    BQCoredataImportController.publicDatabase.addOperation(ServiceForSaleItem(saleItem: saleItem,saleItemRecord: record))
+                    BQCoredataImportController.publicDatabase.addOperation(ServiceForSaleItem(saleItem: saleItem, saleItemRecord: record))
+                    BQCoredataImportController.publicDatabase.addOperation(EmployeeForSaleItem(saleItem: saleItem, saleItemRecord: record))
                 } else {
                     let saleItem = SaleItem.makeFromCloudRecord(record, moc: self.moc)
                     self.synchQueue.addOperationWithBlock() { self.saleItemsFromCloud.insert(saleItem) }
-                    BQCoredataImportController.publicDatabase.addOperation(ServiceForSaleItem(saleItem: saleItem,saleItemRecord: record))
+                    BQCoredataImportController.publicDatabase.addOperation(ServiceForSaleItem(saleItem: saleItem, saleItemRecord: record))
+                    BQCoredataImportController.publicDatabase.addOperation(EmployeeForSaleItem(saleItem: saleItem, saleItemRecord: record))
                 }
                 Coredata.sharedInstance.saveContext()
             }
@@ -508,7 +512,7 @@ extension Employee {
     class func makeFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> Employee {
         var employee: Employee!
         moc.performBlockAndWait() {
-            precondition(record.recordType == "iCloudEmployee", "Unable to create an Employee from this record \(record)")
+            precondition(record.recordType == "icloudEmployee", "Unable to create an Employee from this record \(record)")
             employee = Employee.newObjectWithMoc(moc)
             employee.updateFromCloudRecord(record)
         }
@@ -525,17 +529,17 @@ extension Employee {
         return employees.first as! Employee?
     }
     func updateFromCloudRecord(record:CKRecord) {
-        guard record.recordType == "iCloudEmployee" else {
+        guard record.recordType == "icloudEmployee" else {
             assertionFailure("Employee cannot be updated from recordType \(record.recordType)")
             return
         }
         self.managedObjectContext?.performBlockAndWait() {
             self.setBQDataFromRecord(record)
             self.bqNeedsCoreDataExport = NSNumber(bool: false)
-            self.firstName = record["name"] as? String
-            self.lastName = record["maxPrice"] as? String
-            self.phone = record["minPrice"] as? String
-            self.email = record["nominalPrice"] as? String
+            self.firstName = record["firstName"] as? String
+            self.lastName = record["lastName"] as? String
+            self.phone = record["phone"] as? String
+            self.email = record["email"] as? String
         }
     }
 }
