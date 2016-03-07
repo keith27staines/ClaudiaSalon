@@ -18,7 +18,9 @@ class SaleDetailCellTableViewCell: UITableViewCell {
     private var discountValue:NSNumber?
     private var beforeDiscount:NSNumber?
     
-    @IBOutlet weak var serviceByEmployeeLabel: UILabel!
+    @IBOutlet weak var employeeNameLabel: UILabel!
+    @IBOutlet weak var serviceNameLabel: UILabel!
+    
     @IBOutlet weak var maxLabel: UILabel!
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var beforeDiscountLabel: UILabel!
@@ -67,17 +69,17 @@ class SaleDetailCellTableViewCell: UITableViewCell {
             self.discountValue = self.saleItem?.discountValue
             let min = self.saleItem?.minimumCharge
             let max = self.saleItem?.maximumCharge
-            var serviceByEmployee:String = "Service by Employee"
-            if let service = self.saleItem?.service {
-                serviceByEmployee = service.name ?? ""
-                if let employee = self.saleItem?.performedBy {
-                    serviceByEmployee += " by " + employee.fullName()
-                }
-            }
+            let serviceName = self.saleItem?.service?.name ?? "Unknown service"
+            let employeeName = self.saleItem?.performedBy?.fullName()
             
             NSOperationQueue.mainQueue().addOperationWithBlock() {
                 let hideSlider = max?.doubleValue == min?.doubleValue
-                self.serviceByEmployeeLabel.text = serviceByEmployee
+                self.serviceNameLabel.text = serviceName
+                if employeeName == nil {
+                    self.employeeNameLabel.text = "No stylist assigned for this service"
+                } else {
+                    self.employeeNameLabel.text = "Service assigned to " + employeeName!
+                }
                 self.minLabel.hidden = hideSlider
                 self.maxLabel.hidden = hideSlider
                 self.amountSlider.hidden = hideSlider

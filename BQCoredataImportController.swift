@@ -26,7 +26,7 @@ class BQCoredataImportController {
         parentSalonRecordID = CKRecordID(recordName: salonCloudID)
         parentSalonReference = CKReference(recordID: parentSalonRecordID, action: .None)
         publicDatabase = BQCoredataImportController.publicDatabase
-        self.deleteAllCoredataAppointments()
+        //self.deleteAllCoredataAppointments()
     }
     func deleteAllCoredataAppointments() {
         let entities = ["Salon", "Customer", "Employee", "Service", "ServiceCategory", "Appointment", "Sale", "SaleItem"]
@@ -139,8 +139,8 @@ class SaleForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
                 } else {
                     appointment.sale = Sale.makeFromCloudRecord(record, moc: moc)
                 }
-                Coredata.sharedInstance.saveContext()
             }
+            Coredata.sharedInstance.saveContext()
         }
         self.queryCompletionBlock  = { (queryCursor, error) in
             guard error == nil else {
@@ -183,8 +183,8 @@ class ServiceForSaleItem : CKQueryOperation, AppointmentBuilder {
                 } else {
                     saleItem.service = Service.makeFromCloudRecord(serviceRecord, moc: moc)
                 }
-                Coredata.sharedInstance.saveContext()
             }
+            Coredata.sharedInstance.saveContext()
         }
     }
 }
@@ -220,8 +220,8 @@ class EmployeeForSaleItem : CKQueryOperation, AppointmentBuilder {
                 } else {
                     saleItem.performedBy = Employee.makeFromCloudRecord(employeeRecord, moc: moc)
                 }
-                Coredata.sharedInstance.saveContext()
             }
+            Coredata.sharedInstance.saveContext()
         }
     }
 }
@@ -251,19 +251,20 @@ class SaleItemsForSaleOperation : CKQueryOperation, AppointmentBuilder {
         let predicate = NSPredicate(format: "parentSaleReference == %@", saleRef)
         query = CKQuery(recordType: "iCloudSaleItem", predicate: predicate)
         self.recordFetchedBlock = { record in
+            var saleItem:SaleItem?
             self.moc.performBlockAndWait() {
-                if let saleItem = SaleItem.fetchForCloudID(record.recordID.recordName, moc: self.moc) {
-                    saleItem.updateFromCloudRecordIfNeeded(record)
-                    self.synchQueue.addOperationWithBlock() { self.saleItemsFromCloud.insert(saleItem) }
-                    BQCoredataImportController.publicDatabase.addOperation(ServiceForSaleItem(saleItem: saleItem, saleItemRecord: record))
-                    BQCoredataImportController.publicDatabase.addOperation(EmployeeForSaleItem(saleItem: saleItem, saleItemRecord: record))
+                if let existingSaleItem = SaleItem.fetchForCloudID(record.recordID.recordName, moc: self.moc) {
+                    saleItem = existingSaleItem
+                    existingSaleItem.updateFromCloudRecordIfNeeded(record)
                 } else {
-                    let saleItem = SaleItem.makeFromCloudRecord(record, moc: self.moc)
+                    let newSaleItem = SaleItem.makeFromCloudRecord(record, moc: self.moc)
+                    saleItem = newSaleItem
+                }
+                if let saleItem = saleItem {
                     self.synchQueue.addOperationWithBlock() { self.saleItemsFromCloud.insert(saleItem) }
                     BQCoredataImportController.publicDatabase.addOperation(ServiceForSaleItem(saleItem: saleItem, saleItemRecord: record))
                     BQCoredataImportController.publicDatabase.addOperation(EmployeeForSaleItem(saleItem: saleItem, saleItemRecord: record))
                 }
-                Coredata.sharedInstance.saveContext()
             }
         }
         self.queryCompletionBlock  = { (queryCursor, error) in
@@ -284,6 +285,7 @@ class SaleItemsForSaleOperation : CKQueryOperation, AppointmentBuilder {
                     self.sale.addSaleItemObject(saleItem)
                 }
             }
+            Coredata.sharedInstance.saveContext()
         }
     }
 }
@@ -413,11 +415,11 @@ extension SaleItem {
         let fetchRequest = NSFetchRequest(entityName: "SaleItem")
         let predicate = NSPredicate(format: "bqCloudID = %@", cloudID)
         fetchRequest.predicate = predicate
-        var customers = [AnyObject]()
+        var saleItems = [AnyObject]()
         moc.performBlockAndWait() {
-            customers = try! moc.executeFetchRequest(fetchRequest)
+            saleItems = try! moc.executeFetchRequest(fetchRequest)
         }
-        return customers.first as! SaleItem?
+        return saleItems.first as! SaleItem?
     }
     func updateFromCloudRecord(record:CKRecord) {
         guard record.recordType == "icloudSaleItem" else {

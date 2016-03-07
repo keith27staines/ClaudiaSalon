@@ -11,7 +11,6 @@
 #import "AccountingPaymentGroup.h"
 #import "Customer.h"
 #import "Employee.h"
-#import "OpeningHoursWeekTemplate.h"
 #import "PaymentCategory.h"
 #import "Role.h"
 #import "ServiceCategory.h"

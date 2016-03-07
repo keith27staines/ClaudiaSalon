@@ -42,7 +42,10 @@
     employee.leavingDate = [NSDate distantFuture];
     employee.uid = @"";
     employee.workRecordTemplate = [WorkRecord newObjectWithMoc:moc];
-    //[employee addRolesObject:[Salon salonWithMoc:moc].basicUserRole];
+    Role * basicUserRole = [Salon salonWithMoc:moc].basicUserRole;
+    if (basicUserRole) {
+        [employee addRolesObject:basicUserRole];
+    }
     return employee;
 }
 +(NSArray*)allActiveEmployeesWithMoc:(NSManagedObjectContext*)moc {

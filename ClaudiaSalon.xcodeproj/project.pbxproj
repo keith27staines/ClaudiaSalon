@@ -49,6 +49,26 @@
 		5353EE621C86E8BF00D09B98 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA571C79AF4D006B4002 /* CoreData.swift */; };
 		5353EE641C8766E400D09B98 /* SaleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5353EE631C8766E400D09B98 /* SaleDetailViewController.swift */; };
 		5353EE661C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5353EE651C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift */; };
+		5358DD401C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD391C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m */; };
+		5358DD411C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD391C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m */; };
+		5358DD421C8C9338009DD63E /* IntervalDuringDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD3B1C8C9338009DD63E /* IntervalDuringDay.m */; };
+		5358DD431C8C9338009DD63E /* IntervalDuringDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD3B1C8C9338009DD63E /* IntervalDuringDay.m */; };
+		5358DD441C8C9338009DD63E /* Holiday+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD3D1C8C9338009DD63E /* Holiday+CoreDataProperties.m */; };
+		5358DD451C8C9338009DD63E /* Holiday+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD3D1C8C9338009DD63E /* Holiday+CoreDataProperties.m */; };
+		5358DD461C8C9338009DD63E /* Holiday.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD3F1C8C9338009DD63E /* Holiday.m */; };
+		5358DD471C8C9338009DD63E /* Holiday.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD3F1C8C9338009DD63E /* Holiday.m */; };
+		5358DD501C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD491C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.m */; };
+		5358DD511C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD491C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.m */; };
+		5358DD521C8C9380009DD63E /* OpeningHoursWeekTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD4B1C8C9380009DD63E /* OpeningHoursWeekTemplate.m */; };
+		5358DD531C8C9380009DD63E /* OpeningHoursWeekTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD4B1C8C9380009DD63E /* OpeningHoursWeekTemplate.m */; };
+		5358DD541C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD4D1C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.m */; };
+		5358DD551C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD4D1C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.m */; };
+		5358DD561C8C9380009DD63E /* OpeningHoursDayTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD4F1C8C9380009DD63E /* OpeningHoursDayTemplate.m */; };
+		5358DD571C8C9380009DD63E /* OpeningHoursDayTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD4F1C8C9380009DD63E /* OpeningHoursDayTemplate.m */; };
+		5358DD5C1C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD591C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m */; };
+		5358DD5D1C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD591C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m */; };
+		5358DD5E1C8C93DF009DD63E /* CalendarDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD5B1C8C93DF009DD63E /* CalendarDay.m */; };
+		5358DD5F1C8C93DF009DD63E /* CalendarDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD5B1C8C93DF009DD63E /* CalendarDay.m */; };
 		535F0DEC1AB232CB0035CFD8 /* AMCAccountStatementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */; };
 		535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */; };
 		535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */; };
@@ -78,8 +98,6 @@
 		536B9E661C56077E00F170EC /* SaleItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DEA1C56077D00F170EC /* SaleItem.m */; };
 		536B9E671C56077E00F170EC /* StockedBrand+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DEC1C56077D00F170EC /* StockedBrand+CoreDataProperties.m */; };
 		536B9E681C56077E00F170EC /* StockedBrand.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DEE1C56077D00F170EC /* StockedBrand.m */; };
-		536B9E691C56077E00F170EC /* IntervalDuringDay+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DF01C56077D00F170EC /* IntervalDuringDay+CoreDataProperties.m */; };
-		536B9E6A1C56077E00F170EC /* IntervalDuringDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DF21C56077D00F170EC /* IntervalDuringDay.m */; };
 		536B9E6B1C56077E00F170EC /* Employee+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DF41C56077D00F170EC /* Employee+CoreDataProperties.m */; };
 		536B9E6C1C56077E00F170EC /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DF61C56077D00F170EC /* Employee.m */; };
 		536B9E6D1C56077E00F170EC /* Role+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DF81C56077D00F170EC /* Role+CoreDataProperties.m */; };
@@ -94,8 +112,6 @@
 		536B9E761C56077E00F170EC /* ServiceCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E0A1C56077D00F170EC /* ServiceCategory.m */; };
 		536B9E771C56077E00F170EC /* AccountingPaymentGroup+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E0C1C56077D00F170EC /* AccountingPaymentGroup+CoreDataProperties.m */; };
 		536B9E781C56077E00F170EC /* AccountingPaymentGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E0E1C56077D00F170EC /* AccountingPaymentGroup.m */; };
-		536B9E791C56077E00F170EC /* OpeningHoursWeekTemplate+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E101C56077D00F170EC /* OpeningHoursWeekTemplate+CoreDataProperties.m */; };
-		536B9E7A1C56077E00F170EC /* OpeningHoursWeekTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E121C56077D00F170EC /* OpeningHoursWeekTemplate.m */; };
 		536B9E7B1C56077E00F170EC /* StockedProduct+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E141C56077D00F170EC /* StockedProduct+CoreDataProperties.m */; };
 		536B9E7C1C56077E00F170EC /* StockedProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E161C56077D00F170EC /* StockedProduct.m */; };
 		536B9E7D1C56077E00F170EC /* WorkRecord+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E181C56077D00F170EC /* WorkRecord+CoreDataProperties.m */; };
@@ -122,19 +138,13 @@
 		536B9E921C56077E00F170EC /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E421C56077E00F170EC /* Service.m */; };
 		536B9E931C56077E00F170EC /* ShoppingListItem+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E441C56077E00F170EC /* ShoppingListItem+CoreDataProperties.m */; };
 		536B9E941C56077E00F170EC /* ShoppingListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E461C56077E00F170EC /* ShoppingListItem.m */; };
-		536B9E951C56077E00F170EC /* OpeningHoursDayTemplate+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E481C56077E00F170EC /* OpeningHoursDayTemplate+CoreDataProperties.m */; };
-		536B9E961C56077E00F170EC /* OpeningHoursDayTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E4A1C56077E00F170EC /* OpeningHoursDayTemplate.m */; };
 		536B9E971C56077E00F170EC /* Salon+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E4C1C56077E00F170EC /* Salon+CoreDataProperties.m */; };
-		536B9E981C56077E00F170EC /* CalendarDay+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E4E1C56077E00F170EC /* CalendarDay+CoreDataProperties.m */; };
-		536B9E991C56077E00F170EC /* CalendarDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E501C56077E00F170EC /* CalendarDay.m */; };
 		536B9E9A1C56077E00F170EC /* Payment+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E521C56077E00F170EC /* Payment+CoreDataProperties.m */; };
 		536B9E9B1C56077E00F170EC /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E541C56077E00F170EC /* Payment.m */; };
 		536B9E9C1C56077E00F170EC /* RecurringItem+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E561C56077E00F170EC /* RecurringItem+CoreDataProperties.m */; };
 		536B9E9D1C56077E00F170EC /* RecurringItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E581C56077E00F170EC /* RecurringItem.m */; };
 		536B9E9E1C56077E00F170EC /* ShoppingList+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E5A1C56077E00F170EC /* ShoppingList+CoreDataProperties.m */; };
 		536B9E9F1C56077E00F170EC /* ShoppingList.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E5C1C56077E00F170EC /* ShoppingList.m */; };
-		536B9EA01C56077E00F170EC /* Holiday+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E5E1C56077E00F170EC /* Holiday+CoreDataProperties.m */; };
-		536B9EA11C56077E00F170EC /* Holiday.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E601C56077E00F170EC /* Holiday.m */; };
 		536E57D01AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57CE1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m */; };
 		536E57D11AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 536E57CF1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib */; };
 		536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57D31AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m */; };
@@ -351,7 +361,6 @@
 		53FDCA6A1C7A0D3D006B4002 /* Employee.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DF61C56077D00F170EC /* Employee.m */; };
 		53FDCA6C1C7A1138006B4002 /* ServiceCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E0A1C56077D00F170EC /* ServiceCategory.m */; };
 		53FDCA6E1C7A116E006B4002 /* Salon.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DCE1C52842300F170EC /* Salon.m */; };
-		53FDCA721C7A11FD006B4002 /* Holiday.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E601C56077E00F170EC /* Holiday.m */; };
 		53FDCA731C7A12FB006B4002 /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E421C56077E00F170EC /* Service.m */; };
 		53FDCA741C7A13BB006B4002 /* BusinessFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E3E1C56077E00F170EC /* BusinessFunction.m */; };
 		53FDCA781C7A6E3F006B4002 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E321C56077D00F170EC /* Note.m */; };
@@ -437,6 +446,26 @@
 		5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCChangeUserViewController.xib; sourceTree = "<group>"; };
 		5353EE631C8766E400D09B98 /* SaleDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaleDetailViewController.swift; sourceTree = "<group>"; };
 		5353EE651C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaleDetailCellTableViewCell.swift; sourceTree = "<group>"; };
+		5358DD381C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IntervalDuringDay+CoreDataProperties.h"; sourceTree = "<group>"; };
+		5358DD391C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IntervalDuringDay+CoreDataProperties.m"; sourceTree = "<group>"; };
+		5358DD3A1C8C9338009DD63E /* IntervalDuringDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntervalDuringDay.h; sourceTree = "<group>"; };
+		5358DD3B1C8C9338009DD63E /* IntervalDuringDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntervalDuringDay.m; sourceTree = "<group>"; };
+		5358DD3C1C8C9338009DD63E /* Holiday+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Holiday+CoreDataProperties.h"; sourceTree = "<group>"; };
+		5358DD3D1C8C9338009DD63E /* Holiday+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Holiday+CoreDataProperties.m"; sourceTree = "<group>"; };
+		5358DD3E1C8C9338009DD63E /* Holiday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Holiday.h; sourceTree = "<group>"; };
+		5358DD3F1C8C9338009DD63E /* Holiday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Holiday.m; sourceTree = "<group>"; };
+		5358DD481C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpeningHoursWeekTemplate+CoreDataProperties.h"; sourceTree = "<group>"; };
+		5358DD491C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpeningHoursWeekTemplate+CoreDataProperties.m"; sourceTree = "<group>"; };
+		5358DD4A1C8C9380009DD63E /* OpeningHoursWeekTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningHoursWeekTemplate.h; sourceTree = "<group>"; };
+		5358DD4B1C8C9380009DD63E /* OpeningHoursWeekTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningHoursWeekTemplate.m; sourceTree = "<group>"; };
+		5358DD4C1C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpeningHoursDayTemplate+CoreDataProperties.h"; sourceTree = "<group>"; };
+		5358DD4D1C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpeningHoursDayTemplate+CoreDataProperties.m"; sourceTree = "<group>"; };
+		5358DD4E1C8C9380009DD63E /* OpeningHoursDayTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningHoursDayTemplate.h; sourceTree = "<group>"; };
+		5358DD4F1C8C9380009DD63E /* OpeningHoursDayTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningHoursDayTemplate.m; sourceTree = "<group>"; };
+		5358DD581C8C93DF009DD63E /* CalendarDay+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CalendarDay+CoreDataProperties.h"; sourceTree = "<group>"; };
+		5358DD591C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CalendarDay+CoreDataProperties.m"; sourceTree = "<group>"; };
+		5358DD5A1C8C93DF009DD63E /* CalendarDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarDay.h; sourceTree = "<group>"; };
+		5358DD5B1C8C93DF009DD63E /* CalendarDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarDay.m; sourceTree = "<group>"; };
 		535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAccountStatementViewController.xib; sourceTree = "<group>"; };
 		535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementItem.m; sourceTree = "<group>"; };
 		535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementViewController.m; sourceTree = "<group>"; };
@@ -480,10 +509,6 @@
 		536B9DEC1C56077D00F170EC /* StockedBrand+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "StockedBrand+CoreDataProperties.m"; sourceTree = "<group>"; };
 		536B9DED1C56077D00F170EC /* StockedBrand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedBrand.h; sourceTree = "<group>"; };
 		536B9DEE1C56077D00F170EC /* StockedBrand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockedBrand.m; sourceTree = "<group>"; };
-		536B9DEF1C56077D00F170EC /* IntervalDuringDay+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IntervalDuringDay+CoreDataProperties.h"; sourceTree = "<group>"; };
-		536B9DF01C56077D00F170EC /* IntervalDuringDay+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IntervalDuringDay+CoreDataProperties.m"; sourceTree = "<group>"; };
-		536B9DF11C56077D00F170EC /* IntervalDuringDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntervalDuringDay.h; sourceTree = "<group>"; };
-		536B9DF21C56077D00F170EC /* IntervalDuringDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntervalDuringDay.m; sourceTree = "<group>"; };
 		536B9DF31C56077D00F170EC /* Employee+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Employee+CoreDataProperties.h"; sourceTree = "<group>"; };
 		536B9DF41C56077D00F170EC /* Employee+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Employee+CoreDataProperties.m"; sourceTree = "<group>"; };
 		536B9DF51C56077D00F170EC /* Employee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Employee.h; sourceTree = "<group>"; };
@@ -512,10 +537,6 @@
 		536B9E0C1C56077D00F170EC /* AccountingPaymentGroup+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AccountingPaymentGroup+CoreDataProperties.m"; sourceTree = "<group>"; };
 		536B9E0D1C56077D00F170EC /* AccountingPaymentGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountingPaymentGroup.h; sourceTree = "<group>"; };
 		536B9E0E1C56077D00F170EC /* AccountingPaymentGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountingPaymentGroup.m; sourceTree = "<group>"; };
-		536B9E0F1C56077D00F170EC /* OpeningHoursWeekTemplate+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpeningHoursWeekTemplate+CoreDataProperties.h"; sourceTree = "<group>"; };
-		536B9E101C56077D00F170EC /* OpeningHoursWeekTemplate+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpeningHoursWeekTemplate+CoreDataProperties.m"; sourceTree = "<group>"; };
-		536B9E111C56077D00F170EC /* OpeningHoursWeekTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningHoursWeekTemplate.h; sourceTree = "<group>"; };
-		536B9E121C56077D00F170EC /* OpeningHoursWeekTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningHoursWeekTemplate.m; sourceTree = "<group>"; };
 		536B9E131C56077D00F170EC /* StockedProduct+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StockedProduct+CoreDataProperties.h"; sourceTree = "<group>"; };
 		536B9E141C56077D00F170EC /* StockedProduct+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "StockedProduct+CoreDataProperties.m"; sourceTree = "<group>"; };
 		536B9E151C56077D00F170EC /* StockedProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockedProduct.h; sourceTree = "<group>"; };
@@ -568,16 +589,8 @@
 		536B9E441C56077E00F170EC /* ShoppingListItem+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ShoppingListItem+CoreDataProperties.m"; sourceTree = "<group>"; };
 		536B9E451C56077E00F170EC /* ShoppingListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingListItem.h; sourceTree = "<group>"; };
 		536B9E461C56077E00F170EC /* ShoppingListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingListItem.m; sourceTree = "<group>"; };
-		536B9E471C56077E00F170EC /* OpeningHoursDayTemplate+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpeningHoursDayTemplate+CoreDataProperties.h"; sourceTree = "<group>"; };
-		536B9E481C56077E00F170EC /* OpeningHoursDayTemplate+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OpeningHoursDayTemplate+CoreDataProperties.m"; sourceTree = "<group>"; };
-		536B9E491C56077E00F170EC /* OpeningHoursDayTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeningHoursDayTemplate.h; sourceTree = "<group>"; };
-		536B9E4A1C56077E00F170EC /* OpeningHoursDayTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeningHoursDayTemplate.m; sourceTree = "<group>"; };
 		536B9E4B1C56077E00F170EC /* Salon+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Salon+CoreDataProperties.h"; sourceTree = "<group>"; };
 		536B9E4C1C56077E00F170EC /* Salon+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Salon+CoreDataProperties.m"; sourceTree = "<group>"; };
-		536B9E4D1C56077E00F170EC /* CalendarDay+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CalendarDay+CoreDataProperties.h"; sourceTree = "<group>"; };
-		536B9E4E1C56077E00F170EC /* CalendarDay+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CalendarDay+CoreDataProperties.m"; sourceTree = "<group>"; };
-		536B9E4F1C56077E00F170EC /* CalendarDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarDay.h; sourceTree = "<group>"; };
-		536B9E501C56077E00F170EC /* CalendarDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarDay.m; sourceTree = "<group>"; };
 		536B9E511C56077E00F170EC /* Payment+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Payment+CoreDataProperties.h"; sourceTree = "<group>"; };
 		536B9E521C56077E00F170EC /* Payment+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Payment+CoreDataProperties.m"; sourceTree = "<group>"; };
 		536B9E531C56077E00F170EC /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
@@ -590,10 +603,6 @@
 		536B9E5A1C56077E00F170EC /* ShoppingList+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ShoppingList+CoreDataProperties.m"; sourceTree = "<group>"; };
 		536B9E5B1C56077E00F170EC /* ShoppingList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShoppingList.h; sourceTree = "<group>"; };
 		536B9E5C1C56077E00F170EC /* ShoppingList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShoppingList.m; sourceTree = "<group>"; };
-		536B9E5D1C56077E00F170EC /* Holiday+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Holiday+CoreDataProperties.h"; sourceTree = "<group>"; };
-		536B9E5E1C56077E00F170EC /* Holiday+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Holiday+CoreDataProperties.m"; sourceTree = "<group>"; };
-		536B9E5F1C56077E00F170EC /* Holiday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Holiday.h; sourceTree = "<group>"; };
-		536B9E601C56077E00F170EC /* Holiday.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Holiday.m; sourceTree = "<group>"; };
 		536E57CD1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCMatchingPaymentSelectorViewController.h; sourceTree = "<group>"; };
 		536E57CE1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCMatchingPaymentSelectorViewController.m; sourceTree = "<group>"; };
 		536E57CF1AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCMatchingPaymentSelectorViewController.xib; sourceTree = "<group>"; };
@@ -2305,10 +2314,6 @@
 				536B9DEC1C56077D00F170EC /* StockedBrand+CoreDataProperties.m */,
 				536B9DED1C56077D00F170EC /* StockedBrand.h */,
 				536B9DEE1C56077D00F170EC /* StockedBrand.m */,
-				536B9DEF1C56077D00F170EC /* IntervalDuringDay+CoreDataProperties.h */,
-				536B9DF01C56077D00F170EC /* IntervalDuringDay+CoreDataProperties.m */,
-				536B9DF11C56077D00F170EC /* IntervalDuringDay.h */,
-				536B9DF21C56077D00F170EC /* IntervalDuringDay.m */,
 				53D69DD21A9B243C0004CE10 /* StockedCategory+Methods.h */,
 				53D69CC21A9B240C0004CE10 /* StockedCategory+Methods.m */,
 				536B9DFB1C56077D00F170EC /* StockedCategory+CoreDataProperties.h */,
@@ -2327,10 +2332,6 @@
 				536B9E0C1C56077D00F170EC /* AccountingPaymentGroup+CoreDataProperties.m */,
 				536B9E0D1C56077D00F170EC /* AccountingPaymentGroup.h */,
 				536B9E0E1C56077D00F170EC /* AccountingPaymentGroup.m */,
-				536B9E0F1C56077D00F170EC /* OpeningHoursWeekTemplate+CoreDataProperties.h */,
-				536B9E101C56077D00F170EC /* OpeningHoursWeekTemplate+CoreDataProperties.m */,
-				536B9E111C56077D00F170EC /* OpeningHoursWeekTemplate.h */,
-				536B9E121C56077D00F170EC /* OpeningHoursWeekTemplate.m */,
 				53D69DD01A9B243C0004CE10 /* StockedProduct+Methods.h */,
 				53D69CC01A9B240C0004CE10 /* StockedProduct+Methods.m */,
 				536B9E131C56077D00F170EC /* StockedProduct+CoreDataProperties.h */,
@@ -2351,14 +2352,6 @@
 				536B9E441C56077E00F170EC /* ShoppingListItem+CoreDataProperties.m */,
 				536B9E451C56077E00F170EC /* ShoppingListItem.h */,
 				536B9E461C56077E00F170EC /* ShoppingListItem.m */,
-				536B9E471C56077E00F170EC /* OpeningHoursDayTemplate+CoreDataProperties.h */,
-				536B9E481C56077E00F170EC /* OpeningHoursDayTemplate+CoreDataProperties.m */,
-				536B9E491C56077E00F170EC /* OpeningHoursDayTemplate.h */,
-				536B9E4A1C56077E00F170EC /* OpeningHoursDayTemplate.m */,
-				536B9E4D1C56077E00F170EC /* CalendarDay+CoreDataProperties.h */,
-				536B9E4E1C56077E00F170EC /* CalendarDay+CoreDataProperties.m */,
-				536B9E4F1C56077E00F170EC /* CalendarDay.h */,
-				536B9E501C56077E00F170EC /* CalendarDay.m */,
 				530171831ACBD21F0047116D /* RecurringItem+Methods.h */,
 				530171841ACBD21F0047116D /* RecurringItem+Methods.m */,
 				536B9E551C56077E00F170EC /* RecurringItem+CoreDataProperties.h */,
@@ -2412,6 +2405,26 @@
 		53FDCA611C79CF8E006B4002 /* Coredata  */ = {
 			isa = PBXGroup;
 			children = (
+				5358DD581C8C93DF009DD63E /* CalendarDay+CoreDataProperties.h */,
+				5358DD591C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m */,
+				5358DD5A1C8C93DF009DD63E /* CalendarDay.h */,
+				5358DD5B1C8C93DF009DD63E /* CalendarDay.m */,
+				5358DD481C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.h */,
+				5358DD491C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.m */,
+				5358DD4A1C8C9380009DD63E /* OpeningHoursWeekTemplate.h */,
+				5358DD4B1C8C9380009DD63E /* OpeningHoursWeekTemplate.m */,
+				5358DD4C1C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.h */,
+				5358DD4D1C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.m */,
+				5358DD4E1C8C9380009DD63E /* OpeningHoursDayTemplate.h */,
+				5358DD4F1C8C9380009DD63E /* OpeningHoursDayTemplate.m */,
+				5358DD381C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.h */,
+				5358DD391C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m */,
+				5358DD3A1C8C9338009DD63E /* IntervalDuringDay.h */,
+				5358DD3B1C8C9338009DD63E /* IntervalDuringDay.m */,
+				5358DD3C1C8C9338009DD63E /* Holiday+CoreDataProperties.h */,
+				5358DD3D1C8C9338009DD63E /* Holiday+CoreDataProperties.m */,
+				5358DD3E1C8C9338009DD63E /* Holiday.h */,
+				5358DD3F1C8C9338009DD63E /* Holiday.m */,
 				536B9E4B1C56077E00F170EC /* Salon+CoreDataProperties.h */,
 				536B9E4C1C56077E00F170EC /* Salon+CoreDataProperties.m */,
 				536B9DCD1C52842300F170EC /* Salon.h */,
@@ -2481,10 +2494,6 @@
 				536B9E3C1C56077E00F170EC /* BusinessFunction+CoreDataProperties.m */,
 				536B9E3D1C56077E00F170EC /* BusinessFunction.h */,
 				536B9E3E1C56077E00F170EC /* BusinessFunction.m */,
-				536B9E5D1C56077E00F170EC /* Holiday+CoreDataProperties.h */,
-				536B9E5E1C56077E00F170EC /* Holiday+CoreDataProperties.m */,
-				536B9E5F1C56077E00F170EC /* Holiday.h */,
-				536B9E601C56077E00F170EC /* Holiday.m */,
 			);
 			name = "Coredata ";
 			sourceTree = "<group>";
@@ -2767,10 +2776,9 @@
 				536B9E671C56077E00F170EC /* StockedBrand+CoreDataProperties.m in Sources */,
 				536B9E681C56077E00F170EC /* StockedBrand.m in Sources */,
 				536B9E821C56077E00F170EC /* Appointment.m in Sources */,
+				5358DD401C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m in Sources */,
 				53D69D0E1A9B240C0004CE10 /* AMCShoppingListPrintViewController.m in Sources */,
-				536B9E691C56077E00F170EC /* IntervalDuringDay+CoreDataProperties.m in Sources */,
 				53877F591C6B283E009314A6 /* AMCServiceCategoryPopupController.swift in Sources */,
-				536B9EA11C56077E00F170EC /* Holiday.m in Sources */,
 				53D69D4F1A9B240C0004CE10 /* EditSaleViewController.m in Sources */,
 				53D69D171A9B240C0004CE10 /* AMCEntityViewController.m in Sources */,
 				530171211ACA80170047116D /* AMCAccountManagementViewController.m in Sources */,
@@ -2795,6 +2803,7 @@
 				53D69CE91A9B240C0004CE10 /* AMCHoursWorkedOnDayViewController.m in Sources */,
 				530171851ACBD21F0047116D /* RecurringItem+Methods.m in Sources */,
 				536B9E8C1C56077E00F170EC /* Sale.m in Sources */,
+				5358DD561C8C9380009DD63E /* OpeningHoursDayTemplate.m in Sources */,
 				53D69D641A9B240C0004CE10 /* AMCStaffBusyView.m in Sources */,
 				53D69E061A9B755C0004CE10 /* NSPersistentDocument+SalonMethods.m in Sources */,
 				53D69CF91A9B240C0004CE10 /* AMCWizardWindowController.m in Sources */,
@@ -2807,6 +2816,7 @@
 				53D69DFF1A9B41B60004CE10 /* AMCSalonDocument.m in Sources */,
 				53D69D1B1A9B240C0004CE10 /* AMCCancelAppointmentViewController.m in Sources */,
 				5393EA311AD26100009B336C /* AMCBankStatementReconciliationViewController.m in Sources */,
+				5358DD501C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.m in Sources */,
 				5381C5C51B2C186A00E99946 /* AMCServiceCategoriesManagementViewController.m in Sources */,
 				536B9E801C56077E00F170EC /* Customer.m in Sources */,
 				53D69D541A9B240C0004CE10 /* AMCRefundView.m in Sources */,
@@ -2821,6 +2831,7 @@
 				53D69D4E1A9B240C0004CE10 /* EditStockProductViewController.m in Sources */,
 				53D69D0D1A9B240C0004CE10 /* AMCStockControlViewController.m in Sources */,
 				53D69CF41A9B240C0004CE10 /* AMCStorePopulator.m in Sources */,
+				5358DD5C1C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m in Sources */,
 				53D69D5B1A9B240C0004CE10 /* AMCPaymentFormatter.m in Sources */,
 				536B9E9A1C56077E00F170EC /* Payment+CoreDataProperties.m in Sources */,
 				53D69D451A9B240C0004CE10 /* StockedBrand+Methods.m in Sources */,
@@ -2832,6 +2843,7 @@
 				53D69CEC1A9B240C0004CE10 /* AMCProductSelectorWindowController.m in Sources */,
 				536B9E711C56077E00F170EC /* Salary+CoreDataProperties.m in Sources */,
 				536B9E651C56077E00F170EC /* SaleItem+CoreDataProperties.m in Sources */,
+				5358DD441C8C9338009DD63E /* Holiday+CoreDataProperties.m in Sources */,
 				53D69D581A9B240C0004CE10 /* AMCPaymentCompleteWindowController.m in Sources */,
 				53D69D551A9B240C0004CE10 /* SelectItemsStepViewController.m in Sources */,
 				533054521AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld in Sources */,
@@ -2839,10 +2851,10 @@
 				536B9E9D1C56077E00F170EC /* RecurringItem.m in Sources */,
 				536B9E861C56077E00F170EC /* Permission.m in Sources */,
 				53D69D051A9B240C0004CE10 /* AMCBookingRowViewController.m in Sources */,
+				5358DD461C8C9338009DD63E /* Holiday.m in Sources */,
 				536B9E6B1C56077E00F170EC /* Employee+CoreDataProperties.m in Sources */,
 				53D69CF81A9B240C0004CE10 /* AMCNoteView.m in Sources */,
 				536B9DB21C4FDFAF00F170EC /* AMCBookingQueueManagerWindowController.swift in Sources */,
-				536B9E6A1C56077E00F170EC /* IntervalDuringDay.m in Sources */,
 				53D69CED1A9B240C0004CE10 /* AMCCashEntryField.m in Sources */,
 				53D69D1A1A9B240C0004CE10 /* AMCAppointmentsView.m in Sources */,
 				536B9E941C56077E00F170EC /* ShoppingListItem.m in Sources */,
@@ -2850,6 +2862,7 @@
 				536B9E901C56077E00F170EC /* BusinessFunction.m in Sources */,
 				536B9E8E1C56077E00F170EC /* PaymentCategory.m in Sources */,
 				53D69D531A9B240C0004CE10 /* AMCRefundViewController.m in Sources */,
+				5358DD421C8C9338009DD63E /* IntervalDuringDay.m in Sources */,
 				5346C59A1ABFF6AC005D4540 /* AMCCashBookNode.m in Sources */,
 				53D69D181A9B240C0004CE10 /* AMCPaymentCategoryListViewController.m in Sources */,
 				5381C5D51B2DD7B300E99946 /* EditPaymentCategoryViewController.m in Sources */,
@@ -2858,8 +2871,6 @@
 				536B9E741C56077E00F170EC /* StockedItem.m in Sources */,
 				53D69D431A9B240C0004CE10 /* AccountReconciliation+Methods.m in Sources */,
 				536B9E911C56077E00F170EC /* Service+CoreDataProperties.m in Sources */,
-				536B9E791C56077E00F170EC /* OpeningHoursWeekTemplate+CoreDataProperties.m in Sources */,
-				536B9E951C56077E00F170EC /* OpeningHoursDayTemplate+CoreDataProperties.m in Sources */,
 				53D325661A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m in Sources */,
 				53D69CF31A9B240C0004CE10 /* AMCDayAndMonthPopupViewController.m in Sources */,
 				536B9DAA1C4FDD0100F170EC /* AMCBookingQueueManagerViewController.swift in Sources */,
@@ -2910,7 +2921,6 @@
 				53D69CF01A9B240C0004CE10 /* AMCSaleItemPriceSetterViewController.m in Sources */,
 				53D69CEB1A9B240C0004CE10 /* AMCAccountReconciliationViewController.m in Sources */,
 				536B9E6D1C56077E00F170EC /* Role+CoreDataProperties.m in Sources */,
-				536B9E981C56077E00F170EC /* CalendarDay+CoreDataProperties.m in Sources */,
 				536B9E701C56077E00F170EC /* StockedCategory.m in Sources */,
 				53D69D1D1A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m in Sources */,
 				53D69D041A9B240C0004CE10 /* AMCBookingRowView.m in Sources */,
@@ -2922,18 +2932,17 @@
 				53D69CF61A9B240C0004CE10 /* AMCAssociatedNotesViewController.m in Sources */,
 				539D2DEB1B1842D400761711 /* AMCServicesViewController.m in Sources */,
 				530171261ACA80310047116D /* AMCRecurringEventManagementViewController.m in Sources */,
+				5358DD5E1C8C93DF009DD63E /* CalendarDay.m in Sources */,
 				53D69D5A1A9B240C0004CE10 /* AMCDiscountCalculator.m in Sources */,
 				53D69D081A9B240C0004CE10 /* AMCSaleItemViewController.m in Sources */,
 				53FFAF911AB220470078E9CC /* AMCEmployeeForServiceSelector.m in Sources */,
-				536B9E961C56077E00F170EC /* OpeningHoursDayTemplate.m in Sources */,
 				532377DD1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m in Sources */,
+				5358DD521C8C9380009DD63E /* OpeningHoursWeekTemplate.m in Sources */,
 				536B9E621C56077E00F170EC /* Product.m in Sources */,
 				534F0AEB1C5A2D0100520214 /* BQFirstExtractController.swift in Sources */,
 				53D69CF51A9B240C0004CE10 /* NSDate+AMCDate.m in Sources */,
 				536B9E761C56077E00F170EC /* ServiceCategory.m in Sources */,
 				53D69D511A9B240C0004CE10 /* WizardStepView.m in Sources */,
-				536B9E7A1C56077E00F170EC /* OpeningHoursWeekTemplate.m in Sources */,
-				536B9EA01C56077E00F170EC /* Holiday+CoreDataProperties.m in Sources */,
 				53D69D4C1A9B240C0004CE10 /* ProductSelectorViewController.m in Sources */,
 				5353EE621C86E8BF00D09B98 /* CoreData.swift in Sources */,
 				53D69D031A9B240C0004CE10 /* AMCBookingViewController.m in Sources */,
@@ -2946,6 +2955,7 @@
 				530D54771B1A0DDE00F6C4FE /* AMCSalonDocumentWindow.m in Sources */,
 				5393EA351AD2CBE7009B336C /* AMCStatementParser.m in Sources */,
 				536B9E871C56077E00F170EC /* AccountReconciliation+CoreDataProperties.m in Sources */,
+				5358DD541C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.m in Sources */,
 				53D69D141A9B240C0004CE10 /* AMCReportsView.m in Sources */,
 				5381C5FC1B308C8500E99946 /* AMCAppointmentViewer.m in Sources */,
 				53D4FC9C1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.m in Sources */,
@@ -2972,7 +2982,6 @@
 				53D69D571A9B240C0004CE10 /* AMCReceiptWindowController.m in Sources */,
 				536B9E9F1C56077E00F170EC /* ShoppingList.m in Sources */,
 				536B9E831C56077E00F170EC /* LastUpdatedBy+CoreDataProperties.m in Sources */,
-				536B9E991C56077E00F170EC /* CalendarDay.m in Sources */,
 				536B9DBF1C50C2A200F170EC /* BQDataExtractViewController.swift in Sources */,
 				53D69CF71A9B240C0004CE10 /* AMCNoteViewController.m in Sources */,
 				536B9E6F1C56077E00F170EC /* StockedCategory+CoreDataProperties.m in Sources */,
@@ -2995,12 +3004,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				533A8FD61C7CC0A4000CA54F /* BQCoredataImportController.swift in Sources */,
+				5358DD511C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.m in Sources */,
+				5358DD551C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.m in Sources */,
 				53FDCA3E1C79A591006B4002 /* AppDelegate.swift in Sources */,
 				53FDCA781C7A6E3F006B4002 /* Note.m in Sources */,
+				5358DD531C8C9380009DD63E /* OpeningHoursWeekTemplate.m in Sources */,
 				5353EE661C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift in Sources */,
 				53FDCA661C7A081A006B4002 /* Customer.m in Sources */,
+				5358DD5F1C8C93DF009DD63E /* CalendarDay.m in Sources */,
 				535FEA751C8436730041D272 /* AppointmentFormatter.swift in Sources */,
 				53FDCA821C7A763C006B4002 /* Payment.m in Sources */,
+				5358DD471C8C9338009DD63E /* Holiday.m in Sources */,
 				53FDCA7F1C7A762A006B4002 /* Salary.m in Sources */,
 				53FDCA841C7A7849006B4002 /* NSDate+AMCDate.m in Sources */,
 				53FDCA5A1C79BF75006B4002 /* Appointment.m in Sources */,
@@ -3012,21 +3026,25 @@
 				536118FC1C803DA000758CF4 /* Cloud.swift in Sources */,
 				53FDCA7D1C7A7621006B4002 /* Permission.m in Sources */,
 				53FDCA811C7A7638006B4002 /* Account.m in Sources */,
+				5358DD5D1C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m in Sources */,
+				5358DD411C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m in Sources */,
 				53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */,
 				53EBB3CB1C7B194000BBDC46 /* BQCoredataObjectExtensions.swift in Sources */,
 				53FDCA731C7A12FB006B4002 /* Service.m in Sources */,
 				5353EE641C8766E400D09B98 /* SaleDetailViewController.swift in Sources */,
 				53FDCA431C79A591006B4002 /* MasterViewController.swift in Sources */,
 				53FDCA591C79BF75006B4002 /* Appointment+CoreDataProperties.m in Sources */,
-				53FDCA721C7A11FD006B4002 /* Holiday.m in Sources */,
 				533A8FDB1C7F88CD000CA54F /* ClaudiasSalon.xcdatamodeld in Sources */,
 				53FDCA6C1C7A1138006B4002 /* ServiceCategory.m in Sources */,
 				53FDCA451C79A591006B4002 /* AppointmentDetailViewController.swift in Sources */,
+				5358DD451C8C9338009DD63E /* Holiday+CoreDataProperties.m in Sources */,
 				53FDCA6A1C7A0D3D006B4002 /* Employee.m in Sources */,
+				5358DD431C8C9338009DD63E /* IntervalDuringDay.m in Sources */,
 				53FDCA641C7A06DA006B4002 /* Sale.m in Sources */,
 				53FDCA581C79AF4D006B4002 /* CoreData.swift in Sources */,
 				53E2B9911C81CF0700F8F963 /* AppointmentViewCellTableViewCell.swift in Sources */,
 				53FDCA7E1C7A7625006B4002 /* Role.m in Sources */,
+				5358DD571C8C9380009DD63E /* OpeningHoursDayTemplate.m in Sources */,
 				53FDCA861C7A7965006B4002 /* PaymentCategory.m in Sources */,
 				53FDCA741C7A13BB006B4002 /* BusinessFunction.m in Sources */,
 				53FDCA8F1C7AE77B006B4002 /* CloudSynchronizer.swift in Sources */,

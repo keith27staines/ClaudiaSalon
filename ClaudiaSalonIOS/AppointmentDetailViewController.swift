@@ -120,7 +120,15 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
             let saleItemOperation = SaleItemsForSaleOperation(sale: sale)
             publicDatabase.addOperation(saleItemOperation)
             vc.saleID = appointment.sale!.objectID
+            return
         }
+        if segue.identifier == "saleDetail" {
+            
+        }
+        if segue.identifier == "customer" {
+        
+        }
+        
     }
 }
 

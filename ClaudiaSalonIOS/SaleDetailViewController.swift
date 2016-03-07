@@ -46,6 +46,7 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
