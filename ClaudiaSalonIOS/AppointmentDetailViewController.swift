@@ -104,14 +104,14 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        guard let appointment = detailItem as? Appointment else {
+            fatalError("detail item is not an appointment")
+        }
         if segue.identifier == "saleItems" {
             guard let vc = segue.destinationViewController as? SaleDetailViewController else {
-                fatalError("Unexpected destination controller")
+                fatalError("Unexpected destination controller for saleItems)")
             }
             vc.delegate = self
-            guard let appointment = detailItem as? Appointment else {
-                fatalError("detail item is not an appointment")
-            }
             guard let sale = appointment.sale else {
                 fatalError("appointment doesn't have a sale")
             }
@@ -123,10 +123,14 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
             return
         }
         if segue.identifier == "saleDetail" {
-            
+            return
         }
         if segue.identifier == "customer" {
-        
+            guard let vc = segue.destinationViewController as? FindCustomerViewController else {
+                fatalError("Unexpected destination controller for customer")
+            }
+            vc.selectedCustomer = appointment.customer
+            return
         }
         
     }

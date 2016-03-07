@@ -335,7 +335,7 @@
         <!--Find Customer-->
         <scene sceneID="ndk-uE-fir">
             <objects>
-                <viewController id="9Yd-sh-VLv" sceneMemberID="viewController">
+                <viewController id="9Yd-sh-VLv" customClass="FindCustomerViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dwQ-3p-SQL"/>
                         <viewControllerLayoutGuide type="bottom" id="IVJ-Xk-5dq"/>
@@ -360,25 +360,34 @@
                                 <rect key="frame" x="117" y="81" width="455" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                <connections>
+                                    <outlet property="delegate" destination="9Yd-sh-VLv" id="rHI-lF-BST"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b3j-zI-Av1">
                                 <rect key="frame" x="117" y="122" width="319" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="9Yd-sh-VLv" id="Fko-g2-zo4"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wcQ-Fv-bY6">
                                 <rect key="frame" x="536" y="121" width="36" height="30"/>
                                 <state key="normal" title="Clear"/>
+                                <connections>
+                                    <action selector="clearSearchFields:" destination="9Yd-sh-VLv" eventType="touchUpInside" id="Nnv-0e-AIr"/>
+                                </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kWq-FB-aaM">
                                 <rect key="frame" x="20" y="159" width="560" height="1033"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="0sp-ax-Lo5" detailTextLabel="om3-Or-bae" style="IBUITableViewCellStyleSubtitle" id="arl-Lf-CKU">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="Cell" textLabel="0sp-ax-Lo5" detailTextLabel="om3-Or-bae" style="IBUITableViewCellStyleSubtitle" id="arl-Lf-CKU" customClass="FindCustomerCell" customModule="ClaudiaSalonIOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="arl-Lf-CKU" id="7Ko-4y-5Ca">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="521" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0sp-ax-Lo5">
@@ -399,6 +408,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="9Yd-sh-VLv" id="5Wq-hx-tr4"/>
+                                    <outlet property="delegate" destination="9Yd-sh-VLv" id="Owe-Ji-aQX"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -424,6 +437,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Find Customer" id="72C-dS-ycS"/>
+                    <connections>
+                        <outlet property="nameField" destination="pFX-gO-Z7K" id="FPv-fA-WFN"/>
+                        <outlet property="phoneField" destination="b3j-zI-Av1" id="2x2-Ox-2xj"/>
+                        <outlet property="tableView" destination="kWq-FB-aaM" id="K9t-Kj-XbH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jyl-dl-8rA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
