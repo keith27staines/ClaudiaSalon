@@ -71,6 +71,7 @@
 		5358DD5F1C8C93DF009DD63E /* CalendarDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD5B1C8C93DF009DD63E /* CalendarDay.m */; };
 		5358DD611C8D7085009DD63E /* FindCustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD601C8D7085009DD63E /* FindCustomerViewController.swift */; };
 		5358DD631C8D7934009DD63E /* FindCustomerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD621C8D7934009DD63E /* FindCustomerCell.swift */; };
+		5358DD661C8DC10C009DD63E /* SelectDateOrTimePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD651C8DC10C009DD63E /* SelectDateOrTimePopover.swift */; };
 		535F0DEC1AB232CB0035CFD8 /* AMCAccountStatementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */; };
 		535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */; };
 		535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */; };
@@ -470,6 +471,7 @@
 		5358DD5B1C8C93DF009DD63E /* CalendarDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarDay.m; sourceTree = "<group>"; };
 		5358DD601C8D7085009DD63E /* FindCustomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindCustomerViewController.swift; sourceTree = "<group>"; };
 		5358DD621C8D7934009DD63E /* FindCustomerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindCustomerCell.swift; sourceTree = "<group>"; };
+		5358DD651C8DC10C009DD63E /* SelectDateOrTimePopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateOrTimePopover.swift; sourceTree = "<group>"; };
 		535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAccountStatementViewController.xib; sourceTree = "<group>"; };
 		535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementItem.m; sourceTree = "<group>"; };
 		535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementViewController.m; sourceTree = "<group>"; };
@@ -2549,6 +2551,7 @@
 				5353EE681C876B2400D09B98 /* Appointment Table */,
 				5353EE6A1C876B6D00D09B98 /* Appointment Detail */,
 				5353EE671C876ACA00D09B98 /* Sale Detail */,
+				5358DD651C8DC10C009DD63E /* SelectDateOrTimePopover.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -3058,6 +3061,7 @@
 				5358DD431C8C9338009DD63E /* IntervalDuringDay.m in Sources */,
 				53FDCA641C7A06DA006B4002 /* Sale.m in Sources */,
 				53FDCA581C79AF4D006B4002 /* CoreData.swift in Sources */,
+				5358DD661C8DC10C009DD63E /* SelectDateOrTimePopover.swift in Sources */,
 				53E2B9911C81CF0700F8F963 /* AppointmentViewCellTableViewCell.swift in Sources */,
 				53FDCA7E1C7A7625006B4002 /* Role.m in Sources */,
 				5358DD571C8C9380009DD63E /* OpeningHoursDayTemplate.m in Sources */,

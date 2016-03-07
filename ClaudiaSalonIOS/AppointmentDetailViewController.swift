@@ -132,7 +132,47 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
             vc.selectedCustomer = appointment.customer
             return
         }
+        if segue.identifier == "selectStartTime" {
+            guard let vc = segue.destinationViewController as? SelectDateOrTimePopover else {
+                fatalError("Unexpected destination controller for selectFinishTime)")
+            }
+            vc.configure("Choose appointment start time",selectedDate: appointment.appointmentDate!, minDate: appointment.appointmentDate!.beginningOfDay(), maxDate: appointment.appointmentEndDate!, mode: UIDatePickerMode.Time, completion: changedStartTime)
+            return
+        }
+        if segue.identifier == "selectFinishTime" {
+            guard let vc = segue.destinationViewController as? SelectDateOrTimePopover else {
+                fatalError("Unexpected destination controller for selectFinishTime)")
+            }
+            vc.configure("Choose appointment finish time",selectedDate: appointment.appointmentEndDate!, minDate: appointment.appointmentDate!, maxDate: appointment.appointmentDate!.endOfDay(), mode: UIDatePickerMode.Time, completion: changedFinishTime)
+            return
+        }
+        if segue.identifier == "selectDate" {
+            guard let vc = segue.destinationViewController as? SelectDateOrTimePopover else {
+                fatalError("Unexpected destination controller for selectDate)")
+            }
+            vc.configure("Choose appointment day",selectedDate: appointment.appointmentDate!, minDate: NSDate(), maxDate: NSDate.distantFuture(), mode: UIDatePickerMode.Date, completion: changedAppointmentDate)
+            return
+        }
         
+    }
+    func changedStartTime(vc:SelectDateOrTimePopover) {
+        if vc.cancelled { return }
+        let appointment = detailItem as! Appointment
+        appointment.appointmentDate = vc.selectedDate
+        self.configureView()
+    }
+    func changedFinishTime(vc:SelectDateOrTimePopover) {
+        if vc.cancelled { return }
+        let appointment = detailItem as! Appointment
+        let duration = vc.selectedDate.timeIntervalSinceDate(appointment.appointmentDate!)
+        appointment.bookedDuration = duration
+        self.configureView()
+    }
+    func changedAppointmentDate(vc:SelectDateOrTimePopover) {
+        if vc.cancelled { return }
+        let appointment = detailItem as! Appointment
+        appointment.appointmentDate = vc.selectedDate
+        self.configureView()
     }
 }
 
