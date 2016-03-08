@@ -10,7 +10,14 @@ import UIKit
 
 class FindCustomerViewController: UIViewController {
     
-    var selectedCustomer:Customer?
+    var selectedCustomer:Customer? {
+        didSet {
+            if self.originalSelectedCustomer == nil {
+                self.originalSelectedCustomer = selectedCustomer
+            }
+        }
+    }
+    private var originalSelectedCustomer:Customer?
     
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var phoneField: UITextField!
@@ -18,11 +25,25 @@ class FindCustomerViewController: UIViewController {
     var allCustomers = [Customer]()
     var filteredCustomers = [Customer]()
     let moc = Coredata.sharedInstance.backgroundContext
+    var selectedIndexPath:NSIndexPath?
+    var completion:((vc:UIViewController)->Void)?
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let completion = completion {
+            completion(vc: self)
+        }
+    }
     func configureCell(cell:FindCustomerCell, indexPath:NSIndexPath) {
         let row = indexPath.row
         let customer = self.filteredCustomers[row]
         cell.customer = customer
+        if customer.objectID == self.selectedCustomer!.objectID {
+            cell.chosen  = true
+            self.selectedIndexPath = indexPath
+        } else {
+            cell.chosen = false
+        }
     }
     
     @IBAction func clearSearchFields(sender:AnyObject?) {
@@ -33,12 +54,18 @@ class FindCustomerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancel:")
         self.nameField.text = self.selectedCustomer?.fullName
         self.phoneField.text = self.selectedCustomer?.phone
         self.allCustomers = Customer.allObjectsWithMoc(self.moc) as! [Customer]
         self.nameField.addTarget(self, action:"applyFilters:", forControlEvents: UIControlEvents.EditingChanged)
         self.phoneField.addTarget(self, action:"applyFilters:", forControlEvents: UIControlEvents.EditingChanged)
         self.applyFilters(self)
+    }
+    
+    func cancel(sender:AnyObject?) {
+        self.selectedCustomer = self.originalSelectedCustomer
+        self.navigationController?.popViewControllerAnimated(true)
     }
     func applyFilters(sender:AnyObject?) {
         let name = (self.nameField.text ?? "").capitalizedString
@@ -85,5 +112,17 @@ extension FindCustomerViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell")! as! FindCustomerCell
         self.configureCell(cell,indexPath: indexPath)
         return cell
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.selectedCustomer = self.filteredCustomers[indexPath.row]
+        if let previousSelectedIndexPath = self.selectedIndexPath {
+            if let previousChosenCell  = self.tableView.cellForRowAtIndexPath(previousSelectedIndexPath) as? FindCustomerCell {
+                self.configureCell(previousChosenCell, indexPath: previousSelectedIndexPath)
+            }
+        }
+        if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? FindCustomerCell {
+            self.configureCell(cell, indexPath: indexPath)
+            self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        }
     }
 }

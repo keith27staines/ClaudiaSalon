@@ -130,6 +130,7 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
                 fatalError("Unexpected destination controller for customer")
             }
             vc.selectedCustomer = appointment.customer
+            vc.completion = changedCustomer
             return
         }
         if segue.identifier == "selectStartTime" {
@@ -173,6 +174,21 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
         let appointment = detailItem as! Appointment
         appointment.appointmentDate = vc.selectedDate
         self.configureView()
+    }
+    func changedCustomer(vc:UIViewController) {
+        if let vc = vc as? FindCustomerViewController {
+            let appointment = detailItem as! Appointment
+            guard let selectedCustomerObjectID = vc.selectedCustomer?.objectID else {
+                return
+            }
+            if appointment.customer?.objectID != selectedCustomerObjectID {
+                let moc = appointment.managedObjectContext!
+                moc.performBlockAndWait() {
+                    appointment.customer = moc.objectWithID(selectedCustomerObjectID) as? Customer
+                }
+                self.configureView()
+            }
+        }
     }
 }
 

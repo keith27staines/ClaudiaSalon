@@ -9,6 +9,15 @@
 import UIKit
 
 class FindCustomerCell: UITableViewCell {
+    var chosen = false {
+        didSet {
+            if chosen {
+                self.accessoryType = .Checkmark
+            } else {
+                self.accessoryType = .None
+            }
+        }
+    }
     var customer:Customer? {
         didSet {
             guard let customer = customer else {
