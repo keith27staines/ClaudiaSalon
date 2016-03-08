@@ -54,7 +54,6 @@ class FindCustomerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancel:")
         self.nameField.text = self.selectedCustomer?.fullName
         self.phoneField.text = self.selectedCustomer?.phone
         self.allCustomers = Customer.allObjectsWithMoc(self.moc) as! [Customer]
@@ -63,10 +62,60 @@ class FindCustomerViewController: UIViewController {
         self.applyFilters(self)
     }
     
-    func cancel(sender:AnyObject?) {
+    @IBAction func selectAnonymousCustomer() {
+        let moc = Coredata.sharedInstance.backgroundContext
+        moc.performBlockAndWait() {
+            let salon = Salon(moc: moc)
+            self.selectedCustomer = salon.anonymousCustomer
+        }
+        self.applyFilters(self)
+    }
+    
+    @IBAction func cancel(sender:AnyObject?) {
         self.selectedCustomer = self.originalSelectedCustomer
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
+    @IBAction func addCustomer(sender: AnyObject) {
+        guard let fullName = self.nameField.text, let phone = self.phoneField.text else {
+            return
+        }
+        guard self.filteredCustomers.count == 0 else {
+            let alert = UIAlertController(title: "Customer already exists", message: "A customer called \(fullName) with phone number \(phone) already exists.", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+        }
+        guard fullName.characters.count > 3 else {
+            let alert = UIAlertController(title: "Insufficient Information", message: "The new customer's name is too short", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+        }
+        guard phone.characters.count > 9 else {
+            let alert = UIAlertController(title: "Insufficient Information", message: "The new customer's phone number is too short", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+        }
+        let moc = Coredata.sharedInstance.backgroundContext
+        moc.performBlockAndWait() {
+            let customer = Customer.newObjectWithMoc(moc)
+            let fullName = self.nameField.text!
+            let names = fullName.componentsSeparatedByString(" ")
+            customer.firstName = names[0]
+            var lastName = ""
+            for i in 1..<names.count {
+                lastName += names[i]
+            }
+            customer.lastName = lastName
+            customer.phone = phone
+            self.allCustomers.append(customer)
+        }
+        Coredata.sharedInstance.saveContext()
+        self.applyFilters(self)
+    }
+
     func applyFilters(sender:AnyObject?) {
         let name = (self.nameField.text ?? "").capitalizedString
         let phone = (self.phoneField.text ?? "").capitalizedString
@@ -115,6 +164,8 @@ extension FindCustomerViewController: UITableViewDataSource {
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.selectedCustomer = self.filteredCustomers[indexPath.row]
+        self.nameField.text = self.selectedCustomer?.fullName
+        self.phoneField.text = self.selectedCustomer?.phone
         if let previousSelectedIndexPath = self.selectedIndexPath {
             if let previousChosenCell  = self.tableView.cellForRowAtIndexPath(previousSelectedIndexPath) as? FindCustomerCell {
                 self.configureCell(previousChosenCell, indexPath: previousSelectedIndexPath)
