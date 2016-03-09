@@ -24,6 +24,7 @@ extension BQExportable {
         self.managedObjectContext!.performBlockAndWait() {
             self.bqCloudID = record.recordID.recordName
             self.bqMetadata = record.metadataFromRecord()
+            self.lastUpdatedDate = record.modificationDate
         }
     }
     func cloudRecordFromMetadata() -> CKRecord? {

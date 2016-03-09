@@ -386,7 +386,10 @@ extension BQExportable {
             print("Unable to decode the cloud record from the supplied metadata")
             return true
         }
-        if cloudRecord.modificationDate!.isGreaterThan(self.lastUpdatedDate!) {
+        guard let lastUpdatedDate = self.lastUpdatedDate else {
+            return true
+        }
+        if cloudRecord.modificationDate!.isGreaterThan(lastUpdatedDate) {
             return true
         }
         return false  // We don't need to update ourself as we are more recent
