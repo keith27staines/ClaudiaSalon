@@ -14,7 +14,7 @@ class BQCoredataImportController {
     
     static let publicDatabase = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon").publicCloudDatabase
     
-    let salonCloudID = "44736040-37E7-46B0-AAAB-8EA90A6C99C4"
+    let salonCloudRecordName = "44736040-37E7-46B0-AAAB-8EA90A6C99C4"
     let publicDatabase: CKDatabase
     let coredata = Coredata.sharedInstance
     let parentSalonRecordID:CKRecordID
@@ -23,28 +23,22 @@ class BQCoredataImportController {
     private let counter = AMCThreadSafeCounter(name: "coredataImporter", initialValue: 0)
     
     init() {
-        parentSalonRecordID = CKRecordID(recordName: salonCloudID)
+        parentSalonRecordID = CKRecordID(recordName: salonCloudRecordName)
         parentSalonReference = CKReference(recordID: parentSalonRecordID, action: .None)
         publicDatabase = BQCoredataImportController.publicDatabase
-        //self.deleteAllCoredataAppointments()
-    }
-    func deleteAllCoredataAppointments() {
-        let entities = ["Salon", "Customer", "Employee", "Service", "ServiceCategory", "Appointment", "Sale", "SaleItem"]
-        for entity in entities {
-            self.deleteEntity(entity)
-        }
-        self.coredata.saveContext()
-    }
-    func deleteEntity(name:String) {
-        let fetchRequest = NSFetchRequest(entityName: name)
-        let yesPredicate = NSPredicate(value: true)
-        fetchRequest.predicate = yesPredicate
-        let moc = self.coredata.backgroundContext
-        moc.performBlockAndWait() {
-            let fetchedObjects = try! moc.executeFetchRequest(fetchRequest)
-            for modelObject in fetchedObjects {
-                moc.deleteObject(modelObject as! NSManagedObject)
+        let salon = Salon.fetchForCloudID(salonCloudRecordName, moc: Coredata.sharedInstance.backgroundContext)
+        
+        if let salon = salon {
+            let salonCloudRecordID = CKRecordID(recordName: salonCloudRecordName)
+            self.publicDatabase.fetchRecordWithID(salonCloudRecordID) { (salonRecord, error) -> Void in
+                if error != nil {
+                    fatalError("error downloading salon from cloud")
+                } else {
+                    salon.updateFromCloudRecordIfNeeded(salonRecord!)
+                }
             }
+        } else {
+            self.performInitialImport()
         }
     }
     
@@ -92,6 +86,64 @@ class BQCoredataImportController {
             let fillOperations = self.fillAppointmentDetailsOperations(appointment!, appointmentRecord: appointmentRecord)
             for operation in fillOperations {
                 self.publicDatabase.addOperation(operation)
+            }
+        }
+    }
+}
+
+extension BQCoredataImportController {
+    func performInitialImport() {
+        // Start from clean slate
+        self.deleteAllCoredataObjects()
+        let salonRecordID = CKRecordID(recordName: self.salonCloudRecordName)
+        self.publicDatabase.fetchRecordWithID(salonRecordID) { (record, error) -> Void in
+            guard error == nil else {
+                return
+            }
+            guard let record = record else {
+                return
+            }
+            let moc = Coredata.sharedInstance.backgroundContext
+            let salon = Salon.makeFromCloudRecord(record, moc: moc)
+            if let anonCustomerRef = record["anonymousCustomerReference"] as? CKReference {
+                let customerID = anonCustomerRef.recordID
+                self.publicDatabase.fetchRecordWithID(customerID, completionHandler: { (customerRecord, error) -> Void in
+                    if error != nil {
+                        fatalError("Failed to download the Anonymous Customer from cloud")
+                    } else {
+                        if let anon = Customer.fetchForCloudID(customerID.recordName, moc: moc) {
+                            anon.updateFromCloudRecordIfNeeded(customerRecord!)
+                            salon.anonymousCustomer = anon
+                        } else {
+                            let anon = Customer.makeFromCloudRecord(customerRecord!, moc: moc)
+                            salon.anonymousCustomer = anon
+                        }
+                    }
+                    moc.performBlock() {
+                        Coredata.sharedInstance.saveContext()
+                    }
+                })
+            }
+            
+        }
+
+    }
+    func deleteAllCoredataObjects() {
+        let entities = ["Salon", "Customer", "Employee", "Service", "ServiceCategory", "Appointment", "Sale", "SaleItem"]
+        for entity in entities {
+            self.deleteEntity(entity)
+        }
+        self.coredata.saveContext()
+    }
+    func deleteEntity(name:String) {
+        let fetchRequest = NSFetchRequest(entityName: name)
+        let yesPredicate = NSPredicate(value: true)
+        fetchRequest.predicate = yesPredicate
+        let moc = self.coredata.backgroundContext
+        moc.performBlockAndWait() {
+            let fetchedObjects = try! moc.executeFetchRequest(fetchRequest)
+            for modelObject in fetchedObjects {
+                moc.deleteObject(modelObject as! NSManagedObject)
             }
         }
     }
@@ -437,6 +489,43 @@ extension SaleItem {
             self.maximumCharge = record["maximumCharge"] as? NSNumber
             self.minimumCharge = record["minimumCharge"] as? NSNumber
             self.nominalCharge = record["nominalCharge"] as? NSNumber
+        }
+    }
+}
+
+extension Salon {
+    class func makeFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> Salon {
+        var salon: Salon!
+        moc.performBlockAndWait() {
+            precondition(record.recordType == "iCloudSalon", "Unable to create a salon from this record \(record)")
+            salon = Salon(moc: moc)
+            salon.updateFromCloudRecord(record)
+        }
+        return salon
+    }
+    class func fetchForCloudID(cloudID:String, moc:NSManagedObjectContext ) -> Salon? {
+        let fetchRequest = NSFetchRequest(entityName: "Salon")
+        let predicate = NSPredicate(format: "bqCloudID = %@", cloudID)
+        fetchRequest.predicate = predicate
+        var salons = [AnyObject]()
+        moc.performBlockAndWait() {
+            salons = try! moc.executeFetchRequest(fetchRequest)
+        }
+        return salons.first as! Salon?
+    }
+    func updateFromCloudRecord(record:CKRecord) {
+        guard record.recordType == "iCloudSalon" else {
+            assertionFailure("Salon cannot be updated from recordType \(record.recordType)")
+            return
+        }
+        self.managedObjectContext?.performBlockAndWait() {
+            self.setBQDataFromRecord(record)
+            self.bqNeedsCoreDataExport = NSNumber(bool: false)
+            self.salonName = record["name"] as? String
+            self.postcode = record["postcode"] as? String
+            self.phone = record["phone"] as? String
+            self.addressLine1 = record["addressLine1"] as? String
+            self.addressLine2 = record["addressLine2"] as? String
         }
     }
 }

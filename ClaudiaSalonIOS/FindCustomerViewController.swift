@@ -38,7 +38,11 @@ class FindCustomerViewController: UIViewController {
         let row = indexPath.row
         let customer = self.filteredCustomers[row]
         cell.customer = customer
-        if customer.objectID == self.selectedCustomer!.objectID {
+        guard let selectedCustomerID = self.selectedCustomer?.objectID else {
+            cell.chosen = false
+            return
+        }
+        if customer.objectID == selectedCustomerID {
             cell.chosen  = true
             self.selectedIndexPath = indexPath
         } else {
@@ -66,7 +70,10 @@ class FindCustomerViewController: UIViewController {
         let moc = Coredata.sharedInstance.backgroundContext
         moc.performBlockAndWait() {
             let salon = Salon(moc: moc)
-            self.selectedCustomer = salon.anonymousCustomer
+            let anonymous = salon.anonymousCustomer!
+            self.selectedCustomer = anonymous
+            self.nameField.text = anonymous.fullName
+            self.phoneField.text = anonymous.phone
         }
         self.applyFilters(self)
     }
