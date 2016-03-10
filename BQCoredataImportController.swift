@@ -34,7 +34,6 @@ class BQCoredataImportController {
                 if error != nil {
                     fatalError("error downloading salon from cloud")
                 } else {
-                    salon.updateFromCloudRecord(salonRecord!)
                     salon.updateFromCloudRecordIfNeeded(salonRecord!)
                 }
             }
