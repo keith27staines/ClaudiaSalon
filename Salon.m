@@ -26,6 +26,25 @@
 @implementation Salon
 
 // Insert code here to add functionality to your managed object subclass
+
++(Salon * _Nullable)defaultSalon:(NSManagedObjectContext * _Nonnull)moc {
+    Salon * salon = nil;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Salon" inManagedObjectContext:moc];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error = nil;
+    NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
+    if (fetchedObjects.count == 0) { return nil; }
+    NSAssert(fetchedObjects.count == 1, @"Only one salon was expected");
+    salon = (Salon*)fetchedObjects[0];
+    if (salon.firstDayOfWeek.integerValue == 0) {
+        salon.firstDayOfWeek = @(1);// I, developer, messed up - days of week are 1-based!
+    }
+    [salon addDefaultPaymentCategories];
+    return salon;
+}
+
 +(Salon*)salonWithMoc:(NSManagedObjectContext*)moc {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Salon" inManagedObjectContext:moc];

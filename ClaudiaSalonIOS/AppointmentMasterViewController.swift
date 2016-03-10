@@ -45,6 +45,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        //guard let _ = Salon.defaultSalon(Coredata.sharedInstance.backgroundContext) else {
+            self.performSegueWithIdentifier("GotoImportViewController", sender: self)
+            return
+        //}
         let importer = self.importController
         importer.fetchCloudAppointments()
     }

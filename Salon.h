@@ -12,15 +12,14 @@
 @class AMCSalonDocument;
 @class Account, AccountingPaymentGroup, Customer, Employee, OpeningHoursWeekTemplate, PaymentCategory, Role, ServiceCategory;
 
-NS_ASSUME_NONNULL_BEGIN
 
 @interface Salon : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
 
-+(Salon*)salonWithMoc:(NSManagedObjectContext*)moc;
-@end
++(Salon * _Nonnull)salonWithMoc:(NSManagedObjectContext* _Nonnull)moc;
++(Salon * _Nullable)defaultSalon:(NSManagedObjectContext * _Nonnull)moc;
 
-NS_ASSUME_NONNULL_END
+@end
 
 #import "Salon+CoreDataProperties.h"
