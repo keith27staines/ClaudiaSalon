@@ -34,6 +34,7 @@ class BQCoredataImportController {
                 if error != nil {
                     fatalError("error downloading salon from cloud")
                 } else {
+                    salon.updateFromCloudRecord(salonRecord!)
                     salon.updateFromCloudRecordIfNeeded(salonRecord!)
                 }
             }
@@ -399,9 +400,6 @@ extension BQExportable {
             self.updateFromCloudRecord(record)
         }
     }
-    func updateFromCloudRecord(record:CKRecord) {
-        fatalError("Subclasses must override this")
-    }
 }
 extension CKRecord {
     func metadataFromRecord() -> NSData {
@@ -564,6 +562,38 @@ extension Customer {
             self.firstName = record["firstName"] as? String
             self.lastName = record["lastName"] as? String
             self.phone = record["phone"] as? String
+        }
+    }
+}
+extension ServiceCategory {
+    class func makeFromCloudRecord(record:CKRecord, moc:NSManagedObjectContext) -> ServiceCategory {
+        var serviceCategory: ServiceCategory!
+        moc.performBlockAndWait() {
+            precondition(record.recordType == "iCloudServiceCategory", "Unable to create a Service Category from this record \(record)")
+            serviceCategory = ServiceCategory.newObjectWithMoc(moc)
+            serviceCategory.updateFromCloudRecord(record)
+        }
+        return serviceCategory
+    }
+    class func fetchForCloudID(cloudID:String, moc:NSManagedObjectContext ) -> ServiceCategory? {
+        let fetchRequest = NSFetchRequest(entityName: "ServiceCategory")
+        let predicate = NSPredicate(format: "bqCloudID = %@", cloudID)
+        fetchRequest.predicate = predicate
+        var serviceCategories = [AnyObject]()
+        moc.performBlockAndWait() {
+            serviceCategories = try! moc.executeFetchRequest(fetchRequest)
+        }
+        return serviceCategories.first as! ServiceCategory?
+    }
+    func updateFromCloudRecord(record:CKRecord) {
+        guard record.recordType == "iCloudServiceCategory" else {
+            assertionFailure("Service Category cannot be updated from recordType \(record.recordType)")
+            return
+        }
+        self.managedObjectContext?.performBlockAndWait() {
+            self.setBQDataFromRecord(record)
+            self.bqNeedsCoreDataExport = NSNumber(bool: false)
+            self.name = record["name"] as? String
         }
     }
 }

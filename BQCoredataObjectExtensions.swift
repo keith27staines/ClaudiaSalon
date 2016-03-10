@@ -17,6 +17,7 @@ protocol BQExportable: class {
     var bqCloudID: String? { get set }
     var lastUpdatedDate: NSDate? { get set }
     var managedObjectContext:NSManagedObjectContext? { get }
+    func updateFromCloudRecord(record:CKRecord)
 }
 
 extension BQExportable {
