@@ -380,7 +380,6 @@
 		53FDCA841C7A7849006B4002 /* NSDate+AMCDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C6F1A9B240B0004CE10 /* NSDate+AMCDate.m */; };
 		53FDCA861C7A7965006B4002 /* PaymentCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 536B9E3A1C56077E00F170EC /* PaymentCategory.m */; };
 		53FDCA871C7A79E7006B4002 /* AMCDiscountCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CD41A9B240C0004CE10 /* AMCDiscountCalculator.m */; };
-		53FDCA8F1C7AE77B006B4002 /* CloudSynchronizationTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA8E1C7AE77B006B4002 /* CloudSynchronizationTableViewController.swift */; };
 		53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536B9DC71C50D8A300F170EC /* BQDataObjects.swift */; };
 		53FDCA931C7AFCF2006B4002 /* AMCThreadSafeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */; };
 		53FFAF911AB220470078E9CC /* AMCEmployeeForServiceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */; };
@@ -950,7 +949,6 @@
 		53FDCA531C79A5BA006B4002 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		53FDCA571C79AF4D006B4002 /* CoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		53FDCA5F1C79C952006B4002 /* ClaudiaSalonIOS-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ClaudiaSalonIOS-Bridging-Header.h"; sourceTree = "<group>"; };
-		53FDCA8E1C7AE77B006B4002 /* CloudSynchronizationTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSynchronizationTableViewController.swift; sourceTree = "<group>"; };
 		53FFAF8F1AB220470078E9CC /* AMCEmployeeForServiceSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCEmployeeForServiceSelector.h; sourceTree = "<group>"; };
 		53FFAF901AB220470078E9CC /* AMCEmployeeForServiceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCEmployeeForServiceSelector.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1319,7 +1317,6 @@
 			isa = PBXGroup;
 			children = (
 				5370D4F51C916EF200319147 /* ImportTableViewController.swift */,
-				53FDCA8E1C7AE77B006B4002 /* CloudSynchronizationTableViewController.swift */,
 				5370D4F81C9189AA00319147 /* ImportViewController.swift */,
 				5370D4FA1C92AFC200319147 /* ImportInfoCell.swift */,
 			);
@@ -3087,7 +3084,6 @@
 				53FDCA861C7A7965006B4002 /* PaymentCategory.m in Sources */,
 				53FDCA741C7A13BB006B4002 /* BusinessFunction.m in Sources */,
 				5370D4F61C916EF200319147 /* ImportTableViewController.swift in Sources */,
-				53FDCA8F1C7AE77B006B4002 /* CloudSynchronizationTableViewController.swift in Sources */,
 				53FDCA931C7AFCF2006B4002 /* AMCThreadSafeCounter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

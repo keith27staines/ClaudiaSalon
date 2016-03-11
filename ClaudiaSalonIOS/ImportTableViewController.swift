@@ -11,21 +11,45 @@ import CloudKit
 import CoreData
 
 class ImportTableViewController : UITableViewController {
-    
-    let importer = BQCloudImporter()
+    lazy var importer:BQCloudImporter = {
+        let importer = BQCloudImporter()
+        importer.downloadWasUpdated = self.downloadInformationWasUpdated
+        importer.downloadCompleted = self.downloadCompleted
+        return importer
+    }()
     let importTypes = CloudRecordType.typesAsArray()
     override func viewDidLoad() {
         self.tableView.reloadData()
     }
-    
     func configureCell(cell:ImportInfoCell, indexPath:NSIndexPath) {
-        
+        let type = CloudRecordType.typesAsArray()[indexPath.row]
+        let info = self.importer.downloads[type.rawValue]!
+        cell.recordTypeLabel.text = info.recordType.rawValue
+        cell.infoLabel.text = info.downloadStatus
+        cell.activitySpinner.hidden = !info.executing
+        cell.error = info.error
+        if info.executing {
+            cell.activitySpinner.startAnimating()
+        } else {
+            cell.activitySpinner.stopAnimating()
+        }
     }
     func cancelImport() {
-        
+        self.importer.cancelImport()
     }
     func startImport() {
-        
+        self.importer.startImport()
+    }
+    func downloadInformationWasUpdated(info:DownloadInfo) {
+        let type = info.recordType
+        let row = CloudRecordType.indexForType(type)
+        let indexPath = NSIndexPath(forItem: row, inSection: 0)
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? ImportInfoCell {
+            self.configureCell(cell, indexPath: indexPath)
+        }
+    }
+    func downloadCompleted(info:DownloadInfo) {
+        self.downloadInformationWasUpdated(info)
     }
 }
 
@@ -39,7 +63,13 @@ extension ImportTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! ImportInfoCell
+        self.configureCell(cell, indexPath: indexPath)
         return cell
+    }
+    override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if let cell = cell as? ImportInfoCell {
+            cell.activitySpinner.stopAnimating()
+        }
     }
 }
 
@@ -106,20 +136,50 @@ enum CloudRecordType: String {
     }
 }
 
+struct DownloadInfo {
+    var recordType: CloudRecordType
+    var activeOperations = 0
+    var recordsDownloaded = 0
+    var error:NSError?
+    var downloadStatus: String {
+        if self.waiting {
+            if activeOperations == 0 {
+                return ""
+            } else {
+                return "Waiting for server"
+            }
+        }
+        if self.executing { return "\(recordsDownloaded) downloaded" }
+        if self.finished {
+            if error != nil {
+                return "Encountered error after \(recordsDownloaded) records"
+            } else {
+                return "Finished downloading \(recordsDownloaded) record(s)"
+            }
+        }
+        assertionFailure("Invalid state")
+        return "Invalid state"
+    }
+    var executing = false
+    var finished = false
+    var waiting = true
+    init(recordType:CloudRecordType) {
+        self.recordType = recordType
+    }
+}
+
 class BQCloudImporter {
     let publicDatabase = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon").publicCloudDatabase
     let salonCloudRecordName = "44736040-37E7-46B0-AAAB-8EA90A6C99C4"
     let cloudSalonReference : CKReference? = nil
-    var downloadedRecords: [CKRecord]
-    var downloads: [String:DownloadInfo]
-    var queryOperations: [CKQueryOperation]
+    var downloadedRecords = [CKRecord]()
+    var downloads = [String:DownloadInfo]()
+    var queryOperations = Set<CKQueryOperation>()
     private (set) var cancelled = false
-    
+    private var downloadWasUpdated: ((info:DownloadInfo) -> Void)?
+    private var downloadCompleted: ((info:DownloadInfo) -> Void)?
     
     init() {
-        downloadedRecords = [CKRecord]()
-        downloads = [String:DownloadInfo]()
-        queryOperations = [CKQueryOperation]()
         self.reinitialiseDatastructures()
     }
     
@@ -127,29 +187,21 @@ class BQCloudImporter {
         downloadedRecords.removeAll(keepCapacity: true)
         downloads.removeAll()
         for recordType in CloudRecordType.typesAsArray() {
-            let info = DownloadInfo(recordType: recordType, activeOperations: 0, recordsDownloaded: 0, error: nil, downloadStatus: "Waiting...")
+            let info = DownloadInfo(recordType: recordType)
             downloads[recordType.rawValue] = info
         }
         queryOperations.removeAll()
-    }
-    struct DownloadInfo {
-        var recordType: CloudRecordType
-        var activeOperations = 0
-        var recordsDownloaded = 0
-        var error:NSError?
-        var downloadStatus: String = ""
     }
     
     func startImport() {
         // Start from clean slate
         self.deleteAllCoredataObjects()
-        
         for recordType in CloudRecordType.typesAsArray() {
             self.addQueryOperationToQueueForType(recordType)
         }
     }
     func addQueryOperationToQueueForType(type:CloudRecordType) {
-        let downloadInfoForType = DownloadInfo(recordType: type, activeOperations: 0, recordsDownloaded: 0, error: nil, downloadStatus: "Waiting...")
+        let downloadInfoForType = DownloadInfo(recordType: type)
         downloads[type.rawValue] = downloadInfoForType
         let queryOperation = self.fetchRecordsFromCloudOperation(type.rawValue)
         self.addQueryOperationToQueue(queryOperation)
@@ -171,11 +223,16 @@ class BQCloudImporter {
             guard var info = self.downloads[name] else {
                 fatalError("The operation isn't recognised")
             }
+            info.waiting = false
+            info.executing = true
             info.recordsDownloaded++
-            info.downloadStatus = "downloading..."
             self.downloads[name] = info
+            if let callback = self.downloadWasUpdated {
+                callback(info: info)
+            }
         }
     }
+    
     func handleQueryCompletion(operation:CKQueryOperation,error:NSError?) {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
             guard let name = operation.name else {
@@ -186,27 +243,32 @@ class BQCloudImporter {
             }
             info.activeOperations--
             if info.activeOperations == 0 {
-                if error == nil {
-                    info.downloadStatus = "Finished"
-                } else {
-                    info.downloadStatus = "Finished with error \(error?.localizedDescription)"
-                }
+                info.waiting = false
+                info.executing = false
+                info.finished = true
             }
             info.error = error
             self.downloads[name] = info
-            let index = self.queryOperations.indexOf(operation)
-            self.queryOperations.removeAtIndex(index!)
+            if info.activeOperations == 0 {
+                if let callback = self.downloadCompleted {
+                    callback(info: info)
+                }
+            }
+            self.queryOperations.remove(operation)
             if self.cancelled {
                 self.deleteAllCoredataObjects()
                 self.reinitialiseDatastructures()
             }
         }
-        
     }
     
     func addQueryOperationToQueue(operation:CKQueryOperation) {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
-            self.queryOperations.append(operation)
+            let recordType = operation.name!
+            var info = self.downloads[recordType]!
+            info.activeOperations++
+            self.downloads[recordType] = info
+            self.queryOperations.insert(operation)
             self.publicDatabase.addOperation(operation)
         }
     }
@@ -232,7 +294,6 @@ extension BQCloudImporter {
         }
         return queryOperation
     }
-
 }
 
 extension BQCloudImporter {
@@ -266,9 +327,7 @@ extension BQCloudImporter {
                     }
                 })
             }
-            
         }
-        
     }
     func deleteAllCoredataObjects() {
         let entities = ["Salon", "Customer", "Employee", "Service", "ServiceCategory", "Appointment", "Sale", "SaleItem"]

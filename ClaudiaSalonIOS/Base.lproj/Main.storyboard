@@ -34,12 +34,6 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="moK-yg-ou5"/>
-                                    <barButtonItem enabled="NO" title="Stop" id="nfU-bF-yne">
-                                        <connections>
-                                            <action selector="stopTapped:" destination="W31-SM-QmF" id="sO3-0Q-4No"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="g2e-AQ-ft1"/>
                                 </items>
                             </toolbar>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6A9-86-fNI">
@@ -73,7 +67,7 @@
                     <connections>
                         <outlet property="cancelButton" destination="Ccp-zh-HWG" id="Qnb-L4-OY3"/>
                         <outlet property="startButton" destination="zbn-y4-wDb" id="lNc-CU-qbD"/>
-                        <outlet property="stopButton" destination="nfU-bF-yne" id="VJ0-0d-dz9"/>
+                        <outlet property="statusLabel" destination="8nX-xm-8uq" id="eme-9G-Kcm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pPx-6P-D7D" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -99,24 +93,31 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="l2E-sU-oRn">
                                             <rect key="frame" x="8" y="8" width="544" height="63"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RecordType" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZS-BG-VcW">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="RecordType" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZZS-BG-VcW">
                                                     <rect key="frame" x="0.0" y="0.0" width="544" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="jDg-uY-4u1">
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="jDg-uY-4u1">
                                                     <rect key="frame" x="0.0" y="43" width="544" height="20"/>
                                                     <subviews>
-                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="tvN-Qo-iPc">
+                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="tvN-Qo-iPc">
                                                             <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                                                         </activityIndicatorView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="download info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="heN-xz-N5C">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="download info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="heN-xz-N5C">
                                                             <rect key="frame" x="33" y="0.0" width="511" height="20"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZd-M1-jv9">
+                                                            <rect key="frame" x="544" y="0.0" width="0.0" height="20"/>
+                                                            <state key="normal" title="Show Error"/>
+                                                            <connections>
+                                                                <action selector="showError:" destination="Hst-dC-Kdf" eventType="touchUpInside" id="EZY-zm-ggc"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -133,6 +134,7 @@
                                     <outlet property="activitySpinner" destination="tvN-Qo-iPc" id="fV6-g8-uan"/>
                                     <outlet property="infoLabel" destination="heN-xz-N5C" id="8Ue-Ll-mJ5"/>
                                     <outlet property="recordTypeLabel" destination="ZZS-BG-VcW" id="rYs-j1-RSW"/>
+                                    <outlet property="showErrorButton" destination="PZd-M1-jv9" id="hVX-RR-Zsc"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
