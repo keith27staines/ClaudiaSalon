@@ -153,6 +153,7 @@
 		536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E57D31AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m */; };
 		5370D4F61C916EF200319147 /* ImportTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D4F51C916EF200319147 /* ImportTableViewController.swift */; };
 		5370D4F91C9189AA00319147 /* ImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D4F81C9189AA00319147 /* ImportViewController.swift */; };
+		5370D4FB1C92AFC200319147 /* ImportInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D4FA1C92AFC200319147 /* ImportInfoCell.swift */; };
 		5381C5BC1B2812D700E99946 /* AccountingPaymentGroup+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381C5BB1B2812D700E99946 /* AccountingPaymentGroup+Methods.m */; };
 		5381C5C51B2C186A00E99946 /* AMCServiceCategoriesManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381C5C41B2C186A00E99946 /* AMCServiceCategoriesManagementViewController.m */; };
 		5381C5C81B2C250C00E99946 /* AMCAccountancyGroupManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381C5C71B2C250C00E99946 /* AMCAccountancyGroupManagementViewController.m */; };
@@ -619,6 +620,7 @@
 		536E57D51AEBC39100A60D36 /* ClaudiasSalon 6.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ClaudiasSalon 6.xcdatamodel"; sourceTree = "<group>"; };
 		5370D4F51C916EF200319147 /* ImportTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportTableViewController.swift; sourceTree = "<group>"; };
 		5370D4F81C9189AA00319147 /* ImportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportViewController.swift; sourceTree = "<group>"; };
+		5370D4FA1C92AFC200319147 /* ImportInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportInfoCell.swift; sourceTree = "<group>"; };
 		5381C5BA1B2812D700E99946 /* AccountingPaymentGroup+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AccountingPaymentGroup+Methods.h"; sourceTree = "<group>"; };
 		5381C5BB1B2812D700E99946 /* AccountingPaymentGroup+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AccountingPaymentGroup+Methods.m"; sourceTree = "<group>"; };
 		5381C5C31B2C186A00E99946 /* AMCServiceCategoriesManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCServiceCategoriesManagementViewController.h; sourceTree = "<group>"; };
@@ -1319,6 +1321,7 @@
 				5370D4F51C916EF200319147 /* ImportTableViewController.swift */,
 				53FDCA8E1C7AE77B006B4002 /* CloudSynchronizationTableViewController.swift */,
 				5370D4F81C9189AA00319147 /* ImportViewController.swift */,
+				5370D4FA1C92AFC200319147 /* ImportInfoCell.swift */,
 			);
 			name = "iCloud Synchronization";
 			sourceTree = "<group>";
@@ -3064,6 +3067,7 @@
 				53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */,
 				53EBB3CB1C7B194000BBDC46 /* BQCoredataObjectExtensions.swift in Sources */,
 				53FDCA731C7A12FB006B4002 /* Service.m in Sources */,
+				5370D4FB1C92AFC200319147 /* ImportInfoCell.swift in Sources */,
 				5353EE641C8766E400D09B98 /* SaleDetailViewController.swift in Sources */,
 				53FDCA431C79A591006B4002 /* AppointmentMasterViewController.swift in Sources */,
 				53FDCA591C79BF75006B4002 /* Appointment+CoreDataProperties.m in Sources */,

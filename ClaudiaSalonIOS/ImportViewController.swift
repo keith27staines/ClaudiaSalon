@@ -27,7 +27,7 @@ class ImportViewController : UIViewController {
     @IBOutlet weak var stopButton: UIBarButtonItem!
     
     @IBAction func stopTapped(sender: AnyObject) {
-        self.progressViewController?.pauseImport()
+        
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GotoImportProgress" {

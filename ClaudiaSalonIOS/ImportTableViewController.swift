@@ -12,37 +12,34 @@ import CoreData
 
 class ImportTableViewController : UITableViewController {
     
-    @IBOutlet weak var salonCell: UITableViewCell!
-    
-    @IBOutlet weak var customersCell: UITableViewCell!
-    
-    @IBOutlet weak var staffCell: UITableViewCell!
-    
-    @IBOutlet weak var servicesCell: UITableViewCell!
-    
-    @IBOutlet weak var serviceCategoriesCell: UITableViewCell!
-    
-    @IBOutlet weak var salonActivitySpinner: UIActivityIndicatorView!
-    
-    @IBOutlet weak var customersActivitySpinner: UIActivityIndicatorView!
-    
-    @IBOutlet weak var staffActivitySpinner: UIActivityIndicatorView!
-    
-    @IBOutlet weak var servicesActivitySpinner: UIActivityIndicatorView!
-    
-    @IBOutlet weak var serviceCategoriesActivitySpinner: UIActivityIndicatorView!
-    
+    let importer = BQCloudImporter()
+    let importTypes = CloudRecordType.typesAsArray()
     override func viewDidLoad() {
-        self.salonActivitySpinner.hidden = true
-        self.customersActivitySpinner.hidden = true
-        self.staffActivitySpinner.hidden = true
-        self.servicesActivitySpinner.hidden = true
-        self.serviceCategoriesActivitySpinner.hidden = true
-        self.salonActivitySpinner.stopAnimating()
-        self.customersActivitySpinner.stopAnimating()
-        self.staffActivitySpinner.stopAnimating()
-        self.servicesActivitySpinner.stopAnimating()
-        self.serviceCategoriesActivitySpinner.stopAnimating()
+        self.tableView.reloadData()
+    }
+    
+    func configureCell(cell:ImportInfoCell, indexPath:NSIndexPath) {
+        
+    }
+    func cancelImport() {
+        
+    }
+    func startImport() {
+        
+    }
+}
+
+extension ImportTableViewController {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.importer.downloads.count
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as! ImportInfoCell
+        return cell
     }
 }
 
@@ -58,8 +55,38 @@ enum CloudRecordType: String {
     case CRSaleItem = "iCloudSaleItem"
     
     static func typesAsArray() -> [CloudRecordType] {
-        let array = [CRSalon,CRCustomer,CREmployee,CRService,CRServiceCategory,CRAppointment,CRSale,CRSaleItem]
+        let array = [CRSalon,CRCustomer,CREmployee,CRServiceCategory,CRService,CRAppointment,CRSale,CRSaleItem]
         return array
+    }
+    func coredataEntityName() -> String{
+        return CloudRecordType.coredataEntityNameForType(self)
+    }
+    static func coredataEntityNameForType(type:CloudRecordType) -> String {
+        switch type {
+        case .CRSalon: return "Salon"
+        case .CRCustomer: return "Customer"
+        case .CREmployee: return "Employee"
+        case .CRServiceCategory: return "Service Category"
+        case .CRService: return "Service"
+        case .CRAppointment: return "Appointment"
+        case .CRSale: return "Sale"
+        case .CRSaleItem: return "SaleItem"
+        }
+    }
+    func index() -> Int {
+        return CloudRecordType.indexForType(self)
+    }
+    static func indexForType(type:CloudRecordType) -> Int {
+        switch type {
+        case .CRSalon: return 0
+        case .CRCustomer: return 1
+        case .CREmployee: return 2
+        case .CRServiceCategory: return 3
+        case .CRService: return 4
+        case .CRAppointment: return 5
+        case .CRSale: return 6
+        case .CRSaleItem: return 7
+        }
     }
     static func typesAsDictionary() -> [String:CloudRecordType] {
         return [
@@ -93,12 +120,17 @@ class BQCloudImporter {
         downloadedRecords = [CKRecord]()
         downloads = [String:DownloadInfo]()
         queryOperations = [CKQueryOperation]()
+        self.reinitialiseDatastructures()
     }
     
     func reinitialiseDatastructures() {
         downloadedRecords.removeAll(keepCapacity: true)
-        downloads.removeAll(keepCapacity: true)
-        queryOperations.removeAll(keepCapacity: true)
+        downloads.removeAll()
+        for recordType in CloudRecordType.typesAsArray() {
+            let info = DownloadInfo(recordType: recordType, activeOperations: 0, recordsDownloaded: 0, error: nil, downloadStatus: "Waiting...")
+            downloads[recordType.rawValue] = info
+        }
+        queryOperations.removeAll()
     }
     struct DownloadInfo {
         var recordType: CloudRecordType
@@ -113,11 +145,14 @@ class BQCloudImporter {
         self.deleteAllCoredataObjects()
         
         for recordType in CloudRecordType.typesAsArray() {
-            let downloadInfoForType = DownloadInfo(recordType: recordType, activeOperations: 0, recordsDownloaded: 0, error: nil, downloadStatus: "waiting...")
-            downloads[recordType.rawValue] = downloadInfoForType
-            let queryOperation = self.fetchRecordsFromCloudOperation(recordType.rawValue)
-            self.addQueryOperationToQueue(queryOperation)
+            self.addQueryOperationToQueueForType(recordType)
         }
+    }
+    func addQueryOperationToQueueForType(type:CloudRecordType) {
+        let downloadInfoForType = DownloadInfo(recordType: type, activeOperations: 0, recordsDownloaded: 0, error: nil, downloadStatus: "Waiting...")
+        downloads[type.rawValue] = downloadInfoForType
+        let queryOperation = self.fetchRecordsFromCloudOperation(type.rawValue)
+        self.addQueryOperationToQueue(queryOperation)
     }
     
     func cancelImport() {
