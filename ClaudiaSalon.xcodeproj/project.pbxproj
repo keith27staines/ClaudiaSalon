@@ -154,6 +154,12 @@
 		5370D4F61C916EF200319147 /* ImportTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D4F51C916EF200319147 /* ImportTableViewController.swift */; };
 		5370D4F91C9189AA00319147 /* ImportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D4F81C9189AA00319147 /* ImportViewController.swift */; };
 		5370D4FB1C92AFC200319147 /* ImportInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D4FA1C92AFC200319147 /* ImportInfoCell.swift */; };
+		5370D4FD1C9428F500319147 /* CloudRecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D4FC1C9428F500319147 /* CloudRecordType.swift */; };
+		5370D4FE1C9428F500319147 /* CloudRecordType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D4FC1C9428F500319147 /* CloudRecordType.swift */; };
+		5370D5001C94292D00319147 /* DownloadInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D4FF1C94292D00319147 /* DownloadInfo.swift */; };
+		5370D5011C94292D00319147 /* DownloadInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D4FF1C94292D00319147 /* DownloadInfo.swift */; };
+		5370D5031C94296800319147 /* CloudImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D5021C94296800319147 /* CloudImporter.swift */; };
+		5370D5041C94296800319147 /* CloudImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5370D5021C94296800319147 /* CloudImporter.swift */; };
 		5381C5BC1B2812D700E99946 /* AccountingPaymentGroup+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381C5BB1B2812D700E99946 /* AccountingPaymentGroup+Methods.m */; };
 		5381C5C51B2C186A00E99946 /* AMCServiceCategoriesManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381C5C41B2C186A00E99946 /* AMCServiceCategoriesManagementViewController.m */; };
 		5381C5C81B2C250C00E99946 /* AMCAccountancyGroupManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5381C5C71B2C250C00E99946 /* AMCAccountancyGroupManagementViewController.m */; };
@@ -620,6 +626,9 @@
 		5370D4F51C916EF200319147 /* ImportTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportTableViewController.swift; sourceTree = "<group>"; };
 		5370D4F81C9189AA00319147 /* ImportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportViewController.swift; sourceTree = "<group>"; };
 		5370D4FA1C92AFC200319147 /* ImportInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportInfoCell.swift; sourceTree = "<group>"; };
+		5370D4FC1C9428F500319147 /* CloudRecordType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudRecordType.swift; sourceTree = "<group>"; };
+		5370D4FF1C94292D00319147 /* DownloadInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadInfo.swift; sourceTree = "<group>"; };
+		5370D5021C94296800319147 /* CloudImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudImporter.swift; sourceTree = "<group>"; };
 		5381C5BA1B2812D700E99946 /* AccountingPaymentGroup+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AccountingPaymentGroup+Methods.h"; sourceTree = "<group>"; };
 		5381C5BB1B2812D700E99946 /* AccountingPaymentGroup+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AccountingPaymentGroup+Methods.m"; sourceTree = "<group>"; };
 		5381C5C31B2C186A00E99946 /* AMCServiceCategoriesManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCServiceCategoriesManagementViewController.h; sourceTree = "<group>"; };
@@ -1319,6 +1328,9 @@
 				5370D4F51C916EF200319147 /* ImportTableViewController.swift */,
 				5370D4F81C9189AA00319147 /* ImportViewController.swift */,
 				5370D4FA1C92AFC200319147 /* ImportInfoCell.swift */,
+				5370D4FC1C9428F500319147 /* CloudRecordType.swift */,
+				5370D4FF1C94292D00319147 /* DownloadInfo.swift */,
+				5370D5021C94296800319147 /* CloudImporter.swift */,
 			);
 			name = "iCloud Synchronization";
 			sourceTree = "<group>";
@@ -2956,6 +2968,7 @@
 				53D69D1D1A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m in Sources */,
 				53D69D041A9B240C0004CE10 /* AMCBookingRowView.m in Sources */,
 				53D4FCD71B4044FB009EBF70 /* AMCRoleMaintenance.m in Sources */,
+				5370D5001C94292D00319147 /* DownloadInfo.swift in Sources */,
 				531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */,
 				536B9E641C56077E00F170EC /* Account.m in Sources */,
 				53D69CE71A9B240C0004CE10 /* AMCSalaryPaymentViewController.m in Sources */,
@@ -2968,6 +2981,7 @@
 				53D69D081A9B240C0004CE10 /* AMCSaleItemViewController.m in Sources */,
 				53FFAF911AB220470078E9CC /* AMCEmployeeForServiceSelector.m in Sources */,
 				532377DD1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m in Sources */,
+				5370D4FD1C9428F500319147 /* CloudRecordType.swift in Sources */,
 				5358DD521C8C9380009DD63E /* OpeningHoursWeekTemplate.m in Sources */,
 				536B9E621C56077E00F170EC /* Product.m in Sources */,
 				534F0AEB1C5A2D0100520214 /* BQFirstExtractController.swift in Sources */,
@@ -2978,6 +2992,7 @@
 				5353EE621C86E8BF00D09B98 /* CoreData.swift in Sources */,
 				53D69D031A9B240C0004CE10 /* AMCBookingViewController.m in Sources */,
 				536E57D41AE8F2C300A60D36 /* AMCStatementItemComputerRecordMismatchCalculator.m in Sources */,
+				5370D5031C94296800319147 /* CloudImporter.swift in Sources */,
 				536E57D01AE62BFD00A60D36 /* AMCMatchingPaymentSelectorViewController.m in Sources */,
 				536B9E751C56077E00F170EC /* ServiceCategory+CoreDataProperties.m in Sources */,
 				539D2DF11B18430400761711 /* AMCServiceCategoriesViewController.m in Sources */,
@@ -3038,6 +3053,7 @@
 				5358DD511C8C9380009DD63E /* OpeningHoursWeekTemplate+CoreDataProperties.m in Sources */,
 				5358DD551C8C9380009DD63E /* OpeningHoursDayTemplate+CoreDataProperties.m in Sources */,
 				53FDCA3E1C79A591006B4002 /* AppDelegate.swift in Sources */,
+				5370D5011C94292D00319147 /* DownloadInfo.swift in Sources */,
 				5358DD631C8D7934009DD63E /* FindCustomerCell.swift in Sources */,
 				53FDCA781C7A6E3F006B4002 /* Note.m in Sources */,
 				5358DD531C8C9380009DD63E /* OpeningHoursWeekTemplate.m in Sources */,
@@ -3082,7 +3098,9 @@
 				53FDCA7E1C7A7625006B4002 /* Role.m in Sources */,
 				5358DD571C8C9380009DD63E /* OpeningHoursDayTemplate.m in Sources */,
 				53FDCA861C7A7965006B4002 /* PaymentCategory.m in Sources */,
+				5370D4FE1C9428F500319147 /* CloudRecordType.swift in Sources */,
 				53FDCA741C7A13BB006B4002 /* BusinessFunction.m in Sources */,
+				5370D5041C94296800319147 /* CloudImporter.swift in Sources */,
 				5370D4F61C916EF200319147 /* ImportTableViewController.swift in Sources */,
 				53FDCA931C7AFCF2006B4002 /* AMCThreadSafeCounter.swift in Sources */,
 			);
