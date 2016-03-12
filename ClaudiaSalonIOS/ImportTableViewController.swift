@@ -41,15 +41,25 @@ class ImportTableViewController : UITableViewController {
         self.importer.startImport()
     }
     func downloadInformationWasUpdated(info:DownloadInfo) {
-        let type = info.recordType
-        let row = CloudRecordType.indexForType(type)
-        let indexPath = NSIndexPath(forItem: row, inSection: 0)
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? ImportInfoCell {
-            self.configureCell(cell, indexPath: indexPath)
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            let type = info.recordType
+            let row = CloudRecordType.indexForType(type)
+            let indexPath = NSIndexPath(forItem: row, inSection: 0)
+            if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? ImportInfoCell {
+                self.configureCell(cell, indexPath: indexPath)
+            }
         }
     }
     func downloadCompleted(info:DownloadInfo) {
-        self.downloadInformationWasUpdated(info)
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            self.downloadInformationWasUpdated(info)
+        }
+    }
+    func handleAllDownloadsComplete(withErrors:[NSError]?) {
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            
+        }
+        
     }
 }
 
@@ -169,6 +179,11 @@ struct DownloadInfo {
 }
 
 class BQCloudImporter {
+    lazy var synchQueue: NSOperationQueue = {
+       let queue = NSOperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }()
     let publicDatabase = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon").publicCloudDatabase
     let salonCloudRecordName = "44736040-37E7-46B0-AAAB-8EA90A6C99C4"
     let cloudSalonReference : CKReference? = nil
@@ -178,44 +193,50 @@ class BQCloudImporter {
     private (set) var cancelled = false
     private var downloadWasUpdated: ((info:DownloadInfo) -> Void)?
     private var downloadCompleted: ((info:DownloadInfo) -> Void)?
+    private var allDownloadsComplete: ((withErrors:[NSError]?)->Void)?
     
     init() {
         self.reinitialiseDatastructures()
     }
     
     func reinitialiseDatastructures() {
-        downloadedRecords.removeAll(keepCapacity: true)
-        downloads.removeAll()
-        for recordType in CloudRecordType.typesAsArray() {
-            let info = DownloadInfo(recordType: recordType)
-            downloads[recordType.rawValue] = info
+        self.synchQueue.addOperationWithBlock() {
+            self.downloadedRecords.removeAll(keepCapacity: true)
+            self.downloads.removeAll()
+            for recordType in CloudRecordType.typesAsArray() {
+                let info = DownloadInfo(recordType: recordType)
+                self.downloads[recordType.rawValue] = info
+            }
+            self.queryOperations.removeAll()
         }
-        queryOperations.removeAll()
     }
     
     func startImport() {
-        // Start from clean slate
-        self.deleteAllCoredataObjects()
-        for recordType in CloudRecordType.typesAsArray() {
-            self.addQueryOperationToQueueForType(recordType)
+        self.synchQueue.addOperationWithBlock() {
+            self.deleteAllCoredataObjects()
+            for recordType in CloudRecordType.typesAsArray() {
+                self.addQueryOperationToQueueForType(recordType)
+            }
         }
     }
     func addQueryOperationToQueueForType(type:CloudRecordType) {
         let downloadInfoForType = DownloadInfo(recordType: type)
         downloads[type.rawValue] = downloadInfoForType
         let queryOperation = self.fetchRecordsFromCloudOperation(type.rawValue)
-        self.addQueryOperationToQueue(queryOperation)
+        self.ThreadSafeAddQueryOperationToQueue(queryOperation)
     }
     
     func cancelImport() {
-        for operation in self.queryOperations {
-            operation.cancel()
+        self.synchQueue.addOperationWithBlock() {
+            for operation in self.queryOperations {
+                operation.cancel()
+            }
+            self.cancelled = true
         }
-        self.cancelled = true
     }
     
     func handleDownloadedRecord(operation:CKQueryOperation,record:CKRecord) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
+        self.synchQueue.addOperationWithBlock() {
             self.downloadedRecords.append(record)
             guard let name = operation.name else {
                 fatalError("Operation lacks a name and so cannot be processed")
@@ -233,8 +254,8 @@ class BQCloudImporter {
         }
     }
     
-    func handleQueryCompletion(operation:CKQueryOperation,error:NSError?) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
+    func handleQueryCompletion(operation:CKQueryOperation,cursor:CKQueryCursor?,error:NSError?) {
+        self.synchQueue.addOperationWithBlock() {
             guard let name = operation.name else {
                 fatalError("Operation lacks a name and so cannot be processed")
             }
@@ -249,7 +270,22 @@ class BQCloudImporter {
             }
             info.error = error
             self.downloads[name] = info
-            if info.activeOperations == 0 {
+            
+            if let cursor = cursor  {
+                if !self.cancelled {
+                    let nextQueryOperation = CKQueryOperation(cursor: cursor)
+                    nextQueryOperation.name = operation.name
+                    nextQueryOperation.queryCompletionBlock = { cursor, error in
+                        self.handleQueryCompletion(nextQueryOperation,cursor:cursor,error:error)
+                    }
+                    nextQueryOperation.recordFetchedBlock = { record in
+                        self.handleDownloadedRecord(nextQueryOperation, record: record)
+                    }
+                    self.unsafeAddQueryOperationToQueue(nextQueryOperation)
+                }
+            }
+            
+            if self.downloads[name]!.activeOperations == 0 {
                 if let callback = self.downloadCompleted {
                     callback(info: info)
                 }
@@ -259,18 +295,36 @@ class BQCloudImporter {
                 self.deleteAllCoredataObjects()
                 self.reinitialiseDatastructures()
             }
+            
+            if self.downloadsDidCompleteSuccessfully() {
+                print("Ready to process \(self.downloadedRecords.count) downloaded records")
+            }
+        }
+        
+    }
+    func downloadsDidCompleteSuccessfully() -> Bool {
+        if self.queryOperations.count > 0 { return false } // Some queries still running
+        for (_,info) in self.downloads {
+            if let _ = info.error { return false } // Finished but with an error
+            if !info.finished { return false }  // Still running or waiting to run
+            
+        }
+        // Everything finished without error
+        return true
+    }
+
+    func ThreadSafeAddQueryOperationToQueue(operation:CKQueryOperation) {
+        self.synchQueue.addOperationWithBlock() {
+            self.unsafeAddQueryOperationToQueue(operation)
         }
     }
-    
-    func addQueryOperationToQueue(operation:CKQueryOperation) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            let recordType = operation.name!
-            var info = self.downloads[recordType]!
-            info.activeOperations++
-            self.downloads[recordType] = info
-            self.queryOperations.insert(operation)
-            self.publicDatabase.addOperation(operation)
-        }
+    private func unsafeAddQueryOperationToQueue(operation:CKQueryOperation) {
+        let recordType = operation.name!
+        var info = self.downloads[recordType]!
+        info.activeOperations++
+        self.downloads[recordType] = info
+        self.queryOperations.insert(operation)
+        self.publicDatabase.addOperation(operation)
     }
 }
 
@@ -280,14 +334,7 @@ extension BQCloudImporter {
         let queryOperation = CKQueryOperation(query: query)
         queryOperation.name = recordType
         queryOperation.queryCompletionBlock = { cursor, error in
-            if let cursor = cursor {
-                let nextQueryOperation = CKQueryOperation(cursor: cursor)
-                nextQueryOperation.name = queryOperation.name
-                nextQueryOperation.queryCompletionBlock = queryOperation.queryCompletionBlock
-                nextQueryOperation.recordFetchedBlock = queryOperation.recordFetchedBlock
-                self.addQueryOperationToQueue(nextQueryOperation)
-            }
-            self.handleQueryCompletion(queryOperation,error:error)
+            self.handleQueryCompletion(queryOperation,cursor:cursor,error:error)
         }
         queryOperation.recordFetchedBlock = { record in
             self.handleDownloadedRecord(queryOperation, record: record)
