@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import CloudKit
 
 enum CloudRecordType: String {
     
@@ -27,6 +27,9 @@ enum CloudRecordType: String {
     func coredataEntityName() -> String{
         return CloudRecordType.coredataEntityNameForType(self)
     }
+//    static func typeForRecordID(recordID:CKRecordID) -> CloudRecordType {
+//        return typeFromCloudRecordType(recordID.re)
+//    }
     static func coredataEntityNameForType(type:CloudRecordType) -> String {
         switch type {
         case .CRSalon: return "Salon"
@@ -70,8 +73,8 @@ enum CloudRecordType: String {
         let d = self.typesAsDictionary()
         return d[string]
     }
-    static func typeFromCloudRecordName(name:String) -> CloudRecordType {
-        switch name.lowercaseString {
+    static func typeFromCloudRecordType(recordType:String) -> CloudRecordType {
+        switch recordType.lowercaseString {
         case "icloudsalon": return CRSalon
         case "icloudcustomer": return CRCustomer
         case "icloudemployee": return CREmployee
@@ -80,7 +83,7 @@ enum CloudRecordType: String {
         case "icloudappointment": return CRAppointment
         case "icloudsale": return CRSale
         case "icloudsaleitem": return CRSaleItem
-        default: fatalError("Unknown CKRecord name \(name)")
+        default: fatalError("Unknown CKRecord name \(recordType)")
         }
     }
 }

@@ -126,7 +126,6 @@ extension BQCoredataImportController {
             }
             
         }
-
     }
     func deleteAllCoredataObjects() {
         let entities = ["Salon", "Customer", "Employee", "Service", "ServiceCategory", "Appointment", "Sale", "SaleItem"]
@@ -585,7 +584,7 @@ extension ServiceCategory {
         return serviceCategories.first as! ServiceCategory?
     }
     func updateFromCloudRecord(record:CKRecord) {
-        guard record.recordType == "iCloudServiceCategory" else {
+        guard record.recordType == "icloudServiceCategory" else {
             assertionFailure("Service Category cannot be updated from recordType \(record.recordType)")
             return
         }

@@ -8,6 +8,7 @@
 
 import Foundation
 import CloudKit
+import CoreData
 
 let appointmentExpiryTime = 33.0 * 24 * 3600.0 // 33 days in seconds
 let BQRecordTypeUnknown = "RecordTypeUnknown"
@@ -30,6 +31,8 @@ enum ICloudRecordType: String {
 }
 // MARK:- abstract base class ICloudRecord
 public class ICloudRecord {
+    var cloudRecord:CKRecord?
+    var recordChangedTag: String?
     var needsExortToCoredata = false
     var creationDate: NSDate?
     var recordID: CKRecordID?
@@ -41,6 +44,39 @@ public class ICloudRecord {
     
     private init() {
         assertionFailure("Not supported. Init from a managed object, CRRecord or CKReference instead")
+    }
+    private init(record:CKRecord) {
+        self.cloudRecord = record
+        self.modifiedDate = record.modificationDate
+        self.recordID = record.recordID
+        self.recordType = record.recordType
+        self.recordChangedTag = record.recordChangeTag
+        self.parentSalonReference = record["parentSalonReference"]  as? CKReference
+        self.creationDate = record.creationDate
+        self.isActive = record["isActive"] as! Bool!
+    }
+    
+    func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
+        var exportable:BQExportable?
+        moc.performBlockAndWait() {
+            let type = CloudRecordType.typeFromCloudRecordType(self.cloudRecord!.recordType)
+            switch type {
+            case .CRSalon: exportable = Salon(moc: moc)
+            case .CRCustomer: exportable = Customer.newObjectWithMoc(moc)
+            case .CREmployee: exportable = Employee.newObjectWithMoc(moc)
+            case .CRServiceCategory: exportable = ServiceCategory.newObjectWithMoc(moc)
+            case .CRService: exportable = Service.newObjectWithMoc(moc)
+            case .CRAppointment: exportable = Appointment.newObjectWithMoc(moc)
+            case .CRSale: exportable = Sale.newObjectWithMoc(moc)
+            case .CRSaleItem: exportable = SaleItem.newObjectWithMoc(moc)
+            }
+        }
+        guard let returnExportable = exportable else {
+            fatalError("Failed to create Core Data object from cloud record")
+        }
+        returnExportable.lastUpdatedDate = self.modifiedDate
+        returnExportable.setBQDataFromRecord(self.cloudRecord!)
+        return returnExportable
     }
     
     private init(recordType:String, managedObject: NSManagedObject, parentSalonID: NSManagedObjectID?) {
@@ -141,12 +177,24 @@ public class ICloudSalon : ICloudRecord {
     }
     override func makeCloudKitRecord() -> CKRecord {
         let record = super.makeCloudKitRecord()
+        record["anonymousCustomerReference"] = anonymousCustomerReference
+
         record["name"] = name
         record["addressLine1"] = addressLine1
         record["addressLine2"] = addressLine2
         record["postcode"] = postcode
-        record["anonymousCustomerReference"] = anonymousCustomerReference
         return record
+    }
+    override func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
+        let bqExportable = super.makeShallowCoredataObject(moc) as! Salon
+        guard let record = self.cloudRecord else {
+            fatalError("The required cloud record was not set")
+        }
+        bqExportable.salonName = record["name"] as? String
+        bqExportable.addressLine1 = record["addressLine1"] as? String
+        bqExportable.addressLine2 = record["addressLine2"] as? String
+        bqExportable.postcode = record["postcode"] as? String
+        return bqExportable
     }
 }
 // MARK:- class ICloudCustomer
@@ -171,6 +219,16 @@ public class ICloudCustomer : ICloudRecord {
         record["phone"] = phone
         return record
     }
+    override func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
+        let bqExportable = super.makeShallowCoredataObject(moc) as! Customer
+        guard let record = self.cloudRecord else {
+            fatalError("The required cloud record was not set")
+        }
+        bqExportable.firstName = record["firstName"] as? String
+        bqExportable.lastName = record["lastName"] as? String
+        bqExportable.phone = record["phone"] as? String
+        return bqExportable
+    }
 }
 // MARK:- class ICloudEmployee
 public class ICloudEmployee : ICloudRecord {
@@ -192,6 +250,15 @@ public class ICloudEmployee : ICloudRecord {
         record["lastName"] = lastName
         return record
     }
+    override func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
+        let bqExportable = super.makeShallowCoredataObject(moc) as! Employee
+        guard let record = self.cloudRecord else {
+            fatalError("The required cloud record was not set")
+        }
+        bqExportable.firstName = record["firstName"] as? String
+        bqExportable.lastName = record["lastName"] as? String
+        return bqExportable
+    }
 }
 // MARK:- class ICloudServiceCategory
 public class ICloudServiceCategory : ICloudRecord {
@@ -208,6 +275,14 @@ public class ICloudServiceCategory : ICloudRecord {
         let record = super.makeCloudKitRecord()
         record["name"] = name
         return record
+    }
+    override func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
+        let bqExportable = super.makeShallowCoredataObject(moc) as! ServiceCategory
+        guard let record = self.cloudRecord else {
+            fatalError("The required cloud record was not set")
+        }
+        bqExportable.name = record["name"] as? String
+        return bqExportable
     }
 }
 // MARK:- class ICloudService
@@ -237,12 +312,24 @@ public class ICloudService : ICloudRecord {
     }
     override func makeCloudKitRecord() -> CKRecord {
         let record = super.makeCloudKitRecord()
+        record["parentCategoryReference"] = parentCategoryReference
+
         record["name"] = name
         record["minPrice"] = minPrice
         record["maxPrice"] = maxPrice
         record["nominalPrice"] = nominalPrice
-        record["parentCategoryReference"] = parentCategoryReference
         return record
+    }
+    override func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
+        let bqExportable = super.makeShallowCoredataObject(moc) as! Service
+        guard let record = self.cloudRecord else {
+            fatalError("The required cloud record was not set")
+        }
+        bqExportable.name = record["name"] as? String
+        bqExportable.minimumCharge = record["minPrice"] as? Double
+        bqExportable.maximumCharge = record["maxPrice"] as? Double
+        bqExportable.nominalCharge = record["nominalPrice"] as? Double
+        return bqExportable
     }
 }
 
@@ -276,14 +363,28 @@ class ICloudAppointment:ICloudRecord {
     }
     override func makeCloudKitRecord() -> CKRecord {
         let record = super.makeCloudKitRecord()
+        record["parentCustomerReference"] = parentCustomerReference
+
         record["appointmentStartDate"] = appointmentStartDate
         record["appointmentEndDate"] = appointmentEndDate
-        record["parentCustomerReference"] = parentCustomerReference
         record["cancelled"] = cancelled
         record["cancellationType"] = cancellationType
         record["completed"] = completed
         return record
     }
+    override func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
+        let bqExportable = super.makeShallowCoredataObject(moc) as! Appointment
+        guard let record = self.cloudRecord else {
+            fatalError("The required cloud record was not set")
+        }
+        bqExportable.appointmentDate = record["appointmentStartDate"] as? NSDate
+        bqExportable.appointmentEndDate = record["appointmentEndDate"] as? NSDate
+        bqExportable.cancelled = NSNumber(bool: record["cancelled"] as! Bool)
+        bqExportable.cancellationType = NSNumber(integer: record["cancellationType"] as! Int)
+        bqExportable.completed  = NSNumber(bool: record["completed"] as! Bool)
+        return bqExportable
+    }
+
     class func operationToDetermineExpiredAppointments(salonReference:CKReference) -> CKOperation {
         let earliestNonExpired = NSDate().dateByAddingTimeInterval(-appointmentExpiryTime)
         let expiredPredicate = NSPredicate(format: "appointmentDate < %@ and cloudSalonRef == ", earliestNonExpired,salonReference)
@@ -297,6 +398,7 @@ class ICloudAppointment:ICloudRecord {
 class ICloudSale:ICloudRecord {
     var parentCustomerReference: CKReference?
     var parentAppointmentReference: CKReference?
+    
     var actualCharge :Double? = 0.0
     var nominalCharge :Double? = 0.0
     var discountVersion : Int?
@@ -306,6 +408,7 @@ class ICloudSale:ICloudRecord {
     var hidden: Bool? = false
     var isQuote: Bool? = false
     var voided:Bool? = false
+    
     init(coredataSale: Sale, parentSalonID: NSManagedObjectID) {
         
         super.init(recordType: ICloudRecordType.Sale.rawValue,managedObject: coredataSale, parentSalonID: parentSalonID)
@@ -338,6 +441,7 @@ class ICloudSale:ICloudRecord {
         let record = super.makeCloudKitRecord()
         record["parentCustomerReference"] = parentCustomerReference
         record["parentAppointmentReference"] = parentAppointmentReference
+        
         record["actualCharge"] = actualCharge
         record["nominalCharge"] = nominalCharge
         record["discountVersion"] = discountVersion
@@ -348,6 +452,22 @@ class ICloudSale:ICloudRecord {
         record["hidden"] = hidden
         record["voided"] = voided
         return record
+    }
+    override func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
+        let bqExportable = super.makeShallowCoredataObject(moc) as! Sale
+        guard let record = self.cloudRecord else {
+            fatalError("The required cloud record was not set")
+        }
+        bqExportable.actualCharge = NSNumber(double: record["actualCharge"] as! Double)
+        bqExportable.nominalCharge = NSNumber(double: record["nominalCharge"] as! Double)
+        bqExportable.discountVersion = NSNumber(integer: record["discountVersion"] as! Int)
+        bqExportable.discountType = NSNumber(integer: record["discountType"] as! Int)
+        bqExportable.discountValue = NSNumber(integer: record["discountValue"] as! Int)
+        bqExportable.discountAmount = NSNumber(double: record["discountAmount"] as! Double)
+        bqExportable.isQuote = NSNumber(bool: record["isQuote"] as! Bool)
+        bqExportable.hidden  = NSNumber(bool: record["hidden"] as! Bool)
+        bqExportable.voided  = NSNumber(bool: record["voided"] as! Bool)
+        return bqExportable
     }
 }
 // MARK:- class ICloudSaleItem
@@ -403,6 +523,8 @@ class ICloudSaleItem: ICloudRecord {
         let record = super.makeCloudKitRecord()
         record["parentSaleReference"] = parentSaleReference
         record["serviceReference"] = serviceReference
+        record["employeeReference"] = employeeReference
+
         record["discountVersion"] = discountVersion
         record["discountType"] = discountType
         record["discountValue"] = discountValue
@@ -410,8 +532,21 @@ class ICloudSaleItem: ICloudRecord {
         record["nominalCharge"] = nominalCharge
         record["maximumCharge"] = maximumCharge
         record["minimumCharge"] = minimumCharge
-        record["employeeReference"] = employeeReference
         return record
+    }
+    override func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
+        let bqExportable = super.makeShallowCoredataObject(moc) as! SaleItem
+        guard let record = self.cloudRecord else {
+            fatalError("The required cloud record was not set")
+        }
+        bqExportable.discountVersion = NSNumber(integer: record["discountVersion"] as! Int)
+        bqExportable.discountType = NSNumber(integer: record["discountType"] as! Int)
+        bqExportable.discountValue = NSNumber(integer: record["discountValue"] as! Int)
+        bqExportable.actualCharge = NSNumber(double: record["actualCharge"] as! Double)
+        bqExportable.nominalCharge = NSNumber(double: record["nominalCharge"] as! Double)
+        bqExportable.maximumCharge = NSNumber(double: record["maximumCharge"] as! Double)
+        bqExportable.minimumCharge = NSNumber(double: record["minimumCharge"] as! Double)
+        return bqExportable
     }
 }
 // MARK:- Helper functions
