@@ -196,10 +196,10 @@ class BQCloudImporter {
         for r in services {
             let service = r.service
             let record = r.record
-            if let reference = record["parentCategoryReference"] as? CKReference {
-                let cloudID = reference.recordID.recordName
+            if let categoryReference = record["parentCategoryReference"] as? CKReference {
+                let categoryID = categoryReference.recordID.recordName
                 moc.performBlockAndWait() {
-                    let parentCategory = ServiceCategory.fetchForCloudID(cloudID, moc: self.moc)
+                    let parentCategory = ServiceCategory.fetchForCloudID(categoryID, moc: self.moc)
                     service.serviceCategory = parentCategory
                 }
             }
@@ -241,11 +241,16 @@ class BQCloudImporter {
             let saleCloudID = saleReference.recordID.recordName
             let serviceReference = record["serviceReference"] as! CKReference
             let serviceCloudID = serviceReference.recordID.recordName
+            let employeeReference = record["employeeReference"] as! CKReference
+            let employeeCloudID = employeeReference.recordID.recordName
+
             moc.performBlockAndWait() {
                 let sale = Sale.fetchForCloudID(saleCloudID, moc: self.moc)
                 saleItem.sale = sale
                 let service = Service.fetchForCloudID(serviceCloudID, moc: self.moc)
                 saleItem.service = service
+                let employee = Employee.fetchForCloudID(employeeCloudID, moc: self.moc)
+                saleItem.performedBy = employee
             }
         }
     }
