@@ -237,24 +237,25 @@ class BQCloudImporter {
         for r in saleItems {
             let saleItem = r.saleItem
             let record = r.record
-            let saleReference = record["parentSaleReference"] as! CKReference
-            let saleCloudID = saleReference.recordID.recordName
-            let serviceReference = record["serviceReference"] as! CKReference
-            let serviceCloudID = serviceReference.recordID.recordName
-            let employeeReference = record["employeeReference"] as! CKReference
-            let employeeCloudID = employeeReference.recordID.recordName
-
             moc.performBlockAndWait() {
-                let sale = Sale.fetchForCloudID(saleCloudID, moc: self.moc)
-                saleItem.sale = sale
-                let service = Service.fetchForCloudID(serviceCloudID, moc: self.moc)
-                saleItem.service = service
-                let employee = Employee.fetchForCloudID(employeeCloudID, moc: self.moc)
-                saleItem.performedBy = employee
+                if let saleReference = record["parentSaleReference"] as? CKReference {
+                    let saleCloudID = saleReference.recordID.recordName
+                    let sale = Sale.fetchForCloudID(saleCloudID, moc: self.moc)
+                    saleItem.sale = sale
+                }
+                if let serviceReference = record["serviceReference"] as? CKReference {
+                    let serviceCloudID = serviceReference.recordID.recordName
+                    let service = Service.fetchForCloudID(serviceCloudID, moc: self.moc)
+                    saleItem.service = service
+                }
+                if let employeeReference = record["employeeReference"] as? CKReference {
+                    let employeeCloudID = employeeReference.recordID.recordName
+                    let employee = Employee.fetchForCloudID(employeeCloudID, moc: self.moc)
+                    saleItem.performedBy = employee
+                }
             }
         }
     }
-    
     
     private func createShallowCoredataObjectsFromCloudRecords(records:[CKRecord]) {
         for record in records {

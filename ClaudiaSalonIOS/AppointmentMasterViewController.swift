@@ -49,8 +49,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.performSegueWithIdentifier("GotoImportViewController", sender: self)
             return
         }
-        //let importer = self.importController
-        //importer.fetchCloudAppointments()
     }
 
     override func didReceiveMemoryWarning() {

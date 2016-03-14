@@ -234,6 +234,7 @@ public class ICloudCustomer : ICloudRecord {
 public class ICloudEmployee : ICloudRecord {
     var firstName: String?
     var lastName: String?
+    
     init(coredataEmployee: Employee, parentSalonID: NSManagedObjectID) {
         
         super.init(recordType:ICloudRecordType.Employee.rawValue, managedObject: coredataEmployee, parentSalonID: parentSalonID)
@@ -262,17 +263,28 @@ public class ICloudEmployee : ICloudRecord {
 }
 // MARK:- class ICloudServiceCategory
 public class ICloudServiceCategory : ICloudRecord {
+    var parentCategoryReference: CKReference?
     var name: String?
+    
     init(coredataServiceCategory: ServiceCategory, parentSalonID: NSManagedObjectID) {
         
         super.init(recordType:ICloudRecordType.ServiceCategory.rawValue,managedObject: coredataServiceCategory, parentSalonID: parentSalonID)
         
         coredataServiceCategory.managedObjectContext!.performBlockAndWait() {
             self.name = coredataServiceCategory.name
+            
+            // Assign this service's associated category
+            if let parentServiceCategory = coredataServiceCategory.parent {
+                let cloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: parentServiceCategory, parentSalonID:parentSalonID)
+                self.parentCategoryReference = CKReference(recordID: cloudServiceCategory.recordID!, action: CKReferenceAction.None)
+            }
+            
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
         let record = super.makeCloudKitRecord()
+        record["parentCategoryReference"] = parentCategoryReference
+
         record["name"] = name
         return record
     }
