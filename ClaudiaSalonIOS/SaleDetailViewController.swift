@@ -64,6 +64,16 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
     func saleItemWasUpdated(saleItem: SaleItem) {
         self.delegate?.saleItemWasUpdated(saleItem)
     }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GotoSelectEmployee" {
+            let vc = segue.destinationViewController as! SelectStaffTableViewController
+            if let indexPath = self.tableView.indexPathForSelectedRow {
+                let saleItem = self.fetchedResultsController.objectAtIndexPath(indexPath) as! SaleItem
+                vc.selectedEmployee = saleItem.performedBy
+            }
+        }
+    }
 }
 
 extension SaleDetailViewController {

@@ -41,6 +41,7 @@
 		534F0AF41C61FC1700520214 /* BQExportDeletionRequest+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F0AF21C61FC1700520214 /* BQExportDeletionRequest+CoreDataProperties.swift */; };
 		534F0AF51C61FC1700520214 /* BQExportDeletionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F0AF31C61FC1700520214 /* BQExportDeletionRequest.swift */; };
 		534F0AF71C63C4C700520214 /* BQDeletionRequestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534F0AF61C63C4C700520214 /* BQDeletionRequestList.swift */; };
+		5351557A1C986EE6008123A8 /* SelectStaffTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535155791C986EE6008123A8 /* SelectStaffTableViewController.swift */; };
 		535191691B36B60500F8D37A /* AMCPasswordEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 535191671B36B60500F8D37A /* AMCPasswordEditor.m */; };
 		5351916A1B36B60500F8D37A /* AMCPasswordEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535191681B36B60500F8D37A /* AMCPasswordEditor.xib */; };
 		5351916E1B37F56D00F8D37A /* AMCChangeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5351916C1B37F56D00F8D37A /* AMCChangeUserViewController.m */; };
@@ -449,6 +450,7 @@
 		534F0AF21C61FC1700520214 /* BQExportDeletionRequest+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BQExportDeletionRequest+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		534F0AF31C61FC1700520214 /* BQExportDeletionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQExportDeletionRequest.swift; sourceTree = "<group>"; };
 		534F0AF61C63C4C700520214 /* BQDeletionRequestList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQDeletionRequestList.swift; sourceTree = "<group>"; };
+		535155791C986EE6008123A8 /* SelectStaffTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectStaffTableViewController.swift; sourceTree = "<group>"; };
 		535191661B36B60500F8D37A /* AMCPasswordEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCPasswordEditor.h; sourceTree = "<group>"; };
 		535191671B36B60500F8D37A /* AMCPasswordEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCPasswordEditor.m; sourceTree = "<group>"; };
 		535191681B36B60500F8D37A /* AMCPasswordEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCPasswordEditor.xib; sourceTree = "<group>"; };
@@ -1172,6 +1174,14 @@
 				5381C5E41B2DF22200E99946 /* AMCCashBookRootNode.m */,
 			);
 			name = "Cashbook node subclass";
+			sourceTree = "<group>";
+		};
+		535155781C986E90008123A8 /* Select Staff */ = {
+			isa = PBXGroup;
+			children = (
+				535155791C986EE6008123A8 /* SelectStaffTableViewController.swift */,
+			);
+			name = "Select Staff";
 			sourceTree = "<group>";
 		};
 		535191651B36B5B400F8D37A /* EditPassword */ = {
@@ -2572,6 +2582,7 @@
 		53FDCA8B1C7A7BC1006B4002 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				535155781C986E90008123A8 /* Select Staff */,
 				5370D4F71C9186FF00319147 /* iCloud Synchronization */,
 				5353EE691C876B5300D09B98 /* Launch screen */,
 				5358DD641C8D7D43009DD63E /* Find Customer */,
@@ -3103,6 +3114,7 @@
 				5370D5041C94296800319147 /* CloudImporter.swift in Sources */,
 				5370D4F61C916EF200319147 /* ImportTableViewController.swift in Sources */,
 				53FDCA931C7AFCF2006B4002 /* AMCThreadSafeCounter.swift in Sources */,
+				5351557A1C986EE6008123A8 /* SelectStaffTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
