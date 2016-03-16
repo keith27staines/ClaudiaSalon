@@ -61,17 +61,22 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
             saleItem.sale = self.sale
         }
     }
+    func employeeInfoButtonTapped(cell: SaleDetailCellTableViewCell) {
+        self.performSegueWithIdentifier("GotoSelectEmployee", sender: cell)
+        
+    }
+    func serviceInfoButtonTapped(cell: SaleDetailCellTableViewCell) {
+        assertionFailure("Not implemented yet")
+    }
     func saleItemWasUpdated(saleItem: SaleItem) {
         self.delegate?.saleItemWasUpdated(saleItem)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GotoSelectEmployee" {
+            let cell = sender as! SaleDetailCellTableViewCell
             let vc = segue.destinationViewController as! SelectStaffTableViewController
-            if let indexPath = self.tableView.indexPathForSelectedRow {
-                let saleItem = self.fetchedResultsController.objectAtIndexPath(indexPath) as! SaleItem
-                vc.selectedEmployee = saleItem.performedBy
-            }
+            vc.selectedEmployee = cell.saleItem?.performedBy
         }
     }
 }
@@ -102,6 +107,8 @@ extension SaleDetailViewController {
             return
         }
         cell.delegate = self
+        cell.employeeInfoBlock = self.employeeInfoButtonTapped
+        cell.serviceInfoBlock = self.serviceInfoButtonTapped
         cell.updateWithSaleItem(saleItem)
     }
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

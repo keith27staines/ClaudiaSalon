@@ -23,7 +23,14 @@ class SelectStaffTableViewController : UITableViewController , NSFetchedResultsC
         self.fetchedResultsController.delegate = self
         try! self.fetchedResultsController.performFetch()
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if let employee = self.selectedEmployee {
+            if let indexPath = self.fetchedResultsController.indexPathForObject(employee) {
+                self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: false)
+            }
+        }
+    }
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return self.fetchedResultsController.sections?.count ?? 0
     }

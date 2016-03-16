@@ -725,11 +725,14 @@
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQO-t8-DfW">
                                             <rect key="frame" x="157" y="4" width="22" height="22"/>
+                                            <connections>
+                                                <action selector="serviceInfoTapped:" destination="zah-et-0Lr" eventType="touchUpInside" id="XWb-Bd-yGw"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LxQ-7W-b1k">
                                             <rect key="frame" x="157" y="34" width="22" height="22"/>
                                             <connections>
-                                                <segue destination="m1s-9E-pYH" kind="show" identifier="GotoSelectEmployee" id="ZnB-EA-dQZ"/>
+                                                <action selector="employeeInfoTapped:" destination="zah-et-0Lr" eventType="touchUpInside" id="ssJ-Sm-ReS"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -797,6 +800,7 @@
                     <navigationItem key="navigationItem" title="Sale items" id="wx3-cP-XxO"/>
                     <connections>
                         <outlet property="tableView" destination="jd0-0s-Zde" id="V5X-XV-Fgx"/>
+                        <segue destination="m1s-9E-pYH" kind="show" identifier="GotoSelectEmployee" id="ma9-IH-m22"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="28x-Y6-vtD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -846,7 +850,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3qv-7Q-WAQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3688" y="1420"/>
+            <point key="canvasLocation" x="3859" y="1489"/>
         </scene>
         <!--Item-->
         <scene sceneID="Nki-YV-4Qg">

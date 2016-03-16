@@ -13,10 +13,12 @@ protocol SaleItemUpdateReceiver: class {
 
 class SaleDetailCellTableViewCell: UITableViewCell {
     weak var delegate:SaleItemUpdateReceiver?
-    private var saleItem:SaleItem?
+    private (set) var saleItem:SaleItem?
     private var discountType:NSNumber?
     private var discountValue:NSNumber?
     private var beforeDiscount:NSNumber?
+    var serviceInfoBlock:((cell:SaleDetailCellTableViewCell)->Void)?
+    var employeeInfoBlock:((cell:SaleDetailCellTableViewCell)->Void)?
     
     @IBOutlet weak var employeeNameLabel: UILabel!
     @IBOutlet weak var serviceNameLabel: UILabel!
@@ -44,6 +46,18 @@ class SaleDetailCellTableViewCell: UITableViewCell {
         let rounded = round(sender.value)
         self.beforeDiscount = NSNumber(float: rounded)
         self.updateSaleItem()
+    }
+    
+    @IBAction func serviceInfoTapped(sender: AnyObject) {
+        if let serviceInfoBlock = serviceInfoBlock {
+            serviceInfoBlock(cell: self)
+        }
+    }
+    
+    @IBAction func employeeInfoTapped(sender: AnyObject) {
+        if let employeeInfoBlock = employeeInfoBlock {
+            employeeInfoBlock(cell: self)
+        }
     }
     
     func updateSaleItem() {
