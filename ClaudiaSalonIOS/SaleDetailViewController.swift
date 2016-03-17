@@ -67,20 +67,27 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         
     }
     func serviceInfoButtonTapped(cell: SaleDetailCellTableViewCell) {
-        assertionFailure("Not implemented yet")
+        self.performSegueWithIdentifier("GotoSelectService", sender: cell)
     }
     func saleItemWasUpdated(saleItem: SaleItem) {
         self.delegate?.saleItemWasUpdated(saleItem)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let cell = sender as! SaleDetailCellTableViewCell
         if segue.identifier == "GotoSelectEmployee" {
-            let cell = sender as! SaleDetailCellTableViewCell
             let vc = segue.destinationViewController as! SelectStaffTableViewController
             saleItemBeingEdited = cell.saleItem
             vc.selectedEmployee = saleItemBeingEdited!.performedBy
             vc.employeeWasSelected = self.employeeWasChanged
         }
+        if segue.identifier == "GotoSelectService" {
+            let vc = segue.destinationViewController as! SelectServiceViewController
+            saleItemBeingEdited = cell.saleItem
+//            vc.selectedEmployee = saleItemBeingEdited!.performedBy
+//            vc.employeeWasSelected = self.employeeWasChanged
+        }
+
     }
     
     func employeeWasChanged(selectedEmployee:Employee) {
