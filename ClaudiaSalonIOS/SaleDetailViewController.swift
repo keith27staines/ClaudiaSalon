@@ -14,6 +14,7 @@ import CoreData
 
 class SaleDetailViewController: UITableViewController, NSFetchedResultsControllerDelegate, SaleItemUpdateReceiver {
     var delegate:SaleItemUpdateReceiver?
+    var saleItemBeingEdited:SaleItem?
     var saleID:NSManagedObjectID! {
         didSet {
             self._sale = nil
@@ -76,8 +77,14 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         if segue.identifier == "GotoSelectEmployee" {
             let cell = sender as! SaleDetailCellTableViewCell
             let vc = segue.destinationViewController as! SelectStaffTableViewController
-            vc.selectedEmployee = cell.saleItem?.performedBy
+            saleItemBeingEdited = cell.saleItem
+            vc.selectedEmployee = saleItemBeingEdited!.performedBy
+            vc.employeeWasSelected = self.employeeWasChanged
         }
+    }
+    
+    func employeeWasChanged(selectedEmployee:Employee) {
+        self.saleItemBeingEdited!.performedBy = selectedEmployee
     }
 }
 

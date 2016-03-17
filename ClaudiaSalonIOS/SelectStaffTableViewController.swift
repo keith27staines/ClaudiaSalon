@@ -8,10 +8,14 @@
 
 import UIKit
 
+
+
 class SelectStaffTableViewController : UITableViewController , NSFetchedResultsControllerDelegate {
     var selectedEmployee:Employee?
     var fetchedResultsController:NSFetchedResultsController!
     let moc = Coredata.sharedInstance.backgroundContext
+    
+    var employeeWasSelected:((selectedEmployee:Employee)->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,5 +58,34 @@ class SelectStaffTableViewController : UITableViewController , NSFetchedResultsC
             }
         }
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let employee = self.fetchedResultsController.fetchedObjects?[indexPath.row] as? Employee else {
+            fatalError("User tapped a row with index path not associated with an employee")
+        }
+        
+        // Deselect the previously selected employee (if there is one)
+        if let oldEmployee = self.selectedEmployee {
+            if oldEmployee == employee {
+                return // Nothing to do - user tapped the already selected row
+            }
+            guard let oldIndexPath = self.fetchedResultsController.indexPathForObject(oldEmployee) else {
+                fatalError("Currently selected employee is not in the table")
+            }
+            if let cell = tableView.cellForRowAtIndexPath(oldIndexPath) as UITableViewCell? {
+                self.selectedEmployee = nil
+                cell.accessoryType = .None
+            }
+        }
+        
+        // Select the tapped employee
+        self.selectedEmployee = employee
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) {
+            cell.accessoryType = .Checkmark
+            if let callback = self.employeeWasSelected {
+                callback(selectedEmployee:employee)
+            }
+        }
     }
 }
