@@ -18,6 +18,8 @@
 		530D54A61B270C9300F6C4FE /* Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 530D54A51B270C9300F6C4FE /* Property List.plist */; };
 		530D62571C6DCFCB0064794B /* AMCServiceTableCellViewMac.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D62561C6DCFCB0064794B /* AMCServiceTableCellViewMac.m */; };
 		530D62591C75B0A60064794B /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530D62581C75B0A60064794B /* CloudKit.framework */; };
+		5319A9C81C9AF4220025CB1A /* ServiceCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5319A9C71C9AF4220025CB1A /* ServiceCategoryTableViewController.swift */; };
+		5319A9CA1C9AF4700025CB1A /* ServiceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5319A9C91C9AF4700025CB1A /* ServiceTableViewController.swift */; };
 		531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25521AB80E5100EB3472 /* AMCCashBook.m */; };
 		531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25561AB960F600EB3472 /* AMCCashBookViewController.m */; };
 		531B25591AB960F600EB3472 /* AMCCashBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531B25571AB960F600EB3472 /* AMCCashBookViewController.xib */; };
@@ -413,6 +415,8 @@
 		530D62561C6DCFCB0064794B /* AMCServiceTableCellViewMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCServiceTableCellViewMac.m; sourceTree = "<group>"; };
 		530D62581C75B0A60064794B /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		53146BFC1AB225EC003B7658 /* ClaudiaSalon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = ClaudiaSalon.entitlements; path = ../ClaudiaSalon.entitlements; sourceTree = "<group>"; };
+		5319A9C71C9AF4220025CB1A /* ServiceCategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceCategoryTableViewController.swift; sourceTree = "<group>"; };
+		5319A9C91C9AF4700025CB1A /* ServiceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceTableViewController.swift; sourceTree = "<group>"; };
 		531B25511AB80E5100EB3472 /* AMCCashBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBook.h; sourceTree = "<group>"; };
 		531B25521AB80E5100EB3472 /* AMCCashBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBook.m; sourceTree = "<group>"; };
 		531B25551AB960F600EB3472 /* AMCCashBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBookViewController.h; sourceTree = "<group>"; };
@@ -2436,6 +2440,8 @@
 			isa = PBXGroup;
 			children = (
 				53F6B4D01C9AB81900B3F56D /* SelectServiceViewController.swift */,
+				5319A9C71C9AF4220025CB1A /* ServiceCategoryTableViewController.swift */,
+				5319A9C91C9AF4700025CB1A /* ServiceTableViewController.swift */,
 			);
 			name = "Select Service";
 			sourceTree = "<group>";
@@ -3079,6 +3085,7 @@
 				5358DD631C8D7934009DD63E /* FindCustomerCell.swift in Sources */,
 				53FDCA781C7A6E3F006B4002 /* Note.m in Sources */,
 				5358DD531C8C9380009DD63E /* OpeningHoursWeekTemplate.m in Sources */,
+				5319A9CA1C9AF4700025CB1A /* ServiceTableViewController.swift in Sources */,
 				5353EE661C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift in Sources */,
 				5358DD611C8D7085009DD63E /* FindCustomerViewController.swift in Sources */,
 				53FDCA661C7A081A006B4002 /* Customer.m in Sources */,
@@ -3096,6 +3103,7 @@
 				53FDCA871C7A79E7006B4002 /* AMCDiscountCalculator.m in Sources */,
 				536118FC1C803DA000758CF4 /* Cloud.swift in Sources */,
 				53FDCA7D1C7A7621006B4002 /* Permission.m in Sources */,
+				5319A9C81C9AF4220025CB1A /* ServiceCategoryTableViewController.swift in Sources */,
 				53FDCA811C7A7638006B4002 /* Account.m in Sources */,
 				5358DD5D1C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m in Sources */,
 				5358DD411C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m in Sources */,

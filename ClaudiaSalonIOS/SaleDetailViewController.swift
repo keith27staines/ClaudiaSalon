@@ -84,12 +84,15 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         if segue.identifier == "GotoSelectService" {
             let vc = segue.destinationViewController as! SelectServiceViewController
             saleItemBeingEdited = cell.saleItem
-//            vc.selectedEmployee = saleItemBeingEdited!.performedBy
-//            vc.employeeWasSelected = self.employeeWasChanged
+            vc.currentCategory = saleItemBeingEdited?.service?.serviceCategory
+            vc.selectedService = saleItemBeingEdited!.service
+            vc.serviceWasSelected = self.serviceWasChanged
         }
 
     }
-    
+    func serviceWasChanged(selectedService:Service) {
+        self.saleItemBeingEdited!.service = selectedService
+    }
     func employeeWasChanged(selectedEmployee:Employee) {
         self.saleItemBeingEdited!.performedBy = selectedEmployee
     }
