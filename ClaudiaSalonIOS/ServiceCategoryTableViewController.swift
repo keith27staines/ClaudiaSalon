@@ -8,10 +8,10 @@
 
 import UIKit
 
-
 class ServiceCategoryTableViewController : UITableViewController {
     var currentCategory:ServiceCategory?
     var _fetchController:NSFetchedResultsController?
+    var categoryWasSelected:((selectedCategory:ServiceCategory)->Void)?
     var fetchController:NSFetchedResultsController {
         if _fetchController == nil {
             let fetchRequest = NSFetchRequest(entityName: "ServiceCategory")
@@ -38,6 +38,12 @@ extension ServiceCategoryTableViewController {
         self.configure(cell, indexPath: indexPath)
         return cell
     }
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.currentCategory = self.fetchController.objectAtIndexPath(indexPath) as? ServiceCategory
+        if let callback = self.categoryWasSelected {
+            callback(selectedCategory: self.currentCategory!)
+        }
+    }
     func configure(cell:UITableViewCell, indexPath:NSIndexPath) {
         let category = self.fetchController.objectAtIndexPath(indexPath) as! ServiceCategory
         let moc = category.managedObjectContext!
@@ -45,6 +51,5 @@ extension ServiceCategoryTableViewController {
             cell.textLabel?.text = ""
             cell.detailTextLabel?.text = category.name
         }
-        
     }
 }

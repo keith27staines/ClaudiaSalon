@@ -10,6 +10,8 @@ import UIKit
 
 class SelectServiceViewController : UIViewController {
     var categoryController:ServiceCategoryTableViewController?
+    var serviceController:ServiceTableViewController?
+    
     var selectedService:Service? {
         didSet {
             if selectedService == nil {
@@ -26,17 +28,26 @@ class SelectServiceViewController : UIViewController {
         if segue.identifier == "EmbeddedCategories" {
             let vc = segue.destinationViewController as! ServiceCategoryTableViewController
             vc.currentCategory = self.currentCategory
+            vc.categoryWasSelected = self.categoryWasSelected
             self.categoryController = vc
             return
         }
         if segue.identifier == "EmbeddedServices" {
             let vc = segue.destinationViewController as! ServiceTableViewController
+            vc.category = self.currentCategory
             vc.selectedService = self.selectedService
             vc.serviceWasSelected = self.serviceWasSelected
+            self.serviceController = vc
             return
         }
     }
-
+    func categoryWasSelected(category:ServiceCategory) {
+        if category == self.currentCategory {
+            return
+        }
+        self.currentCategory = category
+        self.serviceController?.category = category
+    }
     func serviceWasSelectedHandler(service:Service) {
         if let callback = self.serviceWasSelected {
             callback(selectedService: service)

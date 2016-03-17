@@ -9,7 +9,18 @@
 import UIKit
 
 class ServiceTableViewController : UITableViewController {
-    
+    var category:ServiceCategory! {
+        didSet {
+            if let f = _fetchController {
+                let m = f.managedObjectContext
+                m.performBlockAndWait() {
+                    self._fetchController = nil
+                    let _ = self.fetchController
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
     var selectedService:Service?
     var serviceWasSelected:((selectedService:Service)->Void)?
     
@@ -17,8 +28,7 @@ class ServiceTableViewController : UITableViewController {
     var fetchController:NSFetchedResultsController {
         if _fetchController == nil {
             let fetchRequest = NSFetchRequest(entityName: "Service")
-            let parentCategory = self.selectedService!.serviceCategory!
-            fetchRequest.predicate = NSPredicate(format: "serviceCategory = %@", parentCategory)
+            fetchRequest.predicate = NSPredicate(format: "serviceCategory = %@", self.category)
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
             _fetchController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: Coredata.sharedInstance.backgroundContext, sectionNameKeyPath: nil, cacheName: nil)
             try! _fetchController?.performFetch()
