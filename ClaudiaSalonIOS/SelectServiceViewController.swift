@@ -9,21 +9,77 @@
 import UIKit
 
 class SelectServiceViewController : UIViewController {
+    
+    
     var categoryController:ServiceCategoryTableViewController?
     var serviceController:ServiceTableViewController?
+    var serviceWasSelected:((selectedService:Service)->Void)?
+    var originalService:Service?
+    var initialCategoryListDistanceFromFloor:CGFloat = 99999
     
-    var selectedService:Service? {
-        didSet {
-            if selectedService == nil {
-                self.currentCategory = nil
-            } else {
-                self.currentCategory = selectedService?.serviceCategory
+    @IBOutlet weak var categoryContainerHeightConstraint: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var categoryContainerBottomConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var upCategoryButton: UIButton!
+    
+    @IBOutlet weak var parentLabel: UILabel!
+    
+    @IBOutlet weak var servicesInCategoryLabel: UILabel!
+    
+    @IBOutlet weak var categoryListContainerView: UIView!
+    
+    @IBOutlet weak var serviceListContainerView: UIView!
+    
+    @IBAction func upCategoryButtonClicked(sender: AnyObject) {
+        let moc = Coredata.sharedInstance.backgroundContext
+        moc.performBlockAndWait() {
+            if let upCategory = self.currentCategory?.parent {
+                self.categoryWasSelected(upCategory)
             }
         }
     }
-    var currentCategory:ServiceCategory?
-    var serviceWasSelected:((selectedService:Service)->Void)?
+    var selectedService:Service? {
+        didSet {
+        }
+    }
+    var currentCategory:ServiceCategory? {
+        didSet {
+            if let category = self.currentCategory {
+                self.categoryWasSelected(category)
+            }
+            self.updateParentCategory()
+        }
+    }
     
+    func updateParentCategory() {
+        guard let _ = self.parentLabel else {
+            return // Connections not set up yet
+        }
+        let moc = Coredata.sharedInstance.backgroundContext
+        var name:String?
+        moc.performBlockAndWait() {
+            if let category = self.currentCategory {
+                name = category.name
+            }
+        }
+        self.parentLabel.text = name
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.parentLabel.text = self.currentCategory?.name
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if initialCategoryListDistanceFromFloor == 99999 {
+            initialCategoryListDistanceFromFloor = self.view.frame.height  - self.categoryController!.view.frame.height - self.categoryController!.view.frame.origin.y
+        }
+    }
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "EmbeddedCategories" {
             let vc = segue.destinationViewController as! ServiceCategoryTableViewController
@@ -46,7 +102,36 @@ class SelectServiceViewController : UIViewController {
             return
         }
         self.currentCategory = category
-        self.serviceController?.category = category
+        var showServiceCategories:Bool?
+        var showServices:Bool?
+        Coredata.sharedInstance.backgroundContext.performBlockAndWait() {
+            if category != self.categoryController?.currentCategory {
+                self.categoryController?.currentCategory = category
+            }
+            self.serviceController?.category = category
+            showServiceCategories = (self.categoryController!.subCategoriesCount > 0) ? true : false
+            showServices = (self.serviceController!.servicesCount > 0) ? true : false
+        }
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            self.categoryController?.reloadData()
+            self.serviceController?.reloadData()
+            UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10.0, options: UIViewAnimationOptions(), animations: {
+                //                    if showServiceCategories {
+                //                        self.categoryListContainerView.alpha = 1.0
+                //                    } else {
+                //                        self.categoryListContainerView.alpha = 0.0
+                //                    }
+                if showServices! {
+                    if showServiceCategories! {
+                        self.categoryContainerBottomConstraint.constant = self.view.frame.height / 2.0
+                    } else {
+                        self.categoryContainerBottomConstraint.constant = self.view.frame.height * 9.0 / 10.0
+                    }
+                } else {
+                    self.categoryContainerBottomConstraint.constant = 8
+                }
+                }, completion: nil)
+        }
     }
     func serviceWasSelectedHandler(service:Service) {
         if let callback = self.serviceWasSelected {

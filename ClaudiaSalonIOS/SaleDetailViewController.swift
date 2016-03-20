@@ -85,16 +85,33 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
             let vc = segue.destinationViewController as! SelectServiceViewController
             saleItemBeingEdited = cell.saleItem
             vc.currentCategory = saleItemBeingEdited?.service?.serviceCategory
+            vc.originalService = saleItemBeingEdited!.service
             vc.selectedService = saleItemBeingEdited!.service
             vc.serviceWasSelected = self.serviceWasChanged
         }
 
     }
     func serviceWasChanged(selectedService:Service) {
-        self.saleItemBeingEdited!.service = selectedService
+        var indexPath:NSIndexPath?
+        self.saleItemBeingEdited?.managedObjectContext?.performBlockAndWait() {
+            let saleItem = self.saleItemBeingEdited!
+            saleItem.service = selectedService
+            saleItem.minimumCharge = selectedService.minimumCharge
+            saleItem.maximumCharge = selectedService.maximumCharge
+            saleItem.nominalCharge = selectedService.nominalCharge
+            saleItem.updatePrice()
+            indexPath = self.fetchedResultsController.indexPathForObject(saleItem)!
+        }
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
+                self.configureCell(cell, atIndexPath: indexPath!)
+            }
+        }
     }
     func employeeWasChanged(selectedEmployee:Employee) {
-        self.saleItemBeingEdited!.performedBy = selectedEmployee
+        selectedEmployee.managedObjectContext?.performBlockAndWait() {
+            self.saleItemBeingEdited!.performedBy = selectedEmployee
+        }
     }
 }
 
@@ -117,6 +134,7 @@ extension SaleDetailViewController {
     }
     
     func configureCell(cell:UITableViewCell, atIndexPath:NSIndexPath) {
+    
         guard let cell = cell as? SaleDetailCellTableViewCell else {
             return
         }
@@ -160,7 +178,7 @@ extension SaleDetailViewController {
         fetchRequest.entity = entity
         let predicate = NSPredicate(format: "sale = %@", self.saleID)
         fetchRequest.predicate = predicate
-        let sortDescriptor = NSSortDescriptor(key: "actualCharge", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "createdDate", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
 
         // Set the batch size to a suitable number.

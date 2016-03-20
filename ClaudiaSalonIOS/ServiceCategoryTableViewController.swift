@@ -9,29 +9,66 @@
 import UIKit
 
 class ServiceCategoryTableViewController : UITableViewController {
-    var currentCategory:ServiceCategory?
+    var currentCategory:ServiceCategory? {
+        didSet {
+            Coredata.sharedInstance.backgroundContext.performBlockAndWait() {
+                self._fetchController = nil
+                self._fetchController = self.fetchController
+            }
+        }
+    }
+    func reloadData() {
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            if let tableView = self.tableView {
+                tableView.reloadData()
+            }
+        }
+    }
     var _fetchController:NSFetchedResultsController?
     var categoryWasSelected:((selectedCategory:ServiceCategory)->Void)?
     var fetchController:NSFetchedResultsController {
-        if _fetchController == nil {
-            let fetchRequest = NSFetchRequest(entityName: "ServiceCategory")
-            let parentCategory = self.currentCategory!.parent!
-            fetchRequest.predicate = NSPredicate(format: "parent = %@", parentCategory)
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-            _fetchController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: Coredata.sharedInstance.backgroundContext, sectionNameKeyPath: nil, cacheName: nil)
-            try! _fetchController?.performFetch()
+        let moc = Coredata.sharedInstance.backgroundContext
+        moc.performBlockAndWait() {
+            if self._fetchController == nil {
+                let fetchRequest = NSFetchRequest(entityName: "ServiceCategory")
+                let parentCategory = self.currentCategory!
+                fetchRequest.predicate = NSPredicate(format: "parent = %@", parentCategory)
+                fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+                self._fetchController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
+                try! self._fetchController?.performFetch()
+            }
         }
         return _fetchController!
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.reloadData()
+    }
+    var subCategoriesCount:Int {
+        var n:Int?
+        Coredata.sharedInstance.backgroundContext.performBlockAndWait() {
+            let sectionInfo = self.fetchController.sections![0]
+            n = sectionInfo.numberOfObjects
+        }
+        return n!
     }
 }
 
 extension ServiceCategoryTableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.fetchController.sections?.count ?? 1
+        var n:Int?
+        Coredata.sharedInstance.backgroundContext.performBlockAndWait() {
+            n = self.fetchController.sections?.count ?? 1
+        }
+        return n!
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchController.sections![section]
-        return sectionInfo.numberOfObjects
+        var n:Int?
+        Coredata.sharedInstance.backgroundContext.performBlockAndWait() {
+            let sectionInfo = self.fetchController.sections![section]
+            n = sectionInfo.numberOfObjects
+        }
+        return n!
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell")!
@@ -39,17 +76,24 @@ extension ServiceCategoryTableViewController {
         return cell
     }
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.currentCategory = self.fetchController.objectAtIndexPath(indexPath) as? ServiceCategory
-        if let callback = self.categoryWasSelected {
-            callback(selectedCategory: self.currentCategory!)
+        let moc = self.fetchController.managedObjectContext
+        var newSelection:ServiceCategory?
+        moc.performBlockAndWait() {
+            newSelection = self.fetchController.objectAtIndexPath(indexPath) as? ServiceCategory
+        }
+        
+        if let callback = self.categoryWasSelected, let newSelection = newSelection {
+            callback(selectedCategory:newSelection)
         }
     }
+    
     func configure(cell:UITableViewCell, indexPath:NSIndexPath) {
-        let category = self.fetchController.objectAtIndexPath(indexPath) as! ServiceCategory
-        let moc = category.managedObjectContext!
-        moc.performBlockAndWait() {
-            cell.textLabel?.text = ""
-            cell.detailTextLabel?.text = category.name
+        Coredata.sharedInstance.backgroundContext.performBlockAndWait() {
+            let category = self.fetchController.objectAtIndexPath(indexPath) as! ServiceCategory
+            let name = category.name
+            NSOperationQueue.mainQueue().addOperationWithBlock() {
+                cell.textLabel?.text = name
+            }
         }
     }
 }
