@@ -49,6 +49,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.performSegueWithIdentifier("GotoImportViewController", sender: self)
             return
         }
+        //self.performSegueWithIdentifier("GotoImportViewController", sender: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,6 +63,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             let appointment = Appointment.newObjectWithMoc(context)
             appointment.customer = self.salon.anonymousCustomer
             appointment.sale?.customer = self.salon.anonymousCustomer
+            appointment.appointmentDate = NSDate()
+            appointment.bookedDuration = 30 * 60
             Coredata.sharedInstance.saveContext()
         }
     }
@@ -85,12 +88,20 @@ extension MasterViewController {
     // MARK: - Table View Data Source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.fetchedResultsController.sections?.count ?? 0
+        var n:Int!
+        self.fetchedResultsController.managedObjectContext.performBlockAndWait() {
+            n = self.fetchedResultsController.sections?.count ?? 0
+        }
+        return n
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sectionInfo = self.fetchedResultsController.sections![section]
-        return sectionInfo.numberOfObjects
+        var n:Int!
+        self.fetchedResultsController.managedObjectContext.performBlockAndWait() {
+            let sectionInfo = self.fetchedResultsController.sections![section]
+            n = sectionInfo.numberOfObjects
+        }
+        return n
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -120,8 +131,9 @@ extension MasterViewController {
         guard let appointmentCell = cell as? AppointmentViewCellTableViewCell else {
             preconditionFailure("Cell is not an AppointmentViewCellTableViewCell")
         }
-        let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
-        appointment.managedObjectContext!.performBlock() {
+        let moc = self.fetchedResultsController.managedObjectContext
+        moc.performBlockAndWait() {
+            let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
             appointmentCell.appointment = appointment
         }
     }

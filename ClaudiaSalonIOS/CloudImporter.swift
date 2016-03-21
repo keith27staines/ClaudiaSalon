@@ -166,11 +166,15 @@ class BQCloudImporter {
         let r = salons[0]
         let salon = r.salon
         let record = r.record
-        let reference = record["anonymousCustomerReference"] as! CKReference
-        let cloudID = reference.recordID.recordName
+        let anonymousCustomerReference = record["anonymousCustomerReference"] as! CKReference
+        let anonymousCustomerCloudID = anonymousCustomerReference.recordID.recordName
+        let rootServiceCategoryReference = record["rootServiceCategoryReference"] as! CKReference
+        let rootServiceCategoryCloudID = rootServiceCategoryReference.recordID.recordName
         moc.performBlockAndWait() {
-            let anonymousCustomer = Customer.fetchForCloudID(cloudID, moc: self.moc)
+            let anonymousCustomer = Customer.fetchForCloudID(anonymousCustomerCloudID, moc: self.moc)
+            let rootServiceCategory = ServiceCategory.fetchForCloudID(rootServiceCategoryCloudID, moc: self.moc)
             salon.anonymousCustomer = anonymousCustomer
+            salon.rootServiceCategory = rootServiceCategory
         }
     }
     func deepProcessEmployees() {

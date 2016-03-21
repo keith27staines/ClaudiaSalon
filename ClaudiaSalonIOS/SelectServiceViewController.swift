@@ -115,22 +115,15 @@ class SelectServiceViewController : UIViewController {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
             self.categoryController?.reloadData()
             self.serviceController?.reloadData()
-            UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10.0, options: UIViewAnimationOptions(), animations: {
-                //                    if showServiceCategories {
-                //                        self.categoryListContainerView.alpha = 1.0
-                //                    } else {
-                //                        self.categoryListContainerView.alpha = 0.0
-                //                    }
-                if showServices! {
-                    if showServiceCategories! {
-                        self.categoryContainerBottomConstraint.constant = self.view.frame.height / 2.0
-                    } else {
-                        self.categoryContainerBottomConstraint.constant = self.view.frame.height * 9.0 / 10.0
-                    }
+            if showServices! {
+                if showServiceCategories! {
+                    self.categoryContainerBottomConstraint.constant = self.view.frame.height / 2.0
                 } else {
-                    self.categoryContainerBottomConstraint.constant = 8
+                    self.categoryContainerBottomConstraint.constant = self.view.frame.height * 9.0 / 10.0
                 }
-                }, completion: nil)
+            } else {
+                self.categoryContainerBottomConstraint.constant = 8
+            }
         }
     }
     func serviceWasSelectedHandler(service:Service) {

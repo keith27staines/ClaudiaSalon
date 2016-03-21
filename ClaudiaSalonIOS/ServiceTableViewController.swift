@@ -79,12 +79,14 @@ extension ServiceTableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var previousIndexPath:NSIndexPath?
+        let moc = Coredata.sharedInstance.backgroundContext
         if let oldService = self.selectedService {
-            let moc = oldService.managedObjectContext
-            moc!.performBlockAndWait() {
+            moc.performBlockAndWait() {
                 previousIndexPath = self.fetchController.indexPathForObject(oldService)
-                self.selectedService = self.fetchController.objectAtIndexPath(indexPath) as? Service
             }
+        }
+        moc.performBlockAndWait() {
+            self.selectedService = self.fetchController.objectAtIndexPath(indexPath) as? Service            
         }
         NSOperationQueue.mainQueue().addOperationWithBlock() {
             if let previousIndexPath = previousIndexPath {

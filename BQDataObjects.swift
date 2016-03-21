@@ -157,6 +157,7 @@ public class ICloudSalon : ICloudRecord {
     var addressLine2: String?
     var postcode: String?
     var anonymousCustomerReference:CKReference?
+    var rootServiceCategoryReference:CKReference?
     
     init(coredataSalon: Salon) {
         
@@ -172,13 +173,17 @@ public class ICloudSalon : ICloudRecord {
                 let anonymousRecordID = iCloudCustomer.makeCloudKitRecord().recordID
                 self.anonymousCustomerReference = CKReference(recordID: anonymousRecordID, action: CKReferenceAction.None)
             }
-            
+            if let rootCategory = coredataSalon.rootServiceCategory {
+                let iCloudCategory = ICloudServiceCategory(coredataServiceCategory: rootCategory, parentSalonID: coredataSalon.objectID)
+                let rootCategoryID = iCloudCategory.makeCloudKitRecord().recordID
+                self.rootServiceCategoryReference = CKReference(recordID: rootCategoryID, action: CKReferenceAction.None)
+            }
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
         let record = super.makeCloudKitRecord()
         record["anonymousCustomerReference"] = anonymousCustomerReference
-
+        record["rootServiceCategoryReference"] = rootServiceCategoryReference
         record["name"] = name
         record["addressLine1"] = addressLine1
         record["addressLine2"] = addressLine2

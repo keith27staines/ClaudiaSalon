@@ -60,6 +60,7 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         context.performBlockAndWait() {
             let saleItem = SaleItem.newObjectWithMoc(context)
             saleItem.sale = self.sale
+            Coredata.sharedInstance.saveContext()
         }
     }
     func employeeInfoButtonTapped(cell: SaleDetailCellTableViewCell) {
@@ -84,7 +85,11 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         if segue.identifier == "GotoSelectService" {
             let vc = segue.destinationViewController as! SelectServiceViewController
             saleItemBeingEdited = cell.saleItem
-            vc.currentCategory = saleItemBeingEdited?.service?.serviceCategory
+            if let currentCategory = saleItemBeingEdited?.service?.serviceCategory {
+                vc.currentCategory = currentCategory
+            } else {
+                vc.currentCategory = Salon(moc: Coredata.sharedInstance.backgroundContext).rootServiceCategory
+            }
             vc.originalService = saleItemBeingEdited!.service
             vc.selectedService = saleItemBeingEdited!.service
             vc.serviceWasSelected = self.serviceWasChanged
@@ -100,6 +105,7 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
             saleItem.maximumCharge = selectedService.maximumCharge
             saleItem.nominalCharge = selectedService.nominalCharge
             saleItem.updatePrice()
+            self.saleItemWasUpdated(saleItem)
             indexPath = self.fetchedResultsController.indexPathForObject(saleItem)!
         }
         NSOperationQueue.mainQueue().addOperationWithBlock() {

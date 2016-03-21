@@ -64,7 +64,8 @@ class Coredata {
     
     lazy var backgroundContext: NSManagedObjectContext = {
        let backgroundContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        backgroundContext.parentContext = self.managedObjectContext
+        backgroundContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        //backgroundContext.parentContext = self.managedObjectContext
         return backgroundContext
     }()
     

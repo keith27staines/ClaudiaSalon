@@ -14,7 +14,7 @@ class BQCoredataImportController {
     
     static let publicDatabase = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon").publicCloudDatabase
     
-    let salonCloudRecordName = "44736040-37E7-46B0-AAAB-8EA90A6C99C4"
+    let salonCloudRecordName = "FEC6DB02-A620-410B-92EC-F6952A8A4E2C"
     let publicDatabase: CKDatabase
     let coredata = Coredata.sharedInstance
     let parentSalonRecordID:CKRecordID
