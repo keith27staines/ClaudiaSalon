@@ -79,8 +79,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
+                controller.appointmentWasUpdated = self.appointmentWasUpdated
             }
         }
+    }
+    func appointmentWasUpdated(appointment:Appointment) {
+        let indexPath = self.fetchedResultsController.indexPathForObject(appointment)
+        let cell = self.tableView.cellForRowAtIndexPath(indexPath!)
+        self.configureCell(cell!, atIndexPath: indexPath!)
     }
 }
 
@@ -122,7 +128,7 @@ extension MasterViewController {
             Coredata.sharedInstance.saveContext()
         }
     }
-
+    
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 70
     }

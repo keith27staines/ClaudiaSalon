@@ -2,7 +2,7 @@
 //  SaleItem+CoreDataProperties.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 24/02/2016.
+//  Created by Keith Staines on 21/03/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -14,6 +14,7 @@
 @implementation SaleItem (CoreDataProperties)
 
 @dynamic actualCharge;
+@dynamic bqCloudID;
 @dynamic bqMetadata;
 @dynamic bqNeedsCoreDataExport;
 @dynamic createdDate;
@@ -24,7 +25,7 @@
 @dynamic maximumCharge;
 @dynamic minimumCharge;
 @dynamic nominalCharge;
-@dynamic bqCloudID;
+@dynamic bqHasClientChanges;
 @dynamic notes;
 @dynamic performedBy;
 @dynamic refund;

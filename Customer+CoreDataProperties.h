@@ -2,7 +2,7 @@
 //  Customer+CoreDataProperties.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 24/02/2016.
+//  Created by Keith Staines on 21/03/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *addressLine1;
 @property (nullable, nonatomic, retain) NSString *addressLine2;
 @property (nullable, nonatomic, retain) NSString *birthday;
+@property (nullable, nonatomic, retain) NSString *bqCloudID;
 @property (nullable, nonatomic, retain) NSData *bqMetadata;
 @property (nullable, nonatomic, retain) NSNumber *bqNeedsCoreDataExport;
 @property (nullable, nonatomic, retain) NSDate *createdDate;
@@ -35,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *saleType;
 @property (nullable, nonatomic, retain) NSString *title;
 @property (nullable, nonatomic, retain) NSString *uid;
-@property (nullable, nonatomic, retain) NSString *bqCloudID;
+@property (nullable, nonatomic, retain) NSNumber *bqHasClientChanges;
 @property (nullable, nonatomic, retain) Salon *anonymousCustomerForSalon;
 @property (nullable, nonatomic, retain) NSSet<Appointment *> *appointments;
 @property (nullable, nonatomic, retain) NSSet<Note *> *notes;

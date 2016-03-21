@@ -28,6 +28,8 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
     
     @IBOutlet weak var actualCharge: UILabel!
     
+    var appointmentWasUpdated:((appointment:Appointment)->Void)?
+    
     var detailItem: AnyObject? {
         didSet {
             // Update the view.
@@ -41,6 +43,7 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
             Coredata.sharedInstance.saveContext()
             NSOperationQueue.mainQueue().addOperationWithBlock() {
                 self.configureView()
+                self.updateAppointment(saleItem.sale!.fromAppointment!)
             }
         }
     }
@@ -112,13 +115,9 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
                 fatalError("Unexpected destination controller for saleItems)")
             }
             vc.delegate = self
-            guard let sale = appointment.sale else {
+            guard let _ = appointment.sale else {
                 fatalError("appointment doesn't have a sale")
             }
-            let container = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon")
-            let publicDatabase = container.publicCloudDatabase
-            let saleItemOperation = SaleItemsForSaleOperation(sale: sale)
-            publicDatabase.addOperation(saleItemOperation)
             vc.saleID = appointment.sale!.objectID
             return
         }
@@ -161,6 +160,7 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
         let appointment = detailItem as! Appointment
         appointment.appointmentDate = vc.selectedDate
         self.configureView()
+        self.updateAppointment(appointment)
     }
     func changedFinishTime(vc:SelectDateOrTimePopover) {
         if vc.cancelled { return }
@@ -168,12 +168,14 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
         let duration = vc.selectedDate.timeIntervalSinceDate(appointment.appointmentDate!)
         appointment.bookedDuration = duration
         self.configureView()
+        self.updateAppointment(appointment)
     }
     func changedAppointmentDate(vc:SelectDateOrTimePopover) {
         if vc.cancelled { return }
         let appointment = detailItem as! Appointment
         appointment.appointmentDate = vc.selectedDate
         self.configureView()
+        self.updateAppointment(appointment)
     }
     func changedCustomer(vc:UIViewController) {
         if let vc = vc as? FindCustomerViewController {
@@ -188,6 +190,12 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
                 }
                 self.configureView()
             }
+            self.updateAppointment(appointment)
+        }
+    }
+    func updateAppointment(appointment:Appointment) {
+        if let callback = self.appointmentWasUpdated  {
+            callback(appointment: appointment)
         }
     }
 }

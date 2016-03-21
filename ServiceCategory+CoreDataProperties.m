@@ -2,7 +2,7 @@
 //  ServiceCategory+CoreDataProperties.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 24/02/2016.
+//  Created by Keith Staines on 21/03/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,6 +13,7 @@
 
 @implementation ServiceCategory (CoreDataProperties)
 
+@dynamic bqCloudID;
 @dynamic bqMetadata;
 @dynamic bqNeedsCoreDataExport;
 @dynamic createdDate;
@@ -23,7 +24,7 @@
 @dynamic lastUpdatedDate;
 @dynamic name;
 @dynamic selectable;
-@dynamic bqCloudID;
+@dynamic bqHasClientChanges;
 @dynamic notes;
 @dynamic parent;
 @dynamic rootCategoryOfSalon;
