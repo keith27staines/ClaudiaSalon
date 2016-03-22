@@ -11,15 +11,22 @@ import UIKit
 class AppointmentViewCellTableViewCell: UITableViewCell {
     var appointment:Appointment! {
         didSet {
-            appointment.managedObjectContext?.performBlock() {
+            var fullName = ""
+            var dateString = ""
+            var startTime = ""
+            var finishTime = ""
+            var durationString = ""
+            var hasChanges = false
+            var needsExport = false
+            appointment.managedObjectContext?.performBlockAndWait() {
                 let formatter = AppointmentFormatter(appointment: self.appointment!)
-                let fullName = self.appointment.customer?.fullName
-                let dateString = formatter.verboseAppointmentDayString
-                let startTime = formatter.startTimeString
-                let finishTime = formatter.finishTimeString
-                let durationString = formatter.bookedDurationString()
-                let hasChanges = self.appointment.bqHasClientChanges?.boolValue ?? false
-                let needsExport = self.appointment.bqNeedsCoreDataExport?.boolValue ?? false
+                fullName = self.appointment.customer?.fullName ?? ""
+                dateString = formatter.verboseAppointmentDayString
+                startTime = formatter.startTimeString
+                finishTime = formatter.finishTimeString
+                durationString = formatter.bookedDurationString()
+                hasChanges = self.appointment.bqHasClientChanges?.boolValue ?? false
+                needsExport = self.appointment.bqNeedsCoreDataExport?.boolValue ?? false
                 
                 NSOperationQueue.mainQueue().addOperationWithBlock() {
                     self.customerNameLabel.text = fullName
@@ -27,66 +34,34 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
                     self.startTimeLabel.text = "Start " + startTime
                     self.finishTimeLabel.text = "Finish " + finishTime
                     self.durationLabel.text = durationString
-                    let button = UIButton(type: UIButtonType.Custom)
-                    let image = UIImage(named: "cloud-upload")
-                    button.imageView?.image = image
-                    button.addTarget(self, action: "accessoryButtonTapped:event:", forControlEvents: UIControlEventTouchUpInside)
-                    self.accessoryView = UIButton()
-                    
+                    let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+                    var image:UIImage
                     if hasChanges {
-                        self.accessoryView?.tintColor = UIColor.orangeColor()
+                        button.tintColor = UIColor.orangeColor()
+                        image = UIImage(named: "amber-upload")!
                     } else if needsExport {
-                        self.accessoryView?.tintColor = UIColor.blueColor()
+                        button.tintColor = UIColor.blueColor()
+                        image = UIImage(named: "blue-upload")!
                     } else {
-                        self.accessoryView?.tintColor = UIColor.greenColor()
+                        button.tintColor = UIColor.greenColor()
+                        image = UIImage(named: "green-cloud")!
                     }
-                    
+                    button.setImage(image, forState: UIControlState.Normal)
+                    button.imageView?.contentMode = .ScaleAspectFit
+                    button.addTarget(self, action: "accessoryButtonTapped:event:", forControlEvents: UIControlEvents.TouchUpInside)
+                    self.accessoryView = button
                 }
             }
         }
     }
+    
+    var cloudSynchButtonTapped:((appointment:Appointment)->Void)?
+
     func accessoryButtonTapped(button:UIControl, event:UIEvent) {
-        var hasChanges:Bool?
-        var needsExport:Bool?
-        Coredata.sharedInstance.backgroundContext.performBlockAndWait() {
-            hasChanges = self.appointment.bqHasClientChanges?.boolValue ?? false
-            needsExport = self.appointment.bqNeedsCoreDataExport?.boolValue ?? false
-        }
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            if hasChanges! {
-                let alert = UIAlertController(title: "Synch changes?", message: "Tap 'export' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
-                let exportAction = UIAlertAction(title: "Export", style: .Default) { action in
-                    
-                }
-                let cancelAction = UIAlertAction(title: "Not yet", style: .Cancel) { action in
-                    
-                }
-                alert.addAction(exportAction)
-                alert.addAction(cancelAction)
-                self..presentViewController(alert, animated: true, completion: nil)
-            } else if needsExport! {
-                let alert = UIAlertController(title: "Synching", message: "This appointment's changes are being synched to the cloud", preferredStyle: .ActionSheet)
-                let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                alert.addAction(okAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-            } else {
-                let alert = UIAlertController(title: "Already synched", message: "This appointment is already synched with the cloud", preferredStyle: .ActionSheet)
-                let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                alert.addAction(okAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-            
+        if let callback = cloudSynchButtonTapped {
+            callback(appointment: self.appointment)
         }
     }
-//    - (void) accessoryButtonTapped: (UIControl *) button withEvent: (UIEvent *) event
-//    {
-//    NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint: [[[event touchesForView: button] anyObject] locationInView: self.tableView]];
-//    if ( indexPath == nil )
-//    return;
-//    
-//    [self.tableView.delegate tableView: self.tableView accessoryButtonTappedForRowWithIndexPath: indexPath];
-//    }
-//    
     @IBOutlet weak var customerNameLabel: UILabel!
     @IBOutlet weak var startTimeLabel: UILabel!
     

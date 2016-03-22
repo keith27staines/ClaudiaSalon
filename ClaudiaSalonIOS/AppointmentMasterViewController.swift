@@ -141,6 +141,39 @@ extension MasterViewController {
         moc.performBlockAndWait() {
             let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
             appointmentCell.appointment = appointment
+            appointmentCell.cloudSynchButtonTapped = { appointment in
+                var hasChanges:Bool?
+                var needsExport:Bool?
+                Coredata.sharedInstance.backgroundContext.performBlockAndWait() {
+                    hasChanges = appointment.bqHasClientChanges?.boolValue ?? false
+                    needsExport = appointment.bqNeedsCoreDataExport?.boolValue ?? false
+                }
+                NSOperationQueue.mainQueue().addOperationWithBlock() {
+                    if hasChanges! {
+                        let alert = UIAlertController(title: "Synch changes?", message: "Tap 'Synch' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
+                        let exportAction = UIAlertAction(title: "Synch", style: .Default) { action in
+                            
+                        }
+                        let cancelAction = UIAlertAction(title: "Not yet", style: .Cancel) { action in
+                            
+                        }
+                        alert.addAction(exportAction)
+                        alert.addAction(cancelAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    } else if needsExport! {
+                        let alert = UIAlertController(title: "Synching", message: "This appointment's changes are being synchronized to the cloud", preferredStyle: .ActionSheet)
+                        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                        alert.addAction(okAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    } else {
+                        let alert = UIAlertController(title: "Already Synched", message: "This appointment has been synchronized with the cloud", preferredStyle: .ActionSheet)
+                        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                        alert.addAction(okAction)
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                }
+
+            }
         }
     }
 }
