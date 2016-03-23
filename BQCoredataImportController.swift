@@ -120,7 +120,7 @@ extension BQCoredataImportController {
                         }
                     }
                     moc.performBlock() {
-                        Coredata.sharedInstance.saveContext()
+                        Coredata.sharedInstance.save()
                     }
                 })
             }
@@ -132,7 +132,7 @@ extension BQCoredataImportController {
         for entity in entities {
             self.deleteEntity(entity)
         }
-        self.coredata.saveContext()
+        self.coredata.save()
     }
     func deleteEntity(name:String) {
         let fetchRequest = NSFetchRequest(entityName: name)
@@ -191,7 +191,7 @@ class SaleForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
                     appointment.sale = Sale.makeFromCloudRecord(record, moc: moc)
                 }
             }
-            Coredata.sharedInstance.saveContext()
+            Coredata.sharedInstance.save()
         }
         self.queryCompletionBlock  = { (queryCursor, error) in
             guard error == nil else {
@@ -235,7 +235,7 @@ class ServiceForSaleItem : CKQueryOperation, AppointmentBuilder {
                     saleItem.service = Service.makeFromCloudRecord(serviceRecord, moc: moc)
                 }
             }
-            Coredata.sharedInstance.saveContext()
+            Coredata.sharedInstance.save()
         }
     }
 }
@@ -272,7 +272,7 @@ class EmployeeForSaleItem : CKQueryOperation, AppointmentBuilder {
                     saleItem.performedBy = Employee.makeFromCloudRecord(employeeRecord, moc: moc)
                 }
             }
-            Coredata.sharedInstance.saveContext()
+            Coredata.sharedInstance.save()
         }
     }
 }
@@ -336,7 +336,7 @@ class SaleItemsForSaleOperation : CKQueryOperation, AppointmentBuilder {
                     self.sale.addSaleItemObject(saleItem)
                 }
             }
-            Coredata.sharedInstance.saveContext()
+            Coredata.sharedInstance.save()
         }
     }
 }
@@ -371,7 +371,7 @@ class CustomerForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
                 assertionFailure("error while fetching appointment's customer \(error)")
                 return
             }
-            Coredata.sharedInstance.saveContext()
+            Coredata.sharedInstance.save()
         }
     }
 }

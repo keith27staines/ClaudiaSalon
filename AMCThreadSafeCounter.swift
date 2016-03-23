@@ -22,7 +22,7 @@ class AMCThreadSafeCounter {
         var didIncrement = false
         dispatch_sync(synchronisationQueue) {
             if self.count == 0 {
-                self.count++
+                self.count += 1
 //                print("Thread safe counter \(self.name) = \(self.count)")
                 didIncrement = true
             }
@@ -31,14 +31,14 @@ class AMCThreadSafeCounter {
     }
     func increment() {
         dispatch_sync(synchronisationQueue) {
-            self.count++
+            self.count += 1
 //            print("Thread safe counter \(self.name) = \(self.count)")
         }
     }
     func decrement() {
         dispatch_sync(synchronisationQueue) {
             precondition(self.count > 0, "Counter is being illegally decremented")
-            self.count--
+            self.count -= 1
 //            print("Thread safe counter \(self.name) = \(self.count)")
         }
     }

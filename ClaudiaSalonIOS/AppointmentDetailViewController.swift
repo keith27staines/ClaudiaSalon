@@ -39,12 +39,8 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
     
     func saleItemWasUpdated(saleItem:SaleItem) {
         saleItem.managedObjectContext?.performBlock() {
-            saleItem.sale?.updatePriceFromSaleItems()
-            Coredata.sharedInstance.saveContext()
-            NSOperationQueue.mainQueue().addOperationWithBlock() {
-                self.configureView()
-                self.updateAppointment(saleItem.sale!.fromAppointment!)
-            }
+            self.configureView()
+            self.updateAppointment(saleItem.sale!.fromAppointment!)
         }
     }
 
@@ -56,22 +52,10 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
             return
         }
         self.view.hidden = false
-        var fullName: String?
-        var phone: String?
-        var nominalCharge: NSNumber?
-        var actualCharge: NSNumber?
-        var discountAmount: NSNumber?
-        appointment.managedObjectContext?.performBlockAndWait() {
-            fullName = appointment.customer?.fullName
-            phone = appointment.customer?.phone
-            nominalCharge = appointment.sale?.nominalCharge
-            actualCharge = appointment.sale?.actualCharge
-            discountAmount = appointment.sale?.discountAmount
-        }
         
         // Configure customer info
-        self.customerFullName.text = fullName
-        self.phone.text = phone
+        self.customerFullName.text = appointment.customer?.fullName
+        self.phone.text = appointment.customer?.phone
         
         // Configure appointment info
         let appointmentFormatter = AppointmentFormatter(appointment: appointment)
@@ -81,6 +65,9 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
         self.duration.text = appointmentFormatter.bookedDurationString()
         
         // Configure sale info
+        let nominalCharge = appointment.sale?.nominalCharge
+        let actualCharge = appointment.sale?.actualCharge
+        let discountAmount = appointment.sale?.discountAmount
         self.nominalCharge.text = stringForCurrencyAmount(nominalCharge) ?? "?"
         self.actualCharge.text = stringForCurrencyAmount(actualCharge) ?? "?"
         self.discountAmount.text = stringForCurrencyAmount(discountAmount) ?? "?"
@@ -195,6 +182,9 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
     }
     func updateAppointment(appointment:Appointment) {
         if let callback = self.appointmentWasUpdated  {
+            appointment.managedObjectContext?.performBlock() {
+                appointment.cascadeHasChangesUpdwards()
+            }
             callback(appointment: appointment)
         }
     }

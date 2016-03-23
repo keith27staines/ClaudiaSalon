@@ -19,6 +19,7 @@ protocol BQExportable: class {
     var lastUpdatedDate: NSDate? { get set }
     var managedObjectContext:NSManagedObjectContext? { get }
     func updateFromCloudRecord(record:CKRecord)
+    func cascadeHasChangesUpdwards()
 }
 
 extension BQExportable {
@@ -43,6 +44,9 @@ extension BQExportable {
 
 // MARK:- Salon
 extension Salon : BQExportable {
+    func cascadeHasChangesUpdwards() {
+        // We are already a top level object so there is nothing to do
+    }
 }
 
 // MARK:- Appointment
@@ -69,6 +73,10 @@ extension Appointment : BQExportable {
             return Set<Appointment>()
         }
     }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        // We are already a top level object so there is nothing else do
+    }
 }
 // MARK:- Customer
 extension Customer : BQExportable {
@@ -90,6 +98,10 @@ extension Customer : BQExportable {
             assertionFailure("Unable to fetch objects marked for export")
             return Set<Customer>()
         }
+    }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        // We are already a top level object so there is nothing else do
     }
 }
 // MARK:- Employee
@@ -113,6 +125,10 @@ extension Employee : BQExportable {
             return Set<Employee>()
         }
     }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        // We are already a top level object so there is nothing else do
+    }
 }
 // MARK:- Service
 extension Service : BQExportable {
@@ -134,6 +150,10 @@ extension Service : BQExportable {
             assertionFailure("Unable to fetch objects marked for export")
             return Set<Service>()
         }
+    }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        // We are already a top level object so there is nothing else do
     }
 }
 // MARK:- ServiceCategory
@@ -157,6 +177,10 @@ extension ServiceCategory : BQExportable {
             return Set<ServiceCategory>()
         }
     }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        // We are already a top level object so there is nothing else do
+    }
 }
 // MARK:- SaleItem
 extension SaleItem : BQExportable {
@@ -172,6 +196,10 @@ extension SaleItem : BQExportable {
             return Set<SaleItem>()
         }
     }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        self.sale?.cascadeHasChangesUpdwards()
+    }
 }
 // MARK:- Sale
 extension Sale : BQExportable {
@@ -186,6 +214,10 @@ extension Sale : BQExportable {
             assertionFailure("Unable to fetch objects marked for export")
             return Set<Sale>()
         }
+    }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        self.fromAppointment?.cascadeHasChangesUpdwards()
     }
 }
 
@@ -205,20 +237,5 @@ extension NSManagedObject {
         return nil;
     }
 }
-// MARK:- NSManagedObjectContext extension
-//extension NSManagedObjectContext {
-//    func objectForIDString(coredataIDString:String) -> NSManagedObject {
-//        guard let coordinator = self.persistentStoreCoordinator else {
-//            preconditionFailure("The managed object context doesn't have a persistent store coordinator")
-//        }
-//        guard let uriRepresentation = NSURL(string: coredataIDString) else {
-//            preconditionFailure("Unable to construct a URL from the string \(coredataIDString)")
-//        }
-//        guard let managedObjectID = coordinator.managedObjectIDForURIRepresentation(uriRepresentation) else {
-//            preconditionFailure("The persistent store coordinate didn't return an objectID for the URL representation")
-//        }
-//        return self.objectWithID(managedObjectID)
-//    }
-//}
 
 

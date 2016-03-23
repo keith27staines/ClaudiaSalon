@@ -55,14 +55,14 @@ class AppointmentFormatter {
         let minutes = Int((interval/60.0) % 60.0)
         var duration = String()
         if hours > 1 {
-            duration = "\(hours) hours "
+            duration = "\(hours) h "
         } else if hours == 1 {
-            duration = "\(hours) hour "
+            duration = "\(hours) h "
         }
         if minutes > 1 {
-            duration += "\(minutes) minutes"
+            duration += "\(minutes) m "
         } else if minutes == 1 {
-            duration += "\(minutes) minute "
+            duration += "\(minutes) m "
         }
         return duration
     }    

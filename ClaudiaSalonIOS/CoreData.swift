@@ -54,42 +54,46 @@ class Coredata {
         return coordinator
     }()
     
+    lazy var saveContext: NSManagedObjectContext = {
+        let saveContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        saveContext.persistentStoreCoordinator = self.persistentStoreCoordinator
+        return saveContext
+    }()
+    
     lazy var managedObjectContext: NSManagedObjectContext = {
-        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
+        // Returns the managed object context for the UI
         let coordinator = self.persistentStoreCoordinator
         var managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        managedObjectContext.persistentStoreCoordinator = coordinator
+        managedObjectContext.parentContext = self.saveContext
         return managedObjectContext
     }()
     
     lazy var backgroundContext: NSManagedObjectContext = {
        let backgroundContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        backgroundContext.persistentStoreCoordinator = self.persistentStoreCoordinator
-        //backgroundContext.parentContext = self.managedObjectContext
+        backgroundContext.parentContext = self.managedObjectContext
         return backgroundContext
     }()
     
     // MARK: - Core Data Saving support
     
-    func saveContext () {
-        self.backgroundContext.performBlockAndWait {
-            //if self.backgroundContext.hasChanges {
-                do {
-                    try self.backgroundContext.save()
-                } catch {
-                    let nserror = error as NSError
-                    fatalError("Unresolved error while saving context \(nserror), \(nserror.userInfo)")
-                }
-            //}
+    func save () {
+        guard self.managedObjectContext.hasChanges || self.saveContext.hasChanges else {
+            return
+        }
+        self.managedObjectContext.performBlockAndWait {
+            do {
+                try self.managedObjectContext.save()
+            } catch {
+                fatalError("Unresolved error while saving context \(error)")
+            }
         }
 
-        self.managedObjectContext.performBlockAndWait() {
-            if self.managedObjectContext.hasChanges {
+        self.saveContext.performBlock() {
+            if self.saveContext.hasChanges {
                 do {
-                    try self.managedObjectContext.save()
+                    try self.saveContext.save()
                 } catch {
-                    let nserror = error as NSError
-                    fatalError("Unresolved error while saving context \(nserror), \(nserror.userInfo)")
+                    fatalError("Unresolved error while saving context \(error)")
                 }
             }
         }

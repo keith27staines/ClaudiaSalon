@@ -38,17 +38,17 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
                     var image:UIImage
                     if hasChanges {
                         button.tintColor = UIColor.orangeColor()
-                        image = UIImage(named: "amber-upload")!
+                        image = UIImage(named: "amber-cloud")!
                     } else if needsExport {
                         button.tintColor = UIColor.blueColor()
-                        image = UIImage(named: "blue-upload")!
+                        image = UIImage(named: "blue-cloud")!
                     } else {
                         button.tintColor = UIColor.greenColor()
                         image = UIImage(named: "green-cloud")!
                     }
                     button.setImage(image, forState: UIControlState.Normal)
                     button.imageView?.contentMode = .ScaleAspectFit
-                    button.addTarget(self, action: "accessoryButtonTapped:event:", forControlEvents: UIControlEvents.TouchUpInside)
+                    button.addTarget(self, action: #selector(AppointmentViewCellTableViewCell.accessoryButtonTapped(_:event:)), forControlEvents: UIControlEvents.TouchUpInside)
                     self.accessoryView = button
                 }
             }

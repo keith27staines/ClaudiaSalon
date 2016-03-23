@@ -92,7 +92,7 @@ class BQCloudImporter {
             }
             info.waiting = false
             info.executing = true
-            info.recordsDownloaded++
+            info.recordsDownloaded += 1
             self.downloads[name] = info
             if let callback = self.downloadWasUpdated {
                 callback(info: info)
@@ -108,7 +108,7 @@ class BQCloudImporter {
             guard var info = self.downloads[name] else {
                 fatalError("The operation isn't recognised")
             }
-            info.activeOperations--
+            info.activeOperations -= 1
             if info.activeOperations == 0 {
                 info.waiting = false
                 info.executing = false
@@ -355,7 +355,7 @@ class BQCloudImporter {
     private func unsafeAddQueryOperationToQueue(operation:CKQueryOperation) {
         let recordType = operation.name!
         var info = self.downloads[recordType]!
-        info.activeOperations++
+        info.activeOperations += 1
         self.downloads[recordType] = info
         self.queryOperations.insert(operation)
         self.publicDatabase.addOperation(operation)
@@ -404,7 +404,7 @@ extension BQCloudImporter {
                         }
                     }
                     moc.performBlock() {
-                        Coredata.sharedInstance.saveContext()
+                        Coredata.sharedInstance.save()
                     }
                 })
             }
@@ -415,7 +415,7 @@ extension BQCloudImporter {
         for entity in entities {
             self.deleteEntity(entity)
         }
-        Coredata.sharedInstance.saveContext()
+        Coredata.sharedInstance.save()
     }
     func deleteEntity(name:String) {
         let fetchRequest = NSFetchRequest(entityName: name)

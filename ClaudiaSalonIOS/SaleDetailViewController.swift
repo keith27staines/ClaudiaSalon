@@ -36,7 +36,7 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(SaleDetailViewController.insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
         self.tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -60,7 +60,7 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         context.performBlockAndWait() {
             let saleItem = SaleItem.newObjectWithMoc(context)
             saleItem.sale = self.sale
-            Coredata.sharedInstance.saveContext()
+            Coredata.sharedInstance.save()
         }
     }
     func employeeInfoButtonTapped(cell: SaleDetailCellTableViewCell) {
@@ -69,9 +69,6 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
     }
     func serviceInfoButtonTapped(cell: SaleDetailCellTableViewCell) {
         self.performSegueWithIdentifier("GotoSelectService", sender: cell)
-    }
-    func saleItemWasUpdated(saleItem: SaleItem) {
-        self.delegate?.saleItemWasUpdated(saleItem)
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -96,6 +93,10 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         }
 
     }
+    func saleItemWasUpdated(saleItem: SaleItem) {
+        saleItemBeingEdited?.cascadeHasChangesUpdwards()
+        self.delegate?.saleItemWasUpdated(saleItem)
+    }
     func serviceWasChanged(selectedService:Service) {
         var indexPath:NSIndexPath?
         self.saleItemBeingEdited?.managedObjectContext?.performBlockAndWait() {
@@ -115,8 +116,9 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         }
     }
     func employeeWasChanged(selectedEmployee:Employee) {
-        selectedEmployee.managedObjectContext?.performBlockAndWait() {
+        selectedEmployee.managedObjectContext?.performBlock() {
             self.saleItemBeingEdited!.performedBy = selectedEmployee
+            self.saleItemWasUpdated(self.saleItemBeingEdited!)
         }
     }
 }
@@ -161,7 +163,7 @@ extension SaleDetailViewController {
         if editingStyle == .Delete {
             let context = self.fetchedResultsController.managedObjectContext
             context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
-            Coredata.sharedInstance.saveContext()
+            Coredata.sharedInstance.save()
         }
     }
     

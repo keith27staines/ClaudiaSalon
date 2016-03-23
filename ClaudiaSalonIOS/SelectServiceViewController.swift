@@ -33,11 +33,8 @@ class SelectServiceViewController : UIViewController {
     @IBOutlet weak var serviceListContainerView: UIView!
     
     @IBAction func upCategoryButtonClicked(sender: AnyObject) {
-        let moc = Coredata.sharedInstance.backgroundContext
-        moc.performBlockAndWait() {
-            if let upCategory = self.currentCategory?.parent {
-                self.categoryWasSelected(upCategory)
-            }
+        if let upCategory = self.currentCategory?.parent {
+            self.categoryWasSelected(upCategory)
         }
     }
     var selectedService:Service? {
@@ -57,14 +54,7 @@ class SelectServiceViewController : UIViewController {
         guard let _ = self.parentLabel else {
             return // Connections not set up yet
         }
-        let moc = Coredata.sharedInstance.backgroundContext
-        var name:String?
-        moc.performBlockAndWait() {
-            if let category = self.currentCategory {
-                name = category.name
-            }
-        }
-        self.parentLabel.text = name
+        self.parentLabel.text = self.currentCategory?.name ?? ""
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,28 +92,23 @@ class SelectServiceViewController : UIViewController {
             return
         }
         self.currentCategory = category
-        var showServiceCategories:Bool?
-        var showServices:Bool?
-        Coredata.sharedInstance.backgroundContext.performBlockAndWait() {
-            if category != self.categoryController?.currentCategory {
-                self.categoryController?.currentCategory = category
-            }
-            self.serviceController?.category = category
-            showServiceCategories = (self.categoryController!.subCategoriesCount > 0) ? true : false
-            showServices = (self.serviceController!.servicesCount > 0) ? true : false
+        if category != self.categoryController?.currentCategory {
+            self.categoryController?.currentCategory = category
         }
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            self.categoryController?.reloadData()
-            self.serviceController?.reloadData()
-            if showServices! {
-                if showServiceCategories! {
-                    self.categoryContainerBottomConstraint.constant = self.view.frame.height / 2.0
-                } else {
-                    self.categoryContainerBottomConstraint.constant = self.view.frame.height * 9.0 / 10.0
-                }
+        self.serviceController?.category = category
+        let showServiceCategories = (self.categoryController!.subCategoriesCount > 0) ? true : false
+        let showServices = (self.serviceController!.servicesCount > 0) ? true : false
+        
+        self.categoryController?.reloadData()
+        self.serviceController?.reloadData()
+        if showServices {
+            if showServiceCategories {
+                self.categoryContainerBottomConstraint.constant = self.view.frame.height / 2.0
             } else {
-                self.categoryContainerBottomConstraint.constant = 8
+                self.categoryContainerBottomConstraint.constant = self.view.frame.height * 9.0 / 10.0
             }
+        } else {
+            self.categoryContainerBottomConstraint.constant = 8
         }
     }
     func serviceWasSelectedHandler(service:Service) {

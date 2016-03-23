@@ -13,10 +13,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     private var _fetchedResultsController: NSFetchedResultsController? = nil
 
     var appointmentViewController: AppointmentDetailViewController? = nil
-    lazy var managedObjectContext: NSManagedObjectContext = Coredata.sharedInstance.backgroundContext
+    lazy var moc: NSManagedObjectContext = Coredata.sharedInstance.managedObjectContext
 
     lazy var salon:Salon = {
-        let salon = Salon(moc: Coredata.sharedInstance.backgroundContext)
+        let salon = Salon(moc: self.moc)
         return salon
     }()
 
@@ -30,7 +30,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(MasterViewController.insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
@@ -58,15 +58,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
 
     func insertNewObject(sender: AnyObject) {
-        let context = self.fetchedResultsController.managedObjectContext
-        context.performBlockAndWait() {
-            let appointment = Appointment.newObjectWithMoc(context)
-            appointment.customer = self.salon.anonymousCustomer
-            appointment.sale?.customer = self.salon.anonymousCustomer
-            appointment.appointmentDate = NSDate()
-            appointment.bookedDuration = 30 * 60
-            Coredata.sharedInstance.saveContext()
-        }
+        let appointment = Appointment.newObjectWithMoc(self.moc)
+        appointment.customer = self.salon.anonymousCustomer
+        appointment.sale?.customer = self.salon.anonymousCustomer
+        appointment.appointmentDate = NSDate()
+        appointment.bookedDuration = 30 * 60
     }
 
     // MARK: - Segues
@@ -94,19 +90,13 @@ extension MasterViewController {
     // MARK: - Table View Data Source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        var n:Int!
-        self.fetchedResultsController.managedObjectContext.performBlockAndWait() {
-            n = self.fetchedResultsController.sections?.count ?? 0
-        }
+        let n = self.fetchedResultsController.sections?.count ?? 0
         return n
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var n:Int!
-        self.fetchedResultsController.managedObjectContext.performBlockAndWait() {
-            let sectionInfo = self.fetchedResultsController.sections![section]
-            n = sectionInfo.numberOfObjects
-        }
+        let sectionInfo = self.fetchedResultsController.sections![section]
+        let n = sectionInfo.numberOfObjects
         return n
     }
     
@@ -125,7 +115,7 @@ extension MasterViewController {
         if editingStyle == .Delete {
             let context = self.fetchedResultsController.managedObjectContext
             context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
-            Coredata.sharedInstance.saveContext()
+            Coredata.sharedInstance.save()
         }
     }
     
@@ -152,7 +142,10 @@ extension MasterViewController {
                     if hasChanges! {
                         let alert = UIAlertController(title: "Synch changes?", message: "Tap 'Synch' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
                         let exportAction = UIAlertAction(title: "Synch", style: .Default) { action in
-                            
+                            appointment.managedObjectContext?.performBlock() {
+                                appointment.bqHasClientChanges = false
+                                appointment.bqNeedsCoreDataExport = true
+                            }
                         }
                         let cancelAction = UIAlertAction(title: "Not yet", style: .Cancel) { action in
                             
@@ -161,7 +154,7 @@ extension MasterViewController {
                         alert.addAction(cancelAction)
                         self.presentViewController(alert, animated: true, completion: nil)
                     } else if needsExport! {
-                        let alert = UIAlertController(title: "Synching", message: "This appointment's changes are being synchronized to the cloud", preferredStyle: .ActionSheet)
+                        let alert = UIAlertController(title: "Synching", message: "This appointment's changes are waiting to be synchronized to the cloud", preferredStyle: .ActionSheet)
                         let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                         alert.addAction(okAction)
                         self.presentViewController(alert, animated: true, completion: nil)

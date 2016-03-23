@@ -24,7 +24,7 @@ class FindCustomerViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var allCustomers = [Customer]()
     var filteredCustomers = [Customer]()
-    let moc = Coredata.sharedInstance.backgroundContext
+
     var selectedIndexPath:NSIndexPath?
     var completion:((vc:UIViewController)->Void)?
     
@@ -60,21 +60,20 @@ class FindCustomerViewController: UIViewController {
         super.viewDidLoad()
         self.nameField.text = self.selectedCustomer?.fullName
         self.phoneField.text = self.selectedCustomer?.phone
-        self.allCustomers = Customer.allObjectsWithMoc(self.moc) as! [Customer]
-        self.nameField.addTarget(self, action:"applyFilters:", forControlEvents: UIControlEvents.EditingChanged)
-        self.phoneField.addTarget(self, action:"applyFilters:", forControlEvents: UIControlEvents.EditingChanged)
+        let moc = Coredata.sharedInstance.managedObjectContext
+        self.allCustomers = Customer.allObjectsWithMoc(moc) as! [Customer]
+        self.nameField.addTarget(self, action:#selector(FindCustomerViewController.applyFilters(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        self.phoneField.addTarget(self, action:#selector(FindCustomerViewController.applyFilters(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.applyFilters(self)
     }
     
     @IBAction func selectAnonymousCustomer() {
-        let moc = Coredata.sharedInstance.backgroundContext
-        moc.performBlockAndWait() {
-            let salon = Salon(moc: moc)
-            let anonymous = salon.anonymousCustomer!
-            self.selectedCustomer = anonymous
-            self.nameField.text = anonymous.fullName
-            self.phoneField.text = anonymous.phone
-        }
+        let moc = Coredata.sharedInstance.managedObjectContext
+        let salon = Salon(moc: moc)
+        let anonymous = salon.anonymousCustomer!
+        self.selectedCustomer = anonymous
+        self.nameField.text = anonymous.fullName
+        self.phoneField.text = anonymous.phone
         self.applyFilters(self)
     }
     
@@ -105,21 +104,17 @@ class FindCustomerViewController: UIViewController {
             self.presentViewController(alert, animated: true, completion: nil)
             return
         }
-        let moc = Coredata.sharedInstance.backgroundContext
-        moc.performBlockAndWait() {
-            let customer = Customer.newObjectWithMoc(moc)
-            let fullName = self.nameField.text!
-            let names = fullName.componentsSeparatedByString(" ")
-            customer.firstName = names[0]
-            var lastName = ""
-            for i in 1..<names.count {
-                lastName += names[i]
-            }
-            customer.lastName = lastName
-            customer.phone = phone
-            self.allCustomers.append(customer)
+        let moc = Coredata.sharedInstance.managedObjectContext
+        let customer = Customer.newObjectWithMoc(moc)
+        let names = fullName.componentsSeparatedByString(" ")
+        customer.firstName = names[0]
+        var lastName = ""
+        for i in 1..<names.count {
+            lastName += names[i]
         }
-        Coredata.sharedInstance.saveContext()
+        customer.lastName = lastName
+        customer.phone = phone
+        self.allCustomers.append(customer)
         self.applyFilters(self)
     }
 

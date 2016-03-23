@@ -13,7 +13,6 @@ import UIKit
 class SelectStaffTableViewController : UITableViewController , NSFetchedResultsControllerDelegate {
     var selectedEmployee:Employee?
     var fetchedResultsController:NSFetchedResultsController!
-    let moc = Coredata.sharedInstance.backgroundContext
     
     var employeeWasSelected:((selectedEmployee:Employee)->Void)?
     
@@ -23,7 +22,8 @@ class SelectStaffTableViewController : UITableViewController , NSFetchedResultsC
         fetch.predicate = NSPredicate(value: true) //NSPredicate(format: "isActive = %@", NSNumber(bool:true))
         let sort = NSSortDescriptor(key: "firstName", ascending: true)
         fetch.sortDescriptors = [sort]
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: self.moc, sectionNameKeyPath: nil, cacheName: nil)
+        let moc = Coredata.sharedInstance.managedObjectContext
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetch, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
         self.fetchedResultsController.delegate = self
         try! self.fetchedResultsController.performFetch()
     }
