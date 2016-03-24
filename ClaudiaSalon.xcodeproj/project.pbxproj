@@ -32,6 +32,7 @@
 		533A8FD61C7CC0A4000CA54F /* BQCoredataImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533A8FD41C7CC0A4000CA54F /* BQCoredataImportController.swift */; };
 		533A8FDB1C7F88CD000CA54F /* ClaudiasSalon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */; };
 		533A8FDC1C7F8ADA000CA54F /* ClaudiasSalon.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */; };
+		533FC06E1CA3E1690074BDF0 /* BQCoredataExportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */; };
 		5346C58D1ABB074C005D4540 /* AMCPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C58B1ABB074C005D4540 /* AMCPreferencesWindowController.m */; };
 		5346C58E1ABB074C005D4540 /* AMCPreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5346C58C1ABB074C005D4540 /* AMCPreferencesWindowController.xib */; };
 		5346C5931ABB2265005D4540 /* AMCCategoryManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5346C5911ABB2265005D4540 /* AMCCategoryManagementViewController.m */; };
@@ -3117,6 +3118,7 @@
 				533A8FDB1C7F88CD000CA54F /* ClaudiasSalon.xcdatamodeld in Sources */,
 				53FDCA6C1C7A1138006B4002 /* ServiceCategory.m in Sources */,
 				53FDCA451C79A591006B4002 /* AppointmentDetailViewController.swift in Sources */,
+				533FC06E1CA3E1690074BDF0 /* BQCoredataExportController.swift in Sources */,
 				5358DD451C8C9338009DD63E /* Holiday+CoreDataProperties.m in Sources */,
 				53FDCA6A1C7A0D3D006B4002 /* Employee.m in Sources */,
 				5358DD431C8C9338009DD63E /* IntervalDuringDay.m in Sources */,

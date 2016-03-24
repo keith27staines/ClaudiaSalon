@@ -13,8 +13,8 @@ import CoreData
 class BQCoredataImportController {
     
     static let publicDatabase = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon").publicCloudDatabase
-    
-    let salonCloudRecordName = "FEC6DB02-A620-410B-92EC-F6952A8A4E2C"
+    private var icloudContainerIdentifier:String!
+    private var iCloudSalonRecordName:String!
     let publicDatabase: CKDatabase
     let coredata = Coredata.sharedInstance
     let parentSalonRecordID:CKRecordID
@@ -22,14 +22,16 @@ class BQCoredataImportController {
     var finished = false
     private let counter = AMCThreadSafeCounter(name: "coredataImporter", initialValue: 0)
     
-    init() {
-        parentSalonRecordID = CKRecordID(recordName: salonCloudRecordName)
+    init(iCloudContainerIdentifier:String, iCloudSalonRecordName:String) {
+        self.icloudContainerIdentifier = iCloudContainerIdentifier
+        self.iCloudSalonRecordName = iCloudSalonRecordName
+        parentSalonRecordID = CKRecordID(recordName: iCloudSalonRecordName)
         parentSalonReference = CKReference(recordID: parentSalonRecordID, action: .None)
         publicDatabase = BQCoredataImportController.publicDatabase
-        let salon = Salon.fetchForCloudID(salonCloudRecordName, moc: Coredata.sharedInstance.backgroundContext)
+        let salon = Salon.fetchForCloudID(iCloudSalonRecordName, moc: Coredata.sharedInstance.backgroundContext)
         
         if let salon = salon {
-            let salonCloudRecordID = CKRecordID(recordName: salonCloudRecordName)
+            let salonCloudRecordID = CKRecordID(recordName: iCloudSalonRecordName)
             self.publicDatabase.fetchRecordWithID(salonCloudRecordID) { (salonRecord, error) -> Void in
                 if error != nil {
                     fatalError("error downloading salon from cloud")
@@ -95,7 +97,7 @@ extension BQCoredataImportController {
     func performInitialImport() {
         // Start from clean slate
         self.deleteAllCoredataObjects()
-        let salonRecordID = CKRecordID(recordName: self.salonCloudRecordName)
+        let salonRecordID = CKRecordID(recordName: self.iCloudSalonRecordName)
         self.publicDatabase.fetchRecordWithID(salonRecordID) { (record, error) -> Void in
             guard error == nil else {
                 return

@@ -13,9 +13,7 @@ class Coredata {
     static let sharedInstance = Coredata()
 
     // Hide the default initializer because this will be a singleton
-    private init() {
-        
-    }
+    private init() {}
     
     private (set) lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.KeithStaines.ClaudiaSalonIOS" in the application's documents Application Support directory.
@@ -54,7 +52,7 @@ class Coredata {
         return coordinator
     }()
     
-    lazy var saveContext: NSManagedObjectContext = {
+    private lazy var saveContext: NSManagedObjectContext = {
         let saveContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         saveContext.persistentStoreCoordinator = self.persistentStoreCoordinator
         return saveContext

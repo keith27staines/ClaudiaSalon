@@ -8,20 +8,25 @@
 
 import UIKit
 import CoreData
+import CloudKit
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+    private let iCloudContainerIdentifier = "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon"
+    private let iCloudSalonRecordName = "44736040-37E7-46B0-AAAB-8EA90A6C99C4"
     private var _fetchedResultsController: NSFetchedResultsController? = nil
 
     var appointmentViewController: AppointmentDetailViewController? = nil
     lazy var moc: NSManagedObjectContext = Coredata.sharedInstance.managedObjectContext
-
+    
+    lazy var exportController:BQCoredataExportController = BQCoredataExportController(parentMoc: self.moc, iCloudContainerIdentifier: self.iCloudContainerIdentifier, startImmediately: false)
+    
     lazy var salon:Salon = {
         let salon = Salon(moc: self.moc)
         return salon
     }()
 
     lazy var importController:BQCoredataImportController = {
-        let importer = BQCoredataImportController()
+        let importer = BQCoredataImportController(iCloudContainerIdentifier: self.iCloudContainerIdentifier, iCloudSalonRecordName: self.iCloudSalonRecordName)
         return importer
     }()
     
@@ -37,6 +42,36 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.appointmentViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? AppointmentDetailViewController
             self.tableView.rowHeight = UITableViewAutomaticDimension
         }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.appointmentWasExported(_:)), name: "appointmentWasExported", object: self.exportController)
+    }
+    
+    func appointmentWasExported(notification:NSNotification) {
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            guard let userInfo = notification.userInfo else {
+                assertionFailure("expected a userInfo object from the appointmentWasExported notification but none was provided")
+                return
+            }
+            if let error = userInfo["error"] as? NSError {
+                assertionFailure("unexpected error after exporting appointment \(error)")
+                return
+            }
+            guard let ckRecord = userInfo["record"] as? CKRecord else {
+                assertionFailure("expected the userInfo object from the appointmentWasExported notification to contain a CKRecord")
+                return
+            }
+            let recordID = ckRecord.recordID.recordName
+            guard let appointment = Appointment.fetchForCloudID(recordID, moc: self.moc) else {
+                assertionFailure("expected to find a coredata appointment with icloud id = \(recordID)")
+                return
+            }
+            guard let indexPath = self.fetchedResultsController.indexPathForObject(appointment) else {
+                assertionFailure("The fetched results controller didn't return an index path for the appointment")
+                return
+            }
+            if let cell = self.tableView.cellForRowAtIndexPath(indexPath) {
+                self.configureCell(cell, atIndexPath: indexPath)
+            }
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -50,6 +85,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             return
         }
         //self.performSegueWithIdentifier("GotoImportViewController", sender: self)
+        self.exportController.startExportIterations()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -139,8 +176,19 @@ extension MasterViewController {
             if hasChanges {
                 let alert = UIAlertController(title: "Synch changes?", message: "Tap 'Synch' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
                 let exportAction = UIAlertAction(title: "Synch", style: .Default) { action in
-                    appointment.bqHasClientChanges = false
-                    appointment.bqNeedsCoreDataExport = true
+                    NSOperationQueue.mainQueue().addOperationWithBlock() {
+                        appointment.bqHasClientChanges = false
+                        appointment.bqNeedsCoreDataExport = true
+                        appointment.sale?.bqHasClientChanges = false
+                        appointment.sale?.bqNeedsCoreDataExport = true
+                        if let saleItems = appointment.sale?.saleItem {
+                            for saleItem in saleItems {
+                                saleItem.bqHasClientChanges = false
+                                saleItem.bqNeedsCoreDataExport = true
+                            }
+                        }
+                    }
+                    Coredata.sharedInstance.save()
                 }
                 let cancelAction = UIAlertAction(title: "Not yet", style: .Cancel) { action in
                     

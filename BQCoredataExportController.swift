@@ -13,27 +13,29 @@ import CoreData
 
 // MARK:- Class BQCoredataExportController
 class BQCoredataExportController {
-    private (set) var salonDocument:AMCSalonDocument!
+//    private (set) var salonDocument:AMCSalonDocument!
     private (set) var salon:Salon!
-    private (set) var parentManagedObjectContext:NSManagedObjectContext!
+    private (set) var workerMoc:NSManagedObjectContext!
     private (set) var cancelled = true
 
     private let iterationWaitForSeconds: UInt64 = 5
     private let synchronisationQueue = dispatch_queue_create("com.AMCAldebaron.BQCoredataExportController", DISPATCH_QUEUE_SERIAL)
     private let namePrefix = "BQCoredataExportController"
     private let exportQueue:NSOperationQueue
-    private let deletionRequestList:BQDeletionRequestList
+    //private let deletionRequestList:BQDeletionRequestList
     private let activeOperationsCounter = AMCThreadSafeCounter(name:"Export Operations Counter",initialValue: 0)
     private var nextRunTime = DISPATCH_TIME_NOW
+    private var iCloudContainerIdentifier:String!
     
-    init(salonDocument:AMCSalonDocument, startImmediately:Bool) {
-        self.salonDocument = salonDocument
-        self.salon = salonDocument.salon
-        self.parentManagedObjectContext = self.salonDocument.managedObjectContext
+    init(parentMoc:NSManagedObjectContext,iCloudContainerIdentifier:String,startImmediately:Bool) {
+        self.iCloudContainerIdentifier = iCloudContainerIdentifier
+        self.workerMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        self.workerMoc.parentContext = parentMoc
+        self.salon = Salon(moc: self.workerMoc)
         self.exportQueue = NSOperationQueue()
         self.exportQueue.name = namePrefix + "Queue"
-        self.deletionRequestList = BQDeletionRequestList(parentManagedObjectContext: self.parentManagedObjectContext)
-                
+//        self.deletionRequestList = BQDeletionRequestList(parentManagedObjectContext: self.parentManagedObjectContext)
+        
         if startImmediately {
             self.startExportIterations()
         }
@@ -51,7 +53,7 @@ class BQCoredataExportController {
     func cancel() {
         self.cancelled = true
         self.exportQueue.cancelAllOperations()
-        self.deletionRequestList.cancel()
+        //self.deletionRequestList.cancel()
     }
 
     /** adds the export operation to the export queue and then calls itself until either the cancelled property becomes true or self is nil */
@@ -63,13 +65,12 @@ class BQCoredataExportController {
             if let strongSelf = weakSelf {
                 
                 // Handle deletions
-                self.deletionRequestList.processList()
+                //self.deletionRequestList.processList()
                 
                 // Handle modifications - only process if we can "gain the lock"
                 if strongSelf.activeOperationsCounter.incrementIfZero() {
                     print("Running export iteration")
-                    let salonDocument = strongSelf.salonDocument
-                    let newOperation = BQExportModifiedCoredataOperation(salonDocument: salonDocument, activeOperationsCounter:self.activeOperationsCounter)
+                    let newOperation = BQExportModifiedCoredataOperation(workerMoc: self.workerMoc,iCloudContainerIdentifier: self.iCloudContainerIdentifier,activeOperationsCounter:self.activeOperationsCounter)
                     newOperation.completionBlock = {
                         self.activeOperationsCounter.decrement()
                     }
@@ -85,27 +86,25 @@ class BQCoredataExportController {
 // MARK:- Class BQExportModifiedCoredataOperation
 private class BQExportModifiedCoredataOperation : NSOperation {
     private let synchronisationQueue = dispatch_queue_create("com.AMCAldebaron.BQExportModifiedCoredataOperation", DISPATCH_QUEUE_SERIAL)
-    private let parentManagedObjectContext: NSManagedObjectContext
+
     private let modifedCoredata = Set<NSManagedObject>()
-    private let salonID:NSManagedObjectID
     private var publicDatabase:CKDatabase!
     private let activeOperationsCounter: AMCThreadSafeCounter
     private var exportedRecordsWithErrors = [String:NSError?]()
-    private var privateMoc: NSManagedObjectContext?
     private var coredataObjectsNeedingExport = [String:NSManagedObject]()
-    private let salonDocument:AMCSalonDocument
+    private let salon:Salon
+    private var workerMoc:NSManagedObjectContext!
+    private var iCloudContainerIdentifier:String!
 
-    init(salonDocument:AMCSalonDocument, activeOperationsCounter:AMCThreadSafeCounter) {
-        self.salonDocument = salonDocument
-        self.parentManagedObjectContext = salonDocument.managedObjectContext!
+    init(workerMoc:NSManagedObjectContext,iCloudContainerIdentifier:String,activeOperationsCounter:AMCThreadSafeCounter) {
+        self.workerMoc = workerMoc
+        self.salon = Salon(moc: workerMoc)
         self.activeOperationsCounter = activeOperationsCounter
-        self.salonID = NSManagedObjectID()
         super.init()
-        self.parentManagedObjectContext.performBlockAndWait() {
-            self.salonID = self.salonDocument.salon.objectID
-        }
         self.name = "BQExportModifiedCoredataOperation"
         self.qualityOfService = .Background
+        self.iCloudContainerIdentifier = iCloudContainerIdentifier
+        self.publicDatabase = CKContainer(identifier: self.iCloudContainerIdentifier).publicCloudDatabase
     }
     
     // MARK:- Main function for this operation
@@ -113,11 +112,9 @@ private class BQExportModifiedCoredataOperation : NSOperation {
         if self.cancelled { return }
         var recordsToSave = [CKRecord]()
         publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
-        self.privateMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        let moc = self.privateMoc!
-        moc.parentContext = parentManagedObjectContext
+        let moc = self.workerMoc
         moc.performBlockAndWait {
-            recordsToSave = self.prepareCoredataObjectsForExportIfRequired(moc)
+            recordsToSave = self.prepareCoredataObjectsForExportIfRequired()
         }
         if recordsToSave.count == 0 {
             return
@@ -133,26 +130,21 @@ private class BQExportModifiedCoredataOperation : NSOperation {
         self.publicDatabase.addOperation(saveRecordsOperation)
     }
     func saveRecordsOperationComplete() -> Void {
-        if let privateMoc = self.privateMoc {
-            privateMoc.performBlockAndWait() {
-                for (cloudID,error) in self.exportedRecordsWithErrors {
-                    let managedObject = self.coredataObjectsNeedingExport[cloudID]! as! BQExportable
-                    if error == nil {
-                        managedObject.bqNeedsCoreDataExport = NSNumber(bool: false)
-                    } else {
-                        print("managed object failed to export with error \(error)")
-                    }
+        self.workerMoc.performBlockAndWait() {
+            for (cloudID,error) in self.exportedRecordsWithErrors {
+                let managedObject = self.coredataObjectsNeedingExport[cloudID]! as! BQExportable
+                if error == nil {
+                    managedObject.bqNeedsCoreDataExport = NSNumber(bool: false)
+                } else {
+                    print("managed object failed to export with error \(error)")
                 }
-                do {
-                    if privateMoc.hasChanges {
-                        try privateMoc.save()
-                        dispatch_sync(dispatch_get_main_queue()) {
-                            self.salonDocument.saveDocument(self)
-                        }
-                    }
-                } catch {
-                    print(error)
+            }
+            do {
+                if self.workerMoc.hasChanges {
+                    try self.workerMoc.save()
                 }
+            } catch {
+                print(error)
             }
         }
         self.activeOperationsCounter.decrement()
@@ -182,6 +174,10 @@ extension BQExportModifiedCoredataOperation {
             }
             dispatch_sync(self.synchronisationQueue) {
                 let cloudID = record.recordID.recordName
+                var userInfo = [NSObject:AnyObject]()
+                userInfo["record"] = record
+                userInfo["error"] = error
+                NSNotificationCenter.defaultCenter().postNotificationName("appointmentWasModified", object: self, userInfo: userInfo)
                 self.exportedRecordsWithErrors[cloudID] = error
             }
         }
@@ -244,76 +240,75 @@ extension BQExportModifiedCoredataOperation {
 }
 // MARK:- prepare modified coredata objects for export to cloud
 extension BQExportModifiedCoredataOperation {
-    private func prepareCoredataObjectsForExportIfRequired(moc:NSManagedObjectContext) -> [CKRecord] {
+    private func prepareCoredataObjectsForExportIfRequired() -> [CKRecord] {
         var recordsToSave = [CKRecord]()
         
         // Export the salon itself if required
         if self.cancelled { return recordsToSave}
-        recordsToSave.appendContentsOf(self.prepareSalonForExportIfRequired(moc, salonID:self.salonID))
+        recordsToSave.appendContentsOf(self.prepareSalonForExportIfRequired(self.salon))
         if recordsToSave.count > 0 {
             return recordsToSave
         }
 
         // Gather all modified Employees
         if self.cancelled { return recordsToSave}
-        recordsToSave.appendContentsOf(self.prepareEmployeesForExportIfRequired(moc, salonID: self.salonID))
+        recordsToSave.appendContentsOf(self.prepareEmployeesForExportIfRequired(self.salon))
         
         // Gather all modifed customers
         if self.cancelled { return recordsToSave}
-        recordsToSave.appendContentsOf(self.prepareCustomersForExportIfRequired(moc, salonID: self.salonID))
+        recordsToSave.appendContentsOf(self.prepareCustomersForExportIfRequired(self.salon))
         
         // Gather all modifed Service categories
         if self.cancelled { return recordsToSave}
-        recordsToSave.appendContentsOf(self.prepareServiceCategoriesForExportIfRequired(moc, salonID: self.salonID))
+        recordsToSave.appendContentsOf(self.prepareServiceCategoriesForExportIfRequired(self.salon))
         
         // Gather all modified Services
         if self.cancelled { return recordsToSave}
-        recordsToSave.appendContentsOf(self.prepareServicesForExportIfRequired(moc, salonID: self.salonID))
+        recordsToSave.appendContentsOf(self.prepareServicesForExportIfRequired(self.salon))
         
         // Gather all modified SaleItems
         if self.cancelled { return recordsToSave}
-        recordsToSave.appendContentsOf(self.prepareSaleItemsForExportIfRequired(moc, salonID: self.salonID))
+        recordsToSave.appendContentsOf(self.prepareSaleItemsForExportIfRequired(self.salon))
         
         // Gather all modified Sales
         if self.cancelled { return recordsToSave}
-        recordsToSave.appendContentsOf(self.prepareSalesForExportIfRequired(moc, salonID: self.salonID))
+        recordsToSave.appendContentsOf(self.prepareSalesForExportIfRequired(self.salon))
         
         // Gather all modified Appointments
         if self.cancelled { return recordsToSave}
-        recordsToSave.appendContentsOf(self.prepareAppointmentsForExportIfRequired(moc, salonID: self.salonID))
+        recordsToSave.appendContentsOf(self.prepareAppointmentsForExportIfRequired(self.salon))
         
         return recordsToSave
     }
     
-    private func prepareSalonForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
+    private func prepareSalonForExportIfRequired(salon:Salon) -> [CKRecord] {
         var recordsToSave = [CKRecord]()
         var cloudSalonRecord: CKRecord?
-        let salon = moc.objectWithID(self.salonID) as! Salon
-        moc.performBlockAndWait() {
-            let anonCustomer = salon.anonymousCustomer
-            if salon.bqNeedsCoreDataExport?.boolValue == true {
-                dispatch_sync(self.synchronisationQueue) {
-                    let icloudSalon = ICloudSalon(coredataSalon: salon)
-                    var cloudID = salon.bqCloudID!
-                    self.coredataObjectsNeedingExport[cloudID] = salon
-                    cloudSalonRecord = icloudSalon.makeCloudKitRecord()
-                    recordsToSave.append(cloudSalonRecord!)
-                    cloudID = anonCustomer!.bqCloudID!
-                    self.coredataObjectsNeedingExport[cloudID] = salon
-                    let cloudCustomer = ICloudCustomer(coredataCustomer: anonCustomer!, parentSalonID: salon.objectID)
-                    recordsToSave.append(cloudCustomer.makeCloudKitRecord())
-                }
-            }            
+        
+        let anonCustomer = salon.anonymousCustomer
+        if salon.bqNeedsCoreDataExport?.boolValue == true {
+            dispatch_sync(self.synchronisationQueue) {
+                let icloudSalon = ICloudSalon(coredataSalon: salon)
+                var cloudID = salon.bqCloudID!
+                self.coredataObjectsNeedingExport[cloudID] = salon
+                cloudSalonRecord = icloudSalon.makeCloudKitRecord()
+                recordsToSave.append(cloudSalonRecord!)
+                cloudID = anonCustomer!.bqCloudID!
+                self.coredataObjectsNeedingExport[cloudID] = salon
+                let cloudCustomer = ICloudCustomer(coredataCustomer: anonCustomer!, parentSalonID: salon.objectID)
+                recordsToSave.append(cloudCustomer.makeCloudKitRecord())
+            }
         }
         return recordsToSave
     }
     
-    private func prepareCustomersForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
+    private func prepareCustomersForExportIfRequired(salon:Salon) -> [CKRecord] {
+        let moc = salon.managedObjectContext!
         let modifiedCustomers = Customer.customersMarkedForExport(moc) as Set<Customer>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedCustomers {
             dispatch_sync(self.synchronisationQueue) {
-                let icloudObject = ICloudCustomer(coredataCustomer: modifiedObject, parentSalonID: self.salonID)
+                let icloudObject = ICloudCustomer(coredataCustomer: modifiedObject, parentSalonID: salon.objectID)
                 let cloudID = modifiedObject.bqCloudID!
                 self.coredataObjectsNeedingExport[cloudID] = modifiedObject
                 let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -322,12 +317,13 @@ extension BQExportModifiedCoredataOperation {
         }
         return recordsToSave
     }
-    private func prepareServiceCategoriesForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
+    private func prepareServiceCategoriesForExportIfRequired(salon:Salon) -> [CKRecord] {
+        let moc = salon.managedObjectContext!
         let modifiedCategories = ServiceCategory.serviceCategoriesMarkedForExport(moc) as Set<ServiceCategory>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedCategories {
             dispatch_sync(self.synchronisationQueue) {
-                let icloudObject = ICloudServiceCategory(coredataServiceCategory: modifiedObject, parentSalonID: salonID)
+                let icloudObject = ICloudServiceCategory(coredataServiceCategory: modifiedObject, parentSalonID: salon.objectID)
                 let cloudID = modifiedObject.bqCloudID!
                 self.coredataObjectsNeedingExport[cloudID] = modifiedObject
                 let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -336,12 +332,13 @@ extension BQExportModifiedCoredataOperation {
         }
         return recordsToSave
     }
-    private func prepareServicesForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
+    private func prepareServicesForExportIfRequired(salon:Salon) -> [CKRecord] {
+        let moc = salon.managedObjectContext!
         let modifiedServices = Service.servicesMarkedForExport(moc) as Set<Service>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedServices {
             dispatch_sync(self.synchronisationQueue) {
-                let icloudObject = ICloudService(coredataService: modifiedObject, parentSalonID: salonID)
+                let icloudObject = ICloudService(coredataService: modifiedObject, parentSalonID: salon.objectID)
                 let cloudID = modifiedObject.bqCloudID!
                 self.coredataObjectsNeedingExport[cloudID] = modifiedObject
                 let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -350,12 +347,13 @@ extension BQExportModifiedCoredataOperation {
         }
         return recordsToSave
     }
-    private func prepareEmployeesForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
+    private func prepareEmployeesForExportIfRequired(salon:Salon) -> [CKRecord] {
+        let moc = salon.managedObjectContext!
         let modifiedEmployees = Employee.employeesMarkedForExport(moc) as Set<Employee>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedEmployees {
             dispatch_sync(self.synchronisationQueue) {
-                let icloudObject = ICloudEmployee(coredataEmployee: modifiedObject, parentSalonID: salonID)
+                let icloudObject = ICloudEmployee(coredataEmployee: modifiedObject, parentSalonID: salon.objectID)
                 let cloudID = modifiedObject.bqCloudID!
                 self.coredataObjectsNeedingExport[cloudID] = modifiedObject
                 let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -364,7 +362,8 @@ extension BQExportModifiedCoredataOperation {
         }
         return recordsToSave
     }
-    private func prepareSaleItemsForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
+    private func prepareSaleItemsForExportIfRequired(salon:Salon) -> [CKRecord] {
+        let moc = salon.managedObjectContext!
         let modifiedSaleItems = SaleItem.saleItemsMarkedForExport(moc) as Set<SaleItem>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedSaleItems {
@@ -376,7 +375,7 @@ extension BQExportModifiedCoredataOperation {
                 }
             }
             dispatch_sync(self.synchronisationQueue) {
-                let icloudObject = ICloudSaleItem(coredataSaleItem: modifiedObject, parentSalonID: salonID)
+                let icloudObject = ICloudSaleItem(coredataSaleItem: modifiedObject, parentSalonID: salon.objectID)
                 let cloudID = modifiedObject.bqCloudID!
                 self.coredataObjectsNeedingExport[cloudID] = modifiedObject
                 let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -385,7 +384,8 @@ extension BQExportModifiedCoredataOperation {
         }
         return recordsToSave
     }
-    private func prepareSalesForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
+    private func prepareSalesForExportIfRequired(salon:Salon) -> [CKRecord] {
+        let moc = salon.managedObjectContext!
         let modifiedSales = Sale.salesMarkedForExport(moc) as Set<Sale>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedSales {
@@ -393,7 +393,7 @@ extension BQExportModifiedCoredataOperation {
                 continue
             }
             dispatch_sync(self.synchronisationQueue) {
-                let icloudObject = ICloudSale(coredataSale: modifiedObject, parentSalonID: salonID)
+                let icloudObject = ICloudSale(coredataSale: modifiedObject, parentSalonID: salon.objectID)
                 let cloudID = modifiedObject.bqCloudID!
                 self.coredataObjectsNeedingExport[cloudID] = modifiedObject
                 let cloudRecord = icloudObject.makeCloudKitRecord()
@@ -402,12 +402,13 @@ extension BQExportModifiedCoredataOperation {
         }
         return recordsToSave
     }
-    private func prepareAppointmentsForExportIfRequired(moc:NSManagedObjectContext, salonID:NSManagedObjectID) -> [CKRecord] {
+    private func prepareAppointmentsForExportIfRequired(salon:Salon) -> [CKRecord] {
+        let moc = salon.managedObjectContext!
         let modifiedAppointments = Appointment.appointmentsMarkedForExport(moc) as Set<Appointment>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedAppointments {
             dispatch_sync(self.synchronisationQueue) {
-                let icloudObject = ICloudAppointment(coredataAppointment: modifiedObject, parentSalonID: salonID)
+                let icloudObject = ICloudAppointment(coredataAppointment: modifiedObject, parentSalonID: salon.objectID)
                 let cloudID = modifiedObject.bqCloudID!
                 self.coredataObjectsNeedingExport[cloudID] = modifiedObject
                 let cloudRecord = icloudObject.makeCloudKitRecord()
