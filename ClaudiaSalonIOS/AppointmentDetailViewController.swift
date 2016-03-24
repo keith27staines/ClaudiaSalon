@@ -38,10 +38,8 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
     }
     
     func saleItemWasUpdated(saleItem:SaleItem) {
-        saleItem.managedObjectContext?.performBlock() {
-            self.configureView()
-            self.updateAppointment(saleItem.sale!.fromAppointment!)
-        }
+        self.configureView()
+        self.updateAppointment(saleItem.sale!.fromAppointment!)
     }
 
     func configureView() {
@@ -171,10 +169,8 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
                 return
             }
             if appointment.customer?.objectID != selectedCustomerObjectID {
-                let moc = appointment.managedObjectContext!
-                moc.performBlockAndWait() {
-                    appointment.customer = moc.objectWithID(selectedCustomerObjectID) as? Customer
-                }
+                let moc = Coredata.sharedInstance.managedObjectContext
+                appointment.customer = moc.objectWithID(selectedCustomerObjectID) as? Customer
                 self.configureView()
             }
             self.updateAppointment(appointment)
@@ -182,9 +178,7 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
     }
     func updateAppointment(appointment:Appointment) {
         if let callback = self.appointmentWasUpdated  {
-            appointment.managedObjectContext?.performBlock() {
-                appointment.cascadeHasChangesUpdwards()
-            }
+            appointment.cascadeHasChangesUpdwards()
             callback(appointment: appointment)
         }
     }

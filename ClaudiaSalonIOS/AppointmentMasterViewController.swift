@@ -45,7 +45,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        guard let _ = Salon.defaultSalon(Coredata.sharedInstance.backgroundContext) else {
+        guard let _ = Salon.defaultSalon(Coredata.sharedInstance.managedObjectContext) else {
             self.performSegueWithIdentifier("GotoImportViewController", sender: self)
             return
         }
@@ -127,47 +127,40 @@ extension MasterViewController {
         guard let appointmentCell = cell as? AppointmentViewCellTableViewCell else {
             preconditionFailure("Cell is not an AppointmentViewCellTableViewCell")
         }
-        let moc = self.fetchedResultsController.managedObjectContext
-        moc.performBlockAndWait() {
-            let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
-            appointmentCell.appointment = appointment
-            appointmentCell.cloudSynchButtonTapped = { appointment in
-                var hasChanges:Bool?
-                var needsExport:Bool?
-                Coredata.sharedInstance.backgroundContext.performBlockAndWait() {
-                    hasChanges = appointment.bqHasClientChanges?.boolValue ?? false
-                    needsExport = appointment.bqNeedsCoreDataExport?.boolValue ?? false
+        
+        let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
+        appointmentCell.appointment = appointment
+        
+        appointmentCell.cloudSynchButtonTapped = { appointment in
+            
+            let hasChanges = appointment.bqHasClientChanges?.boolValue ?? false
+            let needsExport = appointment.bqNeedsCoreDataExport?.boolValue ?? false
+            
+            if hasChanges {
+                let alert = UIAlertController(title: "Synch changes?", message: "Tap 'Synch' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
+                let exportAction = UIAlertAction(title: "Synch", style: .Default) { action in
+                    appointment.bqHasClientChanges = false
+                    appointment.bqNeedsCoreDataExport = true
                 }
-                NSOperationQueue.mainQueue().addOperationWithBlock() {
-                    if hasChanges! {
-                        let alert = UIAlertController(title: "Synch changes?", message: "Tap 'Synch' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
-                        let exportAction = UIAlertAction(title: "Synch", style: .Default) { action in
-                            appointment.managedObjectContext?.performBlock() {
-                                appointment.bqHasClientChanges = false
-                                appointment.bqNeedsCoreDataExport = true
-                            }
-                        }
-                        let cancelAction = UIAlertAction(title: "Not yet", style: .Cancel) { action in
-                            
-                        }
-                        alert.addAction(exportAction)
-                        alert.addAction(cancelAction)
-                        self.presentViewController(alert, animated: true, completion: nil)
-                    } else if needsExport! {
-                        let alert = UIAlertController(title: "Synching", message: "This appointment's changes are waiting to be synchronized to the cloud", preferredStyle: .ActionSheet)
-                        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                        alert.addAction(okAction)
-                        self.presentViewController(alert, animated: true, completion: nil)
-                    } else {
-                        let alert = UIAlertController(title: "Already Synched", message: "This appointment has been synchronized with the cloud", preferredStyle: .ActionSheet)
-                        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                        alert.addAction(okAction)
-                        self.presentViewController(alert, animated: true, completion: nil)
-                    }
+                let cancelAction = UIAlertAction(title: "Not yet", style: .Cancel) { action in
+                    
                 }
-
+                alert.addAction(exportAction)
+                alert.addAction(cancelAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else if needsExport {
+                let alert = UIAlertController(title: "Synching", message: "This appointment's changes are waiting to be synchronized to the cloud", preferredStyle: .ActionSheet)
+                let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alert.addAction(okAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                let alert = UIAlertController(title: "Already Synched", message: "This appointment has been synchronized with the cloud", preferredStyle: .ActionSheet)
+                let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alert.addAction(okAction)
+                self.presentViewController(alert, animated: true, completion: nil)
             }
         }
+        
     }
 }
 
@@ -178,10 +171,10 @@ extension MasterViewController {
         if _fetchedResultsController != nil {
             return _fetchedResultsController!
         }
-        
+        let moc = Coredata.sharedInstance.managedObjectContext
         let fetchRequest = NSFetchRequest()
         // Edit the entity name as appropriate.
-        let entity = NSEntityDescription.entityForName("Appointment", inManagedObjectContext: self.managedObjectContext)
+        let entity = NSEntityDescription.entityForName("Appointment", inManagedObjectContext: moc)
         fetchRequest.entity = entity
         
         // Set the batch size to a suitable number.
@@ -194,7 +187,7 @@ extension MasterViewController {
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: "Master")
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: "Master")
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         
@@ -208,47 +201,39 @@ extension MasterViewController {
     }
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            self.tableView.beginUpdates()
-        }
+        self.tableView.beginUpdates()
     }
     
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
         
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            switch type {
-            case .Insert:
-                self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-            case .Delete:
-                self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-            default:
-                return
-            }
+        switch type {
+        case .Insert:
+            self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        case .Delete:
+            self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        default:
+            return
         }
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            switch type {
-            case .Insert:
-                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-            case .Delete:
-                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            case .Update:
-                if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
-                    self.configureCell(cell, atIndexPath: indexPath!)
-                }
-            case .Move:
-                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        switch type {
+        case .Insert:
+            self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        case .Delete:
+            self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+        case .Update:
+            if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
+                self.configureCell(cell, atIndexPath: indexPath!)
             }
+        case .Move:
+            self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
     }
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            self.tableView.endUpdates()
-        }
+        self.tableView.endUpdates()
     }
     
     /*

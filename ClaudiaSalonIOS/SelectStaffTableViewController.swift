@@ -47,14 +47,12 @@ class SelectStaffTableViewController : UITableViewController , NSFetchedResultsC
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         if let employee = self.fetchedResultsController.fetchedObjects?[indexPath.row] as? Employee {
-                employee.managedObjectContext!.performBlockAndWait() {
-                    cell.textLabel!.text = employee.firstName ?? ""
-                    cell.detailTextLabel!.text = employee.lastName ?? ""
-                    if employee.objectID == self.selectedEmployee?.objectID {
-                        cell.accessoryType = .Checkmark
-                    } else {
-                        cell.accessoryType = .None
-                    }
+            cell.textLabel!.text = employee.firstName ?? ""
+            cell.detailTextLabel!.text = employee.lastName ?? ""
+            if employee.objectID == self.selectedEmployee?.objectID {
+                cell.accessoryType = .Checkmark
+            } else {
+                cell.accessoryType = .None
             }
         }
         return cell

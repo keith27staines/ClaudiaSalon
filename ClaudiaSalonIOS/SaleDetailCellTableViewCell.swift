@@ -62,62 +62,55 @@ class SaleDetailCellTableViewCell: UITableViewCell {
     
     func updateSaleItem() {
         let saleItem = self.saleItem!
-        let moc = saleItem.managedObjectContext!
-        moc.performBlock() {
-            saleItem.nominalCharge = self.beforeDiscount
-            saleItem.discountType = self.discountType
-            saleItem.discountValue = self.discountValue
-            saleItem.updatePrice()
-            saleItem.sale!.updatePriceFromSaleItems()
-            self.updateWithSaleItem(saleItem)
-            self.delegate?.saleItemWasUpdated(saleItem)
-        }
+        saleItem.nominalCharge = self.beforeDiscount
+        saleItem.discountType = self.discountType
+        saleItem.discountValue = self.discountValue
+        saleItem.updatePrice()
+        saleItem.sale!.updatePriceFromSaleItems()
+        self.updateWithSaleItem(saleItem)
+        self.delegate?.saleItemWasUpdated(saleItem)
     }
     
     func updateWithSaleItem(saleItem:SaleItem) {
         self.saleItem = saleItem
-        self.saleItem?.managedObjectContext?.performBlock() {
-            self.beforeDiscount = self.saleItem?.nominalCharge
-            let afterDiscount = self.saleItem?.actualCharge
-            self.discountType = self.saleItem?.discountType
-            self.discountValue = self.saleItem?.discountValue
-            let min = self.saleItem?.minimumCharge
-            let max = self.saleItem?.maximumCharge
-            let serviceName = self.saleItem?.service?.name ?? "Unknown service"
-            let employeeName = self.saleItem?.performedBy?.fullName()
-            
-            NSOperationQueue.mainQueue().addOperationWithBlock() {
-                let hideSlider = max?.doubleValue == min?.doubleValue
-                self.serviceNameLabel.text = serviceName
-                if employeeName == nil {
-                    self.employeeNameLabel.text = "No stylist assigned for this service"
-                } else {
-                    self.employeeNameLabel.text = "Service assigned to " + employeeName!
-                }
-                self.minLabel.hidden = hideSlider
-                self.maxLabel.hidden = hideSlider
-                self.amountSlider.hidden = hideSlider
-                
-                self.amountSlider.minimumValue = min?.floatValue ?? 0
-                self.amountSlider.maximumValue = max?.floatValue ?? 0
-                self.amountSlider.value = self.beforeDiscount?.floatValue ?? 0
-                self.beforeDiscountLabel.text = "Price before discount " + self.stringForCurrencyAmount(self.beforeDiscount)!
-                self.afterDiscountLabel.text = "Price after discount " + self.stringForCurrencyAmount(afterDiscount)!
-                var segmentIndex = self.discountType!.integerValue - 1
-                if segmentIndex < 0 {
-                    segmentIndex = 0
-                }
-                self.discountTypeSegmentedControl.selectedSegmentIndex = segmentIndex
-                if segmentIndex == 0 {
-                    self.discountValueLabel.text = self.discountValue!.stringValue + "%"
-                } else {
-                    self.discountValueLabel.text = self.stringForCurrencyAmount(self.discountValue) ?? " "
-                }
-                self.discountStepper.value = self.discountValue!.doubleValue
-                self.minLabel.text = self.stringForCurrencyAmount(min)
-                self.maxLabel.text = self.stringForCurrencyAmount(max)
-            }
+        self.beforeDiscount = self.saleItem?.nominalCharge
+        let afterDiscount = self.saleItem?.actualCharge
+        self.discountType = self.saleItem?.discountType
+        self.discountValue = self.saleItem?.discountValue
+        let min = self.saleItem?.minimumCharge
+        let max = self.saleItem?.maximumCharge
+        let serviceName = self.saleItem?.service?.name ?? "Unknown service"
+        let employeeName = self.saleItem?.performedBy?.fullName()
+        
+        let hideSlider = max?.doubleValue == min?.doubleValue
+        self.serviceNameLabel.text = serviceName
+        if employeeName == nil {
+            self.employeeNameLabel.text = "No stylist assigned for this service"
+        } else {
+            self.employeeNameLabel.text = "Service assigned to " + employeeName!
         }
+        self.minLabel.hidden = hideSlider
+        self.maxLabel.hidden = hideSlider
+        self.amountSlider.hidden = hideSlider
+        
+        self.amountSlider.minimumValue = min?.floatValue ?? 0
+        self.amountSlider.maximumValue = max?.floatValue ?? 0
+        self.amountSlider.value = self.beforeDiscount?.floatValue ?? 0
+        self.beforeDiscountLabel.text = "Price before discount " + self.stringForCurrencyAmount(self.beforeDiscount)!
+        self.afterDiscountLabel.text = "Price after discount " + self.stringForCurrencyAmount(afterDiscount)!
+        var segmentIndex = self.discountType!.integerValue - 1
+        if segmentIndex < 0 {
+            segmentIndex = 0
+        }
+        self.discountTypeSegmentedControl.selectedSegmentIndex = segmentIndex
+        if segmentIndex == 0 {
+            self.discountValueLabel.text = self.discountValue!.stringValue + "%"
+        } else {
+            self.discountValueLabel.text = self.stringForCurrencyAmount(self.discountValue) ?? " "
+        }
+        self.discountStepper.value = self.discountValue!.doubleValue
+        self.minLabel.text = self.stringForCurrencyAmount(min)
+        self.maxLabel.text = self.stringForCurrencyAmount(max)
     }
     private func stringForCurrencyAmount(amount:NSNumber?) -> String? {
         let formatter = NSNumberFormatter()

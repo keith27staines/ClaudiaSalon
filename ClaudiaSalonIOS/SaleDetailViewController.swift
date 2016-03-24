@@ -21,14 +21,12 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         }
     }
     private var _fetchedResultsController: NSFetchedResultsController? = nil
-    lazy var managedObjectContext: NSManagedObjectContext = Coredata.sharedInstance.backgroundContext
+
     var _sale:Sale?
     var sale:Sale {
         if self._sale == nil {
-            let moc = self.managedObjectContext
-            moc.performBlockAndWait() {
-                self._sale = moc.objectWithID(self.saleID) as? Sale
-            }
+            let moc = Coredata.sharedInstance.managedObjectContext
+            self._sale = moc.objectWithID(self.saleID) as? Sale
             self.tableView.reloadData()
         }
        return _sale!
@@ -56,16 +54,12 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
     }
     
     func insertNewObject(sender: AnyObject) {
-        let context = self.fetchedResultsController.managedObjectContext
-        context.performBlockAndWait() {
-            let saleItem = SaleItem.newObjectWithMoc(context)
-            saleItem.sale = self.sale
-            Coredata.sharedInstance.save()
-        }
+        let moc = Coredata.sharedInstance.managedObjectContext
+        let saleItem = SaleItem.newObjectWithMoc(moc)
+        saleItem.sale = self.sale
     }
     func employeeInfoButtonTapped(cell: SaleDetailCellTableViewCell) {
         self.performSegueWithIdentifier("GotoSelectEmployee", sender: cell)
-        
     }
     func serviceInfoButtonTapped(cell: SaleDetailCellTableViewCell) {
         self.performSegueWithIdentifier("GotoSelectService", sender: cell)
@@ -85,7 +79,8 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
             if let currentCategory = saleItemBeingEdited?.service?.serviceCategory {
                 vc.currentCategory = currentCategory
             } else {
-                vc.currentCategory = Salon(moc: Coredata.sharedInstance.backgroundContext).rootServiceCategory
+                let moc = Coredata.sharedInstance.managedObjectContext
+                vc.currentCategory = Salon(moc: moc).rootServiceCategory
             }
             vc.originalService = saleItemBeingEdited!.service
             vc.selectedService = saleItemBeingEdited!.service
@@ -99,27 +94,22 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
     }
     func serviceWasChanged(selectedService:Service) {
         var indexPath:NSIndexPath?
-        self.saleItemBeingEdited?.managedObjectContext?.performBlockAndWait() {
-            let saleItem = self.saleItemBeingEdited!
-            saleItem.service = selectedService
-            saleItem.minimumCharge = selectedService.minimumCharge
-            saleItem.maximumCharge = selectedService.maximumCharge
-            saleItem.nominalCharge = selectedService.nominalCharge
-            saleItem.updatePrice()
-            self.saleItemWasUpdated(saleItem)
-            indexPath = self.fetchedResultsController.indexPathForObject(saleItem)!
-        }
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
-                self.configureCell(cell, atIndexPath: indexPath!)
-            }
+        let saleItem = self.saleItemBeingEdited!
+        saleItem.service = selectedService
+        saleItem.minimumCharge = selectedService.minimumCharge
+        saleItem.maximumCharge = selectedService.maximumCharge
+        saleItem.nominalCharge = selectedService.nominalCharge
+        saleItem.updatePrice()
+        self.saleItemWasUpdated(saleItem)
+        indexPath = self.fetchedResultsController.indexPathForObject(saleItem)!
+        
+        if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
+            self.configureCell(cell, atIndexPath: indexPath!)
         }
     }
     func employeeWasChanged(selectedEmployee:Employee) {
-        selectedEmployee.managedObjectContext?.performBlock() {
-            self.saleItemBeingEdited!.performedBy = selectedEmployee
-            self.saleItemWasUpdated(self.saleItemBeingEdited!)
-        }
+        self.saleItemBeingEdited!.performedBy = selectedEmployee
+        self.saleItemWasUpdated(self.saleItemBeingEdited!)
     }
 }
 
@@ -161,9 +151,8 @@ extension SaleDetailViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            let context = self.fetchedResultsController.managedObjectContext
-            context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
-            Coredata.sharedInstance.save()
+            let moc = self.fetchedResultsController.managedObjectContext
+            moc.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
         }
     }
     
@@ -182,7 +171,8 @@ extension SaleDetailViewController {
         }
         
         let fetchRequest = NSFetchRequest()
-        let entity = NSEntityDescription.entityForName("SaleItem", inManagedObjectContext: self.managedObjectContext)
+        let moc = Coredata.sharedInstance.managedObjectContext
+        let entity = NSEntityDescription.entityForName("SaleItem", inManagedObjectContext: moc)
         fetchRequest.entity = entity
         let predicate = NSPredicate(format: "sale = %@", self.saleID)
         fetchRequest.predicate = predicate
@@ -194,7 +184,7 @@ extension SaleDetailViewController {
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         
@@ -208,48 +198,39 @@ extension SaleDetailViewController {
     }
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            self.tableView.beginUpdates()
-        }
+        self.tableView.beginUpdates()
     }
     
     func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            switch type {
-            case .Insert:
-                self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-            case .Delete:
-                self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-            default:
-                return
-            }
+        switch type {
+        case .Insert:
+            self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        case .Delete:
+            self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        default:
+            return
         }
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
         
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            switch type {
-            case .Insert:
-                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-            case .Delete:
-                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            case .Update:
-                if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
-                    self.configureCell(cell, atIndexPath: indexPath!)
-                }
-            case .Move:
-                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        switch type {
+        case .Insert:
+            self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        case .Delete:
+            self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+        case .Update:
+            if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
+                self.configureCell(cell, atIndexPath: indexPath!)
             }
+        case .Move:
+            self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
         }
     }
 
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            self.tableView.endUpdates()
-        }
+        self.tableView.endUpdates()
     }
     
     /*
