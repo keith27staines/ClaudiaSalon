@@ -111,7 +111,6 @@ private class BQExportModifiedCoredataOperation : NSOperation {
     override func main() {
         if self.cancelled { return }
         var recordsToSave = [CKRecord]()
-        publicDatabase = CKContainer.defaultContainer().publicCloudDatabase
         let moc = self.workerMoc
         moc.performBlockAndWait {
             recordsToSave = self.prepareCoredataObjectsForExportIfRequired()

@@ -16,18 +16,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        self.setupToplevelController()
+        let moc = Coredata.sharedInstance.managedObjectContext
+        if let _ = Salon.defaultSalon(moc) {
+            self.registerForRemoteNotifications(application)
+        }
+        return true
+    }
+    
+    func registerForRemoteNotifications(application: UIApplication) {
         // Register for push notifications
         let notificationSettings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert, categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
         application.registerForRemoteNotifications()
-        
+    }
+    
+    func setupToplevelController() {
         // Set up top-level view controller
         let splitViewController = self.window!.rootViewController as! UISplitViewController
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
         splitViewController.delegate = self
-        
-        return true
     }
     
     func applicationWillResignActive(application: UIApplication) {

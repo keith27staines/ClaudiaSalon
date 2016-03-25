@@ -11,12 +11,7 @@ import CloudKit
 import CoreData
 
 class ImportTableViewController : UITableViewController {
-    lazy var importer:BQCloudImporter = {
-        let importer = BQCloudImporter()
-        importer.downloadWasUpdated = self.downloadInformationWasUpdated
-        importer.downloadCompleted = self.downloadCompleted
-        return importer
-    }()
+    lazy var importer:BQCloudImporter = { return Coredata.sharedInstance.importController! }()
     let importTypes = CloudRecordType.typesAsArray()
     override func viewDidLoad() {
         self.tableView.reloadData()

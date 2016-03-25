@@ -17,19 +17,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     var appointmentViewController: AppointmentDetailViewController? = nil
     lazy var moc: NSManagedObjectContext = Coredata.sharedInstance.managedObjectContext
-    
-    lazy var exportController:BQCoredataExportController = BQCoredataExportController(parentMoc: self.moc, iCloudContainerIdentifier: self.iCloudContainerIdentifier, startImmediately: false)
-    
+
     lazy var salon:Salon = {
         let salon = Salon(moc: self.moc)
         return salon
     }()
-
-    lazy var importController:BQCoredataImportController = {
-        let importer = BQCoredataImportController(iCloudContainerIdentifier: self.iCloudContainerIdentifier, iCloudSalonRecordName: self.iCloudSalonRecordName)
-        return importer
-    }()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -42,7 +35,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.appointmentViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? AppointmentDetailViewController
             self.tableView.rowHeight = UITableViewAutomaticDimension
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.appointmentWasExported(_:)), name: "appointmentWasExported", object: self.exportController)
+        let coredata = Coredata.sharedInstance
+        coredata.iCloudContainerIdentifier = self.iCloudContainerIdentifier
+        let exportController = coredata.exportController
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.appointmentWasExported(_:)), name: "appointmentWasExported", object: exportController)
     }
     
     func appointmentWasExported(notification:NSNotification) {
@@ -85,8 +81,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             return
         }
         //self.performSegueWithIdentifier("GotoImportViewController", sender: self)
-        self.exportController.startExportIterations()
-        
+        Coredata.sharedInstance.exportController.startExportIterations()
+        let _ = Coredata.sharedInstance.importController
     }
 
     override func didReceiveMemoryWarning() {

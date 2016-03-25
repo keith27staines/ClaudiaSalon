@@ -1,3 +1,4 @@
+
 //
 //  CoreData.swift
 //  ClaudiaSalon
@@ -14,6 +15,20 @@ class Coredata {
 
     // Hide the default initializer because this will be a singleton
     private init() {}
+    var iCloudContainerIdentifier:String?
+    
+    lazy var exportController:BQCoredataExportController = BQCoredataExportController(parentMoc: self.managedObjectContext, iCloudContainerIdentifier: self.iCloudContainerIdentifier!, startImmediately: false)
+    
+    lazy var importController:BQCloudImporter? = {
+        var importer:BQCloudImporter? = nil
+        if let salon = Salon.defaultSalon(self.managedObjectContext) {
+            if let recordName = salon.bqCloudID {
+                importer = BQCloudImporter(containerIdentifier: self.iCloudContainerIdentifier!, salonCloudRecordName: recordName)
+            }
+        }
+        return importer
+    }()
+
     
     private (set) lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.KeithStaines.ClaudiaSalonIOS" in the application's documents Application Support directory.
