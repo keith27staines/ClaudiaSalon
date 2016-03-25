@@ -42,8 +42,50 @@ class BQCloudImporter {
     
     init() {
         self.reinitialiseDatastructures()
+        self.subscribeToCloudNotifications()
+    }
+    func subscribeToCloudNotifications() {
+        let predicate = NSPredicate(format: "recordID.recordName == %@",self.salonCloudRecordName)
+        var subscription: CKSubscription
+        subscription = CKSubscription(recordType: "icloudAppointment", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        self.publicDatabase.saveSubscription(subscription) { (subscription, error) in
+            if error != nil {
+                assertionFailure("Error saving cloud notification subscription \(error)")
+                return
+            }
+        }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("notificationFromCloud:"), name: "cloudKitNotification", object: nil)
     }
     
+    private func notificationFromCloud(notification:NSNotification) {
+        let userInfo = notification.userInfo!
+        let cloudKitNotification = CKNotification(fromRemoteNotificationDictionary: userInfo as! [String : NSObject])
+        let queryNotification = cloudKitNotification as! CKQueryNotification
+        if queryNotification.queryNotificationReason == .RecordDeleted {
+            // If the record has been deleted in CloudKit then delete the local copy
+        } else {
+            // If the record has been created or changed, we fetch the data from CloudKit
+            let database: CKDatabase
+            if queryNotification.isPublicDatabase {
+                database = CKContainer.defaultContainer().publicCloudDatabase
+            } else {
+                database = CKContainer.defaultContainer().privateCloudDatabase
+            }
+            database.fetchRecordWithID(queryNotification.recordID!) { (record: CKRecord?, error: NSError?) -> Void in
+                guard error == nil else {
+                    // Handle the error here
+                    return
+                }
+                
+                if queryNotification.queryNotificationReason == .RecordUpdated {
+                    // Use the information in the record object to modify your local data
+                } else {
+                    // Use the information in the record object to create a new local object
+                }
+            }
+        }
+    }
+
     private func reinitialiseDatastructures() {
         self.synchQueue.addOperationWithBlock() {
             self.downloadedRecords.removeAll(keepCapacity: true)
