@@ -11,14 +11,14 @@ import CloudKit
 import CoreData
 
 class ImportTableViewController : UITableViewController {
-    lazy var importer:BQCloudImporter = { return Coredata.sharedInstance.importController! }()
+    lazy var importer:BQCloudImporter? = { return Coredata.sharedInstance.importController }()
     let importTypes = CloudRecordType.typesAsArray()
     override func viewDidLoad() {
         self.tableView.reloadData()
     }
     func configureCell(cell:ImportInfoCell, indexPath:NSIndexPath) {
         let type = CloudRecordType.typesAsArray()[indexPath.row]
-        let info = self.importer.downloads[type.rawValue]!
+        let info = self.importer!.downloads[type.rawValue]!
         cell.recordTypeLabel.text = info.recordType.rawValue
         cell.infoLabel.text = info.downloadStatus
         cell.activitySpinner.hidden = !info.executing
@@ -30,10 +30,10 @@ class ImportTableViewController : UITableViewController {
         }
     }
     func cancelImport() {
-        self.importer.cancelImport()
+        self.importer?.cancelImport()
     }
     func startImport() {
-        self.importer.startImport()
+        self.importer?.startImport()
     }
     func downloadInformationWasUpdated(info:DownloadInfo) {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
@@ -63,7 +63,11 @@ extension ImportTableViewController {
         return 1
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.importer.downloads.count
+        if let importer = self.importer {
+            return importer.downloads.count ?? 0
+        } else {
+            return 0
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

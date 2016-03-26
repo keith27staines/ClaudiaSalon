@@ -695,12 +695,12 @@ extension Appointment {
         }
         let startDate = record["appointmentStartDate"] as! NSDate
         let endDate = record["appointmentEndDate"] as! NSDate
-        let bookedDuration = endDate.timeIntervalSinceDate(startDate)
+        let bookedDuration = endDate.timeIntervalSinceDate(startDate) 
         self.managedObjectContext?.performBlockAndWait() {
             self.setBQDataFromRecord(record)
             self.bqNeedsCoreDataExport = NSNumber(bool: false)
             self.appointmentDate = startDate
-            self.bookedDuration = bookedDuration
+            self.bookedDuration = NSNumber(double: bookedDuration)
         }
     }
 }

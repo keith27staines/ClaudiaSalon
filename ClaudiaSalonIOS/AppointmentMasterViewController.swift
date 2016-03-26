@@ -11,8 +11,7 @@ import CoreData
 import CloudKit
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    private let iCloudContainerIdentifier = "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon"
-    private let iCloudSalonRecordName = "44736040-37E7-46B0-AAAB-8EA90A6C99C4"
+
     private var _fetchedResultsController: NSFetchedResultsController? = nil
 
     var appointmentViewController: AppointmentDetailViewController? = nil
@@ -35,9 +34,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.appointmentViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? AppointmentDetailViewController
             self.tableView.rowHeight = UITableViewAutomaticDimension
         }
-        let coredata = Coredata.sharedInstance
-        coredata.iCloudContainerIdentifier = self.iCloudContainerIdentifier
-        let exportController = coredata.exportController
+        let exportController = Coredata.sharedInstance.exportController
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.appointmentWasExported(_:)), name: "appointmentWasExported", object: exportController)
     }
     
@@ -80,9 +77,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.performSegueWithIdentifier("GotoImportViewController", sender: self)
             return
         }
-        //self.performSegueWithIdentifier("GotoImportViewController", sender: self)
         Coredata.sharedInstance.exportController.startExportIterations()
-        let _ = Coredata.sharedInstance.importController
+        //self.performSegueWithIdentifier("GotoImportViewController", sender: self)
     }
 
     override func didReceiveMemoryWarning() {

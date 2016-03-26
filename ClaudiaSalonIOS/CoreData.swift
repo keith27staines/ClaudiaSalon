@@ -16,16 +16,12 @@ class Coredata {
     // Hide the default initializer because this will be a singleton
     private init() {}
     var iCloudContainerIdentifier:String?
+    var iCloudSalonRecordName:String?
     
     lazy var exportController:BQCoredataExportController = BQCoredataExportController(parentMoc: self.managedObjectContext, iCloudContainerIdentifier: self.iCloudContainerIdentifier!, startImmediately: false)
     
     lazy var importController:BQCloudImporter? = {
-        var importer:BQCloudImporter? = nil
-        if let salon = Salon.defaultSalon(self.managedObjectContext) {
-            if let recordName = salon.bqCloudID {
-                importer = BQCloudImporter(containerIdentifier: self.iCloudContainerIdentifier!, salonCloudRecordName: recordName)
-            }
-        }
+        var importer = BQCloudImporter(containerIdentifier: self.iCloudContainerIdentifier!, salonCloudRecordName: self.iCloudSalonRecordName!)
         return importer
     }()
 

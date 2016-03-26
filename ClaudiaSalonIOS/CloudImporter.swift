@@ -51,7 +51,8 @@ class BQCloudImporter {
         self.subscribeToCloudNotifications()
     }
     func subscribeToCloudNotifications() {
-        let predicate = NSPredicate(value: true) //NSPredicate(format: "parentSalonReference == %@",self.cloudSalonReference)
+        //let predicate = NSPredicate(value: true)
+        let predicate = NSPredicate(format: "parentSalonReference == %@",self.cloudSalonReference)
         var subscription: CKSubscription
         subscription = CKSubscription(recordType: "icloudAppointment", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
         self.publicDatabase.saveSubscription(subscription) { (subscription, error) in
@@ -73,18 +74,16 @@ class BQCloudImporter {
             // If the record has been created or changed, we fetch the data from CloudKit
             let database: CKDatabase
             if queryNotification.isPublicDatabase {
-                database = CKContainer.defaultContainer().publicCloudDatabase
+                database = self.container.publicCloudDatabase
             } else {
-                database = CKContainer.defaultContainer().privateCloudDatabase
+                database = self.container.privateCloudDatabase
             }
             database.fetchRecordWithID(queryNotification.recordID!) { (record: CKRecord?, error: NSError?) -> Void in
                 guard error == nil else {
                     // Handle the error here
                     return
                 }
-                self.synchQueue.addOperationWithBlock() {
-                    
-                }
+                self.processRecord(record!)
             }
         }
     }
@@ -421,6 +420,7 @@ class BQCloudImporter {
                 serviceCategory!.updateFromCloudRecordIfNeeded(record)
                 self.deepProcessServiceCategoryRecord((serviceCategory!,record))
             }
+            try! self.moc.save()
         }
     }
     

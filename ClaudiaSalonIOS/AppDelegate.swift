@@ -14,12 +14,18 @@ import CloudKit
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-
+    private let iCloudContainerIdentifier = "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon"
+    private let iCloudSalonRecordName = "FEC6DB02-A620-410B-92EC-F6952A8A4E2C"//"44736040-37E7-46B0-AAAB-8EA90A6C99C4"
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.setupToplevelController()
+        let coredata = Coredata.sharedInstance
+        coredata.iCloudContainerIdentifier = self.iCloudContainerIdentifier
+        coredata.iCloudSalonRecordName = self.iCloudSalonRecordName
         let moc = Coredata.sharedInstance.managedObjectContext
         if let _ = Salon.defaultSalon(moc) {
             self.registerForRemoteNotifications(application)
+            let _ = coredata.importController
         }
         return true
     }
