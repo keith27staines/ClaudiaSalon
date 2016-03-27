@@ -41,12 +41,16 @@ class BQCloudImporter {
     
     private (set) var cancelled = false
     
+    private (set) var cloudNotificationProcessor:CloudNotificationProcessor!
+    
     init(containerIdentifier:String, salonCloudRecordName:String) {
         self.salonCloudRecordName = salonCloudRecordName
         self.container = CKContainer(identifier: containerIdentifier)
         self.publicDatabase = self.container.publicCloudDatabase
         let salonID = CKRecordID(recordName: self.salonCloudRecordName)
         self.cloudSalonReference = CKReference(recordID: salonID, action: .None)
+        self.cloudNotificationProcessor = CloudNotificationProcessor(cloudContainerIdentifier: containerIdentifier, cloudSalonRecordName: salonCloudRecordName)
+        self.cloudNotificationProcessor.processRecord = self.processRecord
         self.reinitialiseDatastructures()
         self.subscribeToCloudNotifications()
     }
@@ -62,6 +66,10 @@ class BQCloudImporter {
             }
         }
         NSNotificationCenter.defaultCenter().addObserverForName("cloudKitNotification", object: nil, queue: nil, usingBlock: self.notificationFromCloud)
+    }
+    
+    func pollForMissedRemoteNotifications() {
+        self.cloudNotificationProcessor.pollForMissedRemoteNotifications()
     }
     
     private func notificationFromCloud(notification:NSNotification) {
@@ -86,6 +94,7 @@ class BQCloudImporter {
                 self.processRecord(record!)
             }
         }
+        self.pollForMissedRemoteNotifications()
     }
 
     private func reinitialiseDatastructures() {
