@@ -9,8 +9,8 @@
 import Foundation
 import CloudKit
 import CoreData
-
-class BQCloudImporter {
+@objc
+class BQCloudImporter : NSObject {
     private lazy var synchQueue: NSOperationQueue = {
         let queue = NSOperationQueue()
         queue.maxConcurrentOperationCount = 1
@@ -28,7 +28,6 @@ class BQCloudImporter {
     private let cloudSalonReference : CKReference!
     private var downloadedRecords = [CKRecord]()
     private var queryOperations = Set<CKQueryOperation>()
-    private let moc = Coredata.sharedInstance.backgroundContext
     
     private var appointments = [(appointment:Appointment,record:CKRecord)]()
     private var customers = [(customer:Customer,record:CKRecord)]()
@@ -42,20 +41,25 @@ class BQCloudImporter {
     private (set) var cancelled = false
     
     private (set) var cloudNotificationProcessor:CloudNotificationProcessor!
+    private let moc:NSManagedObjectContext
     
-    init(containerIdentifier:String, salonCloudRecordName:String) {
+    init(parentMoc:NSManagedObjectContext,containerIdentifier:String, salonCloudRecordName:String) {
+        self.moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        self.moc.parentContext = parentMoc
         self.salonCloudRecordName = salonCloudRecordName
         self.container = CKContainer(identifier: containerIdentifier)
         self.publicDatabase = self.container.publicCloudDatabase
         let salonID = CKRecordID(recordName: self.salonCloudRecordName)
         self.cloudSalonReference = CKReference(recordID: salonID, action: .None)
         self.cloudNotificationProcessor = CloudNotificationProcessor(cloudContainerIdentifier: containerIdentifier, cloudSalonRecordName: salonCloudRecordName)
+        super.init()
         self.cloudNotificationProcessor.processRecord = self.processRecord
         self.reinitialiseDatastructures()
         self.subscribeToCloudNotifications()
     }
+    
     func subscribeToCloudNotifications() {
-        //let predicate = NSPredicate(value: true)
+        
         let predicate = NSPredicate(format: "parentSalonReference == %@",self.cloudSalonReference)
         var subscription: CKSubscription
         subscription = CKSubscription(recordType: "icloudAppointment", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
@@ -559,24 +563,23 @@ extension BQCloudImporter {
             guard let record = record else {
                 return
             }
-            let moc = Coredata.sharedInstance.backgroundContext
-            let salon = Salon.makeFromCloudRecord(record, moc: moc)
+            let salon = Salon.makeFromCloudRecord(record, moc: self.moc)
             if let anonCustomerRef = record["anonymousCustomerReference"] as? CKReference {
                 let customerID = anonCustomerRef.recordID
                 self.publicDatabase.fetchRecordWithID(customerID, completionHandler: { (customerRecord, error) -> Void in
                     if error != nil {
                         fatalError("Failed to download the Anonymous Customer from cloud")
                     } else {
-                        if let anon = Customer.fetchForCloudID(customerID.recordName, moc: moc) {
+                        if let anon = Customer.fetchForCloudID(customerID.recordName, moc: self.moc) {
                             anon.updateFromCloudRecordIfNeeded(customerRecord!)
                             salon.anonymousCustomer = anon
                         } else {
-                            let anon = Customer.makeFromCloudRecord(customerRecord!, moc: moc)
+                            let anon = Customer.makeFromCloudRecord(customerRecord!, moc: self.moc)
                             salon.anonymousCustomer = anon
                         }
                     }
-                    moc.performBlock() {
-                        Coredata.sharedInstance.save()
+                    self.moc.performBlock() {
+                        try! self.moc.save()
                     }
                 })
             }
@@ -593,11 +596,10 @@ extension BQCloudImporter {
         let fetchRequest = NSFetchRequest(entityName: name)
         let yesPredicate = NSPredicate(value: true)
         fetchRequest.predicate = yesPredicate
-        let moc = Coredata.sharedInstance.backgroundContext
-        moc.performBlockAndWait() {
-            let fetchedObjects = try! moc.executeFetchRequest(fetchRequest)
+        self.moc.performBlockAndWait() {
+            let fetchedObjects = try! self.moc.executeFetchRequest(fetchRequest)
             for modelObject in fetchedObjects {
-                moc.deleteObject(modelObject as! NSManagedObject)
+                self.moc.deleteObject(modelObject as! NSManagedObject)
             }
         }
     }

@@ -10,373 +10,373 @@ import Foundation
 import CloudKit
 import CoreData
 
-class BQCoredataImportController {
-    
-    static let publicDatabase = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon").publicCloudDatabase
-    private var icloudContainerIdentifier:String!
-    private var iCloudSalonRecordName:String!
-    let publicDatabase: CKDatabase
-    let coredata = Coredata.sharedInstance
-    let parentSalonRecordID:CKRecordID
-    let parentSalonReference:CKReference
-    var finished = false
-    private let counter = AMCThreadSafeCounter(name: "coredataImporter", initialValue: 0)
-    
-    init(iCloudContainerIdentifier:String, iCloudSalonRecordName:String) {
-        self.icloudContainerIdentifier = iCloudContainerIdentifier
-        self.iCloudSalonRecordName = iCloudSalonRecordName
-        parentSalonRecordID = CKRecordID(recordName: iCloudSalonRecordName)
-        parentSalonReference = CKReference(recordID: parentSalonRecordID, action: .None)
-        publicDatabase = BQCoredataImportController.publicDatabase
-        let salon = Salon.fetchForCloudID(iCloudSalonRecordName, moc: Coredata.sharedInstance.backgroundContext)
-        
-        if let salon = salon {
-            let salonCloudRecordID = CKRecordID(recordName: iCloudSalonRecordName)
-            self.publicDatabase.fetchRecordWithID(salonCloudRecordID) { (salonRecord, error) -> Void in
-                if error != nil {
-                    fatalError("error downloading salon from cloud")
-                } else {
-                    salon.updateFromCloudRecordIfNeeded(salonRecord!)
-                }
-            }
-        } else {
-            self.performInitialImport()
-        }
-    }
-    
-    func fetchCloudAppointments() {
-        let queryOperation = self.queryOperationForAppointments()
-        counter.increment()
-        publicDatabase.addOperation(queryOperation)
-    }
-    func queryOperationForAppointments()->CKQueryOperation {
-        let earliestDate = NSDate().dateByAddingTimeInterval(-30*24*3600);
-        let predicate = NSPredicate(format: "appointmentStartDate >= %@ AND parentSalonReference = %@", earliestDate,self.parentSalonReference)
-        let query = CKQuery(recordType: "icloudAppointment", predicate: predicate)
-        let queryOperation = CKQueryOperation(query: query)
-        queryOperation.resultsLimit = 100
-        queryOperation.recordFetchedBlock = {  record in
-            self.processDownloadedAppointment(record)
-        }
-        queryOperation.queryCompletionBlock = { (cursor, error) in
-            if queryOperation.cancelled {
-                return
-            }
-            if error != nil {
-                print("Error fetching appointments \(error)")
-            }
-            if let cursor = cursor {
-                let nextBatch = CKQueryOperation(cursor: cursor)
-                nextBatch.queryCompletionBlock = queryOperation.queryCompletionBlock
-                nextBatch.recordFetchedBlock = queryOperation.recordFetchedBlock
-                self.counter.increment()
-                self.publicDatabase.addOperation(nextBatch)
-            }
-        }
-        return queryOperation
-    }
-    func processDownloadedAppointment(appointmentRecord:CKRecord) {
-        let cloudID = appointmentRecord.recordID.recordName
-        let moc = coredata.backgroundContext
-        moc.performBlock() {
-            var appointment = Appointment.fetchForCloudID(cloudID, moc: moc)
-            if let appointment = appointment {
-                appointment.updateFromCloudRecordIfNeeded(appointmentRecord)
-            } else {
-                appointment = Appointment.makeFromCloudRecord(appointmentRecord, moc: moc)
-            }
-            let fillOperations = self.fillAppointmentDetailsOperations(appointment!, appointmentRecord: appointmentRecord)
-            for operation in fillOperations {
-                self.publicDatabase.addOperation(operation)
-            }
-        }
-    }
-}
-
-extension BQCoredataImportController {
-    func performInitialImport() {
-        // Start from clean slate
-        self.deleteAllCoredataObjects()
-        let salonRecordID = CKRecordID(recordName: self.iCloudSalonRecordName)
-        self.publicDatabase.fetchRecordWithID(salonRecordID) { (record, error) -> Void in
-            guard error == nil else {
-                return
-            }
-            guard let record = record else {
-                return
-            }
-            let moc = Coredata.sharedInstance.backgroundContext
-            let salon = Salon.makeFromCloudRecord(record, moc: moc)
-            if let anonCustomerRef = record["anonymousCustomerReference"] as? CKReference {
-                let customerID = anonCustomerRef.recordID
-                self.publicDatabase.fetchRecordWithID(customerID, completionHandler: { (customerRecord, error) -> Void in
-                    if error != nil {
-                        fatalError("Failed to download the Anonymous Customer from cloud")
-                    } else {
-                        if let anon = Customer.fetchForCloudID(customerID.recordName, moc: moc) {
-                            anon.updateFromCloudRecordIfNeeded(customerRecord!)
-                            salon.anonymousCustomer = anon
-                        } else {
-                            let anon = Customer.makeFromCloudRecord(customerRecord!, moc: moc)
-                            salon.anonymousCustomer = anon
-                        }
-                    }
-                    moc.performBlock() {
-                        Coredata.sharedInstance.save()
-                    }
-                })
-            }
-            
-        }
-    }
-    func deleteAllCoredataObjects() {
-        let entities = ["Salon", "Customer", "Employee", "Service", "ServiceCategory", "Appointment", "Sale", "SaleItem"]
-        for entity in entities {
-            self.deleteEntity(entity)
-        }
-        self.coredata.save()
-    }
-    func deleteEntity(name:String) {
-        let fetchRequest = NSFetchRequest(entityName: name)
-        let yesPredicate = NSPredicate(value: true)
-        fetchRequest.predicate = yesPredicate
-        let moc = self.coredata.backgroundContext
-        moc.performBlockAndWait() {
-            let fetchedObjects = try! moc.executeFetchRequest(fetchRequest)
-            for modelObject in fetchedObjects {
-                moc.deleteObject(modelObject as! NSManagedObject)
-            }
-        }
-    }
-}
-
-extension BQCoredataImportController {
-    func fillAppointmentDetailsOperations(appointment:Appointment, appointmentRecord:CKRecord) -> [CKQueryOperation] {
-        let customerOperation = CustomerForAppointmentOperation(appointment: appointment, appointmentRecord: appointmentRecord)
-        
-        let saleOperation = SaleForAppointmentOperation(appointment: appointment, appointmentRecord: appointmentRecord)
-        saleOperation.addDependency(customerOperation)
-
-        //let saleItemsOperation = SaleItemsForSaleOperation()
-        //saleItemsOperation.addDependency(saleOperation)
-        //return [customerOperation,saleOperation,saleItemsOperation]
-        
-        return [customerOperation, saleOperation]
-    }
-}
+//class BQCoredataImportController {
+//    
+//    static let publicDatabase = CKContainer(identifier: "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon").publicCloudDatabase
+//    private var icloudContainerIdentifier:String!
+//    private var iCloudSalonRecordName:String!
+//    let publicDatabase: CKDatabase
+//    let coredata = Coredata.sharedInstance
+//    let parentSalonRecordID:CKRecordID
+//    let parentSalonReference:CKReference
+//    var finished = false
+//    private let counter = AMCThreadSafeCounter(name: "coredataImporter", initialValue: 0)
+//    
+//    init(iCloudContainerIdentifier:String, iCloudSalonRecordName:String) {
+//        self.icloudContainerIdentifier = iCloudContainerIdentifier
+//        self.iCloudSalonRecordName = iCloudSalonRecordName
+//        parentSalonRecordID = CKRecordID(recordName: iCloudSalonRecordName)
+//        parentSalonReference = CKReference(recordID: parentSalonRecordID, action: .None)
+//        publicDatabase = BQCoredataImportController.publicDatabase
+//        let salon = Salon.fetchForCloudID(iCloudSalonRecordName, moc: Coredata.sharedInstance.backgroundContext)
+//        
+//        if let salon = salon {
+//            let salonCloudRecordID = CKRecordID(recordName: iCloudSalonRecordName)
+//            self.publicDatabase.fetchRecordWithID(salonCloudRecordID) { (salonRecord, error) -> Void in
+//                if error != nil {
+//                    fatalError("error downloading salon from cloud")
+//                } else {
+//                    salon.updateFromCloudRecordIfNeeded(salonRecord!)
+//                }
+//            }
+//        } else {
+//            self.performInitialImport()
+//        }
+//    }
+//    
+//    func fetchCloudAppointments() {
+//        let queryOperation = self.queryOperationForAppointments()
+//        counter.increment()
+//        publicDatabase.addOperation(queryOperation)
+//    }
+//    func queryOperationForAppointments()->CKQueryOperation {
+//        let earliestDate = NSDate().dateByAddingTimeInterval(-30*24*3600);
+//        let predicate = NSPredicate(format: "appointmentStartDate >= %@ AND parentSalonReference = %@", earliestDate,self.parentSalonReference)
+//        let query = CKQuery(recordType: "icloudAppointment", predicate: predicate)
+//        let queryOperation = CKQueryOperation(query: query)
+//        queryOperation.resultsLimit = 100
+//        queryOperation.recordFetchedBlock = {  record in
+//            self.processDownloadedAppointment(record)
+//        }
+//        queryOperation.queryCompletionBlock = { (cursor, error) in
+//            if queryOperation.cancelled {
+//                return
+//            }
+//            if error != nil {
+//                print("Error fetching appointments \(error)")
+//            }
+//            if let cursor = cursor {
+//                let nextBatch = CKQueryOperation(cursor: cursor)
+//                nextBatch.queryCompletionBlock = queryOperation.queryCompletionBlock
+//                nextBatch.recordFetchedBlock = queryOperation.recordFetchedBlock
+//                self.counter.increment()
+//                self.publicDatabase.addOperation(nextBatch)
+//            }
+//        }
+//        return queryOperation
+//    }
+//    func processDownloadedAppointment(appointmentRecord:CKRecord) {
+//        let cloudID = appointmentRecord.recordID.recordName
+//        let moc = coredata.backgroundContext
+//        moc.performBlock() {
+//            var appointment = Appointment.fetchForCloudID(cloudID, moc: moc)
+//            if let appointment = appointment {
+//                appointment.updateFromCloudRecordIfNeeded(appointmentRecord)
+//            } else {
+//                appointment = Appointment.makeFromCloudRecord(appointmentRecord, moc: moc)
+//            }
+//            let fillOperations = self.fillAppointmentDetailsOperations(appointment!, appointmentRecord: appointmentRecord)
+//            for operation in fillOperations {
+//                self.publicDatabase.addOperation(operation)
+//            }
+//        }
+//    }
+//}
+//
+//extension BQCoredataImportController {
+//    func performInitialImport() {
+//        // Start from clean slate
+//        self.deleteAllCoredataObjects()
+//        let salonRecordID = CKRecordID(recordName: self.iCloudSalonRecordName)
+//        self.publicDatabase.fetchRecordWithID(salonRecordID) { (record, error) -> Void in
+//            guard error == nil else {
+//                return
+//            }
+//            guard let record = record else {
+//                return
+//            }
+//            let moc = Coredata.sharedInstance.backgroundContext
+//            let salon = Salon.makeFromCloudRecord(record, moc: moc)
+//            if let anonCustomerRef = record["anonymousCustomerReference"] as? CKReference {
+//                let customerID = anonCustomerRef.recordID
+//                self.publicDatabase.fetchRecordWithID(customerID, completionHandler: { (customerRecord, error) -> Void in
+//                    if error != nil {
+//                        fatalError("Failed to download the Anonymous Customer from cloud")
+//                    } else {
+//                        if let anon = Customer.fetchForCloudID(customerID.recordName, moc: moc) {
+//                            anon.updateFromCloudRecordIfNeeded(customerRecord!)
+//                            salon.anonymousCustomer = anon
+//                        } else {
+//                            let anon = Customer.makeFromCloudRecord(customerRecord!, moc: moc)
+//                            salon.anonymousCustomer = anon
+//                        }
+//                    }
+//                    moc.performBlock() {
+//                        Coredata.sharedInstance.save()
+//                    }
+//                })
+//            }
+//            
+//        }
+//    }
+//    func deleteAllCoredataObjects() {
+//        let entities = ["Salon", "Customer", "Employee", "Service", "ServiceCategory", "Appointment", "Sale", "SaleItem"]
+//        for entity in entities {
+//            self.deleteEntity(entity)
+//        }
+//        self.coredata.save()
+//    }
+//    func deleteEntity(name:String) {
+//        let fetchRequest = NSFetchRequest(entityName: name)
+//        let yesPredicate = NSPredicate(value: true)
+//        fetchRequest.predicate = yesPredicate
+//        let moc = self.coredata.backgroundContext
+//        moc.performBlockAndWait() {
+//            let fetchedObjects = try! moc.executeFetchRequest(fetchRequest)
+//            for modelObject in fetchedObjects {
+//                moc.deleteObject(modelObject as! NSManagedObject)
+//            }
+//        }
+//    }
+//}
+//
+//extension BQCoredataImportController {
+//    func fillAppointmentDetailsOperations(appointment:Appointment, appointmentRecord:CKRecord) -> [CKQueryOperation] {
+//        let customerOperation = CustomerForAppointmentOperation(appointment: appointment, appointmentRecord: appointmentRecord)
+//        
+//        let saleOperation = SaleForAppointmentOperation(appointment: appointment, appointmentRecord: appointmentRecord)
+//        saleOperation.addDependency(customerOperation)
+//
+//        //let saleItemsOperation = SaleItemsForSaleOperation()
+//        //saleItemsOperation.addDependency(saleOperation)
+//        //return [customerOperation,saleOperation,saleItemsOperation]
+//        
+//        return [customerOperation, saleOperation]
+//    }
+//}
 
 protocol AppointmentBuilder {
     var error: NSError? { get }
     var appointment: Appointment? { get }
 }
-class SaleForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
-    var error: NSError?
-    private (set) var appointment:Appointment?
-    private (set) var appointmentRecord:CKRecord
-    private (set) var saleRecord: CKRecord?
-    
-    init(appointment:Appointment, appointmentRecord:CKRecord) {
-        self.appointment = appointment
-        self.appointmentRecord = appointmentRecord
-        let appointmentRef = CKReference(record: appointmentRecord, action: .None)
-        let predicate = NSPredicate(format: "parentAppointmentReference == %@", appointmentRef)
-        super.init()
-        query = CKQuery(recordType: "iCloudSale", predicate: predicate)
-        super.recordFetchedBlock = { record in
-            self.saleRecord = record
-            let moc = appointment.managedObjectContext!
-            moc.performBlockAndWait() {
-                if let sale = Sale.fetchForCloudID(record.recordID.recordName, moc: moc) {
-                    sale.updateFromCloudRecordIfNeeded(record)
-                    appointment.sale = sale
-                } else {
-                    appointment.sale = Sale.makeFromCloudRecord(record, moc: moc)
-                }
-            }
-            Coredata.sharedInstance.save()
-        }
-        self.queryCompletionBlock  = { (queryCursor, error) in
-            guard error == nil else {
-                self.error = error
-                assertionFailure("error while fetching appointment's customer \(error)")
-                return
-            }
-        }
-    }
-}
-
-class ServiceForSaleItem : CKQueryOperation, AppointmentBuilder {
-    var error: NSError?
-    private (set) var appointment:Appointment?
-    private (set) var serviceRecord:CKRecord?
-    
-    init(saleItem:SaleItem,saleItemRecord:CKRecord) {
-        self.appointment = saleItem.sale?.fromAppointment
-        super.init()
-        self.queryCompletionBlock  = { (queryCursor, error) in
-            guard error == nil else {
-                self.error = error
-                assertionFailure("error while fetching service for saleItem \(error)")
-                return
-            }
-        }
-        let serviceRef = saleItemRecord["serviceReference"] as? CKReference
-        guard let serviceID = serviceRef?.recordID else {
-            return
-        }
-        let predicate = NSPredicate(format: "recordID == %@", serviceID)
-        query = CKQuery(recordType: "iCloudService", predicate: predicate)
-        self.recordFetchedBlock = { serviceRecord in
-            self.serviceRecord = serviceRecord
-            let moc = saleItem.managedObjectContext!
-            moc.performBlockAndWait() {
-                if let service = Service.fetchForCloudID(serviceRecord.recordID.recordName, moc: moc) {
-                    service.updateFromCloudRecordIfNeeded(serviceRecord)
-                    saleItem.service = service
-                } else {
-                    saleItem.service = Service.makeFromCloudRecord(serviceRecord, moc: moc)
-                }
-            }
-            Coredata.sharedInstance.save()
-        }
-    }
-}
-
-class EmployeeForSaleItem : CKQueryOperation, AppointmentBuilder {
-    var error: NSError?
-    private (set) var appointment:Appointment?
-    private (set) var employeeRecord:CKRecord?
-    
-    init(saleItem:SaleItem,saleItemRecord:CKRecord) {
-        self.appointment = saleItem.sale?.fromAppointment
-        super.init()
-        self.queryCompletionBlock  = { (queryCursor, error) in
-            guard error == nil else {
-                self.error = error
-                assertionFailure("error while fetching service for saleItem \(error)")
-                return
-            }
-        }
-        let employeeRef = saleItemRecord["employeeReference"] as? CKReference
-        guard let employeeID = employeeRef?.recordID else {
-            return
-        }
-        let predicate = NSPredicate(format: "recordID == %@", employeeID)
-        query = CKQuery(recordType: "iCloudEmployee", predicate: predicate)
-        self.recordFetchedBlock = { employeeRecord in
-            self.employeeRecord = employeeRecord
-            let moc = saleItem.managedObjectContext!
-            moc.performBlockAndWait() {
-                if let employee = Employee.fetchForCloudID(employeeRecord.recordID.recordName, moc: moc) {
-                    employee.updateFromCloudRecordIfNeeded(employeeRecord)
-                    saleItem.performedBy = employee
-                } else {
-                    saleItem.performedBy = Employee.makeFromCloudRecord(employeeRecord, moc: moc)
-                }
-            }
-            Coredata.sharedInstance.save()
-        }
-    }
-}
-
-class SaleItemsForSaleOperation : CKQueryOperation, AppointmentBuilder {
-    var error: NSError?
-    private (set) var appointment:Appointment?
-    private (set) var sale:Sale
-    private (set) var saleRecord: CKRecord?
-    private var saleItemsFromCloud = Set<SaleItem>()
-    private let synchQueue = NSOperationQueue()
-    private let moc: NSManagedObjectContext
-    
-    init(sale:Sale) {
-        self.sale = sale
-        self.moc = sale.managedObjectContext!
-        super.init()
-
-        self.moc.performBlockAndWait() {
-            self.appointment = sale.fromAppointment
-            self.saleRecord = sale.cloudkitRecordFromEmbeddedMetadata()
-        }
-        guard let saleRecord = self.saleRecord else {
-            return
-        }
-        let saleRef = CKReference(record: saleRecord, action: .None)
-        let predicate = NSPredicate(format: "parentSaleReference == %@", saleRef)
-        query = CKQuery(recordType: "iCloudSaleItem", predicate: predicate)
-        self.recordFetchedBlock = { record in
-            var saleItem:SaleItem?
-            self.moc.performBlockAndWait() {
-                if let existingSaleItem = SaleItem.fetchForCloudID(record.recordID.recordName, moc: self.moc) {
-                    saleItem = existingSaleItem
-                    existingSaleItem.updateFromCloudRecordIfNeeded(record)
-                } else {
-                    let newSaleItem = SaleItem.makeFromCloudRecord(record, moc: self.moc)
-                    saleItem = newSaleItem
-                }
-                if let saleItem = saleItem {
-                    self.synchQueue.addOperationWithBlock() { self.saleItemsFromCloud.insert(saleItem) }
-                    BQCoredataImportController.publicDatabase.addOperation(ServiceForSaleItem(saleItem: saleItem, saleItemRecord: record))
-                    BQCoredataImportController.publicDatabase.addOperation(EmployeeForSaleItem(saleItem: saleItem, saleItemRecord: record))
-                }
-            }
-        }
-        self.queryCompletionBlock  = { (queryCursor, error) in
-            guard error == nil else {
-                self.error = error
-                assertionFailure("error while fetching saleItems \(error)")
-                return
-            }
-            self.moc.performBlockAndWait() {
-                let currentItems = self.sale.saleItem!
-                for saleItem in currentItems {
-                    if !self.saleItemsFromCloud.contains(saleItem) {
-                        self.sale.removeSaleItemObject(saleItem)
-                        self.moc.deleteObject(saleItem)
-                    }
-                }
-                for saleItem in self.saleItemsFromCloud {
-                    self.sale.addSaleItemObject(saleItem)
-                }
-            }
-            Coredata.sharedInstance.save()
-        }
-    }
-}
-class CustomerForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
-    var error: NSError?
-    private (set) var appointment:Appointment?
-    private (set) var appointmentRecord:CKRecord
-    private (set) var customerRecord: CKRecord?
-    
-    init(appointment:Appointment, appointmentRecord:CKRecord) {
-        self.appointment = appointment
-        self.appointmentRecord = appointmentRecord
-        let customerRef = appointmentRecord["parentCustomerReference"] as! CKReference
-        let predicate = NSPredicate(format: "recordID == %@", customerRef.recordID)
-        super.init()
-        query = CKQuery(recordType: "iCloudCustomer", predicate: predicate)
-        super.recordFetchedBlock = { record in
-            self.customerRecord = record
-            let moc = Coredata.sharedInstance.backgroundContext
-            moc.performBlockAndWait() {
-                if let customer = Customer.fetchForCloudID(record.recordID.recordName, moc: moc) {
-                    customer.updateFromCloudRecordIfNeeded(record)
-                    appointment.customer = customer
-                } else {
-                    appointment.customer = Customer.makeFromCloudRecord(record, moc: moc)
-                }
-            }
-        }
-        self.queryCompletionBlock  = { (queryCursor, error) in
-            guard error == nil else {
-                self.error = error
-                assertionFailure("error while fetching appointment's customer \(error)")
-                return
-            }
-            Coredata.sharedInstance.save()
-        }
-    }
-}
+//class SaleForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
+//    var error: NSError?
+//    private (set) var appointment:Appointment?
+//    private (set) var appointmentRecord:CKRecord
+//    private (set) var saleRecord: CKRecord?
+//    
+//    init(appointment:Appointment, appointmentRecord:CKRecord) {
+//        self.appointment = appointment
+//        self.appointmentRecord = appointmentRecord
+//        let appointmentRef = CKReference(record: appointmentRecord, action: .None)
+//        let predicate = NSPredicate(format: "parentAppointmentReference == %@", appointmentRef)
+//        super.init()
+//        query = CKQuery(recordType: "iCloudSale", predicate: predicate)
+//        super.recordFetchedBlock = { record in
+//            self.saleRecord = record
+//            let moc = appointment.managedObjectContext!
+//            moc.performBlockAndWait() {
+//                if let sale = Sale.fetchForCloudID(record.recordID.recordName, moc: moc) {
+//                    sale.updateFromCloudRecordIfNeeded(record)
+//                    appointment.sale = sale
+//                } else {
+//                    appointment.sale = Sale.makeFromCloudRecord(record, moc: moc)
+//                }
+//            }
+//            Coredata.sharedInstance.save()
+//        }
+//        self.queryCompletionBlock  = { (queryCursor, error) in
+//            guard error == nil else {
+//                self.error = error
+//                assertionFailure("error while fetching appointment's customer \(error)")
+//                return
+//            }
+//        }
+//    }
+//}
+//
+//class ServiceForSaleItem : CKQueryOperation, AppointmentBuilder {
+//    var error: NSError?
+//    private (set) var appointment:Appointment?
+//    private (set) var serviceRecord:CKRecord?
+//    
+//    init(saleItem:SaleItem,saleItemRecord:CKRecord) {
+//        self.appointment = saleItem.sale?.fromAppointment
+//        super.init()
+//        self.queryCompletionBlock  = { (queryCursor, error) in
+//            guard error == nil else {
+//                self.error = error
+//                assertionFailure("error while fetching service for saleItem \(error)")
+//                return
+//            }
+//        }
+//        let serviceRef = saleItemRecord["serviceReference"] as? CKReference
+//        guard let serviceID = serviceRef?.recordID else {
+//            return
+//        }
+//        let predicate = NSPredicate(format: "recordID == %@", serviceID)
+//        query = CKQuery(recordType: "iCloudService", predicate: predicate)
+//        self.recordFetchedBlock = { serviceRecord in
+//            self.serviceRecord = serviceRecord
+//            let moc = saleItem.managedObjectContext!
+//            moc.performBlockAndWait() {
+//                if let service = Service.fetchForCloudID(serviceRecord.recordID.recordName, moc: moc) {
+//                    service.updateFromCloudRecordIfNeeded(serviceRecord)
+//                    saleItem.service = service
+//                } else {
+//                    saleItem.service = Service.makeFromCloudRecord(serviceRecord, moc: moc)
+//                }
+//            }
+//            Coredata.sharedInstance.save()
+//        }
+//    }
+//}
+//
+//class EmployeeForSaleItem : CKQueryOperation, AppointmentBuilder {
+//    var error: NSError?
+//    private (set) var appointment:Appointment?
+//    private (set) var employeeRecord:CKRecord?
+//    
+//    init(saleItem:SaleItem,saleItemRecord:CKRecord) {
+//        self.appointment = saleItem.sale?.fromAppointment
+//        super.init()
+//        self.queryCompletionBlock  = { (queryCursor, error) in
+//            guard error == nil else {
+//                self.error = error
+//                assertionFailure("error while fetching service for saleItem \(error)")
+//                return
+//            }
+//        }
+//        let employeeRef = saleItemRecord["employeeReference"] as? CKReference
+//        guard let employeeID = employeeRef?.recordID else {
+//            return
+//        }
+//        let predicate = NSPredicate(format: "recordID == %@", employeeID)
+//        query = CKQuery(recordType: "iCloudEmployee", predicate: predicate)
+//        self.recordFetchedBlock = { employeeRecord in
+//            self.employeeRecord = employeeRecord
+//            let moc = saleItem.managedObjectContext!
+//            moc.performBlockAndWait() {
+//                if let employee = Employee.fetchForCloudID(employeeRecord.recordID.recordName, moc: moc) {
+//                    employee.updateFromCloudRecordIfNeeded(employeeRecord)
+//                    saleItem.performedBy = employee
+//                } else {
+//                    saleItem.performedBy = Employee.makeFromCloudRecord(employeeRecord, moc: moc)
+//                }
+//            }
+//            Coredata.sharedInstance.save()
+//        }
+//    }
+//}
+//
+//class SaleItemsForSaleOperation : CKQueryOperation, AppointmentBuilder {
+//    var error: NSError?
+//    private (set) var appointment:Appointment?
+//    private (set) var sale:Sale
+//    private (set) var saleRecord: CKRecord?
+//    private var saleItemsFromCloud = Set<SaleItem>()
+//    private let synchQueue = NSOperationQueue()
+//    private let moc: NSManagedObjectContext
+//    
+//    init(sale:Sale) {
+//        self.sale = sale
+//        self.moc = sale.managedObjectContext!
+//        super.init()
+//
+//        self.moc.performBlockAndWait() {
+//            self.appointment = sale.fromAppointment
+//            self.saleRecord = sale.cloudkitRecordFromEmbeddedMetadata()
+//        }
+//        guard let saleRecord = self.saleRecord else {
+//            return
+//        }
+//        let saleRef = CKReference(record: saleRecord, action: .None)
+//        let predicate = NSPredicate(format: "parentSaleReference == %@", saleRef)
+//        query = CKQuery(recordType: "iCloudSaleItem", predicate: predicate)
+//        self.recordFetchedBlock = { record in
+//            var saleItem:SaleItem?
+//            self.moc.performBlockAndWait() {
+//                if let existingSaleItem = SaleItem.fetchForCloudID(record.recordID.recordName, moc: self.moc) {
+//                    saleItem = existingSaleItem
+//                    existingSaleItem.updateFromCloudRecordIfNeeded(record)
+//                } else {
+//                    let newSaleItem = SaleItem.makeFromCloudRecord(record, moc: self.moc)
+//                    saleItem = newSaleItem
+//                }
+//                if let saleItem = saleItem {
+//                    self.synchQueue.addOperationWithBlock() { self.saleItemsFromCloud.insert(saleItem) }
+//                    BQCoredataImportController.publicDatabase.addOperation(ServiceForSaleItem(saleItem: saleItem, saleItemRecord: record))
+//                    BQCoredataImportController.publicDatabase.addOperation(EmployeeForSaleItem(saleItem: saleItem, saleItemRecord: record))
+//                }
+//            }
+//        }
+//        self.queryCompletionBlock  = { (queryCursor, error) in
+//            guard error == nil else {
+//                self.error = error
+//                assertionFailure("error while fetching saleItems \(error)")
+//                return
+//            }
+//            self.moc.performBlockAndWait() {
+//                let currentItems = self.sale.saleItem!
+//                for saleItem in currentItems {
+//                    if !self.saleItemsFromCloud.contains(saleItem) {
+//                        self.sale.removeSaleItemObject(saleItem)
+//                        self.moc.deleteObject(saleItem)
+//                    }
+//                }
+//                for saleItem in self.saleItemsFromCloud {
+//                    self.sale.addSaleItemObject(saleItem)
+//                }
+//            }
+//            Coredata.sharedInstance.save()
+//        }
+//    }
+//}
+//class CustomerForAppointmentOperation : CKQueryOperation, AppointmentBuilder {
+//    var error: NSError?
+//    private (set) var appointment:Appointment?
+//    private (set) var appointmentRecord:CKRecord
+//    private (set) var customerRecord: CKRecord?
+//    
+//    init(appointment:Appointment, appointmentRecord:CKRecord) {
+//        self.appointment = appointment
+//        self.appointmentRecord = appointmentRecord
+//        let customerRef = appointmentRecord["parentCustomerReference"] as! CKReference
+//        let predicate = NSPredicate(format: "recordID == %@", customerRef.recordID)
+//        super.init()
+//        query = CKQuery(recordType: "iCloudCustomer", predicate: predicate)
+//        super.recordFetchedBlock = { record in
+//            self.customerRecord = record
+//            let moc = Coredata.sharedInstance.backgroundContext
+//            moc.performBlockAndWait() {
+//                if let customer = Customer.fetchForCloudID(record.recordID.recordName, moc: moc) {
+//                    customer.updateFromCloudRecordIfNeeded(record)
+//                    appointment.customer = customer
+//                } else {
+//                    appointment.customer = Customer.makeFromCloudRecord(record, moc: moc)
+//                }
+//            }
+//        }
+//        self.queryCompletionBlock  = { (queryCursor, error) in
+//            guard error == nil else {
+//                self.error = error
+//                assertionFailure("error while fetching appointment's customer \(error)")
+//                return
+//            }
+//            Coredata.sharedInstance.save()
+//        }
+//    }
+//}
 extension BQExportable {
     func doesNeedUpdateFromCloud(cloudRecord:CKRecord) -> Bool {
         guard let metadata = self.bqMetadata else {

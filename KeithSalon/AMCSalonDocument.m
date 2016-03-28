@@ -102,6 +102,8 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 
 @property (strong) IBOutlet AMCAccountReconciliationViewController *accountBalanceViewController;
 @property (strong) BQCoredataExportController * coredataExportController;
+@property (strong) BQCloudImporter * cloudImporter;
+
 @end
 
 @implementation AMCSalonDocument
@@ -132,6 +134,8 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
             }];
         };
         [self.coredataExportController startExportIterations];
+        
+        self.cloudImporter = [[BQCloudImporter alloc] initWithParentMoc:self.managedObjectContext containerIdentifier:containerIdentifer salonCloudRecordName:_salon.bqCloudID];
     }
     return _salon;
 }

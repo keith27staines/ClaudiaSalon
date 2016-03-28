@@ -48,12 +48,28 @@
                                 };
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
     [self registerForNotifications];
+    [self registerForRemoteNotifications];
     self.appStartDate = [NSDate date];
     self.autoShutdownDate = [self defaultAutoShutdownTimeForDate:self.appStartDate];
     if ([self.appStartDate isGreaterThan:[self defaultAutoShutdownTimeForDate:self.appStartDate]]) {
         self.autoShutdownDate = [self.appStartDate endOfDay];
     }
 }
+-(void)registerForRemoteNotifications {
+    // Register for push notifications
+    [NSApp registerForRemoteNotificationTypes:NSRemoteNotificationTypeAlert];
+}
+-(void)application:(NSApplication *)app didReceiveRemoteNotification:(nonnull NSDictionary<NSString *,id> *)userInfo {
+    CKNotification * note = [CKNotification notificationFromRemoteNotificationDictionary:userInfo];
+    if (note.notificationType == CKNotificationTypeQuery) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cloudKitNotification" object:self userInfo:userInfo];
+    }
+}
+
+-(void)application:(NSApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {
+    
+}
+
 -(void)timerDidFire:(id)sender {
     if (sender == self.autoCloseTimer) {
         NSDate * now = [NSDate date];

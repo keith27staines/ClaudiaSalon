@@ -2686,6 +2686,9 @@
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = Q4783BNZ95;
 						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
 							com.apple.Sandbox = {
 								enabled = 1;
 							};

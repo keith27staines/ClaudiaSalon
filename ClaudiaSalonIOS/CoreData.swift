@@ -21,7 +21,7 @@ class Coredata {
     lazy var exportController:BQCoredataExportController = BQCoredataExportController(parentMoc: self.managedObjectContext, iCloudContainerIdentifier: self.iCloudContainerIdentifier!, startImmediately: false)
     
     lazy var importController:BQCloudImporter? = {
-        var importer = BQCloudImporter(containerIdentifier: self.iCloudContainerIdentifier!, salonCloudRecordName: self.iCloudSalonRecordName!)
+        var importer = BQCloudImporter(parentMoc:self.managedObjectContext,containerIdentifier: self.iCloudContainerIdentifier!, salonCloudRecordName: self.iCloudSalonRecordName!)
         return importer
     }()
 
@@ -77,11 +77,11 @@ class Coredata {
         return managedObjectContext
     }()
     
-    lazy var backgroundContext: NSManagedObjectContext = {
-       let backgroundContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        backgroundContext.parentContext = self.managedObjectContext
-        return backgroundContext
-    }()
+//    lazy var backgroundContext: NSManagedObjectContext = {
+//       let backgroundContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+//        backgroundContext.parentContext = self.managedObjectContext
+//        return backgroundContext
+//    }()
     
     // MARK: - Core Data Saving support
     
