@@ -60,11 +60,17 @@ class FindCustomerViewController: UIViewController {
         super.viewDidLoad()
         self.nameField.text = self.selectedCustomer?.fullName
         self.phoneField.text = self.selectedCustomer?.phone
+        self.nameField.delegate = self
+        self.phoneField.delegate = self
         let moc = Coredata.sharedInstance.managedObjectContext
         self.allCustomers = Customer.allObjectsWithMoc(moc) as! [Customer]
         self.nameField.addTarget(self, action:#selector(FindCustomerViewController.applyFilters(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.phoneField.addTarget(self, action:#selector(FindCustomerViewController.applyFilters(_:)), forControlEvents: UIControlEvents.EditingChanged)
         self.applyFilters(self)
+    }
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     @IBAction func selectAnonymousCustomer() {

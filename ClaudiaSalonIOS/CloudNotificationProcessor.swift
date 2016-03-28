@@ -90,11 +90,18 @@ class CloudNotificationProcessor {
                 let recordFetchOp = CKFetchRecordsOperation(recordIDs: changedRecordIDs)
                 var processedNotificationIDs = Set<CKNotificationID>()
                 recordFetchOp.perRecordCompletionBlock = { (record,recordID,error) in
+                    guard let record = record else {
+                        return
+                    }
+                    guard let parentSalonReference = record["parentSalonReference"] as? CKReference else {
+                        return
+                    }
+                    guard parentSalonReference.recordID.recordName == self.cloudSalonRecordName else {
+                        return
+                    }
+                    print("Processing missed notification for \(record)")
+                    self.processRecord(record: record)
                     for notification in self.notifications {
-                        if let record = record {
-                            print("Processing missed notification for \(record)")
-                            self.processRecord(record: record)
-                        }
                         if notification.recordID == recordID {
                             processedNotificationIDs.insert(notification.notificationID!)
                         }

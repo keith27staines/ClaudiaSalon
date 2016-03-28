@@ -372,9 +372,10 @@ class ICloudAppointment:ICloudRecord {
             self.cancellationType = coredataAppointment.cancellationType?.integerValue ?? 0
             
             // Assign this Appointment's parent customer
-            let coredataCustomer = coredataAppointment.customer!
-            let cloudCustomer = ICloudCustomer(coredataCustomer: coredataCustomer, parentSalonID: parentSalonID)
-            self.parentCustomerReference = CKReference(recordID: cloudCustomer.recordID!, action: CKReferenceAction.DeleteSelf)
+            if let coredataCustomer = coredataAppointment.customer {
+                let cloudCustomer = ICloudCustomer(coredataCustomer: coredataCustomer, parentSalonID: parentSalonID)
+                self.parentCustomerReference = CKReference(recordID: cloudCustomer.recordID!, action: CKReferenceAction.DeleteSelf)                
+            }
         }
         
     }
