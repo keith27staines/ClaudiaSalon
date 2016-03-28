@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CloudKit
 
 class BQQueueProcessorViewController: NSViewController {
     // Yah
@@ -28,7 +29,10 @@ class BQQueueProcessorViewController: NSViewController {
     // MARK:- NSViewController overrides
     override func viewDidLoad() {
         super.viewDidLoad()
-        coredataExportController = BQCoredataExportController(salonDocument: self.salonDocument, startImmediately: false)
+        //coredataExportController = BQCoredataExportController(salonDocument: self.salonDocument, startImmediately: false)
+        let parentMoc = self.salonDocument.managedObjectContext!
+        let containerIdentifier = CKContainer.defaultContainer().containerIdentifier!
+        coredataExportController = BQCoredataExportController(parentMoc: parentMoc, iCloudContainerIdentifier: containerIdentifier, startImmediately: false)
     }
     
 }

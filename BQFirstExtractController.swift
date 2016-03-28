@@ -115,9 +115,9 @@ class BQFirstExtractController {
                 self.prepareAllAppointmentsForCoredataExport()
                 for saleItem in SaleItem.allObjectsWithMoc(self.moc) as! [SaleItem] {
                     if saleItem.bqNeedsCoreDataExport!.boolValue == true {
-                        readyForExport++
+                        readyForExport += 1
                     } else {
-                        others++
+                        others += 1
                     }
                 }
                 do {
@@ -216,7 +216,7 @@ class BQFirstExtractController {
             let icloudCustomer = ICloudCustomer(coredataCustomer: customerForExport, parentSalonID: self.salonID)
             let ckRecord = icloudCustomer.makeCloudKitRecord()
             icloudCustomerRecords.append(ckRecord)
-            totalCustomersToProcess++
+            totalCustomersToProcess += 1
         }
         return icloudCustomerRecords
     }
@@ -228,7 +228,7 @@ class BQFirstExtractController {
             let icloudEmployee = ICloudEmployee(coredataEmployee: employeeForExport, parentSalonID: self.salonID)
             let ckRecord = icloudEmployee.makeCloudKitRecord()
             icloudEmployeeRecords.append(ckRecord)
-            totalEmployeesToProcess++
+            totalEmployeesToProcess += 1
         }
         return icloudEmployeeRecords
     }
@@ -240,7 +240,7 @@ class BQFirstExtractController {
             let icloudServiceCategory = ICloudServiceCategory(coredataServiceCategory: serviceCategoryForExport, parentSalonID: self.salonID)
             let ckRecord = icloudServiceCategory.makeCloudKitRecord()
             icloudServiceCategoryRecords.append(ckRecord)
-            totalServiceCategoriesToProcess++
+            totalServiceCategoriesToProcess += 1
         }
         return icloudServiceCategoryRecords
     }
@@ -253,7 +253,7 @@ class BQFirstExtractController {
                 let icloudService = ICloudService(coredataService: serviceForExport, parentSalonID: self.salonID)
                 let ckRecord = icloudService.makeCloudKitRecord()
                 icloudServiceRecords.append(ckRecord)
-                totalServicesToProcess++
+                totalServicesToProcess += 1
             }
         }
         return icloudServiceRecords
@@ -271,18 +271,18 @@ class BQFirstExtractController {
             let icloudAppointment = ICloudAppointment(coredataAppointment: appointmentForExport, parentSalonID: self.salonID)
             let ckAppointmentRecord = icloudAppointment.makeCloudKitRecord()
             icloudRecords.append(ckAppointmentRecord)
-            totalAppointmentsToProcess++
+            totalAppointmentsToProcess += 1
             // Add child Sale record
             if let saleForExport = appointmentForExport.sale {
                 let icloudSale = ICloudSale(coredataSale: saleForExport, parentSalonID: self.salonID)
                 let ckSaleRecord = icloudSale.makeCloudKitRecord()
                 icloudRecords.append(ckSaleRecord)
-                totalSalesToProcess++
+                totalSalesToProcess += 1
                 for saleItemForExport in saleForExport.saleItem! {
                     let icloudSaleItem = ICloudSaleItem(coredataSaleItem: saleItemForExport, parentSalonID: self.salonID)
                     let ckSaleItemRecord = icloudSaleItem.makeCloudKitRecord()
                     icloudRecords.append(ckSaleItemRecord)
-                    totalSaleItemsToProcess++
+                    totalSaleItemsToProcess += 1
                 }
             }
         }
@@ -390,21 +390,21 @@ class BQFirstExtractController {
                     let coredataCustomer = self.coredataCustomersDictionary[cloudID]
                     coredataCustomer?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataCustomer?.bqMetadata = metadata
-                    self.extractedCustomerCount++
+                    self.extractedCustomerCount += 1
                     self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedCustomerCount, total: self.totalCustomersToProcess)
                     
                 case ICloudRecordType.Employee.rawValue:
                     let coredataEmployee = self.coredataEmployeeDictionary[cloudID]
                     coredataEmployee?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataEmployee?.bqMetadata = metadata
-                    self.extractedEmployeesCount++
+                    self.extractedEmployeesCount += 1
                     self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedEmployeesCount, total: self.totalEmployeesToProcess)
                     
                 case ICloudRecordType.ServiceCategory.rawValue:
                     let coredataServiceCategory = self.coredataServiceCategoriesDictionary[cloudID]
                     coredataServiceCategory?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataServiceCategory?.bqMetadata = metadata
-                    self.extractedServiceCategoriesCount++
+                    self.extractedServiceCategoriesCount += 1
                     self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedServiceCategoriesCount, total: self.totalServiceCategoriesToProcess)
                     if self.extractedServiceCategoriesCount == self.totalServiceCategoriesToProcess {
                         // services are dependent on the serviceCategories operation because serviceCategories own services
@@ -417,7 +417,7 @@ class BQFirstExtractController {
                     let coredataService = self.coredataServicesDictionary[cloudID]
                     coredataService?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataService?.bqMetadata = metadata
-                    self.extractedServicesCount++
+                    self.extractedServicesCount += 1
                     self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedServicesCount, total: self.totalServicesToProcess)
                     if self.extractedServicesCount == self.totalServicesToProcess {
                         let appointmentRecords = self.makeExportRecordsForCoredataAppointments()
@@ -429,7 +429,7 @@ class BQFirstExtractController {
                     let coredataAppointment = self.coredataAppointmentsDictionary[cloudID]
                     coredataAppointment?.bqNeedsCoreDataExport = NSNumber(bool: false)
                     coredataAppointment?.bqMetadata = metadata
-                    self.extractedAppointmentsCount++
+                    self.extractedAppointmentsCount += 1
                     self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedAppointmentsCount, total: self.totalAppointmentsToProcess)
                 default: break
                 }

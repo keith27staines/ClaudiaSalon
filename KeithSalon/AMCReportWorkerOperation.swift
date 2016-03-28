@@ -87,7 +87,7 @@ class AMCReportWorkerOperation : NSOperation {
                 }
                 self.startDate = self.previousStartDate(self.startDate)
                 self.endDate = self.endDateFromStartDate(self.startDate)
-                row++;
+                row += 1;
             }
         }
     }

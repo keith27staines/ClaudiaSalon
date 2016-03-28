@@ -155,7 +155,7 @@
     NSArray * workRecords = [salary.employee.workRecords allObjects];
     for (WorkRecord * workRecord in workRecords) {
         if (workRecord.isTemplate.boolValue) continue;
-        if (!workRecord.wages.count > 0) continue;
+        if (workRecord.wages.count <= 0) continue;
         if ([AMCSalaryCalculator doesIntervalOfWorkRecord:workRecord overlapSalary:salary]) {
             for (Payment * paidWage in workRecord.wages) {
                 if (!paidWage.voided.boolValue) {

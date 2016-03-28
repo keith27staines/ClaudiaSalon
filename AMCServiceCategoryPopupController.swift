@@ -103,7 +103,7 @@ class AMCServiceCategoryPopupController : NSObject, NSTableViewDelegate, NSTable
     }
     
     private func menuItemFromCategory(serviceCategory:ServiceCategory)->NSMenuItem {
-        let menuItem = NSMenuItem(title: serviceCategory.name ?? "Unknown category name", action: Selector("categoryPopupChanged:"), keyEquivalent: "")
+        let menuItem = NSMenuItem(title: serviceCategory.name ?? "Unknown category name", action: #selector(AMCServiceCategoryPopupController.categoryPopupChanged(_:)), keyEquivalent: "")
         menuItem.target = self
         menuItem.representedObject = serviceCategory
         if serviceCategory.subCategories!.count > 0 {

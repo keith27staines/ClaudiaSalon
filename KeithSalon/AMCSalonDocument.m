@@ -7,6 +7,8 @@
 //
 #import <objc/runtime.h>
 #import <IOKit/IOKitLib.h>
+#import <CloudKit/CloudKit.h>
+#import "ClaudiaSalon-Swift.h"
 #import "AMCSalonDocument.h"
 #import "AMCStorePopulator.h"
 #import "AMCReportsViewController.h"
@@ -99,6 +101,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 @property (weak) IBOutlet NSToolbarItem *toolbarUserPhotoItem;
 
 @property (strong) IBOutlet AMCAccountReconciliationViewController *accountBalanceViewController;
+@property (strong) BQCoredataExportController * coredataExportController;
 @end
 
 @implementation AMCSalonDocument
@@ -118,6 +121,17 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         [self dataFixes];
         [self processRecurringEvents:self];
         [NSTimer scheduledTimerWithTimeInterval:3600 target:self selector:@selector(processRecurringEvents:) userInfo:nil repeats:YES];
+        
+        NSString * containerIdentifer = [CKContainer defaultContainer].containerIdentifier;
+        
+        self.coredataExportController = [[BQCoredataExportController alloc] initWithParentMoc:self.managedObjectContext iCloudContainerIdentifier:containerIdentifer startImmediately:NO];
+        __weak AMCSalonDocument * weakSelf = self;
+        self.coredataExportController.dataWasExported = ^() {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [weakSelf saveDocument:nil];
+            }];
+        };
+        [self.coredataExportController startExportIterations];
     }
     return _salon;
 }

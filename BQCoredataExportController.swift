@@ -12,10 +12,10 @@ import CloudKit
 import CoreData
 
 // MARK:- Class BQCoredataExportController
-class BQCoredataExportController {
-//    private (set) var salonDocument:AMCSalonDocument!
-    private (set) var salon:Salon!
-    private (set) var workerMoc:NSManagedObjectContext!
+@objc
+class BQCoredataExportController : NSObject {
+    var dataWasExported:(()->Void)?
+    private (set) var parentMoc:NSManagedObjectContext!
     private (set) var cancelled = true
 
     private let iterationWaitForSeconds: UInt64 = 5
@@ -29,11 +29,10 @@ class BQCoredataExportController {
     
     init(parentMoc:NSManagedObjectContext,iCloudContainerIdentifier:String,startImmediately:Bool) {
         self.iCloudContainerIdentifier = iCloudContainerIdentifier
-        self.workerMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        self.workerMoc.parentContext = parentMoc
-        self.salon = Salon(moc: self.workerMoc)
+        self.parentMoc = parentMoc
         self.exportQueue = NSOperationQueue()
         self.exportQueue.name = namePrefix + "Queue"
+        super.init()
 //        self.deletionRequestList = BQDeletionRequestList(parentManagedObjectContext: self.parentManagedObjectContext)
         
         if startImmediately {
@@ -70,7 +69,8 @@ class BQCoredataExportController {
                 // Handle modifications - only process if we can "gain the lock"
                 if strongSelf.activeOperationsCounter.incrementIfZero() {
                     print("Running export iteration")
-                    let newOperation = BQExportModifiedCoredataOperation(workerMoc: self.workerMoc,iCloudContainerIdentifier: self.iCloudContainerIdentifier,activeOperationsCounter:self.activeOperationsCounter)
+                    let newOperation = BQExportModifiedCoredataOperation(parentMoc: self.parentMoc,iCloudContainerIdentifier: self.iCloudContainerIdentifier,activeOperationsCounter:self.activeOperationsCounter)
+                    newOperation.dataWasExported = self.dataWasExported
                     newOperation.completionBlock = {
                         self.activeOperationsCounter.decrement()
                     }
@@ -85,6 +85,7 @@ class BQCoredataExportController {
 
 // MARK:- Class BQExportModifiedCoredataOperation
 private class BQExportModifiedCoredataOperation : NSOperation {
+    var dataWasExported:(()->Void)?
     private let synchronisationQueue = dispatch_queue_create("com.AMCAldebaron.BQExportModifiedCoredataOperation", DISPATCH_QUEUE_SERIAL)
 
     private let modifedCoredata = Set<NSManagedObject>()
@@ -92,14 +93,14 @@ private class BQExportModifiedCoredataOperation : NSOperation {
     private let activeOperationsCounter: AMCThreadSafeCounter
     private var exportedRecordsWithErrors = [String:NSError?]()
     private var coredataObjectsNeedingExport = [String:NSManagedObject]()
-    private let salon:Salon
+    private var salon:Salon!
+    private var parentMoc:NSManagedObjectContext!
     private var workerMoc:NSManagedObjectContext!
     private var iCloudContainerIdentifier:String!
 
-    init(workerMoc:NSManagedObjectContext,iCloudContainerIdentifier:String,activeOperationsCounter:AMCThreadSafeCounter) {
-        self.workerMoc = workerMoc
-        self.salon = Salon(moc: workerMoc)
+    init(parentMoc:NSManagedObjectContext,iCloudContainerIdentifier:String,activeOperationsCounter:AMCThreadSafeCounter) {
         self.activeOperationsCounter = activeOperationsCounter
+        self.parentMoc = parentMoc
         super.init()
         self.name = "BQExportModifiedCoredataOperation"
         self.qualityOfService = .Background
@@ -110,6 +111,10 @@ private class BQExportModifiedCoredataOperation : NSOperation {
     // MARK:- Main function for this operation
     override func main() {
         if self.cancelled { return }
+        self.workerMoc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        self.workerMoc.parentContext = self.parentMoc
+        self.salon = Salon(moc: self.workerMoc)
+
         var recordsToSave = [CKRecord]()
         let moc = self.workerMoc
         moc.performBlockAndWait {
@@ -141,6 +146,9 @@ private class BQExportModifiedCoredataOperation : NSOperation {
             do {
                 if self.workerMoc.hasChanges {
                     try self.workerMoc.save()
+                    if let callback = self.dataWasExported {
+                        callback()
+                    }
                 }
             } catch {
                 print(error)
@@ -402,7 +410,7 @@ extension BQExportModifiedCoredataOperation {
         return recordsToSave
     }
     private func prepareAppointmentsForExportIfRequired(salon:Salon) -> [CKRecord] {
-        let moc = salon.managedObjectContext!
+        let moc = self.workerMoc!
         let modifiedAppointments = Appointment.appointmentsMarkedForExport(moc) as Set<Appointment>
         var recordsToSave = [CKRecord]()
         for modifiedObject in modifiedAppointments {
