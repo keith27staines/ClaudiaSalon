@@ -50,6 +50,7 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="cancellationNote" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cancellationType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -90,6 +91,7 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dayOfBirth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -119,6 +121,7 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dayOfBirth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -305,6 +308,7 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="changeGiven" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
         <attribute name="chargeAfterIndividualDiscounts" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -331,6 +335,7 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="discountType" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -352,6 +357,7 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="firstDayOfTrading" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="firstDayOfWeek" attributeType="Integer 32" defaultValueString="1" syncable="YES"/>
@@ -392,6 +398,7 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="deluxe" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -415,6 +422,7 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -503,12 +511,12 @@
         <element name="Account" positionX="0" positionY="0" width="128" height="360"/>
         <element name="AccountingPaymentGroup" positionX="0" positionY="0" width="128" height="240"/>
         <element name="AccountReconciliation" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="Appointment" positionX="0" positionY="0" width="128" height="315"/>
+        <element name="Appointment" positionX="0" positionY="0" width="128" height="330"/>
         <element name="BQExportDeletionRequest" positionX="9" positionY="153" width="128" height="165"/>
         <element name="BusinessFunction" positionX="0" positionY="0" width="128" height="105"/>
         <element name="CalendarDay" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="Customer" positionX="0" positionY="0" width="128" height="435"/>
-        <element name="Employee" positionX="0" positionY="0" width="128" height="570"/>
+        <element name="Customer" positionX="0" positionY="0" width="128" height="450"/>
+        <element name="Employee" positionX="0" positionY="0" width="128" height="585"/>
         <element name="Holiday" positionX="0" positionY="0" width="128" height="135"/>
         <element name="IntervalDuringDay" positionX="0" positionY="0" width="128" height="120"/>
         <element name="LastUpdatedBy" positionX="0" positionY="0" width="128" height="105"/>
@@ -522,11 +530,11 @@
         <element name="RecurringItem" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Role" positionX="0" positionY="0" width="128" height="225"/>
         <element name="Salary" positionX="0" positionY="0" width="128" height="180"/>
-        <element name="Sale" positionX="0" positionY="0" width="128" height="420"/>
-        <element name="SaleItem" positionX="0" positionY="0" width="128" height="315"/>
-        <element name="Salon" positionX="0" positionY="0" width="128" height="645"/>
-        <element name="Service" positionX="0" positionY="0" width="128" height="360"/>
-        <element name="ServiceCategory" positionX="0" positionY="0" width="128" height="315"/>
+        <element name="Sale" positionX="0" positionY="0" width="128" height="435"/>
+        <element name="SaleItem" positionX="0" positionY="0" width="128" height="330"/>
+        <element name="Salon" positionX="0" positionY="0" width="128" height="660"/>
+        <element name="Service" positionX="0" positionY="0" width="128" height="375"/>
+        <element name="ServiceCategory" positionX="0" positionY="0" width="128" height="330"/>
         <element name="ShoppingList" positionX="0" positionY="0" width="128" height="120"/>
         <element name="ShoppingListItem" positionX="0" positionY="0" width="128" height="105"/>
         <element name="StockedBrand" positionX="0" positionY="0" width="128" height="120"/>

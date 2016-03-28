@@ -13,6 +13,7 @@ import CloudKit
 @objc
 protocol BQExportable: class {
     var bqNeedsCoreDataExport: NSNumber? { get set }
+    var bqNeedsCloudImport: NSNumber? { get set }
     var bqHasClientChanges: NSNumber? { get set }
     var bqMetadata: NSData? { get set }
     var bqCloudID: String? { get set }

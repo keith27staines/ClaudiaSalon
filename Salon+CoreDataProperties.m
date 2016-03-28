@@ -2,7 +2,7 @@
 //  Salon+CoreDataProperties.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 21/03/2016.
+//  Created by Keith Staines on 28/03/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -16,6 +16,7 @@
 @dynamic addressLine1;
 @dynamic addressLine2;
 @dynamic bqCloudID;
+@dynamic bqHasClientChanges;
 @dynamic bqMetadata;
 @dynamic bqNeedsCoreDataExport;
 @dynamic firstDayOfTrading;
@@ -28,7 +29,7 @@
 @dynamic salonName;
 @dynamic serviceEmail;
 @dynamic startOfAccountingYear;
-@dynamic bqHasClientChanges;
+@dynamic bqNeedsCloudImport;
 @dynamic accountantRole;
 @dynamic anonymousCustomer;
 @dynamic basicUserRole;

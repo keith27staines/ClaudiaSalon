@@ -12,6 +12,7 @@
 #import "Service.h"
 #import "NSDate+AMCDate.h"
 #import "AMCConstants.h"
+#import "Customer.h"
 
 @implementation Appointment
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc
@@ -127,6 +128,9 @@
                 saleItem.lastUpdatedDate = rightNow;
                 saleItem.bqNeedsCoreDataExport = @YES;
             }
+            appointment.customer.bqNeedsCoreDataExport = @YES;
+            appointment.customer.lastUpdatedDate = rightNow;
+            
             NSError * error;
             [privateMoc save:(&error)];
             if (error) {

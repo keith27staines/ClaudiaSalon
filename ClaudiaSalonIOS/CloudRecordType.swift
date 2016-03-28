@@ -12,13 +12,13 @@ import CloudKit
 enum CloudRecordType: String {
     
     case CRSalon = "iCloudSalon"
-    case CRCustomer = "iCloudCustomer"
-    case CREmployee = "iCloudEmployee"
-    case CRService = "icloudService"
-    case CRServiceCategory = "iCloudServiceCategory"
-    case CRAppointment = "iCloudAppointment"
-    case CRSale = "iCloudSale"
-    case CRSaleItem = "iCloudSaleItem"
+    case CRCustomer = "icloudCustomer"
+    case CREmployee = "icloudEmployee"
+    case CRService = "iCloudService"
+    case CRServiceCategory = "icloudServiceCategory"
+    case CRAppointment = "icloudAppointment"
+    case CRSale = "icloudSale"
+    case CRSaleItem = "icloudSaleItem"
     
     static func typesAsArray() -> [CloudRecordType] {
         let array = [CRSalon,CRCustomer,CREmployee,CRServiceCategory,CRService,CRAppointment,CRSale,CRSaleItem]

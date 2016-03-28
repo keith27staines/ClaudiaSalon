@@ -2,7 +2,7 @@
 //  Sale+CoreDataProperties.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 21/03/2016.
+//  Created by Keith Staines on 28/03/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *actualCharge;
 @property (nullable, nonatomic, retain) NSNumber *amountGivenByCustomer;
 @property (nullable, nonatomic, retain) NSString *bqCloudID;
+@property (nullable, nonatomic, retain) NSNumber *bqHasClientChanges;
 @property (nullable, nonatomic, retain) NSData *bqMetadata;
 @property (nullable, nonatomic, retain) NSNumber *bqNeedsCoreDataExport;
 @property (nullable, nonatomic, retain) NSNumber *changeGiven;
@@ -32,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSDate *lastUpdatedDate;
 @property (nullable, nonatomic, retain) NSNumber *nominalCharge;
 @property (nullable, nonatomic, retain) NSNumber *voided;
-@property (nullable, nonatomic, retain) NSNumber *bqHasClientChanges;
+@property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
 @property (nullable, nonatomic, retain) Account *account;
 @property (nullable, nonatomic, retain) Payment *advancePayment;
 @property (nullable, nonatomic, retain) Customer *customer;

@@ -307,10 +307,28 @@ class BQCloudImporter : NSObject {
         let appointment = r.appointment
         let record = r.record
         let customerReference = record["parentCustomerReference"] as! CKReference
-        let cloudID = customerReference.recordID.recordName
+        let customerRecordID = customerReference.recordID
+        let customerCloudRecordName = customerReference.recordID.recordName
         moc.performBlockAndWait() {
-            let parentCustomer = Customer.fetchForCloudID(cloudID, moc: self.moc)
-            appointment.customer = parentCustomer
+            if let parentCustomer = Customer.fetchForCloudID(customerCloudRecordName, moc: self.moc) {
+                appointment.customer = parentCustomer
+            } else {
+                let type = CloudRecordType.CRCustomer.rawValue
+                let customerRecord = CKRecord(recordType: type, recordID: customerRecordID)
+                let customer = Customer.makeFromCloudRecord(customerRecord, moc: self.moc)
+                self.publicDatabase.fetchRecordWithID(customerRecordID, completionHandler: { (record, error) in
+                    if record != nil {
+                        customer.updateFromCloudRecord(record!)
+                    } else {
+                        print("error \(error)")
+                        customer.bqNeedsCloudImport = true
+                    }
+                    appointment.customer = customer
+                    self.moc.performBlock() {
+                        try! self.moc.save()
+                    }
+                })
+            }
         }
     }
 
@@ -392,6 +410,7 @@ class BQCloudImporter : NSObject {
                 }
                 employee!.updateFromCloudRecordIfNeeded(record)
                 self.deepProcessEmployeeRecord((employee!,record))
+                
             case .CRSale:
                 var sale:Sale?
                 sale = Sale.fetchForCloudID(recordName, moc: self.moc)
@@ -400,6 +419,7 @@ class BQCloudImporter : NSObject {
                 }
                 sale!.updateFromCloudRecordIfNeeded(record)
                 self.deepProcessSaleRecord((sale!,record))
+                
             case .CRSaleItem:
                 var saleItem:SaleItem?
                 saleItem = SaleItem.fetchForCloudID(recordName, moc: self.moc)
@@ -408,6 +428,7 @@ class BQCloudImporter : NSObject {
                 }
                 saleItem!.updateFromCloudRecordIfNeeded(record)
                 self.deepProcessSaleItemRecord((saleItem!,record))
+                
             case .CRSalon:
                 var salon:Salon?
                 salon = Salon.fetchForCloudID(recordName, moc: self.moc)
@@ -416,6 +437,7 @@ class BQCloudImporter : NSObject {
                 }
                 salon!.updateFromCloudRecordIfNeeded(record)
                 self.deepProcessSalon()
+                
             case .CRService:
                 var service:Service?
                 service = Service.fetchForCloudID(recordName, moc: self.moc)
@@ -424,6 +446,7 @@ class BQCloudImporter : NSObject {
                 }
                 service!.updateFromCloudRecordIfNeeded(record)
                 self.deepProcessServiceRecord((service!,record))
+                
             case .CRServiceCategory:
                 var serviceCategory:ServiceCategory?
                 serviceCategory = ServiceCategory.fetchForCloudID(recordName, moc: self.moc)

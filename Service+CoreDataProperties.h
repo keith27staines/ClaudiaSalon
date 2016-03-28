@@ -2,7 +2,7 @@
 //  Service+CoreDataProperties.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 21/03/2016.
+//  Created by Keith Staines on 28/03/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Service (CoreDataProperties)
 
 @property (nullable, nonatomic, retain) NSString *bqCloudID;
+@property (nullable, nonatomic, retain) NSNumber *bqHasClientChanges;
 @property (nullable, nonatomic, retain) NSData *bqMetadata;
 @property (nullable, nonatomic, retain) NSNumber *bqNeedsCoreDataExport;
 @property (nullable, nonatomic, retain) NSDate *createdDate;
@@ -30,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *nominalCharge;
 @property (nullable, nonatomic, retain) NSNumber *priceNegotiable;
 @property (nullable, nonatomic, retain) NSNumber *selectable;
-@property (nullable, nonatomic, retain) NSNumber *bqHasClientChanges;
+@property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
 @property (nullable, nonatomic, retain) NSSet<Employee *> *canBeDoneBy;
 @property (nullable, nonatomic, retain) NSSet<Note *> *notes;
 @property (nullable, nonatomic, retain) NSSet<Product *> *product;
