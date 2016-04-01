@@ -10,7 +10,8 @@ import Foundation
 import CloudKit
 
 class CloudNotificationProcessor {
-    var processRecord: ((record:CKRecord)->Void)
+    var shallowProcessRecord: ((record:CKRecord)->Void)
+    var deepProcessRecord: ((record:CKRecord)->Bool)
     private (set) var cloudContainerIdentifier:String
     private (set) var cloudSalonRecordName:String
     private let queue:dispatch_queue_t
@@ -18,19 +19,100 @@ class CloudNotificationProcessor {
     private var previousServerChangeToken:CKServerChangeToken?
     private var notifications = [CKQueryNotification]()
     private var container:CKContainer
+    private let publicCloudDatabase:CKDatabase
     
+    private let cloudSalonReference : CKReference!
+
     init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
+        let salonID = CKRecordID(recordName: cloudSalonRecordName)
+        self.cloudSalonReference = CKReference(recordID: salonID, action: .None)
         self.cloudSalonRecordName = cloudSalonRecordName
         self.cloudContainerIdentifier = cloudContainerIdentifier
         self.container = CKContainer(identifier: self.cloudContainerIdentifier)
-        queue = dispatch_queue_create("CloudNotificationProcessor", DISPATCH_QUEUE_SERIAL)
-        self.processRecord = {(record)->Void in  }
+        self.publicCloudDatabase = self.container.publicCloudDatabase
+        self.queue = dispatch_queue_create("CloudNotificationProcessor", DISPATCH_QUEUE_SERIAL)
+        self.shallowProcessRecord = {(record)->Void in
+            assertionFailure("The shallowProcessRecord block cannot be called because it was never set")
+        }
+        self.deepProcessRecord = {(record)->Bool in
+            assertionFailure("The deepProcessRecord block cannot be called because it was never set")
+            return false
+        }
     }
     
+    func subscribeToCloudNotifications() {
+
+        let predicate = NSPredicate(format: "parentSalonReference == %@",self.cloudSalonReference)
+        var subscription: CKSubscription
+
+        // iCloudSalon
+        subscription = CKSubscription(recordType: "iCloudSalon", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        self.saveSubscription(subscription)
+
+        // icloudAppointment
+        subscription = CKSubscription(recordType: "icloudAppointment", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+
+        // icloudCustomer
+        subscription = CKSubscription(recordType: "icloudCustomer", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        self.saveSubscription(subscription)
+
+        // icloudSale
+        subscription = CKSubscription(recordType: "icloudSale", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        self.saveSubscription(subscription)
+
+        // icloudSaleItem
+        subscription = CKSubscription(recordType: "icloudSaleItem", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        self.saveSubscription(subscription)
+
+        // icloudServiceCategory
+        subscription = CKSubscription(recordType: "icloudServiceCategory", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        self.saveSubscription(subscription)
+
+        // icloudService
+        subscription = CKSubscription(recordType: "iCloudService", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        self.saveSubscription(subscription)
+        
+        NSNotificationCenter.defaultCenter().addObserverForName("cloudKitNotification", object: nil, queue: nil, usingBlock: self.notificationFromCloud)
+    }
+    
+    private func saveSubscription(subscription:CKSubscription) {
+        self.publicCloudDatabase.saveSubscription(subscription) { (subscription, error) in
+            if error != nil {
+                //assertionFailure("Error saving cloud notification subscription \(error)")
+                return
+            }
+        }
+    }
+
+    func notificationFromCloud(notification:NSNotification) {
+        let userInfo = notification.userInfo!
+        let cloudKitNotification = CKNotification(fromRemoteNotificationDictionary: userInfo as! [String : NSObject])
+        let queryNotification = cloudKitNotification as! CKQueryNotification
+        if queryNotification.queryNotificationReason == .RecordDeleted {
+            // If the record has been deleted in CloudKit then delete the local copy
+        } else {
+            // If the record has been created or changed, we fetch the data from CloudKit
+            let database: CKDatabase
+            if queryNotification.isPublicDatabase {
+                database = self.container.publicCloudDatabase
+            } else {
+                database = self.container.privateCloudDatabase
+            }
+            database.fetchRecordWithID(queryNotification.recordID!) { (record: CKRecord?, error: NSError?) -> Void in
+                guard error == nil else {
+                    // Handle the error here
+                    return
+                }
+                self.shallowProcessRecord(record: record!)
+            }
+        }
+        self.pollForMissedRemoteNotifications()
+    }
+
     func pollForMissedRemoteNotifications() {
         self.pollForMissedRemoteNotifications(0)
     }
-    
+
     private func pollForMissedRemoteNotifications(secondsDelay:Double) {
         let nanosecondsDelay = Int64(secondsDelay) * Int64(NSEC_PER_SEC)
         let when = dispatch_time(DISPATCH_TIME_NOW, nanosecondsDelay)
@@ -88,8 +170,12 @@ class CloudNotificationProcessor {
                 })
                 
                 let recordFetchOp = CKFetchRecordsOperation(recordIDs: changedRecordIDs)
-                var processedNotificationIDs = Set<CKNotificationID>()
+                var processedNotificationIDs = [CKRecordID:Set<CKNotificationID>]()
+                
                 recordFetchOp.perRecordCompletionBlock = { (record,recordID,error) in
+                    guard let recordID = recordID else {
+                        return
+                    }
                     guard let record = record else {
                         return
                     }
@@ -99,19 +185,33 @@ class CloudNotificationProcessor {
                     guard parentSalonReference.recordID.recordName == self.cloudSalonRecordName else {
                         return
                     }
+                    
+                    // Shallow-process the record
                     print("Processing missed notification for \(record)")
-                    self.processRecord(record: record)
+                    self.shallowProcessRecord(record: record)
                     for notification in self.notifications {
                         if notification.recordID == recordID {
-                            processedNotificationIDs.insert(notification.notificationID!)
+                            var notes:Set<CKNotificationID>
+                            notes = processedNotificationIDs[recordID] ?? Set<CKNotificationID>()
+                            notes.insert(notification.notificationID!)
                         }
                     }
                 }
                 
                 // Mark the notifications as read to avoid processing them again
                 recordFetchOp.fetchRecordsCompletionBlock = { recordInfo, error in
-                    let notificationIDsToMarkRead = Array(processedNotificationIDs)
-                    let markOperation = CKMarkNotificationsReadOperation(notificationIDsToMarkRead: notificationIDsToMarkRead)
+                    var notificationIDsToMarkRead = Set<CKNotificationID>()
+                    if let recordInfo = recordInfo {
+                        for (_,record) in recordInfo {
+                            let deepProcessSuccess = self.deepProcessRecord(record: record)
+                            if deepProcessSuccess {
+                                let notificationIDsReferencingRecord = processedNotificationIDs[record.recordID] ?? Set<CKNotificationID>()
+                                notificationIDsToMarkRead.unionInPlace(notificationIDsReferencingRecord)
+                            }
+                        }
+                    }
+
+                    let markOperation = CKMarkNotificationsReadOperation(notificationIDsToMarkRead: Array(notificationIDsToMarkRead))
                     markOperation.markNotificationsReadCompletionBlock = { (notificationIDsMarkedRead: [CKNotificationID]?, operationError: NSError?) -> Void in
                         if operationError != nil {
                             // Handle the error here

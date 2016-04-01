@@ -25,7 +25,7 @@ class BQCloudImporter : NSObject {
     private var container:CKContainer!
     private var publicDatabase: CKDatabase!
     private let salonCloudRecordName : String!
-    private let cloudSalonReference : CKReference!
+
     private var downloadedRecords = [CKRecord]()
     private var queryOperations = Set<CKQueryOperation>()
     
@@ -49,58 +49,22 @@ class BQCloudImporter : NSObject {
         self.salonCloudRecordName = salonCloudRecordName
         self.container = CKContainer(identifier: containerIdentifier)
         self.publicDatabase = self.container.publicCloudDatabase
-        let salonID = CKRecordID(recordName: self.salonCloudRecordName)
-        self.cloudSalonReference = CKReference(recordID: salonID, action: .None)
         self.cloudNotificationProcessor = CloudNotificationProcessor(cloudContainerIdentifier: containerIdentifier, cloudSalonRecordName: salonCloudRecordName)
         super.init()
-        self.cloudNotificationProcessor.processRecord = self.processRecord
+        self.cloudNotificationProcessor.shallowProcessRecord = self.shallowProcessRecord
+        self.cloudNotificationProcessor.deepProcessRecord = self.deepProcessRecord
         self.reinitialiseDatastructures()
         self.subscribeToCloudNotifications()
     }
     
     func subscribeToCloudNotifications() {
-        
-        let predicate = NSPredicate(format: "parentSalonReference == %@",self.cloudSalonReference)
-        var subscription: CKSubscription
-        subscription = CKSubscription(recordType: "icloudAppointment", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        self.publicDatabase.saveSubscription(subscription) { (subscription, error) in
-            if error != nil {
-                //assertionFailure("Error saving cloud notification subscription \(error)")
-                return
-            }
-        }
-        NSNotificationCenter.defaultCenter().addObserverForName("cloudKitNotification", object: nil, queue: nil, usingBlock: self.notificationFromCloud)
+        self.cloudNotificationProcessor.subscribeToCloudNotifications()
     }
     
     func pollForMissedRemoteNotifications() {
         self.cloudNotificationProcessor.pollForMissedRemoteNotifications()
     }
     
-    private func notificationFromCloud(notification:NSNotification) {
-        let userInfo = notification.userInfo!
-        let cloudKitNotification = CKNotification(fromRemoteNotificationDictionary: userInfo as! [String : NSObject])
-        let queryNotification = cloudKitNotification as! CKQueryNotification
-        if queryNotification.queryNotificationReason == .RecordDeleted {
-            // If the record has been deleted in CloudKit then delete the local copy
-        } else {
-            // If the record has been created or changed, we fetch the data from CloudKit
-            let database: CKDatabase
-            if queryNotification.isPublicDatabase {
-                database = self.container.publicCloudDatabase
-            } else {
-                database = self.container.privateCloudDatabase
-            }
-            database.fetchRecordWithID(queryNotification.recordID!) { (record: CKRecord?, error: NSError?) -> Void in
-                guard error == nil else {
-                    // Handle the error here
-                    return
-                }
-                self.processRecord(record!)
-            }
-        }
-        self.pollForMissedRemoteNotifications()
-    }
-
     private func reinitialiseDatastructures() {
         self.synchQueue.addOperationWithBlock() {
             self.downloadedRecords.removeAll(keepCapacity: true)
@@ -202,16 +166,7 @@ class BQCloudImporter : NSObject {
             if self.downloadsDidCompleteSuccessfully() {
                 print("Building database from \(self.downloadedRecords.count) downloaded records")
                 self.createShallowCoredataObjectsFromCloudRecords(self.downloadedRecords)
-                
-                self.deepProcessSalon()
-                self.deepProcessCustomers()
-                self.deepProcessEmployees()
-
-                self.deepProcessAppointments()
-                self.deepProcessSales()
-                self.deepProcessSaleItems()
-                self.deepProcessServiceCategories()
-                self.deepProcessServices()
+                self.deepProcessRecords()
                 self.moc.performBlock() {
                     try! self.moc.save()
                     print("Save successful")
@@ -221,22 +176,26 @@ class BQCloudImporter : NSObject {
     }
     func processDownloadedRecords() {
         self.createShallowCoredataObjectsFromCloudRecords(self.downloadedRecords)
-        
+        self.deepProcessRecords()
+    }
+    
+    func deepProcessRecords() {
         self.deepProcessSalon()
         self.deepProcessCustomers()
         self.deepProcessEmployees()
-        
         self.deepProcessAppointments()
         self.deepProcessSales()
         self.deepProcessSaleItems()
         self.deepProcessServiceCategories()
         self.deepProcessServices()
     }
+    
     func deepProcessSalon() {
         let r = salons[0]
         self.deepProcessSalonRecord(r)
     }
-    func deepProcessSalonRecord(r: (salon:Salon, record:CKRecord)) {
+    func deepProcessSalonRecord(r: (salon:Salon, record:CKRecord))  -> Bool {
+        var result = false
         let salon = r.salon
         let record = r.record
         let anonymousCustomerReference = record["anonymousCustomerReference"] as! CKReference
@@ -244,92 +203,100 @@ class BQCloudImporter : NSObject {
         let rootServiceCategoryReference = record["rootServiceCategoryReference"] as! CKReference
         let rootServiceCategoryCloudID = rootServiceCategoryReference.recordID.recordName
         moc.performBlockAndWait() {
-            let anonymousCustomer = Customer.fetchForCloudID(anonymousCustomerCloudID, moc: self.moc)
-            let rootServiceCategory = ServiceCategory.fetchForCloudID(rootServiceCategoryCloudID, moc: self.moc)
-            salon.anonymousCustomer = anonymousCustomer
-            salon.rootServiceCategory = rootServiceCategory
+            if let anonymousCustomer = Customer.fetchForCloudID(anonymousCustomerCloudID, moc: self.moc),
+                let rootServiceCategory = ServiceCategory.fetchForCloudID(rootServiceCategoryCloudID, moc: self.moc) {
+                salon.anonymousCustomer = anonymousCustomer
+                salon.rootServiceCategory = rootServiceCategory
+                result = true
+            }
         }
+        return result
     }
+    
     func deepProcessEmployees() {
         for r in employees {
             self.deepProcessEmployeeRecord(r)
         }
     }
-    func deepProcessEmployeeRecord(r: (employee:Employee, record:CKRecord)) {
-        // nothing to do
+    func deepProcessEmployeeRecord(r: (employee:Employee, record:CKRecord))  -> Bool {
+        return true
     }
+    
     func deepProcessCustomers() {
         for r in customers {
             self.deepProcessCustomerRecord(r)
         }
     }
-    func deepProcessCustomerRecord(r: (customer:Customer, record:CKRecord)) {
-        // Nothing to do
+    func deepProcessCustomerRecord(r: (customer:Customer, record:CKRecord))  -> Bool {
+        return true
     }
-    func deepProcessServiceCategoryRecord(r: (serviceCategory:ServiceCategory, record:CKRecord)) {
-        let category = r.serviceCategory
-        let record = r.record
-        if let reference = record["parentCategoryReference"] as? CKReference {
-            let cloudID = reference.recordID.recordName
-            moc.performBlockAndWait() {
-                let serviceCategory = ServiceCategory.fetchForCloudID(cloudID, moc: self.moc)
-                category.parent = serviceCategory
-            }
-        }
-    }
+
     func deepProcessServiceCategories() {
         for r in serviceCategories {
             self.deepProcessServiceCategoryRecord(r)
         }
     }
+    func deepProcessServiceCategoryRecord(r: (serviceCategory:ServiceCategory, record:CKRecord)) -> Bool {
+        var result = false
+        let category = r.serviceCategory
+        let record = r.record
+        if let reference = record["parentCategoryReference"] as? CKReference {
+            let cloudID = reference.recordID.recordName
+            moc.performBlockAndWait() {
+                if let serviceCategory = ServiceCategory.fetchForCloudID(cloudID, moc: self.moc) {
+                    category.parent = serviceCategory
+                    result = true
+                }
+            }
+        } else {
+            category.parent = nil
+            result = true
+        }
+        return result
+    }
+    
     func deepProcessServices() {
         for r in services {
             self.deepProcessServiceRecord(r)
         }
     }
-    func deepProcessServiceRecord(r: (service:Service, record:CKRecord)) {
+    func deepProcessServiceRecord(r: (service:Service, record:CKRecord))  -> Bool {
+        var result = false
         let service = r.service
         let record = r.record
         if let categoryReference = record["parentCategoryReference"] as? CKReference {
             let categoryID = categoryReference.recordID.recordName
             moc.performBlockAndWait() {
-                let parentCategory = ServiceCategory.fetchForCloudID(categoryID, moc: self.moc)
-                service.serviceCategory = parentCategory
+                if let parentCategory = ServiceCategory.fetchForCloudID(categoryID, moc: self.moc) {
+                    service.serviceCategory = parentCategory
+                    result = true
+                }
             }
+        } else {
+            service.serviceCategory = nil
+            result = true
         }
+        return result
     }
+    
     func deepProcessAppointments() {
         for r in appointments {
             self.deepProcessAppointmentRecord(r)
         }
     }
-    func deepProcessAppointmentRecord(r: (appointment:Appointment, record:CKRecord)) {
+    func deepProcessAppointmentRecord(r: (appointment:Appointment, record:CKRecord)) -> Bool {
+        var result = false
         let appointment = r.appointment
         let record = r.record
         let customerReference = record["parentCustomerReference"] as! CKReference
-        let customerRecordID = customerReference.recordID
         let customerCloudRecordName = customerReference.recordID.recordName
         moc.performBlockAndWait() {
             if let parentCustomer = Customer.fetchForCloudID(customerCloudRecordName, moc: self.moc) {
                 appointment.customer = parentCustomer
-            } else {
-                let type = CloudRecordType.CRCustomer.rawValue
-                let customerRecord = CKRecord(recordType: type, recordID: customerRecordID)
-                let customer = Customer.makeFromCloudRecord(customerRecord, moc: self.moc)
-                self.publicDatabase.fetchRecordWithID(customerRecordID, completionHandler: { (record, error) in
-                    if record != nil {
-                        customer.updateFromCloudRecord(record!)
-                    } else {
-                        print("error \(error)")
-                        customer.bqNeedsCloudImport = true
-                    }
-                    appointment.customer = customer
-                    self.moc.performBlock() {
-                        try! self.moc.save()
-                    }
-                })
+                result = true
             }
         }
+        return result
     }
 
     func deepProcessSales() {
@@ -337,7 +304,8 @@ class BQCloudImporter : NSObject {
             self.deepProcessSaleRecord(r)
         }
     }
-    func deepProcessSaleRecord(r: (sale:Sale, record:CKRecord)) {
+    func deepProcessSaleRecord(r: (sale:Sale, record:CKRecord))  -> Bool {
+        var result = false
         let sale = r.sale
         let record = r.record
         let customerReference = record["parentCustomerReference"] as! CKReference
@@ -345,39 +313,123 @@ class BQCloudImporter : NSObject {
         let appointmentReference = record["parentAppointmentReference"] as! CKReference
         let appointmentCloudID = appointmentReference.recordID.recordName
         moc.performBlockAndWait() {
-            let customer = Customer.fetchForCloudID(customerCloudID, moc: self.moc)
-            sale.customer = customer
-            let appointment = Appointment.fetchForCloudID(appointmentCloudID, moc: self.moc)
-            sale.fromAppointment = appointment
+            if let customer = Customer.fetchForCloudID(customerCloudID, moc: self.moc),
+               let appointment = Appointment.fetchForCloudID(appointmentCloudID, moc: self.moc) {
+                sale.customer = customer
+                sale.fromAppointment = appointment
+                result = true
+            }
         }
+        return result
     }
     func deepProcessSaleItems() {
         for r in saleItems {
             self.deepProcessSaleItemRecord(r)
         }
     }
-    func deepProcessSaleItemRecord(r: (saleItem:SaleItem, record:CKRecord)) {
+    
+    func deepProcessSaleItemRecord(r: (saleItem:SaleItem, record:CKRecord))  -> Bool {
+        var result = false
         let saleItem = r.saleItem
         let record = r.record
         moc.performBlockAndWait() {
             if let saleReference = record["parentSaleReference"] as? CKReference {
                 let saleCloudID = saleReference.recordID.recordName
-                let sale = Sale.fetchForCloudID(saleCloudID, moc: self.moc)
-                saleItem.sale = sale
+                if let sale = Sale.fetchForCloudID(saleCloudID, moc: self.moc) {
+                    saleItem.sale = sale
+                    result = true
+                } else {
+                    // failed to find the sale this saleItem is currently assigned to
+                    result = false
+                }
+            } else {
+                // saleItem isn't assigned to a sale (NB currently, only saleItems deleted from a sale fall into this category)
+                result = true
             }
-            if let serviceReference = record["serviceReference"] as? CKReference {
-                let serviceCloudID = serviceReference.recordID.recordName
-                let service = Service.fetchForCloudID(serviceCloudID, moc: self.moc)
-                saleItem.service = service
-            }
-            if let employeeReference = record["employeeReference"] as? CKReference {
-                let employeeCloudID = employeeReference.recordID.recordName
-                let employee = Employee.fetchForCloudID(employeeCloudID, moc: self.moc)
-                saleItem.performedBy = employee
+            
+            // If everything ok so far, go ahead and try to assign employee and service references
+            if result {
+                result = false
+                if let serviceReference = record["serviceReference"] as? CKReference,
+                    let employeeReference = record["employeeReference"] as? CKReference {
+                    
+                    let serviceCloudID = serviceReference.recordID.recordName
+                    let service = Service.fetchForCloudID(serviceCloudID, moc: self.moc)
+                    saleItem.service = service
+
+                    let employeeCloudID = employeeReference.recordID.recordName
+                    let employee = Employee.fetchForCloudID(employeeCloudID, moc: self.moc)
+                    saleItem.performedBy = employee
+                    
+                    result = true
+                }
             }
         }
+        return result
     }
-    private func processRecord(record:CKRecord) {
+    
+    private func deepProcessRecord(record:CKRecord) -> Bool {
+        let type = record.recordType
+        let recordName = record.recordID.recordName
+        let cType = CloudRecordType.typeFromCloudRecordType(type)
+        var result = false
+        moc.performBlockAndWait() {
+            switch cType {
+            case .CRAppointment:
+                if let appointment = Appointment.fetchForCloudID(recordName, moc: self.moc) {
+                    result = self.deepProcessAppointmentRecord((appointment, record))
+                } else {
+                    result = false
+                }
+            case .CRCustomer:
+                if let customer = Customer.fetchForCloudID(recordName, moc: self.moc) {
+                    result = self.deepProcessCustomerRecord((customer, record))
+                } else {
+                    result = false
+                }
+            case .CREmployee:
+                if let employee = Employee.fetchForCloudID(recordName, moc: self.moc) {
+                    result = self.deepProcessEmployeeRecord((employee, record))
+                } else {
+                    result = false
+                }
+            case .CRSale:
+                if let sale = Sale.fetchForCloudID(recordName, moc: self.moc) {
+                    result = self.deepProcessSaleRecord((sale, record))
+                } else {
+                    result = false
+                }
+            case .CRSaleItem:
+                if let saleItem = SaleItem.fetchForCloudID(recordName, moc: self.moc) {
+                    result = self.deepProcessSaleItemRecord((saleItem, record))
+                } else {
+                    result = false
+                }
+            case .CRSalon:
+                if let salon = Salon.fetchForCloudID(recordName, moc: self.moc) {
+                    result = self.deepProcessSalonRecord((salon, record))
+                } else {
+                    result = false
+                }
+            case .CRService:
+                if let service = Service.fetchForCloudID(recordName, moc: self.moc) {
+                    result = self.deepProcessServiceRecord((service, record))
+                } else {
+                    result = false
+                }
+            case .CRServiceCategory:
+                if let serviceCategory = ServiceCategory.fetchForCloudID(recordName, moc: self.moc) {
+                    result = self.deepProcessServiceCategoryRecord((serviceCategory, record))
+                } else {
+                    result = false
+                }
+            }
+            try! self.moc.save()
+        }
+        return result
+    }
+    
+    private func shallowProcessRecord(record:CKRecord) {
         let type = record.recordType
         let recordName = record.recordID.recordName
         let cType = CloudRecordType.typeFromCloudRecordType(type)
@@ -391,8 +443,7 @@ class BQCloudImporter : NSObject {
                     appointment = Appointment.newObjectWithMoc(self.moc)
                 }
                 appointment!.updateFromCloudRecordIfNeeded(record)
-                self.deepProcessAppointmentRecord((appointment!,record))
-                
+                self.appointments.append((appointment!,record))
             case .CRCustomer:
                 var customer:Customer?
                 customer = Customer.fetchForCloudID(recordName, moc: self.moc)
@@ -400,8 +451,7 @@ class BQCloudImporter : NSObject {
                     customer = Customer.newObjectWithMoc(self.moc)
                 }
                 customer!.updateFromCloudRecordIfNeeded(record)
-                self.deepProcessCustomerRecord((customer!,record))
-                
+                self.customers.append((customer!, record))
             case .CREmployee:
                 var employee:Employee?
                 employee = Employee.fetchForCloudID(recordName, moc: self.moc)
@@ -409,8 +459,7 @@ class BQCloudImporter : NSObject {
                     employee = Employee.newObjectWithMoc(self.moc)
                 }
                 employee!.updateFromCloudRecordIfNeeded(record)
-                self.deepProcessEmployeeRecord((employee!,record))
-                
+                self.employees.append((employee!, record))
             case .CRSale:
                 var sale:Sale?
                 sale = Sale.fetchForCloudID(recordName, moc: self.moc)
@@ -418,8 +467,7 @@ class BQCloudImporter : NSObject {
                     sale = Sale.newObjectWithMoc(self.moc)
                 }
                 sale!.updateFromCloudRecordIfNeeded(record)
-                self.deepProcessSaleRecord((sale!,record))
-                
+                self.sales.append((sale!,record))
             case .CRSaleItem:
                 var saleItem:SaleItem?
                 saleItem = SaleItem.fetchForCloudID(recordName, moc: self.moc)
@@ -427,8 +475,7 @@ class BQCloudImporter : NSObject {
                     saleItem = SaleItem.newObjectWithMoc(self.moc)
                 }
                 saleItem!.updateFromCloudRecordIfNeeded(record)
-                self.deepProcessSaleItemRecord((saleItem!,record))
-                
+                self.saleItems.append((saleItem!,record))
             case .CRSalon:
                 var salon:Salon?
                 salon = Salon.fetchForCloudID(recordName, moc: self.moc)
@@ -436,8 +483,7 @@ class BQCloudImporter : NSObject {
                     salon = Salon(moc:self.moc)
                 }
                 salon!.updateFromCloudRecordIfNeeded(record)
-                self.deepProcessSalon()
-                
+                self.salons.append((salon!,record))
             case .CRService:
                 var service:Service?
                 service = Service.fetchForCloudID(recordName, moc: self.moc)
@@ -445,8 +491,7 @@ class BQCloudImporter : NSObject {
                     service = Service.newObjectWithMoc(self.moc)
                 }
                 service!.updateFromCloudRecordIfNeeded(record)
-                self.deepProcessServiceRecord((service!,record))
-                
+                self.services.append((service!,record))
             case .CRServiceCategory:
                 var serviceCategory:ServiceCategory?
                 serviceCategory = ServiceCategory.fetchForCloudID(recordName, moc: self.moc)
@@ -454,86 +499,15 @@ class BQCloudImporter : NSObject {
                     serviceCategory = ServiceCategory.newObjectWithMoc(self.moc)
                 }
                 serviceCategory!.updateFromCloudRecordIfNeeded(record)
-                self.deepProcessServiceCategoryRecord((serviceCategory!,record))
+                self.serviceCategories.append((serviceCategory!,record))
             }
             try! self.moc.save()
         }
     }
-    
+
     private func createShallowCoredataObjectsFromCloudRecords(records:[CKRecord]) {
         for record in records {
-            let type = record.recordType
-            let recordName = record.recordID.recordName
-            let cType = CloudRecordType.typeFromCloudRecordType(type)
-            
-            moc.performBlockAndWait() {
-                switch cType {
-                case .CRAppointment:
-                    var appointment:Appointment?
-                    appointment = Appointment.fetchForCloudID(recordName, moc: self.moc)
-                    if appointment == nil {
-                        appointment = Appointment.newObjectWithMoc(self.moc)
-                    }
-                    appointment!.updateFromCloudRecordIfNeeded(record)
-                    self.appointments.append((appointment!,record))
-                case .CRCustomer:
-                    var customer:Customer?
-                    customer = Customer.fetchForCloudID(recordName, moc: self.moc)
-                    if customer == nil {
-                        customer = Customer.newObjectWithMoc(self.moc)
-                    }
-                    customer!.updateFromCloudRecordIfNeeded(record)
-                    self.customers.append((customer!, record))
-                case .CREmployee:
-                    var employee:Employee?
-                    employee = Employee.fetchForCloudID(recordName, moc: self.moc)
-                    if employee == nil {
-                        employee = Employee.newObjectWithMoc(self.moc)
-                    }
-                    employee!.updateFromCloudRecordIfNeeded(record)
-                    self.employees.append((employee!, record))
-                case .CRSale:
-                    var sale:Sale?
-                    sale = Sale.fetchForCloudID(recordName, moc: self.moc)
-                    if sale == nil {
-                        sale = Sale.newObjectWithMoc(self.moc)
-                    }
-                    sale!.updateFromCloudRecordIfNeeded(record)
-                    self.sales.append((sale!,record))
-                case .CRSaleItem:
-                    var saleItem:SaleItem?
-                    saleItem = SaleItem.fetchForCloudID(recordName, moc: self.moc)
-                    if saleItem == nil {
-                        saleItem = SaleItem.newObjectWithMoc(self.moc)
-                    }
-                    saleItem!.updateFromCloudRecordIfNeeded(record)
-                    self.saleItems.append((saleItem!,record))
-                case .CRSalon:
-                    var salon:Salon?
-                    salon = Salon.fetchForCloudID(recordName, moc: self.moc)
-                    if salon == nil {
-                        salon = Salon(moc:self.moc)
-                    }
-                    salon!.updateFromCloudRecordIfNeeded(record)
-                    self.salons.append((salon!,record))
-                case .CRService:
-                    var service:Service?
-                    service = Service.fetchForCloudID(recordName, moc: self.moc)
-                    if service == nil {
-                        service = Service.newObjectWithMoc(self.moc)
-                    }
-                    service!.updateFromCloudRecordIfNeeded(record)
-                    self.services.append((service!,record))
-                case .CRServiceCategory:
-                    var serviceCategory:ServiceCategory?
-                    serviceCategory = ServiceCategory.fetchForCloudID(recordName, moc: self.moc)
-                    if serviceCategory == nil {
-                        serviceCategory = ServiceCategory.newObjectWithMoc(self.moc)
-                    }
-                    serviceCategory!.updateFromCloudRecordIfNeeded(record)
-                    self.serviceCategories.append((serviceCategory!,record))
-                }
-            }
+            self.shallowProcessRecord(record)
         }
     }
     private func downloadsDidCompleteSuccessfully() -> Bool {

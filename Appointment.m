@@ -121,8 +121,8 @@
         if (appointment) {
             NSDate * rightNow = [NSDate date];
             appointment.lastUpdatedDate = rightNow;
-            appointment.sale.lastUpdatedDate = rightNow;
             appointment.bqNeedsCoreDataExport = @YES;
+            appointment.sale.lastUpdatedDate = rightNow;
             appointment.sale.bqNeedsCoreDataExport = @YES;
             for (SaleItem * saleItem in appointment.sale.saleItem) {
                 saleItem.lastUpdatedDate = rightNow;

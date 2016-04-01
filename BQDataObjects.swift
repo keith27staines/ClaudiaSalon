@@ -169,13 +169,13 @@ public class ICloudSalon : ICloudRecord {
             self.addressLine2 = coredataSalon.addressLine2
             self.postcode = coredataSalon.postcode
             if let anonymousCustomer = coredataSalon.anonymousCustomer {
-                let iCloudCustomer = ICloudCustomer(coredataCustomer: anonymousCustomer, parentSalonID: coredataSalon.objectID)
-                let anonymousRecordID = iCloudCustomer.makeCloudKitRecord().recordID
+                let icloudCustomer = ICloudCustomer(coredataCustomer: anonymousCustomer, parentSalonID: coredataSalon.objectID)
+                let anonymousRecordID = icloudCustomer.makeCloudKitRecord().recordID
                 self.anonymousCustomerReference = CKReference(recordID: anonymousRecordID, action: CKReferenceAction.None)
             }
             if let rootCategory = coredataSalon.rootServiceCategory {
-                let iCloudCategory = ICloudServiceCategory(coredataServiceCategory: rootCategory, parentSalonID: coredataSalon.objectID)
-                let rootCategoryID = iCloudCategory.makeCloudKitRecord().recordID
+                let icloudCategory = ICloudServiceCategory(coredataServiceCategory: rootCategory, parentSalonID: coredataSalon.objectID)
+                let rootCategoryID = icloudCategory.makeCloudKitRecord().recordID
                 self.rootServiceCategoryReference = CKReference(recordID: rootCategoryID, action: CKReferenceAction.None)
             }
         }
