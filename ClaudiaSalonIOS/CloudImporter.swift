@@ -373,57 +373,72 @@ class BQCloudImporter : NSObject {
         let recordName = record.recordID.recordName
         let cType = CloudRecordType.typeFromCloudRecordType(type)
         var result = false
+        var bqExportable: BQExportable?
         moc.performBlockAndWait() {
             switch cType {
             case .CRAppointment:
                 if let appointment = Appointment.fetchForCloudID(recordName, moc: self.moc) {
+                    bqExportable = appointment
                     result = self.deepProcessAppointmentRecord((appointment, record))
                 } else {
                     result = false
                 }
             case .CRCustomer:
                 if let customer = Customer.fetchForCloudID(recordName, moc: self.moc) {
+                    bqExportable = customer
                     result = self.deepProcessCustomerRecord((customer, record))
                 } else {
                     result = false
                 }
             case .CREmployee:
                 if let employee = Employee.fetchForCloudID(recordName, moc: self.moc) {
+                    bqExportable = employee
                     result = self.deepProcessEmployeeRecord((employee, record))
                 } else {
                     result = false
                 }
             case .CRSale:
                 if let sale = Sale.fetchForCloudID(recordName, moc: self.moc) {
+                    bqExportable = sale
                     result = self.deepProcessSaleRecord((sale, record))
                 } else {
                     result = false
                 }
             case .CRSaleItem:
                 if let saleItem = SaleItem.fetchForCloudID(recordName, moc: self.moc) {
+                    bqExportable = saleItem
                     result = self.deepProcessSaleItemRecord((saleItem, record))
                 } else {
                     result = false
                 }
             case .CRSalon:
                 if let salon = Salon.fetchForCloudID(recordName, moc: self.moc) {
+                    bqExportable = salon
                     result = self.deepProcessSalonRecord((salon, record))
                 } else {
                     result = false
                 }
             case .CRService:
                 if let service = Service.fetchForCloudID(recordName, moc: self.moc) {
+                    bqExportable = service
                     result = self.deepProcessServiceRecord((service, record))
                 } else {
                     result = false
                 }
             case .CRServiceCategory:
                 if let serviceCategory = ServiceCategory.fetchForCloudID(recordName, moc: self.moc) {
+                    bqExportable = serviceCategory
                     result = self.deepProcessServiceCategoryRecord((serviceCategory, record))
                 } else {
                     result = false
                 }
             }
+            if result == true {
+                bqExportable?.bqNeedsCloudImport = false
+                bqExportable?.bqNeedsCoreDataExport = false
+                bqExportable?.bqHasClientChanges = false
+            }
+            
             try! self.moc.save()
         }
         return result

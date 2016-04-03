@@ -176,6 +176,7 @@ extension MasterViewController {
                         if let saleItems = appointment.sale?.saleItem {
                             for saleItem in saleItems {
                                 saleItem.bqHasClientChanges = false
+                                saleItem.bqNeedsCloudImport = false
                                 saleItem.bqNeedsCoreDataExport = true
                             }
                         }
@@ -220,6 +221,11 @@ extension MasterViewController {
         // Set the batch size to a suitable number.
         fetchRequest.fetchBatchSize = 20
         
+        // Predicate
+        let predicate = NSPredicate(format: "cancelled == %@", false)
+        
+        fetchRequest.predicate = predicate
+        
         // Edit the sort key as appropriate.
         let sortDescriptor = NSSortDescriptor(key: "appointmentDate", ascending: false)
         
@@ -227,7 +233,7 @@ extension MasterViewController {
         
         // Edit the section name key path and cache name if appropriate.
         // nil for section name key path means "no sections".
-        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: "Master")
+        let aFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
         aFetchedResultsController.delegate = self
         _fetchedResultsController = aFetchedResultsController
         

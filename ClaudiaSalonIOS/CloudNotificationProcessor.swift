@@ -20,8 +20,9 @@ class CloudNotificationProcessor {
     private var notifications = [CKQueryNotification]()
     private var container:CKContainer
     private let publicCloudDatabase:CKDatabase
-    
+    private var currentSubscription: CKSubscription!
     private let cloudSalonReference : CKReference!
+    var subscriptionsDictionary = [String:CKSubscription]()
 
     init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
         let salonID = CKRecordID(recordName: cloudSalonRecordName)
@@ -42,70 +43,124 @@ class CloudNotificationProcessor {
     
     func subscribeToCloudNotifications() {
 
-        let predicate = NSPredicate(format: "parentSalonReference == %@",self.cloudSalonReference)
+        //let predicate = NSPredicate(format: "parentSalonReference = %@",self.cloudSalonReference)
+        let predicate = NSPredicate(value: true)
         var subscription: CKSubscription
 
-        // iCloudSalon
-        subscription = CKSubscription(recordType: "iCloudSalon", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        self.saveSubscription(subscription)
+//        // iCloudSalon
+//        let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
+//        let salonPredicate = NSPredicate(format: "recordID = %@", salonRecordID)
+//        subscription = CKSubscription(recordType: "iCloudSalon", predicate: salonPredicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+//        subscriptionsDictionary[subscription.recordType!] = subscription
 
         // icloudAppointment
         subscription = CKSubscription(recordType: "icloudAppointment", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptionsDictionary[subscription.recordType!] = subscription
+        
+        // icloudEmployee
+        subscription = CKSubscription(recordType: "icloudEmployee", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptionsDictionary[subscription.recordType!] = subscription
 
         // icloudCustomer
         subscription = CKSubscription(recordType: "icloudCustomer", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        self.saveSubscription(subscription)
+        subscriptionsDictionary[subscription.recordType!] = subscription
 
         // icloudSale
         subscription = CKSubscription(recordType: "icloudSale", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        self.saveSubscription(subscription)
+        subscriptionsDictionary[subscription.recordType!] = subscription
 
         // icloudSaleItem
         subscription = CKSubscription(recordType: "icloudSaleItem", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        self.saveSubscription(subscription)
+        subscriptionsDictionary[subscription.recordType!] = subscription
 
         // icloudServiceCategory
         subscription = CKSubscription(recordType: "icloudServiceCategory", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        self.saveSubscription(subscription)
+        subscriptionsDictionary[subscription.recordType!] = subscription
 
         // icloudService
         subscription = CKSubscription(recordType: "iCloudService", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        self.saveSubscription(subscription)
+        subscriptionsDictionary[subscription.recordType!] = subscription
         
-        NSNotificationCenter.defaultCenter().addObserverForName("cloudKitNotification", object: nil, queue: nil, usingBlock: self.notificationFromCloud)
+        self.saveSubscriptions()
+        
+    }
+    
+    private func saveSubscriptions() {
+        if let subscriptionInfo = self.subscriptionsDictionary.first {
+            self.currentSubscription = subscriptionInfo.1
+            self.saveSubscription(currentSubscription)
+        }
+        if self.subscriptionsDictionary.count == 0 {
+            print("Yay!!!!! All subscriptions saved!")
+            NSNotificationCenter.defaultCenter().addObserverForName("cloudKitNotification", object: nil, queue: nil, usingBlock: self.notificationFromCloud)
+            self.pollForMissedRemoteNotifications()
+        }
     }
     
     private func saveSubscription(subscription:CKSubscription) {
+        let shortDelay = dispatch_time(DISPATCH_TIME_NOW, 100)
+        let mainQueue = dispatch_get_main_queue()
+        var removeFromList = true
         self.publicCloudDatabase.saveSubscription(subscription) { (subscription, error) in
-            if error != nil {
-                //assertionFailure("Error saving cloud notification subscription \(error)")
-                return
+            var fatal = false
+            if let error = error {
+                removeFromList = false
+                switch error.code {
+                case CKErrorCode.NetworkFailure.rawValue:
+                    fatal = true
+                    break
+                case CKErrorCode.NetworkUnavailable.rawValue:
+                    fatal = true
+                    break
+                case CKErrorCode.NotAuthenticated.rawValue:
+                    fatal = true
+                    break
+                case CKErrorCode.InvalidArguments.rawValue:
+                    fatal = true
+                    break
+                case CKErrorCode.MissingEntitlement.rawValue:
+                    fatal = true
+                    break
+                case CKErrorCode.LimitExceeded.rawValue:
+                    fatal = false
+                    break
+                case CKErrorCode.PermissionFailure.rawValue:
+                    fatal = true
+                    break
+                case CKErrorCode.QuotaExceeded.rawValue:
+                    fatal = true
+                    break
+                case CKErrorCode.ServiceUnavailable.rawValue:
+                    fatal = true
+                    break
+                case CKErrorCode.ServerRejectedRequest.rawValue:
+                    print("Subscription exists and wasn't saved again")
+                    removeFromList = true
+                    fatal = false
+                    break
+                case CKErrorCode.UnknownItem.rawValue:
+                    removeFromList = true
+                    fatal = false
+                    break
+                default:
+                    fatal = true
+                    break
+                }
+            }
+            if removeFromList {
+                let type = self.currentSubscription.recordType!
+                self.subscriptionsDictionary[type] = nil
+                print("Subscription is saved")
+                dispatch_after(shortDelay, mainQueue) {
+                    self.saveSubscriptions()
+                }
+            } else if fatal {
+                assertionFailure("Fatal error while saving subscriptions: \(error)")
             }
         }
     }
 
     func notificationFromCloud(notification:NSNotification) {
-        let userInfo = notification.userInfo!
-        let cloudKitNotification = CKNotification(fromRemoteNotificationDictionary: userInfo as! [String : NSObject])
-        let queryNotification = cloudKitNotification as! CKQueryNotification
-        if queryNotification.queryNotificationReason == .RecordDeleted {
-            // If the record has been deleted in CloudKit then delete the local copy
-        } else {
-            // If the record has been created or changed, we fetch the data from CloudKit
-            let database: CKDatabase
-            if queryNotification.isPublicDatabase {
-                database = self.container.publicCloudDatabase
-            } else {
-                database = self.container.privateCloudDatabase
-            }
-            database.fetchRecordWithID(queryNotification.recordID!) { (record: CKRecord?, error: NSError?) -> Void in
-                guard error == nil else {
-                    // Handle the error here
-                    return
-                }
-                self.shallowProcessRecord(record: record!)
-            }
-        }
         self.pollForMissedRemoteNotifications()
     }
 
@@ -145,13 +200,28 @@ class CloudNotificationProcessor {
         
         // The callback for the fetch completion
         fetchNotificationOperation.fetchNotificationChangesCompletionBlock = { (serverChangeToken: CKServerChangeToken?, operationError: NSError?) -> Void in
-    
+            guard self.notifications.count > 0 else {
+                dispatch_sync(self.queue) {
+                    self.isWorking = false
+                }
+                return
+            }
+            
             guard operationError == nil else {
                 dispatch_sync(self.queue) {
                     self.notifications.removeAll()
                     self.isWorking = false
                 }
                 return
+            }
+            
+            var processedNotificationIDs = [CKRecordID:Set<CKNotificationID>]()
+            for notification in self.notifications {
+                if notification.queryNotificationReason == .RecordDeleted {
+                    var notes = processedNotificationIDs[notification.recordID!] ?? Set<CKNotificationID>()
+                    notes.insert(notification.notificationID!)
+                    processedNotificationIDs[notification.recordID!] = notes
+                }
             }
 
             dispatch_sync(self.queue) {
@@ -170,7 +240,6 @@ class CloudNotificationProcessor {
                 })
                 
                 let recordFetchOp = CKFetchRecordsOperation(recordIDs: changedRecordIDs)
-                var processedNotificationIDs = [CKRecordID:Set<CKNotificationID>]()
                 
                 recordFetchOp.perRecordCompletionBlock = { (record,recordID,error) in
                     guard let recordID = recordID else {
@@ -194,6 +263,7 @@ class CloudNotificationProcessor {
                             var notes:Set<CKNotificationID>
                             notes = processedNotificationIDs[recordID] ?? Set<CKNotificationID>()
                             notes.insert(notification.notificationID!)
+                            processedNotificationIDs[recordID] = notes
                         }
                     }
                 }

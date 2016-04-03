@@ -67,7 +67,11 @@
 }
 
 -(void)application:(NSApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {
-    
+    NSLog(@"Registered for remote notifications!!");
+}
+
+-(void)application:(NSApplication *)app didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
+    NSLog(@"Failed to register for remote notifications %@",error);
 }
 
 -(void)timerDidFire:(id)sender {

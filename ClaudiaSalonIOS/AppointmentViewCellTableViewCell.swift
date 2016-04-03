@@ -25,6 +25,7 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
             let formatter = AppointmentFormatter(appointment: self.appointment!)
             let hasChanges = self.appointment.bqHasClientChanges?.boolValue ?? false
             let needsExport = self.appointment.bqNeedsCoreDataExport?.boolValue ?? false
+            let needsImport = self.appointment.bqNeedsCloudImport?.boolValue ?? false
             
             self.customerNameLabel.text = self.appointment.customer?.fullName ?? ""
             self.dateLabel.text = formatter.verboseAppointmentDayString
@@ -33,16 +34,19 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
             self.durationLabel.text = formatter.bookedDurationString()
             let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
             var image:UIImage
-            if hasChanges {
-                button.tintColor = UIColor.orangeColor()
-                image = UIImage(named: "amber-cloud")!
-            } else if needsExport {
-                button.tintColor = UIColor.blueColor()
-                image = UIImage(named: "blue-cloud")!
+            
+            if needsImport {
+                image = UIImage(named: "red-cloud")!
             } else {
-                button.tintColor = UIColor.greenColor()
-                image = UIImage(named: "green-cloud")!
+                if hasChanges {
+                    image = UIImage(named: "amber-cloud")!
+                } else if needsExport {
+                    image = UIImage(named: "blue-cloud")!
+                } else {
+                    image = UIImage(named: "green-cloud")!
+                }
             }
+            
             button.setImage(image, forState: UIControlState.Normal)
             button.imageView?.contentMode = .ScaleAspectFit
             button.addTarget(self, action: #selector(AppointmentViewCellTableViewCell.accessoryButtonTapped(_:event:)), forControlEvents: UIControlEvents.TouchUpInside)

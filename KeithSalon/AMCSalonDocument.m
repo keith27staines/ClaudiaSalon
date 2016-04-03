@@ -133,9 +133,11 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
                 [weakSelf saveDocument:nil];
             }];
         };
-        [self.coredataExportController startExportIterations];
         
-        self.cloudImporter = [[BQCloudImporter alloc] initWithParentMoc:self.managedObjectContext containerIdentifier:containerIdentifer salonCloudRecordName:_salon.bqCloudID];
+        if (_salon.bqCloudID != nil ) {
+            [self.coredataExportController startExportIterations];
+            self.cloudImporter = [[BQCloudImporter alloc] initWithParentMoc:self.managedObjectContext containerIdentifier:containerIdentifer salonCloudRecordName:_salon.bqCloudID];
+        }
     }
     return _salon;
 }
