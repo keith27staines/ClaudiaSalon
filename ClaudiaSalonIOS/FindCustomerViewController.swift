@@ -121,6 +121,8 @@ class FindCustomerViewController: UIViewController {
         customer.lastName = lastName
         customer.phone = phone
         self.allCustomers.append(customer)
+        customer.bqNeedsCoreDataExport = true
+        try! customer.managedObjectContext?.save()
         self.applyFilters(self)
     }
 

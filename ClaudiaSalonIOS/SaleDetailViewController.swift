@@ -57,6 +57,10 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         let moc = Coredata.sharedInstance.managedObjectContext
         let saleItem = SaleItem.newObjectWithMoc(moc)
         saleItem.sale = self.sale
+        try! moc.save()
+        if let indexPath = self._fetchedResultsController?.indexPathForObject(saleItem) {
+            self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Middle)
+        }
     }
     func employeeInfoButtonTapped(cell: SaleDetailCellTableViewCell) {
         self.performSegueWithIdentifier("GotoSelectEmployee", sender: cell)
@@ -176,7 +180,7 @@ extension SaleDetailViewController {
         fetchRequest.entity = entity
         let predicate = NSPredicate(format: "sale = %@", self.saleID)
         fetchRequest.predicate = predicate
-        let sortDescriptor = NSSortDescriptor(key: "createdDate", ascending: true)
+        let sortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
 
         // Set the batch size to a suitable number.

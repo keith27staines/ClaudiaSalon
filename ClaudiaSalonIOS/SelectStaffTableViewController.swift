@@ -19,7 +19,7 @@ class SelectStaffTableViewController : UITableViewController , NSFetchedResultsC
     override func viewDidLoad() {
         super.viewDidLoad()
         let fetch = NSFetchRequest(entityName: "Employee")
-        fetch.predicate = NSPredicate(value: true) //NSPredicate(format: "isActive = %@", NSNumber(bool:true))
+        fetch.predicate = NSPredicate(format: "isActive = %@", NSNumber(bool:true)) 
         let sort = NSSortDescriptor(key: "firstName", ascending: true)
         fetch.sortDescriptors = [sort]
         let moc = Coredata.sharedInstance.managedObjectContext

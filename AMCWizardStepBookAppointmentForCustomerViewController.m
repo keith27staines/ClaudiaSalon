@@ -291,7 +291,7 @@
             AMCJobsColumnView * view = (AMCJobsColumnView*)vc.view;
             view.delegate = self;
             NSString * serviceName = saleItem.service.name;
-            view.textField.stringValue = serviceName;
+            view.textField.stringValue = (serviceName)?serviceName:@"Unknown service";
             if (saleItem.service.deluxe.boolValue) {
                 view.imageView.image = [[NSBundle mainBundle] imageForResource:@"GoldStarIcon"];
             } else {

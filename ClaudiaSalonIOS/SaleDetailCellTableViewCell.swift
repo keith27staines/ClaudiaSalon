@@ -87,7 +87,7 @@ class SaleDetailCellTableViewCell: UITableViewCell {
         if employeeName == nil {
             self.employeeNameLabel.text = "No stylist assigned for this service"
         } else {
-            self.employeeNameLabel.text = "Service assigned to " + employeeName!
+            self.employeeNameLabel.text = "Stylist: " + employeeName!
         }
         self.minLabel.hidden = hideSlider
         self.maxLabel.hidden = hideSlider

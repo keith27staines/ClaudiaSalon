@@ -32,7 +32,7 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
             self.startTimeLabel.text = "Start " + formatter.startTimeString
             self.finishTimeLabel.text = "Finish " + formatter.finishTimeString
             self.durationLabel.text = formatter.bookedDurationString()
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
             var image:UIImage
             
             if needsImport {
@@ -54,11 +54,12 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
         }
     }
     
-    var cloudSynchButtonTapped:((appointment:Appointment)->Void)?
+    var cloudSynchButtonTapped:((appointment:Appointment, button:UIButton)->Void)?
 
     func accessoryButtonTapped(button:UIControl, event:UIEvent) {
         if let callback = cloudSynchButtonTapped {
-            callback(appointment: self.appointment)
+            let button = button as! UIButton
+            callback(appointment: self.appointment, button: button)
         }
     }
 

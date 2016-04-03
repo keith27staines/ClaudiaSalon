@@ -92,6 +92,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         appointment.sale?.customer = self.salon.anonymousCustomer
         appointment.appointmentDate = NSDate()
         appointment.bookedDuration = 30 * 60
+        try! self.moc.save()
+        if let indexPath = self.fetchedResultsController.indexPathForObject(appointment) {
+            //self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
+            self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Middle)
+        }
     }
 
     // MARK: - Segues
@@ -160,13 +165,14 @@ extension MasterViewController {
         let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
         appointmentCell.appointment = appointment
         
-        appointmentCell.cloudSynchButtonTapped = { appointment in
+        appointmentCell.cloudSynchButtonTapped = { appointment, button in
             
             let hasChanges = appointment.bqHasClientChanges?.boolValue ?? false
             let needsExport = appointment.bqNeedsCoreDataExport?.boolValue ?? false
             
+            var alert: UIAlertController!
             if hasChanges {
-                let alert = UIAlertController(title: "Synch changes?", message: "Tap 'Synch' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
+                alert = UIAlertController(title: "Synch changes?", message: "Tap 'Synch' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
                 let exportAction = UIAlertAction(title: "Synch", style: .Default) { action in
                     NSOperationQueue.mainQueue().addOperationWithBlock() {
                         appointment.bqHasClientChanges = false
@@ -188,18 +194,19 @@ extension MasterViewController {
                 }
                 alert.addAction(exportAction)
                 alert.addAction(cancelAction)
-                self.presentViewController(alert, animated: true, completion: nil)
             } else if needsExport {
-                let alert = UIAlertController(title: "Synching", message: "This appointment's changes are waiting to be synchronized to the cloud", preferredStyle: .ActionSheet)
+                alert = UIAlertController(title: "Synching", message: "This appointment's changes are waiting to be synchronized to the cloud", preferredStyle: .ActionSheet)
                 let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 alert.addAction(okAction)
-                self.presentViewController(alert, animated: true, completion: nil)
             } else {
-                let alert = UIAlertController(title: "Already Synched", message: "This appointment has been synchronized with the cloud", preferredStyle: .ActionSheet)
+                alert = UIAlertController(title: "Already Synched", message: "This appointment has been synchronized with the cloud", preferredStyle: .ActionSheet)
                 let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                 alert.addAction(okAction)
-                self.presentViewController(alert, animated: true, completion: nil)
             }
+            let popController = alert.popoverPresentationController
+            popController?.sourceView = button
+            popController?.sourceRect = button.bounds
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
     }
