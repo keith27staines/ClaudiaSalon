@@ -214,15 +214,23 @@
     }
     return nonAuditNotes;
 }
+-(NSArray*)activeSaleItems {
+    NSPredicate * activePredicate = [NSPredicate predicateWithFormat:@"isActive = %@",@YES];
+    NSArray * allSaleItems = [self.saleItem allObjects];
+    NSArray * activeSaleItems = [allSaleItems filteredArrayUsingPredicate:activePredicate];
+    return activeSaleItems;
+}
 -(void)updatePriceFromSaleItems {
     double saleItemNominalTotal = 0.0;
     double saleItemActualTotal = 0.0;
     double nonDiscountedItemTotal = 0.0;
-    for (SaleItem * saleItem in self.saleItem) {
-        saleItemNominalTotal += [AMCDiscountCalculator roundVeryCloseOrDown:saleItem.nominalCharge.doubleValue];
-        saleItemActualTotal += [AMCDiscountCalculator roundVeryCloseOrDown:saleItem.actualCharge.doubleValue];
-        if (saleItem.discountType.integerValue == AMCDiscountTypeNone) {
-            nonDiscountedItemTotal += [AMCDiscountCalculator roundVeryCloseOrDown:saleItem.nominalCharge.doubleValue];
+    for (SaleItem * saleItem in [self activeSaleItems]) {
+        if (saleItem.isActive.boolValue) {
+            saleItemNominalTotal += [AMCDiscountCalculator roundVeryCloseOrDown:saleItem.nominalCharge.doubleValue];
+            saleItemActualTotal += [AMCDiscountCalculator roundVeryCloseOrDown:saleItem.actualCharge.doubleValue];
+            if (saleItem.discountType.integerValue == AMCDiscountTypeNone) {
+                nonDiscountedItemTotal += [AMCDiscountCalculator roundVeryCloseOrDown:saleItem.nominalCharge.doubleValue];
+            }
         }
     }
     

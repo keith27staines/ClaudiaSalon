@@ -72,7 +72,7 @@
 }
 -(void)reloadSaleItemsTable {
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:YES];
-    self.saleItemsArray = [self.sale.saleItem allObjects];
+    self.saleItemsArray = [self.sale activeSaleItems];
     self.saleItemsArray = [self.saleItemsArray sortedArrayUsingDescriptors:@[sort]];
     [self.saleItemsTable reloadData];
 }

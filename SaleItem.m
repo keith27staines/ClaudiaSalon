@@ -25,6 +25,7 @@
     saleItem.createdDate = rightNow;
     saleItem.lastUpdatedDate = rightNow;
     saleItem.discountVersion = @2;
+    saleItem.isActive = @YES;
     return saleItem;
 }
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc {

@@ -1751,8 +1751,8 @@
 		53AE26E41AA3066200A1B3E4 /* Appointment Select Services and Time Slot */ = {
 			isa = PBXGroup;
 			children = (
-				53AE26CC1AA1D4DF00A1B3E4 /* Select Staff to perform Service */,
 				5330E2351AF8A8B40062FD93 /* AdvancePaymentView */,
+				53AE26CC1AA1D4DF00A1B3E4 /* Select Staff to perform Service */,
 				53D69BF41A9B23B60004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.xib */,
 				53D69D881A9B243B0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.h */,
 				53D69C791A9B240B0004CE10 /* AMCWizardStepBookAppointmentForCustomerViewController.m */,

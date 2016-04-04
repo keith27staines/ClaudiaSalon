@@ -57,9 +57,20 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
         let moc = Coredata.sharedInstance.managedObjectContext
         let saleItem = SaleItem.newObjectWithMoc(moc)
         saleItem.sale = self.sale
+        self.saleItemBeingEdited = saleItem
+        self.saleItemWasUpdated(saleItem)
         try! moc.save()
         if let indexPath = self._fetchedResultsController?.indexPathForObject(saleItem) {
             self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Middle)
+        }
+    }
+    
+    func deleteSaleItemAtIndexPath(indexPath:NSIndexPath) {
+        if let saleItem = self.fetchedResultsController.objectAtIndexPath(indexPath) as? SaleItem {
+            saleItem.isActive = false
+            let sale = saleItem.sale!
+            sale.updatePriceFromSaleItems()
+            saleItem.cascadeHasChangesUpdwards()
         }
     }
     func employeeInfoButtonTapped(cell: SaleDetailCellTableViewCell) {
@@ -155,8 +166,7 @@ extension SaleDetailViewController {
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            let moc = self.fetchedResultsController.managedObjectContext
-            moc.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as! NSManagedObject)
+            self.deleteSaleItemAtIndexPath(indexPath)
         }
     }
     
@@ -178,7 +188,7 @@ extension SaleDetailViewController {
         let moc = Coredata.sharedInstance.managedObjectContext
         let entity = NSEntityDescription.entityForName("SaleItem", inManagedObjectContext: moc)
         fetchRequest.entity = entity
-        let predicate = NSPredicate(format: "sale = %@", self.saleID)
+        let predicate = NSPredicate(format: "sale = %@ AND isActive = %@", self.saleID,true)
         fetchRequest.predicate = predicate
         let sortDescriptor = NSSortDescriptor(key: "createdDate", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]

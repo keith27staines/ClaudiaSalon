@@ -362,8 +362,7 @@
     if (row >= 0) {
         SaleItem * saleItem = self.saleItemsArray[row];
         [self.saleItemsArray removeObjectAtIndex:row];
-        [[self sale] removeSaleItemObject:saleItem];
-        saleItem.service = nil;
+        saleItem.isActive = @NO;
         [self.saleItemsTable deselectAll:self];
         [self.saleItemsTable reloadData];
         if (self.saleItemsArray.count == 0) {
@@ -389,8 +388,8 @@
 {
     if (!_saleItemsArray) {
         Sale * sale = self.sale;
-        NSSet * saleItems = sale.saleItem;
-        _saleItemsArray = [[[saleItems allObjects] sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:YES]]] mutableCopy];
+        NSArray * saleItems = [sale activeSaleItems];
+        _saleItemsArray = [[saleItems sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:YES]]] mutableCopy];
         if (!_saleItemsArray) {
             _saleItemsArray = [NSMutableArray array];
         }

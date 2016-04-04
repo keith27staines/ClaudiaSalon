@@ -73,7 +73,7 @@
 -(BOOL)isValid {
     return ([self.appointment.appointmentDate isGreaterThan:[NSDate distantPast]] &&
             self.appointment.bookedDuration.integerValue > 0 &&
-            self.appointment.sale.saleItem.count > 0);
+            [self.appointment.sale activeSaleItems ] > 0);
 }
 -(void)resetToObject {
     Appointment * appointment = self.appointment;
@@ -215,7 +215,7 @@
     [self.serviceCategoryPopupController refreshListWithRootCategory:self.salonDocument.salon.rootServiceCategory];
 }
 - (void)loadSaleItems {
-    self.chosenServices = [[self.appointment.sale.saleItem allObjects] mutableCopy];
+    self.chosenServices = [[self.appointment.sale activeSaleItems] mutableCopy];
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:YES];
     self.chosenServices = [[self.chosenServices sortedArrayUsingDescriptors:@[sort]] mutableCopy];
     [self.chosenServicesTable reloadData];
@@ -466,7 +466,7 @@
 - (IBAction)removeServiceButtonClicked:(id)sender {
     SaleItem * saleItem = [self selectedSaleItem];
     if (!saleItem) return;
-    [self.appointment.sale removeSaleItemObject:saleItem];
+    saleItem.isActive = @NO;
     [self.chosenServices removeObject:saleItem];
     [self.chosenServicesTable reloadData];
     [self updateTotal];

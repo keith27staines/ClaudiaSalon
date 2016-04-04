@@ -77,8 +77,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.performSegueWithIdentifier("GotoImportViewController", sender: self)
             return
         }
-        Coredata.sharedInstance.exportController.startExportIterations()
-        //self.performSegueWithIdentifier("GotoImportViewController", sender: self)
+        //Coredata.sharedInstance.exportController.startExportIterations()
+        self.performSegueWithIdentifier("GotoImportViewController", sender: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -94,9 +94,25 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         appointment.bookedDuration = 30 * 60
         try! self.moc.save()
         if let indexPath = self.fetchedResultsController.indexPathForObject(appointment) {
-            //self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
             self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Middle)
         }
+    }
+    
+    func cancelAppointmentAtIndexPath(indexPath:NSIndexPath) {
+        if let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as? Appointment {
+            appointment.cancelled = true
+            self.makeAppointmentReadyForExport(appointment)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        
+        let cancelAppointmentAction = UITableViewRowAction(style: .Normal, title: "Cancel") { (rowAction:UITableViewRowAction, indexPath:NSIndexPath) -> Void in
+            self.cancelAppointmentAtIndexPath(indexPath)
+        }
+        cancelAppointmentAction.backgroundColor = UIColor.blueColor()
+        
+        return [cancelAppointmentAction]
     }
 
     // MARK: - Segues
@@ -113,10 +129,28 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             }
         }
     }
+    
     func appointmentWasUpdated(appointment:Appointment) {
         let indexPath = self.fetchedResultsController.indexPathForObject(appointment)
         let cell = self.tableView.cellForRowAtIndexPath(indexPath!)
         self.configureCell(cell!, atIndexPath: indexPath!)
+    }
+    
+    func makeAppointmentReadyForExport(appointment:Appointment) {
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            appointment.bqHasClientChanges = false
+            appointment.bqNeedsCoreDataExport = true
+            appointment.sale?.bqHasClientChanges = false
+            appointment.sale?.bqNeedsCoreDataExport = true
+            if let saleItems = appointment.sale?.saleItem {
+                for saleItem in saleItems {
+                    saleItem.bqHasClientChanges = false
+                    saleItem.bqNeedsCloudImport = false
+                    saleItem.bqNeedsCoreDataExport = true
+                }
+            }
+            Coredata.sharedInstance.save()
+        }
     }
 }
 
@@ -174,20 +208,7 @@ extension MasterViewController {
             if hasChanges {
                 alert = UIAlertController(title: "Synch changes?", message: "Tap 'Synch' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
                 let exportAction = UIAlertAction(title: "Synch", style: .Default) { action in
-                    NSOperationQueue.mainQueue().addOperationWithBlock() {
-                        appointment.bqHasClientChanges = false
-                        appointment.bqNeedsCoreDataExport = true
-                        appointment.sale?.bqHasClientChanges = false
-                        appointment.sale?.bqNeedsCoreDataExport = true
-                        if let saleItems = appointment.sale?.saleItem {
-                            for saleItem in saleItems {
-                                saleItem.bqHasClientChanges = false
-                                saleItem.bqNeedsCloudImport = false
-                                saleItem.bqNeedsCoreDataExport = true
-                            }
-                        }
-                    }
-                    Coredata.sharedInstance.save()
+                    self.makeAppointmentReadyForExport(appointment)
                 }
                 let cancelAction = UIAlertAction(title: "Not yet", style: .Cancel) { action in
                     

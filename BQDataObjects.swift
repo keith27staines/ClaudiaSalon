@@ -247,13 +247,14 @@ public class ICloudEmployee : ICloudRecord {
         coredataEmployee.managedObjectContext!.performBlockAndWait() {
             self.firstName = coredataEmployee.firstName
             self.lastName = coredataEmployee.lastName
-            self.isActive = (coredataEmployee.isActive?.boolValue == true ? true : false)
+            self.isActive = coredataEmployee.isActive?.boolValue ?? true
         }
     }
     override func makeCloudKitRecord() -> CKRecord {
         let record = super.makeCloudKitRecord()
         record["firstName"] = firstName
         record["lastName"] = lastName
+        record["isActive"] = isActive
         return record
     }
     override func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
@@ -263,6 +264,7 @@ public class ICloudEmployee : ICloudRecord {
         }
         bqExportable.firstName = record["firstName"] as? String
         bqExportable.lastName = record["lastName"] as? String
+        bqExportable.isActive = record["isActive"] as? Bool
         return bqExportable
     }
 }
@@ -513,6 +515,7 @@ class ICloudSaleItem: ICloudRecord {
             self.nominalCharge = coredataSaleItem.nominalCharge?.doubleValue
             self.maximumCharge = coredataSaleItem.maximumCharge?.doubleValue
             self.minimumCharge = coredataSaleItem.minimumCharge?.doubleValue
+            self.isActive = coredataSaleItem.isActive?.boolValue ?? true
             
             // Assign this SaleItem's parent sale
             if let coredataSale = coredataSaleItem.sale {
@@ -550,6 +553,7 @@ class ICloudSaleItem: ICloudRecord {
         record["nominalCharge"] = nominalCharge
         record["maximumCharge"] = maximumCharge
         record["minimumCharge"] = minimumCharge
+        record["isActive"] = isActive
         return record
     }
     override func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
@@ -564,6 +568,7 @@ class ICloudSaleItem: ICloudRecord {
         bqExportable.nominalCharge = NSNumber(double: record["nominalCharge"] as! Double)
         bqExportable.maximumCharge = NSNumber(double: record["maximumCharge"] as! Double)
         bqExportable.minimumCharge = NSNumber(double: record["minimumCharge"] as! Double)
+        bqExportable.isActive = NSNumber(bool: record["isActive"] as! Bool)
         return bqExportable
     }
 }

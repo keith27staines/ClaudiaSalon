@@ -2,7 +2,7 @@
 //  SaleItem+CoreDataProperties.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 28/03/2016.
+//  Created by Keith Staines on 04/04/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *minimumCharge;
 @property (nullable, nonatomic, retain) NSNumber *nominalCharge;
 @property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
+@property (nullable, nonatomic, retain) NSNumber *isActive;
 @property (nullable, nonatomic, retain) NSSet<Note *> *notes;
 @property (nullable, nonatomic, retain) Employee *performedBy;
 @property (nullable, nonatomic, retain) Payment *refund;

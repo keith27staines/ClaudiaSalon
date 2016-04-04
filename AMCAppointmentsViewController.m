@@ -455,7 +455,7 @@ NSAnimationDelegate>
 }
 -(NSArray*)saleItems {
     if (!self.selectedAppointment) return @[];
-    NSArray * array = self.selectedAppointment.sale.saleItem.allObjects;
+    NSArray * array = [self.selectedAppointment.sale activeSaleItems];
     NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"createdDate" ascending:YES];
     return [array sortedArrayUsingDescriptors:@[sort]];
 }
