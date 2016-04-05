@@ -77,8 +77,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.performSegueWithIdentifier("GotoImportViewController", sender: self)
             return
         }
-        //Coredata.sharedInstance.exportController.startExportIterations()
-        self.performSegueWithIdentifier("GotoImportViewController", sender: self)
+        Coredata.sharedInstance.exportController.startExportIterations()
+        //self.performSegueWithIdentifier("GotoImportViewController", sender: self)
     }
 
     override func didReceiveMemoryWarning() {

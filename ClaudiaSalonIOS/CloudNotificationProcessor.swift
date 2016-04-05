@@ -97,6 +97,10 @@ class CloudNotificationProcessor {
         }
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     private func saveSubscription(subscription:CKSubscription) {
         let shortDelay = dispatch_time(DISPATCH_TIME_NOW, 100)
         let mainQueue = dispatch_get_main_queue()
