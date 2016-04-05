@@ -662,10 +662,11 @@
         <scene sceneID="XIv-si-UfE">
             <objects>
                 <tableViewController id="L5M-um-Wk2" customClass="SaleDetailViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="234" sectionHeaderHeight="28" sectionFooterHeight="28" id="jd0-0s-Zde">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="234" sectionHeaderHeight="28" sectionFooterHeight="28" id="jd0-0s-Zde">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="separatorColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="1000" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="234" id="zah-et-0Lr" customClass="SaleDetailCellTableViewCell" customModule="ClaudiaSalonIOS" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="234"/>
@@ -757,6 +758,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.88109147548675537" green="1" blue="0.8285176157951355" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstItem="hbe-bv-8gZ" firstAttribute="centerX" secondItem="O3F-3L-dg1" secondAttribute="centerX" id="1AV-OD-XGS"/>
                                         <constraint firstItem="0hd-YS-Wie" firstAttribute="leading" secondItem="Cwn-JY-MWs" secondAttribute="leading" id="5K3-tq-dKA"/>
@@ -861,6 +863,7 @@
                             </stackView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Lh-EM-Oz3" userLabel="categoryContainer">
                                 <rect key="frame" x="0.0" y="101" width="600" height="699"/>
+                                <color key="backgroundColor" red="0.0017741776537150145" green="0.99894827604293823" blue="0.91082000732421875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="200" id="QSz-Po-LPk"/>
                                 </constraints>
@@ -1097,10 +1100,12 @@
         <scene sceneID="gJL-Hq-2Ol">
             <objects>
                 <tableViewController id="z74-7f-y2H" customClass="ServiceCategoryTableViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Hgd-yi-hbV">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Hgd-yi-hbV">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="699"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.0017741776537150145" green="0.99894827604293823" blue="0.91082000732421875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="aB6-1h-UgA" style="IBUITableViewCellStyleDefault" id="JHW-2P-rV2">
                                 <rect key="frame" x="0.0" y="28" width="600" height="44"/>
@@ -1134,10 +1139,12 @@
         <scene sceneID="Apx-yh-Ct2">
             <objects>
                 <tableViewController id="HqU-xj-R9q" customClass="ServiceTableViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="sAP-aL-cog">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="sAP-aL-cog">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="384"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.9248461127281189" green="0.67005777359008789" blue="0.9300122857093811" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="65N-a1-doV" detailTextLabel="6rf-3N-aOd" style="IBUITableViewCellStyleSubtitle" id="weP-4g-Tec">
                                 <rect key="frame" x="0.0" y="28" width="600" height="44"/>

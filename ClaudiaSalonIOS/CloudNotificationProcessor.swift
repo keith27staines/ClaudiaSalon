@@ -42,9 +42,8 @@ class CloudNotificationProcessor {
     }
     
     func subscribeToCloudNotifications() {
-
-        //let predicate = NSPredicate(format: "parentSalonReference = %@",self.cloudSalonReference)
-        let predicate = NSPredicate(value: true)
+        let predicate = NSPredicate(format: "parentSalonReference == %@",self.cloudSalonReference.recordID)
+        //let predicate = NSPredicate(value: true)
         var subscription: CKSubscription
 
 //        // iCloudSalon
@@ -112,43 +111,43 @@ class CloudNotificationProcessor {
                 switch error.code {
                 case CKErrorCode.NetworkFailure.rawValue:
                     fatal = true
-                    break
+
                 case CKErrorCode.NetworkUnavailable.rawValue:
                     fatal = true
-                    break
+
                 case CKErrorCode.NotAuthenticated.rawValue:
                     fatal = true
-                    break
+
                 case CKErrorCode.InvalidArguments.rawValue:
                     fatal = true
-                    break
+
                 case CKErrorCode.MissingEntitlement.rawValue:
                     fatal = true
-                    break
+
                 case CKErrorCode.LimitExceeded.rawValue:
                     fatal = false
-                    break
+
                 case CKErrorCode.PermissionFailure.rawValue:
                     fatal = true
-                    break
+
                 case CKErrorCode.QuotaExceeded.rawValue:
                     fatal = true
-                    break
+
                 case CKErrorCode.ServiceUnavailable.rawValue:
                     fatal = true
-                    break
+
                 case CKErrorCode.ServerRejectedRequest.rawValue:
                     print("Subscription exists and wasn't saved again")
                     removeFromList = true
                     fatal = false
-                    break
+
                 case CKErrorCode.UnknownItem.rawValue:
                     removeFromList = true
                     fatal = false
-                    break
+
                 default:
                     fatal = true
-                    break
+
                 }
             }
             if removeFromList {
@@ -159,7 +158,7 @@ class CloudNotificationProcessor {
                     self.saveSubscriptions()
                 }
             } else if fatal {
-                assertionFailure("Fatal error while saving subscriptions: \(error)")
+                assertionFailure("Fatal error while saving subscription: \(error)")
             }
         }
     }
@@ -220,14 +219,6 @@ class CloudNotificationProcessor {
             }
             
             var processedNotificationIDs = [CKRecordID:Set<CKNotificationID>]()
-            for notification in self.notifications {
-                if notification.queryNotificationReason == .RecordDeleted {
-                    var notes = processedNotificationIDs[notification.recordID!] ?? Set<CKNotificationID>()
-                    notes.insert(notification.notificationID!)
-                    processedNotificationIDs[notification.recordID!] = notes
-                }
-            }
-
             dispatch_sync(self.queue) {
 
                 // Get array of possibly null IDs of records that have been modified in some way (including being created)

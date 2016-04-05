@@ -61,6 +61,7 @@
 
     [self.previousVisitsTable reloadData];
 }
+
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument *)salonDocument
 {
     [super prepareForDisplayWithSalon:salonDocument];
@@ -265,6 +266,7 @@
     }
     customer.dayOfBirth = @(self.dayAndMonthPopupButtonsController.dayNumber);
     customer.monthOfBirth = @(self.dayAndMonthPopupButtonsController.monthNumber);
+    customer.bqNeedsCoreDataExport = @YES;
 }
 
 
