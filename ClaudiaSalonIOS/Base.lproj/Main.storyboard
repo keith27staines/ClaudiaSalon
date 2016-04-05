@@ -305,10 +305,20 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AiQ-9z-M9c">
+                                                    <rect key="frame" x="404" y="39" width="30" height="30"/>
+                                                    <state key="normal" title="Edit"/>
+                                                    <connections>
+                                                        <segue destination="5C5-kx-ZeE" kind="popoverPresentation" identifier="selectInterval" popoverAnchorView="AiQ-9z-M9c" id="NI3-cV-wPc">
+                                                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                        </segue>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="7B3-Ks-PcX" firstAttribute="baseline" secondItem="ka0-F6-qAk" secondAttribute="baseline" id="3ZE-XP-ydY"/>
                                                 <constraint firstItem="yfK-Nh-vF9" firstAttribute="top" secondItem="PyB-ED-EW6" secondAttribute="topMargin" constant="3" id="4n9-0I-Xam"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="AiQ-9z-M9c" secondAttribute="trailing" id="6lC-8G-39l"/>
                                                 <constraint firstItem="FnL-0K-nLr" firstAttribute="leading" secondItem="CBy-XC-BPx" secondAttribute="trailing" constant="8" symbolic="YES" id="7pw-BZ-KOB"/>
                                                 <constraint firstItem="1jo-fi-T5L" firstAttribute="leading" secondItem="yfK-Nh-vF9" secondAttribute="trailing" constant="20" id="ACd-Vf-SQ7"/>
                                                 <constraint firstItem="CBy-XC-BPx" firstAttribute="baseline" secondItem="aRQ-Ek-e0d" secondAttribute="baseline" id="Ays-Sh-yAb"/>
@@ -320,6 +330,7 @@
                                                 <constraint firstItem="CBy-XC-BPx" firstAttribute="centerX" secondItem="PyB-ED-EW6" secondAttribute="centerX" priority="750" id="Out-b9-orD"/>
                                                 <constraint firstItem="CBy-XC-BPx" firstAttribute="centerY" secondItem="FnL-0K-nLr" secondAttribute="centerY" id="Ox0-vS-OR5"/>
                                                 <constraint firstItem="ka0-F6-qAk" firstAttribute="centerY" secondItem="Ab0-Nx-RC7" secondAttribute="centerY" id="Rcs-DS-79T"/>
+                                                <constraint firstItem="AiQ-9z-M9c" firstAttribute="baseline" secondItem="FnL-0K-nLr" secondAttribute="baseline" id="Rzo-MA-Gqc"/>
                                                 <constraint firstItem="6fc-am-zB7" firstAttribute="leading" secondItem="1jo-fi-T5L" secondAttribute="leading" id="ULp-ad-OG4"/>
                                                 <constraint firstItem="CBy-XC-BPx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6fc-am-zB7" secondAttribute="trailing" constant="20" id="VQf-M8-kno"/>
                                                 <constraint firstItem="6fc-am-zB7" firstAttribute="top" secondItem="1jo-fi-T5L" secondAttribute="bottom" constant="8" symbolic="YES" id="Vgb-FE-i1Q"/>
@@ -329,12 +340,12 @@
                                                 <constraint firstItem="ka0-F6-qAk" firstAttribute="trailing" secondItem="xIN-WK-ht6" secondAttribute="trailing" id="cYa-cd-gqD"/>
                                                 <constraint firstItem="FnL-0K-nLr" firstAttribute="top" secondItem="CBy-XC-BPx" secondAttribute="bottom" constant="8" id="dGP-he-ACV"/>
                                                 <constraint firstItem="1jo-fi-T5L" firstAttribute="baseline" secondItem="yfK-Nh-vF9" secondAttribute="baseline" id="jTf-dp-XYb"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="FnL-0K-nLr" secondAttribute="trailing" id="pkN-gW-dTL"/>
                                                 <constraint firstItem="7B3-Ks-PcX" firstAttribute="leading" secondItem="1jo-fi-T5L" secondAttribute="leading" id="rmn-QO-TEq"/>
                                                 <constraint firstItem="6fc-am-zB7" firstAttribute="trailing" secondItem="1jo-fi-T5L" secondAttribute="trailing" id="rry-5b-NOR"/>
                                                 <constraint firstItem="FnL-0K-nLr" firstAttribute="leading" secondItem="CBy-XC-BPx" secondAttribute="trailing" constant="8" id="ssy-Us-9SH"/>
                                                 <constraint firstItem="xIN-WK-ht6" firstAttribute="centerY" secondItem="aRQ-Ek-e0d" secondAttribute="centerY" id="wOe-d9-4cL"/>
                                                 <constraint firstItem="FnL-0K-nLr" firstAttribute="centerX" secondItem="CBy-XC-BPx" secondAttribute="centerX" id="xBy-yL-5OA"/>
+                                                <constraint firstItem="AiQ-9z-M9c" firstAttribute="leading" secondItem="FnL-0K-nLr" secondAttribute="trailing" constant="27" id="xMu-Qp-rwg"/>
                                                 <constraint firstItem="yfK-Nh-vF9" firstAttribute="top" secondItem="PyB-ED-EW6" secondAttribute="topMargin" constant="3" id="xlm-H0-0tr"/>
                                                 <constraint firstItem="FnL-0K-nLr" firstAttribute="baseline" secondItem="CBy-XC-BPx" secondAttribute="baseline" id="yek-Hx-If7"/>
                                             </constraints>
@@ -510,7 +521,62 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fTw-wW-kLA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2635" y="456"/>
+            <point key="canvasLocation" x="2638" y="111"/>
+        </scene>
+        <!--Select Time Interval Popover-->
+        <scene sceneID="Aiv-5l-zyP">
+            <objects>
+                <viewController id="5C5-kx-ZeE" customClass="SelectTimeIntervalPopover" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VBr-kP-rwr"/>
+                        <viewControllerLayoutGuide type="bottom" id="nx6-3D-XBb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KdR-4O-2cy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9q3-PT-UYh">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ZpN-ED-Xu8"/>
+                                    <barButtonItem title="Cancel" id="yRZ-6H-vmX">
+                                        <connections>
+                                            <action selector="cancelTapped:" destination="5C5-kx-ZeE" id="5p2-YH-tzj"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Ihq-AF-TRn"/>
+                                    <barButtonItem title="Done" id="oyY-Bj-CzE">
+                                        <connections>
+                                            <action selector="doneTapped:" destination="5C5-kx-ZeE" id="jjz-9Q-eVO"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="FS1-25-Whj"/>
+                                </items>
+                            </toolbar>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rw4-ze-VjC">
+                                <rect key="frame" x="140" y="192" width="320" height="216"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="5C5-kx-ZeE" id="dgy-Pj-KKz"/>
+                                    <outlet property="delegate" destination="5C5-kx-ZeE" id="RwA-bB-62f"/>
+                                </connections>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9q3-PT-UYh" firstAttribute="leading" secondItem="KdR-4O-2cy" secondAttribute="leadingMargin" constant="-20" id="5vu-Fn-OVI"/>
+                            <constraint firstItem="rw4-ze-VjC" firstAttribute="centerX" secondItem="KdR-4O-2cy" secondAttribute="centerX" id="Kc4-It-zdW"/>
+                            <constraint firstItem="nx6-3D-XBb" firstAttribute="top" secondItem="9q3-PT-UYh" secondAttribute="bottom" id="Rxc-bJ-u5o"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9q3-PT-UYh" secondAttribute="trailing" constant="-20" id="bWh-qN-mHb"/>
+                            <constraint firstItem="rw4-ze-VjC" firstAttribute="centerY" secondItem="KdR-4O-2cy" secondAttribute="centerY" id="mxf-om-DVn"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="picker" destination="rw4-ze-VjC" id="fwO-Aj-STp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nUp-aU-cjW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2632" y="773"/>
         </scene>
         <!--Find Customer-->
         <scene sceneID="ndk-uE-fir">
@@ -829,7 +895,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="28x-Y6-vtD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2986" y="1720"/>
+            <point key="canvasLocation" x="2937" y="1945"/>
         </scene>
         <!--Select Service-->
         <scene sceneID="M8C-XB-R19">
@@ -1186,7 +1252,7 @@
         <image name="anonymous-man" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cfO-Sq-w9Y"/>
         <segue reference="6S0-TO-JiA"/>
+        <segue reference="vO4-65-Rjh"/>
     </inferredMetricsTieBreakers>
 </document>

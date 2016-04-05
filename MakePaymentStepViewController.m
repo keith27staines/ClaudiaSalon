@@ -50,6 +50,10 @@
     }
     return view;
 }
+-(void)viewDidAppear {
+    self.amountGivenByCustomer.fontSize = 24;
+    [self.amountGivenByCustomer setNeedsLayout:YES];
+}
 
 -(void)loadDiscountPopup
 {
@@ -146,6 +150,7 @@
         } else {
             self.changeToReturn.stringValue = @"nil";
         }
+        [self configurePaymentCompleteButton];
     }
 }
 -(double)roundUpPenny:(double)amount
@@ -211,6 +216,13 @@
 -(void)controlTextDidChange:(NSNotification *)obj
 {
     Sale * sale = [self sale];
+    [self configurePaymentCompleteButton];
+    double d = self.amountGivenByCustomer.doubleValue;
+    sale.amountGivenByCustomer = @(d);
+    [self applySale];
+}
+-(void)configurePaymentCompleteButton {
+    Sale * sale = [self sale];
     [self.paymentCompleteButton setEnabled:NO];
     double d = self.amountGivenByCustomer.doubleValue;
     if (d >= sale.actualCharge.doubleValue) {
@@ -219,8 +231,6 @@
     } else {
         [self.paymentCompleteButton setEnabled:NO];
     }
-    sale.amountGivenByCustomer = @(d);
-    [self applySale];
 }
 -(void)cashEntryDidBeginEditing:(AMCCashEntryField *)cashEntryField {
 

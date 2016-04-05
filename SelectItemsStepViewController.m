@@ -214,6 +214,9 @@
     }
     return view;
 }
+-(void)viewDidAppear {
+    [self.delegate wizardStep:self isValid:self.isValid];
+}
 -(void)controlTextDidChange:(NSNotification *)obj
 {
     if (obj.object == self.chargePriceBeforeDiscount) {

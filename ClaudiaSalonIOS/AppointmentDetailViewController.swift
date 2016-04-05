@@ -124,6 +124,12 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
             vc.configure("Choose appointment start time",selectedDate: appointment.appointmentDate!, minDate: appointment.appointmentDate!.beginningOfDay(), maxDate: appointment.appointmentEndDate!, mode: UIDatePickerMode.Time, completion: changedStartTime)
             return
         }
+        if segue.identifier == "selectInterval" {
+            guard let vc = segue.destinationViewController as? SelectTimeIntervalPopover else {
+                fatalError("Unexpected destination controller for selectInterval)")
+            }
+            vc.configure("Duration", intervalInSeconds: appointment.bookedDuration!.integerValue, completion: changedInterval)
+        }
         if segue.identifier == "selectFinishTime" {
             guard let vc = segue.destinationViewController as? SelectDateOrTimePopover else {
                 fatalError("Unexpected destination controller for selectFinishTime)")
@@ -139,6 +145,13 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
             return
         }
         
+    }
+    func changedInterval(vc:SelectTimeIntervalPopover) {
+        if vc.cancelled { return }
+        let appointment = detailItem as! Appointment
+        appointment.bookedDuration = vc.interval
+        self.configureView()
+        self.updateAppointment(appointment)
     }
     func changedStartTime(vc:SelectDateOrTimePopover) {
         if vc.cancelled { return }

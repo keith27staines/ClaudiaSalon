@@ -194,6 +194,7 @@
 		53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */; };
 		53AE270D1AA317B200A1B3E4 /* AMCJobsColumnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE270A1AA317B200A1B3E4 /* AMCJobsColumnViewController.m */; };
 		53AE270E1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AE270B1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib */; };
+		53BC4D0B1CB428B200FED83D /* SelectTimeIntervalPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BC4D0A1CB428B200FED83D /* SelectTimeIntervalPopover.swift */; };
 		53CD1E4A1C5EC52C00E09E6F /* BQCoredataExportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */; };
 		53D325661A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D325651A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m */; };
 		53D325A51A9E390B00AFCDE4 /* AMCWelcomeScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D325A31A9E390B00AFCDE4 /* AMCWelcomeScreen.m */; };
@@ -685,6 +686,7 @@
 		53AE27091AA317B200A1B3E4 /* AMCJobsColumnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCJobsColumnViewController.h; sourceTree = "<group>"; };
 		53AE270A1AA317B200A1B3E4 /* AMCJobsColumnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCJobsColumnViewController.m; sourceTree = "<group>"; };
 		53AE270B1AA317B200A1B3E4 /* AMCJobsColumnViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCJobsColumnViewController.xib; sourceTree = "<group>"; };
+		53BC4D0A1CB428B200FED83D /* SelectTimeIntervalPopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectTimeIntervalPopover.swift; sourceTree = "<group>"; };
 		53CD1E491C5EC52C00E09E6F /* BQCoredataExportController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQCoredataExportController.swift; sourceTree = "<group>"; };
 		53D325641A9B9D2300AFCDE4 /* NSViewController+SalonMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSViewController+SalonMethods.h"; sourceTree = "<group>"; };
 		53D325651A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSViewController+SalonMethods.m"; sourceTree = "<group>"; };
@@ -2611,6 +2613,7 @@
 				5353EE681C876B2400D09B98 /* Appointment Table */,
 				5353EE671C876ACA00D09B98 /* Sale Detail */,
 				5358DD651C8DC10C009DD63E /* SelectDateOrTimePopover.swift */,
+				53BC4D0A1CB428B200FED83D /* SelectTimeIntervalPopover.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -3092,6 +3095,7 @@
 				53FDCA3E1C79A591006B4002 /* AppDelegate.swift in Sources */,
 				5370D5011C94292D00319147 /* DownloadInfo.swift in Sources */,
 				5358DD631C8D7934009DD63E /* FindCustomerCell.swift in Sources */,
+				53BC4D0B1CB428B200FED83D /* SelectTimeIntervalPopover.swift in Sources */,
 				53FDCA781C7A6E3F006B4002 /* Note.m in Sources */,
 				5358DD531C8C9380009DD63E /* OpeningHoursWeekTemplate.m in Sources */,
 				5319A9CA1C9AF4700025CB1A /* ServiceTableViewController.swift in Sources */,

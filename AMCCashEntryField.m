@@ -46,6 +46,9 @@ static NSSet * decimalSet;
     [self setNeedsDisplay:YES];
 }
 -(CGFloat)fontSize {
+    if (_fontSize < 8) {
+        _fontSize = 8;
+    }
     return _fontSize;
 }
 -(void)setFontSize:(CGFloat)fontSize {
