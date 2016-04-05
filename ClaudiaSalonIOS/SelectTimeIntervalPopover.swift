@@ -12,6 +12,7 @@ class SelectTimeIntervalPopover : UIViewController, UIPickerViewDataSource,UIPic
     
     private (set) var completion: ((vc:SelectTimeIntervalPopover)->Void)?
 
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var picker: UIPickerView!
     var interval:Int = 1*3600 + 20 * 60
     var cancelled = false
@@ -36,6 +37,7 @@ class SelectTimeIntervalPopover : UIViewController, UIPickerViewDataSource,UIPic
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.setPickerFromInterval()
+        self.titleLabel.text = self.title
     }
     func configure(title:String,intervalInSeconds:Int, completion:((vc:SelectTimeIntervalPopover)->Void)?) {
         self.title = title

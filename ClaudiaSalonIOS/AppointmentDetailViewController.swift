@@ -128,7 +128,7 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
             guard let vc = segue.destinationViewController as? SelectTimeIntervalPopover else {
                 fatalError("Unexpected destination controller for selectInterval)")
             }
-            vc.configure("Duration", intervalInSeconds: appointment.bookedDuration!.integerValue, completion: changedInterval)
+            vc.configure("Appointment Duration", intervalInSeconds: appointment.bookedDuration!.integerValue, completion: changedInterval)
         }
         if segue.identifier == "selectFinishTime" {
             guard let vc = segue.destinationViewController as? SelectDateOrTimePopover else {
