@@ -127,12 +127,6 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         NSString * containerIdentifer = [CKContainer defaultContainer].containerIdentifier;
         
         self.coredataExportController = [[BQCoredataExportController alloc] initWithParentMoc:self.managedObjectContext iCloudContainerIdentifier:containerIdentifer startImmediately:NO];
-        __weak AMCSalonDocument * weakSelf = self;
-        self.coredataExportController.dataWasExported = ^() {
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [weakSelf saveDocument:nil];
-            }];
-        };
         
         if (_salon.bqCloudID != nil ) {
             [self.coredataExportController startExportIterations];
