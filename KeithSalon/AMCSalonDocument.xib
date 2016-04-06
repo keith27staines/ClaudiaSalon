@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCSalonDocument">
@@ -59,7 +59,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES"/>
             <rect key="contentRect" x="335" y="50" width="1389" height="820"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="1389" height="820"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -231,6 +231,11 @@
                             <action selector="userIconClicked:" target="-1" id="JIP-vh-DCQ"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="3EE6363F-7B66-4FD5-BB31-B898088ABE43" label="Refresh" paletteLabel="Refresh" tag="-1" image="Refresh" id="T9y-t8-Mcy">
+                        <connections>
+                            <action selector="refreshFromCloud:" target="-2" id="0oY-qb-z4V"/>
+                        </connections>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="7oS-Ii-ebJ"/>
@@ -244,6 +249,8 @@
                     <toolbarItem reference="FIF-Al-kU4"/>
                     <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="Jka-uK-Hc8"/>
+                    <toolbarItem reference="8st-gg-pmT"/>
+                    <toolbarItem reference="T9y-t8-Mcy"/>
                     <toolbarItem reference="8st-gg-pmT"/>
                     <toolbarItem reference="Zed-Ij-tDH"/>
                     <toolbarItem reference="N06-ft-jtC"/>
@@ -294,6 +301,7 @@
         <image name="CoinsIcon" width="48" height="48"/>
         <image name="NSFolder" width="32" height="32"/>
         <image name="PaySalary" width="32" height="32"/>
+        <image name="Refresh" width="32" height="32"/>
         <image name="TimeLineIcon" width="32" height="32"/>
         <image name="UserIcon" width="32" height="32"/>
     </resources>

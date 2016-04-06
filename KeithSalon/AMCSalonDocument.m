@@ -577,6 +577,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.accountStatementViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.accountStatementViewController];
 }
+- (IBAction)refreshFromCloud:(id)sender {
+    [self.cloudImporter pollForMissedRemoteNotifications];
+    
+}
 - (IBAction)manageCashbookGroups:(id)sender {
     [self.accountGroupingsViewController prepareForDisplayWithSalon:self];
     [self.mainViewController presentViewControllerAsSheet:self.accountGroupingsViewController];

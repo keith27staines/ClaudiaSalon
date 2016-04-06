@@ -22,7 +22,7 @@ class CloudNotificationProcessor {
     private let publicCloudDatabase:CKDatabase
     private var currentSubscription: CKSubscription!
     private let cloudSalonReference : CKReference!
-    var subscriptionsDictionary = [String:CKSubscription]()
+    var subscriptions = [CKSubscription]()
 
     init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
         let salonID = CKRecordID(recordName: cloudSalonRecordName)
@@ -42,9 +42,13 @@ class CloudNotificationProcessor {
     }
     
     func subscribeToCloudNotifications() {
-        let predicate = NSPredicate(format: "parentSalonReference == %@",self.cloudSalonReference.recordID)
+        let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
+        let predicate = NSPredicate(format: "parentSalonReference == %@",salonRecordID)
         //let predicate = NSPredicate(value: true)
         var subscription: CKSubscription
+        var CRT:CloudRecordType
+        var crt:String
+        var subID: String
 
 //        // iCloudSalon
 //        let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
@@ -53,114 +57,86 @@ class CloudNotificationProcessor {
 //        subscriptionsDictionary[subscription.recordType!] = subscription
 
         // icloudAppointment
-        subscription = CKSubscription(recordType: "icloudAppointment", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptionsDictionary[subscription.recordType!] = subscription
+        CRT = CloudRecordType.CRAppointment
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
         
         // icloudEmployee
-        subscription = CKSubscription(recordType: "icloudEmployee", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptionsDictionary[subscription.recordType!] = subscription
+        CRT = CloudRecordType.CREmployee
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
 
         // icloudCustomer
-        subscription = CKSubscription(recordType: "icloudCustomer", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptionsDictionary[subscription.recordType!] = subscription
+        CRT = CloudRecordType.CRCustomer
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
 
         // icloudSale
-        subscription = CKSubscription(recordType: "icloudSale", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptionsDictionary[subscription.recordType!] = subscription
+        CRT = CloudRecordType.CRSale
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
 
         // icloudSaleItem
-        subscription = CKSubscription(recordType: "icloudSaleItem", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptionsDictionary[subscription.recordType!] = subscription
+        CRT = CloudRecordType.CRSaleItem
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
 
         // icloudServiceCategory
-        subscription = CKSubscription(recordType: "icloudServiceCategory", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptionsDictionary[subscription.recordType!] = subscription
+        CRT = CloudRecordType.CRServiceCategory
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
 
         // icloudService
-        subscription = CKSubscription(recordType: "iCloudService", predicate: predicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptionsDictionary[subscription.recordType!] = subscription
+        CRT = CloudRecordType.CRService
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
         
         self.saveSubscriptions()
         
     }
     
     private func saveSubscriptions() {
-        if let subscriptionInfo = self.subscriptionsDictionary.first {
-            self.currentSubscription = subscriptionInfo.1
-            self.saveSubscription(currentSubscription)
-        }
-        if self.subscriptionsDictionary.count == 0 {
-            print("Yay!!!!! All subscriptions saved!")
+        
+        let modifySubscriptions = CKModifySubscriptionsOperation(subscriptionsToSave: self.subscriptions, subscriptionIDsToDelete: nil)
+        modifySubscriptions.queuePriority = .VeryHigh
+        modifySubscriptions.modifySubscriptionsCompletionBlock = { (savedSubscriptions, deletedIDs, operationError) -> Void in
+            if let operationError = operationError {
+                let retryAfter = operationError.userInfo["retryAfter"] as? Int
+                if let retryAfter = retryAfter {
+                    let shortDelay = dispatch_time(DISPATCH_TIME_NOW, Int64(retryAfter))
+                    let mainQueue = dispatch_get_main_queue()
+                    print("Transient subscription error - will retry after \(retryAfter) seconds")
+                    dispatch_after(shortDelay, mainQueue) {
+                        self.saveSubscriptions()
+                    }
+                    return
+                }
+                assertionFailure("Failed to modify subscriptions with error \(operationError)")
+                return
+            }
+            print("All subscriptions saved - Begun listening for cloud notifications")
             NSNotificationCenter.defaultCenter().addObserverForName("cloudKitNotification", object: nil, queue: nil, usingBlock: self.notificationFromCloud)
             self.pollForMissedRemoteNotifications()
         }
+        self.publicCloudDatabase.addOperation(modifySubscriptions)
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    private func saveSubscription(subscription:CKSubscription) {
-        let shortDelay = dispatch_time(DISPATCH_TIME_NOW, 100)
-        let mainQueue = dispatch_get_main_queue()
-        var removeFromList = true
-        self.publicCloudDatabase.saveSubscription(subscription) { (subscription, error) in
-            var fatal = false
-            if let error = error {
-                removeFromList = false
-                switch error.code {
-                case CKErrorCode.NetworkFailure.rawValue:
-                    fatal = true
-
-                case CKErrorCode.NetworkUnavailable.rawValue:
-                    fatal = true
-
-                case CKErrorCode.NotAuthenticated.rawValue:
-                    fatal = true
-
-                case CKErrorCode.InvalidArguments.rawValue:
-                    fatal = true
-
-                case CKErrorCode.MissingEntitlement.rawValue:
-                    fatal = true
-
-                case CKErrorCode.LimitExceeded.rawValue:
-                    fatal = false
-
-                case CKErrorCode.PermissionFailure.rawValue:
-                    fatal = true
-
-                case CKErrorCode.QuotaExceeded.rawValue:
-                    fatal = true
-
-                case CKErrorCode.ServiceUnavailable.rawValue:
-                    fatal = true
-
-                case CKErrorCode.ServerRejectedRequest.rawValue:
-                    print("Subscription exists and wasn't saved again")
-                    removeFromList = true
-                    fatal = false
-
-                case CKErrorCode.UnknownItem.rawValue:
-                    removeFromList = true
-                    fatal = false
-
-                default:
-                    fatal = true
-
-                }
-            }
-            if removeFromList {
-                let type = self.currentSubscription.recordType!
-                self.subscriptionsDictionary[type] = nil
-                print("Subscription is saved")
-                dispatch_after(shortDelay, mainQueue) {
-                    self.saveSubscriptions()
-                }
-            } else if fatal {
-                assertionFailure("Fatal error while saving subscription: \(error)")
-            }
-        }
     }
 
     func notificationFromCloud(notification:NSNotification) {

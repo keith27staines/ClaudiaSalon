@@ -238,7 +238,7 @@ extension BQExportModifiedCoredataOperation {
                     self.retryOperationOnPublicDatabase(saveRecordsOperation, waitInterval: retryAfter)
                 default:
                     // Operation failed unrecoverably so nothing we can do except figure out the cause
-                    fatalError("saveRecordsOperation failed unrecoverably")
+                    print("saveRecordsOperation failed unrecoverably")
                 }
             }
         }

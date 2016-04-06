@@ -114,6 +114,15 @@ NSAnimationDelegate>
     [self buildIntervalSegmentedControl:appointmentsView.intervalPickerSegmentedControl];
     [self reloadData];
 }
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"fetchedCloudNotificationsWereProcessedNotification" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        [self.appointmentsTable reloadData];
+    }];
+}
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 #pragma mark - NSTableViewDataSource
 -(NSInteger)numberOfRowsInTableView:(NSTableView *)tableView

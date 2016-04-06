@@ -440,6 +440,7 @@ class BQCloudImporter : NSObject {
             }
             
             try! self.moc.save()
+            NSNotificationCenter.defaultCenter().postNotificationName("fetchedCloudNotificationsWereProcessedNotification", object: self)
         }
         return result
     }
