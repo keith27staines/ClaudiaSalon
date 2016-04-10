@@ -189,6 +189,7 @@
 		539D2DF11B18430400761711 /* AMCServiceCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DEF1B18430400761711 /* AMCServiceCategoriesViewController.m */; };
 		539D2DF21B18430400761711 /* AMCServiceCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */; };
 		539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DF51B18434400761711 /* AMCEmployeesViewController.m */; };
+		539FBEDA1CB90404006F9717 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539FBED91CB90404006F9717 /* MenuTableViewController.swift */; };
 		53A9F0E31C672DC7001E1618 /* AMCThreadSafeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */; };
 		53AE26D11AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */; };
 		53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */; };
@@ -679,6 +680,7 @@
 		539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCServiceCategoriesViewController.xib; sourceTree = "<group>"; };
 		539D2DF41B18434400761711 /* AMCEmployeesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCEmployeesViewController.h; sourceTree = "<group>"; };
 		539D2DF51B18434400761711 /* AMCEmployeesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCEmployeesViewController.m; sourceTree = "<group>"; };
+		539FBED91CB90404006F9717 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMCThreadSafeCounter.swift; sourceTree = "<group>"; };
 		53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeeForServiceSelector.xib; sourceTree = "<group>"; };
 		53AE27071AA317B200A1B3E4 /* AMCJobsColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCJobsColumnView.h; sourceTree = "<group>"; };
@@ -2457,6 +2459,7 @@
 			isa = PBXGroup;
 			children = (
 				53FDCA461C79A591006B4002 /* Main.storyboard */,
+				539FBED91CB90404006F9717 /* MenuTableViewController.swift */,
 				53FDCA891C7A7B47006B4002 /* Models */,
 				53FDCA8B1C7A7BC1006B4002 /* View Controllers */,
 				53FDCA8A1C7A7B70006B4002 /* Supporting files */,
@@ -3135,6 +3138,7 @@
 				53FDCA6A1C7A0D3D006B4002 /* Employee.m in Sources */,
 				5358DD431C8C9338009DD63E /* IntervalDuringDay.m in Sources */,
 				53FDCA641C7A06DA006B4002 /* Sale.m in Sources */,
+				539FBEDA1CB90404006F9717 /* MenuTableViewController.swift in Sources */,
 				53FDCA581C79AF4D006B4002 /* CoreData.swift in Sources */,
 				533FC0711CA6DB210074BDF0 /* CloudNotificationProcessor.swift in Sources */,
 				5358DD661C8DC10C009DD63E /* SelectDateOrTimePopover.swift in Sources */,

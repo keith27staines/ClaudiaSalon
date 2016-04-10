@@ -36,6 +36,13 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         let exportController = Coredata.sharedInstance.exportController
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.appointmentWasExported(_:)), name: "appointmentWasExported", object: exportController)
+        let menuButtonImage = UIImage(named: "MenuButton")
+        let menuButton = UIBarButtonItem(image: menuButtonImage, style: .Plain, target: self, action: #selector(MasterViewController.showMenu(_:)))
+        self.navigationItem.leftBarButtonItem = menuButton
+    }
+    
+    func showMenu(sender:AnyObject?) {
+        self.performSegueWithIdentifier("showMenu", sender: self)
     }
     
     func appointmentWasExported(notification:NSNotification) {
@@ -77,7 +84,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.performSegueWithIdentifier("GotoImportViewController", sender: self)
             return
         }
-        Coredata.sharedInstance.exportController.startExportIterations()
+        //Coredata.sharedInstance.exportController.startExportIterations()
         //self.performSegueWithIdentifier("GotoImportViewController", sender: self)
     }
 
@@ -127,6 +134,10 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 controller.navigationItem.leftItemsSupplementBackButton = true
                 controller.appointmentWasUpdated = self.appointmentWasUpdated
             }
+            return
+        }
+        if segue.identifier == "showMenu" {
+            
         }
     }
     

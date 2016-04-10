@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     var window: UIWindow?
     private let iCloudContainerIdentifier = "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon"
-    private let iCloudSalonRecordName = "2A1EC700-4DFD-484F-AF79-B62887EC9565"
+    private let iCloudSalonRecordName = "33C8DFF5-0C9A-47A9-95D1-AED9C482B8DF"
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.setupToplevelController()
