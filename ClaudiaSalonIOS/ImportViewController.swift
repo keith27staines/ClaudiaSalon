@@ -11,6 +11,9 @@ import UIKit
 
 class ImportViewController : UIViewController {
     var progressViewController: ImportTableViewController?
+    var salonName = ""
+    
+    var bulkImportCompletionBlock:(()->Void)?
     
     @IBOutlet weak var statusLabel: UILabel!
     
@@ -29,7 +32,8 @@ class ImportViewController : UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "GotoImportProgress" {
             self.progressViewController = segue.destinationViewController as? ImportTableViewController
-            
+            self.progressViewController?.bulkImportCompletionBlock = self.bulkImportCompletionBlock
+            self.progressViewController?.salonName = self.salonName
             return
         }
     }

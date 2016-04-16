@@ -190,6 +190,8 @@
 		539D2DF21B18430400761711 /* AMCServiceCategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539D2DF01B18430400761711 /* AMCServiceCategoriesViewController.xib */; };
 		539D2DF71B18434400761711 /* AMCEmployeesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 539D2DF51B18434400761711 /* AMCEmployeesViewController.m */; };
 		539FBEDA1CB90404006F9717 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539FBED91CB90404006F9717 /* MenuTableViewController.swift */; };
+		539FBEDD1CC0CFA1006F9717 /* SelectSalonTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539FBEDC1CC0CFA1006F9717 /* SelectSalonTableViewController.swift */; };
+		539FBEDF1CC0CFE1006F9717 /* AddSalonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539FBEDE1CC0CFE1006F9717 /* AddSalonController.swift */; };
 		53A9F0E31C672DC7001E1618 /* AMCThreadSafeCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */; };
 		53AE26D11AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */; };
 		53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE27081AA317B200A1B3E4 /* AMCJobsColumnView.m */; };
@@ -681,6 +683,8 @@
 		539D2DF41B18434400761711 /* AMCEmployeesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCEmployeesViewController.h; sourceTree = "<group>"; };
 		539D2DF51B18434400761711 /* AMCEmployeesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCEmployeesViewController.m; sourceTree = "<group>"; };
 		539FBED91CB90404006F9717 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
+		539FBEDC1CC0CFA1006F9717 /* SelectSalonTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSalonTableViewController.swift; sourceTree = "<group>"; };
+		539FBEDE1CC0CFE1006F9717 /* AddSalonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSalonController.swift; sourceTree = "<group>"; };
 		53A9F0E21C672DC7001E1618 /* AMCThreadSafeCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMCThreadSafeCounter.swift; sourceTree = "<group>"; };
 		53AE26CF1AA1D53A00A1B3E4 /* AMCEmployeeForServiceSelector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCEmployeeForServiceSelector.xib; sourceTree = "<group>"; };
 		53AE27071AA317B200A1B3E4 /* AMCJobsColumnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCJobsColumnView.h; sourceTree = "<group>"; };
@@ -1474,6 +1478,15 @@
 				53D3256B1A9C6D4600AFCDE4 /* Salary */,
 			);
 			name = Employees;
+			sourceTree = "<group>";
+		};
+		539FBEDB1CC0CF76006F9717 /* Select Salon */ = {
+			isa = PBXGroup;
+			children = (
+				539FBEDC1CC0CFA1006F9717 /* SelectSalonTableViewController.swift */,
+				539FBEDE1CC0CFE1006F9717 /* AddSalonController.swift */,
+			);
+			name = "Select Salon";
 			sourceTree = "<group>";
 		};
 		53A9F0E01C65DFC1001E1618 /* Extract Maintenance */ = {
@@ -2608,6 +2621,7 @@
 		53FDCA8B1C7A7BC1006B4002 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				539FBEDB1CC0CF76006F9717 /* Select Salon */,
 				53F6B4CF1C9AB7FC00B3F56D /* Select Service */,
 				535155781C986E90008123A8 /* Select Staff */,
 				5370D4F71C9186FF00319147 /* iCloud Synchronization */,
@@ -3121,6 +3135,7 @@
 				53FDCA7D1C7A7621006B4002 /* Permission.m in Sources */,
 				5319A9C81C9AF4220025CB1A /* ServiceCategoryTableViewController.swift in Sources */,
 				53FDCA811C7A7638006B4002 /* Account.m in Sources */,
+				539FBEDF1CC0CFE1006F9717 /* AddSalonController.swift in Sources */,
 				5358DD5D1C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m in Sources */,
 				5358DD411C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m in Sources */,
 				53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */,
@@ -3144,6 +3159,7 @@
 				5358DD661C8DC10C009DD63E /* SelectDateOrTimePopover.swift in Sources */,
 				5370D4F91C9189AA00319147 /* ImportViewController.swift in Sources */,
 				53E2B9911C81CF0700F8F963 /* AppointmentViewCellTableViewCell.swift in Sources */,
+				539FBEDD1CC0CFA1006F9717 /* SelectSalonTableViewController.swift in Sources */,
 				53FDCA7E1C7A7625006B4002 /* Role.m in Sources */,
 				5358DD571C8C9380009DD63E /* OpeningHoursDayTemplate.m in Sources */,
 				53FDCA861C7A7965006B4002 /* PaymentCategory.m in Sources */,

@@ -164,12 +164,16 @@ class BQCloudImporter : NSObject {
             }
             
             if self.downloadsDidCompleteSuccessfully() {
-                print("Building database from \(self.downloadedRecords.count) downloaded records")
                 self.createShallowCoredataObjectsFromCloudRecords(self.downloadedRecords)
                 self.deepProcessRecords()
                 self.moc.performBlock() {
                     try! self.moc.save()
-                    print("Save successful")
+                }
+                print("Built database from \(self.downloadedRecords.count) downloaded records")
+                NSOperationQueue.mainQueue().addOperationWithBlock() {
+                    if let callback = self.allDownloadsComplete {
+                        callback(withErrors: nil)
+                    }
                 }
             }
         }

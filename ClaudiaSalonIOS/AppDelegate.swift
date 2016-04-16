@@ -14,21 +14,15 @@ import CloudKit
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
     var window: UIWindow?
-    private let iCloudContainerIdentifier = "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon"
-    private let iCloudSalonRecordName = "33C8DFF5-0C9A-47A9-95D1-AED9C482B8DF"
+
+    private static var _processCloudNotifications: Bool? = nil
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.setupToplevelController()
-        let coredata = Coredata.sharedInstance
-        coredata.iCloudContainerIdentifier = self.iCloudContainerIdentifier
-        coredata.iCloudSalonRecordName = self.iCloudSalonRecordName
-        let moc = Coredata.sharedInstance.managedObjectContext
-        if let _ = Salon.defaultSalon(moc) {
-            self.registerForRemoteNotifications(application)
-            let _ = coredata.importController
-        }
+        self.registerUserDefaults()
+        self.registerForRemoteNotifications(application)
         return true
-    }
+    }    
     
     func registerForRemoteNotifications(application: UIApplication) {
         // Register for push notifications
@@ -62,13 +56,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        Coredata.sharedInstance.importController?.pollForMissedRemoteNotifications()
+        if let _ = Coredata.sharedInstance {
+            Coredata.sharedInstance.importController?.pollForMissedRemoteNotifications()            
+        }
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-        Coredata.sharedInstance.save()
+        if let _ = Coredata.sharedInstance {
+            Coredata.sharedInstance.save()
+        }
     }
 
     // MARK: - Split view
@@ -87,9 +85,87 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 extension AppDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         let cloudKitNotification = CKNotification(fromRemoteNotificationDictionary: userInfo as! [String : NSObject])
-        if cloudKitNotification.notificationType == .Query {
+        if cloudKitNotification.notificationType == .Query && AppDelegate.processCloudNotifications() {
             NSNotificationCenter.defaultCenter().postNotificationName("cloudKitNotification", object: self, userInfo: userInfo)
         }
+    }
+}
+
+extension AppDelegate {
+    func registerUserDefaults() {
+        var defaults = [String:AnyObject]()
+        defaults["salonKeys"] = [String]()
+        defaults["appStartsWithCloudUpdating"] = false
+        defaults["processCloudNotifications"] = false
+        defaults["exportChangesToCloud"] = false
+        NSUserDefaults.standardUserDefaults().registerDefaults(defaults)
+    }
+    
+    class func salonKeys() -> [String] {
+        if let salonKeys = NSUserDefaults.standardUserDefaults().arrayForKey("salonKeys") as? [String] {
+            return salonKeys
+        } else {
+            return [String]()
+        }
+    }
+    
+    class func addSalonKey(key:String) {
+        var salonKeys = self.salonKeys()
+        if salonKeys.contains(key) {
+            return
+        } else {
+            salonKeys.append(key)
+            NSUserDefaults.standardUserDefaults().setObject(salonKeys, forKey: "salonKeys")
+        }
+    }
+    
+    class func removeSalonKey(key:String) {
+        var salonKeys = self.salonKeys()
+        if let index = salonKeys.indexOf(key) {
+            salonKeys.removeAtIndex(index)
+            NSUserDefaults.standardUserDefaults().setObject(salonKeys, forKey: "salonKeys")
+            if key == self.defaultSalonKey() {
+                self.setDefaultSalonKey(nil)
+            }
+            if salonKeys.count == 1 {
+                self.setDefaultSalonKey(salonKeys.first)
+            }
+        }
+    }
+    
+    class func defaultSalonKey() -> String? {
+        return NSUserDefaults.standardUserDefaults().objectForKey("defaultSalonKey") as? String
+    }
+    
+    class func setDefaultSalonKey(key:String?) {
+        NSUserDefaults.standardUserDefaults().setObject(key, forKey: "defaultSalonKey")
+    }
+    
+    class func appStartsWithCloudUpdating() -> Bool {
+        return NSUserDefaults.standardUserDefaults().boolForKey("appStartsWithCloudUpdating")
+    }
+
+    class func setAppStartsWithCloudUpdating(value:Bool) {
+        NSUserDefaults.standardUserDefaults().setBool(value, forKey: "appStartsWithCloudUpdating")
+    }
+
+    class func processCloudNotifications() -> Bool {
+        if self._processCloudNotifications == nil {
+            _processCloudNotifications = NSUserDefaults.standardUserDefaults().boolForKey("processCloudNotifications")
+        }
+        return _processCloudNotifications!
+    }
+    class func setProcessCloudNotifications(value:Bool) {
+        self._processCloudNotifications = value
+        NSUserDefaults.standardUserDefaults().setBool(value, forKey: "processCloudNotifications")
+    }
+    
+    class func exportChangesToCloud() -> Bool {
+        return NSUserDefaults.standardUserDefaults().boolForKey("exportChangesToCloud")
+    }
+    
+    class func setExportChangesToCloud(value:Bool) {
+        NSUserDefaults.standardUserDefaults().setBool(value, forKey: "exportChangesToCloud")
     }
 }
 

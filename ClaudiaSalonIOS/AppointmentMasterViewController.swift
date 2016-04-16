@@ -13,7 +13,8 @@ import CloudKit
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
     private var _fetchedResultsController: NSFetchedResultsController? = nil
-
+    
+    private var currentSalonName:String? = nil
     var appointmentViewController: AppointmentDetailViewController? = nil
     lazy var moc: NSManagedObjectContext = Coredata.sharedInstance.managedObjectContext
 
@@ -34,11 +35,63 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             self.appointmentViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? AppointmentDetailViewController
             self.tableView.rowHeight = UITableViewAutomaticDimension
         }
-        let exportController = Coredata.sharedInstance.exportController
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.appointmentWasExported(_:)), name: "appointmentWasExported", object: exportController)
+        
         let menuButtonImage = UIImage(named: "MenuButton")
         let menuButton = UIBarButtonItem(image: menuButtonImage, style: .Plain, target: self, action: #selector(MasterViewController.showMenu(_:)))
         self.navigationItem.leftBarButtonItem = menuButton
+    }
+    override func viewWillAppear(animated: Bool) {
+        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
+        super.viewWillAppear(animated)
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Do we have a default salon?
+        guard let _ = AppDelegate.defaultSalonKey() else {
+            // No, so ask the user to add one
+            self.performSegueWithIdentifier("GotoAddSalon", sender: self)
+            AppDelegate.setProcessCloudNotifications(false)
+            AppDelegate.setExportChangesToCloud(false)
+            return
+        }
+        self.loadDefaultSalon()
+    }
+    
+    func loadDefaultSalon() {
+        guard let salonRecordName = AppDelegate.defaultSalonKey() else {
+            return
+        }
+
+        let coredata = self.openCoredataSalon(salonRecordName)
+        Coredata.setSharedInstance(salonRecordName)
+        
+        // Have we downloaded any data from the cloud for this salon?
+        guard let _ = Salon.defaultSalon(coredata.managedObjectContext) else {
+            self.performSegueWithIdentifier("GotoImportViewController", sender: self)
+            return
+        }
+        
+        // Decide whether to start processing cloud notifications and exporting changes to the cloud
+        let cloudUpdating = AppDelegate.appStartsWithCloudUpdating()
+        AppDelegate.setProcessCloudNotifications(cloudUpdating)
+        AppDelegate.setExportChangesToCloud(cloudUpdating)
+        let exportController = Coredata.sharedInstance.exportController
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.appointmentWasExported(_:)), name: "appointmentWasExported", object: exportController)
+        
+        if AppDelegate.exportChangesToCloud() {
+            Coredata.sharedInstance.exportController.startExportIterations()
+        }
+        
+        let processCloudNotifications = AppDelegate.processCloudNotifications()
+        Coredata.sharedInstance.importController?.cloudNotificationProcessor.setProcessingState(processCloudNotifications)
+    }
+    
+    func openCoredataSalon(recordName:String) -> Coredata {
+        let coredata = Coredata.coredataForKey(recordName)
+        let _ = coredata.importController
+        return coredata
     }
     
     func showMenu(sender:AnyObject?) {
@@ -72,20 +125,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 self.configureCell(cell, atIndexPath: indexPath)
             }
         }
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
-        super.viewWillAppear(animated)
-    }
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        guard let _ = Salon.defaultSalon(Coredata.sharedInstance.managedObjectContext) else {
-            self.performSegueWithIdentifier("GotoImportViewController", sender: self)
-            return
-        }
-        //Coredata.sharedInstance.exportController.startExportIterations()
-        //self.performSegueWithIdentifier("GotoImportViewController", sender: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -137,7 +176,30 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             return
         }
         if segue.identifier == "showMenu" {
-            
+            return
+        }
+        if segue.identifier == "GotoImportViewController" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let controller = navigationController.topViewController as! ImportViewController
+            controller.salonName = self.currentSalonName ?? "New Salon"
+            controller.bulkImportCompletionBlock = {
+                NSOperationQueue.mainQueue().addOperationWithBlock() {
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.tableView.reloadData()
+                }
+            }
+            return
+        }
+        if segue.identifier == "GotoAddSalon" {
+            let controller = segue.destinationViewController as! AddSalonController
+            controller.completion = {controller in
+                if let salonRecordName = controller.salonRecordName {
+                    self.currentSalonName = controller.salonName
+                    AppDelegate.addSalonKey(salonRecordName)
+                    AppDelegate.setDefaultSalonKey(salonRecordName)
+                }
+            }
+            return
         }
     }
     
@@ -169,8 +231,11 @@ extension MasterViewController {
     // MARK: - Table View Data Source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        let n = self.fetchedResultsController.sections?.count ?? 0
-        return n
+        if let _ = Coredata.sharedInstance {
+            let n = self.fetchedResultsController.sections?.count ?? 0
+            return n
+        }
+        return 0
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

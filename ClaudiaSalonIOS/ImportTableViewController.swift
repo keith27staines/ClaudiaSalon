@@ -11,10 +11,31 @@ import CloudKit
 import CoreData
 
 class ImportTableViewController : UITableViewController {
-    lazy var importer:BQCloudImporter? = { return Coredata.sharedInstance.importController }()
+    
+    var bulkImportCompletionBlock:(()->Void)?
+    var salonName = "?"
+    
+    lazy var importer:BQCloudImporter? = {
+        let importer = Coredata.sharedInstance.importController
+        return Coredata.sharedInstance.importController
+    }()
     let importTypes = CloudRecordType.typesAsArray()
     override func viewDidLoad() {
         self.tableView.reloadData()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        let alert = UIAlertController(title: "Data Download Required", message: "To finish setting up \(salonName) we need to download its data from the cloud", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Download", style: .Default, handler: { (download) in
+            self.startImport()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (cancel) in
+            if let callback = self.bulkImportCompletionBlock {
+                callback()
+            }
+        }))
+        self.presentViewController(alert, animated: true) {}
     }
     func configureCell(cell:ImportInfoCell, indexPath:NSIndexPath) {
         let type = CloudRecordType.typesAsArray()[indexPath.row]
@@ -24,6 +45,8 @@ class ImportTableViewController : UITableViewController {
         cell.activitySpinner.hidden = !info.executing
         cell.error = info.error
         if info.executing {
+            cell.activitySpinner.hidesWhenStopped = true
+            cell.activitySpinner.hidden = false
             cell.activitySpinner.startAnimating()
         } else {
             cell.activitySpinner.stopAnimating()
@@ -33,6 +56,9 @@ class ImportTableViewController : UITableViewController {
         self.importer?.cancelImport()
     }
     func startImport() {
+        self.importer?.downloadWasUpdated = self.downloadInformationWasUpdated
+        self.importer?.downloadWasUpdated = self.downloadCompleted
+        self.importer?.allDownloadsComplete = self.handleAllDownloadsComplete
         self.importer?.startImport()
     }
     func downloadInformationWasUpdated(info:DownloadInfo) {
@@ -51,10 +77,14 @@ class ImportTableViewController : UITableViewController {
         }
     }
     func handleAllDownloadsComplete(withErrors:[NSError]?) {
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            
-        }
-        
+        let alert = UIAlertController(title: "Download completed", message: "\(salonName) is now ready for use on this device", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (download) in
+            print("download finished")
+            if let callback = self.bulkImportCompletionBlock {
+                callback()
+            }
+        }))
+        self.presentViewController(alert, animated: true) {}
     }
 }
 

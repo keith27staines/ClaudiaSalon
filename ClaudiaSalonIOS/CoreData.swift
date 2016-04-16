@@ -11,17 +11,35 @@ import Foundation
 import CoreData
 
 class Coredata {
-    static let sharedInstance = Coredata()
-
-    // Hide the default initializer because this will be a singleton
-    private init() {}
-    var iCloudContainerIdentifier:String?
-    var iCloudSalonRecordName:String?
+    private static var instances = [String:Coredata]()
+    private (set) static var sharedInstance:Coredata!
+    static let cloudContainerID = "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon"
     
-    lazy var exportController:BQCoredataExportController = BQCoredataExportController(parentMoc: self.managedObjectContext, iCloudContainerIdentifier: self.iCloudContainerIdentifier!, startImmediately: false)
+    class func coredataForKey(recordName:String) -> Coredata {
+        var instance = self.instances[recordName]
+        if instance == nil {
+            instance = Coredata(cloudContainerIdentifier:self.cloudContainerID , cloudSalonRecordName: recordName)
+            self.instances[recordName] = instance
+        }
+        return instance!
+    }
+    
+    class func setSharedInstance(cloudSalonRecordName:String) {
+        self.sharedInstance = self.instances[cloudSalonRecordName]
+    }
+    
+    private init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
+        self.iCloudContainerIdentifier = cloudContainerIdentifier
+        self.iCloudSalonRecordName = cloudSalonRecordName
+    }
+    
+    private (set) var iCloudContainerIdentifier:String
+    private (set) var iCloudSalonRecordName:String
+    
+    lazy var exportController:BQCoredataExportController = BQCoredataExportController(parentMoc: self.managedObjectContext, iCloudContainerIdentifier: self.iCloudContainerIdentifier, startImmediately: false)
     
     lazy var importController:BQCloudImporter? = {
-        var importer = BQCloudImporter(parentMoc:self.managedObjectContext,containerIdentifier: self.iCloudContainerIdentifier!, salonCloudRecordName: self.iCloudSalonRecordName!)
+        var importer = BQCloudImporter(parentMoc:self.managedObjectContext,containerIdentifier: self.iCloudContainerIdentifier, salonCloudRecordName: self.iCloudSalonRecordName)
         return importer
     }()
 
@@ -44,7 +62,7 @@ class Coredata {
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let storeOptions = [NSMigratePersistentStoresAutomaticallyOption:true, NSInferMappingModelAutomaticallyOption: true]
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("SingleViewCoreData.sqlite")
+        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.iCloudSalonRecordName + ".salon")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
             try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: storeOptions)

@@ -37,49 +37,210 @@
                                 </items>
                             </toolbar>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6A9-86-fNI">
-                                <rect key="frame" x="20" y="78" width="560" height="478"/>
+                                <rect key="frame" x="20" y="64" width="560" height="492"/>
                                 <connections>
                                     <segue destination="RPT-I0-EEq" kind="embed" identifier="GotoImportProgress" id="lH8-bA-XHJ"/>
                                 </connections>
                             </containerView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Essential data must be downloaded from iCloud before you can continue. Tap Start to begin" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8nX-xm-8uq">
-                                <rect key="frame" x="20" y="64" width="560" height="14"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="6A9-86-fNI" firstAttribute="top" secondItem="P10-4r-6fS" secondAttribute="bottom" id="7D4-4Z-NeV"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6A9-86-fNI" secondAttribute="trailing" id="F8n-ZE-L8a"/>
                             <constraint firstItem="8SJ-s2-Dzw" firstAttribute="top" secondItem="6A9-86-fNI" secondAttribute="bottom" id="NH4-wK-ok6"/>
                             <constraint firstAttribute="trailing" secondItem="8SJ-s2-Dzw" secondAttribute="trailing" id="RYf-dd-qFu"/>
                             <constraint firstItem="6A9-86-fNI" firstAttribute="leading" secondItem="Q9n-Qy-ImT" secondAttribute="leadingMargin" id="Xgm-lG-9Lo"/>
                             <constraint firstItem="jti-Dc-VmW" firstAttribute="top" secondItem="8SJ-s2-Dzw" secondAttribute="bottom" id="Zhv-la-vg9"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="8nX-xm-8uq" secondAttribute="trailing" id="fnD-WD-JRo"/>
-                            <constraint firstItem="8nX-xm-8uq" firstAttribute="top" secondItem="P10-4r-6fS" secondAttribute="bottom" id="fxq-fs-CrA"/>
-                            <constraint firstItem="6A9-86-fNI" firstAttribute="top" secondItem="8nX-xm-8uq" secondAttribute="bottom" id="lwc-77-8wP"/>
                             <constraint firstItem="8SJ-s2-Dzw" firstAttribute="leading" secondItem="Q9n-Qy-ImT" secondAttribute="leading" id="m7T-En-fiD"/>
-                            <constraint firstItem="8nX-xm-8uq" firstAttribute="leading" secondItem="Q9n-Qy-ImT" secondAttribute="leadingMargin" id="map-2t-b33"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="iCloud synchronization" id="8K7-Gy-3B9"/>
                     <connections>
                         <outlet property="cancelButton" destination="Ccp-zh-HWG" id="Qnb-L4-OY3"/>
                         <outlet property="startButton" destination="zbn-y4-wDb" id="lNc-CU-qbD"/>
-                        <outlet property="statusLabel" destination="8nX-xm-8uq" id="eme-9G-Kcm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pPx-6P-D7D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3252" y="-2474"/>
+            <point key="canvasLocation" x="3398" y="-2008"/>
+        </scene>
+        <!--Add Salon-->
+        <scene sceneID="6AL-j3-QOI">
+            <objects>
+                <viewController id="738-GP-6U6" customClass="AddSalonController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DX8-Dp-HIu"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZIf-dc-VmD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hIk-Qc-gmx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="iOO-ku-aG2">
+                                <rect key="frame" x="20" y="101" width="480" height="110"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your email address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="hTs-MX-Gl6">
+                                        <rect key="frame" x="0.0" y="0.0" width="480" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="738-GP-6U6" id="gKr-dL-Js2"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="your password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rjn-kR-qej">
+                                        <rect key="frame" x="0.0" y="40" width="480" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="738-GP-6U6" id="TkT-vW-ETU"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Salon ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="2j3-tR-S93">
+                                        <rect key="frame" x="0.0" y="80" width="480" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="738-GP-6U6" id="q0b-Rb-37j"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Salon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wll-8i-qVT">
+                                <rect key="frame" x="261" y="40" width="78" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQL-Xt-CZh">
+                                <rect key="frame" x="20" y="367" width="68" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manager" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRq-mr-8A0">
+                                <rect key="frame" x="20" y="424" width="68" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kwx-Mh-N3E">
+                                <rect key="frame" x="199" y="227" width="123" height="30"/>
+                                <state key="normal" title="Find Salon Details"/>
+                                <connections>
+                                    <action selector="findDetailsTapped:" destination="738-GP-6U6" eventType="touchUpInside" id="CV8-gq-x90"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xWZ-Tj-0mv">
+                                <rect key="frame" x="108" y="309" width="392" height="136"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ftb-UP-Vs2">
+                                        <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="wLQ-MO-52M">
+                                        <rect key="frame" x="0.0" y="41" width="29" height="54"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiD-v5-y8b">
+                                                <rect key="frame" x="0.0" y="0.0" width="29" height="14"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHu-ng-9I8">
+                                                <rect key="frame" x="0.0" y="20" width="29" height="14"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X60-8z-Lqf">
+                                                <rect key="frame" x="0.0" y="40" width="29" height="14"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hgK-CM-zyi">
+                                        <rect key="frame" x="0.0" y="115" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z3E-hJ-RNq">
+                                <rect key="frame" x="20" y="309" width="68" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hy5-5n-jEI">
+                                <rect key="frame" x="108" y="465" width="97" height="30"/>
+                                <state key="normal" title="Add this salon"/>
+                                <connections>
+                                    <action selector="addThisTapped:" destination="738-GP-6U6" eventType="touchUpInside" id="Ea1-7P-8r4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cFy-Vc-Jlq">
+                                <rect key="frame" x="20" y="36" width="48" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="738-GP-6U6" eventType="touchUpInside" id="pbQ-I7-QIX"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eRq-mr-8A0" firstAttribute="bottom" secondItem="xWZ-Tj-0mv" secondAttribute="bottom" id="6gJ-Ss-UxJ"/>
+                            <constraint firstItem="Kwx-Mh-N3E" firstAttribute="top" secondItem="iOO-ku-aG2" secondAttribute="bottom" constant="16" id="8VB-eG-jQL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iOO-ku-aG2" secondAttribute="trailing" constant="80" id="A6w-Wm-Kbj"/>
+                            <constraint firstItem="Wll-8i-qVT" firstAttribute="top" secondItem="DX8-Dp-HIu" secondAttribute="bottom" constant="20" id="Bvv-Sd-sW9"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="JQL-Xt-CZh" secondAttribute="leading" id="HPt-wU-mDv"/>
+                            <constraint firstItem="hy5-5n-jEI" firstAttribute="leading" secondItem="xWZ-Tj-0mv" secondAttribute="leading" id="K2r-05-5RD"/>
+                            <constraint firstItem="JQL-Xt-CZh" firstAttribute="width" secondItem="z3E-hJ-RNq" secondAttribute="width" id="M0y-em-h9j"/>
+                            <constraint firstItem="ftb-UP-Vs2" firstAttribute="leading" secondItem="z3E-hJ-RNq" secondAttribute="trailing" constant="20" id="PNe-bt-RRU"/>
+                            <constraint firstItem="Wll-8i-qVT" firstAttribute="centerX" secondItem="hIk-Qc-gmx" secondAttribute="centerX" id="SGm-sc-AGL"/>
+                            <constraint firstItem="iOO-ku-aG2" firstAttribute="leading" secondItem="hIk-Qc-gmx" secondAttribute="leadingMargin" id="UKd-Jw-lhb"/>
+                            <constraint firstItem="eRq-mr-8A0" firstAttribute="trailing" secondItem="z3E-hJ-RNq" secondAttribute="trailing" id="XpQ-OC-sKh"/>
+                            <constraint firstItem="Wll-8i-qVT" firstAttribute="baseline" secondItem="cFy-Vc-Jlq" secondAttribute="baseline" id="Y2c-As-cqM"/>
+                            <constraint firstItem="xWZ-Tj-0mv" firstAttribute="top" secondItem="Kwx-Mh-N3E" secondAttribute="bottom" constant="52" id="aff-1i-hc2"/>
+                            <constraint firstItem="hy5-5n-jEI" firstAttribute="top" secondItem="xWZ-Tj-0mv" secondAttribute="bottom" constant="20" id="doV-nJ-P05"/>
+                            <constraint firstItem="JQL-Xt-CZh" firstAttribute="trailing" secondItem="z3E-hJ-RNq" secondAttribute="trailing" id="ifL-Rf-hn0"/>
+                            <constraint firstItem="eRq-mr-8A0" firstAttribute="width" secondItem="z3E-hJ-RNq" secondAttribute="width" id="qRz-L5-hlV"/>
+                            <constraint firstItem="cFy-Vc-Jlq" firstAttribute="leading" secondItem="iOO-ku-aG2" secondAttribute="leading" id="qTd-ZV-g3M"/>
+                            <constraint firstItem="iOO-ku-aG2" firstAttribute="top" secondItem="Wll-8i-qVT" secondAttribute="bottom" constant="40" id="rmh-CQ-X27"/>
+                            <constraint firstItem="xWZ-Tj-0mv" firstAttribute="trailing" secondItem="iOO-ku-aG2" secondAttribute="trailing" id="tO6-L5-ZMb"/>
+                            <constraint firstItem="xWZ-Tj-0mv" firstAttribute="centerY" secondItem="JQL-Xt-CZh" secondAttribute="centerY" id="vJk-3l-3Lz"/>
+                            <constraint firstItem="xWZ-Tj-0mv" firstAttribute="top" secondItem="z3E-hJ-RNq" secondAttribute="top" id="vy5-Ee-VLa"/>
+                            <constraint firstItem="Kwx-Mh-N3E" firstAttribute="centerX" secondItem="iOO-ku-aG2" secondAttribute="centerX" priority="999" id="ygm-4f-R1M"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Salon" id="3G8-w0-bW2"/>
+                    <connections>
+                        <outlet property="addThisSalonButton" destination="hy5-5n-jEI" id="oz4-QE-tFY"/>
+                        <outlet property="addressLine1Label" destination="wiD-v5-y8b" id="Isx-rI-tFl"/>
+                        <outlet property="addressLine2Label" destination="qHu-ng-9I8" id="AXI-NN-enj"/>
+                        <outlet property="addressLine3Label" destination="X60-8z-Lqf" id="zZ0-gN-GhQ"/>
+                        <outlet property="emailAddressField" destination="hTs-MX-Gl6" id="GNi-wb-BzW"/>
+                        <outlet property="findSalonDetailsButton" destination="Kwx-Mh-N3E" id="otx-0G-oiS"/>
+                        <outlet property="managerLabel" destination="hgK-CM-zyi" id="4MD-wh-5ap"/>
+                        <outlet property="passwordField" destination="rjn-kR-qej" id="FZe-dn-ss7"/>
+                        <outlet property="salonIDField" destination="2j3-tR-S93" id="UJb-es-UNs"/>
+                        <outlet property="salonNameLabel" destination="ftb-UP-Vs2" id="yet-wE-1ZL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jae-bG-WAS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3881" y="-2827"/>
         </scene>
         <!--Import Table View Controller-->
         <scene sceneID="oW2-E2-nO9">
             <objects>
                 <tableViewController id="RPT-I0-EEq" customClass="ImportTableViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="tXa-uo-uLM">
-                        <rect key="frame" x="0.0" y="0.0" width="560" height="478"/>
+                        <rect key="frame" x="0.0" y="0.0" width="560" height="492"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -147,7 +308,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="riT-Q2-dKx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4054" y="-2475"/>
+            <point key="canvasLocation" x="4329" y="-2008"/>
         </scene>
         <!--Master-->
         <scene sceneID="pY4-Hu-kfo">
@@ -563,7 +724,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tyj-gc-dle">
                                 <rect key="frame" x="299" y="52" width="34" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1134,11 +1295,12 @@
                     <connections>
                         <segue destination="mpQ-tJ-TbJ" kind="presentation" identifier="GotoImportViewController" id="6ql-zi-71z"/>
                         <segue destination="Jx7-P4-kLb" kind="presentation" identifier="showMenu" id="dL3-2E-cXm"/>
+                        <segue destination="738-GP-6U6" kind="presentation" identifier="GotoAddSalon" id="nr2-kS-Oz1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="910" y="-1298"/>
+            <point key="canvasLocation" x="916" y="-2008"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r7l-gg-dq7">
@@ -1176,17 +1338,20 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Claudia's Salon Finchley, N128LT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rg-eN-1ZG">
                                                     <rect key="frame" x="8" y="11" width="584" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Salon record name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTn-Ne-cGw">
                                                     <rect key="frame" x="8" y="40" width="584" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="bxs-9K-aho" kind="show" id="br8-Zt-Om1"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -1205,7 +1370,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Start with import/export suspended" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omk-3W-siH">
                                                     <rect key="frame" x="8" y="10" width="273" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1224,7 +1389,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Suspend import from cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e84-5N-qMO">
                                                     <rect key="frame" x="8" y="14" width="209" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1243,7 +1408,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Suspend export to cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2SD-SG-BbY">
                                                     <rect key="frame" x="8" y="11" width="188" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1261,7 +1426,44 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gOt-Ja-jmg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1343" y="-2475"/>
+            <point key="canvasLocation" x="2307" y="-3161"/>
+        </scene>
+        <!--Select Salon-->
+        <scene sceneID="82P-XE-rgU">
+            <objects>
+                <tableViewController id="bxs-9K-aho" customClass="SelectSalonTableViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kNP-Qo-WAo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="QkN-h0-RtR">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QkN-h0-RtR" id="26r-2Y-fTg">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bxs-9K-aho" id="PNp-TT-eVY"/>
+                            <outlet property="delegate" destination="bxs-9K-aho" id="zbe-yB-Wei"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Select Salon" id="kfq-Aw-Y99">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="DK8-bH-dZF">
+                            <connections>
+                                <segue destination="738-GP-6U6" kind="popoverPresentation" identifier="GotoAddSalon" popoverAnchorBarButtonItem="DK8-bH-dZF" id="uH1-HX-69Q">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zrU-PW-Q0c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2992" y="-3161"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="P1T-Me-1hl">
@@ -1279,7 +1481,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DtH-Ad-FiP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2440" y="-2474"/>
+            <point key="canvasLocation" x="2563" y="-2008"/>
         </scene>
         <!--Service Category Table View Controller-->
         <scene sceneID="gJL-Hq-2Ol">
@@ -1382,7 +1584,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WkX-Te-ld7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="531" y="-2475"/>
+            <point key="canvasLocation" x="1627" y="-3161"/>
         </scene>
     </scenes>
     <resources>
@@ -1390,6 +1592,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6S0-TO-JiA"/>
+        <segue reference="uH1-HX-69Q"/>
         <segue reference="vO4-65-Rjh"/>
     </inferredMetricsTieBreakers>
 </document>
