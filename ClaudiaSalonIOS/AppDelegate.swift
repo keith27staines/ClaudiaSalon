@@ -12,7 +12,8 @@ import CloudKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
-
+    
+    static let cloudContainerID = "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon"
     var window: UIWindow?
 
     private static var _processCloudNotifications: Bool? = nil

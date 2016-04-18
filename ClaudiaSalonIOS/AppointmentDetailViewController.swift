@@ -185,8 +185,8 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
                 let moc = Coredata.sharedInstance.managedObjectContext
                 appointment.customer = moc.objectWithID(selectedCustomerObjectID) as? Customer
                 self.configureView()
+                self.updateAppointment(appointment)
             }
-            self.updateAppointment(appointment)
         }
     }
     func updateAppointment(appointment:Appointment) {

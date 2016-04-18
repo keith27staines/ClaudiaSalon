@@ -77,14 +77,26 @@ class ImportTableViewController : UITableViewController {
         }
     }
     func handleAllDownloadsComplete(withErrors:[NSError]?) {
+        self.stopAllDownloadAnimations()
         let alert = UIAlertController(title: "Download completed", message: "\(salonName) is now ready for use on this device", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Continue", style: .Default, handler: { (download) in
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (download) in
             print("download finished")
             if let callback = self.bulkImportCompletionBlock {
                 callback()
             }
         }))
         self.presentViewController(alert, animated: true) {}
+    }
+    
+    func stopAllDownloadAnimations() {
+        NSOperationQueue.mainQueue().addOperationWithBlock() {
+            if let rowCount = self.importer?.downloads.count {
+                for row in 0..<rowCount {
+                    let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) as! ImportInfoCell
+                    cell.activitySpinner.stopAnimating()
+                }
+            }
+        }
     }
 }
 

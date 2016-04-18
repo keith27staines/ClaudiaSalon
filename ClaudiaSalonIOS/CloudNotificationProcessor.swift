@@ -22,7 +22,7 @@ class CloudNotificationProcessor {
     private let publicCloudDatabase:CKDatabase
     private var currentSubscription: CKSubscription!
     private let cloudSalonReference : CKReference!
-    private var processingOn = false
+    var willProcessNotifications = false
     var subscriptions = [CKSubscription]()
 
     init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
@@ -41,11 +41,6 @@ class CloudNotificationProcessor {
             return false
         }
     }
-    
-    func setProcessingState(processing:Bool) {
-        self.processingOn = processing
-    }
-    
     
     func subscribeToCloudNotifications() {
         let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
@@ -150,7 +145,7 @@ class CloudNotificationProcessor {
     }
 
     func pollForMissedRemoteNotifications() {
-        if self.processingOn {
+        if self.willProcessNotifications {
             self.pollForMissedRemoteNotifications(0)
         }
     }

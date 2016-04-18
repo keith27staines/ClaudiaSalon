@@ -79,6 +79,7 @@ class BQCloudImporter : NSObject {
     
     func startImport() {
         self.synchQueue.addOperationWithBlock() {
+            self.cloudNotificationProcessor.willProcessNotifications = false
             self.deleteAllCoredataObjects()
             for recordType in CloudRecordType.typesAsArray() {
                 self.addQueryOperationToQueueForType(recordType)
@@ -173,6 +174,7 @@ class BQCloudImporter : NSObject {
                 NSOperationQueue.mainQueue().addOperationWithBlock() {
                     if let callback = self.allDownloadsComplete {
                         callback(withErrors: nil)
+                        self.cloudNotificationProcessor.willProcessNotifications = true
                     }
                 }
             }
@@ -603,11 +605,13 @@ extension BQCloudImporter {
         }
     }
     func deleteAllCoredataObjects() {
+        print("Deleting Coredata objects")
         let entities = ["Salon", "Customer", "Employee", "Service", "ServiceCategory", "Appointment", "Sale", "SaleItem"]
         for entity in entities {
             self.deleteEntity(entity)
         }
         Coredata.sharedInstance.save()
+        print("All Coredata objects were deleted")
     }
     func deleteEntity(name:String) {
         let fetchRequest = NSFetchRequest(entityName: name)

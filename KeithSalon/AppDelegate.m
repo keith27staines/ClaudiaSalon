@@ -36,7 +36,6 @@
 @property (weak) IBOutlet AMCPreferencesWindowController *preferencesWindowController;
 @property (weak) IBOutlet AMCBookingQueueManagerWindowController *bookingQueueManagerWindowController;
 
-
 @end
 
 @implementation AppDelegate

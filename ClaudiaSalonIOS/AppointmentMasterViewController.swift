@@ -10,7 +10,10 @@ import UIKit
 import CoreData
 import CloudKit
 
+
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+    
+    static var onceOnlyFlag:dispatch_once_t = 0
 
     private var _fetchedResultsController: NSFetchedResultsController? = nil
     
@@ -25,6 +28,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
 
@@ -39,6 +43,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         let menuButtonImage = UIImage(named: "MenuButton")
         let menuButton = UIBarButtonItem(image: menuButtonImage, style: .Plain, target: self, action: #selector(MasterViewController.showMenu(_:)))
         self.navigationItem.leftBarButtonItem = menuButton
+        
     }
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
@@ -46,7 +51,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
         // Do we have a default salon?
         guard let _ = AppDelegate.defaultSalonKey() else {
             // No, so ask the user to add one
@@ -68,7 +72,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         
         // Have we downloaded any data from the cloud for this salon?
         guard let _ = Salon.defaultSalon(coredata.managedObjectContext) else {
-            self.performSegueWithIdentifier("GotoImportViewController", sender: self)
+            dispatch_once(&MasterViewController.onceOnlyFlag) {
+                self.performSegueWithIdentifier("GotoImportViewController", sender: self)
+            }
             return
         }
         
@@ -85,7 +91,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         
         let processCloudNotifications = AppDelegate.processCloudNotifications()
-        Coredata.sharedInstance.importController?.cloudNotificationProcessor.setProcessingState(processCloudNotifications)
+        Coredata.sharedInstance.importController?.cloudNotificationProcessor.willProcessNotifications = processCloudNotifications
+        self.tableView.reloadData()
     }
     
     func openCoredataSalon(recordName:String) -> Coredata {
@@ -153,7 +160,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         
-        let cancelAppointmentAction = UITableViewRowAction(style: .Normal, title: "Cancel") { (rowAction:UITableViewRowAction, indexPath:NSIndexPath) -> Void in
+        let cancelAppointmentAction = UITableViewRowAction(style: .Normal, title: "Cancel Appointment") { (rowAction:UITableViewRowAction, indexPath:NSIndexPath) -> Void in
             self.cancelAppointmentAtIndexPath(indexPath)
         }
         cancelAppointmentAction.backgroundColor = UIColor.blueColor()

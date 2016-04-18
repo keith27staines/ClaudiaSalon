@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--iCloud synchronization-->
@@ -114,18 +115,18 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQL-Xt-CZh">
                                 <rect key="frame" x="20" y="367" width="68" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manager" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRq-mr-8A0">
                                 <rect key="frame" x="20" y="424" width="68" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kwx-Mh-N3E">
-                                <rect key="frame" x="199" y="227" width="123" height="30"/>
-                                <state key="normal" title="Find Salon Details"/>
+                                <rect key="frame" x="194" y="227" width="132" height="30"/>
+                                <state key="normal" title="Fetch Salon Details"/>
                                 <connections>
                                     <action selector="findDetailsTapped:" destination="738-GP-6U6" eventType="touchUpInside" id="CV8-gq-x90"/>
                                 </connections>
@@ -173,7 +174,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z3E-hJ-RNq">
                                 <rect key="frame" x="20" y="309" width="68" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hy5-5n-jEI">
@@ -721,8 +722,8 @@
                                     <outlet property="delegate" destination="5C5-kx-ZeE" id="RwA-bB-62f"/>
                                 </connections>
                             </pickerView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tyj-gc-dle">
-                                <rect key="frame" x="299" y="52" width="34" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tyj-gc-dle">
+                                <rect key="frame" x="283" y="28" width="34" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1317,7 +1318,7 @@
             </objects>
             <point key="canvasLocation" x="-45" y="129"/>
         </scene>
-        <!--Application settings-->
+        <!--Salon Settings-->
         <scene sceneID="46l-Zp-S4n">
             <objects>
                 <tableViewController id="jXf-2i-B2J" customClass="MenuTableViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
@@ -1326,7 +1327,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
-                            <tableViewSection headerTitle="Salon" id="Spm-TI-VLO">
+                            <tableViewSection headerTitle="Current Salon Details" id="Spm-TI-VLO">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" rowHeight="80" id="y8w-gl-5GA">
                                         <rect key="frame" x="0.0" y="92" width="600" height="80"/>
@@ -1335,59 +1336,161 @@
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Claudia's Salon Finchley, N128LT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rg-eN-1ZG">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Salon Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rg-eN-1ZG">
                                                     <rect key="frame" x="8" y="11" width="584" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Salon record name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTn-Ne-cGw">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Salon Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTn-Ne-cGw">
                                                     <rect key="frame" x="8" y="40" width="584" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="bxs-9K-aho" kind="show" id="br8-Zt-Om1"/>
+                                            <segue destination="bxs-9K-aho" kind="show" identifier="GotoSelectSalon" id="br8-Zt-Om1"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Cloud import and export" id="VSJ-pX-hbM">
+                            <tableViewSection headerTitle="Refresh from Cloud" id="ST4-uh-G75">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="edG-0D-fc9">
-                                        <rect key="frame" x="0.0" y="200" width="600" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="109" id="j8I-P7-cK4">
+                                        <rect key="frame" x="0.0" y="200" width="600" height="109"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="edG-0D-fc9" id="S9T-1Z-iet">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j8I-P7-cK4" id="dLY-x8-nJh">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="108"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="93k-Xf-kua">
-                                                    <rect key="frame" x="430" y="0.0" width="51" height="31"/>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Start with import/export suspended" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omk-3W-siH">
-                                                    <rect key="frame" x="8" y="10" width="273" height="21"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="lCu-Z0-Wk2">
+                                                    <rect key="frame" x="8" y="8" width="300" height="92"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="All data held on this device relating to this Salon will be freshly downloaded from the cloud" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ie6-bq-5S4">
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="92"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ukS-Qk-4bP">
+                                                    <rect key="frame" x="341" y="39" width="83" height="30"/>
+                                                    <color key="backgroundColor" red="1" green="0.62139372643553492" blue="0.21125220836298164" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="83" id="pw4-vM-gC4"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Refresh">
+                                                        <color key="titleColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="refreshTapped:" destination="jXf-2i-B2J" eventType="touchUpInside" id="LgA-Jm-SRa"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="lCu-Z0-Wk2" firstAttribute="leading" secondItem="dLY-x8-nJh" secondAttribute="leadingMargin" id="9x6-RO-iWx"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ukS-Qk-4bP" secondAttribute="trailing" priority="999" id="KSZ-Ss-JrF"/>
+                                                <constraint firstItem="lCu-Z0-Wk2" firstAttribute="top" secondItem="dLY-x8-nJh" secondAttribute="topMargin" id="ROC-5R-h7D"/>
+                                                <constraint firstItem="lCu-Z0-Wk2" firstAttribute="width" secondItem="dLY-x8-nJh" secondAttribute="width" multiplier="0.5" id="UH3-XR-4wK"/>
+                                                <constraint firstItem="ukS-Qk-4bP" firstAttribute="centerY" secondItem="dLY-x8-nJh" secondAttribute="centerY" id="d0h-4M-cNY"/>
+                                                <constraint firstItem="lCu-Z0-Wk2" firstAttribute="centerY" secondItem="dLY-x8-nJh" secondAttribute="centerY" id="pav-WR-n2E"/>
+                                                <constraint firstItem="lCu-Z0-Wk2" firstAttribute="leading" secondItem="dLY-x8-nJh" secondAttribute="leadingMargin" id="pbF-Ws-M4E"/>
+                                                <constraint firstItem="ukS-Qk-4bP" firstAttribute="leading" secondItem="lCu-Z0-Wk2" secondAttribute="trailing" constant="33" id="yiA-df-2t0"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Forget This Salon" id="XxV-32-j3p">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="77" id="qg0-8D-Yoa">
+                                        <rect key="frame" x="0.0" y="337" width="600" height="77"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qg0-8D-Yoa" id="n8T-tI-2UT">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="76"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="jZs-Sj-4DV">
+                                                    <rect key="frame" x="8" y="8" width="300" height="60"/>
+                                                </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5i-RP-PYE">
+                                                    <rect key="frame" x="341" y="23" width="83" height="30"/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="83" id="PWb-JX-coo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Forget">
+                                                        <color key="titleColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="forgetTapped:" destination="jXf-2i-B2J" eventType="touchUpInside" id="blA-dU-uiH"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="All data relating to this Salon will be removed from this device" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-1R-6lN">
+                                                    <rect key="frame" x="8" y="4" width="300" height="60"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="centerY" secondItem="n8T-tI-2UT" secondAttribute="centerY" id="4LP-VY-QKR"/>
+                                                <constraint firstItem="jZs-Sj-4DV" firstAttribute="leading" secondItem="n8T-tI-2UT" secondAttribute="leadingMargin" id="4Nq-tU-cww"/>
+                                                <constraint firstItem="jZs-Sj-4DV" firstAttribute="centerY" secondItem="n8T-tI-2UT" secondAttribute="centerY" id="ABs-Va-0bG"/>
+                                                <constraint firstItem="jZs-Sj-4DV" firstAttribute="width" secondItem="n8T-tI-2UT" secondAttribute="width" multiplier="0.5" id="ATr-p7-Im4"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="P5i-RP-PYE" secondAttribute="trailing" priority="999" id="B9Z-FI-lzH"/>
+                                                <constraint firstItem="jZs-Sj-4DV" firstAttribute="leading" secondItem="n8T-tI-2UT" secondAttribute="leadingMargin" id="jJh-eu-epz"/>
+                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="leading" secondItem="jZs-Sj-4DV" secondAttribute="trailing" constant="33" id="tSI-EG-wga"/>
+                                                <constraint firstItem="jZs-Sj-4DV" firstAttribute="top" secondItem="n8T-tI-2UT" secondAttribute="topMargin" id="wBU-fD-V53"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Cloud import and export settings for this App" id="VSJ-pX-hbM">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="edG-0D-fc9">
+                                        <rect key="frame" x="0.0" y="442" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="edG-0D-fc9" id="S9T-1Z-iet">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="App starts with cloud import/export allowed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omk-3W-siH">
+                                                    <rect key="frame" x="17" y="11" width="335" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="93k-Xf-kua">
+                                                    <rect key="frame" x="393" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="appStartSwitchChanged:" destination="jXf-2i-B2J" eventType="valueChanged" id="QDq-eI-xGs"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ODM-wK-s0N">
-                                        <rect key="frame" x="0.0" y="244" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="486" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ODM-wK-s0N" id="C3v-lh-y6O">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TRd-Vb-Xsv">
-                                                    <rect key="frame" x="430" y="4" width="51" height="31"/>
+                                                    <rect key="frame" x="491" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="importProcessingSwitchChanged:" destination="jXf-2i-B2J" eventType="valueChanged" id="kLf-Sf-pRv"/>
+                                                    </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Suspend import from cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e84-5N-qMO">
-                                                    <rect key="frame" x="8" y="14" width="209" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Allow imports from cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e84-5N-qMO">
+                                                    <rect key="frame" x="235" y="11" width="191" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1396,17 +1499,20 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="zuU-wT-BSw">
-                                        <rect key="frame" x="0.0" y="288" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="530" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zuU-wT-BSw" id="xIr-HP-hwO">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOI-o5-BFJ">
-                                                    <rect key="frame" x="430" y="6" width="51" height="31"/>
+                                                    <rect key="frame" x="491" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="exportProcessingSwitchChanged:" destination="jXf-2i-B2J" eventType="valueChanged" id="TOx-rO-GeQ"/>
+                                                    </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Suspend export to cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2SD-SG-BbY">
-                                                    <rect key="frame" x="8" y="11" width="188" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Allow export to cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2SD-SG-BbY">
+                                                    <rect key="frame" x="265" y="11" width="162" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1422,7 +1528,19 @@
                             <outlet property="delegate" destination="jXf-2i-B2J" id="AA5-sc-vVv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Application settings" id="kFe-SI-Vxe"/>
+                    <navigationItem key="navigationItem" title="Salon Settings" id="kFe-SI-Vxe"/>
+                    <connections>
+                        <outlet property="appStartSwitch" destination="93k-Xf-kua" id="Key-24-jQR"/>
+                        <outlet property="exportProcessingSwitch" destination="cOI-o5-BFJ" id="zTL-v9-d7G"/>
+                        <outlet property="forgetButton" destination="P5i-RP-PYE" id="36o-M3-Hr3"/>
+                        <outlet property="forgetLabel" destination="RYS-1R-6lN" id="vO8-C7-cyD"/>
+                        <outlet property="importProcessingSwitch" destination="TRd-Vb-Xsv" id="z89-OU-bN6"/>
+                        <outlet property="refreshButton" destination="ukS-Qk-4bP" id="MiO-oU-gQY"/>
+                        <outlet property="refreshLabel" destination="ie6-bq-5S4" id="qYO-aq-zqf"/>
+                        <outlet property="salonAddress" destination="LTn-Ne-cGw" id="SRP-Tw-AKg"/>
+                        <outlet property="salonName" destination="1rg-eN-1ZG" id="Md3-Nm-pIE"/>
+                        <segue destination="mpQ-tJ-TbJ" kind="presentation" identifier="GotoImporter" id="Sop-gt-fl4"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gOt-Ja-jmg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1432,18 +1550,53 @@
         <scene sceneID="82P-XE-rgU">
             <objects>
                 <tableViewController id="bxs-9K-aho" customClass="SelectSalonTableViewController" customModule="ClaudiaSalonIOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kNP-Qo-WAo">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" id="kNP-Qo-WAo">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="QkN-h0-RtR">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="74" id="QkN-h0-RtR" customClass="SalonTableViewCell" customModule="ClaudiaSalonIOS" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QkN-h0-RtR" id="26r-2Y-fTg">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="73"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="v2t-dM-atk">
+                                            <rect key="frame" x="12" y="12" width="576" height="49"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" text="Salon Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6pb-PY-IRs">
+                                                    <rect key="frame" x="0.0" y="0.0" width="78" height="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" text="Salon Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWr-QU-xBs">
+                                                    <rect key="frame" x="0.0" y="19" width="76" height="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" text="Salon Record Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EPK-SF-V48">
+                                                    <rect key="frame" x="0.0" y="35" width="103" height="14"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="v2t-dM-atk" secondAttribute="bottom" constant="4" id="W9O-Rc-OhR"/>
+                                        <constraint firstItem="v2t-dM-atk" firstAttribute="top" secondItem="26r-2Y-fTg" secondAttribute="topMargin" constant="4" id="XDm-Uz-Gh7"/>
+                                        <constraint firstItem="v2t-dM-atk" firstAttribute="leading" secondItem="26r-2Y-fTg" secondAttribute="leadingMargin" constant="4" id="bZd-W4-igd"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="v2t-dM-atk" secondAttribute="trailing" constant="4" id="cv6-Vx-SXP"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="salonAddress" destination="yWr-QU-xBs" id="Dm6-Pl-MoZ"/>
+                                    <outlet property="salonName" destination="6pb-PY-IRs" id="ptg-f6-OjF"/>
+                                    <outlet property="salonRecordName" destination="EPK-SF-V48" id="NvE-sj-0FQ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -1591,8 +1744,9 @@
         <image name="anonymous-man" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Sop-gt-fl4"/>
         <segue reference="6S0-TO-JiA"/>
-        <segue reference="uH1-HX-69Q"/>
         <segue reference="vO4-65-Rjh"/>
+        <segue reference="uH1-HX-69Q"/>
     </inferredMetricsTieBreakers>
 </document>

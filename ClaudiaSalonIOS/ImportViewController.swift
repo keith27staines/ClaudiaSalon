@@ -21,6 +21,7 @@ class ImportViewController : UIViewController {
     
     @IBAction func cancelTapped(sender: AnyObject) {
         self.progressViewController?.cancelImport()
+        self.bulkImportCompletionBlock?()
     }
     
     @IBOutlet weak var startButton: UIBarButtonItem!
