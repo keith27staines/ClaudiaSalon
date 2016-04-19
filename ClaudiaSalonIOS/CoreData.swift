@@ -28,6 +28,25 @@ class Coredata {
         self.sharedInstance = self.instances[cloudSalonRecordName]
     }
     
+    class func forgetSalon(recordName:String,completion:(success:Bool)->Void) {
+        let coredata = self.coredataForKey(recordName)
+        if coredata === self.sharedInstance {
+            self.sharedInstance = nil
+            coredata.exportController.suspendExportIterations()
+            coredata.importController.suspendCloudNotificationProcessing()
+            coredata.importController.forgetSalon { (success) in
+                if success {
+                    do {
+                        try NSFileManager.defaultManager().removeItemAtURL(coredata.fileURL)
+                    } catch {
+                        assertionFailure("Failed to delete datastore for \(recordName) with error \(error)")
+                    }
+                }
+                completion(success: success)
+            }
+        }
+    }
+    
     private init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
         self.iCloudContainerIdentifier = cloudContainerIdentifier
         self.iCloudSalonRecordName = cloudSalonRecordName
@@ -35,6 +54,7 @@ class Coredata {
     
     private (set) var iCloudContainerIdentifier:String
     private (set) var iCloudSalonRecordName:String
+    private var fileURL: NSURL!
     
     lazy var exportController:BQCoredataExportController = BQCoredataExportController(parentMoc: self.managedObjectContext, iCloudContainerIdentifier: self.iCloudContainerIdentifier, startProcessingImmediately: false)
     
@@ -62,10 +82,10 @@ class Coredata {
         // Create the coordinator and store
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let storeOptions = [NSMigratePersistentStoresAutomaticallyOption:true, NSInferMappingModelAutomaticallyOption: true]
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.iCloudSalonRecordName + ".salon")
+        self.fileURL = self.applicationDocumentsDirectory.URLByAppendingPathComponent(self.iCloudSalonRecordName + ".salon")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: storeOptions)
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: self.fileURL, options: storeOptions)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -73,7 +93,7 @@ class Coredata {
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             
             dict[NSUnderlyingErrorKey] = error as NSError
-            let wrappedError = NSError(domain: "com.KeithStaines.ClaudiaSalonIOS", code: 9999, userInfo: dict)
+            let wrappedError = NSError(domain: "co.uk.ClaudiaSalonIOS", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             fatalError("Unresolved error \(wrappedError), \(wrappedError.userInfo)")

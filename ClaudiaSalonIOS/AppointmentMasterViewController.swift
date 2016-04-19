@@ -294,8 +294,8 @@ extension MasterViewController {
                 let cancelAction = UIAlertAction(title: "Not yet", style: .Cancel) { action in
                     
                 }
-                alert.addAction(exportAction)
                 alert.addAction(cancelAction)
+                alert.addAction(exportAction)
             } else if needsExport {
                 alert = UIAlertController(title: "Synching", message: "This appointment's changes are waiting to be synchronized to the cloud", preferredStyle: .ActionSheet)
                 let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)

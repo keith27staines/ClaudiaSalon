@@ -125,16 +125,13 @@ extension AppDelegate {
         }
     }
     
-    class func removeSalonKey(key:String) {
+    class func forgetSalon(recordName:String) {
         var salonKeys = self.salonKeys()
-        if let index = salonKeys.indexOf(key) {
+        if let index = salonKeys.indexOf(recordName) {
             salonKeys.removeAtIndex(index)
             NSUserDefaults.standardUserDefaults().setObject(salonKeys, forKey: "salonKeys")
-            if key == self.defaultSalonKey() {
+            if recordName == self.defaultSalonKey() {
                 self.setDefaultSalonKey(nil)
-            }
-            if salonKeys.count == 1 {
-                self.setDefaultSalonKey(salonKeys.first)
             }
         }
     }

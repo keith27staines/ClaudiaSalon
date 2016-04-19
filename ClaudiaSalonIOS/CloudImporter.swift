@@ -52,8 +52,13 @@ class BQCloudImporter : NSObject {
         super.init()
         self.cloudNotificationProcessor.shallowProcessRecord = self.shallowProcessRecord
         self.cloudNotificationProcessor.deepProcessRecord = self.deepProcessRecord
-        self.reinitialiseDatastructures()
-        self.subscribeToCloudNotifications()
+        self.initialiseDatastructures()
+    }
+    
+    func forgetSalon(completion:(success:Bool)->Void) {
+        self.cloudNotificationProcessor.forgetSalon { (success) in
+            completion(success: success)
+        }
     }
     
     func isSuspended() -> Bool {
@@ -67,15 +72,11 @@ class BQCloudImporter : NSObject {
         self.cloudNotificationProcessor.resumeNotificationProcessing()
     }
     
-    func subscribeToCloudNotifications() {
-        self.cloudNotificationProcessor.subscribeToCloudNotifications()
-    }
-    
     func pollForMissedRemoteNotifications() {
         self.cloudNotificationProcessor.pollForMissedRemoteNotifications()
     }
     
-    private func reinitialiseDatastructures() {
+    private func initialiseDatastructures() {
         self.synchQueue.addOperationWithBlock() {
             self.downloadedRecords.removeAll(keepCapacity: true)
             self.downloads.removeAll()
@@ -88,6 +89,7 @@ class BQCloudImporter : NSObject {
     }
     
     func startBulkImport() {
+        self.initialiseDatastructures()
         self.synchQueue.addOperationWithBlock() {
             self.cloudNotificationProcessor.suspendNotificationProcessing()
             self.deleteAllCoredataObjects()
@@ -171,7 +173,7 @@ class BQCloudImporter : NSObject {
             self.queryOperations.remove(operation)
             if self.cancelled {
                 self.deleteAllCoredataObjects()
-                self.reinitialiseDatastructures()
+                self.initialiseDatastructures()
             }
             
             if self.downloadsDidCompleteSuccessfully() {

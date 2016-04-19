@@ -11,6 +11,8 @@ import CloudKit
 
 class AddSalonController: UIViewController, UITextFieldDelegate {
     
+    @IBOutlet weak var salonDetailsStack: UIStackView!
+    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var emailAddressField: UITextField!
     
     @IBOutlet weak var passwordField: UITextField!
@@ -32,7 +34,7 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addThisSalonButton: UIButton!
     
     var completion:((sender:AddSalonController)->Void)?
-    
+    var allowCancel = false
     var salonRecordName:String?
     var salonName: String? = "New Salon"
     
@@ -49,12 +51,22 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
     @IBAction func addThisTapped(sender: AnyObject) {
         self.dismissController()
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.hideSalonDetails(true)
+    }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         self.clearSalonDetails()
         self.clearUserInputs()
         self.enableFindDetailsButtonIfAppropriate()
+        self.cancelButton.hidden = !self.allowCancel
+        self.hideSalonDetails(true)
+    }
+    
+    func hideSalonDetails(hidden:Bool) {
+        self.salonDetailsStack.hidden = hidden
+        self.addThisSalonButton.hidden = hidden
     }
     
     func dismissController() {
@@ -111,6 +123,7 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
         self.addressLine3Label.text = " "
         self.managerLabel.text = " "
         self.addThisSalonButton.enabled = false
+        self.hideSalonDetails(true)
     }
     
     func populateSalonDetails(record:CKRecord) {
@@ -121,6 +134,7 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
         self.addressLine3Label.text = record["postcode"] as? String
         self.managerLabel.text = "Claudia Erickson" //record["Unknown manager"] as? String
         self.addThisSalonButton.enabled = true
+        self.hideSalonDetails(false)
         self.findSalonDetailsButton.enabled = false
     }
     

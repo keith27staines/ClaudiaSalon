@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--iCloud synchronization-->
@@ -77,10 +78,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="iOO-ku-aG2">
-                                <rect key="frame" x="20" y="101" width="480" height="110"/>
+                                <rect key="frame" x="20" y="89" width="300" height="110"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your email address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="hTs-MX-Gl6">
-                                        <rect key="frame" x="0.0" y="0.0" width="480" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
@@ -88,7 +89,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="your password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rjn-kR-qej">
-                                        <rect key="frame" x="0.0" y="40" width="480" height="30"/>
+                                        <rect key="frame" x="0.0" y="40" width="300" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
@@ -96,7 +97,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Salon ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="2j3-tR-S93">
-                                        <rect key="frame" x="0.0" y="80" width="480" height="30"/>
+                                        <rect key="frame" x="0.0" y="80" width="300" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
@@ -106,32 +107,13 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Salon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wll-8i-qVT">
-                                <rect key="frame" x="261" y="40" width="78" height="21"/>
+                                <rect key="frame" x="261" y="28" width="78" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQL-Xt-CZh">
-                                <rect key="frame" x="20" y="367" width="68" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manager" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRq-mr-8A0">
-                                <rect key="frame" x="20" y="424" width="68" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kwx-Mh-N3E">
-                                <rect key="frame" x="194" y="227" width="132" height="30"/>
-                                <state key="normal" title="Fetch Salon Details"/>
-                                <connections>
-                                    <action selector="findDetailsTapped:" destination="738-GP-6U6" eventType="touchUpInside" id="CV8-gq-x90"/>
-                                </connections>
-                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xWZ-Tj-0mv">
-                                <rect key="frame" x="108" y="309" width="392" height="136"/>
+                                <rect key="frame" x="20" y="219" width="540" height="136"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ftb-UP-Vs2">
                                         <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
@@ -170,51 +152,56 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z3E-hJ-RNq">
-                                <rect key="frame" x="20" y="309" width="68" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hy5-5n-jEI">
-                                <rect key="frame" x="108" y="465" width="97" height="30"/>
-                                <state key="normal" title="Add this salon"/>
+                                <rect key="frame" x="20" y="367" width="120" height="30"/>
+                                <color key="backgroundColor" red="0.68539365399999996" green="0.42286896289999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="rMJ-8u-Fqa"/>
+                                </constraints>
+                                <state key="normal" title="Add this salon">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="addThisTapped:" destination="738-GP-6U6" eventType="touchUpInside" id="Ea1-7P-8r4"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cFy-Vc-Jlq">
-                                <rect key="frame" x="20" y="36" width="48" height="30"/>
+                                <rect key="frame" x="20" y="24" width="48" height="30"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="cancelButtonTapped:" destination="738-GP-6U6" eventType="touchUpInside" id="pbQ-I7-QIX"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kwx-Mh-N3E">
+                                <rect key="frame" x="340" y="169" width="158" height="30"/>
+                                <color key="backgroundColor" red="0.68539365396380836" green="0.42286896291253184" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="158" id="s5r-Tw-Sy4"/>
+                                </constraints>
+                                <state key="normal" title="Fetch Salon Details">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="findDetailsTapped:" destination="738-GP-6U6" eventType="touchUpInside" id="CV8-gq-x90"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="eRq-mr-8A0" firstAttribute="bottom" secondItem="xWZ-Tj-0mv" secondAttribute="bottom" id="6gJ-Ss-UxJ"/>
-                            <constraint firstItem="Kwx-Mh-N3E" firstAttribute="top" secondItem="iOO-ku-aG2" secondAttribute="bottom" constant="16" id="8VB-eG-jQL"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="iOO-ku-aG2" secondAttribute="trailing" constant="80" id="A6w-Wm-Kbj"/>
-                            <constraint firstItem="Wll-8i-qVT" firstAttribute="top" secondItem="DX8-Dp-HIu" secondAttribute="bottom" constant="20" id="Bvv-Sd-sW9"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="JQL-Xt-CZh" secondAttribute="leading" id="HPt-wU-mDv"/>
-                            <constraint firstItem="hy5-5n-jEI" firstAttribute="leading" secondItem="xWZ-Tj-0mv" secondAttribute="leading" id="K2r-05-5RD"/>
-                            <constraint firstItem="JQL-Xt-CZh" firstAttribute="width" secondItem="z3E-hJ-RNq" secondAttribute="width" id="M0y-em-h9j"/>
-                            <constraint firstItem="ftb-UP-Vs2" firstAttribute="leading" secondItem="z3E-hJ-RNq" secondAttribute="trailing" constant="20" id="PNe-bt-RRU"/>
+                            <constraint firstItem="Kwx-Mh-N3E" firstAttribute="bottom" secondItem="iOO-ku-aG2" secondAttribute="bottom" id="0w0-7U-KDM"/>
+                            <constraint firstItem="hy5-5n-jEI" firstAttribute="leading" secondItem="xWZ-Tj-0mv" secondAttribute="leading" id="9mR-MI-1GN"/>
+                            <constraint firstItem="Wll-8i-qVT" firstAttribute="top" secondItem="DX8-Dp-HIu" secondAttribute="bottom" constant="8" id="Bvv-Sd-sW9"/>
+                            <constraint firstItem="xWZ-Tj-0mv" firstAttribute="top" secondItem="iOO-ku-aG2" secondAttribute="bottom" constant="20" id="Igl-Hx-x9r"/>
+                            <constraint firstItem="hy5-5n-jEI" firstAttribute="top" secondItem="xWZ-Tj-0mv" secondAttribute="bottom" constant="12" id="JsC-Kr-K8I"/>
+                            <constraint firstItem="xWZ-Tj-0mv" firstAttribute="leading" secondItem="iOO-ku-aG2" secondAttribute="leading" id="MN5-B7-aN3"/>
                             <constraint firstItem="Wll-8i-qVT" firstAttribute="centerX" secondItem="hIk-Qc-gmx" secondAttribute="centerX" id="SGm-sc-AGL"/>
                             <constraint firstItem="iOO-ku-aG2" firstAttribute="leading" secondItem="hIk-Qc-gmx" secondAttribute="leadingMargin" id="UKd-Jw-lhb"/>
-                            <constraint firstItem="eRq-mr-8A0" firstAttribute="trailing" secondItem="z3E-hJ-RNq" secondAttribute="trailing" id="XpQ-OC-sKh"/>
                             <constraint firstItem="Wll-8i-qVT" firstAttribute="baseline" secondItem="cFy-Vc-Jlq" secondAttribute="baseline" id="Y2c-As-cqM"/>
-                            <constraint firstItem="xWZ-Tj-0mv" firstAttribute="top" secondItem="Kwx-Mh-N3E" secondAttribute="bottom" constant="52" id="aff-1i-hc2"/>
-                            <constraint firstItem="hy5-5n-jEI" firstAttribute="top" secondItem="xWZ-Tj-0mv" secondAttribute="bottom" constant="20" id="doV-nJ-P05"/>
-                            <constraint firstItem="JQL-Xt-CZh" firstAttribute="trailing" secondItem="z3E-hJ-RNq" secondAttribute="trailing" id="ifL-Rf-hn0"/>
-                            <constraint firstItem="eRq-mr-8A0" firstAttribute="width" secondItem="z3E-hJ-RNq" secondAttribute="width" id="qRz-L5-hlV"/>
+                            <constraint firstItem="Kwx-Mh-N3E" firstAttribute="leading" secondItem="2j3-tR-S93" secondAttribute="trailing" constant="20" id="gPB-Am-p95"/>
+                            <constraint firstItem="iOO-ku-aG2" firstAttribute="width" secondItem="hIk-Qc-gmx" secondAttribute="width" multiplier="0.5" id="pae-nj-2FE"/>
                             <constraint firstItem="cFy-Vc-Jlq" firstAttribute="leading" secondItem="iOO-ku-aG2" secondAttribute="leading" id="qTd-ZV-g3M"/>
                             <constraint firstItem="iOO-ku-aG2" firstAttribute="top" secondItem="Wll-8i-qVT" secondAttribute="bottom" constant="40" id="rmh-CQ-X27"/>
-                            <constraint firstItem="xWZ-Tj-0mv" firstAttribute="trailing" secondItem="iOO-ku-aG2" secondAttribute="trailing" id="tO6-L5-ZMb"/>
-                            <constraint firstItem="xWZ-Tj-0mv" firstAttribute="centerY" secondItem="JQL-Xt-CZh" secondAttribute="centerY" id="vJk-3l-3Lz"/>
-                            <constraint firstItem="xWZ-Tj-0mv" firstAttribute="top" secondItem="z3E-hJ-RNq" secondAttribute="top" id="vy5-Ee-VLa"/>
-                            <constraint firstItem="Kwx-Mh-N3E" firstAttribute="centerX" secondItem="iOO-ku-aG2" secondAttribute="centerX" priority="999" id="ygm-4f-R1M"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xWZ-Tj-0mv" secondAttribute="trailing" constant="20" id="yhC-jY-Sm2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Salon" id="3G8-w0-bW2"/>
@@ -223,10 +210,12 @@
                         <outlet property="addressLine1Label" destination="wiD-v5-y8b" id="Isx-rI-tFl"/>
                         <outlet property="addressLine2Label" destination="qHu-ng-9I8" id="AXI-NN-enj"/>
                         <outlet property="addressLine3Label" destination="X60-8z-Lqf" id="zZ0-gN-GhQ"/>
+                        <outlet property="cancelButton" destination="cFy-Vc-Jlq" id="nDt-Ng-GxY"/>
                         <outlet property="emailAddressField" destination="hTs-MX-Gl6" id="GNi-wb-BzW"/>
                         <outlet property="findSalonDetailsButton" destination="Kwx-Mh-N3E" id="otx-0G-oiS"/>
                         <outlet property="managerLabel" destination="hgK-CM-zyi" id="4MD-wh-5ap"/>
                         <outlet property="passwordField" destination="rjn-kR-qej" id="FZe-dn-ss7"/>
+                        <outlet property="salonDetailsStack" destination="xWZ-Tj-0mv" id="CKy-rY-VbG"/>
                         <outlet property="salonIDField" destination="2j3-tR-S93" id="UJb-es-UNs"/>
                         <outlet property="salonNameLabel" destination="ftb-UP-Vs2" id="yet-wE-1ZL"/>
                     </connections>

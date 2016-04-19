@@ -23,7 +23,9 @@ class CloudNotificationProcessor {
     private var currentSubscription: CKSubscription!
     private let cloudSalonReference : CKReference!
     private var processingSuspended = true
-    var subscriptions = [CKSubscription]()
+    lazy var subscriptions: [CKSubscription] = {
+        return self.makeSubscriptionsArray()
+    }()
 
     init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
         let salonID = CKRecordID(recordName: cloudSalonRecordName)
@@ -40,6 +42,44 @@ class CloudNotificationProcessor {
             assertionFailure("The deepProcessRecord block cannot be called because it was never set")
             return false
         }
+        self.subscribeToCloudNotifications()
+    }
+    
+    func forgetSalon(completion:((success:Bool)->Void)) {
+        self.suspendNotificationProcessing()
+        let subscriptionIDs = self.subscriptions.map {
+            subscription in
+            return subscription.subscriptionID
+        }
+        let deleteSubscriptionsOperation = CKModifySubscriptionsOperation(subscriptionsToSave: nil, subscriptionIDsToDelete: subscriptionIDs)
+        deleteSubscriptionsOperation.modifySubscriptionsCompletionBlock = { _, subscriptionIDs, error in
+            if let error = error {
+                let userInfo = error.userInfo
+                let errorCode = CKErrorCode(rawValue: error.code)!
+                switch errorCode {
+                case .PartialFailure:
+                    var okToComplete = true
+                    let errorsByID = userInfo[CKPartialErrorsByItemIDKey] as! [String:NSError]
+                    for (_,error) in errorsByID {
+                        if error.code != CKErrorCode.UnknownItem.rawValue {
+                            okToComplete = false
+                        }
+                    }
+                    if okToComplete {
+                        print("Subscriptions deleted")
+                    } else {
+                        print("Failed to delete subscriptions")
+                    }
+                    completion(success: okToComplete)
+                default:
+                    print("Subscriptions deleted")
+                    completion(success: false)
+                }
+                return
+            }
+            completion(success: true)
+        }
+        self.container.publicCloudDatabase.addOperation(deleteSubscriptionsOperation)
     }
     
     func isSuspended() -> Bool {
@@ -54,75 +94,10 @@ class CloudNotificationProcessor {
     }
     
     func subscribeToCloudNotifications() {
-        let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
-        let predicate = NSPredicate(format: "parentSalonReference == %@",salonRecordID)
-        //let predicate = NSPredicate(value: true)
-        var subscription: CKSubscription
-        var CRT:CloudRecordType
-        var crt:String
-        var subID: String
-
-//        // iCloudSalon
-//        let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
-//        let salonPredicate = NSPredicate(format: "recordID = %@", salonRecordID)
-//        subscription = CKSubscription(recordType: "iCloudSalon", predicate: salonPredicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-//        subscriptionsDictionary[subscription.recordType!] = subscription
-
-        // icloudAppointment
-        CRT = CloudRecordType.CRAppointment
-        crt = CRT.rawValue
-        subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptions.append(subscription)
-        
-        // icloudEmployee
-        CRT = CloudRecordType.CREmployee
-        crt = CRT.rawValue
-        subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptions.append(subscription)
-
-        // icloudCustomer
-        CRT = CloudRecordType.CRCustomer
-        crt = CRT.rawValue
-        subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptions.append(subscription)
-
-        // icloudSale
-        CRT = CloudRecordType.CRSale
-        crt = CRT.rawValue
-        subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptions.append(subscription)
-
-        // icloudSaleItem
-        CRT = CloudRecordType.CRSaleItem
-        crt = CRT.rawValue
-        subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptions.append(subscription)
-
-        // icloudServiceCategory
-        CRT = CloudRecordType.CRServiceCategory
-        crt = CRT.rawValue
-        subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptions.append(subscription)
-
-        // icloudService
-        CRT = CloudRecordType.CRService
-        crt = CRT.rawValue
-        subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        subscriptions.append(subscription)
-        
         self.saveSubscriptions()
-        
     }
     
     private func saveSubscriptions() {
-        
         let modifySubscriptions = CKModifySubscriptionsOperation(subscriptionsToSave: self.subscriptions, subscriptionIDsToDelete: nil)
         modifySubscriptions.queuePriority = .VeryHigh
         modifySubscriptions.modifySubscriptionsCompletionBlock = { (savedSubscriptions, deletedIDs, operationError) -> Void in
@@ -292,5 +267,73 @@ class CloudNotificationProcessor {
             }
         }
         self.container.addOperation(fetchNotificationOperation)
+    }
+}
+
+extension CloudNotificationProcessor {
+    func makeSubscriptionsArray() -> [CKSubscription] {
+        var subscriptions = [CKSubscription]()
+        let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
+        let predicate = NSPredicate(format: "parentSalonReference == %@",salonRecordID)
+        var subscription: CKSubscription
+        var CRT:CloudRecordType
+        var crt:String
+        var subID: String
+        
+        //        // iCloudSalon
+        //        let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
+        //        let salonPredicate = NSPredicate(format: "recordID = %@", salonRecordID)
+        //        subscription = CKSubscription(recordType: "iCloudSalon", predicate: salonPredicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        //        subscriptionsDictionary[subscription.recordType!] = subscription
+        
+        // icloudAppointment
+        CRT = CloudRecordType.CRAppointment
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
+        
+        // icloudEmployee
+        CRT = CloudRecordType.CREmployee
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
+        
+        // icloudCustomer
+        CRT = CloudRecordType.CRCustomer
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
+        
+        // icloudSale
+        CRT = CloudRecordType.CRSale
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
+        
+        // icloudSaleItem
+        CRT = CloudRecordType.CRSaleItem
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
+        
+        // icloudServiceCategory
+        CRT = CloudRecordType.CRServiceCategory
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
+        
+        // icloudService
+        CRT = CloudRecordType.CRService
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
+        return subscriptions
     }
 }

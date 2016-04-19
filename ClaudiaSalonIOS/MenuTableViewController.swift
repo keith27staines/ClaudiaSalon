@@ -22,11 +22,32 @@ class MenuTableViewController: UITableViewController {
 
     @IBOutlet weak var allowExportLabel: UILabel!
     @IBOutlet weak var allowImportLabel: UILabel!
+    
     @IBAction func refreshTapped(sender: AnyObject) {
         self.performSegueWithIdentifier("GotoImporter", sender: self)
     }
     
     @IBAction func forgetTapped(sender: AnyObject) {
+        guard let recordName = AppDelegate.defaultSalonKey() else {
+            return
+        }
+        Coredata.forgetSalon(recordName) { success in
+            NSOperationQueue.mainQueue().addOperationWithBlock() {
+                var alert:UIAlertController
+                if success {
+                    AppDelegate.forgetSalon(recordName)
+                    alert = UIAlertController(title: "Salon forgotten", message: "All data related to this salon has been removed from this device", preferredStyle: .Alert)
+                    let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    alert.addAction(action)
+                } else {
+                    alert = UIAlertController(title: "Error Forgetting Salon", message: "Not all data related to this salon has been removed from this device due to a network problem. Please try again later.", preferredStyle: .Alert)
+                    let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    alert.addAction(action)
+                }
+                self.presentViewController(alert, animated: true, completion: nil)
+                self.salonDidChange()
+            }
+        }
     }
     
     @IBAction func importProcessingSwitchChanged(sender: UISwitch) {
@@ -66,9 +87,8 @@ class MenuTableViewController: UITableViewController {
         self.allowImportLabel.enabled = enable
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.salonName.text = "Select a Salon"
+    func salonDidChange() {
+        self.salonName.text = "Select or Add a Salon"
         self.salonAddress.text = " "
         self.enableSalonSpecificControls(false)
         guard let recordName = AppDelegate.defaultSalonKey() else {
@@ -84,9 +104,9 @@ class MenuTableViewController: UITableViewController {
             self.fetchSalonFromCloud(recordName)
             return
         }
-
+        
         guard let salon = Salon.defaultSalon(coredata.managedObjectContext),
-              let name = salon.salonName else {
+            let name = salon.salonName else {
                 self.salonAddress.text = "Data refresh is required"
                 self.refreshLabel.enabled = true
                 self.refreshButton.enabled = true
@@ -98,6 +118,11 @@ class MenuTableViewController: UITableViewController {
         self.salonName.text = name
         self.salonAddress.text = self.constructSingleLineAddress(salon.addressLine1, addressLine2: salon.addressLine2, postcode: salon.postcode)
         self.enableSalonSpecificControls(true)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.salonDidChange()
     }
     
     func constructSingleLineAddress(addressLine1: String?, addressLine2: String?, postcode: String?) -> String {
