@@ -36,9 +36,9 @@ class Coredata {
     private (set) var iCloudContainerIdentifier:String
     private (set) var iCloudSalonRecordName:String
     
-    lazy var exportController:BQCoredataExportController = BQCoredataExportController(parentMoc: self.managedObjectContext, iCloudContainerIdentifier: self.iCloudContainerIdentifier, startImmediately: false)
+    lazy var exportController:BQCoredataExportController = BQCoredataExportController(parentMoc: self.managedObjectContext, iCloudContainerIdentifier: self.iCloudContainerIdentifier, startProcessingImmediately: false)
     
-    lazy var importController:BQCloudImporter? = {
+    lazy var importController:BQCloudImporter = {
         var importer = BQCloudImporter(parentMoc:self.managedObjectContext,containerIdentifier: self.iCloudContainerIdentifier, salonCloudRecordName: self.iCloudSalonRecordName)
         return importer
     }()

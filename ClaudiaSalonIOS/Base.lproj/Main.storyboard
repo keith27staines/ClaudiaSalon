@@ -4,7 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--iCloud synchronization-->
@@ -1336,19 +1335,28 @@
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Salon Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rg-eN-1ZG">
-                                                    <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Salon Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rg-eN-1ZG">
+                                                    <rect key="frame" x="28" y="11" width="531" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Salon Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTn-Ne-cGw">
-                                                    <rect key="frame" x="8" y="40" width="584" height="21"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Salon Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTn-Ne-cGw">
+                                                    <rect key="frame" x="28" y="40" width="531" height="28"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="LTn-Ne-cGw" firstAttribute="top" secondItem="1rg-eN-1ZG" secondAttribute="bottom" constant="8" id="2Xv-5s-YW0"/>
+                                                <constraint firstItem="LTn-Ne-cGw" firstAttribute="leading" secondItem="kvS-1f-aTO" secondAttribute="leadingMargin" constant="20" id="BDb-dS-1yT"/>
+                                                <constraint firstItem="1rg-eN-1ZG" firstAttribute="top" secondItem="kvS-1f-aTO" secondAttribute="topMargin" constant="3" id="bIC-8M-bag"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="LTn-Ne-cGw" secondAttribute="trailing" id="cg2-f9-x1x"/>
+                                                <constraint firstItem="1rg-eN-1ZG" firstAttribute="leading" secondItem="kvS-1f-aTO" secondAttribute="leadingMargin" constant="20" id="k44-Gd-3wH"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="1rg-eN-1ZG" secondAttribute="trailing" id="swu-Ty-Srd"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="LTn-Ne-cGw" secondAttribute="bottom" constant="3" id="vNa-HN-KCE"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="bxs-9K-aho" kind="show" identifier="GotoSelectSalon" id="br8-Zt-Om1"/>
@@ -1358,29 +1366,24 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Refresh from Cloud" id="ST4-uh-G75">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="109" id="j8I-P7-cK4">
-                                        <rect key="frame" x="0.0" y="200" width="600" height="109"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="84" id="j8I-P7-cK4">
+                                        <rect key="frame" x="0.0" y="200" width="600" height="84"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j8I-P7-cK4" id="dLY-x8-nJh">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="108"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="83"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="lCu-Z0-Wk2">
-                                                    <rect key="frame" x="8" y="8" width="300" height="92"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="All data held on this device relating to this Salon will be freshly downloaded from the cloud" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ie6-bq-5S4">
-                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="92"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All data held on this device relating to this Salon will be freshly downloaded from the cloud" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ie6-bq-5S4">
+                                                    <rect key="frame" x="28" y="11" width="202" height="61"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ukS-Qk-4bP">
-                                                    <rect key="frame" x="341" y="39" width="83" height="30"/>
+                                                    <rect key="frame" x="250" y="27" width="100" height="30"/>
                                                     <color key="backgroundColor" red="1" green="0.62139372643553492" blue="0.21125220836298164" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="83" id="pw4-vM-gC4"/>
+                                                        <constraint firstAttribute="width" priority="999" constant="100" id="pw4-vM-gC4"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Refresh">
@@ -1392,14 +1395,12 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="lCu-Z0-Wk2" firstAttribute="leading" secondItem="dLY-x8-nJh" secondAttribute="leadingMargin" id="9x6-RO-iWx"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ukS-Qk-4bP" secondAttribute="trailing" priority="999" id="KSZ-Ss-JrF"/>
-                                                <constraint firstItem="lCu-Z0-Wk2" firstAttribute="top" secondItem="dLY-x8-nJh" secondAttribute="topMargin" id="ROC-5R-h7D"/>
-                                                <constraint firstItem="lCu-Z0-Wk2" firstAttribute="width" secondItem="dLY-x8-nJh" secondAttribute="width" multiplier="0.5" id="UH3-XR-4wK"/>
-                                                <constraint firstItem="ukS-Qk-4bP" firstAttribute="centerY" secondItem="dLY-x8-nJh" secondAttribute="centerY" id="d0h-4M-cNY"/>
-                                                <constraint firstItem="lCu-Z0-Wk2" firstAttribute="centerY" secondItem="dLY-x8-nJh" secondAttribute="centerY" id="pav-WR-n2E"/>
-                                                <constraint firstItem="lCu-Z0-Wk2" firstAttribute="leading" secondItem="dLY-x8-nJh" secondAttribute="leadingMargin" id="pbF-Ws-M4E"/>
-                                                <constraint firstItem="ukS-Qk-4bP" firstAttribute="leading" secondItem="lCu-Z0-Wk2" secondAttribute="trailing" constant="33" id="yiA-df-2t0"/>
+                                                <constraint firstItem="ukS-Qk-4bP" firstAttribute="centerX" secondItem="dLY-x8-nJh" secondAttribute="centerX" priority="999" id="DWv-Ih-XsI"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ukS-Qk-4bP" secondAttribute="trailing" constant="20" id="Fvm-5U-uEH"/>
+                                                <constraint firstItem="ukS-Qk-4bP" firstAttribute="centerY" secondItem="dLY-x8-nJh" secondAttribute="centerY" id="QiF-Ui-xlt"/>
+                                                <constraint firstItem="ukS-Qk-4bP" firstAttribute="leading" secondItem="ie6-bq-5S4" secondAttribute="trailing" constant="20" id="WD7-UP-loP"/>
+                                                <constraint firstItem="ie6-bq-5S4" firstAttribute="centerY" secondItem="dLY-x8-nJh" secondAttribute="centerY" id="cpQ-Da-zkt"/>
+                                                <constraint firstItem="ie6-bq-5S4" firstAttribute="leading" secondItem="dLY-x8-nJh" secondAttribute="leadingMargin" constant="20" id="zGR-iA-cnw"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1408,20 +1409,23 @@
                             <tableViewSection headerTitle="Forget This Salon" id="XxV-32-j3p">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="77" id="qg0-8D-Yoa">
-                                        <rect key="frame" x="0.0" y="337" width="600" height="77"/>
+                                        <rect key="frame" x="0.0" y="312" width="600" height="77"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qg0-8D-Yoa" id="n8T-tI-2UT">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="76"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="jZs-Sj-4DV">
-                                                    <rect key="frame" x="8" y="8" width="300" height="60"/>
-                                                </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All data relating to this Salon will be removed from this device" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-1R-6lN">
+                                                    <rect key="frame" x="28" y="8" width="202" height="61"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5i-RP-PYE">
-                                                    <rect key="frame" x="341" y="23" width="83" height="30"/>
+                                                    <rect key="frame" x="250" y="23" width="100" height="30"/>
                                                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="83" id="PWb-JX-coo"/>
+                                                        <constraint firstAttribute="width" priority="999" constant="100" id="PWb-JX-coo"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Forget">
@@ -1431,93 +1435,87 @@
                                                         <action selector="forgetTapped:" destination="jXf-2i-B2J" eventType="touchUpInside" id="blA-dU-uiH"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="All data relating to this Salon will be removed from this device" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-1R-6lN">
-                                                    <rect key="frame" x="8" y="4" width="300" height="60"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="centerY" secondItem="n8T-tI-2UT" secondAttribute="centerY" id="4LP-VY-QKR"/>
-                                                <constraint firstItem="jZs-Sj-4DV" firstAttribute="leading" secondItem="n8T-tI-2UT" secondAttribute="leadingMargin" id="4Nq-tU-cww"/>
-                                                <constraint firstItem="jZs-Sj-4DV" firstAttribute="centerY" secondItem="n8T-tI-2UT" secondAttribute="centerY" id="ABs-Va-0bG"/>
-                                                <constraint firstItem="jZs-Sj-4DV" firstAttribute="width" secondItem="n8T-tI-2UT" secondAttribute="width" multiplier="0.5" id="ATr-p7-Im4"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="P5i-RP-PYE" secondAttribute="trailing" priority="999" id="B9Z-FI-lzH"/>
-                                                <constraint firstItem="jZs-Sj-4DV" firstAttribute="leading" secondItem="n8T-tI-2UT" secondAttribute="leadingMargin" id="jJh-eu-epz"/>
-                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="leading" secondItem="jZs-Sj-4DV" secondAttribute="trailing" constant="33" id="tSI-EG-wga"/>
-                                                <constraint firstItem="jZs-Sj-4DV" firstAttribute="top" secondItem="n8T-tI-2UT" secondAttribute="topMargin" id="wBU-fD-V53"/>
+                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="centerX" secondItem="n8T-tI-2UT" secondAttribute="centerX" priority="999" id="5Uu-Xu-5gh"/>
+                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="centerY" secondItem="n8T-tI-2UT" secondAttribute="centerY" id="5m9-Db-1YR"/>
+                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="leading" secondItem="RYS-1R-6lN" secondAttribute="trailing" constant="20" id="RU9-7E-2uR"/>
+                                                <constraint firstItem="RYS-1R-6lN" firstAttribute="centerY" secondItem="n8T-tI-2UT" secondAttribute="centerY" id="efg-zV-Fd1"/>
+                                                <constraint firstItem="RYS-1R-6lN" firstAttribute="leading" secondItem="n8T-tI-2UT" secondAttribute="leadingMargin" constant="20" id="ly0-X0-nFa"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="P5i-RP-PYE" secondAttribute="trailing" constant="20" id="mVJ-BS-Mee"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Cloud import and export settings for this App" id="VSJ-pX-hbM">
+                            <tableViewSection headerTitle="Data import and export permissions" id="VSJ-pX-hbM">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="edG-0D-fc9">
-                                        <rect key="frame" x="0.0" y="442" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="edG-0D-fc9" id="S9T-1Z-iet">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="App starts with cloud import/export allowed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omk-3W-siH">
-                                                    <rect key="frame" x="17" y="11" width="335" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="93k-Xf-kua">
-                                                    <rect key="frame" x="393" y="6" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="appStartSwitchChanged:" destination="jXf-2i-B2J" eventType="valueChanged" id="QDq-eI-xGs"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ODM-wK-s0N">
-                                        <rect key="frame" x="0.0" y="486" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="417" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ODM-wK-s0N" id="C3v-lh-y6O">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TRd-Vb-Xsv">
-                                                    <rect key="frame" x="491" y="6" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="importProcessingSwitchChanged:" destination="jXf-2i-B2J" eventType="valueChanged" id="kLf-Sf-pRv"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Allow imports from cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e84-5N-qMO">
-                                                    <rect key="frame" x="235" y="11" width="191" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow imports from cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e84-5N-qMO">
+                                                    <rect key="frame" x="28" y="11" width="191" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TRd-Vb-Xsv">
+                                                    <rect key="frame" x="276" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="importProcessingSwitchChanged:" destination="jXf-2i-B2J" eventType="valueChanged" id="kLf-Sf-pRv"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="TRd-Vb-Xsv" secondAttribute="trailing" id="E1a-dt-AwP"/>
+                                                <constraint firstItem="TRd-Vb-Xsv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="e84-5N-qMO" secondAttribute="trailing" constant="20" id="ML3-bK-7zc"/>
+                                                <constraint firstItem="e84-5N-qMO" firstAttribute="centerY" secondItem="C3v-lh-y6O" secondAttribute="centerY" id="eGU-og-s8t"/>
+                                                <constraint firstItem="TRd-Vb-Xsv" firstAttribute="centerX" secondItem="C3v-lh-y6O" secondAttribute="centerX" priority="999" id="lMG-GG-pTK"/>
+                                                <constraint firstItem="e84-5N-qMO" firstAttribute="leading" secondItem="C3v-lh-y6O" secondAttribute="leadingMargin" constant="20" id="mAq-in-PTo"/>
+                                                <constraint firstItem="TRd-Vb-Xsv" firstAttribute="centerY" secondItem="C3v-lh-y6O" secondAttribute="centerY" id="vp6-FO-GSS"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="zuU-wT-BSw">
-                                        <rect key="frame" x="0.0" y="530" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="461" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zuU-wT-BSw" id="xIr-HP-hwO">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOI-o5-BFJ">
-                                                    <rect key="frame" x="491" y="6" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="exportProcessingSwitchChanged:" destination="jXf-2i-B2J" eventType="valueChanged" id="TOx-rO-GeQ"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Allow export to cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2SD-SG-BbY">
-                                                    <rect key="frame" x="265" y="11" width="162" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow export to cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2SD-SG-BbY">
+                                                    <rect key="frame" x="28" y="11" width="162" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cOI-o5-BFJ">
+                                                    <rect key="frame" x="276" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="exportProcessingSwitchChanged:" destination="jXf-2i-B2J" eventType="valueChanged" id="TOx-rO-GeQ"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="2SD-SG-BbY" firstAttribute="leading" secondItem="xIr-HP-hwO" secondAttribute="leadingMargin" constant="20" id="4jj-oy-Olu"/>
+                                                <constraint firstItem="2SD-SG-BbY" firstAttribute="leading" secondItem="xIr-HP-hwO" secondAttribute="leadingMargin" id="AkK-Fg-6y5"/>
+                                                <constraint firstItem="2SD-SG-BbY" firstAttribute="centerY" secondItem="xIr-HP-hwO" secondAttribute="centerY" id="GKA-IP-huT"/>
+                                                <constraint firstItem="cOI-o5-BFJ" firstAttribute="centerX" secondItem="xIr-HP-hwO" secondAttribute="centerX" priority="999" id="hTs-id-idZ"/>
+                                                <constraint firstItem="2SD-SG-BbY" firstAttribute="leading" secondItem="xIr-HP-hwO" secondAttribute="leadingMargin" constant="20" id="oaW-VN-kiM"/>
+                                                <constraint firstItem="cOI-o5-BFJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2SD-SG-BbY" secondAttribute="trailing" constant="20" id="wUj-Zz-qOA"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="cOI-o5-BFJ" secondAttribute="trailing" constant="20" id="x0d-hr-Fv4"/>
+                                                <constraint firstItem="cOI-o5-BFJ" firstAttribute="centerY" secondItem="xIr-HP-hwO" secondAttribute="centerY" id="x1K-cI-Exc"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="4jj-oy-Olu"/>
+                                                    <exclude reference="AkK-Fg-6y5"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -1530,7 +1528,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Salon Settings" id="kFe-SI-Vxe"/>
                     <connections>
-                        <outlet property="appStartSwitch" destination="93k-Xf-kua" id="Key-24-jQR"/>
+                        <outlet property="allowExportLabel" destination="2SD-SG-BbY" id="uQE-W6-X2G"/>
+                        <outlet property="allowImportLabel" destination="e84-5N-qMO" id="Wd4-VJ-cYW"/>
                         <outlet property="exportProcessingSwitch" destination="cOI-o5-BFJ" id="zTL-v9-d7G"/>
                         <outlet property="forgetButton" destination="P5i-RP-PYE" id="36o-M3-Hr3"/>
                         <outlet property="forgetLabel" destination="RYS-1R-6lN" id="vO8-C7-cyD"/>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9532" systemVersion="15E39d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15F18b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9532"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AMCHoursWorkedEachDayOfWeekViewController">
@@ -27,7 +27,7 @@
                 <constraint firstAttribute="trailing" secondItem="RpA-3t-C39" secondAttribute="trailing" id="Yde-fE-t1h"/>
                 <constraint firstItem="RpA-3t-C39" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="zV0-YK-A2L"/>
             </constraints>
-            <point key="canvasLocation" x="432.5" y="131.5"/>
+            <point key="canvasLocation" x="470.5" y="-146.5"/>
         </customView>
     </objects>
 </document>

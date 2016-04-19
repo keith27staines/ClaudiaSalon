@@ -126,11 +126,13 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         
         NSString * containerIdentifer = [CKContainer defaultContainer].containerIdentifier;
         
-        self.coredataExportController = [[BQCoredataExportController alloc] initWithParentMoc:self.managedObjectContext iCloudContainerIdentifier:containerIdentifer startImmediately:NO];
+        self.coredataExportController = [[BQCoredataExportController alloc] initWithParentMoc:self.managedObjectContext iCloudContainerIdentifier:containerIdentifer startProcessingImmediately:NO];
         
         if (_salon.bqCloudID != nil ) {
-            [self.coredataExportController startExportIterations];
             self.cloudImporter = [[BQCloudImporter alloc] initWithParentMoc:self.managedObjectContext containerIdentifier:containerIdentifer salonCloudRecordName:_salon.bqCloudID];
+
+            [self.coredataExportController resumeExportIterations];
+            [self.cloudImporter resumeCloudNotificationProcessing];
         }
     }
     return _salon;

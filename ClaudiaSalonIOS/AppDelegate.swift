@@ -15,8 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     static let cloudContainerID = "iCloud.uk.co.ClaudiasSalon.ClaudiaSalon"
     var window: UIWindow?
-
-    private static var _processCloudNotifications: Bool? = nil
+    private var didSuspendExports = false
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         self.setupToplevelController()
@@ -48,17 +47,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        if !Coredata.sharedInstance.exportController.isSuspended() {
+            Coredata.sharedInstance.exportController.suspendExportIterations()
+            self.didSuspendExports = true
+        } else {
+            self.didSuspendExports = false
+        }
         Coredata.sharedInstance.save()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        if self.didSuspendExports {
+            Coredata.sharedInstance.exportController.resumeExportIterations()
+        }
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         if let _ = Coredata.sharedInstance {
-            Coredata.sharedInstance.importController?.pollForMissedRemoteNotifications()            
+            Coredata.sharedInstance.importController.pollForMissedRemoteNotifications()            
         }
     }
 
@@ -86,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 extension AppDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         let cloudKitNotification = CKNotification(fromRemoteNotificationDictionary: userInfo as! [String : NSObject])
-        if cloudKitNotification.notificationType == .Query && AppDelegate.processCloudNotifications() {
+        if cloudKitNotification.notificationType == .Query {
             NSNotificationCenter.defaultCenter().postNotificationName("cloudKitNotification", object: self, userInfo: userInfo)
         }
     }
@@ -96,9 +104,6 @@ extension AppDelegate {
     func registerUserDefaults() {
         var defaults = [String:AnyObject]()
         defaults["salonKeys"] = [String]()
-        defaults["appStartsWithCloudUpdating"] = false
-        defaults["processCloudNotifications"] = false
-        defaults["exportChangesToCloud"] = false
         NSUserDefaults.standardUserDefaults().registerDefaults(defaults)
     }
     
@@ -142,31 +147,5 @@ extension AppDelegate {
         NSUserDefaults.standardUserDefaults().setObject(key, forKey: "defaultSalonKey")
     }
     
-    class func appStartsWithCloudUpdating() -> Bool {
-        return NSUserDefaults.standardUserDefaults().boolForKey("appStartsWithCloudUpdating")
-    }
-
-    class func setAppStartsWithCloudUpdating(value:Bool) {
-        NSUserDefaults.standardUserDefaults().setBool(value, forKey: "appStartsWithCloudUpdating")
-    }
-
-    class func processCloudNotifications() -> Bool {
-        if self._processCloudNotifications == nil {
-            _processCloudNotifications = NSUserDefaults.standardUserDefaults().boolForKey("processCloudNotifications")
-        }
-        return _processCloudNotifications!
-    }
-    class func setProcessCloudNotifications(value:Bool) {
-        self._processCloudNotifications = value
-        NSUserDefaults.standardUserDefaults().setBool(value, forKey: "processCloudNotifications")
-    }
-    
-    class func exportChangesToCloud() -> Bool {
-        return NSUserDefaults.standardUserDefaults().boolForKey("exportChangesToCloud")
-    }
-    
-    class func setExportChangesToCloud(value:Bool) {
-        NSUserDefaults.standardUserDefaults().setBool(value, forKey: "exportChangesToCloud")
-    }
 }
 

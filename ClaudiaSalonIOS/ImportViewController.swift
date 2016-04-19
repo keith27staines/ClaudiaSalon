@@ -20,14 +20,14 @@ class ImportViewController : UIViewController {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     @IBAction func cancelTapped(sender: AnyObject) {
-        self.progressViewController?.cancelImport()
+        self.progressViewController?.cancelBulkImport()
         self.bulkImportCompletionBlock?()
     }
     
     @IBOutlet weak var startButton: UIBarButtonItem!
     
     @IBAction func startTapped(sender: AnyObject) {
-        self.progressViewController?.startImport()
+        self.progressViewController?.startBulkImport()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

@@ -22,7 +22,7 @@ class CloudNotificationProcessor {
     private let publicCloudDatabase:CKDatabase
     private var currentSubscription: CKSubscription!
     private let cloudSalonReference : CKReference!
-    var willProcessNotifications = false
+    private var processingSuspended = true
     var subscriptions = [CKSubscription]()
 
     init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
@@ -40,6 +40,17 @@ class CloudNotificationProcessor {
             assertionFailure("The deepProcessRecord block cannot be called because it was never set")
             return false
         }
+    }
+    
+    func isSuspended() -> Bool {
+        return self.processingSuspended
+    }
+    func suspendNotificationProcessing() {
+        self.processingSuspended = true
+    }
+    func resumeNotificationProcessing() {
+        self.processingSuspended = false
+        self.pollForMissedRemoteNotifications()
     }
     
     func subscribeToCloudNotifications() {
@@ -141,13 +152,17 @@ class CloudNotificationProcessor {
     }
 
     func notificationFromCloud(notification:NSNotification) {
+        if self.processingSuspended {
+            return
+        }
         self.pollForMissedRemoteNotifications()
     }
 
     func pollForMissedRemoteNotifications() {
-        if self.willProcessNotifications {
-            self.pollForMissedRemoteNotifications(0)
+        if self.processingSuspended {
+            return
         }
+        self.pollForMissedRemoteNotifications(0)
     }
 
     private func pollForMissedRemoteNotifications(secondsDelay:Double) {

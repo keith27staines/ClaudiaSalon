@@ -12,23 +12,16 @@ import CloudKit
 class MenuTableViewController: UITableViewController {
 
     @IBOutlet weak var salonName: UILabel!
-    
-    
     @IBOutlet weak var salonAddress: UILabel!
-    
-    
-    @IBOutlet weak var appStartSwitch: UISwitch!
     @IBOutlet weak var importProcessingSwitch: UISwitch!
     @IBOutlet weak var exportProcessingSwitch: UISwitch!
-    
     @IBOutlet weak var forgetButton: UIButton!
-    
     @IBOutlet weak var refreshButton: UIButton!
-    
     @IBOutlet weak var refreshLabel: UILabel!
-    
     @IBOutlet weak var forgetLabel: UILabel!
-    
+
+    @IBOutlet weak var allowExportLabel: UILabel!
+    @IBOutlet weak var allowImportLabel: UILabel!
     @IBAction func refreshTapped(sender: AnyObject) {
         self.performSegueWithIdentifier("GotoImporter", sender: self)
     }
@@ -36,23 +29,30 @@ class MenuTableViewController: UITableViewController {
     @IBAction func forgetTapped(sender: AnyObject) {
     }
     
-    @IBAction func appStartSwitchChanged(sender: UISwitch) {
-        AppDelegate.setAppStartsWithCloudUpdating(sender.on)
-    }
-    
     @IBAction func importProcessingSwitchChanged(sender: UISwitch) {
-        AppDelegate.setProcessCloudNotifications(sender.on)
-    
+        if sender.on {
+            Coredata.sharedInstance.importController.resumeCloudNotificationProcessing()
+        } else {
+            Coredata.sharedInstance.importController.suspendCloudNotificationProcessing()
+        }
     }
 
     @IBAction func exportProcessingSwitchChanged(sender: UISwitch) {
-        AppDelegate.setExportChangesToCloud(sender.on)
+        if sender.on {
+            Coredata.sharedInstance.exportController.resumeExportIterations()
+        } else {
+            Coredata.sharedInstance.exportController.suspendExportIterations()
+        }
     }
     override func viewDidLoad() {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(MenuTableViewController.done(_:)))
-        self.appStartSwitch.on = AppDelegate.appStartsWithCloudUpdating()
-        self.importProcessingSwitch.on = AppDelegate.processCloudNotifications()
-        self.exportProcessingSwitch.on = AppDelegate.exportChangesToCloud()
+        if let coredata = Coredata.sharedInstance {
+            self.importProcessingSwitch.on = !coredata.importController.isSuspended()
+            self.exportProcessingSwitch.on = !coredata.exportController.isSuspended()
+        } else {
+            self.importProcessingSwitch.on = false
+            self.exportProcessingSwitch.on = false
+        }
     }
     
     func enableSalonSpecificControls(enable:Bool) {
@@ -60,16 +60,58 @@ class MenuTableViewController: UITableViewController {
         self.refreshButton.enabled = enable
         self.forgetLabel.enabled = enable
         self.forgetButton.enabled = enable
+        self.importProcessingSwitch.enabled = enable
+        self.exportProcessingSwitch.enabled = enable
+        self.allowExportLabel.enabled = enable
+        self.allowImportLabel.enabled = enable
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.salonName.text = "Select a Salon"
+        self.salonAddress.text = " "
+        self.enableSalonSpecificControls(false)
         guard let recordName = AppDelegate.defaultSalonKey() else {
-            self.enableSalonSpecificControls(false)
             return
         }
+        
+        guard let coredata = Coredata.sharedInstance else {
+            self.salonAddress.text = "Data refresh is required"
+            self.refreshLabel.enabled = true
+            self.refreshButton.enabled = true
+            self.forgetLabel.enabled = true
+            self.forgetButton.enabled = true
+            self.fetchSalonFromCloud(recordName)
+            return
+        }
+
+        guard let salon = Salon.defaultSalon(coredata.managedObjectContext),
+              let name = salon.salonName else {
+                self.salonAddress.text = "Data refresh is required"
+                self.refreshLabel.enabled = true
+                self.refreshButton.enabled = true
+                self.forgetLabel.enabled = true
+                self.forgetButton.enabled = true
+                self.fetchSalonFromCloud(recordName)
+                return
+        }
+        self.salonName.text = name
+        self.salonAddress.text = self.constructSingleLineAddress(salon.addressLine1, addressLine2: salon.addressLine2, postcode: salon.postcode)
         self.enableSalonSpecificControls(true)
-        self.fetchSalonFromCloud(recordName)
+    }
+    
+    func constructSingleLineAddress(addressLine1: String?, addressLine2: String?, postcode: String?) -> String {
+        let addressLine1 = addressLine1
+        let addressLine2 = addressLine2
+        let postcode = postcode
+        var address = addressLine1
+        if address != nil && addressLine2 != nil {
+            address = address! + ", " + addressLine2!
+        }
+        if address != nil && postcode != nil {
+            address = address! + ", " + postcode!
+        }
+        return address ?? " "
     }
     
     func fetchSalonFromCloud(salonRecordName:String) {
@@ -92,17 +134,6 @@ class MenuTableViewController: UITableViewController {
             }
             NSOperationQueue.mainQueue().addOperationWithBlock() {
                 self.salonName.text = record["name"] as? String
-                let addressLine1 = record["addressLine1"] as? String
-                let addressLine2 = record["addressLine2"] as? String
-                let postcode = record["postcode"] as? String
-                var address = addressLine1
-                if address != nil && addressLine2 != nil {
-                    address = address! + ", " + addressLine2!
-                }
-                if address != nil && postcode != nil {
-                    address = address! + ", " + postcode!
-                }
-                self.salonAddress.text = address
             }
         }
     }

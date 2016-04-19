@@ -22,25 +22,30 @@ class BQCoredataExportController : NSObject {
     private let synchronisationQueue = dispatch_queue_create("com.AMCAldebaron.BQCoredataExportController", DISPATCH_QUEUE_SERIAL)
     private let namePrefix = "BQCoredataExportController"
     private let exportQueue:NSOperationQueue
-    //private let deletionRequestList:BQDeletionRequestList
     private let activeOperationsCounter = AMCThreadSafeCounter(name:"Export Operations Counter",initialValue: 0)
     private var nextRunTime = DISPATCH_TIME_NOW
     private var iCloudContainerIdentifier:String!
     
-    init(parentMoc:NSManagedObjectContext,iCloudContainerIdentifier:String,startImmediately:Bool) {
+    init(parentMoc:NSManagedObjectContext,iCloudContainerIdentifier:String,startProcessingImmediately:Bool) {
         self.iCloudContainerIdentifier = iCloudContainerIdentifier
         self.parentMoc = parentMoc
         self.exportQueue = NSOperationQueue()
         self.exportQueue.name = namePrefix + "Queue"
         super.init()
-//        self.deletionRequestList = BQDeletionRequestList(parentManagedObjectContext: self.parentManagedObjectContext)
         
-        if startImmediately {
-            self.startExportIterations()
+        if startProcessingImmediately {
+            self.resumeExportIterations()
+        } else {
+            self.suspendExportIterations()
         }
     }
+    
+    func isSuspended() -> Bool {
+        return self.cancelled
+    }
+    
     /** Start iterating new export operations. Safe to call this multiple times because subsequent calls have no effect unless cancelled has been set (usually by a call to cancel) after the first call */
-    func startExportIterations() {
+    func resumeExportIterations() {
         if !self.cancelled {
             // already running
             return
@@ -49,10 +54,9 @@ class BQCoredataExportController : NSObject {
         self.runExportIterationAfterWait(iterationWaitForSeconds)
     }
     /** Cancels all sub operations. The effect will not be immediate. Use startExportIterations when you want to restart */
-    func cancel() {
+    func suspendExportIterations() {
         self.cancelled = true
         self.exportQueue.cancelAllOperations()
-        //self.deletionRequestList.cancel()
     }
 
     /** adds the export operation to the export queue and then calls itself until either the cancelled property becomes true or self is nil */
@@ -62,9 +66,6 @@ class BQCoredataExportController : NSObject {
         let nextRunTime = dispatch_time(DISPATCH_TIME_NOW, Int64(waitForSeconds * NSEC_PER_SEC))
         dispatch_after(nextRunTime, synchronisationQueue) {
             if let strongSelf = weakSelf {
-                
-                // Handle deletions
-                //self.deletionRequestList.processList()
                 
                 // Handle modifications - only process if we can "gain the lock"
                 if strongSelf.activeOperationsCounter.incrementIfZero() {

@@ -39,7 +39,6 @@ class BQCloudImporter : NSObject {
     private var serviceCategories = [(serviceCategory:ServiceCategory,record:CKRecord)]()
     
     private (set) var cancelled = false
-    
     private (set) var cloudNotificationProcessor:CloudNotificationProcessor!
     private let moc:NSManagedObjectContext
     
@@ -55,6 +54,17 @@ class BQCloudImporter : NSObject {
         self.cloudNotificationProcessor.deepProcessRecord = self.deepProcessRecord
         self.reinitialiseDatastructures()
         self.subscribeToCloudNotifications()
+    }
+    
+    func isSuspended() -> Bool {
+        return self.cloudNotificationProcessor?.isSuspended() ?? true
+    }
+    
+    func suspendCloudNotificationProcessing() {
+        self.cloudNotificationProcessor.suspendNotificationProcessing()
+    }
+    func resumeCloudNotificationProcessing() {
+        self.cloudNotificationProcessor.resumeNotificationProcessing()
     }
     
     func subscribeToCloudNotifications() {
@@ -77,16 +87,16 @@ class BQCloudImporter : NSObject {
         }
     }
     
-    func startImport() {
+    func startBulkImport() {
         self.synchQueue.addOperationWithBlock() {
-            self.cloudNotificationProcessor.willProcessNotifications = false
+            self.cloudNotificationProcessor.suspendNotificationProcessing()
             self.deleteAllCoredataObjects()
             for recordType in CloudRecordType.typesAsArray() {
                 self.addQueryOperationToQueueForType(recordType)
             }
         }
     }
-    func cancelImport() {
+    func cancelBulkImport() {
         self.synchQueue.addOperationWithBlock() {
             for operation in self.queryOperations {
                 operation.cancel()
@@ -174,7 +184,7 @@ class BQCloudImporter : NSObject {
                 NSOperationQueue.mainQueue().addOperationWithBlock() {
                     if let callback = self.allDownloadsComplete {
                         callback(withErrors: nil)
-                        self.cloudNotificationProcessor.willProcessNotifications = true
+                        self.cloudNotificationProcessor.resumeNotificationProcessing()
                     }
                 }
             }

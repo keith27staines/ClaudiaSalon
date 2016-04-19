@@ -18,9 +18,9 @@ class BQQueueProcessorViewController: NSViewController {
     @IBAction func runMaintenanceButtonClicked(sender: NSButton) {
         switch sender.state {
         case NSOffState:
-            self.coredataExportController.cancel()
+            self.coredataExportController.suspendExportIterations()
         case NSOnState:
-            self.coredataExportController.startExportIterations()
+            self.coredataExportController.resumeExportIterations()
         default:
             break
         }
@@ -32,7 +32,7 @@ class BQQueueProcessorViewController: NSViewController {
         //coredataExportController = BQCoredataExportController(salonDocument: self.salonDocument, startImmediately: false)
         let parentMoc = self.salonDocument.managedObjectContext!
         let containerIdentifier = CKContainer.defaultContainer().containerIdentifier!
-        coredataExportController = BQCoredataExportController(parentMoc: parentMoc, iCloudContainerIdentifier: containerIdentifier, startImmediately: false)
+        coredataExportController = BQCoredataExportController(parentMoc: parentMoc, iCloudContainerIdentifier: containerIdentifier, startProcessingImmediately: false)
     }
     
 }

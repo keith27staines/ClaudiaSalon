@@ -17,7 +17,11 @@ class ImportTableViewController : UITableViewController {
     
     lazy var importer:BQCloudImporter? = {
         let importer = Coredata.sharedInstance.importController
-        return Coredata.sharedInstance.importController
+        return importer
+    }()
+    lazy var exporter:BQCoredataExportController? = {
+       let exporter = Coredata.sharedInstance.exportController
+        return exporter
     }()
     let importTypes = CloudRecordType.typesAsArray()
     override func viewDidLoad() {
@@ -28,7 +32,7 @@ class ImportTableViewController : UITableViewController {
         super.viewDidAppear(animated)
         let alert = UIAlertController(title: "Data Download Required", message: "To finish setting up \(salonName) we need to download its data from the cloud", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Download", style: .Default, handler: { (download) in
-            self.startImport()
+            self.startBulkImport()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (cancel) in
             if let callback = self.bulkImportCompletionBlock {
@@ -52,14 +56,16 @@ class ImportTableViewController : UITableViewController {
             cell.activitySpinner.stopAnimating()
         }
     }
-    func cancelImport() {
-        self.importer?.cancelImport()
+    func cancelBulkImport() {
+        self.importer?.cancelBulkImport()
     }
-    func startImport() {
+    func startBulkImport() {
         self.importer?.downloadWasUpdated = self.downloadInformationWasUpdated
         self.importer?.downloadWasUpdated = self.downloadCompleted
         self.importer?.allDownloadsComplete = self.handleAllDownloadsComplete
-        self.importer?.startImport()
+        self.importer?.cloudNotificationProcessor.suspendNotificationProcessing()
+        self.exporter?.suspendExportIterations()
+        self.importer?.startBulkImport()
     }
     func downloadInformationWasUpdated(info:DownloadInfo) {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
@@ -81,6 +87,8 @@ class ImportTableViewController : UITableViewController {
         let alert = UIAlertController(title: "Download completed", message: "\(salonName) is now ready for use on this device", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (download) in
             print("download finished")
+            self.importer?.resumeCloudNotificationProcessing()
+            self.exporter?.resumeExportIterations()
             if let callback = self.bulkImportCompletionBlock {
                 callback()
             }

@@ -16,7 +16,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     static var onceOnlyFlag:dispatch_once_t = 0
 
     private var _fetchedResultsController: NSFetchedResultsController? = nil
-    
+    private var loadedSalon = false
     private var currentSalonName:String? = nil
     var appointmentViewController: AppointmentDetailViewController? = nil
     lazy var moc: NSManagedObjectContext = Coredata.sharedInstance.managedObjectContext
@@ -55,14 +55,15 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         guard let _ = AppDelegate.defaultSalonKey() else {
             // No, so ask the user to add one
             self.performSegueWithIdentifier("GotoAddSalon", sender: self)
-            AppDelegate.setProcessCloudNotifications(false)
-            AppDelegate.setExportChangesToCloud(false)
             return
         }
         self.loadDefaultSalon()
     }
     
     func loadDefaultSalon() {
+        if self.loadedSalon {
+            return
+        }
         guard let salonRecordName = AppDelegate.defaultSalonKey() else {
             return
         }
@@ -78,21 +79,17 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             return
         }
         
-        // Decide whether to start processing cloud notifications and exporting changes to the cloud
-        let cloudUpdating = AppDelegate.appStartsWithCloudUpdating()
-        AppDelegate.setProcessCloudNotifications(cloudUpdating)
-        AppDelegate.setExportChangesToCloud(cloudUpdating)
+        // Start processing cloud notifications and exporting changes to the cloud
+
         let exportController = Coredata.sharedInstance.exportController
-        
+        let importController = Coredata.sharedInstance.importController
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MasterViewController.appointmentWasExported(_:)), name: "appointmentWasExported", object: exportController)
         
-        if AppDelegate.exportChangesToCloud() {
-            Coredata.sharedInstance.exportController.startExportIterations()
-        }
+        exportController.resumeExportIterations()
+        importController.resumeCloudNotificationProcessing()
         
-        let processCloudNotifications = AppDelegate.processCloudNotifications()
-        Coredata.sharedInstance.importController?.cloudNotificationProcessor.willProcessNotifications = processCloudNotifications
         self.tableView.reloadData()
+        self.loadedSalon = true
     }
     
     func openCoredataSalon(recordName:String) -> Coredata {
@@ -192,6 +189,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             controller.bulkImportCompletionBlock = {
                 NSOperationQueue.mainQueue().addOperationWithBlock() {
                     self.dismissViewControllerAnimated(true, completion: nil)
+                    self.loadedSalon = false
                     self.tableView.reloadData()
                 }
             }
