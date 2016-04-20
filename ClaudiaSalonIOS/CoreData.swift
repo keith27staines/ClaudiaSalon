@@ -32,18 +32,19 @@ class Coredata {
         let coredata = self.coredataForKey(recordName)
         if coredata === self.sharedInstance {
             self.sharedInstance = nil
-            coredata.exportController.suspendExportIterations()
-            coredata.importController.suspendCloudNotificationProcessing()
-            coredata.importController.forgetSalon { (success) in
-                if success {
-                    do {
-                        try NSFileManager.defaultManager().removeItemAtURL(coredata.fileURL)
-                    } catch {
-                        assertionFailure("Failed to delete datastore for \(recordName) with error \(error)")
-                    }
+        }
+        Coredata.instances[recordName] = nil
+        coredata.exportController.suspendExportIterations()
+        coredata.importController.suspendCloudNotificationProcessing()
+        coredata.importController.forgetSalon { (success) in
+            if success {
+                do {
+                    try NSFileManager.defaultManager().removeItemAtURL(coredata.fileURL)
+                } catch {
+                    assertionFailure("Failed to delete datastore for \(recordName) with error \(error)")
                 }
-                completion(success: success)
             }
+            completion(success: success)
         }
     }
     

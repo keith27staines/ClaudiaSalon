@@ -11,12 +11,29 @@ import CloudKit
 
 class SelectSalonTableViewController: UITableViewController {
     
-    let salonKeys = AppDelegate.salonKeys()
-    var defaultSalonRecordName = AppDelegate.defaultSalonKey()
+    var salonKeys:[String] { return AppDelegate.salonKeys() }
+    var defaultSalonRecordName:String? { return AppDelegate.defaultSalonKey() }
     var salonRecordsDictionary = [String:CKRecord]()
     
     override func viewDidAppear(animated: Bool) {
         
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "GotoAddSalon" {
+            let vc = segue.destinationViewController as! AddSalonController
+            vc.completion = { vc in
+                if let newSalonRecordName = vc.salonRecordName {
+                    AppDelegate.addSalonKey(newSalonRecordName)
+                    if AppDelegate.defaultSalonKey() == nil {
+                        AppDelegate.setDefaultSalonKey(newSalonRecordName)
+                    }
+                    self.tableView.reloadData()
+                }
+            }
+            vc.allowCancel = true
+            return
+        }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -58,8 +75,7 @@ class SelectSalonTableViewController: UITableViewController {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         cell?.accessoryType = .Checkmark
         let newDefaultRecord = self.recordForIndexPath(indexPath)
-        self.defaultSalonRecordName = newDefaultRecord?.recordID.recordName
-        AppDelegate.setDefaultSalonKey(self.defaultSalonRecordName)
+        AppDelegate.setDefaultSalonKey(newDefaultRecord?.recordID.recordName)
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }
     

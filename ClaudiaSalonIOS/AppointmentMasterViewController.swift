@@ -202,6 +202,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                     self.currentSalonName = controller.salonName
                     AppDelegate.addSalonKey(salonRecordName)
                     AppDelegate.setDefaultSalonKey(salonRecordName)
+                    self.loadedSalon = false
+                    self.performSegueWithIdentifier("GotoImportViewController", sender: self)
+                }
+                NSOperationQueue.mainQueue().addOperationWithBlock() {
+                    self.tableView.reloadData()
                 }
             }
             return

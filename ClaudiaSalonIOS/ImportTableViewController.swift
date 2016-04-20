@@ -31,13 +31,13 @@ class ImportTableViewController : UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         let alert = UIAlertController(title: "Data Download Required", message: "To finish setting up \(salonName) we need to download its data from the cloud", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Download", style: .Default, handler: { (download) in
-            self.startBulkImport()
-        }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (cancel) in
             if let callback = self.bulkImportCompletionBlock {
                 callback()
             }
+        }))
+        alert.addAction(UIAlertAction(title: "Download", style: .Default, handler: { (download) in
+            self.startBulkImport()
         }))
         self.presentViewController(alert, animated: true) {}
     }

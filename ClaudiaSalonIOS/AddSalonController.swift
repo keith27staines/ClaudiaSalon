@@ -36,6 +36,7 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
     var completion:((sender:AddSalonController)->Void)?
     var allowCancel = false
     var salonRecordName:String?
+    var trialRecordName:String?
     var salonName: String? = "New Salon"
     
     @IBAction func cancelButtonTapped(sender: AnyObject) {
@@ -75,11 +76,21 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
     }
     
     func performFetchSalon() {
+        self.salonRecordName = nil
+        let trialRecordName = self.salonIDField.text ?? ""
+        guard trialRecordName.characters.count > 16 else {
+            self.displayError("Invalid Salon ID",message: "The Salon ID must have at least 16 characters. Please correct it and try again.",targetView: self.salonIDField)
+            return
+        }
         self.salonRecordName = self.salonIDField.text
+        if AppDelegate.salonKeys().contains(trialRecordName) {
+            self.displayError("Salon Already Added",message: "A Salon with this ID has already been added. Please try a different ID.",targetView: self.salonIDField)
+            return
+        }
         let containerID = Coredata.cloudContainerID
         let container = CKContainer(identifier: containerID)
         let cloudDB = container.publicCloudDatabase
-        let recordID = CKRecordID(recordName: self.salonRecordName!)
+        let recordID = CKRecordID(recordName: trialRecordName)
         cloudDB.fetchRecordWithID(recordID) { record, error in
             NSOperationQueue.mainQueue().addOperationWithBlock() {
                 guard let record = record else {
@@ -88,7 +99,6 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
                     switch errorCode {
                     case .UnknownItem:
                         self.displayError("Salon not found",message: "Please re-enter the salon ID and try again",targetView: self.salonIDField)
-                        self.findSalonDetailsButton.enabled = false
                     case .NetworkFailure, .NetworkUnavailable:
                         self.displayError("Unable to retrieve details", message: "The network is unavailable. Please try later when you have a good internet connection", targetView: self.findSalonDetailsButton)
                     case .NotAuthenticated:
@@ -98,6 +108,7 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
                     }
                     return
                 }
+                self.salonRecordName = trialRecordName
                 self.populateSalonDetails(record)
             }
         }
@@ -135,15 +146,16 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
         self.managerLabel.text = "Claudia Erickson" //record["Unknown manager"] as? String
         self.addThisSalonButton.enabled = true
         self.hideSalonDetails(false)
-        self.findSalonDetailsButton.enabled = false
+        self.findSalonDetailsButton.enabled = true
     }
     
     func enableFindDetailsButtonIfAppropriate() {
-        var enableButton = true
-        if !self.isValidEmail() { enableButton = false }
-        if self.passwordField.text?.characters.count < 5 { enableButton = false }
-        if self.salonIDField.text?.characters.count < 16 { enableButton = false }
-        self.findSalonDetailsButton.enabled = enableButton
+//        var enableButton = true
+//        if !self.isValidEmail() { enableButton = false }
+//        if self.passwordField.text?.characters.count < 5 { enableButton = false }
+//        if self.salonIDField.text?.characters.count < 16 { enableButton = false }
+//        self.findSalonDetailsButton.enabled = enableButton
+        self.findSalonDetailsButton.enabled = true
     }
     
     func isValidEmail() -> Bool {
@@ -164,7 +176,7 @@ extension AddSalonController {
     }
     
     func textFieldShouldClear(textField: UITextField) -> Bool {
-        self.findSalonDetailsButton.enabled = false
+        self.enableFindDetailsButtonIfAppropriate()
         return true
     }
 
