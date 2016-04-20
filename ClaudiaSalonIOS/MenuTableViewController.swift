@@ -176,6 +176,7 @@ class MenuTableViewController: UITableViewController {
             let navigationController = segue.destinationViewController as! UINavigationController
             let importController = navigationController.topViewController as! ImportViewController
             importController.salonName = self.salonName.text!
+            
             importController.bulkImportCompletionBlock = {
                 NSOperationQueue.mainQueue().addOperationWithBlock() {
                     self.dismissViewControllerAnimated(true, completion: nil)

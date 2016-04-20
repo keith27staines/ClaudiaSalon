@@ -40,19 +40,25 @@ class BQCloudImporter : NSObject {
     
     private (set) var cancelled = false
     private (set) var cloudNotificationProcessor:CloudNotificationProcessor!
-    private let moc:NSManagedObjectContext
+    private var moc:NSManagedObjectContext!
+    private let parentMoc: NSManagedObjectContext
     
     init(parentMoc:NSManagedObjectContext,containerIdentifier:String, salonCloudRecordName:String) {
-        self.moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        self.moc.parentContext = parentMoc
+        self.parentMoc = parentMoc
         self.salonCloudRecordName = salonCloudRecordName
         self.container = CKContainer(identifier: containerIdentifier)
         self.publicDatabase = self.container.publicCloudDatabase
         self.cloudNotificationProcessor = CloudNotificationProcessor(cloudContainerIdentifier: containerIdentifier, cloudSalonRecordName: salonCloudRecordName)
         super.init()
+        self.makePrivateMoc()
         self.cloudNotificationProcessor.shallowProcessRecord = self.shallowProcessRecord
         self.cloudNotificationProcessor.deepProcessRecord = self.deepProcessRecord
         self.initialiseDatastructures()
+    }
+    
+    func makePrivateMoc() {
+        self.moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        self.moc.parentContext = self.parentMoc
     }
     
     func forgetSalon(completion:(success:Bool)->Void) {
@@ -85,6 +91,15 @@ class BQCloudImporter : NSObject {
                 self.downloads[recordType.rawValue] = info
             }
             self.queryOperations.removeAll()
+            
+            self.salons.removeAll()
+            self.employees.removeAll()
+            self.customers.removeAll()
+            self.services.removeAll()
+            self.serviceCategories.removeAll()
+            self.appointments.removeAll()
+            self.sales.removeAll()
+            self.saleItems.removeAll()
         }
     }
     
@@ -93,6 +108,7 @@ class BQCloudImporter : NSObject {
         self.synchQueue.addOperationWithBlock() {
             self.cloudNotificationProcessor.suspendNotificationProcessing()
             self.deleteAllCoredataObjects()
+            self.makePrivateMoc()
             for recordType in CloudRecordType.typesAsArray() {
                 self.addQueryOperationToQueueForType(recordType)
             }
@@ -516,6 +532,7 @@ class BQCloudImporter : NSObject {
                 if salon == nil {
                     salon = Salon(moc:self.moc)
                 }
+                assert(salon?.managedObjectContext != nil)
                 salon!.updateFromCloudRecordIfNeeded(record)
                 self.salons.append((salon!,record))
             case .CRService:
@@ -622,6 +639,7 @@ extension BQCloudImporter {
         for entity in entities {
             self.deleteEntity(entity)
         }
+        try! self.moc.save()
         Coredata.sharedInstance.save()
         print("All Coredata objects were deleted")
     }
