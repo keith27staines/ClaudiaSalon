@@ -24,30 +24,56 @@ class MenuTableViewController: UITableViewController {
     @IBOutlet weak var allowImportLabel: UILabel!
     
     @IBAction func refreshTapped(sender: AnyObject) {
-        self.performSegueWithIdentifier("GotoImporter", sender: self)
+        guard let _ = Coredata.sharedInstance else {
+            let alert = UIAlertController(title: "Can't refresh data", message: "You must select a salon first", preferredStyle: .Alert)
+            let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alert.addAction(alertAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+        }
+        let alert = UIAlertController(title: "Refresh data?", message: "Are you sure you want to refresh data now? Any changes you have made that have not been exported from this device (orange cloud) may be lost", preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let refreshAction = UIAlertAction(title: "Refresh", style: .Destructive) { _ in
+            self.performSegueWithIdentifier("GotoImporter", sender: self)
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(refreshAction)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func forgetTapped(sender: AnyObject) {
         guard let recordName = AppDelegate.defaultSalonKey() else {
+            let alert = UIAlertController(title: "Can't forget Salon", message: "You must select a salon to forget", preferredStyle: .Alert)
+            let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alert.addAction(alertAction)
+            self.presentViewController(alert, animated: true, completion: nil)
             return
         }
-        Coredata.forgetSalon(recordName) { success in
-            NSOperationQueue.mainQueue().addOperationWithBlock() {
-                var alert:UIAlertController
-                if success {
-                    AppDelegate.forgetSalon(recordName)
-                    alert = UIAlertController(title: "Salon forgotten", message: "All data related to this salon has been removed from this device", preferredStyle: .Alert)
-                    let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                    alert.addAction(action)
-                } else {
-                    alert = UIAlertController(title: "Error Forgetting Salon", message: "Not all data related to this salon has been removed from this device due to a network problem. Please try again later.", preferredStyle: .Alert)
-                    let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                    alert.addAction(action)
+        
+        let alert = UIAlertController(title: "Forget Salon?", message: "Are you sure you want to remove all data for this salon from this device?", preferredStyle: .Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let forgetAction = UIAlertAction(title: "Remove", style: .Destructive) { _ in
+            Coredata.forgetSalon(recordName) { success in
+                NSOperationQueue.mainQueue().addOperationWithBlock() {
+                    var alert:UIAlertController
+                    if success {
+                        AppDelegate.forgetSalon(recordName)
+                        alert = UIAlertController(title: "Salon forgotten", message: "All data related to this salon has been removed from this device", preferredStyle: .Alert)
+                        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                        alert.addAction(action)
+                    } else {
+                        alert = UIAlertController(title: "Error Forgetting Salon", message: "Not all data related to this salon has been removed from this device due to a network problem. Please try again later.", preferredStyle: .Alert)
+                        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                        alert.addAction(action)
+                    }
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.salonDidChange()
                 }
-                self.presentViewController(alert, animated: true, completion: nil)
-                self.salonDidChange()
             }
         }
+        alert.addAction(cancelAction)
+        alert.addAction(forgetAction)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     @IBAction func importProcessingSwitchChanged(sender: UISwitch) {

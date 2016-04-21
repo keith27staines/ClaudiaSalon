@@ -54,7 +54,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // Do we have a default salon?
         guard let _ = AppDelegate.defaultSalonKey() else {
             // No, so ask the user to add one
-            self.performSegueWithIdentifier("GotoAddSalon", sender: self)
+            
+            //self.performSegueWithIdentifier("GotoAddSalon", sender: self)
             return
         }
         self.loadDefaultSalon()
@@ -197,6 +198,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         if segue.identifier == "GotoAddSalon" {
             let controller = segue.destinationViewController as! AddSalonController
+            controller.allowCancel = true
             controller.completion = {controller in
                 if let salonRecordName = controller.salonRecordName {
                     self.currentSalonName = controller.salonName

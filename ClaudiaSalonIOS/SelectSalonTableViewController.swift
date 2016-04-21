@@ -74,8 +74,9 @@ class SelectSalonTableViewController: UITableViewController {
         }
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         cell?.accessoryType = .Checkmark
-        let newDefaultRecord = self.recordForIndexPath(indexPath)
-        AppDelegate.setDefaultSalonKey(newDefaultRecord?.recordID.recordName)
+        let salonRecordName = self.recordNameForIndexPath(indexPath)
+        AppDelegate.setDefaultSalonKey(salonRecordName)
+        Coredata.setSharedInstance(salonRecordName)
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }
     
@@ -103,7 +104,6 @@ class SelectSalonTableViewController: UITableViewController {
     
     func fetchSalonFromCloud(recordName:String) {
         guard let coredata = Coredata.sharedInstance else {
-            self.performSegueWithIdentifier("GotoAddSalon", sender: self)
             return
         }
         let containerID = coredata.iCloudContainerIdentifier

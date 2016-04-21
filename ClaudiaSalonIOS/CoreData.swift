@@ -25,7 +25,8 @@ class Coredata {
     }
     
     class func setSharedInstance(cloudSalonRecordName:String) {
-        self.sharedInstance = self.instances[cloudSalonRecordName]
+        let coredata = self.coredataForKey(cloudSalonRecordName)
+        self.sharedInstance = coredata
     }
     
     class func forgetSalon(recordName:String,completion:(success:Bool)->Void) {
@@ -46,6 +47,10 @@ class Coredata {
             }
             completion(success: success)
         }
+    }
+    
+    deinit {
+        self.save(true)
     }
     
     private init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
@@ -116,15 +121,9 @@ class Coredata {
         return managedObjectContext
     }()
     
-//    lazy var backgroundContext: NSManagedObjectContext = {
-//       let backgroundContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-//        backgroundContext.parentContext = self.managedObjectContext
-//        return backgroundContext
-//    }()
-    
     // MARK: - Core Data Saving support
     
-    func save () {
+    func save (raiseFatalErrorOnFail:Bool = true) {
         guard self.managedObjectContext.hasChanges || self.saveContext.hasChanges else {
             return
         }
@@ -132,7 +131,11 @@ class Coredata {
             do {
                 try self.managedObjectContext.save()
             } catch {
-                fatalError("Unresolved error while saving context \(error)")
+                if raiseFatalErrorOnFail {
+                    fatalError("Unresolved error while saving context \(error)")
+                } else {
+                    print("error while saving managed object context but fatal error has been masked")
+                }
             }
         }
 
@@ -141,7 +144,11 @@ class Coredata {
                 do {
                     try self.saveContext.save()
                 } catch {
-                    fatalError("Unresolved error while saving context \(error)")
+                    if raiseFatalErrorOnFail {
+                        fatalError("Unresolved error while saving context \(error)")
+                    } else {
+                        print("error while saving managed object context but fatal error has been masked")
+                    }
                 }
             }
         }
