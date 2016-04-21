@@ -102,7 +102,11 @@ class SelectSalonTableViewController: UITableViewController {
     }
     
     func fetchSalonFromCloud(recordName:String) {
-        let containerID = Coredata.sharedInstance.iCloudContainerIdentifier
+        guard let coredata = Coredata.sharedInstance else {
+            self.performSegueWithIdentifier("GotoAddSalon", sender: self)
+            return
+        }
+        let containerID = coredata.iCloudContainerIdentifier
         let container = CKContainer(identifier: containerID)
         let recordID = CKRecordID(recordName: recordName)
         container.publicCloudDatabase.fetchRecordWithID(recordID) { record, error in

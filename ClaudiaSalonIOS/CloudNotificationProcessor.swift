@@ -251,6 +251,9 @@ class CloudNotificationProcessor {
                             // Handle the error here
                             return
                         }
+                        let notice = NSNotification(name: "BadgeCountReducedNotification", object: self, userInfo: ["processed":5])
+                        
+                        NSNotificationCenter.defaultCenter().postNotification(notice)
                         self.notifications.removeAll()
                         self.isWorking = false
                     }
@@ -272,6 +275,7 @@ class CloudNotificationProcessor {
 
 extension CloudNotificationProcessor {
     func makeSubscriptionsArray() -> [CKSubscription] {
+        
         var subscriptions = [CKSubscription]()
         let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
         let predicate = NSPredicate(format: "parentSalonReference == %@",salonRecordID)
@@ -287,10 +291,14 @@ extension CloudNotificationProcessor {
         //        subscriptionsDictionary[subscription.recordType!] = subscription
         
         // icloudAppointment
+        let appointmentInfo = CKNotificationInfo()
+        appointmentInfo.alertBody = "Salon appointment was updated";
+        appointmentInfo.shouldBadge = true;
         CRT = CloudRecordType.CRAppointment
         crt = CRT.rawValue
         subID = crt + self.cloudSalonRecordName
         subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscription.notificationInfo = appointmentInfo
         subscriptions.append(subscription)
         
         // icloudEmployee

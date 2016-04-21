@@ -100,8 +100,9 @@ class ImportTableViewController : UITableViewController {
         NSOperationQueue.mainQueue().addOperationWithBlock() {
             if let rowCount = self.importer?.downloads.count {
                 for row in 0..<rowCount {
-                    let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) as! ImportInfoCell
-                    cell.activitySpinner.stopAnimating()
+                    if let cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) as? ImportInfoCell {
+                        cell.activitySpinner.stopAnimating()
+                    }
                 }
             }
         }

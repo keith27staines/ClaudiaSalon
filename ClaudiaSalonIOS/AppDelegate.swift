@@ -31,6 +31,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         application.registerForRemoteNotifications()
     }
     
+    func registerForAppNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.processBadgeNotification(_:)), name: "BadgeCountReducedNotification", object: nil)
+    }
+    
+    func processBadgeNotification(notification:NSNotification) {
+        var badgeCount = UIApplication.sharedApplication().applicationIconBadgeNumber
+        if let userInfo = notification.userInfo {
+            if let processedBadges = userInfo["processed"] as? Int {
+                badgeCount = badgeCount - processedBadges
+            } else {
+                badgeCount = 0
+            }
+            if badgeCount < 0 { badgeCount = 0 }
+        }
+        let badgeResetOperation = CKModifyBadgeOperation(badgeValue: badgeCount)
+        badgeResetOperation.modifyBadgeCompletionBlock = { (error) -> Void in
+            if error != nil {
+                print("Error resetting badge: \(error)")
+            }
+            else {
+                UIApplication.sharedApplication().applicationIconBadgeNumber = badgeCount
+            }
+        }
+        let container = CKContainer(identifier: AppDelegate.cloudContainerID)
+        container.addOperation(badgeResetOperation)
+    }
+
+    
     func setupToplevelController() {
         // Set up top-level view controller
         let splitViewController = self.window!.rootViewController as! UISplitViewController

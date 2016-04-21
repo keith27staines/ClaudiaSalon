@@ -38,6 +38,8 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
     var salonRecordName:String?
     var trialRecordName:String?
     var salonName: String? = "New Salon"
+    var activeTextField: UITextField? = nil
+    var keyboardDisplacement:CGFloat = 0
     
     @IBAction func cancelButtonTapped(sender: AnyObject) {
         self.salonRecordName = nil
@@ -52,17 +54,28 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
     @IBAction func addThisTapped(sender: AnyObject) {
         self.dismissController()
     }
+    
+    override func viewDidLoad() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddSalonController.handleTap(_:)))
+        self.view.addGestureRecognizer(tapRecognizer)
+    }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.hideSalonDetails(true)
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.addKeyboardObservers()
         self.clearSalonDetails()
         self.clearUserInputs()
         self.enableFindDetailsButtonIfAppropriate()
         self.cancelButton.hidden = !self.allowCancel
         self.hideSalonDetails(true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeKeyboardObservers()
     }
     
     func hideSalonDetails(hidden:Bool) {
@@ -73,6 +86,18 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
     func dismissController() {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         self.completion?(sender: self)
+    }
+    
+    func handleTap(sender:UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            self.dismissKeyboard()
+        }
+    }
+    
+    func dismissKeyboard(control: UIControl? = nil) {
+        if activeTextField != nil {
+            activeTextField?.resignFirstResponder()
+        }
     }
     
     func performFetchSalon() {
@@ -118,6 +143,8 @@ class AddSalonController: UIViewController, UITextFieldDelegate {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .ActionSheet)
         alert.popoverPresentationController?.sourceView = targetView
         alert.popoverPresentationController?.sourceRect = targetView.bounds
+        let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alert.addAction(alertAction)
         self.presentViewController(alert, animated: true) {}
     }
     
@@ -179,7 +206,64 @@ extension AddSalonController {
         self.enableFindDetailsButtonIfAppropriate()
         return true
     }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        activeTextField = textField
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        activeTextField = nil
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.dismissKeyboard(textField)
+        return true
+    }
 
+}
+
+// Extension for keyboard observers
+extension AddSalonController {
+    func addKeyboardObservers() {
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.addObserverForName(UIKeyboardDidShowNotification, object: nil, queue: nil) { notification in
+            guard let activeTextField = self.activeTextField else {
+                return
+            }
+            guard let userInfo = notification.userInfo else {
+                fatalError("The UIKeyboardDidShowNotification was missing")
+            }
+            guard let frameValueObject = userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue else {
+                fatalError("Unable to retrieve the keyboard frame from userInfo")
+            }
+            let unrotatedKeyboardFrame = frameValueObject.CGRectValue()
+            let keyboardFrame = self.view.convertRect(unrotatedKeyboardFrame, toView: self.view)
+            let keyboardHeight = keyboardFrame.size.height
+            let visibleHeight = CGRectGetMaxY(self.view.frame) - keyboardHeight - 8
+            let textBottom = CGRectGetMaxY(self.view.convertRect(activeTextField.frame, toView: self.view))
+            if textBottom > visibleHeight {
+                self.keyboardDisplacement = textBottom - visibleHeight
+                UIView.animateWithDuration(0.3) {
+                    self.view.frame.origin.y -= self.keyboardDisplacement
+                    self.view.frame.size.height += self.keyboardDisplacement
+                }
+            }
+        }
+        nc.addObserverForName(UIKeyboardDidHideNotification, object: nil, queue: nil) { notification in
+            if self.keyboardDisplacement > 0 {
+                UIView.animateWithDuration(0.3) {
+                    self.view.frame.origin.y = 0 //
+                    self.view.frame.size.height -= self.keyboardDisplacement
+                }
+            }
+        }
+    }
+    
+    func removeKeyboardObservers() {
+        let nc = NSNotificationCenter.defaultCenter()
+        nc.removeObserver(self, name: UIKeyboardDidShowNotification, object: nil)
+        nc.removeObserver(self, name: UIKeyboardDidHideNotification, object: nil)
+    }
 }
 
 extension String {
