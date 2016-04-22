@@ -49,12 +49,16 @@ class AMCReportWorkerOperation : NSOperation {
                     guard !sale.voided!.boolValue && !sale.isQuote!.boolValue else {
                         continue
                     }
+                    self.salesTotal += sale.actualCharge!.doubleValue
                     for saleItem in sale.saleItem! {
                         guard let service = saleItem.service else {
                             continue
                         }
+                        guard saleItem.isActive == true else {
+                            continue
+                        }
                         let saleAmount = saleItem.actualCharge!.doubleValue
-                        self.salesTotal += saleAmount
+                        //self.salesTotal += saleAmount
                         if service.serviceCategory!.isHairCategory() {
                             self.hairTotal += saleAmount
                         } else {
