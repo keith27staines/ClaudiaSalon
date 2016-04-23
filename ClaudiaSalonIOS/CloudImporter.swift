@@ -588,7 +588,17 @@ class BQCloudImporter : NSObject {
 
 extension BQCloudImporter {
     func fetchRecordsFromCloudOperation(recordType:String) -> CKQueryOperation {
-        let query = CKQuery(recordType: recordType, predicate: NSPredicate(value: true))
+        let salonID = CKRecordID(recordName: self.salonCloudRecordName)
+        let salonRef = CKReference(recordID: salonID, action: .None)
+        let predicate:NSPredicate
+        let iType = ICloudRecordType(rawValue: recordType)!
+        switch iType {
+        case .Salon:
+            predicate = NSPredicate(format: "self.recordID = %@", salonID)
+        default:
+            predicate = NSPredicate(format: "parentSalonReference = %@", salonRef)
+        }
+        let query = CKQuery(recordType: recordType, predicate: predicate)
         let queryOperation = CKQueryOperation(query: query)
         queryOperation.name = recordType
         queryOperation.queryCompletionBlock = { cursor, error in
