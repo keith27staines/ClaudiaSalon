@@ -26,8 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     
     func registerForRemoteNotifications(application: UIApplication) {
         // Register for push notifications
-        //let u = UIMutableUserNotificationAction
-        let notificationSettings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert, categories: nil)
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
         application.registerForRemoteNotifications()
     }
