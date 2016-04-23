@@ -52,6 +52,10 @@
 		5351916A1B36B60500F8D37A /* AMCPasswordEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535191681B36B60500F8D37A /* AMCPasswordEditor.xib */; };
 		5351916E1B37F56D00F8D37A /* AMCChangeUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5351916C1B37F56D00F8D37A /* AMCChangeUserViewController.m */; };
 		5351916F1B37F56D00F8D37A /* AMCChangeUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */; };
+		5352DBC81CCA0C15002BDE6B /* CreateDevelopmentSalon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5352DBC71CCA0C15002BDE6B /* CreateDevelopmentSalon.swift */; };
+		5352DBCB1CCA2006002BDE6B /* AWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5352DBCA1CCA2006002BDE6B /* AWindow.xib */; };
+		5352DBCE1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5352DBCC1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.swift */; };
+		5352DBCF1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5352DBCD1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.xib */; };
 		5353EE611C86E88800D09B98 /* BQCoredataImportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533A8FD41C7CC0A4000CA54F /* BQCoredataImportController.swift */; };
 		5353EE621C86E8BF00D09B98 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA571C79AF4D006B4002 /* CoreData.swift */; };
 		5353EE641C8766E400D09B98 /* SaleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5353EE631C8766E400D09B98 /* SaleDetailViewController.swift */; };
@@ -472,6 +476,10 @@
 		5351916B1B37F56D00F8D37A /* AMCChangeUserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCChangeUserViewController.h; sourceTree = "<group>"; };
 		5351916C1B37F56D00F8D37A /* AMCChangeUserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCChangeUserViewController.m; sourceTree = "<group>"; };
 		5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCChangeUserViewController.xib; sourceTree = "<group>"; };
+		5352DBC71CCA0C15002BDE6B /* CreateDevelopmentSalon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDevelopmentSalon.swift; sourceTree = "<group>"; };
+		5352DBCA1CCA2006002BDE6B /* AWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AWindow.xib; sourceTree = "<group>"; };
+		5352DBCC1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateDevelopmentSalonWindowController.swift; sourceTree = "<group>"; };
+		5352DBCD1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateDevelopmentSalonWindowController.xib; sourceTree = "<group>"; };
 		5353EE631C8766E400D09B98 /* SaleDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaleDetailViewController.swift; sourceTree = "<group>"; };
 		5353EE651C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaleDetailCellTableViewCell.swift; sourceTree = "<group>"; };
 		5358DD381C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IntervalDuringDay+CoreDataProperties.h"; sourceTree = "<group>"; };
@@ -1065,6 +1073,7 @@
 				53D69BB51A9B22830004CE10 /* AppDelegate.m */,
 				53D325A71A9E391000AFCDE4 /* Welcome Screen */,
 				5346C5891ABB0717005D4540 /* Preferences Window */,
+				5352DBC91CCA1F7D002BDE6B /* Create Development Salon */,
 			);
 			name = "Application objects";
 			sourceTree = "<group>";
@@ -1222,6 +1231,17 @@
 				5351916D1B37F56D00F8D37A /* AMCChangeUserViewController.xib */,
 			);
 			name = "Change User View Controller";
+			sourceTree = "<group>";
+		};
+		5352DBC91CCA1F7D002BDE6B /* Create Development Salon */ = {
+			isa = PBXGroup;
+			children = (
+				5352DBC71CCA0C15002BDE6B /* CreateDevelopmentSalon.swift */,
+				5352DBCA1CCA2006002BDE6B /* AWindow.xib */,
+				5352DBCC1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.swift */,
+				5352DBCD1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.xib */,
+			);
+			name = "Create Development Salon";
 			sourceTree = "<group>";
 		};
 		5353EE671C876ACA00D09B98 /* Sale Detail */ = {
@@ -2772,6 +2792,7 @@
 				53D69C341A9B23B70004CE10 /* AMCDateRangeSelectorViewController.xib in Resources */,
 				53D69C1F1A9B23B60004CE10 /* AMCSalaryPaymentViewController.xib in Resources */,
 				53D69C4F1A9B23B70004CE10 /* EditPaymentViewController.xib in Resources */,
+				5352DBCF1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.xib in Resources */,
 				53D69C3E1A9B23B70004CE10 /* AMCReportsViewController.xib in Resources */,
 				53D69C241A9B23B60004CE10 /* AMCProductSelectorWindowController.xib in Resources */,
 				5351916F1B37F56D00F8D37A /* AMCChangeUserViewController.xib in Resources */,
@@ -2811,6 +2832,7 @@
 				5351916A1B36B60500F8D37A /* AMCPasswordEditor.xib in Resources */,
 				535F0DF61AB2339A0035CFD8 /* AMCAutoCloseViewController.xib in Resources */,
 				53D69C2E1A9B23B60004CE10 /* AMCWizardStepSelectCustomerViewController.xib in Resources */,
+				5352DBCB1CCA2006002BDE6B /* AWindow.xib in Resources */,
 				53D69C561A9B23B70004CE10 /* AMCMoneyTransferViewController.xib in Resources */,
 				530171271ACA80310047116D /* AMCRecurringEventManagementViewController.xib in Resources */,
 				5381C5D61B2DD7B300E99946 /* EditPaymentCategoryViewController.xib in Resources */,
@@ -2875,6 +2897,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53D69D3C1A9B240C0004CE10 /* Product+Methods.m in Sources */,
+				5352DBCE1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.swift in Sources */,
 				536B9E671C56077E00F170EC /* StockedBrand+CoreDataProperties.m in Sources */,
 				536B9E681C56077E00F170EC /* StockedBrand.m in Sources */,
 				536B9E821C56077E00F170EC /* Appointment.m in Sources */,
@@ -2893,6 +2916,7 @@
 				53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */,
 				53D69CFD1A9B240C0004CE10 /* AMCWizardStepSelectCustomerViewController.m in Sources */,
 				536B9E921C56077E00F170EC /* Service.m in Sources */,
+				5352DBC81CCA0C15002BDE6B /* CreateDevelopmentSalon.swift in Sources */,
 				536B9E881C56077E00F170EC /* AccountReconciliation.m in Sources */,
 				53D69CFB1A9B240C0004CE10 /* AMCWizardStepViewController.m in Sources */,
 				535FEA741C8436730041D272 /* AppointmentFormatter.swift in Sources */,

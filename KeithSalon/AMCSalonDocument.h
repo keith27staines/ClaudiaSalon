@@ -38,6 +38,9 @@
 - (IBAction)salonToolbarButton:(id)sender;
 - (IBAction)showMoneyInTill:(id)sender;
 
+// Suspend or resume import and export activities
+-(void)suspendImportsAndExports:(BOOL)suspend;
+
 // Top tab view
 @property (weak) IBOutlet NSTabView *topTabView;
 

@@ -100,6 +100,11 @@ class BQFirstExtractController {
         })
     }
     
+    // Reset for development
+    func resetForDevelopment() {
+        
+    }
+    
     // Prepare coredata records for extract
     func prepareCoredataRecordsReadyForFirstExport() {
         var readyForExport = 0

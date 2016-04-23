@@ -53,6 +53,7 @@
 @property (weak) IBOutlet NSPopUpButton *primaryBankAccountPopup;
 @property (weak) IBOutlet NSPopUpButton *tillAccountPopup;
 @property (weak) IBOutlet NSPopUpButton *cardPaymentAccountPopup;
+@property (weak) IBOutlet NSTextField * salonIDField;
 
 @end
 

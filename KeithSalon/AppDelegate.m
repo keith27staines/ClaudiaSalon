@@ -35,7 +35,7 @@
 @property AMCAutoCloseWindowController * autoCloseWindowController;
 @property (weak) IBOutlet AMCPreferencesWindowController *preferencesWindowController;
 @property (weak) IBOutlet AMCBookingQueueManagerWindowController *bookingQueueManagerWindowController;
-
+@property CreateDevelopmentSalonWindowController * createDevelopmentSalonWC;
 @end
 
 @implementation AppDelegate
@@ -54,6 +54,7 @@
         self.autoShutdownDate = [self.appStartDate endOfDay];
     }
 }
+
 -(void)registerForRemoteNotifications {
     // Register for push notifications
     [NSApp registerForRemoteNotificationTypes:NSRemoteNotificationTypeAlert];
@@ -141,6 +142,7 @@
     self.showWelcomeWindow = ((NSNumber*)[defaults objectForKey:kShowWelcomeWindow]).boolValue;
     [self openDefaultSalon:self];
 }
+
 -(IBAction)openDefaultSalon:(id)sender {
     if (self.pathOfDefaultSalon && self.pathOfDefaultSalon.length > 0) {
         // A file exists that matches the path of the default salon, but can we open it?
@@ -150,6 +152,9 @@
                 // No, couldn't open it, so just open the welcome screen and show the error because what else can we do?
                 [self presentWelcomeScreen:self];
                 [self.welcomeScreenController presentError:error modalForWindow:self.welcomeScreenController.window delegate:nil didPresentSelector:NULL contextInfo:nil];
+            } else {
+                AMCSalonDocument * salonDocument = (AMCSalonDocument*)document;
+                [salonDocument suspendImportsAndExports:NO];
             }
         }];
     } else {
@@ -168,13 +173,14 @@
         }];
     } else {
         alert.messageText = @"Make this Salon the default";
-        alert.informativeText = [NSString stringWithFormat:@"If it is made default, %@ will be opened automatically whenever the application is opened",currentSalon.fileURL.path];
+        alert.informativeText = [NSString stringWithFormat:@"If it is made default, %@ will be opened automatically whenever the application is opened. Also, cloud imports and exports will be enabled.",currentSalon.fileURL.path];
         [alert addButtonWithTitle:@"Make default"];
         [alert addButtonWithTitle:@"Cancel"];
         alert.delegate = self;
         [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse returnCode) {
             if (returnCode == NSAlertFirstButtonReturn) {
                 self.pathOfDefaultSalon = currentSalon.fileURL.path;
+                [currentSalon suspendImportsAndExports:false];
             }
         }];
     }
@@ -223,5 +229,17 @@
     AMCSalonDocument * currentSalon = [[NSDocumentController sharedDocumentController] currentDocument];
     self.bookingQueueManagerWindowController.salonDocument = currentSalon;
     [self.bookingQueueManagerWindowController showWindow:self];
+}
+
+- (IBAction)createDevelopmentSalon:(id)sender {
+    
+    NSDocumentController * documentController = [NSDocumentController sharedDocumentController];
+    for (NSDocument * document in documentController.documents) {
+        AMCSalonDocument * salon = (AMCSalonDocument*)document;
+        [salon suspendImportsAndExports:YES];
+    }
+
+    self.createDevelopmentSalonWC = [[CreateDevelopmentSalonWindowController alloc] init];
+    [self.createDevelopmentSalonWC showWindow:nil];
 }
 @end

@@ -117,6 +117,16 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 -(void)processRecurringEvents:(id)sender {
     [RecurringItem processOutstandingItemsFor:self.managedObjectContext error:nil];
 }
+
+-(void)suspendImportsAndExports:(BOOL)suspend {
+    if(suspend) {
+        [self.cloudImporter suspendCloudNotificationProcessing];
+        [self.coredataExportController suspendExportIterations];
+    } else {
+        [self.cloudImporter resumeCloudNotificationProcessing];
+        [self.coredataExportController resumeExportIterations];
+    }
+}
 -(Salon *)salon {
     if (!_salon) {
         _salon = [Salon salonWithMoc:self.managedObjectContext];
@@ -129,11 +139,9 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         self.coredataExportController = [[BQCoredataExportController alloc] initWithParentMoc:self.managedObjectContext iCloudContainerIdentifier:containerIdentifer startProcessingImmediately:NO];
         
         if (_salon.bqCloudID != nil ) {
-            self.cloudImporter = [[BQCloudImporter alloc] initWithParentMoc:self.managedObjectContext containerIdentifier:containerIdentifer salonCloudRecordName:_salon.bqCloudID];
-
-            [self.coredataExportController resumeExportIterations];
-            [self.cloudImporter resumeCloudNotificationProcessing];
+            self.cloudImporter = [[BQCloudImporter alloc] initWithParentMoc:self.managedObjectContext containerIdentifier:containerIdentifer salonCloudRecordName:_salon.bqCloudID];        
         }
+        [self suspendImportsAndExports:true];
     }
     return _salon;
 }
