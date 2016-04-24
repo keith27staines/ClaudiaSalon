@@ -80,8 +80,7 @@ class BQDataExtractViewController: NSViewController, BQFirstExtractControllerDel
         var progressIndicator: NSProgressIndicator?
         switch type {
         case ICloudRecordType.Appointment.rawValue:
-            progressIndicator = nil
-            break
+            progressIndicator = self.appointmentProgressIndicator
         case ICloudRecordType.Customer.rawValue:
             progressIndicator = self.customerProgressIndicator
         case ICloudRecordType.Employee.rawValue:

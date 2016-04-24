@@ -117,7 +117,12 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 -(void)processRecurringEvents:(id)sender {
     [RecurringItem processOutstandingItemsFor:self.managedObjectContext error:nil];
 }
-
+-(void)close {
+    [self suspendImportsAndExports:true];
+    self.cloudImporter = nil;
+    self.coredataExportController = nil;
+    [super close];
+}
 -(void)suspendImportsAndExports:(BOOL)suspend {
     if(suspend) {
         if (self.cloudImporter) {
@@ -519,6 +524,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"AMCSalonDocument";
 }
+
 #pragma mark - NSTabViewDelegate
 -(void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {

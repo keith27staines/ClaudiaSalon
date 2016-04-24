@@ -100,11 +100,6 @@ class BQFirstExtractController {
         })
     }
     
-    // Reset for development
-    func resetForDevelopment() {
-        
-    }
-    
     // Prepare coredata records for extract
     func prepareCoredataRecordsReadyForFirstExport() {
         var readyForExport = 0
@@ -537,7 +532,6 @@ extension BQFirstExtractController {
             }
         }
         do {
-            let _ = ICloudSalon(coredataSalon: Salon.defaultSalon(moc)!)
             try self.moc.save()
         } catch {
             print("Unable to save moc \(error)")
@@ -545,6 +539,7 @@ extension BQFirstExtractController {
     }
     private func bqExportableArrays() -> [[BQExportable]] {
         var array = [[BQExportable]]()
+        array.append([Salon.defaultSalon(moc)!])
         array.append(Customer.customersOrderedByFirstName(moc))
         array.append(Employee.employeesOrderedByFirstName(moc))
         array.append(ServiceCategory.serviceCategoriesOrderedByName(moc))
@@ -552,7 +547,6 @@ extension BQFirstExtractController {
         array.append(Appointment.allObjectsWithMoc(moc) as! [BQExportable])
         array.append(Sale.allObjectsWithMoc(moc) as! [BQExportable])
         array.append(SaleItem.allObjectsWithMoc(moc) as! [BQExportable])
-        array.append([Salon.defaultSalon(moc)!])
         return array
     }
     private func removeAllCloudReferencesFromBQExportable(bqExportable:BQExportable) {
