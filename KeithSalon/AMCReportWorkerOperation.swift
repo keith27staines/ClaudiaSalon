@@ -16,6 +16,7 @@ class AMCReportWorkerOperation : NSOperation {
     var paymentsTotal = 0.0
     var hairTotal = 0.0
     var beautyTotal = 0.0
+    var mixedPackagesTotal = 0.0
     var subIntervalCompletionBlock: ((row:Int,dictionary:[String:NSObject])->Void)?
     let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
     let reportingInterval:AMCReportingInterval
@@ -32,7 +33,6 @@ class AMCReportWorkerOperation : NSOperation {
     override func main() {
         self.moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         self.moc?.parentContext = self.parentMoc
-        //self.moc!.persistentStoreCoordinator = parentMoc.persistentStoreCoordinator
         self.moc!.performBlockAndWait {
             var row = 0
             while self.endDate.isGreaterThan(self.earliestDate) {
@@ -44,12 +44,15 @@ class AMCReportWorkerOperation : NSOperation {
                 self.paymentsTotal = 0
                 self.hairTotal = 0
                 self.beautyTotal = 0
+                self.mixedPackagesTotal = 0
                 for sale in sales {
                     if self.cancelled { return }
                     guard !sale.voided!.boolValue && !sale.isQuote!.boolValue else {
                         continue
                     }
                     self.salesTotal += sale.actualCharge!.doubleValue
+                    let diff = sale.chargeAfterIndividualDiscounts!.doubleValue - sale.actualCharge!.doubleValue
+
                     for saleItem in sale.saleItem! {
                         guard let service = saleItem.service else {
                             continue
@@ -61,10 +64,29 @@ class AMCReportWorkerOperation : NSOperation {
                         //self.salesTotal += saleAmount
                         if service.serviceCategory!.isHairCategory() {
                             self.hairTotal += saleAmount
-                        } else {
+                        } else if service.serviceCategory!.isBeautyCategory() {
                             self.beautyTotal += saleAmount
+                        } else {
+                            self.mixedPackagesTotal += saleAmount
                         }
                     }
+                    let halfDiff1 = Double(Int(diff/2.0))
+                    let halfDiff2 = diff - halfDiff1
+                    let smallestTotal = min(self.hairTotal, self.beautyTotal)
+                    var smallestDiff = min(halfDiff1,halfDiff2)
+                    if smallestDiff > smallestTotal {
+                        smallestDiff = max(smallestTotal,0)
+                    }
+                    let largestDiff = diff - smallestDiff
+                    if self.hairTotal > self.beautyTotal {
+                        self.beautyTotal -= smallestDiff
+                        self.hairTotal -= largestDiff
+                    } else {
+                        self.beautyTotal -= largestDiff
+                        self.hairTotal -= smallestDiff
+                    }
+                    self.beautyTotal = max(0,self.beautyTotal)
+                    self.hairTotal = max(0,self.hairTotal)
                 }
                 for payment in payments {
                     if self.cancelled { return }
@@ -81,7 +103,7 @@ class AMCReportWorkerOperation : NSOperation {
                         self.paymentsTotal -= payment.amount!.doubleValue
                     }
                 }
-                let dictionary = ["date": self.startDate,"hairCategories":self.hairTotal, "beautyCategories":self.beautyTotal ,"allCategories":self.salesTotal, "payments":self.paymentsTotal, "profits":(self.salesTotal - self.paymentsTotal)]
+                let dictionary = ["date": self.startDate,"mixedPackageCategories":self.mixedPackagesTotal,"hairCategories":self.hairTotal, "beautyCategories":self.beautyTotal ,"allCategories":self.salesTotal, "payments":self.paymentsTotal, "profits":(self.salesTotal - self.paymentsTotal)]
                 
                 if let subIntervalBlock = self.subIntervalCompletionBlock {
                     if self.cancelled {

@@ -307,6 +307,9 @@
         NSDate * date = data[@"date"];
         return [date dayAndMonthString];
     }
+    if ([tableColumn.identifier isEqualToString:@"mixedPackageCategories"]) {
+        return data[@"mixedPackageCategories"];
+    }
     if ([tableColumn.identifier isEqualToString:@"hairCategories"]) {
         return data[@"hairCategories"];
     }

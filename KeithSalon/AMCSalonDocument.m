@@ -120,11 +120,19 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 
 -(void)suspendImportsAndExports:(BOOL)suspend {
     if(suspend) {
-        [self.cloudImporter suspendCloudNotificationProcessing];
-        [self.coredataExportController suspendExportIterations];
+        if (self.cloudImporter) {
+            [self.cloudImporter suspendCloudNotificationProcessing];
+        }
+        if (self.coredataExportController) {
+            [self.coredataExportController suspendExportIterations];
+        }
     } else {
-        [self.cloudImporter resumeCloudNotificationProcessing];
-        [self.coredataExportController resumeExportIterations];
+        if (self.cloudImporter) {
+            [self.cloudImporter resumeCloudNotificationProcessing];
+        }
+        if (self.coredataExportController) {
+            [self.coredataExportController resumeExportIterations];            
+        }
     }
 }
 -(Salon *)salon {
@@ -138,7 +146,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         
         self.coredataExportController = [[BQCoredataExportController alloc] initWithParentMoc:self.managedObjectContext iCloudContainerIdentifier:containerIdentifer startProcessingImmediately:NO];
         
-        if (_salon.bqCloudID != nil ) {
+        if (_salon.bqCloudID != nil && _salon.bqCloudID.length > 0 ) {
             self.cloudImporter = [[BQCloudImporter alloc] initWithParentMoc:self.managedObjectContext containerIdentifier:containerIdentifer salonCloudRecordName:_salon.bqCloudID];        
         }
         [self suspendImportsAndExports:true];
@@ -203,7 +211,18 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
                 category.salon = _salon;
             }
         }
-    } // End Service Category data fix
+    }
+    for (ServiceCategory * category in [ServiceCategory allObjectsWithMoc:self.managedObjectContext]) {
+        if (category.salon == nil) {
+            category.salon = _salon;
+        }
+    }
+    for (ServiceCategory * category in rootServiceCategory.subCategories) {
+        if (category.salon == nil) {
+            category.salon = _salon;
+        }
+    }
+    // End Service Category data fix
     
     // Initialise entity "AccountancyPaymentGroup"
     [AccountingPaymentGroup buildDefaultGroupsForSalon:_salon];

@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 -(BOOL)isHairCategory;
+-(BOOL)isBeautyCategory;
 @end
 
 NS_ASSUME_NONNULL_END

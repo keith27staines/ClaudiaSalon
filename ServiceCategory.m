@@ -43,10 +43,26 @@
 }
 
 -(BOOL)isHairCategory {
-    if ([[self.name substringToIndex:4].uppercaseString isEqualToString:@"HAIR"]) {
-        return YES;
+    if (self.parent.parent == nil) {
+        if ([[self.name substringToIndex:4].uppercaseString isEqualToString:@"HAIR"]) {
+            return YES;
+        } else {
+            return NO;
+        }
+    } else {
+        return [self.parent isHairCategory];
     }
-    return NO;
+}
+-(BOOL)isBeautyCategory {
+    if (self.parent.parent == nil) {
+        if ([[self.name substringToIndex:4].uppercaseString isEqualToString:@"BEAU"]) {
+            return YES;
+        } else {
+            return NO;
+        }
+    } else {
+        return [self.parent isBeautyCategory];
+    }
 }
 
 #pragma mark - AMCTreeNodeProtocol

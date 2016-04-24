@@ -177,8 +177,8 @@ class CreateDevelopmentSalonWindowController: NSWindowController {
                     salon.addressLine1 = "1 Development Place"
                     salon.addressLine2 = "Development Street"
                     salon.postcode = "BR6 0HU"
-                    //let extractController = BQFirstExtractController(salonDocument: salonDocument)
-                    //extractController.prepareCoredataRecordsReadyForFirstExport()
+                    let extractController = BQFirstExtractController(salonDocument: salonDocument)
+                    extractController.removeAllCloudReferences()
                 }
             }
         }

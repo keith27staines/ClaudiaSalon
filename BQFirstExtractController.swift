@@ -325,6 +325,7 @@ class BQFirstExtractController {
             serviceCategory.bqMetadata = nil
         }
     }
+    
     func prepareAllServicesForCoredataExport() {
         allCoredataServices = Service.servicesOrderedByName(moc)
         coredataServicesDictionary.removeAll()
@@ -523,5 +524,42 @@ class BQFirstExtractController {
         if self.totalEmployeesToProcess > self.extractedEmployeesCount { return false }
         if self.totalAppointmentsToProcess > self.extractedAppointmentsCount { return false }
         return true
+    }
+}
+
+
+extension BQFirstExtractController {
+    func removeAllCloudReferences() {
+        let bqExportableArraysArray = self.bqExportableArrays()
+        for bqExportableObjects in bqExportableArraysArray {
+            for exportable in bqExportableObjects {
+                self.removeAllCloudReferencesFromBQExportable(exportable)
+            }
+        }
+        do {
+            let _ = ICloudSalon(coredataSalon: Salon.defaultSalon(moc)!)
+            try self.moc.save()
+        } catch {
+            print("Unable to save moc \(error)")
+        }
+    }
+    private func bqExportableArrays() -> [[BQExportable]] {
+        var array = [[BQExportable]]()
+        array.append(Customer.customersOrderedByFirstName(moc))
+        array.append(Employee.employeesOrderedByFirstName(moc))
+        array.append(ServiceCategory.serviceCategoriesOrderedByName(moc))
+        array.append(Service.servicesOrderedByName(moc))
+        array.append(Appointment.allObjectsWithMoc(moc) as! [BQExportable])
+        array.append(Sale.allObjectsWithMoc(moc) as! [BQExportable])
+        array.append(SaleItem.allObjectsWithMoc(moc) as! [BQExportable])
+        array.append([Salon.defaultSalon(moc)!])
+        return array
+    }
+    private func removeAllCloudReferencesFromBQExportable(bqExportable:BQExportable) {
+        bqExportable.bqCloudID = ""
+        bqExportable.bqMetadata = nil
+        bqExportable.bqHasClientChanges = false
+        bqExportable.bqNeedsCloudImport = false
+        bqExportable.bqNeedsCoreDataExport = false
     }
 }
