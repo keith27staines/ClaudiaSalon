@@ -38,6 +38,7 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
     }
     
     func saleItemWasUpdated(saleItem:SaleItem) {
+        saleItem.sale?.updatePriceFromSaleItems()
         self.configureView()
         self.updateAppointment(saleItem.sale!.fromAppointment!)
     }

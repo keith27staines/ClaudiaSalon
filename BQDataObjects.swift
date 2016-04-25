@@ -239,6 +239,9 @@ public class ICloudCustomer : ICloudRecord {
 public class ICloudEmployee : ICloudRecord {
     var firstName: String?
     var lastName: String?
+    var email: String?
+    var phone: String?
+    var password: String?
     
     init(coredataEmployee: Employee, parentSalonID: NSManagedObjectID) {
         
@@ -247,6 +250,9 @@ public class ICloudEmployee : ICloudRecord {
         coredataEmployee.managedObjectContext!.performBlockAndWait() {
             self.firstName = coredataEmployee.firstName
             self.lastName = coredataEmployee.lastName
+            self.phone = coredataEmployee.phone
+            self.email = coredataEmployee.email
+            self.password = coredataEmployee.password
             self.isActive = coredataEmployee.isActive?.boolValue ?? true
         }
     }
@@ -254,6 +260,9 @@ public class ICloudEmployee : ICloudRecord {
         let record = super.makeCloudKitRecord()
         record["firstName"] = firstName
         record["lastName"] = lastName
+        record["phone"] = phone
+        record["email"] = email
+        record["password"] = password
         record["isActive"] = isActive
         return record
     }
@@ -264,6 +273,8 @@ public class ICloudEmployee : ICloudRecord {
         }
         bqExportable.firstName = record["firstName"] as? String
         bqExportable.lastName = record["lastName"] as? String
+        bqExportable.email = record["email"] as? String
+        bqExportable.password = record["password"] as? String
         bqExportable.isActive = record["isActive"] as? Bool
         return bqExportable
     }

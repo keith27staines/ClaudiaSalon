@@ -303,6 +303,7 @@ extension Employee {
             self.lastName = record["lastName"] as? String
             self.phone = record["phone"] as? String
             self.email = record["email"] as? String
+            self.password = record["email"] as? String
             self.isActive = record["isActive"] as? Bool
         }
     }

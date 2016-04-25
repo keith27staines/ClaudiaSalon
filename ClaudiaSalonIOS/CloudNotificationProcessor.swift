@@ -112,7 +112,7 @@ class CloudNotificationProcessor {
                     }
                     return
                 }
-                assertionFailure("Failed to modify subscriptions with error \(operationError)")
+                print("Failed to modify subscriptions with error \(operationError)")
                 return
             }
             print("All subscriptions saved - Begun listening for cloud notifications")
@@ -313,8 +313,11 @@ extension CloudNotificationProcessor {
         var subID: String
         
         // iCloudSalon
-        let salonPredicate = NSPredicate(format: "recordID = %@", salonRecordID)
-        subscription = CKSubscription(recordType: "iCloudSalon", predicate: salonPredicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        CRT = CloudRecordType.CRSalon
+        crt = CRT.rawValue
+        subID = crt + self.cloudSalonRecordName
+        let salonPredicate = NSPredicate(format: "recordID == %@",salonRecordID)
+        subscription = CKSubscription(recordType: crt, predicate: salonPredicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
         subscriptions.append(subscription)
         
         // icloudAppointment
@@ -324,7 +327,7 @@ extension CloudNotificationProcessor {
         CRT = CloudRecordType.CRAppointment
         crt = CRT.rawValue
         subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
         subscription.notificationInfo = appointmentInfo
         subscriptions.append(subscription)
         
@@ -332,42 +335,42 @@ extension CloudNotificationProcessor {
         CRT = CloudRecordType.CREmployee
         crt = CRT.rawValue
         subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
         subscriptions.append(subscription)
         
         // icloudCustomer
         CRT = CloudRecordType.CRCustomer
         crt = CRT.rawValue
         subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
         subscriptions.append(subscription)
         
         // icloudSale
         CRT = CloudRecordType.CRSale
         crt = CRT.rawValue
         subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
         subscriptions.append(subscription)
         
         // icloudSaleItem
         CRT = CloudRecordType.CRSaleItem
         crt = CRT.rawValue
         subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
         subscriptions.append(subscription)
         
         // icloudServiceCategory
         CRT = CloudRecordType.CRServiceCategory
         crt = CRT.rawValue
         subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
         subscriptions.append(subscription)
         
         // icloudService
         CRT = CloudRecordType.CRService
         crt = CRT.rawValue
         subID = crt + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscription = CKSubscription(recordType: crt, predicate: predicate, subscriptionID: subID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
         subscriptions.append(subscription)
         return subscriptions
     }
