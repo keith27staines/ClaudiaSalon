@@ -251,9 +251,10 @@ class CloudNotificationProcessor {
                             // Handle the error here
                             return
                         }
-                        let notice = NSNotification(name: "BadgeCountReducedNotification", object: self, userInfo: ["processed":5])
-                        
-                        NSNotificationCenter.defaultCenter().postNotification(notice)
+                        if let processedCount = notificationIDsMarkedRead?.count {
+                            let notice = NSNotification(name: "BadgeCountReducedNotification", object: self, userInfo: ["processed":processedCount])
+                            NSNotificationCenter.defaultCenter().postNotification(notice)
+                        }
                         self.notifications.removeAll()
                         self.isWorking = false
                     }

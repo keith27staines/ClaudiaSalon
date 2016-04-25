@@ -41,6 +41,13 @@ class MenuTableViewController: UITableViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    @IBAction func resetBadgeCount(sender: AnyObject) {
+        let app = UIApplication.sharedApplication()
+        if let appDelegate = app.delegate as? AppDelegate {
+            appDelegate.setBadgeCount(0)
+        }
+    }
+    
     @IBAction func forgetTapped(sender: AnyObject) {
         guard let recordName = AppDelegate.defaultSalonKey() else {
             let alert = UIAlertController(title: "Can't forget Salon", message: "You must select a salon to forget", preferredStyle: .Alert)

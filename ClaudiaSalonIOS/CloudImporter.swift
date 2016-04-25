@@ -339,7 +339,7 @@ class BQCloudImporter : NSObject {
         }
     }
     func deepProcessSaleRecord(r: (sale:Sale, record:CKRecord))  -> Bool {
-    
+        var result = false
         let sale = r.sale
         let record = r.record
         let customerReference = record["parentCustomerReference"] as! CKReference
@@ -349,12 +349,16 @@ class BQCloudImporter : NSObject {
         moc.performBlockAndWait() {
             if let customer = Customer.fetchForCloudID(customerCloudID, moc: self.moc) {
                 sale.customer = customer
+            } else {
+                result = false
             }
             if let appointment = Appointment.fetchForCloudID(appointmentCloudID, moc: self.moc) {
                 sale.fromAppointment = appointment
+            } else {
+                result = false
             }
         }
-        return true
+        return result
     }
     func deepProcessSaleItems() {
         for r in saleItems {

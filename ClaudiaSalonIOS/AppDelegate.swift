@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         self.setupToplevelController()
         self.registerUserDefaults()
         self.registerForRemoteNotifications(application)
+        self .processBadgeNotification(nil)
         return true
     }    
     
@@ -32,19 +33,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     }
     
     func registerForAppNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.processBadgeNotification(_:)), name: "BadgeCountReducedNotification", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.processBadgeNotification(_:)), name: "BadgeCountReducedNotification", object: nil)
     }
     
-    func processBadgeNotification(notification:NSNotification) {
+    func processBadgeNotification(notification:NSNotification?) {
         var badgeCount = UIApplication.sharedApplication().applicationIconBadgeNumber
-        if let userInfo = notification.userInfo {
+        if let userInfo = notification?.userInfo {
             if let processedBadges = userInfo["processed"] as? Int {
                 badgeCount = badgeCount - processedBadges
             } else {
                 badgeCount = 0
             }
             if badgeCount < 0 { badgeCount = 0 }
+        } else {
+            badgeCount = 0
         }
+        self.setBadgeCount(badgeCount)
+    }
+    func setBadgeCount(badgeCount:Int) {
         let badgeResetOperation = CKModifyBadgeOperation(badgeValue: badgeCount)
         badgeResetOperation.modifyBadgeCompletionBlock = { (error) -> Void in
             if error != nil {
@@ -130,6 +136,7 @@ extension AppDelegate {
         let cloudKitNotification = CKNotification(fromRemoteNotificationDictionary: userInfo as! [String : NSObject])
         if cloudKitNotification.notificationType == .Query {
             NSNotificationCenter.defaultCenter().postNotificationName("cloudKitNotification", object: self, userInfo: userInfo)
+            return
         }
     }
 }

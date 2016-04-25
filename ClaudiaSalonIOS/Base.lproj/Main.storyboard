@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F18b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H1p-Uh-vWS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F24b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="H1p-Uh-vWS">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1400,7 +1400,7 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ukS-Qk-4bP">
                                                     <rect key="frame" x="250" y="27" width="100" height="30"/>
-                                                    <color key="backgroundColor" red="1" green="0.62139372643553492" blue="0.21125220836298164" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.6164621186" green="0.83000361919999999" blue="0.50601832589999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" priority="999" constant="100" id="pw4-vM-gC4"/>
                                                     </constraints>
@@ -1425,52 +1425,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Forget This Salon" id="XxV-32-j3p">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="77" id="qg0-8D-Yoa">
-                                        <rect key="frame" x="0.0" y="312" width="600" height="77"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qg0-8D-Yoa" id="n8T-tI-2UT">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="76"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All data relating to this Salon will be removed from this device" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-1R-6lN">
-                                                    <rect key="frame" x="28" y="8" width="202" height="61"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5i-RP-PYE">
-                                                    <rect key="frame" x="250" y="23" width="100" height="30"/>
-                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" priority="999" constant="100" id="PWb-JX-coo"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <state key="normal" title="Forget">
-                                                        <color key="titleColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="forgetTapped:" destination="jXf-2i-B2J" eventType="touchUpInside" id="blA-dU-uiH"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="centerX" secondItem="n8T-tI-2UT" secondAttribute="centerX" priority="999" id="5Uu-Xu-5gh"/>
-                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="centerY" secondItem="n8T-tI-2UT" secondAttribute="centerY" id="5m9-Db-1YR"/>
-                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="leading" secondItem="RYS-1R-6lN" secondAttribute="trailing" constant="20" id="RU9-7E-2uR"/>
-                                                <constraint firstItem="RYS-1R-6lN" firstAttribute="centerY" secondItem="n8T-tI-2UT" secondAttribute="centerY" id="efg-zV-Fd1"/>
-                                                <constraint firstItem="RYS-1R-6lN" firstAttribute="leading" secondItem="n8T-tI-2UT" secondAttribute="leadingMargin" constant="20" id="ly0-X0-nFa"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="P5i-RP-PYE" secondAttribute="trailing" constant="20" id="mVJ-BS-Mee"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Data import and export permissions" id="VSJ-pX-hbM">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ODM-wK-s0N">
-                                        <rect key="frame" x="0.0" y="417" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="312" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ODM-wK-s0N" id="C3v-lh-y6O">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -1500,7 +1458,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="zuU-wT-BSw">
-                                        <rect key="frame" x="0.0" y="461" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="356" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zuU-wT-BSw" id="xIr-HP-hwO">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
@@ -1535,6 +1493,94 @@
                                                     <exclude reference="AkK-Fg-6y5"/>
                                                 </mask>
                                             </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="fKs-T5-o1W">
+                                        <rect key="frame" x="0.0" y="400" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fKs-T5-o1W" id="tKk-Vx-QzM">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zero badge count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7lu-2P-Hj5">
+                                                    <rect key="frame" x="28" y="11" width="137" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDt-Z4-Ik7">
+                                                    <rect key="frame" x="250" y="7" width="100" height="30"/>
+                                                    <color key="backgroundColor" red="0.6164621186" green="0.83000361919999999" blue="0.50601832589999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="100" id="8mp-Jr-NXk"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Zero Count">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="resetBadgeCount:" destination="jXf-2i-B2J" eventType="touchUpInside" id="gkl-gW-QUR"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="EDt-Z4-Ik7" firstAttribute="centerX" secondItem="tKk-Vx-QzM" secondAttribute="centerX" id="0zi-yT-7oR"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="EDt-Z4-Ik7" secondAttribute="trailing" constant="20" id="UA7-Pr-0Op"/>
+                                                <constraint firstItem="7lu-2P-Hj5" firstAttribute="leading" secondItem="tKk-Vx-QzM" secondAttribute="leadingMargin" constant="20" id="UAM-1h-vMa"/>
+                                                <constraint firstItem="7lu-2P-Hj5" firstAttribute="leading" secondItem="tKk-Vx-QzM" secondAttribute="leadingMargin" constant="20" id="VN6-MC-CXH"/>
+                                                <constraint firstItem="EDt-Z4-Ik7" firstAttribute="centerY" secondItem="tKk-Vx-QzM" secondAttribute="centerY" id="ccy-QX-v4d"/>
+                                                <constraint firstItem="7lu-2P-Hj5" firstAttribute="centerY" secondItem="tKk-Vx-QzM" secondAttribute="centerY" id="kjd-tL-2xA"/>
+                                                <constraint firstItem="EDt-Z4-Ik7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7lu-2P-Hj5" secondAttribute="trailing" constant="20" id="p8s-gu-rkr"/>
+                                                <constraint firstItem="7lu-2P-Hj5" firstAttribute="leading" secondItem="tKk-Vx-QzM" secondAttribute="leadingMargin" id="x4P-yM-825"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="UAM-1h-vMa"/>
+                                                    <exclude reference="x4P-yM-825"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Forget This Salon" id="XxV-32-j3p">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="77" id="qg0-8D-Yoa">
+                                        <rect key="frame" x="0.0" y="472" width="600" height="77"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qg0-8D-Yoa" id="n8T-tI-2UT">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="76"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All data relating to this Salon will be removed from this device" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYS-1R-6lN">
+                                                    <rect key="frame" x="28" y="8" width="202" height="61"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5i-RP-PYE">
+                                                    <rect key="frame" x="250" y="23" width="100" height="30"/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" priority="999" constant="100" id="PWb-JX-coo"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal" title="Forget">
+                                                        <color key="titleColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="forgetTapped:" destination="jXf-2i-B2J" eventType="touchUpInside" id="blA-dU-uiH"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="centerX" secondItem="n8T-tI-2UT" secondAttribute="centerX" priority="999" id="5Uu-Xu-5gh"/>
+                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="centerY" secondItem="n8T-tI-2UT" secondAttribute="centerY" id="5m9-Db-1YR"/>
+                                                <constraint firstItem="P5i-RP-PYE" firstAttribute="leading" secondItem="RYS-1R-6lN" secondAttribute="trailing" constant="20" id="RU9-7E-2uR"/>
+                                                <constraint firstItem="RYS-1R-6lN" firstAttribute="centerY" secondItem="n8T-tI-2UT" secondAttribute="centerY" id="efg-zV-Fd1"/>
+                                                <constraint firstItem="RYS-1R-6lN" firstAttribute="leading" secondItem="n8T-tI-2UT" secondAttribute="leadingMargin" constant="20" id="ly0-X0-nFa"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="P5i-RP-PYE" secondAttribute="trailing" constant="20" id="mVJ-BS-Mee"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
