@@ -153,6 +153,17 @@ class CloudNotificationProcessor {
         }
     }
     
+    private func recordBelongsToSalon(record:CKRecord) -> Bool {
+        if record.recordType == CloudRecordType.CRSalon.rawValue {
+            return (record.recordID.recordName == self.cloudSalonRecordName)
+        } else {
+            guard let parentSalonReference = record["parentSalonReference"] as? CKReference else {
+                return false
+            }
+            return (parentSalonReference.recordID.recordName == self.cloudSalonRecordName)
+        }
+    }
+    
     private func performNotificationFetch(serverChangeToken: CKServerChangeToken? = nil) {
 
         // Create fetch notifications operation
@@ -171,6 +182,7 @@ class CloudNotificationProcessor {
         }
         
         // The callback for the fetch completion
+        fetchNotificationOperation.resultsLimit = 100
         fetchNotificationOperation.fetchNotificationChangesCompletionBlock = { (serverChangeToken: CKServerChangeToken?, operationError: NSError?) -> Void in
             guard self.notifications.count > 0 else {
                 dispatch_sync(self.queue) {
@@ -186,8 +198,10 @@ class CloudNotificationProcessor {
                 }
                 return
             }
-            
-            var processedNotificationIDs = [CKRecordID:Set<CKNotificationID>]()
+
+            var shallowProcessedNotificationIDs = [CKRecordID:Set<CKNotificationID>]()
+            var notificationIDsToMarkRead = Set<CKNotificationID>()
+
             dispatch_sync(self.queue) {
 
                 // Get array of possibly null IDs of records that have been modified in some way (including being created)
@@ -198,11 +212,12 @@ class CloudNotificationProcessor {
                 optionalRecordIDs = optionalRecordIDs.filter({ (recordID) -> Bool in
                     return (recordID != nil)
                 })
-                // Convert the [CKRecordID?] (which now contains no nil entries) into an array of [CKRecord]
+                // Convert the [CKRecordID?] (which now contains no nil entries) into an array of [CKRecordID]
                 let changedRecordIDs:[CKRecordID] = optionalRecordIDs.map({ (recordID) -> CKRecordID in
                     return recordID!
                 })
                 
+                var foreignNotificationIDsByRecordID = [CKRecordID:Set<CKNotificationID>]()
                 let recordFetchOp = CKFetchRecordsOperation(recordIDs: changedRecordIDs)
                 
                 recordFetchOp.perRecordCompletionBlock = { (record,recordID,error) in
@@ -212,11 +227,17 @@ class CloudNotificationProcessor {
                     guard let record = record else {
                         return
                     }
-                    guard let parentSalonReference = record["parentSalonReference"] as? CKReference else {
-                        return
-                    }
-                    guard parentSalonReference.recordID.recordName == self.cloudSalonRecordName else {
-                        return
+                    
+                    guard self.recordBelongsToSalon(record) else {
+                        // Reject this notification because it was for a different salon (i.e, a foreign salon) so we record its id in order to later mark it as read
+                        for notification in self.notifications {
+                            if notification.recordID == recordID {
+                                var notes = foreignNotificationIDsByRecordID[recordID] ?? Set<CKNotificationID>()
+                                notes.insert(notification.notificationID!)
+                                foreignNotificationIDsByRecordID[recordID] = notes
+                            }
+                        }
+                        return  // Reject foreign record
                     }
                     
                     // Shallow-process the record
@@ -224,25 +245,31 @@ class CloudNotificationProcessor {
                     self.shallowProcessRecord(record: record)
                     for notification in self.notifications {
                         if notification.recordID == recordID {
-                            var notes:Set<CKNotificationID>
-                            notes = processedNotificationIDs[recordID] ?? Set<CKNotificationID>()
+                            var notes = shallowProcessedNotificationIDs[recordID] ?? Set<CKNotificationID>()
                             notes.insert(notification.notificationID!)
-                            processedNotificationIDs[recordID] = notes
+                            shallowProcessedNotificationIDs[recordID] = notes
                         }
                     }
                 }
                 
                 // Mark the notifications as read to avoid processing them again
                 recordFetchOp.fetchRecordsCompletionBlock = { recordInfo, error in
-                    var notificationIDsToMarkRead = Set<CKNotificationID>()
                     if let recordInfo = recordInfo {
                         for (_,record) in recordInfo {
+                            guard self.recordBelongsToSalon(record) else {
+                                // Reject foreign records
+                                continue
+                            }
                             let deepProcessSuccess = self.deepProcessRecord(record: record)
                             if deepProcessSuccess {
-                                let notificationIDsReferencingRecord = processedNotificationIDs[record.recordID] ?? Set<CKNotificationID>()
-                                notificationIDsToMarkRead.unionInPlace(notificationIDsReferencingRecord)
+                                let shallowProcessedNotifications = shallowProcessedNotificationIDs[record.recordID] ?? Set<CKNotificationID>()
+                                notificationIDsToMarkRead.unionInPlace(shallowProcessedNotifications)
                             }
                         }
+                    }
+                    
+                    for (_,foreignNotificationID) in foreignNotificationIDsByRecordID {
+                        notificationIDsToMarkRead.unionInPlace(foreignNotificationID)
                     }
 
                     let markOperation = CKMarkNotificationsReadOperation(notificationIDsToMarkRead: Array(notificationIDsToMarkRead))
