@@ -312,11 +312,10 @@ extension CloudNotificationProcessor {
         var crt:String
         var subID: String
         
-        //        // iCloudSalon
-        //        let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
-        //        let salonPredicate = NSPredicate(format: "recordID = %@", salonRecordID)
-        //        subscription = CKSubscription(recordType: "iCloudSalon", predicate: salonPredicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
-        //        subscriptionsDictionary[subscription.recordType!] = subscription
+        // iCloudSalon
+        let salonPredicate = NSPredicate(format: "recordID = %@", salonRecordID)
+        subscription = CKSubscription(recordType: "iCloudSalon", predicate: salonPredicate, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate, .FiresOnRecordDeletion])
+        subscriptions.append(subscription)
         
         // icloudAppointment
         let appointmentInfo = CKNotificationInfo()
