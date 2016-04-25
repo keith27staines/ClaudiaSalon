@@ -273,6 +273,7 @@ public class ICloudEmployee : ICloudRecord {
         }
         bqExportable.firstName = record["firstName"] as? String
         bqExportable.lastName = record["lastName"] as? String
+        bqExportable.phone = record["phone"] as? String
         bqExportable.email = record["email"] as? String
         bqExportable.password = record["password"] as? String
         bqExportable.isActive = record["isActive"] as? Bool
