@@ -17,21 +17,7 @@ protocol AppointmentBuilder {
 
 extension BQExportable {
     func doesNeedUpdateFromCloud(cloudRecord:CKRecord) -> Bool {
-        guard let metadata = self.bqMetadata else {
-            return true // We have never been initialised with any data from the cloud
-        }
-        let decoder = NSKeyedUnarchiver(forReadingWithData: metadata)
-        guard let _ = CKRecord(coder: decoder) else {
-            print("Unable to decode the cloud record from the supplied metadata")
-            return true
-        }
-        guard let lastUpdatedDate = self.lastUpdatedDate else {
-            return true
-        }
-        if cloudRecord.modificationDate!.isGreaterThan(lastUpdatedDate) {
-            return true
-        }
-        return false  // We don't need to update ourself as we are more recent
+        return true
     }
     func updateFromCloudRecordIfNeeded(record:CKRecord) {
         if self.doesNeedUpdateFromCloud(record) {
