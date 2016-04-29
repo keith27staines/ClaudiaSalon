@@ -62,7 +62,14 @@
 -(void)application:(NSApplication *)app didReceiveRemoteNotification:(nonnull NSDictionary<NSString *,id> *)userInfo {
     CKNotification * note = [CKNotification notificationFromRemoteNotificationDictionary:userInfo];
     if (note.notificationType == CKNotificationTypeQuery) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"cloudKitNotification" object:self userInfo:userInfo];
+        CKQueryNotification * qNote = (CKQueryNotification*)note;
+        CKReference * parentSaloReference = qNote.recordFields[@"parentSalonReference"];
+        NSString * salonName = parentSaloReference.recordID.recordName;
+        NSDocument * currentDocument = [NSDocumentController sharedDocumentController].currentDocument;
+        AMCSalonDocument * currentSalon = (AMCSalonDocument*)currentDocument;
+        if ([salonName isEqualToString:currentSalon.salon.salonName]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"cloudKitNotification" object:self userInfo:userInfo];
+        }
     }
 }
 

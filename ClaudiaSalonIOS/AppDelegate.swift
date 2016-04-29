@@ -134,10 +134,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 extension AppDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         let cloudKitNotification = CKNotification(fromRemoteNotificationDictionary: userInfo as! [String : NSObject])
-        if cloudKitNotification.notificationType == .Query {
-            NSNotificationCenter.defaultCenter().postNotificationName("cloudKitNotification", object: self, userInfo: userInfo)
+        guard cloudKitNotification.notificationType == .Query  else {
             return
         }
+        guard let queryNotification = cloudKitNotification as? CKQueryNotification else {
+            return
+        }
+        guard let parentSalonReference = queryNotification.recordFields["parentSalonReference"] as? CKReference else {
+            return
+        }
+        guard let currentSalonName = Coredata.sharedInstance.iCloudSalonRecordName else {
+            return
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName("cloudKitNotification", object: self, userInfo: userInfo)
     }
 }
 
