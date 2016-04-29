@@ -48,6 +48,10 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
+    @IBAction func forgetCloudNotificationSubscriptions() {
+        Coredata.sharedInstance.forgetCloudNotificationSubscriptions()
+    }
+    
     @IBAction func forgetTapped(sender: AnyObject) {
         guard let recordName = AppDelegate.defaultSalonKey() else {
             let alert = UIAlertController(title: "Can't forget Salon", message: "You must select a salon to forget", preferredStyle: .Alert)

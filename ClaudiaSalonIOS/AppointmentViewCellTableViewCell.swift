@@ -20,13 +20,23 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
     
     @IBOutlet weak var dateLabel: UILabel!
     
+    @IBOutlet weak var statusLabel: UILabel!
+    
     var appointment:Appointment! {
         didSet {
             let formatter = AppointmentFormatter(appointment: self.appointment!)
             let hasChanges = self.appointment.bqHasClientChanges?.boolValue ?? false
             let needsExport = self.appointment.bqNeedsCoreDataExport?.boolValue ?? false
             let needsImport = self.appointment.bqNeedsCloudImport?.boolValue ?? false
-            
+            let completed = self.appointment.completed?.boolValue ?? false
+            let cancelled = self.appointment.cancelled?.boolValue ?? false
+            let tint:UIColor
+            if cancelled || completed {
+                tint = UIColor(red: 0.6, green: 0.0, blue: 0.0, alpha: 1.0)
+            } else {
+                tint = UIColor(red: 0.0, green: 0.0, blue: 0.6, alpha: 1.0)
+            }
+            self.statusLabel.textColor = tint
             self.customerNameLabel.text = self.appointment.customer?.fullName ?? ""
             self.dateLabel.text = formatter.verboseAppointmentDayString
             self.startTimeLabel.text = "Start " + formatter.startTimeString
@@ -45,6 +55,14 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
                 } else {
                     image = UIImage(named: "green-cloud")!
                 }
+            }
+            
+            if cancelled {
+                self.statusLabel.text = "Cancelled"
+            } else if completed {
+                self.statusLabel.text = "Completed"
+            } else {
+                self.statusLabel.text = "Booked"
             }
             
             button.setImage(image, forState: UIControlState.Normal)

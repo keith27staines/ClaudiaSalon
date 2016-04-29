@@ -16,11 +16,17 @@ class AppointmentFormatter {
     var appointmentDayString: String {
         return AppointmentFormatter.dateFormatter.stringFromDate(appointment.appointmentDate!)
     }
-    var verboseAppointmentDayString: String {
+    var veryVerboseAppointmentDayString: String {
         guard let date = appointment.appointmentDate  else {
             return ""
         }
         return date.stringNamingDayOfWeek() + " " + self.appointmentDayString
+    }
+    var verboseAppointmentDayString: String {
+        guard let date = appointment.appointmentDate  else {
+            return ""
+        }
+        return date.stringAbbreviatingDayOfWeek() + " " + self.appointmentDayString
     }
     var startTimeString: String {
         guard let date = appointment.appointmentDate  else {
@@ -65,5 +71,25 @@ class AppointmentFormatter {
             duration += "\(minutes) m "
         }
         return duration
-    }    
+    }
+    func bookedDurationStringVerbose() -> String {
+        guard let interval = appointment.bookedDuration?.doubleValue else {
+            return ""
+        }
+        let hours = Int(floor(Double(interval)/3600.0))
+        let minutes = Int((interval/60.0) % 60.0)
+        var duration = String()
+        if hours > 1 {
+            duration = "\(hours) hours "
+        } else if hours == 1 {
+            duration = "\(hours) hour "
+        }
+        if minutes > 1 {
+            duration += "\(minutes) minutes "
+        } else if minutes == 1 {
+            duration += "\(minutes) minute "
+        }
+        return duration
+    }
+    
 }

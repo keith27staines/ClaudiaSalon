@@ -82,6 +82,10 @@ class BQCloudImporter : NSObject {
         self.cloudNotificationProcessor.pollForMissedRemoteNotifications()
     }
     
+    func deleteAllCloudNotificationSubscriptions() {
+        self.cloudNotificationProcessor.deleteAllCloudNotificationSubscriptions()
+    }
+    
     private func initialiseDatastructures() {
         self.synchQueue.addOperationWithBlock() {
             self.downloadedRecords.removeAll(keepCapacity: true)
@@ -386,21 +390,17 @@ class BQCloudImporter : NSObject {
             }
             
             // If everything ok so far, go ahead and try to assign employee and service references
-            if result {
-                result = false
-                if let serviceReference = record["serviceReference"] as? CKReference,
-                    let employeeReference = record["employeeReference"] as? CKReference {
-                    
-                    let serviceCloudID = serviceReference.recordID.recordName
-                    let service = Service.fetchForCloudID(serviceCloudID, moc: self.moc)
-                    saleItem.service = service
-
-                    let employeeCloudID = employeeReference.recordID.recordName
-                    let employee = Employee.fetchForCloudID(employeeCloudID, moc: self.moc)
-                    saleItem.performedBy = employee
-                    
-                    result = true
-                }
+            result = false
+            if let serviceReference = record["serviceReference"] as? CKReference {
+                let serviceCloudID = serviceReference.recordID.recordName
+                let service = Service.fetchForCloudID(serviceCloudID, moc: self.moc)
+                saleItem.service = service
+                result = true
+            }
+            if let employeeReference = record["employeeReference"] as? CKReference {
+                let employeeCloudID = employeeReference.recordID.recordName
+                let employee = Employee.fetchForCloudID(employeeCloudID, moc: self.moc)
+                saleItem.performedBy = employee
             }
         }
         return result

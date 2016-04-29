@@ -92,8 +92,8 @@
                     </customSpacing>
                 </stackView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0B9-nn-exN">
-                    <rect key="frame" x="14" y="347" width="75" height="32"/>
-                    <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3QD-Xq-3Gz">
+                    <rect key="frame" x="14" y="347" width="172" height="32"/>
+                    <buttonCell key="cell" type="push" title="Reset for data extract" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3QD-Xq-3Gz">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -169,6 +169,16 @@
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="35m-Cp-aFK">
+                    <rect key="frame" x="355" y="347" width="212" height="32"/>
+                    <buttonCell key="cell" type="push" title="Delete all cloud notifications" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="m2M-yI-Gle">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="deleteCloudNotifications:" target="-2" id="ef3-Pz-KuA"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="y6i-jx-Zar" secondAttribute="trailing" constant="20" id="0Pi-L7-uTm"/>
@@ -179,13 +189,17 @@
                 <constraint firstItem="Q5S-Pk-ilB" firstAttribute="top" secondItem="Rdz-5T-ghZ" secondAttribute="bottom" constant="19" id="C9B-nh-LH4"/>
                 <constraint firstItem="y6i-jx-Zar" firstAttribute="leading" secondItem="Q5S-Pk-ilB" secondAttribute="trailing" constant="13" id="MhY-gs-Bx0"/>
                 <constraint firstAttribute="bottom" secondItem="QSr-7L-hLU" secondAttribute="bottom" constant="20" id="Nvb-QY-g7i"/>
+                <constraint firstItem="35m-Cp-aFK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0B9-nn-exN" secondAttribute="trailing" constant="20" id="QZ0-Vf-te9"/>
                 <constraint firstItem="Rdz-5T-ghZ" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="Qhw-pt-Rd3"/>
                 <constraint firstItem="6QC-7Q-hlY" firstAttribute="top" secondItem="0B9-nn-exN" secondAttribute="bottom" constant="24" id="Szr-7M-Cs4"/>
                 <constraint firstItem="QSr-7L-hLU" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="U7C-q3-eiw"/>
                 <constraint firstItem="mnk-0d-N6O" firstAttribute="top" secondItem="Q5S-Pk-ilB" secondAttribute="bottom" constant="23" id="e3g-4n-Qoc"/>
                 <constraint firstItem="Rdz-5T-ghZ" firstAttribute="top" secondItem="6QC-7Q-hlY" secondAttribute="bottom" constant="24" id="jgM-hw-Ynx"/>
+                <constraint firstAttribute="trailing" secondItem="35m-Cp-aFK" secondAttribute="trailing" constant="20" id="lYf-ac-WIX"/>
+                <constraint firstItem="35m-Cp-aFK" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="26" id="ppl-OT-oMc"/>
                 <constraint firstItem="mnk-0d-N6O" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="8" id="tFj-iZ-g3G"/>
                 <constraint firstAttribute="trailing" secondItem="mnk-0d-N6O" secondAttribute="trailing" constant="20" symbolic="YES" id="vRs-Gy-WPY"/>
+                <constraint firstItem="0B9-nn-exN" firstAttribute="baseline" secondItem="35m-Cp-aFK" secondAttribute="baseline" id="wm3-K6-KHu"/>
                 <constraint firstItem="y6i-jx-Zar" firstAttribute="top" secondItem="Q5S-Pk-ilB" secondAttribute="top" id="zYf-Re-JVK"/>
             </constraints>
             <point key="canvasLocation" x="-1261.5" y="-258.5"/>

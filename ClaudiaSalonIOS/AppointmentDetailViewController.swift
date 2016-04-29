@@ -11,6 +11,12 @@ import CloudKit
 
 class AppointmentDetailViewController: UITableViewController,SaleItemUpdateReceiver {
 
+    @IBOutlet weak var customerDetailsTableCellView: UITableViewCell!
+    
+    
+    @IBOutlet weak var saleDetailsTableCellView: UITableViewCell!
+    
+    
     @IBOutlet weak var customerFullName: UILabel!
     
     @IBOutlet weak var phone: UILabel!
@@ -28,7 +34,25 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
     
     @IBOutlet weak var actualCharge: UILabel!
     
+    @IBOutlet weak var editStartTimeButton: UIButton!
+    
+    @IBOutlet weak var editDurationButton: UIButton!
+    
+    @IBOutlet weak var editAppointmentDate: UIButton!
+    
     var appointmentWasUpdated:((appointment:Appointment)->Void)?
+    
+    var allowEditing:Bool {
+        guard let appointment = self.detailItem as? Appointment else {
+            return false
+        }
+        let cancelled = appointment.cancelled?.boolValue ?? false
+        let completed = appointment.completed?.boolValue ?? false
+        if cancelled || completed {
+            return false
+        }
+        return true
+    }
     
     var detailItem: AnyObject? {
         didSet {
@@ -51,6 +75,18 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
             return
         }
         self.view.hidden = false
+        self.navigationItem.title = self.titleFromAppointment(appointment)
+        if self.allowEditing {
+            self.customerDetailsTableCellView.accessoryType = (self.allowEditing) ? .DisclosureIndicator : .None
+            self.saleDetailsTableCellView.accessoryType = (self.allowEditing) ? .DisclosureIndicator : .None
+            
+        } else {
+            self.customerDetailsTableCellView.accessoryType = .None
+            self.saleDetailsTableCellView.accessoryType = .None
+        }
+        self.editAppointmentDate.hidden = !self.allowEditing
+        self.editStartTimeButton.hidden = !self.allowEditing
+        self.editDurationButton.hidden = !self.allowEditing
         
         // Configure customer info
         self.customerFullName.text = appointment.customer?.fullName
@@ -58,10 +94,10 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
         
         // Configure appointment info
         let appointmentFormatter = AppointmentFormatter(appointment: appointment)
-        self.appointmentDate.text = appointmentFormatter.verboseAppointmentDayString
+        self.appointmentDate.text = appointmentFormatter.veryVerboseAppointmentDayString
         self.startTime.text = appointmentFormatter.startTimeString
         self.finishTime.text = appointmentFormatter.finishTimeString
-        self.duration.text = appointmentFormatter.bookedDurationString()
+        self.duration.text = appointmentFormatter.bookedDurationStringVerbose()
         
         // Configure sale info
         let nominalCharge = appointment.sale?.nominalCharge
@@ -70,6 +106,20 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
         self.nominalCharge.text = stringForCurrencyAmount(nominalCharge) ?? "?"
         self.actualCharge.text = stringForCurrencyAmount(actualCharge) ?? "?"
         self.discountAmount.text = stringForCurrencyAmount(discountAmount) ?? "?"
+    }
+    
+    private func titleFromAppointment(appointment:Appointment) -> String {
+        if appointment.cancelled!.boolValue {
+            return "Cancelled Appointment"
+        } else if appointment.completed!.boolValue {
+            return "Completed Appointment"
+        } else {
+            if appointment.bqMetadata == nil {
+                return "New Appointment"
+            } else {
+                return "Open Appointment"
+            }
+        }
     }
     private func stringForCurrencyAmount(amount:NSNumber?) -> String? {
         let formatter = NSNumberFormatter()
@@ -92,6 +142,10 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
         // Dispose of any resources that can be recreated.
     }
 
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        return self.allowEditing
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         guard let appointment = detailItem as? Appointment else {
             fatalError("detail item is not an appointment")
@@ -122,7 +176,7 @@ class AppointmentDetailViewController: UITableViewController,SaleItemUpdateRecei
             guard let vc = segue.destinationViewController as? SelectDateOrTimePopover else {
                 fatalError("Unexpected destination controller for selectFinishTime)")
             }
-            vc.configure("Choose appointment start time",selectedDate: appointment.appointmentDate!, minDate: appointment.appointmentDate!.beginningOfDay(), maxDate: appointment.appointmentEndDate!, mode: UIDatePickerMode.Time, completion: changedStartTime)
+            vc.configure("Choose appointment start time",selectedDate: appointment.appointmentDate!, minDate: appointment.appointmentDate!.beginningOfDay(), maxDate: appointment.appointmentDate!.endOfDay(), mode: UIDatePickerMode.Time, completion: changedStartTime)
             return
         }
         if segue.identifier == "selectInterval" {

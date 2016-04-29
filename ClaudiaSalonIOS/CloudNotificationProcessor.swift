@@ -375,3 +375,32 @@ extension CloudNotificationProcessor {
         return subscriptions
     }
 }
+
+extension CloudNotificationProcessor {
+    func deleteAllCloudNotificationSubscriptions() {
+        let db = self.container.publicCloudDatabase
+        let fetchSubscriptions = CKFetchSubscriptionsOperation.fetchAllSubscriptionsOperation()
+        fetchSubscriptions.fetchSubscriptionCompletionBlock = { dictionary, error in
+            guard let dictionary = dictionary else {
+                print("error fetching subscriptions \(error)")
+                return
+            }
+            var subscriptionIDs = [String]()
+            for (subscriptionID,_) in dictionary {
+                subscriptionIDs.append(subscriptionID)
+            }
+            let deleteSubscriptions = CKModifySubscriptionsOperation(subscriptionsToSave: nil, subscriptionIDsToDelete: subscriptionIDs)
+            deleteSubscriptions.modifySubscriptionsCompletionBlock = { _,subscriptionIDs,error in
+                if error != nil {
+                    print("error deleting subscriptions \(error)")
+                    return
+                }
+                print("All subscriptions deleted")
+            }
+            db.addOperation(deleteSubscriptions)
+        }
+        db.addOperation(fetchSubscriptions)
+        
+        
+    }
+}

@@ -123,6 +123,9 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     self.coredataExportController = nil;
     [super close];
 }
+-(void)deleteAllCloudNotificationSubscriptions {
+    [self.cloudImporter deleteAllCloudNotificationSubscriptions];
+}
 -(void)suspendImportsAndExports:(BOOL)suspend {
     if(suspend) {
         if (self.cloudImporter) {

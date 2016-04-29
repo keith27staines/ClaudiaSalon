@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import CloudKit
 
 class BQDataExtractViewController: NSViewController, BQFirstExtractControllerDelegate {
     
@@ -17,7 +18,6 @@ class BQDataExtractViewController: NSViewController, BQFirstExtractControllerDel
     @IBOutlet weak var activityIndicator: NSProgressIndicator!
    
     @IBOutlet weak var appointmentProgressIndicator: NSProgressIndicator!
-    
     
     @IBOutlet weak var extractStatus: NSTextField!
     var salonDocument: AMCSalonDocument!
@@ -31,7 +31,12 @@ class BQDataExtractViewController: NSViewController, BQFirstExtractControllerDel
         extractModel = BQFirstExtractController(salonDocument:self.salonDocument)
         extractModel.delegate = self
     }
-    
+
+    @IBAction func deleteCloudNotifications(sender: AnyObject) {
+        self.salonDocument.suspendImportsAndExports(true)
+        self.salonDocument.deleteAllCloudNotificationSubscriptions()
+    }
+
     @IBAction func resetDataExtract(sender: AnyObject) {
         self.activityIndicator.hidden = false
         self.activityIndicator.startAnimation(self)
