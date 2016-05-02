@@ -24,6 +24,13 @@
 		531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25521AB80E5100EB3472 /* AMCCashBook.m */; };
 		531B25581AB960F600EB3472 /* AMCCashBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25561AB960F600EB3472 /* AMCCashBookViewController.m */; };
 		531B25591AB960F600EB3472 /* AMCCashBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 531B25571AB960F600EB3472 /* AMCCashBookViewController.xib */; };
+		532279E11CD4836F002FEB26 /* FetchFromCloudOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279E01CD4836F002FEB26 /* FetchFromCloudOperation.swift */; };
+		532279E41CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279E21CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.swift */; };
+		532279E51CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 532279E31CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.xib */; };
+		532279EB1CD5C780002FEB26 /* DeleteFromCloudOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279EA1CD5C780002FEB26 /* DeleteFromCloudOperation.swift */; };
+		532279EC1CD5C780002FEB26 /* DeleteFromCloudOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279EA1CD5C780002FEB26 /* DeleteFromCloudOperation.swift */; };
+		532279EE1CD72A9A002FEB26 /* RobustDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279ED1CD72A9A002FEB26 /* RobustDownloader.swift */; };
+		532279EF1CD72A9A002FEB26 /* RobustDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279ED1CD72A9A002FEB26 /* RobustDownloader.swift */; };
 		532377DD1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532377DB1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m */; };
 		532377DE1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 532377DC1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.xib */; };
 		533054521AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */; };
@@ -435,6 +442,11 @@
 		531B25551AB960F600EB3472 /* AMCCashBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBookViewController.h; sourceTree = "<group>"; };
 		531B25561AB960F600EB3472 /* AMCCashBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCashBookViewController.m; sourceTree = "<group>"; };
 		531B25571AB960F600EB3472 /* AMCCashBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCCashBookViewController.xib; sourceTree = "<group>"; };
+		532279E01CD4836F002FEB26 /* FetchFromCloudOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchFromCloudOperation.swift; path = ../FetchFromCloudOperation.swift; sourceTree = "<group>"; };
+		532279E21CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteSalonFromCloudWindowController.swift; sourceTree = "<group>"; };
+		532279E31CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeleteSalonFromCloudWindowController.xib; sourceTree = "<group>"; };
+		532279EA1CD5C780002FEB26 /* DeleteFromCloudOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteFromCloudOperation.swift; sourceTree = "<group>"; };
+		532279ED1CD72A9A002FEB26 /* RobustDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobustDownloader.swift; sourceTree = "<group>"; };
 		532377DA1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCSaleMiniEditorViewController.h; sourceTree = "<group>"; };
 		532377DB1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCSaleMiniEditorViewController.m; sourceTree = "<group>"; };
 		532377DC1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCSaleMiniEditorViewController.xib; sourceTree = "<group>"; };
@@ -1120,6 +1132,25 @@
 			path = KeithSalon;
 			sourceTree = "<group>";
 		};
+		532279E61CD4B0F0002FEB26 /* Delete Salon From ICloud */ = {
+			isa = PBXGroup;
+			children = (
+				532279E21CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.swift */,
+				532279E31CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.xib */,
+				532279E01CD4836F002FEB26 /* FetchFromCloudOperation.swift */,
+				532279EA1CD5C780002FEB26 /* DeleteFromCloudOperation.swift */,
+			);
+			name = "Delete Salon From ICloud";
+			sourceTree = "<group>";
+		};
+		532279F01CD7A199002FEB26 /* RobustDownloaders */ = {
+			isa = PBXGroup;
+			children = (
+				532279ED1CD72A9A002FEB26 /* RobustDownloader.swift */,
+			);
+			name = RobustDownloaders;
+			sourceTree = "<group>";
+		};
 		532377D01AA8C3BF009FA91D /* Bank statements */ = {
 			isa = PBXGroup;
 			children = (
@@ -1240,6 +1271,7 @@
 				5352DBCA1CCA2006002BDE6B /* AWindow.xib */,
 				5352DBCC1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.swift */,
 				5352DBCD1CCA222B002BDE6B /* CreateDevelopmentSalonWindowController.xib */,
+				532279E61CD4B0F0002FEB26 /* Delete Salon From ICloud */,
 			);
 			name = "Create Development Salon";
 			sourceTree = "<group>";
@@ -1382,6 +1414,7 @@
 				5370D4FF1C94292D00319147 /* DownloadInfo.swift */,
 				5370D5021C94296800319147 /* CloudImporter.swift */,
 				533FC06F1CA6DB210074BDF0 /* CloudNotificationProcessor.swift */,
+				532279F01CD7A199002FEB26 /* RobustDownloaders */,
 			);
 			name = "iCloud Synchronization";
 			sourceTree = "<group>";
@@ -2784,6 +2817,7 @@
 				53D4FC9D1B39D61A009EBF70 /* AMCPermissionsForRoleEditor.xib in Resources */,
 				530D546F1B18D3E100F6C4FE /* AMCEmployeesViewController.xib in Resources */,
 				53D69C451A9B23B70004CE10 /* ProductSelectorViewController.xib in Resources */,
+				532279E51CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.xib in Resources */,
 				53D69C371A9B23B70004CE10 /* AMCRequestPasswordWindowController.xib in Resources */,
 				53D69C461A9B23B70004CE10 /* EditStockProductViewController.xib in Resources */,
 				53D69C511A9B23B70004CE10 /* EditProductViewController.xib in Resources */,
@@ -2924,6 +2958,7 @@
 				53D69D561A9B240C0004CE10 /* AMCReceiptView.m in Sources */,
 				53D69D1C1A9B240C0004CE10 /* AMCCancelAppointmentView.m in Sources */,
 				53D69D671A9B240C0004CE10 /* AMCViewController.m in Sources */,
+				532279EB1CD5C780002FEB26 /* DeleteFromCloudOperation.swift in Sources */,
 				534F0AF71C63C4C700520214 /* BQDeletionRequestList.swift in Sources */,
 				536118FB1C803DA000758CF4 /* Cloud.swift in Sources */,
 				53D69CE91A9B240C0004CE10 /* AMCHoursWorkedOnDayViewController.m in Sources */,
@@ -2936,6 +2971,7 @@
 				53D69CE31A9B240C0004CE10 /* AMCConstants.m in Sources */,
 				53D69D191A9B240C0004CE10 /* AMCAppointmentsViewController.m in Sources */,
 				53D934081AC71E1B001D6C64 /* AMCSalonDetailsViewController.m in Sources */,
+				532279E41CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.swift in Sources */,
 				536B9DD11C52842300F170EC /* Salon.m in Sources */,
 				536B9E721C56077E00F170EC /* Salary.m in Sources */,
 				5353EE611C86E88800D09B98 /* BQCoredataImportController.swift in Sources */,
@@ -2965,6 +3001,7 @@
 				535F0DF71AB2339A0035CFD8 /* AMCAutoCloseWindowController.m in Sources */,
 				53D69D0C1A9B240C0004CE10 /* AMCBarcodeScanningViewController.m in Sources */,
 				534F0AF51C61FC1700520214 /* BQExportDeletionRequest.swift in Sources */,
+				532279EE1CD72A9A002FEB26 /* RobustDownloader.swift in Sources */,
 				536B9E841C56077E00F170EC /* LastUpdatedBy.m in Sources */,
 				53D69CEC1A9B240C0004CE10 /* AMCProductSelectorWindowController.m in Sources */,
 				536B9E711C56077E00F170EC /* Salary+CoreDataProperties.m in Sources */,
@@ -3062,6 +3099,7 @@
 				5358DD5E1C8C93DF009DD63E /* CalendarDay.m in Sources */,
 				53D69D5A1A9B240C0004CE10 /* AMCDiscountCalculator.m in Sources */,
 				53D69D081A9B240C0004CE10 /* AMCSaleItemViewController.m in Sources */,
+				532279E11CD4836F002FEB26 /* FetchFromCloudOperation.swift in Sources */,
 				53FFAF911AB220470078E9CC /* AMCEmployeeForServiceSelector.m in Sources */,
 				532377DD1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m in Sources */,
 				5370D4FD1C9428F500319147 /* CloudRecordType.swift in Sources */,
@@ -3165,6 +3203,7 @@
 				53FDCA811C7A7638006B4002 /* Account.m in Sources */,
 				539FBEDF1CC0CFE1006F9717 /* AddSalonController.swift in Sources */,
 				5358DD5D1C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m in Sources */,
+				532279EC1CD5C780002FEB26 /* DeleteFromCloudOperation.swift in Sources */,
 				5358DD411C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m in Sources */,
 				53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */,
 				53EBB3CB1C7B194000BBDC46 /* BQCoredataObjectExtensions.swift in Sources */,
@@ -3187,6 +3226,7 @@
 				5358DD661C8DC10C009DD63E /* SelectDateOrTimePopover.swift in Sources */,
 				5370D4F91C9189AA00319147 /* ImportViewController.swift in Sources */,
 				53E2B9911C81CF0700F8F963 /* AppointmentViewCellTableViewCell.swift in Sources */,
+				532279EF1CD72A9A002FEB26 /* RobustDownloader.swift in Sources */,
 				539FBEDD1CC0CFA1006F9717 /* SelectSalonTableViewController.swift in Sources */,
 				53FDCA7E1C7A7625006B4002 /* Role.m in Sources */,
 				5358DD571C8C9380009DD63E /* OpeningHoursDayTemplate.m in Sources */,

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15F28b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="DeleteSalonFromCloudWindowController" customModule="ClaudiaSalon" customModuleProvider="target">
+            <connections>
+                <outlet property="recordNameField" destination="ncw-w8-ZOb" id="OYa-R6-dfU"/>
+                <outlet property="tableView" destination="wfh-bX-yzH" id="Bvs-6N-GD8"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Remove Salon From Cloud" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="822" height="633"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="822" height="633"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yR-su-jOO">
+                        <rect key="frame" x="20" y="80" width="782" height="465"/>
+                        <clipView key="contentView" id="doM-FH-7sr">
+                            <rect key="frame" x="1" y="0.0" width="780" height="464"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="RIf-04-nhZ" id="wfh-bX-yzH">
+                                    <rect key="frame" x="0.0" y="0.0" width="780" height="441"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <size key="intercellSpacing" width="3" height="2"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn identifier="recordType" width="217" minWidth="40" maxWidth="1000" id="H6b-ze-uhK">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Record Type">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="Vfj-dZ-Jo8">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        </tableColumn>
+                                        <tableColumn identifier="recordCount" width="100" minWidth="40" maxWidth="1000" id="DcL-Uw-JMp">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Record Count">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="oQM-VJ-ymF">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        </tableColumn>
+                                        <tableColumn identifier="downloadStatus" width="251" minWidth="10" maxWidth="3.4028234663852886e+38" id="vpO-Nz-9vW">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Download Status">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="byR-IQ-ziA">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        </tableColumn>
+                                        <tableColumn identifier="error" width="200" minWidth="10" maxWidth="3.4028234663852886e+38" id="1uM-PX-Dwz">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Error">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="uJj-EZ-f9s">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        </tableColumn>
+                                    </tableColumns>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-2" id="eT9-pv-Zxz"/>
+                                        <outlet property="delegate" destination="-2" id="i0a-gp-0hZ"/>
+                                    </connections>
+                                </tableView>
+                            </subviews>
+                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="8hI-D6-eGj">
+                            <rect key="frame" x="1" y="508" width="780" height="16"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="6PM-CZ-8DH">
+                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <tableHeaderView key="headerView" id="RIf-04-nhZ">
+                            <rect key="frame" x="0.0" y="0.0" width="780" height="23"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </tableHeaderView>
+                    </scrollView>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ncw-w8-ZOb">
+                        <rect key="frame" x="20" y="565" width="626" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="QeL-9x-fYw">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="paq-hk-PAD">
+                        <rect key="frame" x="18" y="604" width="377" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Enter the ICloud record name of the salon you wish to remove" id="4Ur-q2-z6i">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E1c-RN-QAY">
+                        <rect key="frame" x="648" y="558" width="160" height="32"/>
+                        <buttonCell key="cell" type="push" title="Remove from Cloud" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5jL-1F-bbR">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="startDelete:" target="-2" id="YLO-L3-ZCe"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FQs-Yk-4yr">
+                        <rect key="frame" x="441" y="18" width="117" height="32"/>
+                        <buttonCell key="cell" type="push" title="Unsubscribe" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3Oc-bY-KC6">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="unsubscribeFromCloudNotifications:" target="-2" id="tYO-BC-U8d"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZMg-Jh-9UX">
+                        <rect key="frame" x="79" y="28" width="329" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Unsubscribe from all Cloud Notification Subscriptions" id="vwp-hF-tY8">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ncw-w8-ZOb" firstAttribute="leading" secondItem="paq-hk-PAD" secondAttribute="leading" id="5GT-CJ-VbF"/>
+                    <constraint firstItem="FQs-Yk-4yr" firstAttribute="baseline" secondItem="ZMg-Jh-9UX" secondAttribute="baseline" id="7Ao-Cg-Vng"/>
+                    <constraint firstItem="E1c-RN-QAY" firstAttribute="baseline" secondItem="ncw-w8-ZOb" secondAttribute="baseline" id="A3u-UA-PVs"/>
+                    <constraint firstItem="FQs-Yk-4yr" firstAttribute="leading" secondItem="ZMg-Jh-9UX" secondAttribute="trailing" constant="41" id="BDm-sn-ZJX"/>
+                    <constraint firstAttribute="bottom" secondItem="ZMg-Jh-9UX" secondAttribute="bottom" constant="28" id="Cbi-Rv-BfL"/>
+                    <constraint firstItem="4yR-su-jOO" firstAttribute="top" secondItem="E1c-RN-QAY" secondAttribute="bottom" constant="20" symbolic="YES" id="G4h-rs-LVs"/>
+                    <constraint firstItem="ZMg-Jh-9UX" firstAttribute="top" secondItem="4yR-su-jOO" secondAttribute="bottom" constant="35" id="LGd-cK-AWY"/>
+                    <constraint firstItem="E1c-RN-QAY" firstAttribute="trailing" secondItem="4yR-su-jOO" secondAttribute="trailing" id="R6X-pF-IFd"/>
+                    <constraint firstAttribute="trailing" secondItem="4yR-su-jOO" secondAttribute="trailing" constant="20" id="XX5-ml-48m"/>
+                    <constraint firstItem="4yR-su-jOO" firstAttribute="leading" secondItem="paq-hk-PAD" secondAttribute="leading" id="YSc-v7-fK7"/>
+                    <constraint firstItem="E1c-RN-QAY" firstAttribute="leading" secondItem="ncw-w8-ZOb" secondAttribute="trailing" constant="8" symbolic="YES" id="Z0V-BY-qDN"/>
+                    <constraint firstItem="ncw-w8-ZOb" firstAttribute="top" secondItem="paq-hk-PAD" secondAttribute="bottom" constant="17" id="bsv-Ub-hbT"/>
+                    <constraint firstItem="paq-hk-PAD" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="12" id="gAt-BP-EG6"/>
+                    <constraint firstItem="paq-hk-PAD" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" id="hVv-Dv-USL"/>
+                    <constraint firstAttribute="bottom" secondItem="4yR-su-jOO" secondAttribute="bottom" constant="80" id="r9c-VG-vCT"/>
+                    <constraint firstItem="ZMg-Jh-9UX" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="81" id="wRS-ag-AYH"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="586" y="413.5"/>
+        </window>
+    </objects>
+</document>

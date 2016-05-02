@@ -36,6 +36,7 @@
 @property (weak) IBOutlet AMCPreferencesWindowController *preferencesWindowController;
 @property (weak) IBOutlet AMCBookingQueueManagerWindowController *bookingQueueManagerWindowController;
 @property CreateDevelopmentSalonWindowController * createDevelopmentSalonWC;
+@property DeleteSalonFromCloudWindowController * deleteSalonFromCloudWC;
 @end
 
 @implementation AppDelegate
@@ -67,6 +68,7 @@
         NSString * salonName = parentSaloReference.recordID.recordName;
         NSDocument * currentDocument = [NSDocumentController sharedDocumentController].currentDocument;
         AMCSalonDocument * currentSalon = (AMCSalonDocument*)currentDocument;
+        if (!currentSalon) { return; }
         if ([salonName isEqualToString:currentSalon.salon.salonName]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"cloudKitNotification" object:self userInfo:userInfo];
         }
@@ -248,5 +250,10 @@
 
     self.createDevelopmentSalonWC = [[CreateDevelopmentSalonWindowController alloc] init];
     [self.createDevelopmentSalonWC showWindow:nil];
+}
+
+- (IBAction)removeSalonFromCloud:(id)sender {
+    self.deleteSalonFromCloudWC = [[DeleteSalonFromCloudWindowController alloc] init];
+    [self.deleteSalonFromCloudWC showWindow:nil];
 }
 @end

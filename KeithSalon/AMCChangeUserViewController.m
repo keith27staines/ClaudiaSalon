@@ -73,6 +73,7 @@
         return;
     }
     self.selectedEmployee = self.usersArrayController.arrangedObjects[row];
+    [self.employeeTable deselectAll:nil];
     [self showGetSelectedUsersPassword];
 }
 
@@ -136,6 +137,7 @@
         predicate = [NSPredicate predicateWithFormat:@"isActive = YES AND self != %@",self.salonDocument.currentUser];
     }
     self.usersArrayController.filterPredicate = predicate;
+    self.usersArrayController.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"fullName" ascending:YES]];
     [self.employeeTable deselectAll:self];
     [self.employeeTable reloadData];
     [self.view.window makeFirstResponder:self.employeeTable];

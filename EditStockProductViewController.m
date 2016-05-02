@@ -197,7 +197,8 @@
         [self.categoryPopupButton addItemWithTitle:@"Select category"];
         [self.categoryPopupButton selectItemAtIndex:0];
     }
-    NSArray * categories = [StockedCategory allObjectsWithMoc:self.documentMoc];
+    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"categoryName" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+    NSArray * categories = [[StockedCategory allObjectsWithMoc:self.documentMoc] sortedArrayUsingDescriptors:@[sort]];
     NSMenuItem * menuItem;
     for (StockedCategory * category in categories) {
         menuItem = [[NSMenuItem alloc] init];
@@ -212,7 +213,8 @@
         [self.brandPopupButton addItemWithTitle:@"Select brand"];
         [self.brandPopupButton selectItemAtIndex:0];
     }
-    NSArray * brands = [StockedBrand allObjectsWithMoc:self.documentMoc];
+    NSSortDescriptor * sort = [NSSortDescriptor sortDescriptorWithKey:@"shortBrandName" ascending:YES selector:@selector(caseInsensitiveCompare:)];
+    NSArray * brands = [[StockedBrand allObjectsWithMoc:self.documentMoc] sortedArrayUsingDescriptors:@[sort]];
     for (StockedBrand * brand in brands) {
         NSMenuItem * menuItem = [[NSMenuItem alloc] init];
         menuItem.representedObject = brand;
@@ -249,7 +251,7 @@
             [set addObject:product.name];
         }
         NSArray * names = [set allObjects];
-        names = [names sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"" ascending:YES]]];
+        names = [names sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
         for (NSString * name in names) {
             menuItem = [[NSMenuItem alloc] initWithTitle:name action:nil keyEquivalent:@""];
             menuItem.representedObject = name;

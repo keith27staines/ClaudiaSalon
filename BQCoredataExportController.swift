@@ -81,8 +81,9 @@ class BQCoredataExportController : NSObject {
                 strongSelf.runExportIterationAfterWait(waitForSeconds)
             }
         }
-    }
+    }    
 }
+
 
 // MARK:- Class BQExportModifiedCoredataOperation
 private class BQExportModifiedCoredataOperation : NSOperation {
