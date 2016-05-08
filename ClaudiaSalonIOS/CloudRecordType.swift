@@ -35,7 +35,7 @@ enum CloudRecordType: String {
         case .CRSalon: return "Salon"
         case .CRCustomer: return "Customer"
         case .CREmployee: return "Employee"
-        case .CRServiceCategory: return "Service Category"
+        case .CRServiceCategory: return "ServiceCategory"
         case .CRService: return "Service"
         case .CRAppointment: return "Appointment"
         case .CRSale: return "Sale"
