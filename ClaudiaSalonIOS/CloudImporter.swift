@@ -52,8 +52,6 @@ class BQCloudImporter : NSObject {
         super.init()
         self.makePrivateMoc()
         self.cloudNotificationProcessor.moc = self.moc
-        self.cloudNotificationProcessor.shallowProcessRecord = self.shallowProcessRecord
-        self.cloudNotificationProcessor.deepProcessRecord = self.deepProcessRecord
         self.initialiseDatastructures()
     }
     

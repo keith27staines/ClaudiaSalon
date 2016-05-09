@@ -142,6 +142,7 @@ class CloudNotificationProcessor {
                 return
             }
             self.isWorking = true
+            self.prepareForNewFetch()
             self.performNotificationFetch()
         }
     }
@@ -188,8 +189,6 @@ class CloudNotificationProcessor {
     
     private func performNotificationFetch(serverChangeToken: CKServerChangeToken? = nil) {
         
-        self.prepareForNewFetch()
-        
         // Create fetch notifications operation
         let fetchNotificationOperation = CKFetchNotificationChangesOperation(previousServerChangeToken: nil)
         
@@ -208,16 +207,15 @@ class CloudNotificationProcessor {
         // The callback for the fetch completion
         fetchNotificationOperation.resultsLimit = 100
         fetchNotificationOperation.fetchNotificationChangesCompletionBlock = { (serverChangeToken: CKServerChangeToken?, operationError: NSError?) -> Void in
-            guard self.notifications.count > 0 else {
-                dispatch_sync(self.queue) {
-                    self.isWorking = false
-                }
+            
+            // The previous fetch may only have returned some of the missed notifications so now we check for more
+            if fetchNotificationOperation.moreComing {
+                self.performNotificationFetch(serverChangeToken)
                 return
             }
-            
+
             guard operationError == nil else {
                 dispatch_sync(self.queue) {
-                    self.notifications.removeAll()
                     self.isWorking = false
                 }
                 return
@@ -314,11 +312,6 @@ class CloudNotificationProcessor {
                 
                 // Having set up all the callback blocks, we can now execute the fetchNotification operation
                 self.container.publicCloudDatabase.addOperation(recordFetchOp)
-            }
-            
-            // The previous fetch may only have returned some of the missed notifications so now we check for more
-            if fetchNotificationOperation.moreComing {
-                self.performNotificationFetch(serverChangeToken)
             }
         }
         self.container.addOperation(fetchNotificationOperation)
