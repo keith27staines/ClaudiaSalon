@@ -11,13 +11,12 @@ import CloudKit
 
 class CloudNotificationProcessor {
     var moc: NSManagedObjectContext!
-    var shallowProcessRecord: ((record:CKRecord)->Void)
-    var deepProcessRecord: ((record:CKRecord)->Bool)
     private (set) var cloudContainerIdentifier:String
     private (set) var cloudSalonRecordName:String
     private let queue:dispatch_queue_t
     private var isWorking = false
     private var previousServerChangeToken:CKServerChangeToken?
+    private var importers = [RobustImporter]()
     private var notifications = [CKQueryNotification]()
     private var container:CKContainer
     private let publicCloudDatabase:CKDatabase
@@ -36,13 +35,6 @@ class CloudNotificationProcessor {
         self.container = CKContainer(identifier: self.cloudContainerIdentifier)
         self.publicCloudDatabase = self.container.publicCloudDatabase
         self.queue = dispatch_queue_create("CloudNotificationProcessor", DISPATCH_QUEUE_SERIAL)
-        self.shallowProcessRecord = {(record)->Void in
-            assertionFailure("The shallowProcessRecord block cannot be called because it was never set")
-        }
-        self.deepProcessRecord = {(record)->Bool in
-            assertionFailure("The deepProcessRecord block cannot be called because it was never set")
-            return false
-        }
         self.subscribeToCloudNotifications()
     }
     
@@ -165,8 +157,39 @@ class CloudNotificationProcessor {
         }
     }
     
+    private func prepareForNewFetch() {
+        self.importers.removeAll()
+        self.notifications.removeAll()
+    }
+    
+    private func importerForRecordType(recordType:String, recordID: CKRecordID) -> RobustImporter {
+        guard let type = ICloudRecordType(rawValue: recordType) else {
+            fatalError("There is no importer for records of type \(recordType)")
+        }
+        switch type {
+        case .Salon:
+            return SalonImporter(key: "salon", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+        case .Customer:
+            return CustomerImporter(key: "customer", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+        case .Employee:
+            return EmployeeImporter(key: "employee", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+        case .ServiceCategory:
+            return ServiceCategoryImporter(key: "serviceCategory", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+        case .Service:
+            return ServiceImporter(key: "service", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+        case .Appointment:
+            return AppointmentImporter(key: "appointment", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+        case .Sale:
+            return SaleImporter(key: "sale", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+        case .SaleItem:
+            return SaleItemImporter(key: "saleItem", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+        }
+    }
+    
     private func performNotificationFetch(serverChangeToken: CKServerChangeToken? = nil) {
-
+        
+        self.prepareForNewFetch()
+        
         // Create fetch notifications operation
         let fetchNotificationOperation = CKFetchNotificationChangesOperation(previousServerChangeToken: nil)
         
@@ -322,7 +345,7 @@ extension CloudNotificationProcessor {
         subscriptions.append(subscription)
         
         let notificationInfo = CKNotificationInfo()
-        notificationInfo.desiredKeys = ["parentSalonReference","recordType"]
+        notificationInfo.desiredKeys = ["parentSalonReference"]
         
         // icloudAppointment
         let appointmentInfo = CKNotificationInfo()
@@ -393,5 +416,14 @@ extension CloudNotificationProcessor {
             db.addOperation(deleteSubscriptions)
         }
         db.addOperation(fetchSubscriptions)
+    }
+}
+
+extension CloudNotificationProcessor : RobustImporterDelegate {
+    func importDidFail(importer: RobustImporter) {
+        
+    }
+    func importDidProgressState(importer: RobustImporter) {
+        
     }
 }

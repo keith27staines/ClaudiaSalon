@@ -717,4 +717,56 @@ class EmployeeImporter : RobustImporter {
     }
 }
 
+//////////////////////////////////////////////////////
+// MARK:- SalonImporter (RobustImporter sublcass) -
+class SalonImporter : RobustImporter {
+    
+    required init(key:String, moc: NSManagedObjectContext,
+                  cloudDatabase: CKDatabase,
+                  recordID: CKRecordID,
+                  delegate: RobustImporterDelegate) {
+        
+        let recordType = ICloudRecordType.Salon
+        super.init(key:key, moc:moc, cloudDatabase:cloudDatabase, recordType:recordType, recordID:recordID, delegate:delegate)
+    }
+    
+    override func writeToCoredata() {
+        self.moc.performBlockAndWait() {
+            let recordName = self.importData.cloudRecord!.recordID.recordName
+            let salon = Salon.fetchForCloudID(recordName, moc: self.moc)
+            if salon == nil {
+                fatalError("Salon's cannot be created from notifications - use bulk cloud import instead")
+            }
+            self.importData.coredataRecord = salon
+            salon!.updateFromCloudRecord(self.importData.cloudRecord!)
+        }
+        super.writeToCoredata()
+    }
+}
 
+//////////////////////////////////////////////////////
+// MARK:- ServiceCategoryImporter (RobustImporter sublcass) -
+class ServiceCategoryImporter : RobustImporter {
+    
+    required init(key:String, moc: NSManagedObjectContext,
+                  cloudDatabase: CKDatabase,
+                  recordID: CKRecordID,
+                  delegate: RobustImporterDelegate) {
+        
+        let recordType = ICloudRecordType.ServiceCategory
+        super.init(key:key, moc:moc, cloudDatabase:cloudDatabase, recordType:recordType, recordID:recordID, delegate:delegate)
+    }
+    
+    override func writeToCoredata() {
+        self.moc.performBlockAndWait() {
+            let recordName = self.importData.cloudRecord!.recordID.recordName
+            let serviceCategory = ServiceCategory.fetchForCloudID(recordName, moc: self.moc)
+            if serviceCategory == nil {
+                fatalError("Salon's cannot be created from notifications - use bulk cloud import instead")
+            }
+            self.importData.coredataRecord = serviceCategory
+            serviceCategory!.updateFromCloudRecord(self.importData.cloudRecord!)
+        }
+        super.writeToCoredata()
+    }
+}
