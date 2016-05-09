@@ -437,10 +437,19 @@ class AppointmentImporter : RobustImporter {
     
     override func writeToCoredata() {
         self.moc.performBlockAndWait() {
-            
+            self.customerImporter?.writeToCoredata()
+            self.saleImporter?.writeToCoredata()
+            let recordName = self.importData.cloudRecord!.recordID.recordName
+            var appointment = Appointment.fetchForCloudID(recordName, moc: self.moc)
+            if appointment == nil {
+                appointment = Appointment.newObjectWithMoc(self.moc)
+            }
+            appointment!.updateFromCloudRecord(self.importData.cloudRecord!)
+            appointment!.customer = (self.customerImporter!.importData.coredataRecord as! Customer)
+            appointment!.sale = (self.saleImporter!.importData.coredataRecord as! Sale)
+            self.importData.coredataRecord = appointment
         }
         super.writeToCoredata()
-        
     }
 
     private func startDownloadingCustomer() {
@@ -485,7 +494,13 @@ class CustomerImporter : RobustImporter {
     
     override func writeToCoredata() {
         self.moc.performBlockAndWait() {
-            
+            let recordName = self.importData.cloudRecord!.recordID.recordName
+            var customer = Customer.fetchForCloudID(recordName, moc: self.moc)
+            if customer == nil {
+                customer = Customer.newObjectWithMoc(self.moc)
+            }
+            customer!.updateFromCloudRecord(self.importData.cloudRecord!)
+            self.importData.coredataRecord = customer
         }
         super.writeToCoredata()
     }
@@ -533,7 +548,22 @@ class SaleImporter : RobustImporter {
     
     override func writeToCoredata() {
         self.moc.performBlockAndWait() {
-            
+            self.customerImporter?.writeToCoredata()
+            for importer in self.saleItemImporters {
+                importer.writeToCoredata()
+            }
+            let recordName = self.importData.cloudRecord!.recordID.recordName
+            var sale = Sale.fetchForCloudID(recordName, moc: self.moc)
+            if sale == nil {
+                sale = Sale.newObjectWithMoc(self.moc)
+            }
+            sale!.updateFromCloudRecord(self.importData.cloudRecord!)
+            sale!.customer = (self.customerImporter!.importData.coredataRecord as! Customer)
+            for importer in self.saleItemImporters {
+                let saleItem = importer.importData.coredataRecord as! SaleItem
+                sale!.addSaleItemObject(saleItem)
+            }
+            self.importData.coredataRecord = sale
         }
         super.writeToCoredata()
     }
@@ -553,7 +583,6 @@ class SaleImporter : RobustImporter {
             }
         }
     }
-
 }
 
 extension SaleImporter {
@@ -618,7 +647,17 @@ class SaleItemImporter : RobustImporter {
     
     override func writeToCoredata() {
         self.moc.performBlockAndWait() {
-            
+            self.serviceImporter?.writeToCoredata()
+            self.employeeImporter?.writeToCoredata()
+            let recordName = self.importData.cloudRecord!.recordID.recordName
+            var saleItem = SaleItem.fetchForCloudID(recordName, moc: self.moc)
+            if saleItem == nil {
+                saleItem = SaleItem.newObjectWithMoc(self.moc)
+            }
+            saleItem!.updateFromCloudRecord(self.importData.cloudRecord!)
+            saleItem!.service = (self.serviceImporter!.importData.coredataRecord as! Service)
+            saleItem!.performedBy = (self.employeeImporter!.importData.coredataRecord as! Employee)
+            self.importData.coredataRecord = saleItem
         }
         super.writeToCoredata()
     }
@@ -639,7 +678,13 @@ class ServiceImporter : RobustImporter {
     
     override func writeToCoredata() {
         self.moc.performBlockAndWait() {
-            
+            let recordName = self.importData.cloudRecord!.recordID.recordName
+            var service = Service.fetchForCloudID(recordName, moc: self.moc)
+            if service == nil {
+                service = Service.newObjectWithMoc(self.moc)
+            }
+            self.importData.coredataRecord = service
+            service!.updateFromCloudRecord(self.importData.cloudRecord!)
         }
         super.writeToCoredata()
     }
@@ -660,7 +705,13 @@ class EmployeeImporter : RobustImporter {
     
     override func writeToCoredata() {
         self.moc.performBlockAndWait() {
-            
+            let recordName = self.importData.cloudRecord!.recordID.recordName
+            var employee = Employee.fetchForCloudID(recordName, moc: self.moc)
+            if employee == nil {
+                employee = Employee.newObjectWithMoc(self.moc)
+            }
+            self.importData.coredataRecord = employee
+            employee!.updateFromCloudRecord(self.importData.cloudRecord!)
         }
         super.writeToCoredata()
     }

@@ -10,6 +10,7 @@ import Foundation
 import CloudKit
 
 class CloudNotificationProcessor {
+    var moc: NSManagedObjectContext!
     var shallowProcessRecord: ((record:CKRecord)->Void)
     var deepProcessRecord: ((record:CKRecord)->Bool)
     private (set) var cloudContainerIdentifier:String
@@ -321,7 +322,7 @@ extension CloudNotificationProcessor {
         subscriptions.append(subscription)
         
         let notificationInfo = CKNotificationInfo()
-        notificationInfo.desiredKeys = ["parentSalonReference"]
+        notificationInfo.desiredKeys = ["parentSalonReference","recordType"]
         
         // icloudAppointment
         let appointmentInfo = CKNotificationInfo()

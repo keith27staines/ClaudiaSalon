@@ -51,6 +51,7 @@ class BQCloudImporter : NSObject {
         self.cloudNotificationProcessor = CloudNotificationProcessor(cloudContainerIdentifier: containerIdentifier, cloudSalonRecordName: salonCloudRecordName)
         super.init()
         self.makePrivateMoc()
+        self.cloudNotificationProcessor.moc = self.moc
         self.cloudNotificationProcessor.shallowProcessRecord = self.shallowProcessRecord
         self.cloudNotificationProcessor.deepProcessRecord = self.deepProcessRecord
         self.initialiseDatastructures()
@@ -587,6 +588,15 @@ class BQCloudImporter : NSObject {
         self.downloads[recordType] = info
         self.queryOperations.insert(operation)
         self.publicDatabase.addOperation(operation)
+    }
+}
+
+extension BQCloudImporter : RobustImporterDelegate {
+    func importDidFail(importer:RobustImporter) {
+        
+    }
+    func importDidProgressState(importer:RobustImporter) {
+        
     }
 }
 
