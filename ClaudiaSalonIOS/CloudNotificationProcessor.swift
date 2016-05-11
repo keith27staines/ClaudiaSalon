@@ -16,7 +16,7 @@ class CloudNotificationProcessor {
     private let queue:dispatch_queue_t
     private var isWorking = false
     private var previousServerChangeToken:CKServerChangeToken?
-    private var importers = [RobustImporter]()
+    private var importers = [CKRecordID:RobustImporter]()
     private var notifications = [CKQueryNotification]()
     private var container:CKContainer
     private let publicCloudDatabase:CKDatabase
@@ -263,8 +263,6 @@ class CloudNotificationProcessor {
                     }
                     
                     // Shallow-process the record
-                    print("Processing missed notification for \(record)")
-                    self.shallowProcessRecord(record: record)
                     for notification in self.notifications {
                         if notification.recordID == recordID {
                             var notes = shallowProcessedNotificationIDs[recordID] ?? Set<CKNotificationID>()
