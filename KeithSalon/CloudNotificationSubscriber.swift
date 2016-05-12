@@ -1,0 +1,179 @@
+//
+//  CloudNotificationSubscriber.swift
+//  ClaudiaSalon
+//
+//  Created by Keith Staines on 12/05/2016.
+//  Copyright © 2016 ClaudiasSalon. All rights reserved.
+//
+
+import Foundation
+import CloudKit
+
+
+class CloudNotificationSubscriber {
+    private let database:CKDatabase
+    private let queue: dispatch_queue_t
+    private let cloudSalonRecordName: String
+    lazy var subscriptions: [CKSubscription] = {
+        return self.makeSubscriptionsArray()
+    }()
+    
+    init(database:CKDatabase, cloudSalonRecordName:String) {
+        self.database = database
+        self.cloudSalonRecordName = cloudSalonRecordName
+        self.queue = dispatch_queue_create("CloudNotificationProcessor", DISPATCH_QUEUE_SERIAL)
+    }
+    
+    func deleteAllCloudNotificationSubscriptions() {
+        let fetchSubscriptions = CKFetchSubscriptionsOperation.fetchAllSubscriptionsOperation()
+        fetchSubscriptions.fetchSubscriptionCompletionBlock = { dictionary, error in
+            guard let dictionary = dictionary else {
+                print("error fetching subscriptions \(error)")
+                return
+            }
+            var subscriptionIDs = [String]()
+            for (subscriptionID,_) in dictionary {
+                subscriptionIDs.append(subscriptionID)
+            }
+            let deleteSubscriptions = CKModifySubscriptionsOperation(subscriptionsToSave: nil, subscriptionIDsToDelete: subscriptionIDs)
+            deleteSubscriptions.modifySubscriptionsCompletionBlock = { _,subscriptionIDs,error in
+                if error != nil {
+                    print("error deleting subscriptions \(error)")
+                    return
+                }
+                print("All subscriptions deleted")
+            }
+            self.database.addOperation(deleteSubscriptions)
+        }
+        self.database.addOperation(fetchSubscriptions)
+    }
+
+    
+    func deleteSubscriptions(completion:(success:Bool)->Void) {
+        let subscriptionIDs = self.subscriptions.map {
+            subscription in
+            return subscription.subscriptionID
+        }
+        let deleteSubscriptionsOperation = CKModifySubscriptionsOperation(subscriptionsToSave: nil, subscriptionIDsToDelete: subscriptionIDs)
+        deleteSubscriptionsOperation.modifySubscriptionsCompletionBlock = { _, subscriptionIDs, error in
+            if let error = error {
+                let userInfo = error.userInfo
+                let errorCode = CKErrorCode(rawValue: error.code)!
+                switch errorCode {
+                case .PartialFailure:
+                    var okToComplete = true
+                    let errorsByID = userInfo[CKPartialErrorsByItemIDKey] as! [String:NSError]
+                    for (_,error) in errorsByID {
+                        if error.code != CKErrorCode.UnknownItem.rawValue {
+                            okToComplete = false
+                        }
+                    }
+                    if okToComplete {
+                        print("Subscriptions deleted")
+                    } else {
+                        print("Failed to delete subscriptions")
+                    }
+                    completion(success: okToComplete)
+                default:
+                    print("Subscriptions deleted")
+                    completion(success: false)
+                }
+                return
+            }
+            completion(success: true)
+        }
+        self.database.addOperation(deleteSubscriptionsOperation)
+    }
+    
+    func saveSubscriptions(completion:(success:Bool)->Void) {
+        let modifySubscriptions = CKModifySubscriptionsOperation(subscriptionsToSave: self.subscriptions, subscriptionIDsToDelete: nil)
+        modifySubscriptions.queuePriority = .VeryHigh
+        modifySubscriptions.modifySubscriptionsCompletionBlock = { (savedSubscriptions, deletedIDs, operationError) -> Void in
+            if let operationError = operationError {
+                let retryAfter = operationError.userInfo["retryAfter"] as? Int
+                if let retryAfter = retryAfter {
+                    let shortDelay = dispatch_time(DISPATCH_TIME_NOW, Int64(retryAfter))
+                    let mainQueue = dispatch_get_main_queue()
+                    print("Transient subscription error - will retry after \(retryAfter) seconds")
+                    dispatch_after(shortDelay, mainQueue) {
+                        self.saveSubscriptions(completion)
+                    }
+                    return
+                }
+                print("Failed to modify subscriptions with error \(operationError)")
+                return
+            }
+        }
+        self.database.addOperation(modifySubscriptions)
+    }
+    
+    
+    
+}
+
+extension CloudNotificationSubscriber {
+    func makeSubscriptionsArray() -> [CKSubscription] {
+        
+        var subscriptions = [CKSubscription]()
+        let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
+        let predicate = NSPredicate(format: "parentSalonReference == %@",salonRecordID)
+        var subscription: CKSubscription
+        var cloudRecordType:CloudRecordType
+        var recordType:String
+        var subscriptionID: String
+        
+        // iCloudSalon
+        cloudRecordType = CloudRecordType.CRSalon
+        recordType = cloudRecordType.rawValue
+        subscriptionID = recordType + self.cloudSalonRecordName
+        let salonPredicate = NSPredicate(format: "recordID == %@",salonRecordID)
+        subscription = CKSubscription(recordType: recordType, predicate: salonPredicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
+        subscriptions.append(subscription)
+        
+        let notificationInfo = CKNotificationInfo()
+        notificationInfo.desiredKeys = ["parentSalonReference"]
+        
+        // icloudAppointment
+        let appointmentInfo = CKNotificationInfo()
+        appointmentInfo.desiredKeys = notificationInfo.desiredKeys
+        cloudRecordType = CloudRecordType.CRAppointment
+        recordType = cloudRecordType.rawValue
+        subscriptionID = recordType + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
+        subscription.notificationInfo = appointmentInfo
+        subscriptions.append(subscription)
+        
+        // icloudEmployee
+        cloudRecordType = CloudRecordType.CREmployee
+        recordType = cloudRecordType.rawValue
+        subscriptionID = recordType + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
+        subscription.notificationInfo = notificationInfo
+        subscriptions.append(subscription)
+        
+        // icloudCustomer
+        cloudRecordType = CloudRecordType.CRCustomer
+        recordType = cloudRecordType.rawValue
+        subscriptionID = recordType + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
+        subscription.notificationInfo = notificationInfo
+        subscriptions.append(subscription)
+        
+        // icloudServiceCategory
+        cloudRecordType = CloudRecordType.CRServiceCategory
+        recordType = cloudRecordType.rawValue
+        subscriptionID = recordType + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
+        subscription.notificationInfo = notificationInfo
+        subscriptions.append(subscription)
+        
+        // icloudService
+        cloudRecordType = CloudRecordType.CRService
+        recordType = cloudRecordType.rawValue
+        subscriptionID = recordType + self.cloudSalonRecordName
+        subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
+        subscription.notificationInfo = notificationInfo
+        subscriptions.append(subscription)
+        return subscriptions
+    }
+}

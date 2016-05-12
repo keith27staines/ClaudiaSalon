@@ -90,6 +90,8 @@
 		5358DD611C8D7085009DD63E /* FindCustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD601C8D7085009DD63E /* FindCustomerViewController.swift */; };
 		5358DD631C8D7934009DD63E /* FindCustomerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD621C8D7934009DD63E /* FindCustomerCell.swift */; };
 		5358DD661C8DC10C009DD63E /* SelectDateOrTimePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD651C8DC10C009DD63E /* SelectDateOrTimePopover.swift */; };
+		535DF8651CE4529500BBE621 /* CloudNotificationSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535DF8641CE4529500BBE621 /* CloudNotificationSubscriber.swift */; };
+		535DF8661CE453E600BBE621 /* CloudNotificationSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535DF8641CE4529500BBE621 /* CloudNotificationSubscriber.swift */; };
 		535F0DEC1AB232CB0035CFD8 /* AMCAccountStatementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */; };
 		535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */; };
 		535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */; };
@@ -517,6 +519,7 @@
 		5358DD601C8D7085009DD63E /* FindCustomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindCustomerViewController.swift; sourceTree = "<group>"; };
 		5358DD621C8D7934009DD63E /* FindCustomerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindCustomerCell.swift; sourceTree = "<group>"; };
 		5358DD651C8DC10C009DD63E /* SelectDateOrTimePopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateOrTimePopover.swift; sourceTree = "<group>"; };
+		535DF8641CE4529500BBE621 /* CloudNotificationSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CloudNotificationSubscriber.swift; path = ../KeithSalon/CloudNotificationSubscriber.swift; sourceTree = "<group>"; };
 		535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAccountStatementViewController.xib; sourceTree = "<group>"; };
 		535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementItem.m; sourceTree = "<group>"; };
 		535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementViewController.m; sourceTree = "<group>"; };
@@ -1413,6 +1416,7 @@
 				5370D4FC1C9428F500319147 /* CloudRecordType.swift */,
 				5370D4FF1C94292D00319147 /* DownloadInfo.swift */,
 				5370D5021C94296800319147 /* CloudImporter.swift */,
+				535DF8641CE4529500BBE621 /* CloudNotificationSubscriber.swift */,
 				533FC06F1CA6DB210074BDF0 /* CloudNotificationProcessor.swift */,
 				532279F01CD7A199002FEB26 /* RobustDownloaders */,
 			);
@@ -2948,6 +2952,7 @@
 				536B9E9C1C56077E00F170EC /* RecurringItem+CoreDataProperties.m in Sources */,
 				535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */,
 				53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */,
+				535DF8651CE4529500BBE621 /* CloudNotificationSubscriber.swift in Sources */,
 				53D69CFD1A9B240C0004CE10 /* AMCWizardStepSelectCustomerViewController.m in Sources */,
 				536B9E921C56077E00F170EC /* Service.m in Sources */,
 				5352DBC81CCA0C15002BDE6B /* CreateDevelopmentSalon.swift in Sources */,
@@ -3217,6 +3222,7 @@
 				53FDCA451C79A591006B4002 /* AppointmentDetailViewController.swift in Sources */,
 				533FC06E1CA3E1690074BDF0 /* BQCoredataExportController.swift in Sources */,
 				5358DD451C8C9338009DD63E /* Holiday+CoreDataProperties.m in Sources */,
+				535DF8661CE453E600BBE621 /* CloudNotificationSubscriber.swift in Sources */,
 				53FDCA6A1C7A0D3D006B4002 /* Employee.m in Sources */,
 				5358DD431C8C9338009DD63E /* IntervalDuringDay.m in Sources */,
 				53FDCA641C7A06DA006B4002 /* Sale.m in Sources */,

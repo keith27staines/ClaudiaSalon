@@ -16,16 +16,18 @@ class CloudNotificationProcessor {
     private let queue:dispatch_queue_t
     private var isWorking = false
     private var previousServerChangeToken:CKServerChangeToken?
-    private var importers = [CKRecordID:RobustImporter]()
-    private var notifications = [CKQueryNotification]()
     private var container:CKContainer
     private let publicCloudDatabase:CKDatabase
     private var currentSubscription: CKSubscription!
     private let cloudSalonReference : CKReference!
     private var processingSuspended = true
-    lazy var subscriptions: [CKSubscription] = {
-        return self.makeSubscriptionsArray()
+    
+    lazy var cloudSubscriber: CloudNotificationSubscriber = {
+        return CloudNotificationSubscriber(database: self.publicCloudDatabase, cloudSalonRecordName: self.cloudSalonRecordName)
     }()
+
+    private var importers = [CKRecordID:RobustImporter]()
+    private var notifications = [CKQueryNotification]()
 
     init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
         let salonID = CKRecordID(recordName: cloudSalonRecordName)
@@ -40,41 +42,11 @@ class CloudNotificationProcessor {
     
     func forgetSalon(completion:((success:Bool)->Void)) {
         self.suspendNotificationProcessing()
-        let subscriptionIDs = self.subscriptions.map {
-            subscription in
-            return subscription.subscriptionID
-        }
-        let deleteSubscriptionsOperation = CKModifySubscriptionsOperation(subscriptionsToSave: nil, subscriptionIDsToDelete: subscriptionIDs)
-        deleteSubscriptionsOperation.modifySubscriptionsCompletionBlock = { _, subscriptionIDs, error in
-            if let error = error {
-                let userInfo = error.userInfo
-                let errorCode = CKErrorCode(rawValue: error.code)!
-                switch errorCode {
-                case .PartialFailure:
-                    var okToComplete = true
-                    let errorsByID = userInfo[CKPartialErrorsByItemIDKey] as! [String:NSError]
-                    for (_,error) in errorsByID {
-                        if error.code != CKErrorCode.UnknownItem.rawValue {
-                            okToComplete = false
-                        }
-                    }
-                    if okToComplete {
-                        print("Subscriptions deleted")
-                    } else {
-                        print("Failed to delete subscriptions")
-                    }
-                    completion(success: okToComplete)
-                default:
-                    print("Subscriptions deleted")
-                    completion(success: false)
-                }
-                return
-            }
-            completion(success: true)
-        }
-        self.container.publicCloudDatabase.addOperation(deleteSubscriptionsOperation)
+        self.cloudSubscriber.deleteSubscriptions(completion)
     }
-    
+    func deleteAllCloudNotificationSubscriptions() {
+        self.cloudSubscriber.deleteAllCloudNotificationSubscriptions()
+    }
     func isSuspended() -> Bool {
         return self.processingSuspended
     }
@@ -87,32 +59,12 @@ class CloudNotificationProcessor {
     }
     
     func subscribeToCloudNotifications() {
-        self.saveSubscriptions()
-    }
-    
-    private func saveSubscriptions() {
-        let modifySubscriptions = CKModifySubscriptionsOperation(subscriptionsToSave: self.subscriptions, subscriptionIDsToDelete: nil)
-        modifySubscriptions.queuePriority = .VeryHigh
-        modifySubscriptions.modifySubscriptionsCompletionBlock = { (savedSubscriptions, deletedIDs, operationError) -> Void in
-            if let operationError = operationError {
-                let retryAfter = operationError.userInfo["retryAfter"] as? Int
-                if let retryAfter = retryAfter {
-                    let shortDelay = dispatch_time(DISPATCH_TIME_NOW, Int64(retryAfter))
-                    let mainQueue = dispatch_get_main_queue()
-                    print("Transient subscription error - will retry after \(retryAfter) seconds")
-                    dispatch_after(shortDelay, mainQueue) {
-                        self.saveSubscriptions()
-                    }
-                    return
-                }
-                print("Failed to modify subscriptions with error \(operationError)")
-                return
-            }
+        self.cloudSubscriber.saveSubscriptions { success in
+            guard success else {return}
             print("All subscriptions saved - Begun listening for cloud notifications")
             NSNotificationCenter.defaultCenter().addObserverForName("cloudKitNotification", object: nil, queue: nil, usingBlock: self.notificationFromCloud)
             self.pollForMissedRemoteNotifications()
         }
-        self.publicCloudDatabase.addOperation(modifySubscriptions)
     }
     
     deinit {
@@ -163,6 +115,33 @@ class CloudNotificationProcessor {
         self.notifications.removeAll()
     }
     
+    private func performNotificationFetch(serverChangeToken: CKServerChangeToken? = nil) {
+        
+        // Create fetch notifications operation
+        let fetchNotificationOperation = CKFetchNotificationChangesOperation(previousServerChangeToken: nil)
+        fetchNotificationOperation.resultsLimit = 100
+        
+        // Set the per-notification block
+        fetchNotificationOperation.notificationChangedBlock = self.notificationChanged
+        
+        // Set the fetch completion block
+        fetchNotificationOperation.fetchNotificationChangesCompletionBlock = { serverChangeToken, operationError in
+            self.fetchNotificationsCompleted(fetchNotificationOperation.moreComing, serverChangeToken: serverChangeToken, operationError: operationError)
+        }
+        self.container.addOperation(fetchNotificationOperation)
+    }
+}
+
+extension CloudNotificationProcessor : RobustImporterDelegate {
+    func importDidFail(importer: RobustImporter) {
+        
+    }
+    func importDidProgressState(importer: RobustImporter) {
+        
+    }
+}
+
+extension CloudNotificationProcessor {
     private func importerForRecordType(recordType:String, recordID: CKRecordID) -> RobustImporter {
         guard let type = ICloudRecordType(rawValue: recordType) else {
             fatalError("There is no importer for records of type \(recordType)")
@@ -186,235 +165,122 @@ class CloudNotificationProcessor {
             return SaleItemImporter(key: "saleItem", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
         }
     }
+}
+extension CloudNotificationProcessor {
     
-    private func performNotificationFetch(serverChangeToken: CKServerChangeToken? = nil) {
-        
-        // Create fetch notifications operation
-        let fetchNotificationOperation = CKFetchNotificationChangesOperation(previousServerChangeToken: nil)
-        
-        // The callback for when a notification is returned from the fetch
-        fetchNotificationOperation.notificationChangedBlock = { (notification: CKNotification) -> Void in
+    private func notificationChanged(notification: CKNotification) {
+        // If the notification is a query type then add it to the array for future processing
+        if notification.notificationType == .Query {
+            let queryNotification = notification as! CKQueryNotification
             
-            // If the notification is a query type then add it to the array for future processing
-            if notification.notificationType == .Query {
-                let queryNotification = notification as! CKQueryNotification
-                
-                // Add the notification id to the array of processed notifications to mark them as read
-                self.notifications.append(queryNotification)
-            }
+            // Add the notification id to the array of processed notifications to mark them as read
+            self.notifications.append(queryNotification)
         }
-        
-        // The callback for the fetch completion
-        fetchNotificationOperation.resultsLimit = 100
-        fetchNotificationOperation.fetchNotificationChangesCompletionBlock = { (serverChangeToken: CKServerChangeToken?, operationError: NSError?) -> Void in
-            
-            // The previous fetch may only have returned some of the missed notifications so now we check for more
-            if fetchNotificationOperation.moreComing {
-                self.performNotificationFetch(serverChangeToken)
-                return
-            }
+    }
 
-            guard operationError == nil else {
-                dispatch_sync(self.queue) {
-                    self.isWorking = false
-                }
-                return
-            }
-
-            var shallowProcessedNotificationIDs = [CKRecordID:Set<CKNotificationID>]()
-            var notificationIDsToMarkRead = Set<CKNotificationID>()
-
+    private func fetchNotificationsCompleted(moreComing:Bool, serverChangeToken: CKServerChangeToken?, operationError: NSError?) {
+        guard operationError == nil else {
             dispatch_sync(self.queue) {
-
-                // Get array of possibly null IDs of records that have been modified in some way (including being created)
-                var optionalRecordIDs = self.notifications.map { (notification) -> CKRecordID? in
-                    return notification.recordID
-                }
-                // Filter out the null records
-                optionalRecordIDs = optionalRecordIDs.filter({ (recordID) -> Bool in
-                    return (recordID != nil)
-                })
-                // Convert the [CKRecordID?] (which now contains no nil entries) into an array of [CKRecordID]
-                let changedRecordIDs:[CKRecordID] = optionalRecordIDs.map({ (recordID) -> CKRecordID in
-                    return recordID!
-                })
-                
-                var foreignNotificationIDsByRecordID = [CKRecordID:Set<CKNotificationID>]()
-                let recordFetchOp = CKFetchRecordsOperation(recordIDs: changedRecordIDs)
-                
-                recordFetchOp.perRecordCompletionBlock = { (record,recordID,error) in
-                    guard let recordID = recordID else {
-                        return
-                    }
-                    guard let record = record else {
-                        return
-                    }
-                    
-                    guard self.recordBelongsToSalon(record) else {
-                        // Reject this notification because it was for a different salon (i.e, a foreign salon) so we record its id in order to later mark it as read
-                        for notification in self.notifications {
-                            if notification.recordID == recordID {
-                                var notes = foreignNotificationIDsByRecordID[recordID] ?? Set<CKNotificationID>()
-                                notes.insert(notification.notificationID!)
-                                foreignNotificationIDsByRecordID[recordID] = notes
-                            }
-                        }
-                        return  // Reject foreign record
-                    }
-                    
-                    // Shallow-process the record
-                    for notification in self.notifications {
-                        if notification.recordID == recordID {
-                            var notes = shallowProcessedNotificationIDs[recordID] ?? Set<CKNotificationID>()
-                            notes.insert(notification.notificationID!)
-                            shallowProcessedNotificationIDs[recordID] = notes
-                        }
-                    }
-                }
-                
-                // Mark the notifications as read to avoid processing them again
-                recordFetchOp.fetchRecordsCompletionBlock = { recordInfo, error in
-                    if let recordInfo = recordInfo {
-                        for (_,record) in recordInfo {
-                            guard self.recordBelongsToSalon(record) else {
-                                // Reject foreign records
-                                continue
-                            }
-                            let deepProcessSuccess = self.deepProcessRecord(record: record)
-                            if deepProcessSuccess {
-                                let shallowProcessedNotifications = shallowProcessedNotificationIDs[record.recordID] ?? Set<CKNotificationID>()
-                                notificationIDsToMarkRead.unionInPlace(shallowProcessedNotifications)
-                            }
-                        }
-                    }
-                    
-                    for (_,foreignNotificationID) in foreignNotificationIDsByRecordID {
-                        notificationIDsToMarkRead.unionInPlace(foreignNotificationID)
-                    }
-
-                    let markOperation = CKMarkNotificationsReadOperation(notificationIDsToMarkRead: Array(notificationIDsToMarkRead))
-                    markOperation.markNotificationsReadCompletionBlock = { (notificationIDsMarkedRead: [CKNotificationID]?, operationError: NSError?) -> Void in
-                        if operationError != nil {
-                            // Handle the error here
-                            return
-                        }
-                        if let processedCount = notificationIDsMarkedRead?.count {
-                            let notice = NSNotification(name: "BadgeCountReducedNotification", object: self, userInfo: ["processed":processedCount])
-                            NSNotificationCenter.defaultCenter().postNotification(notice)
-                        }
-                        self.notifications.removeAll()
-                        self.isWorking = false
-                    }
-                    self.container.addOperation(markOperation)
-                }
-                
-                // Having set up all the callback blocks, we can now execute the fetchNotification operation
-                self.container.publicCloudDatabase.addOperation(recordFetchOp)
+                self.isWorking = false
             }
+            return
         }
-        self.container.addOperation(fetchNotificationOperation)
-    }
-}
 
-extension CloudNotificationProcessor {
-    func makeSubscriptionsArray() -> [CKSubscription] {
+        // The previous operation might have returned only a subset of the missed notifications so now we check for more
+        if moreComing {
+            self.performNotificationFetch(serverChangeToken)
+            return
+        }
         
-        var subscriptions = [CKSubscription]()
-        let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
-        let predicate = NSPredicate(format: "parentSalonReference == %@",salonRecordID)
-        var subscription: CKSubscription
-        var cloudRecordType:CloudRecordType
-        var recordType:String
-        var subscriptionID: String
+        var shallowProcessedNotificationIDs = [CKRecordID:Set<CKNotificationID>]()
+        var notificationIDsToMarkRead = Set<CKNotificationID>()
         
-        // iCloudSalon
-        cloudRecordType = CloudRecordType.CRSalon
-        recordType = cloudRecordType.rawValue
-        subscriptionID = recordType + self.cloudSalonRecordName
-        let salonPredicate = NSPredicate(format: "recordID == %@",salonRecordID)
-        subscription = CKSubscription(recordType: recordType, predicate: salonPredicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
-        subscriptions.append(subscription)
-        
-        let notificationInfo = CKNotificationInfo()
-        notificationInfo.desiredKeys = ["parentSalonReference"]
-        
-        // icloudAppointment
-        let appointmentInfo = CKNotificationInfo()
-        appointmentInfo.desiredKeys = notificationInfo.desiredKeys
-        cloudRecordType = CloudRecordType.CRAppointment
-        recordType = cloudRecordType.rawValue
-        subscriptionID = recordType + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
-        subscription.notificationInfo = appointmentInfo
-        subscriptions.append(subscription)
-        
-        // icloudEmployee
-        cloudRecordType = CloudRecordType.CREmployee
-        recordType = cloudRecordType.rawValue
-        subscriptionID = recordType + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
-        subscription.notificationInfo = notificationInfo
-        subscriptions.append(subscription)
-        
-        // icloudCustomer
-        cloudRecordType = CloudRecordType.CRCustomer
-        recordType = cloudRecordType.rawValue
-        subscriptionID = recordType + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
-        subscription.notificationInfo = notificationInfo
-        subscriptions.append(subscription)
-        
-        // icloudServiceCategory
-        cloudRecordType = CloudRecordType.CRServiceCategory
-        recordType = cloudRecordType.rawValue
-        subscriptionID = recordType + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
-        subscription.notificationInfo = notificationInfo
-        subscriptions.append(subscription)
-        
-        // icloudService
-        cloudRecordType = CloudRecordType.CRService
-        recordType = cloudRecordType.rawValue
-        subscriptionID = recordType + self.cloudSalonRecordName
-        subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
-        subscription.notificationInfo = notificationInfo
-        subscriptions.append(subscription)
-        return subscriptions
-    }
-}
-
-extension CloudNotificationProcessor {
-    func deleteAllCloudNotificationSubscriptions() {
-        let db = self.container.publicCloudDatabase
-        let fetchSubscriptions = CKFetchSubscriptionsOperation.fetchAllSubscriptionsOperation()
-        fetchSubscriptions.fetchSubscriptionCompletionBlock = { dictionary, error in
-            guard let dictionary = dictionary else {
-                print("error fetching subscriptions \(error)")
-                return
+        dispatch_sync(self.queue) {
+            
+            // Get array of possibly null IDs of records that have been modified in some way (including being created)
+            var optionalRecordIDs = self.notifications.map { (notification) -> CKRecordID? in
+                return notification.recordID
             }
-            var subscriptionIDs = [String]()
-            for (subscriptionID,_) in dictionary {
-                subscriptionIDs.append(subscriptionID)
-            }
-            let deleteSubscriptions = CKModifySubscriptionsOperation(subscriptionsToSave: nil, subscriptionIDsToDelete: subscriptionIDs)
-            deleteSubscriptions.modifySubscriptionsCompletionBlock = { _,subscriptionIDs,error in
-                if error != nil {
-                    print("error deleting subscriptions \(error)")
+            // Filter out the null records
+            optionalRecordIDs = optionalRecordIDs.filter({ (recordID) -> Bool in
+                return (recordID != nil)
+            })
+            // Convert the [CKRecordID?] (which now contains no nil entries) into an array of [CKRecordID]
+            let changedRecordIDs:[CKRecordID] = optionalRecordIDs.map({ (recordID) -> CKRecordID in
+                return recordID!
+            })
+            
+            var foreignNotificationIDsByRecordID = [CKRecordID:Set<CKNotificationID>]()
+            let recordFetchOp = CKFetchRecordsOperation(recordIDs: changedRecordIDs)
+            
+            recordFetchOp.perRecordCompletionBlock = { (record,recordID,error) in
+                guard let recordID = recordID else {
                     return
                 }
-                print("All subscriptions deleted")
+                guard let record = record else {
+                    return
+                }
+                
+                guard self.recordBelongsToSalon(record) else {
+                    // Reject this notification because it was for a different salon (i.e, a foreign salon) so we record its id in order to later mark it as read
+                    for notification in self.notifications {
+                        if notification.recordID == recordID {
+                            var notes = foreignNotificationIDsByRecordID[recordID] ?? Set<CKNotificationID>()
+                            notes.insert(notification.notificationID!)
+                            foreignNotificationIDsByRecordID[recordID] = notes
+                        }
+                    }
+                    return  // Reject foreign record
+                }
+                
+                // Shallow-process the record
+                for notification in self.notifications {
+                    if notification.recordID == recordID {
+                        var notes = shallowProcessedNotificationIDs[recordID] ?? Set<CKNotificationID>()
+                        notes.insert(notification.notificationID!)
+                        shallowProcessedNotificationIDs[recordID] = notes
+                    }
+                }
             }
-            db.addOperation(deleteSubscriptions)
+            
+            // Mark the notifications as read to avoid processing them again
+            recordFetchOp.fetchRecordsCompletionBlock = { recordInfo, error in
+                if let recordInfo = recordInfo {
+                    for (_,record) in recordInfo {
+                        guard self.recordBelongsToSalon(record) else {
+                            // Reject foreign records
+                            continue
+                        }
+                        //let deepProcessSuccess = self.deepProcessRecord(record: record)
+//                        if deepProcessSuccess {
+//                            let shallowProcessedNotifications = shallowProcessedNotificationIDs[record.recordID] ?? Set<CKNotificationID>()
+//                            notificationIDsToMarkRead.unionInPlace(shallowProcessedNotifications)
+//                        }
+                    }
+                }
+                
+                for (_,foreignNotificationID) in foreignNotificationIDsByRecordID {
+                    notificationIDsToMarkRead.unionInPlace(foreignNotificationID)
+                }
+                
+                let markOperation = CKMarkNotificationsReadOperation(notificationIDsToMarkRead: Array(notificationIDsToMarkRead))
+                markOperation.markNotificationsReadCompletionBlock = { (notificationIDsMarkedRead: [CKNotificationID]?, operationError: NSError?) -> Void in
+                    if operationError != nil {
+                        // Handle the error here
+                        return
+                    }
+                    if let processedCount = notificationIDsMarkedRead?.count {
+                        let notice = NSNotification(name: "BadgeCountReducedNotification", object: self, userInfo: ["processed":processedCount])
+                        NSNotificationCenter.defaultCenter().postNotification(notice)
+                    }
+                    self.notifications.removeAll()
+                    self.isWorking = false
+                }
+                self.container.addOperation(markOperation)
+            }
+            
+            // Having set up all the callback blocks, we can now execute the fetchNotification operation
+            self.container.publicCloudDatabase.addOperation(recordFetchOp)
         }
-        db.addOperation(fetchSubscriptions)
-    }
-}
-
-extension CloudNotificationProcessor : RobustImporterDelegate {
-    func importDidFail(importer: RobustImporter) {
-        
-    }
-    func importDidProgressState(importer: RobustImporter) {
-        
     }
 }
