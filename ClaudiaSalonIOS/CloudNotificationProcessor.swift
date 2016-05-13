@@ -21,14 +21,16 @@ class CloudNotificationProcessor {
     private var currentSubscription: CKSubscription!
     private let cloudSalonReference : CKReference!
     private var processingSuspended = true
+    private var importState: RobustImporter.ImportState = RobustImporter.ImportState.InPreparation
     
     lazy var cloudSubscriber: CloudNotificationSubscriber = {
         return CloudNotificationSubscriber(database: self.publicCloudDatabase, cloudSalonRecordName: self.cloudSalonRecordName)
     }()
 
-    private var importers = [CKRecordID:RobustImporter]()
-    private var notifications = [CKQueryNotification]()
-
+    private var downloadedNotifications = [CKQueryNotification]()
+    private var recordDataByRecordID = [CKRecordID:RecordData]()
+    private var notificationsToMarkRead = Set<CKQueryNotification>()
+    
     init(cloudContainerIdentifier:String, cloudSalonRecordName:String) {
         let salonID = CKRecordID(recordName: cloudSalonRecordName)
         self.cloudSalonReference = CKReference(recordID: salonID, action: .None)
@@ -94,7 +96,7 @@ class CloudNotificationProcessor {
                 return
             }
             self.isWorking = true
-            self.prepareForNewFetch()
+            self.prepareToFetchNotifications()
             self.performNotificationFetch()
         }
     }
@@ -110,9 +112,11 @@ class CloudNotificationProcessor {
         }
     }
     
-    private func prepareForNewFetch() {
-        self.importers.removeAll()
-        self.notifications.removeAll()
+    private func prepareToFetchNotifications() {
+        self.downloadedNotifications.removeAll()
+        self.notificationsToMarkRead.removeAll()
+        self.recordDataByRecordID.removeAll()
+        self.importState = RobustImporter.ImportState.InPreparation
     }
     
     private func performNotificationFetch(serverChangeToken: CKServerChangeToken? = nil) {
@@ -122,7 +126,7 @@ class CloudNotificationProcessor {
         fetchNotificationOperation.resultsLimit = 100
         
         // Set the per-notification block
-        fetchNotificationOperation.notificationChangedBlock = self.notificationChanged
+        fetchNotificationOperation.notificationChangedBlock = self.handleNotificationFetched
         
         // Set the fetch completion block
         fetchNotificationOperation.fetchNotificationChangesCompletionBlock = { serverChangeToken, operationError in
@@ -134,14 +138,64 @@ class CloudNotificationProcessor {
 
 extension CloudNotificationProcessor : RobustImporterDelegate {
     func importDidFail(importer: RobustImporter) {
-        
+        print("importer did fail import with error: \(importer.importData.error)")
+        if importer.successRequired {
+            
+        }
     }
     func importDidProgressState(importer: RobustImporter) {
-        
+        if importer.importData.state == RobustImporter.ImportState.AllDataDownloaded {
+            importer.writeToCoredata()
+            return
+        }
+        if self.isComplete() {
+            self.isWorking = false
+            return
+        }
+    }
+    
+    private func writeToCoredata() {
+        for (_,recordData) in self.recordDataByRecordID {
+            if let importer = recordData.importer {
+                importer.writeToCoredata()
+            }
+        }
+    }
+    private func isInErrorState() -> Bool {
+        for (_,recordData) in self.recordDataByRecordID {
+            guard let importer = recordData.importer else { return false }
+            if importer.successRequired  && importer.isInErrorState() { return true }
+        }
+        return false
+    }
+    private func isFullyDownloaded() -> Bool {
+        for (_,recordData) in self.recordDataByRecordID {
+            if recordData.isForeign { continue }
+            guard let importer = recordData.importer else { return false }
+            if importer.state() != RobustImporter.ImportState.AllDataDownloaded { return false }
+        }
+        return true
+    }
+    
+    private func isComplete() -> Bool {
+        for (_,recordData) in self.recordDataByRecordID {
+            if recordData.isForeign { continue }
+            guard let importer = recordData.importer else { return false }
+            if !importer.isComplete() || !importer.isInErrorState() {
+                return false
+            }
+        }
+        return true
     }
 }
 
 extension CloudNotificationProcessor {
+    
+    
+    private func importerForRecord(record:CKRecord) -> RobustImporter {
+        return self.importerForRecordType(record.recordType, recordID: record.recordID)
+    }
+    
     private func importerForRecordType(recordType:String, recordID: CKRecordID) -> RobustImporter {
         guard let type = ICloudRecordType(rawValue: recordType) else {
             fatalError("There is no importer for records of type \(recordType)")
@@ -166,24 +220,131 @@ extension CloudNotificationProcessor {
         }
     }
 }
+
+struct RecordData {
+    var recordID:CKRecordID
+    var record:CKRecord? = nil
+    var notifications = Set<CKQueryNotification>()
+    var isForeign = false
+    var recordFetchError: NSError?
+    var importer: RobustImporter?
+    
+    init(recordID:CKRecordID) {
+        self.recordID = recordID
+    }
+    init(recordID:CKRecordID, record:CKRecord) {
+        self.init(recordID: recordID)
+        self.record = record
+    }
+}
+
 extension CloudNotificationProcessor {
     
-    private func notificationChanged(notification: CKNotification) {
+    private func handleNotificationFetched(notification: CKNotification) {
         // If the notification is a query type then add it to the array for future processing
         if notification.notificationType == .Query {
             let queryNotification = notification as! CKQueryNotification
             
             // Add the notification id to the array of processed notifications to mark them as read
-            self.notifications.append(queryNotification)
+            self.downloadedNotifications.append(queryNotification)
         }
     }
 
-    private func fetchNotificationsCompleted(moreComing:Bool, serverChangeToken: CKServerChangeToken?, operationError: NSError?) {
-        guard operationError == nil else {
-            dispatch_sync(self.queue) {
-                self.isWorking = false
+    private func prepareRecordData() {
+        self.recordDataByRecordID.removeAll()
+        for notification in self.downloadedNotifications {
+            if let recordID = notification.recordID {
+                var recordData = self.recordDataByRecordID[recordID] ?? RecordData(recordID: recordID)
+                recordData.notifications.insert(notification)
+                self.recordDataByRecordID[recordID] = recordData
             }
-            return
+        }
+    }
+    
+    private var uniqueRecordIDs: [CKRecordID]  {
+        let keys = self.recordDataByRecordID.keys
+        return Array(keys)
+    }
+    
+    private func handleFetchedRecord(record:CKRecord?, recordID: CKRecordID?, error: NSError?) {
+        guard let recordID = recordID else {
+            fatalError("Fetched record has no record ID") // Can this actually happen?
+        }
+        if let error = error {
+            self.recordDataByRecordID[recordID]!.recordFetchError = error
+        }
+        if let record = record {
+            self.recordDataByRecordID[recordID]!.record = record
+            let belongsToSalon = self.recordBelongsToSalon(record)
+            self.recordDataByRecordID[recordID]!.isForeign = !belongsToSalon
+            if belongsToSalon {
+                let importer = self.importerForRecord(record)
+                self.recordDataByRecordID[recordID]!.importer = importer
+                importer.startImport(true)
+            }
+        }
+    }
+    
+    private func handleRecordFetchCompleted(recordInfo:[CKRecordID:CKRecord]?,error:NSError?) {
+        if error != nil {
+            // TODO: handle error
+            print("error on handleRecordFetchCompleted: \(error)")
+        }
+        let foreignNotifications = self.foreignNotificationSubset()
+        let processedNotifications = self.processedNotificationSubset()
+        let markRead = foreignNotifications.union(processedNotifications)
+        
+        let readNotificationIDs = markRead.map { (notification) -> CKNotificationID in
+            notification.notificationID!
+        }
+        
+        let markOperation = CKMarkNotificationsReadOperation(notificationIDsToMarkRead: readNotificationIDs)
+        markOperation.markNotificationsReadCompletionBlock = self.handleNotificationsMarkedRead
+        self.container.addOperation(markOperation)
+    }
+    
+    private func handleNotificationsMarkedRead(notificationIDsMarkedRead: [CKNotificationID]?, operationError: NSError?) {
+        if operationError != nil {
+            // TODO: Handle the error
+            print("error on handleNotificationsMarkedRead: \(operationError)")
+        }
+    }
+
+    private func foreignNotificationSubset() -> Set<CKQueryNotification> {
+        var foreignNotifications = Set<CKQueryNotification>()
+        for (_,recordData) in self.recordDataByRecordID {
+            if recordData.isForeign {
+                foreignNotifications.unionInPlace(recordData.notifications)
+            }
+        }
+        return foreignNotifications
+    }
+    private func processedNotificationSubset() -> Set<CKQueryNotification> {
+        var processedNotifications = Set<CKQueryNotification>()
+        for (_,recordData) in self.recordDataByRecordID {
+            if let importer = recordData.importer {
+                if importer.isComplete() {
+                    processedNotifications.unionInPlace(recordData.notifications)
+                }
+            }
+        }
+        return processedNotifications
+    }
+    
+    private func processFetchedNotifications() {
+        self.prepareRecordData()
+        let recordFetchOp = CKFetchRecordsOperation(recordIDs: self.uniqueRecordIDs)
+        recordFetchOp.perRecordCompletionBlock = self.handleFetchedRecord
+        recordFetchOp.fetchRecordsCompletionBlock = self.handleRecordFetchCompleted
+        
+        // Execute the operation to fetch the records corresponding to the notifications
+        self.container.publicCloudDatabase.addOperation(recordFetchOp)
+    }
+    
+    private func fetchNotificationsCompleted(moreComing:Bool, serverChangeToken: CKServerChangeToken?, operationError: NSError?) {
+        if operationError != nil {
+            // TODO: Handle the error once we have worked out how
+            print("Error on fetchNotificationsCompleted: \(operationError)")
         }
 
         // The previous operation might have returned only a subset of the missed notifications so now we check for more
@@ -192,95 +353,8 @@ extension CloudNotificationProcessor {
             return
         }
         
-        var shallowProcessedNotificationIDs = [CKRecordID:Set<CKNotificationID>]()
-        var notificationIDsToMarkRead = Set<CKNotificationID>()
-        
         dispatch_sync(self.queue) {
-            
-            // Get array of possibly null IDs of records that have been modified in some way (including being created)
-            var optionalRecordIDs = self.notifications.map { (notification) -> CKRecordID? in
-                return notification.recordID
-            }
-            // Filter out the null records
-            optionalRecordIDs = optionalRecordIDs.filter({ (recordID) -> Bool in
-                return (recordID != nil)
-            })
-            // Convert the [CKRecordID?] (which now contains no nil entries) into an array of [CKRecordID]
-            let changedRecordIDs:[CKRecordID] = optionalRecordIDs.map({ (recordID) -> CKRecordID in
-                return recordID!
-            })
-            
-            var foreignNotificationIDsByRecordID = [CKRecordID:Set<CKNotificationID>]()
-            let recordFetchOp = CKFetchRecordsOperation(recordIDs: changedRecordIDs)
-            
-            recordFetchOp.perRecordCompletionBlock = { (record,recordID,error) in
-                guard let recordID = recordID else {
-                    return
-                }
-                guard let record = record else {
-                    return
-                }
-                
-                guard self.recordBelongsToSalon(record) else {
-                    // Reject this notification because it was for a different salon (i.e, a foreign salon) so we record its id in order to later mark it as read
-                    for notification in self.notifications {
-                        if notification.recordID == recordID {
-                            var notes = foreignNotificationIDsByRecordID[recordID] ?? Set<CKNotificationID>()
-                            notes.insert(notification.notificationID!)
-                            foreignNotificationIDsByRecordID[recordID] = notes
-                        }
-                    }
-                    return  // Reject foreign record
-                }
-                
-                // Shallow-process the record
-                for notification in self.notifications {
-                    if notification.recordID == recordID {
-                        var notes = shallowProcessedNotificationIDs[recordID] ?? Set<CKNotificationID>()
-                        notes.insert(notification.notificationID!)
-                        shallowProcessedNotificationIDs[recordID] = notes
-                    }
-                }
-            }
-            
-            // Mark the notifications as read to avoid processing them again
-            recordFetchOp.fetchRecordsCompletionBlock = { recordInfo, error in
-                if let recordInfo = recordInfo {
-                    for (_,record) in recordInfo {
-                        guard self.recordBelongsToSalon(record) else {
-                            // Reject foreign records
-                            continue
-                        }
-                        //let deepProcessSuccess = self.deepProcessRecord(record: record)
-//                        if deepProcessSuccess {
-//                            let shallowProcessedNotifications = shallowProcessedNotificationIDs[record.recordID] ?? Set<CKNotificationID>()
-//                            notificationIDsToMarkRead.unionInPlace(shallowProcessedNotifications)
-//                        }
-                    }
-                }
-                
-                for (_,foreignNotificationID) in foreignNotificationIDsByRecordID {
-                    notificationIDsToMarkRead.unionInPlace(foreignNotificationID)
-                }
-                
-                let markOperation = CKMarkNotificationsReadOperation(notificationIDsToMarkRead: Array(notificationIDsToMarkRead))
-                markOperation.markNotificationsReadCompletionBlock = { (notificationIDsMarkedRead: [CKNotificationID]?, operationError: NSError?) -> Void in
-                    if operationError != nil {
-                        // Handle the error here
-                        return
-                    }
-                    if let processedCount = notificationIDsMarkedRead?.count {
-                        let notice = NSNotification(name: "BadgeCountReducedNotification", object: self, userInfo: ["processed":processedCount])
-                        NSNotificationCenter.defaultCenter().postNotification(notice)
-                    }
-                    self.notifications.removeAll()
-                    self.isWorking = false
-                }
-                self.container.addOperation(markOperation)
-            }
-            
-            // Having set up all the callback blocks, we can now execute the fetchNotification operation
-            self.container.publicCloudDatabase.addOperation(recordFetchOp)
+            self.processFetchedNotifications()
         }
     }
 }

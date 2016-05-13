@@ -1359,7 +1359,6 @@
 		536B9DB41C50BD4F00F170EC /* View controllers for top level booking queue functiions */ = {
 			isa = PBXGroup;
 			children = (
-				53A9F0E11C65DFD6001E1618 /* First Extract */,
 				53A9F0E01C65DFC1001E1618 /* Extract Maintenance */,
 			);
 			name = "View controllers for top level booking queue functiions";
@@ -1368,9 +1367,10 @@
 		536B9DC51C50C2F600F170EC /* Booking Queue Window Controller */ = {
 			isa = PBXGroup;
 			children = (
+				536B9DB01C4FDFAF00F170EC /* AMCBookingQueueManagerWindowController.swift */,
+				536B9DB11C4FDFAF00F170EC /* AMCBookingQueueManagerWindowController.xib */,
 				536B9DA81C4FDD0100F170EC /* AMCBookingQueueManagerViewController.swift */,
 				536B9DA91C4FDD0100F170EC /* AMCBookingQueueManagerViewController.xib */,
-				536B9DDB1C5381D300F170EC /* Window Controller */,
 			);
 			name = "Booking Queue Window Controller";
 			sourceTree = "<group>";
@@ -1386,15 +1386,6 @@
 				536118FA1C803DA000758CF4 /* Cloud.swift */,
 			);
 			name = "Model Controllers";
-			sourceTree = "<group>";
-		};
-		536B9DDB1C5381D300F170EC /* Window Controller */ = {
-			isa = PBXGroup;
-			children = (
-				536B9DB01C4FDFAF00F170EC /* AMCBookingQueueManagerWindowController.swift */,
-				536B9DB11C4FDFAF00F170EC /* AMCBookingQueueManagerWindowController.xib */,
-			);
-			name = "Window Controller";
 			sourceTree = "<group>";
 		};
 		536E57CC1AE62B5E00A60D36 /* Best matches */ = {
@@ -1562,6 +1553,7 @@
 		53A9F0E11C65DFD6001E1618 /* First Extract */ = {
 			isa = PBXGroup;
 			children = (
+				534F0AEA1C5A2D0100520214 /* BQFirstExtractController.swift */,
 				536B9DBD1C50C2A200F170EC /* BQDataExtractViewController.swift */,
 				536B9DBE1C50C2A200F170EC /* BQDataExtractViewController.xib */,
 			);
@@ -2698,20 +2690,12 @@
 		53FDCA901C7AFC79006B4002 /* BookingQueueMac */ = {
 			isa = PBXGroup;
 			children = (
-				53FDCA941C7AFD1A006B4002 /* Model controllers */,
+				53A9F0E11C65DFD6001E1618 /* First Extract */,
 				536B9DB41C50BD4F00F170EC /* View controllers for top level booking queue functiions */,
 				536B9DC51C50C2F600F170EC /* Booking Queue Window Controller */,
 			);
 			name = BookingQueueMac;
 			path = ..;
-			sourceTree = "<group>";
-		};
-		53FDCA941C7AFD1A006B4002 /* Model controllers */ = {
-			isa = PBXGroup;
-			children = (
-				534F0AEA1C5A2D0100520214 /* BQFirstExtractController.swift */,
-			);
-			name = "Model controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

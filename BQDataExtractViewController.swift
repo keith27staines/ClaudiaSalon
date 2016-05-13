@@ -30,6 +30,7 @@ class BQDataExtractViewController: NSViewController, BQFirstExtractControllerDel
         self.extractStatus.stringValue = ""
         extractModel = BQFirstExtractController(salonDocument:self.salonDocument)
         extractModel.delegate = self
+        self.salonDocument.suspendImportsAndExports(true)
     }
 
     @IBAction func deleteCloudNotifications(sender: AnyObject) {

@@ -181,15 +181,47 @@ class RobustImporter : RobustImporterDelegate {
     }
     
     func importDidProgressState(importer: RobustImporter) {
-        // If our child imports are all complete, then we are complete. If any one of them isn't complete, then neither are we
+        // If our child imports are all downloaded, then we are downloaded. If any one of them hasn't downloaded, then neither are we
+        if  self.importData.state == ImportState.DownloadingChildRecords && self.isAllChildDataDownloaded() {
+            self.changeState(.AllDataDownloaded)
+            return
+        }
+    
+        // If our child imports are all downloaded, then we are downloaded. If any one of them hasn't downloaded, then neither are we
+        if self.importData.state == ImportState.WritingToCoredata && self.isAllChildDataComplete() {
+            self.changeState(.Complete)
+            return
+        }
+    }
+    private func isAllChildDataDownloaded() -> Bool {
         for (_,importer) in self.childImporters {
-            guard importer.importData.state == ImportState.AllDataDownloaded else {
-                // This child hasb't downloaded, so neither have we
-                return
+            let state = importer.importData.state
+            if importer.successRequired {
+                if state != ImportState.AllDataDownloaded { return false }
+            } else {
+                // As not required, error states count as downloaded
+                if !importer.isInErrorState() {
+                    // But if not in error state, then it must be downloaded
+                    if importer.importData.state != ImportState.AllDataDownloaded { return false }
+                }
             }
         }
-        // All child imports downloaded, so we have also completed downloading
-        self.changeState(.Complete)
+        return true
+    }
+    private func isAllChildDataComplete() -> Bool {
+        for (_,importer) in self.childImporters {
+            let state = importer.importData.state
+            if importer.successRequired {
+                if state != ImportState.Complete { return false }
+            } else {
+                // As not required, error states count as complete
+                if !importer.isInErrorState() {
+                    // But if not in error state, then it must be complete
+                    if importer.importData.state != ImportState.Complete { return false }
+                }
+            }
+        }
+        return true
     }
     
     private func handleFetchedChildObjectID(childRecord:CKRecord) {
@@ -239,13 +271,12 @@ extension RobustImporter {
     }
     private func changeStateForError(error:ImportError) {
         self.synchQueue.addOperationWithBlock() {
+            self.importData.error = error
             guard self.successRequired else {
                 // If success isn't required then we have finished processing (simply because errors prevent us continuing), so we mark ourselves complete
-                self.importData.error = error
                 self.changeState(.Complete)
                 return
             }
-            self.importData.error = error
             switch self.importData.state {
                 
             // Active states can legitimately be failed
