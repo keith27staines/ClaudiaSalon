@@ -64,12 +64,11 @@
     CKNotification * note = [CKNotification notificationFromRemoteNotificationDictionary:userInfo];
     if (note.notificationType == CKNotificationTypeQuery) {
         CKQueryNotification * qNote = (CKQueryNotification*)note;
-        CKReference * parentSaloReference = qNote.recordFields[@"parentSalonReference"];
-        NSString * salonName = parentSaloReference.recordID.recordName;
+        NSString * salonName = qNote.recordFields[@"parentSalonReference"];
         NSDocument * currentDocument = [NSDocumentController sharedDocumentController].currentDocument;
         AMCSalonDocument * currentSalon = (AMCSalonDocument*)currentDocument;
         if (!currentSalon) { return; }
-        if ([salonName isEqualToString:currentSalon.salon.salonName]) {
+        if ([salonName isEqualToString:currentSalon.salon.bqCloudID]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"cloudKitNotification" object:self userInfo:userInfo];
         }
     }

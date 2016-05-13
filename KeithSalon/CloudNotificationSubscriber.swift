@@ -101,8 +101,11 @@ class CloudNotificationSubscriber {
                     return
                 }
                 print("Failed to modify subscriptions with error \(operationError)")
+                completion(success: false)
                 return
             }
+            print("Saved cloud notification subscriptions")
+            completion(success: true)
         }
         self.database.addOperation(modifySubscriptions)
     }

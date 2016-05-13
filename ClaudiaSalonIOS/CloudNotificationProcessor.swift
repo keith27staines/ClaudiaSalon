@@ -63,7 +63,7 @@ class CloudNotificationProcessor {
     func subscribeToCloudNotifications() {
         self.cloudSubscriber.saveSubscriptions { success in
             guard success else {return}
-            print("All subscriptions saved - Begun listening for cloud notifications")
+            print("Begin listening for local notifications")
             NSNotificationCenter.defaultCenter().addObserverForName("cloudKitNotification", object: nil, queue: nil, usingBlock: self.notificationFromCloud)
             self.pollForMissedRemoteNotifications()
         }
@@ -97,7 +97,7 @@ class CloudNotificationProcessor {
             }
             self.isWorking = true
             self.prepareToFetchNotifications()
-            self.performNotificationFetch()
+            self.beginNotificationFetch()
         }
     }
     
@@ -119,7 +119,7 @@ class CloudNotificationProcessor {
         self.importState = RobustImporter.ImportState.InPreparation
     }
     
-    private func performNotificationFetch(serverChangeToken: CKServerChangeToken? = nil) {
+    private func beginNotificationFetch(serverChangeToken: CKServerChangeToken? = nil) {
         
         // Create fetch notifications operation
         let fetchNotificationOperation = CKFetchNotificationChangesOperation(previousServerChangeToken: nil)
@@ -139,9 +139,6 @@ class CloudNotificationProcessor {
 extension CloudNotificationProcessor : RobustImporterDelegate {
     func importDidFail(importer: RobustImporter) {
         print("importer did fail import with error: \(importer.importData.error)")
-        if importer.successRequired {
-            
-        }
     }
     func importDidProgressState(importer: RobustImporter) {
         if importer.importData.state == RobustImporter.ImportState.AllDataDownloaded {
@@ -149,43 +146,71 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
             return
         }
         if self.isComplete() {
-            self.isWorking = false
+            dispatch_sync(self.queue) {
+                self.isWorking = false
+            }
             return
         }
     }
     
     private func writeToCoredata() {
-        for (_,recordData) in self.recordDataByRecordID {
-            if let importer = recordData.importer {
-                importer.writeToCoredata()
+        dispatch_sync(self.queue) {
+            for (_,recordData) in self.recordDataByRecordID {
+                if let importer = recordData.importer {
+                    importer.writeToCoredata()
+                }
             }
         }
     }
     private func isInErrorState() -> Bool {
-        for (_,recordData) in self.recordDataByRecordID {
-            guard let importer = recordData.importer else { return false }
-            if importer.successRequired  && importer.isInErrorState() { return true }
+        var result = true
+        dispatch_sync(self.queue) {
+            for (_,recordData) in self.recordDataByRecordID {
+                guard let importer = recordData.importer else {
+                    result = false
+                    break
+                }
+                if importer.successRequired  && importer.isInErrorState() {
+                    result = true
+                    break
+                }
+            }
         }
-        return false
+        return result
     }
     private func isFullyDownloaded() -> Bool {
-        for (_,recordData) in self.recordDataByRecordID {
-            if recordData.isForeign { continue }
-            guard let importer = recordData.importer else { return false }
-            if importer.state() != RobustImporter.ImportState.AllDataDownloaded { return false }
+        var result = true
+        dispatch_sync(self.queue) {
+            for (_,recordData) in self.recordDataByRecordID {
+                if recordData.isForeign { continue }
+                guard let importer = recordData.importer else {
+                    result = false
+                    break
+                }
+                if importer.state() != RobustImporter.ImportState.AllDataDownloaded {
+                    result = false
+                }
+            }
         }
-        return true
+        return result
     }
     
     private func isComplete() -> Bool {
-        for (_,recordData) in self.recordDataByRecordID {
-            if recordData.isForeign { continue }
-            guard let importer = recordData.importer else { return false }
-            if !importer.isComplete() || !importer.isInErrorState() {
-                return false
+        var result = true
+        dispatch_sync(self.queue) {
+            for (_,recordData) in self.recordDataByRecordID {
+                if recordData.isForeign { continue }
+                guard let importer = recordData.importer else {
+                    result = false
+                    break
+                }
+                if !importer.isComplete() || !importer.isInErrorState() {
+                    result = false
+                    break
+                }
             }
         }
-        return true
+        return result
     }
 }
 
@@ -246,17 +271,21 @@ extension CloudNotificationProcessor {
             let queryNotification = notification as! CKQueryNotification
             
             // Add the notification id to the array of processed notifications to mark them as read
-            self.downloadedNotifications.append(queryNotification)
+            dispatch_sync(self.queue) {
+                self.downloadedNotifications.append(queryNotification)
+            }
         }
     }
 
     private func prepareRecordData() {
-        self.recordDataByRecordID.removeAll()
-        for notification in self.downloadedNotifications {
-            if let recordID = notification.recordID {
-                var recordData = self.recordDataByRecordID[recordID] ?? RecordData(recordID: recordID)
-                recordData.notifications.insert(notification)
-                self.recordDataByRecordID[recordID] = recordData
+        dispatch_sync(self.queue) {
+            self.recordDataByRecordID.removeAll()
+            for notification in self.downloadedNotifications {
+                if let recordID = notification.recordID {
+                    var recordData = self.recordDataByRecordID[recordID] ?? RecordData(recordID: recordID)
+                    recordData.notifications.insert(notification)
+                    self.recordDataByRecordID[recordID] = recordData
+                }
             }
         }
     }
@@ -270,17 +299,19 @@ extension CloudNotificationProcessor {
         guard let recordID = recordID else {
             fatalError("Fetched record has no record ID") // Can this actually happen?
         }
-        if let error = error {
-            self.recordDataByRecordID[recordID]!.recordFetchError = error
-        }
-        if let record = record {
-            self.recordDataByRecordID[recordID]!.record = record
-            let belongsToSalon = self.recordBelongsToSalon(record)
-            self.recordDataByRecordID[recordID]!.isForeign = !belongsToSalon
-            if belongsToSalon {
-                let importer = self.importerForRecord(record)
-                self.recordDataByRecordID[recordID]!.importer = importer
-                importer.startImport(true)
+        dispatch_sync(self.queue) {
+            if let error = error {
+                self.recordDataByRecordID[recordID]!.recordFetchError = error
+            }
+            if let record = record {
+                self.recordDataByRecordID[recordID]!.record = record
+                let belongsToSalon = self.recordBelongsToSalon(record)
+                self.recordDataByRecordID[recordID]!.isForeign = !belongsToSalon
+                if belongsToSalon {
+                    let importer = self.importerForRecord(record)
+                    self.recordDataByRecordID[recordID]!.importer = importer
+                    importer.startImport(true)
+                }
             }
         }
     }
@@ -349,7 +380,7 @@ extension CloudNotificationProcessor {
 
         // The previous operation might have returned only a subset of the missed notifications so now we check for more
         if moreComing {
-            self.performNotificationFetch(serverChangeToken)
+            self.beginNotificationFetch(serverChangeToken)
             return
         }
         
