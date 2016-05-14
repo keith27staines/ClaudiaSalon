@@ -24,31 +24,6 @@ class CloudNotificationSubscriber {
         self.queue = dispatch_queue_create("CloudNotificationProcessor", DISPATCH_QUEUE_SERIAL)
     }
     
-    func deleteAllCloudNotificationSubscriptions() {
-        let fetchSubscriptions = CKFetchSubscriptionsOperation.fetchAllSubscriptionsOperation()
-        fetchSubscriptions.fetchSubscriptionCompletionBlock = { dictionary, error in
-            guard let dictionary = dictionary else {
-                print("error fetching subscriptions \(error)")
-                return
-            }
-            var subscriptionIDs = [String]()
-            for (subscriptionID,_) in dictionary {
-                subscriptionIDs.append(subscriptionID)
-            }
-            let deleteSubscriptions = CKModifySubscriptionsOperation(subscriptionsToSave: nil, subscriptionIDsToDelete: subscriptionIDs)
-            deleteSubscriptions.modifySubscriptionsCompletionBlock = { _,subscriptionIDs,error in
-                if error != nil {
-                    print("error deleting subscriptions \(error)")
-                    return
-                }
-                print("All subscriptions deleted")
-            }
-            self.database.addOperation(deleteSubscriptions)
-        }
-        self.database.addOperation(fetchSubscriptions)
-    }
-
-    
     func deleteSubscriptions(completion:(success:Bool)->Void) {
         let subscriptionIDs = self.subscriptions.map {
             subscription in
@@ -109,9 +84,43 @@ class CloudNotificationSubscriber {
         }
         self.database.addOperation(modifySubscriptions)
     }
-    
-    
-    
+}
+
+extension CloudNotificationSubscriber {
+    class func deleteAllCloudNotificationSubscriptions(database:CKDatabase, completion:((Result)->Void)) {
+        let fetchSubscriptions = CKFetchSubscriptionsOperation.fetchAllSubscriptionsOperation()
+        fetchSubscriptions.fetchSubscriptionCompletionBlock = { dictionary, error in
+            guard error == nil else {
+                print("Error fetching subsciptions: \(error)")
+                let r = Result.failure(error!)
+                completion(r)
+                return
+            }
+            guard let dictionary = dictionary else {
+                let r = Result.success
+                completion(r)
+                return
+            }
+            var subscriptionIDs = [String]()
+            for (subscriptionID,_) in dictionary {
+                subscriptionIDs.append(subscriptionID)
+            }
+            let deleteSubscriptions = CKModifySubscriptionsOperation(subscriptionsToSave: nil, subscriptionIDsToDelete: subscriptionIDs)
+            deleteSubscriptions.modifySubscriptionsCompletionBlock = { _,subscriptionIDs,error in
+                if error != nil {
+                    print("error deleting subscriptions \(error)")
+                    let r = Result.failure(error!)
+                    completion(r)
+                    return
+                }
+                print("All subscriptions deleted")
+                let r = Result.success
+                completion(r)
+            }
+            database.addOperation(deleteSubscriptions)
+        }
+        database.addOperation(fetchSubscriptions)
+    }
 }
 
 extension CloudNotificationSubscriber {

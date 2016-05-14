@@ -29,10 +29,6 @@ class Coredata {
         self.sharedInstance = coredata
     }
     
-    func forgetCloudNotificationSubscriptions() {
-        self.importController.deleteAllCloudNotificationSubscriptions()
-    }
-    
     class func forgetSalon(recordName:String,completion:(success:Bool)->Void) {
         let coredata = self.coredataForKey(recordName)
         if coredata === self.sharedInstance {

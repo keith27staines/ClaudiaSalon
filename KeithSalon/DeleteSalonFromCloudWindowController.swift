@@ -35,9 +35,26 @@ class DeleteSalonFromCloudWindowController: NSWindowController {
     }
     
     @IBAction func unsubscribeFromCloudNotifications(sender: AnyObject) {
-        if let salonDocument = NSDocumentController.sharedDocumentController().currentDocument as? AMCSalonDocument {
-            salonDocument.suspendImportsAndExports(true)
-            salonDocument.deleteAllCloudNotificationSubscriptions()
+        let container = CKContainer.defaultContainer()
+        let database = container.publicCloudDatabase
+        CloudNotificationSubscriber.deleteAllCloudNotificationSubscriptions(database) { result in
+            let alert = NSAlert()
+            switch result {
+            case .success:
+                alert.alertStyle = .InformationalAlertStyle
+                alert.messageText = "All notifications were unsubscribed"
+                alert.informativeText = "Notifications will no longer be received by this app"
+                alert.addButtonWithTitle("Close")
+            case .failure(let error):
+                alert.alertStyle = .WarningAlertStyle
+                alert.messageText = "Failed to delete notification subscriptions"
+                alert.informativeText = "Notifications might continue to be received. \nError was:\(error)"
+                alert.addButtonWithTitle("Close")
+                alert.beginSheetModalForWindow(self.window!, completionHandler: nil)
+            }
+            NSOperationQueue.mainQueue().addOperationWithBlock {
+                alert.beginSheetModalForWindow(self.window!, completionHandler: nil)
+            }
         }
     }
     

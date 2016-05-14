@@ -140,10 +140,11 @@ extension AppDelegate {
         guard let queryNotification = cloudKitNotification as? CKQueryNotification else {
             return
         }
-        guard let parentSalonReference = queryNotification.recordFields["parentSalonReference"] as? CKReference else {
+        // TODO: Check this carefully. I think 'parentSalonReference' is actually just a string, not a CKReference
+        guard let parentSalonReference = queryNotification.recordFields!["parentSalonReference"] as? CKReference else {
             return
         }
-        guard let currentSalonName = Coredata.sharedInstance.iCloudSalonRecordName else {
+        guard parentSalonReference.recordID.recordName == Coredata.sharedInstance.iCloudSalonRecordName else {
             return
         }
         NSNotificationCenter.defaultCenter().postNotificationName("cloudKitNotification", object: self, userInfo: userInfo)

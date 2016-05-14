@@ -65,7 +65,12 @@ class BQCloudImporter : NSObject {
             completion(success: success)
         }
     }
-    
+
+    func deleteSubscriptions(completion:(success:Bool)->Void) {
+        self.cloudNotificationProcessor.cloudSubscriber.deleteSubscriptions { (success) in
+            completion(success: success)
+        }
+    }
     func isSuspended() -> Bool {
         return self.cloudNotificationProcessor?.isSuspended() ?? true
     }
@@ -79,10 +84,6 @@ class BQCloudImporter : NSObject {
     
     func pollForMissedRemoteNotifications() {
         self.cloudNotificationProcessor.pollForMissedRemoteNotifications()
-    }
-    
-    func deleteAllCloudNotificationSubscriptions() {
-        self.cloudNotificationProcessor.deleteAllCloudNotificationSubscriptions()
     }
     
     private func initialiseDatastructures() {

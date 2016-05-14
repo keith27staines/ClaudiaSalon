@@ -41,7 +41,7 @@
 // Suspend or resume import and export activities
 -(void)suspendImportsAndExports:(BOOL)suspend;
 
--(void)deleteAllCloudNotificationSubscriptions;
+-(void)deleteSubscriptions;
 
 // Top tab view
 @property (weak) IBOutlet NSTabView *topTabView;

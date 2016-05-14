@@ -46,9 +46,6 @@ class CloudNotificationProcessor {
         self.suspendNotificationProcessing()
         self.cloudSubscriber.deleteSubscriptions(completion)
     }
-    func deleteAllCloudNotificationSubscriptions() {
-        self.cloudSubscriber.deleteAllCloudNotificationSubscriptions()
-    }
     func isSuspended() -> Bool {
         return self.processingSuspended
     }

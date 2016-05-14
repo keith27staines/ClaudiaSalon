@@ -28,7 +28,6 @@
 		532279E41CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279E21CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.swift */; };
 		532279E51CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 532279E31CD4A278002FEB26 /* DeleteSalonFromCloudWindowController.xib */; };
 		532279EB1CD5C780002FEB26 /* DeleteFromCloudOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279EA1CD5C780002FEB26 /* DeleteFromCloudOperation.swift */; };
-		532279EC1CD5C780002FEB26 /* DeleteFromCloudOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279EA1CD5C780002FEB26 /* DeleteFromCloudOperation.swift */; };
 		532279EE1CD72A9A002FEB26 /* RobustDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279ED1CD72A9A002FEB26 /* RobustDownloader.swift */; };
 		532279EF1CD72A9A002FEB26 /* RobustDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532279ED1CD72A9A002FEB26 /* RobustDownloader.swift */; };
 		532377DD1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532377DB1AAADC0E009FA91D /* AMCSaleMiniEditorViewController.m */; };
@@ -92,6 +91,8 @@
 		5358DD661C8DC10C009DD63E /* SelectDateOrTimePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5358DD651C8DC10C009DD63E /* SelectDateOrTimePopover.swift */; };
 		535DF8651CE4529500BBE621 /* CloudNotificationSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535DF8641CE4529500BBE621 /* CloudNotificationSubscriber.swift */; };
 		535DF8661CE453E600BBE621 /* CloudNotificationSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535DF8641CE4529500BBE621 /* CloudNotificationSubscriber.swift */; };
+		535DF8681CE7063300BBE621 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535DF8671CE7063300BBE621 /* Utility.swift */; };
+		535DF8691CE7063300BBE621 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535DF8671CE7063300BBE621 /* Utility.swift */; };
 		535F0DEC1AB232CB0035CFD8 /* AMCAccountStatementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */; };
 		535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */; };
 		535F0DEE1AB232CB0035CFD8 /* AMCAccountStatementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */; };
@@ -520,6 +521,7 @@
 		5358DD621C8D7934009DD63E /* FindCustomerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindCustomerCell.swift; sourceTree = "<group>"; };
 		5358DD651C8DC10C009DD63E /* SelectDateOrTimePopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectDateOrTimePopover.swift; sourceTree = "<group>"; };
 		535DF8641CE4529500BBE621 /* CloudNotificationSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CloudNotificationSubscriber.swift; path = ../KeithSalon/CloudNotificationSubscriber.swift; sourceTree = "<group>"; };
+		535DF8671CE7063300BBE621 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		535F0DE71AB232CB0035CFD8 /* AMCAccountStatementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AMCAccountStatementViewController.xib; sourceTree = "<group>"; };
 		535F0DE81AB232CB0035CFD8 /* AMCAccountStatementItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementItem.m; sourceTree = "<group>"; };
 		535F0DE91AB232CB0035CFD8 /* AMCAccountStatementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAccountStatementViewController.m; sourceTree = "<group>"; };
@@ -2541,6 +2543,7 @@
 				53AE26F81AA3118000A1B3E4 /* Discount Calculator */,
 				53FDCA881C7A7A00006B4002 /* NSDate extensions */,
 				53FDCA611C79CF8E006B4002 /* Coredata  */,
+				535DF8671CE7063300BBE621 /* Utility.swift */,
 			);
 			name = "Shared code";
 			sourceTree = "<group>";
@@ -2934,6 +2937,7 @@
 				536B9E6E1C56077E00F170EC /* Role.m in Sources */,
 				536B9E7E1C56077E00F170EC /* WorkRecord.m in Sources */,
 				536B9E9C1C56077E00F170EC /* RecurringItem+CoreDataProperties.m in Sources */,
+				535DF8681CE7063300BBE621 /* Utility.swift in Sources */,
 				535F0DED1AB232CB0035CFD8 /* AMCAccountStatementItem.m in Sources */,
 				53AE270C1AA317B200A1B3E4 /* AMCJobsColumnView.m in Sources */,
 				535DF8651CE4529500BBE621 /* CloudNotificationSubscriber.swift in Sources */,
@@ -3192,7 +3196,6 @@
 				53FDCA811C7A7638006B4002 /* Account.m in Sources */,
 				539FBEDF1CC0CFE1006F9717 /* AddSalonController.swift in Sources */,
 				5358DD5D1C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m in Sources */,
-				532279EC1CD5C780002FEB26 /* DeleteFromCloudOperation.swift in Sources */,
 				5358DD411C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m in Sources */,
 				53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */,
 				53EBB3CB1C7B194000BBDC46 /* BQCoredataObjectExtensions.swift in Sources */,
@@ -3222,6 +3225,7 @@
 				5358DD571C8C9380009DD63E /* OpeningHoursDayTemplate.m in Sources */,
 				53FDCA861C7A7965006B4002 /* PaymentCategory.m in Sources */,
 				5370D4FE1C9428F500319147 /* CloudRecordType.swift in Sources */,
+				535DF8691CE7063300BBE621 /* Utility.swift in Sources */,
 				53FDCA741C7A13BB006B4002 /* BusinessFunction.m in Sources */,
 				5370D5041C94296800319147 /* CloudImporter.swift in Sources */,
 				53F6B4D11C9AB81900B3F56D /* SelectServiceViewController.swift in Sources */,
