@@ -134,17 +134,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 extension AppDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         let cloudKitNotification = CKNotification(fromRemoteNotificationDictionary: userInfo as! [String : NSObject])
-        guard cloudKitNotification.notificationType == .Query  else {
+        guard let coredataSalonCloudName = Coredata.sharedInstance.iCloudSalonRecordName else {
             return
         }
-        guard let queryNotification = cloudKitNotification as? CKQueryNotification else {
+        guard let notificationSalonName = CloudNotificationProcessor.parentSalonName(cloudKitNotification, salonRecordName: <#T##String#>) else {
             return
         }
-        // TODO: Check this carefully. I think 'parentSalonReference' is actually just a string, not a CKReference
-        guard let parentSalonReference = queryNotification.recordFields!["parentSalonReference"] as? CKReference else {
-            return
-        }
-        guard parentSalonReference.recordID.recordName == Coredata.sharedInstance.iCloudSalonRecordName else {
+        guard let coredataSalonCloudName = notificationSalonName else {
             return
         }
         NSNotificationCenter.defaultCenter().postNotificationName("cloudKitNotification", object: self, userInfo: userInfo)
