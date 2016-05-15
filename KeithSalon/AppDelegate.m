@@ -63,15 +63,17 @@
 -(void)application:(NSApplication *)app didReceiveRemoteNotification:(nonnull NSDictionary<NSString *,id> *)userInfo {
     CKNotification * note = [CKNotification notificationFromRemoteNotificationDictionary:userInfo];
     if (note.notificationType == CKNotificationTypeQuery) {
-        CKQueryNotification * qNote = (CKQueryNotification*)note;
-        NSString * salonName = qNote.recordFields[@"parentSalonReference"];
-        NSDocument * currentDocument = [NSDocumentController sharedDocumentController].currentDocument;
-        AMCSalonDocument * currentSalon = (AMCSalonDocument*)currentDocument;
-        if (!currentSalon) { return; }
-        if ([salonName isEqualToString:currentSalon.salon.bqCloudID]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"cloudKitNotification" object:self userInfo:userInfo];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"cloudKitNotification" object:self userInfo:userInfo];
+    }
+}
+-(AMCSalonDocument*)documentForName:(NSString*)salonRecordName {
+    for (NSDocument * document in [NSDocumentController sharedDocumentController].documents) {
+        AMCSalonDocument * amcDocument = (AMCSalonDocument*)document;
+        if ([amcDocument.salon.bqCloudID isEqualToString:salonRecordName]) {
+            return amcDocument;
         }
     }
+    return nil;
 }
 
 -(void)application:(NSApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {

@@ -142,9 +142,7 @@ class RobustImporter : RobustImporterDelegate {
     
     // Override if the subclass has child records
     func startDownloadingChildRecords() {
-        // Base implementation doesn't trigger download of children and changes state to download complete
         self.childImporters.removeAll()
-        self.changeState(.AllDataDownloaded)
     }
     
     func writeToCoredata() {
@@ -256,7 +254,7 @@ extension RobustImporter {
     
     private func changeState(newState:ImportState) {
         self.synchQueue.addOperationWithBlock() {
-            assert(newState != .InvalidState, "The import has entered and invalid state")
+            assert(newState != .InvalidState, "The import has entered an invalid state")
             guard self.importData.state != .InvalidState else {
                 fatalError("An import in an invalid state has been further processed")
             }
@@ -707,6 +705,12 @@ class ServiceImporter : RobustImporter {
         super.init(key:key, moc:moc, cloudDatabase:cloudDatabase, recordType:recordType, recordID:recordID, delegate:delegate)
     }
     
+    override func startDownloadingChildRecords() {
+        super.startDownloadingChildRecords()
+        // As there are no child records, we now just move the state on
+        self.changeState(.AllDataDownloaded)
+    }
+    
     override func writeToCoredata() {
         self.moc.performBlockAndWait() {
             let recordName = self.importData.cloudRecord!.recordID.recordName
@@ -732,6 +736,12 @@ class EmployeeImporter : RobustImporter {
         
         let recordType = ICloudRecordType.Employee
         super.init(key:key, moc:moc, cloudDatabase:cloudDatabase, recordType:recordType, recordID:recordID, delegate:delegate)
+    }
+    
+    override func startDownloadingChildRecords() {
+        super.startDownloadingChildRecords()
+        // As there are no child records, we now just move the state on
+        self.changeState(.AllDataDownloaded)
     }
     
     override func writeToCoredata() {
@@ -761,6 +771,12 @@ class SalonImporter : RobustImporter {
         super.init(key:key, moc:moc, cloudDatabase:cloudDatabase, recordType:recordType, recordID:recordID, delegate:delegate)
     }
     
+    override func startDownloadingChildRecords() {
+        super.startDownloadingChildRecords()
+        // As there are no child records, we now just move the state on
+        self.changeState(.AllDataDownloaded)
+    }
+    
     override func writeToCoredata() {
         self.moc.performBlockAndWait() {
             let recordName = self.importData.cloudRecord!.recordID.recordName
@@ -786,6 +802,12 @@ class ServiceCategoryImporter : RobustImporter {
         
         let recordType = ICloudRecordType.ServiceCategory
         super.init(key:key, moc:moc, cloudDatabase:cloudDatabase, recordType:recordType, recordID:recordID, delegate:delegate)
+    }
+    
+    override func startDownloadingChildRecords() {
+        super.startDownloadingChildRecords()
+        // As there are no child records, we now just move the state on
+        self.changeState(.AllDataDownloaded)
     }
     
     override func writeToCoredata() {

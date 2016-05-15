@@ -155,23 +155,16 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
             importer.writeToCoredata()
             return
         }
-        if self.isComplete() {
+        // If this importer has completed then it is possible that we have completed too
+        if importer.isComplete() || importer.isInErrorState() {
             dispatch_sync(self.queue) {
-                self.isWorking = false
-            }
-            return
-        }
-    }
-    
-    private func writeToCoredata() {
-        dispatch_sync(self.queue) {
-            for (_,recordData) in self.recordDataByRecordID {
-                if let importer = recordData.importer {
-                    importer.writeToCoredata()
+                if self.isComplete() {
+                    self.isWorking = false
                 }
             }
         }
     }
+    
     private func isInErrorState() -> Bool {
         var result = true
         dispatch_sync(self.queue) {
@@ -207,17 +200,15 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
     
     private func isComplete() -> Bool {
         var result = true
-        dispatch_sync(self.queue) {
-            for (_,recordData) in self.recordDataByRecordID {
-                if recordData.isForeign { continue }
-                guard let importer = recordData.importer else {
-                    result = false
-                    break
-                }
-                if !importer.isComplete() || !importer.isInErrorState() {
-                    result = false
-                    break
-                }
+        for (_,recordData) in self.recordDataByRecordID {
+            if recordData.isForeign { continue }
+            guard let importer = recordData.importer else {
+                result = false
+                break
+            }
+            if !importer.isComplete() || !importer.isInErrorState() {
+                result = false
+                break
             }
         }
         return result
