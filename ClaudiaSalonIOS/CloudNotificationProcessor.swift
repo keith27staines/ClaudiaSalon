@@ -119,7 +119,7 @@ class CloudNotificationProcessor {
     private func beginNotificationFetch(serverChangeToken: CKServerChangeToken? = nil) {
         
         // Create fetch notifications operation
-        let fetchNotificationOperation = CKFetchNotificationChangesOperation(previousServerChangeToken: nil)
+        let fetchNotificationOperation = CKFetchNotificationChangesOperation(previousServerChangeToken: serverChangeToken)
         fetchNotificationOperation.resultsLimit = 100
         
         // Set the per-notification block
@@ -275,14 +275,12 @@ extension CloudNotificationProcessor {
     }
 
     private func prepareRecordData() {
-        dispatch_sync(self.queue) {
-            self.recordDataByRecordID.removeAll()
-            for notification in self.downloadedNotifications {
-                if let recordID = notification.recordID {
-                    var recordData = self.recordDataByRecordID[recordID] ?? RecordData(recordID: recordID)
-                    recordData.notifications.insert(notification)
-                    self.recordDataByRecordID[recordID] = recordData
-                }
+        self.recordDataByRecordID.removeAll()
+        for notification in self.downloadedNotifications {
+            if let recordID = notification.recordID {
+                var recordData = self.recordDataByRecordID[recordID] ?? RecordData(recordID: recordID)
+                recordData.notifications.insert(notification)
+                self.recordDataByRecordID[recordID] = recordData
             }
         }
     }
@@ -313,10 +311,20 @@ extension CloudNotificationProcessor {
         }
     }
     
-    private func handleRecordFetchCompleted(recordInfo:[CKRecordID:CKRecord]?,error:NSError?) {
-        if error != nil {
-            // TODO: handle error
-            print("error on handleRecordFetchCompleted: \(error)")
+    private func handleRecordFetchCompleted(fetchOperation:CKFetchRecordsOperation,recordInfo:[CKRecordID:CKRecord]?,error:NSError?) {
+        if let error = error {
+            if error.code == CKErrorCode.LimitExceeded.rawValue {
+                let n = recordInfo!.count / 2
+                let arrays = fetchOperation.recordIDs!.subdivideAtIndex(n)
+                let operation1 = self.makeFetchRecordsOperation(arrays.left)
+                let operation2 = self.makeFetchRecordsOperation(arrays.right)
+                operation2.addDependency(operation1)
+                self.publicCloudDatabase.addOperation(operation1)
+                self.publicCloudDatabase.addOperation(operation2)
+                return
+            } else {
+                print("error on handleRecordFetchCompleted: \(error)")
+            }
         }
         let foreignNotifications = self.foreignNotificationSubset()
         let processedNotifications = self.processedNotificationSubset()
@@ -359,14 +367,15 @@ extension CloudNotificationProcessor {
         return processedNotifications
     }
     
-    private func processFetchedNotifications() {
+    private func makeFetchRecordsOperation(recordIDs:[CKRecordID]) -> CKFetchRecordsOperation {
         self.prepareRecordData()
-        let recordFetchOp = CKFetchRecordsOperation(recordIDs: self.uniqueRecordIDs)
-        recordFetchOp.perRecordCompletionBlock = self.handleFetchedRecord
-        recordFetchOp.fetchRecordsCompletionBlock = self.handleRecordFetchCompleted
+        let recordFetchOp = CKFetchRecordsOperation(recordIDs: recordIDs)
         
-        // Execute the operation to fetch the records corresponding to the notifications
-        self.container.publicCloudDatabase.addOperation(recordFetchOp)
+        recordFetchOp.perRecordCompletionBlock = self.handleFetchedRecord
+        recordFetchOp.fetchRecordsCompletionBlock = { recordInfo, error in
+            self.handleRecordFetchCompleted(recordFetchOp,recordInfo: recordInfo, error:error)
+        }
+        return recordFetchOp
     }
     
     private func fetchNotificationsCompleted(moreComing:Bool, serverChangeToken: CKServerChangeToken?, operationError: NSError?) {
@@ -382,7 +391,8 @@ extension CloudNotificationProcessor {
         }
         
         dispatch_sync(self.queue) {
-            self.processFetchedNotifications()
+            let recordFetchOp = self.makeFetchRecordsOperation(self.uniqueRecordIDs)
+            self.container.publicCloudDatabase.addOperation(recordFetchOp)
         }
     }
 }
