@@ -82,28 +82,30 @@ class BQDataExtractViewController: NSViewController, BQFirstExtractControllerDel
         self.activityIndicator.hidden = true
     }
     func coredataRecordWasExtracted(sender:AnyObject, recordType:String, extractCount: Int, total: Int) {
-        let type = recordType
-        var progressIndicator: NSProgressIndicator?
-        switch type {
-        case ICloudRecordType.Appointment.rawValue:
-            progressIndicator = self.appointmentProgressIndicator
-        case ICloudRecordType.Customer.rawValue:
-            progressIndicator = self.customerProgressIndicator
-        case ICloudRecordType.Employee.rawValue:
-            progressIndicator = self.employeeProgressIndicator
-        case ICloudRecordType.Service.rawValue:
-            progressIndicator = serviceProgressIndicator
-        case ICloudRecordType.ServiceCategory.rawValue:
-            progressIndicator = serviceCategoryProgressIndicator
-        case ICloudRecordType.Appointment.rawValue:
-            progressIndicator = appointmentProgressIndicator
-        case ICloudRecordType.Salon.rawValue:
-            break
-        default:
-            break
+        NSOperationQueue.mainQueue().addOperationWithBlock {
+            let type = recordType
+            var progressIndicator: NSProgressIndicator?
+            switch type {
+            case ICloudRecordType.Appointment.rawValue:
+                progressIndicator = self.appointmentProgressIndicator
+            case ICloudRecordType.Customer.rawValue:
+                progressIndicator = self.customerProgressIndicator
+            case ICloudRecordType.Employee.rawValue:
+                progressIndicator = self.employeeProgressIndicator
+            case ICloudRecordType.Service.rawValue:
+                progressIndicator = self.serviceProgressIndicator
+            case ICloudRecordType.ServiceCategory.rawValue:
+                progressIndicator = self.serviceCategoryProgressIndicator
+            case ICloudRecordType.Appointment.rawValue:
+                progressIndicator = self.appointmentProgressIndicator
+            case ICloudRecordType.Salon.rawValue:
+                break
+            default:
+                break
+            }
+            progressIndicator?.minValue = 0
+            progressIndicator?.maxValue = Double(total)
+            progressIndicator?.doubleValue = Double(extractCount)
         }
-        progressIndicator?.minValue = 0
-        progressIndicator?.maxValue = Double(total)
-        progressIndicator?.doubleValue = Double(extractCount)
     }
 }

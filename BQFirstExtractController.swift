@@ -67,19 +67,17 @@ class BQFirstExtractController {
         self.salonDocument = salonDocument
         self.parentManagedObjectContext = salonDocument.managedObjectContext!
         self.salonID = salonDocument.salon.objectID
-        dispatch_sync(self.synchronisationQueue) {
-            self.moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-            self.moc.parentContext = self.parentManagedObjectContext
-            self.moc.performBlockAndWait() {
-                self.salon = self.moc.objectWithID(self.salonID) as! Salon
-            }
+        self.moc = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        self.moc.parentContext = self.parentManagedObjectContext
+        self.moc.performBlockAndWait() {
+            self.salon = self.moc.objectWithID(self.salonID) as! Salon
         }
+        // Ensure that all coredata changes are committed
+        self.saveToDocument()
     }
     
     // MARK: Prepare coredata for clean extract
     func resetDataExtract() {
-        // Delete Salon (this should cascade deletes all the way down)
-        //deleteAllIcloudData()
         prepareCoredataRecordsReadyForFirstExport()
     }
 
@@ -102,35 +100,28 @@ class BQFirstExtractController {
     
     // Prepare coredata records for extract
     func prepareCoredataRecordsReadyForFirstExport() {
-        var readyForExport = 0
-        var others = 0
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            self.moc.performBlockAndWait() {
-                self.salonDocument.salon.bqNeedsCoreDataExport = true
-                self.salonDocument.salon.bqMetadata = nil;
-                self.prepareAllCustomersForCoredataExport()
-                self.prepareAllEmployeesForCoredataExport()
-                self.prepareAllServiceCategoriesForCoredataExport()
-                self.prepareAllServicesForCoredataExport()
-                self.prepareAllAppointmentsForCoredataExport()
-                for saleItem in SaleItem.allObjectsWithMoc(self.moc) as! [SaleItem] {
-                    if saleItem.bqNeedsCoreDataExport!.boolValue == true {
-                        readyForExport += 1
-                    } else {
-                        others += 1
-                    }
-                }
-                do {
-                    try self.moc.save()
-                } catch {
-                    print("Unable to save moc \(error)")
-                }
-                dispatch_sync(dispatch_get_main_queue()) {
+        self.moc.performBlockAndWait() {
+            self.salon.bqNeedsCoreDataExport = true
+            self.salon.bqMetadata = nil;
+            self.prepareAllCustomersForCoredataExport()
+            self.prepareAllEmployeesForCoredataExport()
+            self.prepareAllServiceCategoriesForCoredataExport()
+            self.prepareAllServicesForCoredataExport()
+            self.prepareAllAppointmentsForCoredataExport()
+        }
+        self.saveToDocument()
+    }
+    
+    private func saveToDocument() {
+        self.moc.performBlockAndWait() {
+            guard self.moc.hasChanges  else {return}
+            do {
+                try self.moc.save()
+                NSOperationQueue.mainQueue().addOperationWithBlock {
                     self.salonDocument.saveDocument(self)
-                    print("Sale Items ready for export = \(readyForExport)")
-                    print("Sale Items not needing export = \(others)")
-                    print("reset finished")
                 }
+            } catch {
+                print("Unable to save to document: \(error)")
             }
         }
     }
@@ -138,35 +129,12 @@ class BQFirstExtractController {
     // MARK:- Extract data
     func extractData() {
         if moc == nil { preconditionFailure("No managed object context") }
+        self.prepareCoredataRecordsReadyForFirstExport()
+
         // Create operation to extract the coredata salon
         let salonOperation = extractSalonOperation()
-        salonOperation.completionBlock = { () -> Void in
-            // Prepare the salon's child data for export
-            self.prepareAllCustomersForCoredataExport()
-            self.prepareAllEmployeesForCoredataExport()
-            self.prepareAllServiceCategoriesForCoredataExport()
-            self.prepareAllServicesForCoredataExport()
-            self.prepareAllAppointmentsForCoredataExport()  // Also prepares child sale and saleItems for export
-            
-            let customerRecords = self.makeExportRecordsForCoredataCustomers()
-            let employeeRecords = self.makeExportRecordsForCoredataEmployees()
-            let serviceCategoryRecords = self.makeExportRecordsForCoredataServiceCategies()
-            
-            // Create operations to do the export
-            let customersOperation = self.saveRecordsOperation(customerRecords)
-            let employeesOperation = self.saveRecordsOperation(employeeRecords)
-            let serviceCategoriesOperation = self.saveRecordsOperation(serviceCategoryRecords)
-            
-            // Make child record operations dependent on the salon operation
-            customersOperation.addDependency(salonOperation)
-            employeesOperation.addDependency(salonOperation)
-            serviceCategoriesOperation.addDependency(salonOperation)
-            
-            // Execute the operations
-            self.publicDatabase.addOperation(customersOperation)
-            self.publicDatabase.addOperation(employeesOperation)
-            self.publicDatabase.addOperation(serviceCategoriesOperation)
-        }
+
+        // Everything is dependent on the salon operation
         self.publicDatabase.addOperation(salonOperation)
     }
     
@@ -356,8 +324,8 @@ class BQFirstExtractController {
         let cloudSalon = ICloudSalon(coredataSalon: self.salon)
         cloudSalonRecord = cloudSalon.makeCloudKitRecord()
         let recordsToSave = [cloudSalonRecord!]
-        let operation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
-        operation.modifyRecordsCompletionBlock = { (saveRecords:[CKRecord]?,deleteRecordIDs:[CKRecordID]?,error:NSError?) in
+        let salonOperation = CKModifyRecordsOperation(recordsToSave: recordsToSave, recordIDsToDelete: nil)
+        salonOperation.modifyRecordsCompletionBlock = { (saveRecords:[CKRecord]?,deleteRecordIDs:[CKRecordID]?,error:NSError?) in
             if error != nil {
                 print("Oops")
                 return
@@ -367,13 +335,41 @@ class BQFirstExtractController {
                 assertionFailure("No error was reported but the record was absent")
                 return
             }
-            let metadata = archiveMetadataForCKRecord(cloudRecord)
-            self.salonDocument.salon.bqMetadata = metadata
-            self.cloudSalonRecord = cloudRecord
-            self.cloudSalonReference = CKReference(record: self.cloudSalonRecord!, action: CKReferenceAction.DeleteSelf)
+            
+            self.moc.performBlockAndWait() {
+
+                let metadata = archiveMetadataForCKRecord(cloudRecord)
+                self.salon.bqMetadata = metadata
+                self.salon.bqNeedsCoreDataExport = false
+                self.cloudSalonRecord = cloudRecord
+                self.cloudSalonReference = CKReference(record: self.cloudSalonRecord!, action: CKReferenceAction.DeleteSelf)
+                
+                // Make export records for each entity and then create operations to export them
+                
+                let customerRecords = self.makeExportRecordsForCoredataCustomers()
+                let employeeRecords = self.makeExportRecordsForCoredataEmployees()
+                let serviceCategoryRecords = self.makeExportRecordsForCoredataServiceCategies()
+                // Don't make export records for services here - they are dealt with in serviceCategory completion
+                
+                // Create operations to do the export
+                let customersOperation = self.saveRecordsOperation(customerRecords)
+                let employeesOperation = self.saveRecordsOperation(employeeRecords)
+                let serviceCategoriesOperation = self.saveRecordsOperation(serviceCategoryRecords)
+                // Don't create save records operation for services here - they are dealt with in serviceCategory completion
+                
+                // Make child record operations dependent on the salon operation
+                customersOperation.addDependency(salonOperation)
+                employeesOperation.addDependency(salonOperation)
+                serviceCategoriesOperation.addDependency(salonOperation)
+                
+                // Execute the operations
+                self.publicDatabase.addOperation(customersOperation)
+                self.publicDatabase.addOperation(employeesOperation)
+                self.publicDatabase.addOperation(serviceCategoriesOperation)
+            }
             
         }
-        return operation
+        return salonOperation
     }
     
     // MARK:- Save operation and completion logic
@@ -382,65 +378,64 @@ class BQFirstExtractController {
             assertionFailure("Unhandled error in perRecordCompletionBlock")
             return
         }
-        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-            if let recordType = record?.recordType {
-                let cloudID = record!.recordID.recordName
-                let metadata = archiveMetadataForCKRecord(record!)
-                switch recordType {
-                case ICloudRecordType.Customer.rawValue:
-                    let coredataCustomer = self.coredataCustomersDictionary[cloudID]
-                    coredataCustomer?.bqNeedsCoreDataExport = NSNumber(bool: false)
-                    coredataCustomer?.bqMetadata = metadata
-                    self.extractedCustomerCount += 1
-                    self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedCustomerCount, total: self.totalCustomersToProcess)
-                    
-                case ICloudRecordType.Employee.rawValue:
-                    let coredataEmployee = self.coredataEmployeeDictionary[cloudID]
-                    coredataEmployee?.bqNeedsCoreDataExport = NSNumber(bool: false)
-                    coredataEmployee?.bqMetadata = metadata
-                    self.extractedEmployeesCount += 1
-                    self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedEmployeesCount, total: self.totalEmployeesToProcess)
-                    
-                case ICloudRecordType.ServiceCategory.rawValue:
-                    let coredataServiceCategory = self.coredataServiceCategoriesDictionary[cloudID]
-                    coredataServiceCategory?.bqNeedsCoreDataExport = NSNumber(bool: false)
-                    coredataServiceCategory?.bqMetadata = metadata
-                    self.extractedServiceCategoriesCount += 1
-                    self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedServiceCategoriesCount, total: self.totalServiceCategoriesToProcess)
-                    if self.extractedServiceCategoriesCount == self.totalServiceCategoriesToProcess {
-                        // services are dependent on the serviceCategories operation because serviceCategories own services
-                        let serviceRecords = self.makeExportRecordsForCoredataServices()
-                        let servicesOperation = self.saveRecordsOperation(serviceRecords)
-                        self.publicDatabase.addOperation(servicesOperation)
-                    }
-                    
-                case ICloudRecordType.Service.rawValue:
-                    let coredataService = self.coredataServicesDictionary[cloudID]
-                    coredataService?.bqNeedsCoreDataExport = NSNumber(bool: false)
-                    coredataService?.bqMetadata = metadata
-                    self.extractedServicesCount += 1
-                    self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedServicesCount, total: self.totalServicesToProcess)
-                    if self.extractedServicesCount == self.totalServicesToProcess {
-                        let appointmentRecords = self.makeExportRecordsForCoredataAppointments()
-                        let appointmentOperation = self.saveRecordsOperation(appointmentRecords)
-                        self.publicDatabase.addOperation(appointmentOperation)
-                    }
-
-                case ICloudRecordType.Appointment.rawValue:
-                    let coredataAppointment = self.coredataAppointmentsDictionary[cloudID]
-                    coredataAppointment?.bqNeedsCoreDataExport = NSNumber(bool: false)
-                    coredataAppointment?.bqMetadata = metadata
-                    self.extractedAppointmentsCount += 1
-                    self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedAppointmentsCount, total: self.totalAppointmentsToProcess)
-                default: break
+        self.moc.performBlockAndWait {
+            
+            guard let recordType = record?.recordType else { return }
+            
+            let cloudID = record!.recordID.recordName
+            let metadata = archiveMetadataForCKRecord(record!)
+            switch recordType {
+            case ICloudRecordType.Customer.rawValue:
+                let coredataCustomer = self.coredataCustomersDictionary[cloudID]
+                coredataCustomer?.bqNeedsCoreDataExport = NSNumber(bool: false)
+                coredataCustomer?.bqMetadata = metadata
+                self.extractedCustomerCount += 1
+                self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedCustomerCount, total: self.totalCustomersToProcess)
+                
+            case ICloudRecordType.Employee.rawValue:
+                let coredataEmployee = self.coredataEmployeeDictionary[cloudID]
+                coredataEmployee?.bqNeedsCoreDataExport = NSNumber(bool: false)
+                coredataEmployee?.bqMetadata = metadata
+                self.extractedEmployeesCount += 1
+                self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedEmployeesCount, total: self.totalEmployeesToProcess)
+                
+            case ICloudRecordType.ServiceCategory.rawValue:
+                let coredataServiceCategory = self.coredataServiceCategoriesDictionary[cloudID]
+                coredataServiceCategory?.bqNeedsCoreDataExport = NSNumber(bool: false)
+                coredataServiceCategory?.bqMetadata = metadata
+                self.extractedServiceCategoriesCount += 1
+                self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedServiceCategoriesCount, total: self.totalServiceCategoriesToProcess)
+                if self.extractedServiceCategoriesCount == self.totalServiceCategoriesToProcess {
+                    // services are dependent on the serviceCategories operation because serviceCategories own services
+                    let serviceRecords = self.makeExportRecordsForCoredataServices()
+                    let servicesOperation = self.saveRecordsOperation(serviceRecords)
+                    self.publicDatabase.addOperation(servicesOperation)
                 }
+                
+            case ICloudRecordType.Service.rawValue:
+                let coredataService = self.coredataServicesDictionary[cloudID]
+                coredataService?.bqNeedsCoreDataExport = NSNumber(bool: false)
+                coredataService?.bqMetadata = metadata
+                self.extractedServicesCount += 1
+                self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedServicesCount, total: self.totalServicesToProcess)
+                if self.extractedServicesCount == self.totalServicesToProcess {
+                    let appointmentRecords = self.makeExportRecordsForCoredataAppointments()
+                    let appointmentOperation = self.saveRecordsOperation(appointmentRecords)
+                    self.publicDatabase.addOperation(appointmentOperation)
+                }
+                
+            case ICloudRecordType.Appointment.rawValue:
+                let coredataAppointment = self.coredataAppointmentsDictionary[cloudID]
+                coredataAppointment?.bqNeedsCoreDataExport = NSNumber(bool: false)
+                coredataAppointment?.bqMetadata = metadata
+                self.extractedAppointmentsCount += 1
+                self.delegate?.coredataRecordWasExtracted(self, recordType: recordType, extractCount: self.extractedAppointmentsCount, total: self.totalAppointmentsToProcess)
+            default: break
             }
-        })
+        }
     }
     func retryOperation(operation:CKModifyRecordsOperation, waitInterval:Double) {
-        let waitIntervalNanoseconds = Int64(waitInterval * 1000_000_000.0)
-        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, waitIntervalNanoseconds)
-        dispatch_after(dispatchTime, dispatch_get_main_queue()) { () -> Void in
+        waitAndDispatchOnMainQueue(waitInterval) {
             self.publicDatabase.addOperation(operation)
         }
     }
@@ -462,16 +457,7 @@ class BQFirstExtractController {
                 case CKErrorCode.LimitExceeded.rawValue:
                     // Too many records - need to recurse down to smaller operations
                     let n = recordsToSave.count / 2
-                    var recordsA = [CKRecord]()
-                    var recordsB = [CKRecord]()
-                    for index in recordsToSave.indices {
-                        if index <= n {
-                            recordsA.append(recordsToSave[index])
-                        } else {
-                            recordsB.append(recordsToSave[index])
-                        }
-                    }
-                    // Recurse with the smaller operations
+                    let (recordsA,recordsB) = recordsToSave.subdivideAtIndex(n)
                     let operationA = self.saveRecordsOperation(recordsA)
                     let operationB = self.saveRecordsOperation(recordsB)
                     self.publicDatabase.addOperation(operationA)
@@ -499,15 +485,15 @@ class BQFirstExtractController {
                 }
                 return
             }
-            NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
-                if self.totalCustomersToProcess == self.extractedCustomerCount {
-                    // Notify customer extract is complete
-                }
-                self.salonDocument.saveDocument(self)
-                if self.isFullExtractComplete() {
+            self.saveToDocument()
+            let fullyExtracted = self.isFullExtractComplete()
+            if fullyExtracted {
+                self.markAllRecordsAsExported()
+                self.saveToDocument()
+                NSOperationQueue.mainQueue().addOperationWithBlock {
                     self.delegate?.fullCoredataExtractWasCompleted(self)
                 }
-            })
+            }
         }
         return saveOperation
     }
@@ -525,28 +511,26 @@ class BQFirstExtractController {
 
 extension BQFirstExtractController {
     func removeAllCloudReferences() {
-        let bqExportableArraysArray = self.bqExportableArrays()
-        for bqExportableObjects in bqExportableArraysArray {
-            for exportable in bqExportableObjects {
-                self.removeAllCloudReferencesFromBQExportable(exportable)
+        self.moc.performBlockAndWait {
+            let bqExportableArraysArray = self.bqExportableArrays()
+            for bqExportableObjects in bqExportableArraysArray {
+                for exportable in bqExportableObjects {
+                    self.removeAllCloudReferencesFromBQExportable(exportable)
+                }
             }
         }
-        do {
-            try self.moc.save()
-        } catch {
-            print("Unable to save moc \(error)")
-        }
+        self.saveToDocument()
     }
     private func bqExportableArrays() -> [[BQExportable]] {
         var array = [[BQExportable]]()
-        array.append([Salon.defaultSalon(moc)!])
-        array.append(Customer.customersOrderedByFirstName(moc))
-        array.append(Employee.employeesOrderedByFirstName(moc))
-        array.append(ServiceCategory.serviceCategoriesOrderedByName(moc))
-        array.append(Service.servicesOrderedByName(moc))
-        array.append(Appointment.allObjectsWithMoc(moc) as! [BQExportable])
-        array.append(Sale.allObjectsWithMoc(moc) as! [BQExportable])
-        array.append(SaleItem.allObjectsWithMoc(moc) as! [BQExportable])
+        array.append([Salon.defaultSalon(self.moc)!])
+        array.append(Customer.customersOrderedByFirstName(self.moc))
+        array.append(Employee.employeesOrderedByFirstName(self.moc))
+        array.append(ServiceCategory.serviceCategoriesOrderedByName(self.moc))
+        array.append(Service.servicesOrderedByName(self.moc))
+        array.append(Appointment.allObjectsWithMoc(self.moc) as! [BQExportable])
+        array.append(Sale.allObjectsWithMoc(self.moc) as! [BQExportable])
+        array.append(SaleItem.allObjectsWithMoc(self.moc) as! [BQExportable])
         return array
     }
     private func removeAllCloudReferencesFromBQExportable(bqExportable:BQExportable) {
@@ -555,5 +539,16 @@ extension BQFirstExtractController {
         bqExportable.bqHasClientChanges = false
         bqExportable.bqNeedsCloudImport = false
         bqExportable.bqNeedsCoreDataExport = false
+    }
+    private func markAllRecordsAsExported() {
+        self.moc.performBlockAndWait {
+            for array in self .bqExportableArrays() {
+                for exportable in array {
+                    exportable.bqNeedsCoreDataExport = false
+                    exportable.bqNeedsCloudImport = false
+                    exportable.bqHasClientChanges = false
+                }
+            }
+        }
     }
 }

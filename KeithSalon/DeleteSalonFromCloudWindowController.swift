@@ -72,8 +72,10 @@ class DeleteSalonFromCloudWindowController: NSWindowController {
                 self.tableView.reloadData()
                 if tableInformation.state == DeleteOperationStates.FetchFinished {
                     self.deleteOperation = DeleteFromCloudOperation(containerID: containerID, salonRecordName: recordName, deletionInfo: self.tableInformation, completionResult: { (tableInformation) in
-                        self.tableInformation = tableInformation
-                        self.tableView.reloadData()
+                        NSOperationQueue.mainQueue().addOperationWithBlock {
+                            self.tableInformation = tableInformation
+                            self.tableView.reloadData()                            
+                        }
                     })
                     self.deleteWorkerQueue.addOperation(self.deleteOperation!)                    
                 }

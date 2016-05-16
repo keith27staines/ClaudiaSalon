@@ -23,20 +23,20 @@ struct RecordTypeInfo {
 
 enum RecordTypeInfoStates: String {
     case Waiting = "waiting"
-    case FetchingIDs = "fetching"
-    case FetchIDsComplete = "fetched complete"
+    case FetchingIDs = "fetching..."
+    case FetchIDsComplete = "fetch complete"
     case ErrorFetchingIDs = "error fetching"
-    case DeletingRecords = "deleting"
-    case DeletingRecordsComplete = "delete complete"
+    case DeletingRecords = "deleting..."
+    case DeletingRecordsComplete = "finished"
     case ErrorDeletingRecords = "error deleting records"
     case Cancelled = "cancelled"
 }
 
 enum DeleteOperationStates: String {
     case Waiting = "waiting"
-    case FetchingIDs = "fetching"
-    case FetchFinished = "fetch finished"
-    case DeletingRecords = "deleting"
+    case FetchingIDs = "fetching..."
+    case FetchFinished = "fetch complete"
+    case DeletingRecords = "deleting..."
     case SuccessfulDeletion = "success"
     case FailedDeletion = "failed"
     case Cancelled = "cancelled"

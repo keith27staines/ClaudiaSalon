@@ -169,7 +169,7 @@ extension DeleteFromCloudOperation {
             if error != nil {
                 self.deletionInfo.recordTypeInformation[recordType]!.status = RecordTypeInfoStates.ErrorDeletingRecords
             } else {
-                self.deletionInfo.recordTypeInformation[recordType]!.status = RecordTypeInfoStates.FetchIDsComplete
+                self.deletionInfo.recordTypeInformation[recordType]!.status = RecordTypeInfoStates.DeletingRecordsComplete
             }
             self.deleteWasCompleted(recordType)
         }

@@ -161,9 +161,7 @@ private class BQExportModifiedCoredataOperation : NSOperation {
     
     // MARK:- Retry operation
     func retryOperationOnPublicDatabase(operation:CKModifyRecordsOperation, waitInterval:Double) {
-        let waitIntervalNanoseconds = Int64(waitInterval * 1_000_000_000.0)
-        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, waitIntervalNanoseconds)
-        dispatch_after(dispatchTime, self.synchronisationQueue) { () -> Void in
+        waitAndDispatchOnQueue(waitInterval, queue: self.synchronisationQueue) {
             self.activeOperationsCounter.increment()
             self.publicDatabase.addOperation(operation)
         }
