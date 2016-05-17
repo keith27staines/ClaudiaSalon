@@ -140,7 +140,7 @@ class CloudNotificationProcessor {
         
         // Set the fetch completion block
         fetchNotificationOperation.fetchNotificationChangesCompletionBlock = { serverChangeToken, operationError in
-            self.fetchNotificationsCompleted(fetchNotificationOperation.moreComing, serverChangeToken: serverChangeToken, operationError: operationError)
+            self.fetchNotificationsCompleted(fetchNotificationOperation, serverChangeToken: serverChangeToken, operationError: operationError)
         }
         self.container.addOperation(fetchNotificationOperation)
     }
@@ -312,9 +312,7 @@ extension CloudNotificationProcessor {
     }
     
     private func handleFetchedRecord(record:CKRecord?, recordID: CKRecordID?, error: NSError?) {
-        guard let recordID = recordID else {
-            fatalError("Fetched record has no record ID") // Can this actually happen?
-        }
+        let recordID = recordID!
         dispatch_sync(self.queue) {
             if let error = error {
                 self.recordDataByRecordID[recordID]!.recordFetchError = error
@@ -381,8 +379,12 @@ extension CloudNotificationProcessor {
                 self.container.addOperation(operation2)
                 return
             } else {
-                print("error on handleNotificationsMarkedRead: \(operationError)")
+                assertionFailure("error on handleNotificationsMarkedRead: \(operationError)")
+                return
             }
+        }
+        if let numberMarkedRead = notificationIDsMarkedRead?.count where notificationIDsMarkedRead?.count > 0 {
+            print("\(numberMarkedRead) cloud notifications were successfully marked as read")
         }
     }
 
@@ -417,25 +419,34 @@ extension CloudNotificationProcessor {
         return recordFetchOp
     }
     
-    private func fetchNotificationsCompleted(moreComing:Bool, serverChangeToken: CKServerChangeToken?, operationError: NSError?) {
+    private func fetchNotificationsCompleted(fetchNotificationsOperation:CKFetchNotificationChangesOperation, serverChangeToken: CKServerChangeToken?, operationError: NSError?) {
         if operationError != nil {
             // TODO: Handle the error once we have worked out how
             print("Error on fetchNotificationsCompleted: \(operationError)")
         }
 
         // The previous operation might have returned only a subset of the missed notifications so now we check for more
-        if moreComing {
+        if fetchNotificationsOperation.moreComing {
             self.beginNotificationFetch(serverChangeToken)
             return
         }
         
         dispatch_sync(self.queue) {
+            // Reject foreign notifications and mark them as read
             let processFilter = self.rejectOrProcessFilter()
-            let markOperation = self.makeMarkNotificationsAsReadOperation(processFilter.reject)
-            self.container.addOperation(markOperation)
+            if processFilter.reject.count > 0 {
+                let markOperation = self.makeMarkNotificationsAsReadOperation(processFilter.reject)
+                self.container.addOperation(markOperation)
+            }
+            // Process notifications intended for the current salon
             self.prepareRecordData(processFilter.notificationsToProcess)
-            let recordFetchOp = self.makeFetchRecordsOperation(self.uniqueRecordIDsToProcess)
-            self.container.publicCloudDatabase.addOperation(recordFetchOp)
+            let recordsToProcess = self.uniqueRecordIDsToProcess
+            if recordsToProcess.count > 0 {
+                let recordFetchOp = self.makeFetchRecordsOperation(self.uniqueRecordIDsToProcess)
+                self.container.publicCloudDatabase.addOperation(recordFetchOp)
+            } else {
+                self.isWorking = false
+            }
         }
     }
     private func rejectOrProcessFilter() -> (reject:[CKNotificationID],notificationsToProcess:[CKQueryNotification]) {

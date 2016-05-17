@@ -76,6 +76,7 @@ class RobustImporter : RobustImporterDelegate {
         guard self.importData.state == .InPreparation else {
             return false
         }
+        self.childImporters.removeAll()
         self.successRequired = successRequired
         self.childImporters = [String:RobustImporter]()
         self.importData = ImportData(recordType:self.recordType,
@@ -142,7 +143,6 @@ class RobustImporter : RobustImporterDelegate {
     
     // Override if the subclass has child records
     func startDownloadingChildRecords() {
-        self.childImporters.removeAll()
     }
     
     func writeToCoredata() {
@@ -243,7 +243,7 @@ extension RobustImporter {
 
         }
         fetchOperation.recordFetchedBlock = { record in
-            
+        
         }
         self.cloudDatabase.addOperation(fetchOperation)
     }
@@ -421,6 +421,16 @@ extension RobustImporter {
 }
 
 ////////////////////////////////////////////////
+// MARK:- ChildlessRobustImporter (RobustImporter abstract sublcass) -
+class ChildlessRobustImporter : RobustImporter {
+    override func startDownloadingChildRecords() {
+        super.startDownloadingChildRecords()
+        // As there are no child records, we now just move the state on
+        self.changeState(.AllDataDownloaded)
+    }
+}
+
+////////////////////////////////////////////////
 // MARK:- AppointmentImporter (RobustImporter sublcass) -
 class AppointmentImporter : RobustImporter {
     
@@ -509,8 +519,8 @@ class AppointmentImporter : RobustImporter {
 }
 
 //////////////////////////////////////////////////////
-// MARK:- CustomerImporter (RobustImporter sublcass) -
-class CustomerImporter : RobustImporter {
+// MARK:- CustomerImporter (ChildlessRobustImporter sublcass) -
+class CustomerImporter : ChildlessRobustImporter {
     
     required init(key:String, moc: NSManagedObjectContext,
                   cloudDatabase: CKDatabase,
@@ -693,8 +703,8 @@ class SaleItemImporter : RobustImporter {
 }
 
 //////////////////////////////////////////////////////
-// MARK:- ServiceImporter (RobustImporter sublcass) -
-class ServiceImporter : RobustImporter {
+// MARK:- ServiceImporter (ChildlessRobustImporter sublcass) -
+class ServiceImporter : ChildlessRobustImporter {
     
     required init(key:String, moc: NSManagedObjectContext,
                   cloudDatabase: CKDatabase,
@@ -703,12 +713,6 @@ class ServiceImporter : RobustImporter {
         
         let recordType = ICloudRecordType.Service
         super.init(key:key, moc:moc, cloudDatabase:cloudDatabase, recordType:recordType, recordID:recordID, delegate:delegate)
-    }
-    
-    override func startDownloadingChildRecords() {
-        super.startDownloadingChildRecords()
-        // As there are no child records, we now just move the state on
-        self.changeState(.AllDataDownloaded)
     }
     
     override func writeToCoredata() {
@@ -726,8 +730,8 @@ class ServiceImporter : RobustImporter {
 }
 
 //////////////////////////////////////////////////////
-// MARK:- EmployeeImporter (RobustImporter sublcass) -
-class EmployeeImporter : RobustImporter {
+// MARK:- EmployeeImporter (ChildlessRobustImporter sublcass) -
+class EmployeeImporter : ChildlessRobustImporter {
     
     required init(key:String, moc: NSManagedObjectContext,
                   cloudDatabase: CKDatabase,
@@ -736,12 +740,6 @@ class EmployeeImporter : RobustImporter {
         
         let recordType = ICloudRecordType.Employee
         super.init(key:key, moc:moc, cloudDatabase:cloudDatabase, recordType:recordType, recordID:recordID, delegate:delegate)
-    }
-    
-    override func startDownloadingChildRecords() {
-        super.startDownloadingChildRecords()
-        // As there are no child records, we now just move the state on
-        self.changeState(.AllDataDownloaded)
     }
     
     override func writeToCoredata() {
@@ -759,8 +757,8 @@ class EmployeeImporter : RobustImporter {
 }
 
 //////////////////////////////////////////////////////
-// MARK:- SalonImporter (RobustImporter sublcass) -
-class SalonImporter : RobustImporter {
+// MARK:- SalonImporter (ChildlessRobustImporter sublcass) -
+class SalonImporter : ChildlessRobustImporter {
     
     required init(key:String, moc: NSManagedObjectContext,
                   cloudDatabase: CKDatabase,
@@ -769,12 +767,6 @@ class SalonImporter : RobustImporter {
         
         let recordType = ICloudRecordType.Salon
         super.init(key:key, moc:moc, cloudDatabase:cloudDatabase, recordType:recordType, recordID:recordID, delegate:delegate)
-    }
-    
-    override func startDownloadingChildRecords() {
-        super.startDownloadingChildRecords()
-        // As there are no child records, we now just move the state on
-        self.changeState(.AllDataDownloaded)
     }
     
     override func writeToCoredata() {
@@ -792,8 +784,8 @@ class SalonImporter : RobustImporter {
 }
 
 //////////////////////////////////////////////////////
-// MARK:- ServiceCategoryImporter (RobustImporter sublcass) -
-class ServiceCategoryImporter : RobustImporter {
+// MARK:- ServiceCategoryImporter (ChildlessRobustImporter sublcass) -
+class ServiceCategoryImporter : ChildlessRobustImporter {
     
     required init(key:String, moc: NSManagedObjectContext,
                   cloudDatabase: CKDatabase,
@@ -802,12 +794,6 @@ class ServiceCategoryImporter : RobustImporter {
         
         let recordType = ICloudRecordType.ServiceCategory
         super.init(key:key, moc:moc, cloudDatabase:cloudDatabase, recordType:recordType, recordID:recordID, delegate:delegate)
-    }
-    
-    override func startDownloadingChildRecords() {
-        super.startDownloadingChildRecords()
-        // As there are no child records, we now just move the state on
-        self.changeState(.AllDataDownloaded)
     }
     
     override func writeToCoredata() {
