@@ -19,6 +19,10 @@
 		530D62571C6DCFCB0064794B /* AMCServiceTableCellViewMac.m in Sources */ = {isa = PBXBuildFile; fileRef = 530D62561C6DCFCB0064794B /* AMCServiceTableCellViewMac.m */; };
 		530D62591C75B0A60064794B /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530D62581C75B0A60064794B /* CloudKit.framework */; };
 		5312CFDF1CC3738900E495E2 /* SalonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5312CFDE1CC3738900E495E2 /* SalonTableViewCell.swift */; };
+		531767B91CEC7642001FB845 /* ImportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531767B81CEC7642001FB845 /* ImportData.swift */; };
+		531767BA1CEC7642001FB845 /* ImportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531767B81CEC7642001FB845 /* ImportData.swift */; };
+		531767BC1CECB623001FB845 /* RobustImporterStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531767BB1CECB623001FB845 /* RobustImporterStateMachine.swift */; };
+		531767BD1CECB623001FB845 /* RobustImporterStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531767BB1CECB623001FB845 /* RobustImporterStateMachine.swift */; };
 		5319A9C81C9AF4220025CB1A /* ServiceCategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5319A9C71C9AF4220025CB1A /* ServiceCategoryTableViewController.swift */; };
 		5319A9CA1C9AF4700025CB1A /* ServiceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5319A9C91C9AF4700025CB1A /* ServiceTableViewController.swift */; };
 		531B25531AB80E5100EB3472 /* AMCCashBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 531B25521AB80E5100EB3472 /* AMCCashBook.m */; };
@@ -438,6 +442,8 @@
 		530D62581C75B0A60064794B /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		5312CFDE1CC3738900E495E2 /* SalonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalonTableViewCell.swift; sourceTree = "<group>"; };
 		53146BFC1AB225EC003B7658 /* ClaudiaSalon.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = ClaudiaSalon.entitlements; path = ../ClaudiaSalon.entitlements; sourceTree = "<group>"; };
+		531767B81CEC7642001FB845 /* ImportData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportData.swift; sourceTree = "<group>"; };
+		531767BB1CECB623001FB845 /* RobustImporterStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RobustImporterStateMachine.swift; sourceTree = "<group>"; };
 		5319A9C71C9AF4220025CB1A /* ServiceCategoryTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceCategoryTableViewController.swift; sourceTree = "<group>"; };
 		5319A9C91C9AF4700025CB1A /* ServiceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceTableViewController.swift; sourceTree = "<group>"; };
 		531B25511AB80E5100EB3472 /* AMCCashBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCashBook.h; sourceTree = "<group>"; };
@@ -1152,6 +1158,8 @@
 			isa = PBXGroup;
 			children = (
 				532279ED1CD72A9A002FEB26 /* RobustDownloader.swift */,
+				531767B81CEC7642001FB845 /* ImportData.swift */,
+				531767BB1CECB623001FB845 /* RobustImporterStateMachine.swift */,
 			);
 			name = RobustDownloaders;
 			sourceTree = "<group>";
@@ -2982,6 +2990,7 @@
 				53D69D0A1A9B240C0004CE10 /* AMCManagersBudgetWindowController.m in Sources */,
 				536B9E8F1C56077E00F170EC /* BusinessFunction+CoreDataProperties.m in Sources */,
 				5330E2391AF8A8F40062FD93 /* AMCAdvancePayment.m in Sources */,
+				531767B91CEC7642001FB845 /* ImportData.swift in Sources */,
 				53D69CE61A9B240C0004CE10 /* AMCPaymentAmountViewController.m in Sources */,
 				53D69D4E1A9B240C0004CE10 /* EditStockProductViewController.m in Sources */,
 				53D69D0D1A9B240C0004CE10 /* AMCStockControlViewController.m in Sources */,
@@ -3000,6 +3009,7 @@
 				536B9E711C56077E00F170EC /* Salary+CoreDataProperties.m in Sources */,
 				536B9E651C56077E00F170EC /* SaleItem+CoreDataProperties.m in Sources */,
 				5358DD441C8C9338009DD63E /* Holiday+CoreDataProperties.m in Sources */,
+				531767BC1CECB623001FB845 /* RobustImporterStateMachine.swift in Sources */,
 				53D69D581A9B240C0004CE10 /* AMCPaymentCompleteWindowController.m in Sources */,
 				53D69D551A9B240C0004CE10 /* SelectItemsStepViewController.m in Sources */,
 				533054521AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld in Sources */,
@@ -3174,6 +3184,7 @@
 				53FDCA781C7A6E3F006B4002 /* Note.m in Sources */,
 				5358DD531C8C9380009DD63E /* OpeningHoursWeekTemplate.m in Sources */,
 				5319A9CA1C9AF4700025CB1A /* ServiceTableViewController.swift in Sources */,
+				531767BD1CECB623001FB845 /* RobustImporterStateMachine.swift in Sources */,
 				5353EE661C876ABD00D09B98 /* SaleDetailCellTableViewCell.swift in Sources */,
 				5358DD611C8D7085009DD63E /* FindCustomerViewController.swift in Sources */,
 				53FDCA661C7A081A006B4002 /* Customer.m in Sources */,
@@ -3198,6 +3209,7 @@
 				5358DD5D1C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m in Sources */,
 				5358DD411C8C9338009DD63E /* IntervalDuringDay+CoreDataProperties.m in Sources */,
 				53FDCA911C7AFCD7006B4002 /* BQDataObjects.swift in Sources */,
+				531767BA1CEC7642001FB845 /* ImportData.swift in Sources */,
 				53EBB3CB1C7B194000BBDC46 /* BQCoredataObjectExtensions.swift in Sources */,
 				53FDCA731C7A12FB006B4002 /* Service.m in Sources */,
 				5370D4FB1C92AFC200319147 /* ImportInfoCell.swift in Sources */,
