@@ -1157,9 +1157,9 @@
 		532279F01CD7A199002FEB26 /* RobustDownloaders */ = {
 			isa = PBXGroup;
 			children = (
-				532279ED1CD72A9A002FEB26 /* RobustDownloader.swift */,
-				531767B81CEC7642001FB845 /* ImportData.swift */,
 				531767BB1CECB623001FB845 /* RobustImporterStateMachine.swift */,
+				531767B81CEC7642001FB845 /* ImportData.swift */,
+				532279ED1CD72A9A002FEB26 /* RobustDownloader.swift */,
 			);
 			name = RobustDownloaders;
 			sourceTree = "<group>";

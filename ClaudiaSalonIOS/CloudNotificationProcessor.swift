@@ -21,7 +21,7 @@ class CloudNotificationProcessor {
     private var currentSubscription: CKSubscription!
     private let cloudSalonReference : CKReference!
     private var processingSuspended = true
-    private var importState: RobustImporter.ImportState = RobustImporter.ImportState.InPreparation
+    private var importState: ImportState = ImportState.InPreparation
     
     lazy var cloudSubscriber: CloudNotificationSubscriber = {
         return CloudNotificationSubscriber(database: self.publicCloudDatabase, cloudSalonRecordName: self.cloudSalonRecordName)
@@ -126,7 +126,7 @@ class CloudNotificationProcessor {
         self.downloadedNotifications.removeAll()
         self.notificationsToMarkRead.removeAll()
         self.recordDataByRecordID.removeAll()
-        self.importState = RobustImporter.ImportState.InPreparation
+        self.importState = ImportState.InPreparation
     }
     
     private func beginNotificationFetch(serverChangeToken: CKServerChangeToken? = nil) {
@@ -151,12 +151,12 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
         print("importer did fail import with error: \(importer.importData.error)")
     }
     func importDidProgressState(importer: RobustImporter) {
-        if importer.importData.state == RobustImporter.ImportState.AllDataDownloaded {
+        if importer.importData.state == ImportState.AllRequiredDataDownloaded {
             importer.writeToCoredata()
             return
         }
         // If this importer has completed then it is possible that we have completed too
-        if importer.isComplete() || importer.isInErrorState() {
+        if importer.state().isComplete() || importer.state().isErrorState() {
             dispatch_sync(self.queue) {
                 if self.isComplete() {
                     self.isWorking = false
@@ -173,7 +173,7 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
                     result = false
                     break
                 }
-                if importer.successRequired  && importer.isInErrorState() {
+                if importer.successRequired  && importer.state().isErrorState() {
                     result = true
                     break
                 }
@@ -190,7 +190,7 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
                     result = false
                     break
                 }
-                if importer.state() != RobustImporter.ImportState.AllDataDownloaded {
+                if importer.state() != ImportState.AllRequiredDataDownloaded {
                     result = false
                 }
             }
@@ -206,7 +206,7 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
                 result = false
                 break
             }
-            if !importer.isComplete() || !importer.isInErrorState() {
+            if !importer.state().isComplete() || !importer.state().isErrorState() {
                 result = false
                 break
             }
@@ -228,21 +228,21 @@ extension CloudNotificationProcessor {
         }
         switch type {
         case .Salon:
-            return SalonImporter(key: "salon", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+            return SalonImporter(key: "salon", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
         case .Customer:
-            return CustomerImporter(key: "customer", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+            return CustomerImporter(key: "customer", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
         case .Employee:
-            return EmployeeImporter(key: "employee", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+            return EmployeeImporter(key: "employee", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
         case .ServiceCategory:
-            return ServiceCategoryImporter(key: "serviceCategory", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+            return ServiceCategoryImporter(key: "serviceCategory", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
         case .Service:
-            return ServiceImporter(key: "service", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+            return ServiceImporter(key: "service", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
         case .Appointment:
-            return AppointmentImporter(key: "appointment", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+            return AppointmentImporter(key: "appointment", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
         case .Sale:
-            return SaleImporter(key: "sale", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+            return SaleImporter(key: "sale", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
         case .SaleItem:
-            return SaleItemImporter(key: "saleItem", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, delegate: self)
+            return SaleItemImporter(key: "saleItem", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
         }
     }
 }
@@ -324,7 +324,7 @@ extension CloudNotificationProcessor {
                 if belongsToSalon {
                     let importer = self.importerForRecord(record)
                     self.recordDataByRecordID[recordID]!.importer = importer
-                    importer.startImport(true)
+                    importer.startImport()
                 }
             }
         }
@@ -401,7 +401,7 @@ extension CloudNotificationProcessor {
         var processedNotifications = Set<CKQueryNotification>()
         for (_,recordData) in self.recordDataByRecordID {
             if let importer = recordData.importer {
-                if importer.isComplete() {
+                if importer.state().isComplete() {
                     processedNotifications.unionInPlace(recordData.notifications)
                 }
             }
