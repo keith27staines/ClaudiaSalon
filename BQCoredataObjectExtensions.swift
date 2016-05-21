@@ -21,6 +21,8 @@ protocol BQExportable: class {
     var managedObjectContext:NSManagedObjectContext? { get }
     func updateFromCloudRecord(record:CKRecord)
     func cascadeHasChangesUpdwards()
+    static func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable?
+    static func newExportableWithMoc(moc:NSManagedObjectContext) -> BQExportable
 }
 
 extension BQExportable {
@@ -45,6 +47,12 @@ extension BQExportable {
 
 // MARK:- Salon
 extension Salon : BQExportable {
+    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Salon(moc: moc)
+    }
+    class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
+        return Salon.fetchForCloudID(cloudID, moc: moc)
+    }
     func cascadeHasChangesUpdwards() {
         // We are already a top level object so there is nothing to do
     }
@@ -52,6 +60,18 @@ extension Salon : BQExportable {
 
 // MARK:- Appointment
 extension Appointment : BQExportable {
+    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Appointment.newObjectWithMoc(moc)
+    }
+    class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
+        return Appointment.fetchForCloudID(cloudID, moc: moc)
+    }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        // We are already a top level object so there is nothing else do
+    }
+}
+extension Appointment {
     class func unexpiredAppointments(managedObjectContext:NSManagedObjectContext) -> [Appointment] {
         let today = NSDate()
         let earliest = today.dateByAddingTimeInterval(-appointmentExpiryTime)
@@ -74,13 +94,22 @@ extension Appointment : BQExportable {
             return Set<Appointment>()
         }
     }
+}
+// MARK:- Customer
+extension Customer : BQExportable {
+    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Customer.newObjectWithMoc(moc)
+    }
+    class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
+        return Customer.fetchForCloudID(cloudID, moc: moc)
+    }
+    
     func cascadeHasChangesUpdwards() {
         self.bqHasClientChanges = true
         // We are already a top level object so there is nothing else do
     }
 }
-// MARK:- Customer
-extension Customer : BQExportable {
+extension Customer {
     class func customersOrderedByFirstName(managedObjectContext:NSManagedObjectContext) -> [Customer] {
         let customers = Customer.allObjectsWithMoc(managedObjectContext) as! [Customer]
         let sortedCustomers = customers.sort { (customer1:Customer, customer2:Customer) -> Bool in
@@ -100,13 +129,21 @@ extension Customer : BQExportable {
             return Set<Customer>()
         }
     }
+}
+// MARK:- Employee
+extension Employee : BQExportable {
+    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Employee.newObjectWithMoc(moc)
+    }
+    class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
+        return Employee.fetchForCloudID(cloudID, moc: moc)
+    }
     func cascadeHasChangesUpdwards() {
         self.bqHasClientChanges = true
         // We are already a top level object so there is nothing else do
     }
 }
-// MARK:- Employee
-extension Employee : BQExportable {
+extension Employee {
     class func employeesOrderedByFirstName(managedObjectContext:NSManagedObjectContext) -> [Employee] {
         let employees = Employee.allObjectsWithMoc(managedObjectContext) as! [Employee]
         let sortedEmployees = employees.sort { (employee1, employee2) -> Bool in
@@ -126,13 +163,21 @@ extension Employee : BQExportable {
             return Set<Employee>()
         }
     }
+}
+// MARK:- Service
+extension Service : BQExportable {
+    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Service.newObjectWithMoc(moc)
+    }
+    class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
+        return Service.fetchForCloudID(cloudID, moc: moc)
+    }
     func cascadeHasChangesUpdwards() {
         self.bqHasClientChanges = true
         // We are already a top level object so there is nothing else do
     }
 }
-// MARK:- Service
-extension Service : BQExportable {
+extension Service {
     class func servicesOrderedByName(managedObjectContext: NSManagedObjectContext) -> [Service] {
         let services = Service.allObjectsWithMoc(managedObjectContext) as! [Service]
         let sortedServices = services.sort { (service1, service2) -> Bool in
@@ -152,13 +197,21 @@ extension Service : BQExportable {
             return Set<Service>()
         }
     }
+}
+// MARK:- ServiceCategory
+extension ServiceCategory : BQExportable {
+    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return ServiceCategory.newObjectWithMoc(moc)
+    }
+    class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
+        return ServiceCategory.fetchForCloudID(cloudID, moc: moc)
+    }
     func cascadeHasChangesUpdwards() {
         self.bqHasClientChanges = true
         // We are already a top level object so there is nothing else do
     }
 }
-// MARK:- ServiceCategory
-extension ServiceCategory : BQExportable {
+extension ServiceCategory {
     class func serviceCategoriesOrderedByName(managedObjectContext: NSManagedObjectContext) -> [ServiceCategory] {
         let serviceCategories = ServiceCategory.allObjectsWithMoc(managedObjectContext) as! [ServiceCategory]
         let sortedServiceCategories = serviceCategories.sort { (serviceCategory1, serviceCategory2) -> Bool in
@@ -178,13 +231,21 @@ extension ServiceCategory : BQExportable {
             return Set<ServiceCategory>()
         }
     }
-    func cascadeHasChangesUpdwards() {
-        self.bqHasClientChanges = true
-        // We are already a top level object so there is nothing else do
-    }
 }
 // MARK:- SaleItem
 extension SaleItem : BQExportable {
+    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return SaleItem.newObjectWithMoc(moc)
+    }
+    class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
+        return SaleItem.fetchForCloudID(cloudID, moc: moc)
+    }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        self.sale?.cascadeHasChangesUpdwards()
+    }
+}
+extension SaleItem {
     class func saleItemsMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<SaleItem> {
         let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
         let fetchRequest = NSFetchRequest(entityName:"SaleItem")
@@ -197,13 +258,21 @@ extension SaleItem : BQExportable {
             return Set<SaleItem>()
         }
     }
-    func cascadeHasChangesUpdwards() {
-        self.bqHasClientChanges = true
-        self.sale?.cascadeHasChangesUpdwards()
-    }
 }
 // MARK:- Sale
 extension Sale : BQExportable {
+    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Sale.newObjectWithMoc(moc)
+    }
+    class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
+        return SaleItem.fetchForCloudID(cloudID, moc: moc)
+    }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        self.fromAppointment?.cascadeHasChangesUpdwards()
+    }
+}
+extension Sale {
     class func salesMarkedForExport(managedObjectContext:NSManagedObjectContext) -> Set<Sale> {
         let predicate = NSPredicate(format: "bqNeedsCoreDataExport = %@", true)
         let fetchRequest = NSFetchRequest(entityName:"Sale")
@@ -215,10 +284,6 @@ extension Sale : BQExportable {
             assertionFailure("Unable to fetch objects marked for export")
             return Set<Sale>()
         }
-    }
-    func cascadeHasChangesUpdwards() {
-        self.bqHasClientChanges = true
-        self.fromAppointment?.cascadeHasChangesUpdwards()
     }
 }
 

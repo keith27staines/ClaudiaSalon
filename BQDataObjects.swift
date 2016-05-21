@@ -29,6 +29,28 @@ enum ICloudRecordType: String {
     case SaleItem = "icloudSaleItem"
     case Appointment = "icloudAppointment"
 }
+
+func classTypeForRecordType(recordType:ICloudRecordType) -> BQExportable.Type {
+    switch recordType {
+    case .Appointment:
+        return Appointment.self
+    case .Customer:
+        return Customer.self
+    case .Employee:
+        return Employee.self
+    case .Sale:
+        return Sale.self
+    case .SaleItem:
+        return SaleItem.self
+    case .Salon:
+        return Salon.self
+    case .Service:
+        return Service.self
+    case .ServiceCategory:
+        return ServiceCategory.self
+    }
+}
+
 // MARK:- abstract base class ICloudRecord
 public class ICloudRecord {
     var cloudRecord:CKRecord?

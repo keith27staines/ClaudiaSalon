@@ -196,11 +196,33 @@ class RobustImporter : RobustImporterDelegate {
 
     // MARK: - Implementation
     
-    func writeToCoredata() {
-        self.save()
+    /// Permorms a shallow updates the coredata record corresponding to the icloud record. Shallow means that only the ids of directly referenced objects withing the record are updated, but the referenced objects themselves are left alone. 
+    ///
+    /// If no coredata object currently exists for the cloud id, then one is created
+    func createOrUpdatePrimaryCoredataRecord() -> BQExportable {
+        var bqExportable:BQExportable!
+        self.moc.performBlockAndWait() {
+            let recordName = self.importData.cloudRecord!.recordID.recordName
+            let BQType = classTypeForRecordType(self.recordType)
+            bqExportable = BQType.fetchBQExportable(recordName, moc: self.moc)
+            if bqExportable == nil {
+                bqExportable = BQType.newExportableWithMoc(self.moc)
+            }
+            bqExportable.updateFromCloudRecord(self.importData.cloudRecord!)
+            self.importData.coredataRecord = (bqExportable as! NSManagedObject)
+        }
+        return bqExportable
     }
     
-    func save() {
+    /// This base class implementation simply writes the primary record to the coredata context and saves the context. 
+    ///
+    /// Subclasses that have child records should perform a similar function but additionally they should set the child references and ensure they call saveCoredataContext
+    func writeToCoredata() {
+        let _ = self.createOrUpdatePrimaryCoredataRecord()
+        self.saveCoredataContext()
+    }
+    
+    func saveCoredataContext() {
         self.moc.performBlockAndWait() {
             guard self.moc.hasChanges else {
                 return
@@ -472,18 +494,12 @@ class AppointmentImporter : RobustImporter {
     }
     
     override func writeToCoredata() {
+        let appointment = super.createOrUpdatePrimaryCoredataRecord() as! Appointment
         self.moc.performBlockAndWait() {
-            let recordName = self.importData.cloudRecord!.recordID.recordName
-            var appointment = Appointment.fetchForCloudID(recordName, moc: self.moc)
-            if appointment == nil {
-                appointment = Appointment.newObjectWithMoc(self.moc)
-            }
-            appointment!.updateFromCloudRecord(self.importData.cloudRecord!)
-            appointment!.customer = (self.customerImporter!.importData.coredataRecord as! Customer)
-            appointment!.sale = (self.saleImporter!.importData.coredataRecord as! Sale)
-            self.importData.coredataRecord = appointment
+            appointment.customer = (self.customerImporter!.importData.coredataRecord as! Customer)
+            appointment.sale = (self.saleImporter!.importData.coredataRecord as! Sale)
         }
-        super.writeToCoredata()
+        self.saveCoredataContext()
     }
 }
 
@@ -534,27 +550,16 @@ class SaleImporter : RobustImporter {
         return Result.success
     }
     
-    //
     override func writeToCoredata() {
+        let sale = super.createOrUpdatePrimaryCoredataRecord() as! Sale
         self.moc.performBlockAndWait() {
-            self.customerImporter?.writeToCoredata()
-            for importer in self.saleItemImporters {
-                importer.writeToCoredata()
-            }
-            let recordName = self.importData.cloudRecord!.recordID.recordName
-            var sale = Sale.fetchForCloudID(recordName, moc: self.moc)
-            if sale == nil {
-                sale = Sale.newObjectWithMoc(self.moc)
-            }
-            sale!.updateFromCloudRecord(self.importData.cloudRecord!)
-            sale!.customer = (self.customerImporter!.importData.coredataRecord as! Customer)
+            sale.customer = (self.customerImporter!.importData.coredataRecord as! Customer)
             for importer in self.saleItemImporters {
                 let saleItem = importer.importData.coredataRecord as! SaleItem
-                sale!.addSaleItemObject(saleItem)
+                sale.addSaleItemObject(saleItem)
             }
-            self.importData.coredataRecord = sale
         }
-        super.writeToCoredata()
+        self.saveCoredataContext()
     }
 }
 
@@ -564,19 +569,7 @@ class SaleImporter : RobustImporter {
 class CustomerImporter : ChildlessRobustImporter {
     
     override var recordType: ICloudRecordType { return ICloudRecordType.Customer }
-    
-    override func writeToCoredata() {
-        self.moc.performBlockAndWait() {
-            let recordName = self.importData.cloudRecord!.recordID.recordName
-            var customer = Customer.fetchForCloudID(recordName, moc: self.moc)
-            if customer == nil {
-                customer = Customer.newObjectWithMoc(self.moc)
-            }
-            customer!.updateFromCloudRecord(self.importData.cloudRecord!)
-            self.importData.coredataRecord = customer
-        }
-        super.writeToCoredata()
-    }
+
 }
 
 //////////////////////////////////////////////////////
@@ -617,20 +610,12 @@ class SaleItemImporter : RobustImporter {
     }
     
     override func writeToCoredata() {
+        let saleItem = self.createOrUpdatePrimaryCoredataRecord() as! SaleItem
         self.moc.performBlockAndWait() {
-            self.serviceImporter?.writeToCoredata()
-            self.employeeImporter?.writeToCoredata()
-            let recordName = self.importData.cloudRecord!.recordID.recordName
-            var saleItem = SaleItem.fetchForCloudID(recordName, moc: self.moc)
-            if saleItem == nil {
-                saleItem = SaleItem.newObjectWithMoc(self.moc)
-            }
-            saleItem!.updateFromCloudRecord(self.importData.cloudRecord!)
-            saleItem!.service = (self.serviceImporter!.importData.coredataRecord as! Service)
-            saleItem!.performedBy = (self.employeeImporter!.importData.coredataRecord as! Employee)
-            self.importData.coredataRecord = saleItem
+            saleItem.service = (self.serviceImporter!.importData.coredataRecord as! Service)
+            saleItem.performedBy = (self.employeeImporter!.importData.coredataRecord as! Employee)
         }
-        super.writeToCoredata()
+        self.saveCoredataContext()
     }
 }
 
@@ -640,18 +625,6 @@ class ServiceImporter : ChildlessRobustImporter {
     
     override var recordType: ICloudRecordType { return ICloudRecordType.Service }
 
-    override func writeToCoredata() {
-        self.moc.performBlockAndWait() {
-            let recordName = self.importData.cloudRecord!.recordID.recordName
-            var service = Service.fetchForCloudID(recordName, moc: self.moc)
-            if service == nil {
-                service = Service.newObjectWithMoc(self.moc)
-            }
-            self.importData.coredataRecord = service
-            service!.updateFromCloudRecord(self.importData.cloudRecord!)
-        }
-        super.writeToCoredata()
-    }
 }
 
 //////////////////////////////////////////////////////
@@ -660,18 +633,6 @@ class EmployeeImporter : ChildlessRobustImporter {
 
     override var recordType: ICloudRecordType { return ICloudRecordType.Employee }
 
-    override func writeToCoredata() {
-        self.moc.performBlockAndWait() {
-            let recordName = self.importData.cloudRecord!.recordID.recordName
-            var employee = Employee.fetchForCloudID(recordName, moc: self.moc)
-            if employee == nil {
-                employee = Employee.newObjectWithMoc(self.moc)
-            }
-            self.importData.coredataRecord = employee
-            employee!.updateFromCloudRecord(self.importData.cloudRecord!)
-        }
-        super.writeToCoredata()
-    }
 }
 
 //////////////////////////////////////////////////////
@@ -680,18 +641,6 @@ class SalonImporter : ChildlessRobustImporter {
 
     override var recordType: ICloudRecordType { return ICloudRecordType.Salon }
 
-    override func writeToCoredata() {
-        self.moc.performBlockAndWait() {
-            let recordName = self.importData.cloudRecord!.recordID.recordName
-            let salon = Salon.fetchForCloudID(recordName, moc: self.moc)
-            if salon == nil {
-                fatalError("Salon's cannot be created from notifications - use bulk cloud import instead")
-            }
-            self.importData.coredataRecord = salon
-            salon!.updateFromCloudRecord(self.importData.cloudRecord!)
-        }
-        super.writeToCoredata()
-    }
 }
 
 //////////////////////////////////////////////////////
@@ -700,18 +649,6 @@ class ServiceCategoryImporter : ChildlessRobustImporter {
 
     override var recordType: ICloudRecordType { return ICloudRecordType.ServiceCategory }
 
-    override func writeToCoredata() {
-        self.moc.performBlockAndWait() {
-            let recordName = self.importData.cloudRecord!.recordID.recordName
-            let serviceCategory = ServiceCategory.fetchForCloudID(recordName, moc: self.moc)
-            if serviceCategory == nil {
-                fatalError("Salon's cannot be created from notifications - use bulk cloud import instead")
-            }
-            self.importData.coredataRecord = serviceCategory
-            serviceCategory!.updateFromCloudRecord(self.importData.cloudRecord!)
-        }
-        super.writeToCoredata()
-    }
 }
 
 
