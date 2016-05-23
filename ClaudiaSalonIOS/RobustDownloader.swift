@@ -604,7 +604,6 @@ class SaleImporter : RobustImporter {
     // Importers for indirectly referenced objects (no id is known)
     private var childRecordFetcher: CKQueryOperation!
     private let saleItemKey = "saleItem"
-    private var saleItemImporters = [SaleItemImporter]()
     
     override class func getRecordType() -> ICloudRecordType {
         return ICloudRecordType.Sale
