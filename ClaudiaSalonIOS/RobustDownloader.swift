@@ -647,9 +647,11 @@ class SaleImporter : RobustImporter {
         let sale = super.createOrUpdatePrimaryCoredataRecord() as! Sale
         self.moc.performBlockAndWait() {
             sale.customer = (self.customerImporter!.importData.coredataRecord as! Customer)
-            for importer in self.saleItemImporters {
-                let saleItem = importer.importData.coredataRecord as! SaleItem
-                sale.addSaleItemObject(saleItem)
+            for (_,importer) in self.childImporters {
+                if importer.recordType == ICloudRecordType.SaleItem {
+                    let saleItem = importer.importData.coredataRecord as! SaleItem
+                    sale.addSaleItemObject(saleItem)
+                }
             }
         }
         self.saveCoredataContext()
