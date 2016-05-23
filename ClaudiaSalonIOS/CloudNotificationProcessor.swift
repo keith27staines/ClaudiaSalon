@@ -150,16 +150,26 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
     func importDidFail(importer: RobustImporter) {
         print("importer did fail import with error: \(importer.importData.error)")
     }
+    
     func importDidProgressState(importer: RobustImporter) {
-
         // If this importer has completed then it is possible that we have completed too
-        if importer.state().isComplete() || importer.state().isErrorState() {
+        if importer.state().isFinalState() {
             dispatch_sync(self.queue) {
                 if self.isComplete() {
-                    self.isWorking = false
+                    self.markNotificationsComplete()
+                    waitAndDispatchOnMainQueue(5) {
+                        self.isWorking = false
+                    }
                 }
             }
         }
+    }
+    
+    private func markNotificationsComplete() {
+        let processedNotificationsSet = self.processedNotificationSubset()
+        let processedNotificationIDs = Array(processedNotificationsSet.map { $0.notificationID! } )
+        let markOperation = self.makeMarkNotificationsAsReadOperation(processedNotificationIDs)
+        self.container.addOperation(markOperation)
     }
     
     private func isInErrorState() -> Bool {
@@ -173,22 +183,6 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
                 if importer.successRequired  && importer.state().isErrorState() {
                     result = true
                     break
-                }
-            }
-        }
-        return result
-    }
-    private func isFullyDownloaded() -> Bool {
-        var result = true
-        dispatch_sync(self.queue) {
-            for (_,recordData) in self.recordDataByRecordID {
-                if recordData.isForeign { continue }
-                guard let importer = recordData.importer else {
-                    result = false
-                    break
-                }
-                if importer.state() != ImportState.AllRequiredDataDownloaded {
-                    result = false
                 }
             }
         }
@@ -352,7 +346,6 @@ extension CloudNotificationProcessor {
             print("\(numberMarkedRead) cloud notifications were successfully marked as read")
         }
     }
-
     private func foreignNotificationSubset() -> Set<CKQueryNotification> {
         var foreignNotifications = Set<CKQueryNotification>()
         for (_,recordData) in self.recordDataByRecordID {
