@@ -32,7 +32,7 @@ class RobustImporter : RobustImporterDelegate {
     private (set) var importData:ImportData
     private (set) var childImporters = [String:RobustImporter]()
     private (set) var successRequired = false
-    private var recordType: ICloudRecordType {
+    final private var recordType: ICloudRecordType {
         return self.dynamicType.getRecordType()
     }
 
@@ -63,7 +63,7 @@ class RobustImporter : RobustImporterDelegate {
          record:CKRecord?,
          successRequired:Bool,
          delegate:RobustImporterDelegate) {
-        
+        print("Initializing \(self.dynamicType.getRecordType())")
         let myRecordType = self.dynamicType.getRecordType()
         if let record = record {
             if record.recordType != myRecordType.rawValue {
@@ -87,16 +87,18 @@ class RobustImporter : RobustImporterDelegate {
         
     /// Start import. The receiver will automatically determine the appropriate start point
     func startImport() {
+        print("\(self.recordType) entered startImport")
+        self.changeState(.DownloadingRecord)
         if let record = self.importData.cloudRecord {
+            // We already have our primary record so move on to next stage
             self.handleFetchedPrimaryRecord(record, error: nil)
-        } else {
-            self.changeState(.DownloadingRecord)
         }
     }
     
     // Override this method if necessary, but call super to automatically take care of state changes and notifications.
     // Note that the implementation of this function is martialled onto the synchronization queue
     private func handleFetchedPrimaryRecord(record:CKRecord?, error:NSError?) {
+        print("\(self.recordType) entered base class implementation of handleFetchedPrimaryRecord")
         self.synchQueue.addOperationWithBlock() {
             if let error = error {
                 self.changeState(ImportState.FailedToDownloadRecord(error))
@@ -104,7 +106,7 @@ class RobustImporter : RobustImporterDelegate {
             }
             if let record = record {
                 self.importData.cloudRecord = record
-                self.changeState(.AddingChildImporters)
+                self.changeState(.DownloadedRecord)
             }
         }
     }
@@ -123,14 +125,15 @@ class RobustImporter : RobustImporterDelegate {
     ///
     /// Parameter 'result' just indicates the success or failure of the operation, but this method performs its own check to determine if all required child importers were added
     private final func handleAddingChildImportersCompleted(result:Result) {
+        print("\(self.recordType) entered handleAddingChildImportersCompleted")
         switch result {
         case Result.success:
             let verifyResult = self.verifyRequiredChildImportersWereAdded()
             switch verifyResult {
             case Result.success:
-                self.changeState(.DownloadingChildRecords)
+                self.changeState(.AddedChildImporters)
             case Result.failure(let veryifyError):
-                self.changeState(ImportState.FailedToDownloadRequiredChild(veryifyError))
+                self.changeState(ImportState.FailedToAddChildImporters(veryifyError))
             }
         case Result.failure(let error):
             self.changeState(ImportState.FailedToAddChildImporters(error))
@@ -139,7 +142,7 @@ class RobustImporter : RobustImporterDelegate {
 
     // Start downloading child records and handle completion
     private final func startChildRecordImporters() {
-        self.changeState(.DownloadingChildRecords)
+        print("\(self.recordType) entered startChildRecordImporters")
         if self.childImporters.count == 0 {
             self.changeState(ImportState.AllRequiredDataDownloaded)
             return
@@ -156,11 +159,16 @@ class RobustImporter : RobustImporterDelegate {
     
     // MARK:- RobustImporterDelegate
     func importDidFail(importer: RobustImporter) {
+        print("\(self.recordType) entered importDidFail")
         switch importer.state() {
         case .InvalidState:
             self.changeState(ImportState.FailedToDownloadRequiredChild(nil))
         case ImportState.FailedToDownloadRecord(let error):
-            self.changeState(ImportState.FailedToDownloadRequiredChild(error))
+            if importer.successRequired {
+                self.changeState(ImportState.FailedToDownloadRequiredChild(error))
+            } else {
+                self.importDidProgressState(importer)
+            }
         case ImportState.FailedToAddChildImporters(let error):
             self.changeState(ImportState.FailedToAddChildImporters(error))
         case ImportState.FailedToDownloadRequiredChild(let error):
@@ -171,7 +179,9 @@ class RobustImporter : RobustImporterDelegate {
         // Cases where the importer is not in an error state should never be met
         case ImportState.InPreparation,
              ImportState.DownloadingRecord,
+             ImportState.DownloadedRecord,
              ImportState.AddingChildImporters,
+             ImportState.AddedChildImporters,
              ImportState.DownloadingChildRecords,
              ImportState.AllRequiredDataDownloaded,
              ImportState.WritingToCoredata,
@@ -181,14 +191,15 @@ class RobustImporter : RobustImporterDelegate {
     }
     
     func importDidProgressState(importer: RobustImporter) {
+        print("\(self.recordType) entered importDidProgressState")
         // If our child imports are all downloaded, then we are downloaded. If any one of them hasn't downloaded, then neither are we
-        if  self.importData.state == ImportState.DownloadingChildRecords && self.isAllChildDataDownloaded() {
+        if  self.isReadyForAllRequiredDataDownloadedState() {
             self.changeState(.AllRequiredDataDownloaded)
             return
         }
         
         // If our child imports are all downloaded, then we are downloaded. If any one of them hasn't downloaded, then neither are we
-        if self.importData.state == ImportState.WritingToCoredata && self.isAllChildDataComplete() {
+        if self.isReadyForSuccessfulCompletetion() {
             self.changeState(.Complete)
             return
         }
@@ -200,6 +211,7 @@ class RobustImporter : RobustImporterDelegate {
     ///
     /// If no coredata object currently exists for the cloud id, then one is created
     func createOrUpdatePrimaryCoredataRecord() -> BQExportable {
+        print("\(self.recordType) entered createOrUpdatePrimaryCoredataRecord")
         var bqExportable:BQExportable!
         self.moc.performBlockAndWait() {
             let recordName = self.importData.cloudRecord!.recordID.recordName
@@ -218,13 +230,16 @@ class RobustImporter : RobustImporterDelegate {
     ///
     /// Subclasses that have child records should perform a similar function but additionally they should set the child references and ensure they call saveCoredataContext
     func writeToCoredata() {
+        print("\(self.recordType) entered writeToCoredata")
         let _ = self.createOrUpdatePrimaryCoredataRecord()
         self.saveCoredataContext()
     }
     
     func saveCoredataContext() {
+        print("\(self.recordType) entered saveCoredataContext")
         self.moc.performBlockAndWait() {
             guard self.moc.hasChanges else {
+                self.changeState(ImportState.Complete)
                 return
             }
             do {
@@ -236,60 +251,117 @@ class RobustImporter : RobustImporterDelegate {
         }
     }
     
-    private func isAllChildDataDownloaded() -> Bool {
-        for (_,importer) in self.childImporters {
-            let state = importer.importData.state
-            if importer.successRequired {
-                if state != ImportState.AllRequiredDataDownloaded { return false }
-            } else {
-                // As not required, error states count as downloaded
-                if !importer.state().isErrorState() {
-                    // But if not in error state, then it must be in the fully downloaded state
-                    if importer.importData.state != ImportState.AllRequiredDataDownloaded { return false }
-                }
-            }
-        }
-        return true
+    private func isReadyForAllRequiredDataDownloadedState() -> Bool {
+        guard self.importData.state == ImportState.DownloadingChildRecords else { return false }
+        return self.areChildImportersComplete()
     }
-    private func isAllChildDataComplete() -> Bool {
+    
+    private func isReadyForSuccessfulCompletetion() -> Bool {
+        guard self.importData.state == ImportState.WritingToCoredata else { return false }
+        return self.areChildImportersComplete()
+    }
+    
+    private func areChildImportersComplete() -> Bool {
         for (_,importer) in self.childImporters {
             let state = importer.importData.state
             if importer.successRequired {
                 if state != ImportState.Complete { return false }
             } else {
-                // As not required, error states count as complete
-                if !importer.state().isErrorState() {
-                    // But if not in error state, then it must be complete
+                // As not required, any final state counts as complete
+                if !importer.state().isFinalState() {
                     if importer.importData.state != ImportState.Complete { return false }
                 }
             }
         }
+        // All importers pass the test for being complete
         return true
+    }
+}
+
+// MARK:- Factory methods
+extension RobustImporter {
+    
+    class func importerForRecord(record:CKRecord, cloudDatabase:CKDatabase, moc:NSManagedObjectContext, delegate:RobustImporterDelegate) -> RobustImporter {
+        guard let type = ICloudRecordType(rawValue: record.recordType) else {
+            fatalError("There is no importer for records of type \(record.recordType)")
+        }
+        let recordID = record.recordID
+        switch type {
+        case .Salon:
+            return SalonImporter(key: "salon", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
+        case .Customer:
+            return CustomerImporter(key: "customer", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
+        case .Employee:
+            return EmployeeImporter(key: "employee", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
+        case .ServiceCategory:
+            return ServiceCategoryImporter(key: "serviceCategory", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
+        case .Service:
+            return ServiceImporter(key: "service", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
+        case .Appointment:
+            return AppointmentImporter(key: "appointment", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
+        case .Sale:
+            return SaleImporter(key: "sale", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
+        case .SaleItem:
+            return SaleItemImporter(key: "saleItem", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
+        }
+    }
+    
+    class func importerForRecordType(recordType:String, recordID: CKRecordID, database:CKDatabase, moc:NSManagedObjectContext, delegate:RobustImporterDelegate) -> RobustImporter {
+        guard let type = ICloudRecordType(rawValue: recordType) else {
+            fatalError("There is no importer for records of type \(recordType)")
+        }
+        switch type {
+        case .Salon:
+            return SalonImporter(key: "salon", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
+        case .Customer:
+            return CustomerImporter(key: "customer", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
+        case .Employee:
+            return EmployeeImporter(key: "employee", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
+        case .ServiceCategory:
+            return ServiceCategoryImporter(key: "serviceCategory", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
+        case .Service:
+            return ServiceImporter(key: "service", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
+        case .Appointment:
+            return AppointmentImporter(key: "appointment", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
+        case .Sale:
+            return SaleImporter(key: "sale", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
+        case .SaleItem:
+            return SaleItemImporter(key: "saleItem", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
+        }
     }
 }
 
 // MARK:- State machine
 extension RobustImporter {
     private func changeState(nextState:ImportState) {
+        let recordType = self.recordType
+        let currentState = self.state()
+        print("\(recordType) is changing state from \(currentState) to \(nextState)")
         self.synchQueue.addOperationWithBlock() {
 
             let currentState = self.importData.state
             self.ensureStateTransitionIsValid(currentState, nextState: nextState)
+
             self.importData.state = nextState
             self.delegate?.importDidProgressState(self)
             
             switch nextState {
             case .InPreparation: break
+                
             case .DownloadingRecord:
-                self.cloudDatabase.fetchRecordWithID(self.recordID, completionHandler: self.handleFetchedPrimaryRecord)
+                if self.importData.cloudRecord == nil {
+                    self.cloudDatabase.fetchRecordWithID(self.recordID, completionHandler: self.handleFetchedPrimaryRecord)
+                }
+            case .DownloadedRecord:
+                self.changeState(ImportState.AddingChildImporters)
             case .AddingChildImporters:
                 self.startAddingChildImporters()
-                break
+            case .AddedChildImporters:
+                self.changeState(ImportState.DownloadingChildRecords)
             case .DownloadingChildRecords:
                 self.startChildRecordImporters()
             case .AllRequiredDataDownloaded:
                 self.changeState(ImportState.WritingToCoredata)
-                break
             case .WritingToCoredata:
                 self.writeToCoredata()
             case .Complete:
@@ -319,6 +391,7 @@ extension RobustImporter {
                 return
             }
         }
+        assertionFailure("There is no legal transition from \(currentState) to \(nextState)")
         fatalError("There is no legal transition from \(currentState) to \(nextState)")
     }
     
@@ -330,19 +403,28 @@ extension RobustImporter {
             
         case .DownloadingRecord:
             allowedStates.append(ImportState.FailedToDownloadRecord(nil))
+            allowedStates.append(ImportState.DownloadedRecord)
+        
+        case .DownloadedRecord:
             allowedStates.append(ImportState.AddingChildImporters)
             
         case .AddingChildImporters:
-            allowedStates.append(ImportState.DownloadingChildRecords)
             allowedStates.append(ImportState.FailedToDownloadRecord(nil))
+            allowedStates.append(ImportState.AddedChildImporters)
+            
+        case .AddedChildImporters:
+            allowedStates.append(ImportState.DownloadingChildRecords)
+            
         case .DownloadingChildRecords:
-            allowedStates.append(ImportState.AllRequiredDataDownloaded)
             allowedStates.append(ImportState.FailedToDownloadRequiredChild(nil))
+            allowedStates.append(ImportState.AllRequiredDataDownloaded)
+            
         case .AllRequiredDataDownloaded:
             allowedStates.append(ImportState.WritingToCoredata)
+            
         case .WritingToCoredata:
-            allowedStates.append(ImportState.Complete)
             allowedStates.append(ImportState.FailedToWriteToCoredata(nil))
+            allowedStates.append(ImportState.Complete)
         
         // End states cannot be transitioned to anything else
         case .FailedToDownloadRecord,
@@ -362,6 +444,7 @@ extension RobustImporter {
 extension RobustImporter {
     
     func addChildImporter(baseKey:String,importer:RobustImporter) {
+        print("\(self.recordType) is adding child importer of type \(importer.recordType)")
         self.synchQueue.addOperationWithBlock {
             let key = self.constructKeyFromBase(baseKey)
             importer.key = key
@@ -407,9 +490,8 @@ extension RobustImporter {
     private func addCompletionBlockToChildFetchOperation(queryOperation:CKQueryOperation) {
         queryOperation.name = "fetchChildOperation"
         queryOperation.queryCompletionBlock = { cursor, error in
-
+            print("\(self.recordType) entered fetchChildOperation completion block")
             if let error = error {
-                self.changeState(ImportState.FailedToDownloadRequiredChild(error))
                 self.handleAddingChildImportersCompleted(Result.failure(error))
                 return
             }
@@ -453,17 +535,22 @@ class AppointmentImporter : RobustImporter {
     private var saleRecordID:CKRecordID!
     private var saleImporter: SaleImporter?
     
-    override var recordType:ICloudRecordType { return ICloudRecordType.Appointment }
+    override class func getRecordType() -> ICloudRecordType {
+        return ICloudRecordType.Appointment
+    }
     
     private override func handleFetchedPrimaryRecord(record: CKRecord?, error: NSError?) {
         if let record = record {
             let customerReference = record[customerKey] as! CKReference
-            self.customerRecordID = customerReference.recordID
+            self.synchQueue.addOperationWithBlock() {
+                self.customerRecordID = customerReference.recordID
+            }
         }
         super.handleFetchedPrimaryRecord(record, error: error)
     }
     
     override func startAddingChildImporters() {
+        print("\(self.recordType) entered startAddingChildImporters")
         // Add customer importer - we already have the customer id
         self.customerImporter = CustomerImporter(key: self.customerKey, moc: self.moc, cloudDatabase: self.cloudDatabase, recordID: self.customerRecordID , record: nil, successRequired:true, delegate: self)
         self.addChildImporter(self.customerKey,importer: self.customerImporter!)
@@ -494,6 +581,8 @@ class AppointmentImporter : RobustImporter {
     }
     
     override func writeToCoredata() {
+        print("\(self.recordType) entered writeToCoredata")
+
         let appointment = super.createOrUpdatePrimaryCoredataRecord() as! Appointment
         self.moc.performBlockAndWait() {
             appointment.customer = (self.customerImporter!.importData.coredataRecord as! Customer)
@@ -508,7 +597,7 @@ class AppointmentImporter : RobustImporter {
 class SaleImporter : RobustImporter {
     
     // Importers for directly referenced child objects (ids are known)
-    private let customerKey = "customer"
+    private let customerKey = "parentCustomerReference"
     private var customerRecordID:CKRecordID!
     private var customerImporter: CustomerImporter?
     
@@ -517,7 +606,9 @@ class SaleImporter : RobustImporter {
     private let saleItemKey = "saleItem"
     private var saleItemImporters = [SaleItemImporter]()
     
-    override var recordType: ICloudRecordType { return ICloudRecordType.Sale }
+    override class func getRecordType() -> ICloudRecordType {
+        return ICloudRecordType.Sale
+    }
     
     private override func handleFetchedPrimaryRecord(record: CKRecord?, error: NSError?) {
         if let record = record {
@@ -528,6 +619,7 @@ class SaleImporter : RobustImporter {
     }
     
     override func startAddingChildImporters() {
+        print("\(self.recordType) entered startAddingChildImporters")
         // Add customer importer - we already have the customer id
         self.customerImporter = CustomerImporter(key: self.customerKey, moc: self.moc, cloudDatabase: self.cloudDatabase, recordID: self.customerRecordID , record: nil, successRequired:true, delegate: self)
         self.addChildImporter(self.customerKey,importer: self.customerImporter!)
@@ -551,6 +643,7 @@ class SaleImporter : RobustImporter {
     }
     
     override func writeToCoredata() {
+        print("\(self.recordType) entered writeToCoredata")
         let sale = super.createOrUpdatePrimaryCoredataRecord() as! Sale
         self.moc.performBlockAndWait() {
             sale.customer = (self.customerImporter!.importData.coredataRecord as! Customer)
@@ -568,7 +661,9 @@ class SaleImporter : RobustImporter {
 // MARK:- CustomerImporter (ChildlessRobustImporter sublcass) -
 class CustomerImporter : ChildlessRobustImporter {
     
-    override var recordType: ICloudRecordType { return ICloudRecordType.Customer }
+    override class func getRecordType() -> ICloudRecordType {
+        return ICloudRecordType.Customer
+    }
 
 }
 
@@ -585,7 +680,9 @@ class SaleItemImporter : RobustImporter {
     private var employeeRecordID: CKRecordID!
     private var employeeImporter: EmployeeImporter?
     
-    override var recordType: ICloudRecordType { return ICloudRecordType.SaleItem }
+    override class func getRecordType() -> ICloudRecordType {
+        return ICloudRecordType.SaleItem
+    }
     
     private override func handleFetchedPrimaryRecord(record: CKRecord?, error: NSError?) {
         if let record = record {
@@ -598,10 +695,11 @@ class SaleItemImporter : RobustImporter {
     }
     
     private override func startAddingChildImporters() {
-        self.serviceImporter = ServiceImporter(key: serviceKey, moc: moc, cloudDatabase: cloudDatabase, recordID: serviceRecordID, record: nil, successRequired: true, delegate: self)
+        print("\(self.recordType) entered startAddingChildImporters")
         self.employeeImporter = EmployeeImporter(key: employeeKey, moc: moc, cloudDatabase: cloudDatabase, recordID: employeeRecordID, record: nil, successRequired: false, delegate: self)
-        self.addChildImporter(serviceKey, importer: serviceImporter!)
+        self.serviceImporter = ServiceImporter(key: serviceKey, moc: moc, cloudDatabase: cloudDatabase, recordID: serviceRecordID, record: nil, successRequired: true, delegate: self)
         self.addChildImporter(employeeKey, importer: employeeImporter!)
+        self.addChildImporter(serviceKey, importer: serviceImporter!)
         self.handleAddingChildImportersCompleted(Result.success)
     }
     
@@ -610,10 +708,11 @@ class SaleItemImporter : RobustImporter {
     }
     
     override func writeToCoredata() {
+        print("\(self.recordType) entered writeToCoredata")
         let saleItem = self.createOrUpdatePrimaryCoredataRecord() as! SaleItem
         self.moc.performBlockAndWait() {
             saleItem.service = (self.serviceImporter!.importData.coredataRecord as! Service)
-            saleItem.performedBy = (self.employeeImporter!.importData.coredataRecord as! Employee)
+            saleItem.performedBy = self.employeeImporter!.importData.coredataRecord as? Employee  // Employee is not strictly required, hence ? instead of !
         }
         self.saveCoredataContext()
     }
@@ -623,7 +722,9 @@ class SaleItemImporter : RobustImporter {
 // MARK:- ServiceImporter (ChildlessRobustImporter sublcass) -
 class ServiceImporter : ChildlessRobustImporter {
     
-    override var recordType: ICloudRecordType { return ICloudRecordType.Service }
+    override class func getRecordType() -> ICloudRecordType {
+        return ICloudRecordType.Service
+    }
 
 }
 
@@ -631,7 +732,9 @@ class ServiceImporter : ChildlessRobustImporter {
 // MARK:- EmployeeImporter (ChildlessRobustImporter sublcass) -
 class EmployeeImporter : ChildlessRobustImporter {
 
-    override var recordType: ICloudRecordType { return ICloudRecordType.Employee }
+    override class func getRecordType() -> ICloudRecordType {
+        return ICloudRecordType.Employee
+    }
 
 }
 
@@ -639,7 +742,9 @@ class EmployeeImporter : ChildlessRobustImporter {
 // MARK:- SalonImporter (ChildlessRobustImporter sublcass) -
 class SalonImporter : ChildlessRobustImporter {
 
-    override var recordType: ICloudRecordType { return ICloudRecordType.Salon }
+    override class func getRecordType() -> ICloudRecordType {
+        return ICloudRecordType.Salon
+    }
 
 }
 
@@ -647,8 +752,10 @@ class SalonImporter : ChildlessRobustImporter {
 // MARK:- ServiceCategoryImporter (ChildlessRobustImporter sublcass) -
 class ServiceCategoryImporter : ChildlessRobustImporter {
 
-    override var recordType: ICloudRecordType { return ICloudRecordType.ServiceCategory }
-
+    override class func getRecordType() -> ICloudRecordType {
+        return ICloudRecordType.ServiceCategory
+    }
+    
 }
 
 

@@ -151,10 +151,7 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
         print("importer did fail import with error: \(importer.importData.error)")
     }
     func importDidProgressState(importer: RobustImporter) {
-        if importer.importData.state == ImportState.AllRequiredDataDownloaded {
-            importer.writeToCoredata()
-            return
-        }
+
         // If this importer has completed then it is possible that we have completed too
         if importer.state().isComplete() || importer.state().isErrorState() {
             dispatch_sync(self.queue) {
@@ -206,44 +203,12 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
                 result = false
                 break
             }
-            if !importer.state().isComplete() || !importer.state().isErrorState() {
+            if !importer.state().isFinalState() {
                 result = false
                 break
             }
         }
         return result
-    }
-}
-
-extension CloudNotificationProcessor {
-    
-    
-    private func importerForRecord(record:CKRecord) -> RobustImporter {
-        return self.importerForRecordType(record.recordType, recordID: record.recordID)
-    }
-    
-    private func importerForRecordType(recordType:String, recordID: CKRecordID) -> RobustImporter {
-        guard let type = ICloudRecordType(rawValue: recordType) else {
-            fatalError("There is no importer for records of type \(recordType)")
-        }
-        switch type {
-        case .Salon:
-            return SalonImporter(key: "salon", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
-        case .Customer:
-            return CustomerImporter(key: "customer", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
-        case .Employee:
-            return EmployeeImporter(key: "employee", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
-        case .ServiceCategory:
-            return ServiceCategoryImporter(key: "serviceCategory", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
-        case .Service:
-            return ServiceImporter(key: "service", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
-        case .Appointment:
-            return AppointmentImporter(key: "appointment", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
-        case .Sale:
-            return SaleImporter(key: "sale", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
-        case .SaleItem:
-            return SaleItemImporter(key: "saleItem", moc: self.moc, cloudDatabase: self.publicCloudDatabase, recordID: recordID, record:nil , successRequired: true, delegate: self)
-        }
     }
 }
 
@@ -322,7 +287,7 @@ extension CloudNotificationProcessor {
                 let belongsToSalon = self.recordBelongsToSalon(record)
                 self.recordDataByRecordID[recordID]!.isForeign = !belongsToSalon
                 if belongsToSalon {
-                    let importer = self.importerForRecord(record)
+                    let importer = RobustImporter.importerForRecord(record, cloudDatabase: self.publicCloudDatabase, moc: self.moc, delegate: self)
                     self.recordDataByRecordID[recordID]!.importer = importer
                     importer.startImport()
                 }

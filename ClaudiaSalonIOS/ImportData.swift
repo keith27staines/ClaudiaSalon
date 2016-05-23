@@ -39,12 +39,14 @@ enum ImportError : ErrorType {
 enum ImportState {
     case InPreparation
     case DownloadingRecord
+    case DownloadedRecord
     case FailedToDownloadRecord(NSError?)
     case AddingChildImporters
+    case AddedChildImporters
     case FailedToAddChildImporters(NSError?)
     case DownloadingChildRecords
-    case FailedToDownloadRequiredChild(NSError?)
     case AllRequiredDataDownloaded
+    case FailedToDownloadRequiredChild(NSError?)
     case WritingToCoredata
     case FailedToWriteToCoredata(NSError?)
     case Complete
@@ -59,20 +61,42 @@ enum ImportState {
     
     func isWorkingState() -> Bool {
         switch self {
-        case .DownloadingRecord, .AddingChildImporters, .DownloadingChildRecords,.AllRequiredDataDownloaded:
+        case .DownloadingRecord,
+             .DownloadedRecord,
+             .AddingChildImporters,
+             .AddedChildImporters,
+             .DownloadingChildRecords,
+             .AllRequiredDataDownloaded,
+             .WritingToCoredata:
             return true
-        default:
+            
+        case .InPreparation,
+             .FailedToDownloadRecord,
+             .FailedToAddChildImporters,
+             .FailedToDownloadRequiredChild,
+             .FailedToWriteToCoredata,
+             .InvalidState,
+             .Complete:
             return false
         }
     }
     func isErrorState() -> Bool {
         switch self {
-        case .FailedToDownloadRecord,
+        case .InvalidState,
+             .FailedToDownloadRecord,
              .FailedToAddChildImporters,
              .FailedToDownloadRequiredChild,
              .FailedToWriteToCoredata:
             return true
-        default:
+        case .InPreparation,
+             .DownloadingRecord,
+             .DownloadedRecord,
+             .AddingChildImporters,
+             .AddedChildImporters,
+             .DownloadingChildRecords,
+             .AllRequiredDataDownloaded,
+             .WritingToCoredata,
+             .Complete:
             return false
         }
     }
@@ -96,20 +120,35 @@ extension ImportState: Equatable {
 }
 
 func ==(lhs: ImportState, rhs: ImportState) -> Bool {
-    switch (lhs, rhs) {
-    case (.InPreparation,.InPreparation): return true
-    case (.DownloadingRecord,.DownloadingRecord): return true
-    case (.FailedToDownloadRecord,.FailedToDownloadRecord): return true
-    case (.AddingChildImporters,.AddingChildImporters): return true
-    case (.FailedToAddChildImporters,.FailedToAddChildImporters): return true
-    case (.DownloadingChildRecords,.DownloadingChildRecords): return true
-    case (.FailedToDownloadRequiredChild,.FailedToDownloadRequiredChild): return true
-    case (.AllRequiredDataDownloaded,.AllRequiredDataDownloaded): return true
-    case (.WritingToCoredata,.WritingToCoredata): return true
-    case (.FailedToWriteToCoredata,.FailedToWriteToCoredata): return true
-    case (.Complete,.Complete): return true
-    case (.InvalidState,.InvalidState): return true
-    default: return false
+    switch lhs {
+        
+    case .InPreparation: switch rhs { case .InPreparation: return true; default: return false }
+        
+    case .DownloadingRecord: switch rhs { case .DownloadingRecord: return true; default: return false }
+        
+    case .FailedToDownloadRecord: switch rhs { case .FailedToDownloadRecord: return true; default: return false }
+        
+    case .DownloadedRecord: switch rhs { case .DownloadedRecord: return true; default: return false }
+        
+    case .AddingChildImporters: switch rhs { case .AddingChildImporters: return true; default: return false }
+        
+    case .FailedToAddChildImporters: switch rhs { case .FailedToAddChildImporters: return true; default: return false }
+        
+    case .AddedChildImporters: switch rhs { case .AddedChildImporters: return true; default: return false }
+        
+    case .DownloadingChildRecords: switch rhs { case .DownloadingChildRecords: return true; default: return false }
+        
+    case .FailedToDownloadRequiredChild: switch rhs { case .FailedToDownloadRequiredChild: return true; default: return false }
+        
+    case .AllRequiredDataDownloaded: switch rhs { case .AllRequiredDataDownloaded: return true; default: return false }
+        
+    case .WritingToCoredata: switch rhs { case .WritingToCoredata: return true; default: return false }
+        
+    case .FailedToWriteToCoredata: switch rhs { case .FailedToWriteToCoredata: return true; default: return false }
+        
+    case .Complete: switch rhs { case .Complete: return true; default: return false }
+        
+    case .InvalidState: switch rhs { case .InvalidState: return true; default: return false }
     }
 }
 
