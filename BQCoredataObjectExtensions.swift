@@ -265,7 +265,7 @@ extension Sale : BQExportable {
         return Sale.newObjectWithMoc(moc)
     }
     class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
-        return SaleItem.fetchForCloudID(cloudID, moc: moc)
+        return Sale.fetchForCloudID(cloudID, moc: moc)
     }
     func cascadeHasChangesUpdwards() {
         self.bqHasClientChanges = true
