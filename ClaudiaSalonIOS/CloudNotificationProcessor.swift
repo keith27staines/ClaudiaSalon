@@ -157,6 +157,8 @@ extension CloudNotificationProcessor : RobustImporterDelegate {
             dispatch_sync(self.queue) {
                 if self.isComplete() {
                     self.markNotificationsComplete()
+                    let localNote = NSNotification(name: "CloudNotificationsWereProcessed", object: self)
+                    NSNotificationCenter.defaultCenter().postNotification(localNote)
                     waitAndDispatchOnMainQueue(5) {
                         self.isWorking = false
                     }

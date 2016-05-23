@@ -16,6 +16,7 @@
 @property (weak, readonly) NSManagedObjectContext * documentMoc;
 -(void)prepareForDisplayWithSalon:(AMCSalonDocument*)salonDocument;
 -(void)reloadData;
+-(void)reloadDataMaintainingSelection:(BOOL)maintainSelection;
 -(NSString*)editModeVerb;
 @property (strong,readonly) BusinessFunction * businessFunction;
 @property (readonly) BOOL permissionDeniedNeedsOKButton;

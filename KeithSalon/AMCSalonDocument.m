@@ -110,7 +110,9 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        // Add your subclass-specific initialization here.
+        [[NSNotificationCenter defaultCenter] addObserverForName:@"CloudNotificationsWereProcessed" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+            [self refreshFromCloud:self];
+        }];
     }
     return self;
 }
@@ -612,8 +614,13 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     [self.mainViewController presentViewControllerAsSheet:self.accountStatementViewController];
 }
 - (IBAction)refreshFromCloud:(id)sender {
-    [self.cloudImporter pollForMissedRemoteNotifications];
-    
+    [self.appointmentsViewController reloadDataMaintainingSelection:YES];
+    [self.salesViewController reloadDataMaintainingSelection:YES];
+    [self.customersViewController reloadDataMaintainingSelection:YES];
+    [self.paymentsViewController reloadDataMaintainingSelection:YES];
+    [self.servicesViewController reloadDataMaintainingSelection:YES];
+    [self.employeesViewController reloadDataMaintainingSelection:YES];
+    [self.stockViewController reloadDataMaintainingSelection:YES];
 }
 - (IBAction)manageCashbookGroups:(id)sender {
     [self.accountGroupingsViewController prepareForDisplayWithSalon:self];

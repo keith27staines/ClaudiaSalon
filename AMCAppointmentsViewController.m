@@ -434,6 +434,13 @@ NSAnimationDelegate>
         }
     }
 }
+
+-(void)reloadDataMaintainigSelection:(BOOL)maintainSelection {
+    [self reloadData];
+    if (maintainSelection) {
+        [self selectAppointment:self.previouslySelectedAppointment];
+    }
+}
 -(void)reloadData
 {
     _appointments = nil;
@@ -628,8 +635,7 @@ NSAnimationDelegate>
             [SaleItem markSaleItemsForExportInMoc:moc saleItemIDs:saleItemIDsSet];
             [self.salonDocument saveDocument:self];
         }
-        [self reloadData];
-        [self selectAppointment:self.previouslySelectedAppointment];
+        [self reloadDataMaintainigSelection:YES];
         [self.view.window makeFirstResponder:self.appointmentsTable];
     }];
 }
@@ -809,8 +815,7 @@ NSAnimationDelegate>
         if (self.quickQuoteViewController.sale.bqNeedsCoreDataExport) {
             [self markAppointmentForExport:self.quickQuoteViewController.sale.fromAppointment];
         }
-        [self reloadData];
-        [self selectAppointment:self.previouslySelectedAppointment];
+        [self reloadDataMaintainigSelection:true];
         [self configureButtons];
     }
     [super dismissViewController:viewController];

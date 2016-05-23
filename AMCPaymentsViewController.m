@@ -60,15 +60,17 @@
         default:
             break;
     }
-    switch (self.reconciliationStateSelector.selectedSegment) {
-        case 0:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"reconciledWithBankStatement = %@",@(YES)]];
-            break;
-        case 1:
-            [predicates addObject:[NSPredicate predicateWithFormat:@"reconciledWithBankStatement = %@",@(NO)]];
-            break;
-        default:
-            break;
+    if (self.reconciliationStateSelector) {
+        switch (self.reconciliationStateSelector.selectedSegment) {
+            case 0:
+                [predicates addObject:[NSPredicate predicateWithFormat:@"reconciledWithBankStatement = %@",@(YES)]];
+                break;
+            case 1:
+                [predicates addObject:[NSPredicate predicateWithFormat:@"reconciledWithBankStatement = %@",@(NO)]];
+                break;
+            default:
+                break;
+        }
     }
     Account * account = self.accountSelector.selectedItem.representedObject;
     if (account) {

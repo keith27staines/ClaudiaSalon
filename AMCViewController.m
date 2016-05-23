@@ -32,7 +32,9 @@
 -(NSManagedObjectContext *)documentMoc {
     return self.salonDocument.managedObjectContext;
 }
-
+-(void)reloadDataMaintainingSelection:(BOOL)maintainSelection {
+    [self reloadData];
+}
 -(void)reloadData {
 
 }
