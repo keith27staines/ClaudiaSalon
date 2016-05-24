@@ -58,7 +58,7 @@
         <window title="Claudia's Salon Manager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="mainWindow" animationBehavior="default" id="QvC-M9-y7g" customClass="AMCSalonDocumentWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="335" y="0.0" width="1389" height="820"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="1389" height="820"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -244,19 +244,13 @@
                     <toolbarItem reference="IZp-bX-nji"/>
                     <toolbarItem reference="7oS-Ii-ebJ"/>
                     <toolbarItem reference="4ku-0m-mPp"/>
-                    <toolbarItem reference="7oS-Ii-ebJ"/>
-                    <toolbarItem reference="FIF-Al-kU4"/>
-                    <toolbarItem reference="7oS-Ii-ebJ"/>
-                    <toolbarItem reference="Jka-uK-Hc8"/>
-                    <toolbarItem reference="8st-gg-pmT"/>
-                    <toolbarItem reference="T9y-t8-Mcy"/>
                     <toolbarItem reference="8st-gg-pmT"/>
                     <toolbarItem reference="Zed-Ij-tDH"/>
                     <toolbarItem reference="N06-ft-jtC"/>
                     <toolbarItem reference="7oS-Ii-ebJ"/>
                 </defaultToolbarItems>
             </toolbar>
-            <point key="canvasLocation" x="-660.5" y="-2285"/>
+            <point key="canvasLocation" x="-635.5" y="-2369"/>
         </window>
         <customObject id="WNJ-WT-lCg" customClass="AMCServicesViewController"/>
         <customObject id="TVM-zP-UFW" userLabel="Service Categories View Controller" customClass="AMCServiceCategoriesViewController"/>
