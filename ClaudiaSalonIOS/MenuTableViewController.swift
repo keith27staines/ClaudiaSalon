@@ -52,18 +52,20 @@ class MenuTableViewController: UITableViewController {
         let container = CKContainer(identifier: AppDelegate.cloudContainerID)
         let database = container.publicCloudDatabase
         CloudNotificationSubscriber.deleteAllCloudNotificationSubscriptions(database) { result in
-            switch result {
-            case .success:
-                let alert = UIAlertController(title: "Cloud Notifications Updated", message: "This app has successfully unsubscribed from cloud notifications", preferredStyle: .Alert)
-                let action = UIAlertAction(title: "Done", style: .Default, handler: nil)
-                alert.addAction(action)
-                self.presentViewController(alert, animated: false, completion: nil)
-            case .failure(let error):
-                print("Failed to unsubscribe cloud notifications with error \(error)")
-                let alert = UIAlertController(title: "Update failed", message: "Failed to unsubscribe from cloud notifications.", preferredStyle: .Alert)
-                let action = UIAlertAction(title: "Done", style: .Default, handler: nil)
-                alert.addAction(action)
-                self.presentViewController(alert, animated: false, completion: nil)
+            NSOperationQueue.mainQueue().addOperationWithBlock() {
+                switch result {
+                case .success:
+                    let alert = UIAlertController(title: "Cloud Notifications Updated", message: "This app has successfully unsubscribed from cloud notifications", preferredStyle: .Alert)
+                    let action = UIAlertAction(title: "Done", style: .Default, handler: nil)
+                    alert.addAction(action)
+                    self.presentViewController(alert, animated: false, completion: nil)
+                case .failure(let error):
+                    print("Failed to unsubscribe cloud notifications with error \(error)")
+                    let alert = UIAlertController(title: "Update failed", message: "Failed to unsubscribe from cloud notifications.", preferredStyle: .Alert)
+                    let action = UIAlertAction(title: "Done", style: .Default, handler: nil)
+                    alert.addAction(action)
+                    self.presentViewController(alert, animated: false, completion: nil)
+                }
             }
             
         }

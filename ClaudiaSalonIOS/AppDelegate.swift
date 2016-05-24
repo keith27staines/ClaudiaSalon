@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         self.setupToplevelController()
         self.registerUserDefaults()
         self.registerForRemoteNotifications(application)
-        self .processBadgeNotification(nil)
+        self.processBadgeNotification(nil)
         return true
     }    
     
@@ -134,16 +134,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 extension AppDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         let cloudKitNotification = CKNotification(fromRemoteNotificationDictionary: userInfo as! [String : NSObject])
-        guard let coredataSalonCloudName = Coredata.sharedInstance.iCloudSalonRecordName else {
-            return
+        if cloudKitNotification.notificationType == .Query {
+            NSNotificationCenter.defaultCenter().postNotificationName("cloudKitNotification", object: self, userInfo: userInfo)
         }
-        guard let notificationSalonName = CloudNotificationProcessor.parentSalonName(cloudKitNotification, salonRecordName: <#T##String#>) else {
-            return
-        }
-        guard let coredataSalonCloudName = notificationSalonName else {
-            return
-        }
-        NSNotificationCenter.defaultCenter().postNotificationName("cloudKitNotification", object: self, userInfo: userInfo)
     }
 }
 
