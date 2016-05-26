@@ -30,6 +30,9 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
             let needsImport = self.appointment.bqNeedsCloudImport?.boolValue ?? false
             let completed = self.appointment.completed?.boolValue ?? false
             let cancelled = self.appointment.cancelled?.boolValue ?? false
+            let existsOnServer = self.appointment.bqCloudID ?? ""
+            let isReadyForExport = self.appointment.isReadyForExport()
+            
             let tint:UIColor
             if cancelled || completed {
                 tint = UIColor(red: 0.6, green: 0.0, blue: 0.0, alpha: 1.0)
@@ -49,7 +52,12 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
                 image = UIImage(named: "red-cloud")!
             } else {
                 if hasChanges {
-                    image = UIImage(named: "amber-cloud")!
+                    switch isReadyForExport {
+                    case .Yes:
+                        image = UIImage(named: "amber-cloud")!
+                    default:
+                        image = UIImage(named: "red-cloud")!
+                    }
                 } else if needsExport {
                     image = UIImage(named: "blue-cloud")!
                 } else {
@@ -62,7 +70,11 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
             } else if completed {
                 self.statusLabel.text = "Completed"
             } else {
-                self.statusLabel.text = "Booked"
+                if existsOnServer.isEmpty {
+                    self.statusLabel.text = "Preparing"
+                } else {
+                    self.statusLabel.text = "Booked"
+                }
             }
             
             button.setImage(image, forState: UIControlState.Normal)

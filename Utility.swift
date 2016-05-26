@@ -9,6 +9,12 @@
 import Foundation
 
 // MARK:- Return result enumeration
+
+enum YesOrNoWithReason {
+    case Yes
+    case No(reason:String)
+}
+
 enum Result {
     case success
     case failure(NSError)

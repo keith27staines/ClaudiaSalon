@@ -146,7 +146,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         try! self.moc.save()
         if let indexPath = self.fetchedResultsController.indexPathForObject(appointment) {
             self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Middle)
+            let appointment = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Appointment
+            appointment.sale!.cascadeHasChangesUpdwards()
+            appointment.customer!.cascadeHasChangesUpdwards()
         }
+        self.performSegueWithIdentifier("showDetail", sender: self)
     }
     
     func cancelAppointmentAtIndexPath(indexPath:NSIndexPath) {
@@ -294,15 +298,27 @@ extension MasterViewController {
             
             var alert: UIAlertController!
             if hasChanges {
-                alert = UIAlertController(title: "Synch changes?", message: "Tap 'Synch' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
-                let exportAction = UIAlertAction(title: "Synch", style: .Default) { action in
-                    self.makeAppointmentReadyForExport(appointment)
+                
+                
+                switch appointment.isReadyForExport() {
+                case YesOrNoWithReason.Yes:
+                    alert = UIAlertController(title: "Synch changes?", message: "Tap 'Synch' if you are ready to synch this appointment with the cloud", preferredStyle: .ActionSheet)
+                    let exportAction = UIAlertAction(title: "Synch", style: .Default) { action in
+                        self.makeAppointmentReadyForExport(appointment)
+                    }
+                    let cancelAction = UIAlertAction(title: "Not yet", style: .Cancel) { action in
+                        
+                    }
+                    alert.addAction(cancelAction)
+                    alert.addAction(exportAction)
+                case YesOrNoWithReason.No(let reason):
+                    alert = UIAlertController(title: "Incomplete", message: "This appointment can't be exported because it is missing some information. \(reason)", preferredStyle: .ActionSheet)
+                    let okAction = UIAlertAction(title: "OK", style: .Cancel) { action in
+                        
+                    }
+                    alert.addAction(okAction)
                 }
-                let cancelAction = UIAlertAction(title: "Not yet", style: .Cancel) { action in
-                    
-                }
-                alert.addAction(cancelAction)
-                alert.addAction(exportAction)
+                
             } else if needsExport {
                 alert = UIAlertController(title: "Synching", message: "This appointment's changes are waiting to be synchronized to the cloud", preferredStyle: .ActionSheet)
                 let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -318,6 +334,20 @@ extension MasterViewController {
             self.presentViewController(alert, animated: true, completion: nil)
         }
         
+    }
+}
+extension Appointment {
+
+    func isReadyForExport() -> YesOrNoWithReason {
+        guard let _ = self.customer else { return YesOrNoWithReason.No(reason: "A customer is required") }
+        guard let sale = self.sale else { return YesOrNoWithReason.No(reason: "A sale is required")  }
+        guard let saleItems = sale.saleItem else { return YesOrNoWithReason.Yes }
+        for saleItem in saleItems {
+            guard saleItem.isActive == true else { continue }
+            guard let _ = saleItem.service else { return YesOrNoWithReason.No(reason: "Every sale item requires a service")  }
+            
+        }
+        return YesOrNoWithReason.Yes
     }
 }
 
