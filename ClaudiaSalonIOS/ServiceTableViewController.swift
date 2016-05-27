@@ -93,6 +93,17 @@ extension ServiceTableViewController {
         let isSelectedService = (service.objectID == self.selectedService?.objectID)
         cell.textLabel?.text = name
         cell.detailTextLabel?.text = chargeInfo
+        if let category = service.serviceCategory {
+            if category.isHairCategory() {
+                cell.imageView?.image = UIImage(named: "Scissors")
+            } else if category.isBeautyCategory() {
+                cell.imageView?.image = UIImage(named: "FacePowder")
+            } else {
+                cell.imageView?.image = UIImage(named: "Package")
+            }
+        } else {
+            cell.imageView?.image = UIImage(named: "Scissors")
+        }        
         if isSelectedService {
             cell.accessoryType = .Checkmark
         } else {

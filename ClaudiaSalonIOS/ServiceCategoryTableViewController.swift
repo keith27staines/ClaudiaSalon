@@ -60,10 +60,24 @@ extension ServiceCategoryTableViewController {
         self.configure(cell, indexPath: indexPath)
         return cell
     }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        
+        if let currentSelectedPath = self.tableView.indexPathForSelectedRow {
+            if let selectedCell = tableView.cellForRowAtIndexPath(indexPath) {
+                self.configure(selectedCell, indexPath: currentSelectedPath)
+            }
+        }
+        return indexPath
+    }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let newSelection = self.fetchController.objectAtIndexPath(indexPath) as? ServiceCategory
         if let callback = self.categoryWasSelected, let newSelection = newSelection {
             callback(selectedCategory:newSelection)
+        }
+        if let cell = self.tableView.cellForRowAtIndexPath(indexPath) {
+            self.configure(cell, indexPath: indexPath)
         }
     }
     
@@ -71,6 +85,12 @@ extension ServiceCategoryTableViewController {
         let category = self.fetchController.objectAtIndexPath(indexPath) as! ServiceCategory
         let name = category.name
         cell.textLabel?.text = name
+        cell.imageView?.image = UIImage(named: "FolderClosed")
+        if indexPath == self.tableView.indexPathForSelectedRow {
+            cell.imageView?.image = UIImage(named: "FolderOpen")
+        } else {
+            cell.imageView?.image = UIImage(named: "FolderClosed")
+        }
     }
 }
 
