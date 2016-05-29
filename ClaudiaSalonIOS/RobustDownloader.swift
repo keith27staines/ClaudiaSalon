@@ -687,8 +687,8 @@ class SaleItemImporter : RobustImporter {
     
     private override func handleFetchedPrimaryRecord(record: CKRecord?, error: NSError?) {
         if let record = record {
-            let customerReference = record[serviceKey] as! CKReference
-            self.serviceRecordID = customerReference.recordID
+            let serviceReference = record[serviceKey] as? CKReference
+            self.serviceRecordID = serviceReference?.recordID
             if let employeeReference = record[employeeKey] as? CKReference {
                 self.employeeRecordID = employeeReference.recordID
             }
@@ -702,8 +702,10 @@ class SaleItemImporter : RobustImporter {
             self.employeeImporter = EmployeeImporter(key: employeeKey, moc: moc, cloudDatabase: cloudDatabase, recordID: employeeRecordID, record: nil, successRequired: false, delegate: self)
             self.addChildImporter(employeeKey, importer: employeeImporter!)
         }
-        self.serviceImporter = ServiceImporter(key: serviceKey, moc: moc, cloudDatabase: cloudDatabase, recordID: serviceRecordID, record: nil, successRequired: true, delegate: self)
-        self.addChildImporter(serviceKey, importer: serviceImporter!)
+        if let serviceRecordID = self.serviceRecordID {
+            self.serviceImporter = ServiceImporter(key: serviceKey, moc: moc, cloudDatabase: cloudDatabase, recordID: serviceRecordID, record: nil, successRequired: true, delegate: self)
+            self.addChildImporter(serviceKey, importer: serviceImporter!)
+        }
         self.handleAddingChildImportersCompleted(Result.success)
     }
     
@@ -715,7 +717,7 @@ class SaleItemImporter : RobustImporter {
         print("\(self.recordType) entered writeToCoredata")
         let saleItem = self.createOrUpdatePrimaryCoredataRecord() as! SaleItem
         self.moc.performBlockAndWait() {
-            saleItem.service = (self.serviceImporter!.importData.coredataRecord as! Service)
+            saleItem.service = (self.serviceImporter?.importData.coredataRecord as? Service) // Service not strictly required, hence ?
             saleItem.performedBy = self.employeeImporter?.importData.coredataRecord as? Employee  // Employee is not strictly required, hence ? instead of !
         }
         self.saveCoredataContext()
