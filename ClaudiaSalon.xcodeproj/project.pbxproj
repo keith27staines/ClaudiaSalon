@@ -387,6 +387,7 @@
 		53EBB3CB1C7B194000BBDC46 /* BQCoredataObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */; };
 		53F6B4D11C9AB81900B3F56D /* SelectServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F6B4D01C9AB81900B3F56D /* SelectServiceViewController.swift */; };
 		53FA37361C6503430067136C /* BQCoredataObjectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */; };
+		53FCD5601CFADA8A0005B24A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FCD55F1CFADA8A0005B24A /* GradientView.swift */; };
 		53FDCA3E1C79A591006B4002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA3D1C79A591006B4002 /* AppDelegate.swift */; };
 		53FDCA431C79A591006B4002 /* AppointmentMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA421C79A591006B4002 /* AppointmentMasterViewController.swift */; };
 		53FDCA451C79A591006B4002 /* AppointmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53FDCA441C79A591006B4002 /* AppointmentDetailViewController.swift */; };
@@ -999,6 +1000,7 @@
 		53E2B9901C81CF0700F8F963 /* AppointmentViewCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppointmentViewCellTableViewCell.swift; sourceTree = "<group>"; };
 		53F6B4D01C9AB81900B3F56D /* SelectServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectServiceViewController.swift; sourceTree = "<group>"; };
 		53FA37351C6503430067136C /* BQCoredataObjectExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BQCoredataObjectExtensions.swift; sourceTree = "<group>"; };
+		53FCD55F1CFADA8A0005B24A /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		53FDCA3B1C79A591006B4002 /* ClaudiaSalonIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudiaSalonIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53FDCA3D1C79A591006B4002 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		53FDCA421C79A591006B4002 /* AppointmentMasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentMasterViewController.swift; sourceTree = "<group>"; };
@@ -2533,6 +2535,7 @@
 		53FDCA3C1C79A591006B4002 /* ClaudiaSalonIOS */ = {
 			isa = PBXGroup;
 			children = (
+				53FCD55F1CFADA8A0005B24A /* GradientView.swift */,
 				53FDCA461C79A591006B4002 /* Main.storyboard */,
 				539FBED91CB90404006F9717 /* MenuTableViewController.swift */,
 				53FDCA891C7A7B47006B4002 /* Models */,
@@ -3225,6 +3228,7 @@
 				53FDCA6A1C7A0D3D006B4002 /* Employee.m in Sources */,
 				5358DD431C8C9338009DD63E /* IntervalDuringDay.m in Sources */,
 				53FDCA641C7A06DA006B4002 /* Sale.m in Sources */,
+				53FCD5601CFADA8A0005B24A /* GradientView.swift in Sources */,
 				539FBEDA1CB90404006F9717 /* MenuTableViewController.swift in Sources */,
 				53FDCA581C79AF4D006B4002 /* CoreData.swift in Sources */,
 				533FC0711CA6DB210074BDF0 /* CloudNotificationProcessor.swift in Sources */,

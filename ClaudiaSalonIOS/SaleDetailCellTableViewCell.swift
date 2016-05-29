@@ -20,6 +20,7 @@ class SaleDetailCellTableViewCell: UITableViewCell {
     var serviceInfoBlock:((cell:SaleDetailCellTableViewCell)->Void)?
     var employeeInfoBlock:((cell:SaleDetailCellTableViewCell)->Void)?
     
+    @IBOutlet weak var serviceCategoryIcon: UIImageView!
     @IBOutlet weak var employeeNameLabel: UILabel!
     @IBOutlet weak var serviceNameLabel: UILabel!
     
@@ -60,6 +61,10 @@ class SaleDetailCellTableViewCell: UITableViewCell {
         }
     }
     
+    override func didMoveToSuperview() {
+        self.contentView.backgroundColor = UIColor.whiteColor()
+    }
+    
     func updateSaleItem() {
         let saleItem = self.saleItem!
         saleItem.nominalCharge = self.beforeDiscount
@@ -79,11 +84,24 @@ class SaleDetailCellTableViewCell: UITableViewCell {
         self.discountValue = self.saleItem?.discountValue
         let min = self.saleItem?.minimumCharge
         let max = self.saleItem?.maximumCharge
-        let serviceName = self.saleItem?.service?.name ?? "Unknown service"
         let employeeName = self.saleItem?.performedBy?.fullName()
         
         let hideSlider = max?.doubleValue == min?.doubleValue
-        self.serviceNameLabel.text = serviceName
+        if let serviceName = self.saleItem?.service?.name {
+            self.serviceNameLabel.text = serviceName
+            if let category = self.saleItem?.service?.serviceCategory {
+                if category.isHairCategory() {
+                    self.serviceCategoryIcon.image = UIImage(named: "Scissors")
+                } else if category.isBeautyCategory() {
+                    self.serviceCategoryIcon.image = UIImage(named: "FacePowder")
+                } else {
+                    self.serviceCategoryIcon.image = UIImage(named: "Package")
+                }
+            }
+        } else {
+            self.serviceNameLabel.text = "Service must be specified!"
+            self.serviceCategoryIcon.image = UIImage(named: "CircledQuestionmark")
+        }
         if employeeName == nil {
             self.employeeNameLabel.text = "No stylist assigned for this service"
         } else {
