@@ -28,7 +28,6 @@
 @dynamic completionType;
 @dynamic createdDate;
 @dynamic lastUpdatedDate;
-@dynamic bqNeedsCloudImport;
 @dynamic customer;
 @dynamic notes;
 @dynamic sale;

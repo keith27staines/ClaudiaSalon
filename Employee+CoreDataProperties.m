@@ -38,7 +38,6 @@
 @dynamic postcode;
 @dynamic startingDate;
 @dynamic uid;
-@dynamic bqNeedsCloudImport;
 @dynamic canDo;
 @dynamic holidays;
 @dynamic manages;

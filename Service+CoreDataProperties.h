@@ -31,7 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *nominalCharge;
 @property (nullable, nonatomic, retain) NSNumber *priceNegotiable;
 @property (nullable, nonatomic, retain) NSNumber *selectable;
-@property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
 @property (nullable, nonatomic, retain) NSSet<Employee *> *canBeDoneBy;
 @property (nullable, nonatomic, retain) NSSet<Note *> *notes;
 @property (nullable, nonatomic, retain) NSSet<Product *> *product;

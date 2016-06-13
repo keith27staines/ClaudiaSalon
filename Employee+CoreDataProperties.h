@@ -40,7 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *postcode;
 @property (nullable, nonatomic, retain) NSDate *startingDate;
 @property (nullable, nonatomic, retain) NSString *uid;
-@property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
 @property (nullable, nonatomic, retain) NSSet<Service *> *canDo;
 @property (nullable, nonatomic, retain) NSSet<Holiday *> *holidays;
 @property (nullable, nonatomic, retain) Salon *manages;

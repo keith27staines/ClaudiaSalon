@@ -183,7 +183,6 @@ extension Customer {
         self.managedObjectContext?.performBlockAndWait() {
             self.setBQDataFromRecord(record)
             self.bqNeedsCoreDataExport = NSNumber(bool: false)
-            self.bqNeedsCloudImport = NSNumber(bool: false)
             self.firstName = record["firstName"] as? String
             self.lastName = record["lastName"] as? String
             self.phone = record["phone"] as? String

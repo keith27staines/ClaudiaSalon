@@ -537,7 +537,6 @@ extension BQFirstExtractController {
         bqExportable.bqCloudID = ""
         bqExportable.bqMetadata = nil
         bqExportable.bqHasClientChanges = false
-        bqExportable.bqNeedsCloudImport = false
         bqExportable.bqNeedsCoreDataExport = false
     }
     private func markAllRecordsAsExported() {
@@ -545,7 +544,6 @@ extension BQFirstExtractController {
             for array in self .bqExportableArrays() {
                 for exportable in array {
                     exportable.bqNeedsCoreDataExport = false
-                    exportable.bqNeedsCloudImport = false
                     exportable.bqHasClientChanges = false
                 }
             }

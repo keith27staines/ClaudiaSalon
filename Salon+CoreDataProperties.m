@@ -29,7 +29,6 @@
 @dynamic salonName;
 @dynamic serviceEmail;
 @dynamic startOfAccountingYear;
-@dynamic bqNeedsCloudImport;
 @dynamic accountantRole;
 @dynamic anonymousCustomer;
 @dynamic basicUserRole;

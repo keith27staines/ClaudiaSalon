@@ -27,7 +27,6 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
             let formatter = AppointmentFormatter(appointment: self.appointment!)
             let hasChanges = self.appointment.bqHasClientChanges?.boolValue ?? false
             let needsExport = self.appointment.bqNeedsCoreDataExport?.boolValue ?? false
-            let needsImport = self.appointment.bqNeedsCloudImport?.boolValue ?? false
             let completed = self.appointment.completed?.boolValue ?? false
             let cancelled = self.appointment.cancelled?.boolValue ?? false
             let existsOnServer = self.appointment.bqCloudID ?? ""
@@ -48,23 +47,19 @@ class AppointmentViewCellTableViewCell: UITableViewCell {
             let button = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
             var image:UIImage
             
-            if needsImport {
-                image = UIImage(named: "red-cloud")!
-            } else {
-                if hasChanges {
-                    switch isReadyForExport {
-                    case .Yes:
-                        image = UIImage(named: "amber-cloud")!
-                    default:
-                        image = UIImage(named: "red-cloud")!
-                    }
-                } else if needsExport {
-                    image = UIImage(named: "blue-cloud")!
-                } else {
-                    image = UIImage(named: "green-cloud")!
+            if hasChanges {
+                switch isReadyForExport {
+                case .Yes:
+                    image = UIImage(named: "amber-cloud")!
+                default:
+                    image = UIImage(named: "red-cloud")!
                 }
+            } else if needsExport {
+                image = UIImage(named: "blue-cloud")!
+            } else {
+                image = UIImage(named: "green-cloud")!
             }
-            
+        
             if cancelled {
                 self.statusLabel.text = "Cancelled"
             } else if completed {

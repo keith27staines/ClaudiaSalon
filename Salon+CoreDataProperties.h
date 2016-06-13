@@ -31,7 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *salonName;
 @property (nullable, nonatomic, retain) NSString *serviceEmail;
 @property (nullable, nonatomic, retain) NSDate *startOfAccountingYear;
-@property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
 @property (nullable, nonatomic, retain) Role *accountantRole;
 @property (nullable, nonatomic, retain) Customer *anonymousCustomer;
 @property (nullable, nonatomic, retain) Role *basicUserRole;

@@ -25,7 +25,6 @@
 @dynamic lastUpdatedDate;
 @dynamic name;
 @dynamic selectable;
-@dynamic bqNeedsCloudImport;
 @dynamic notes;
 @dynamic parent;
 @dynamic rootCategoryOfSalon;

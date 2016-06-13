@@ -31,7 +31,6 @@
 @dynamic lastUpdatedDate;
 @dynamic nominalCharge;
 @dynamic voided;
-@dynamic bqNeedsCloudImport;
 @dynamic account;
 @dynamic advancePayment;
 @dynamic customer;

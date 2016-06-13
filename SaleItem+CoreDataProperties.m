@@ -26,7 +26,6 @@
 @dynamic maximumCharge;
 @dynamic minimumCharge;
 @dynamic nominalCharge;
-@dynamic bqNeedsCloudImport;
 @dynamic isActive;
 @dynamic notes;
 @dynamic performedBy;

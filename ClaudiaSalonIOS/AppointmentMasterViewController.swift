@@ -234,7 +234,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             if let saleItems = appointment.sale?.saleItem {
                 for saleItem in saleItems {
                     saleItem.bqHasClientChanges = false
-                    saleItem.bqNeedsCloudImport = false
                     saleItem.bqNeedsCoreDataExport = true
                 }
             }

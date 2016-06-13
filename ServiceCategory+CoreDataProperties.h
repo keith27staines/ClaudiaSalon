@@ -27,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSDate *lastUpdatedDate;
 @property (nullable, nonatomic, retain) NSString *name;
 @property (nullable, nonatomic, retain) NSNumber *selectable;
-@property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
 @property (nullable, nonatomic, retain) NSSet<Note *> *notes;
 @property (nullable, nonatomic, retain) ServiceCategory *parent;
 @property (nullable, nonatomic, retain) Salon *rootCategoryOfSalon;

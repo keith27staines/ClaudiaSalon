@@ -29,7 +29,6 @@
 @dynamic nominalCharge;
 @dynamic priceNegotiable;
 @dynamic selectable;
-@dynamic bqNeedsCloudImport;
 @dynamic canBeDoneBy;
 @dynamic notes;
 @dynamic product;

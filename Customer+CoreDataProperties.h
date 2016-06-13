@@ -37,7 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *saleType;
 @property (nullable, nonatomic, retain) NSString *title;
 @property (nullable, nonatomic, retain) NSString *uid;
-@property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
 @property (nullable, nonatomic, retain) Salon *anonymousCustomerForSalon;
 @property (nullable, nonatomic, retain) NSSet<Appointment *> *appointments;
 @property (nullable, nonatomic, retain) NSSet<Note *> *notes;

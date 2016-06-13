@@ -472,7 +472,6 @@ class BQCloudImporter : NSObject {
                 }
             }
             if result == true {
-                bqExportable?.bqNeedsCloudImport = false
                 bqExportable?.bqNeedsCoreDataExport = false
                 bqExportable?.bqHasClientChanges = false
             }

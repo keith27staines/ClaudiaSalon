@@ -33,7 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSDate *lastUpdatedDate;
 @property (nullable, nonatomic, retain) NSNumber *nominalCharge;
 @property (nullable, nonatomic, retain) NSNumber *voided;
-@property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
 @property (nullable, nonatomic, retain) Account *account;
 @property (nullable, nonatomic, retain) Payment *advancePayment;
 @property (nullable, nonatomic, retain) Customer *customer;

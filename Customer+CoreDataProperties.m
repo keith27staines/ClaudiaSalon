@@ -35,7 +35,6 @@
 @dynamic saleType;
 @dynamic title;
 @dynamic uid;
-@dynamic bqNeedsCloudImport;
 @dynamic anonymousCustomerForSalon;
 @dynamic appointments;
 @dynamic notes;

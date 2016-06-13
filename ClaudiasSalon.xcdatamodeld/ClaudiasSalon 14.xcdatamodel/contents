@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G12a" minimumToolsVersion="Automatic">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="accountNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bankName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCoreDataExport" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="csvAmountColumn" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
         <attribute name="csvDateColumn" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
         <attribute name="csvFeeColumn" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
@@ -13,6 +17,8 @@
         <attribute name="csvStatusExclude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="csvStatusInclude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="friendlyName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="lastupdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="sortCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="transactionFeePercentageIncoming" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="transactionFeePercentageOutgoing" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -40,6 +46,12 @@
     </entity>
     <entity name="AccountReconciliation" representedClassName="AccountReconciliation" syncable="YES">
         <attribute name="actualBalance" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="reconciliationDate" attributeType="Date" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="reconciliations" inverseEntity="Account" syncable="YES"/>
     </entity>
@@ -50,7 +62,6 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="cancellationNote" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cancellationType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -91,7 +102,6 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dayOfBirth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -121,7 +131,6 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dayOfBirth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -205,9 +214,14 @@
     <entity name="Payment" representedClassName="Payment" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="amountNet" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="direction" attributeType="String" defaultValueString="OUT" syncable="YES"/>
         <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="isManagersBudgetItem" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isManagersBudgetStatusManuallyChanged" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
@@ -231,9 +245,14 @@
         <relationship name="workRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkRecord" inverseName="wages" inverseEntity="WorkRecord" syncable="YES"/>
     </entity>
     <entity name="PaymentCategory" representedClassName="PaymentCategory" syncable="YES">
+        <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="categoryName" optional="YES" attributeType="String" defaultValueString="New category" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="fullDescription" optional="YES" attributeType="String" defaultValueString="Description" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="isDefault" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isDirectorsLoan" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isManagersBudgetItem" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -241,6 +260,7 @@
         <attribute name="isSale" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isStartupCost" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isTransferBetweenAccounts" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="lastUpdatedDate" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="defaultCategoryForMoneyTransfers" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="defaultPaymentCategoryForMoneyTransfers" inverseEntity="Salon" syncable="YES"/>
         <relationship name="defaultCategoryForPayments" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="defaultPaymentCategoryForPayments" inverseEntity="Salon" syncable="YES"/>
         <relationship name="defaultCategoryForSales" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Salon" inverseName="defaultPaymentCategoryForSales" inverseEntity="Salon" syncable="YES"/>
@@ -308,7 +328,6 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="changeGiven" attributeType="Double" minValueString="0" defaultValueString="0.0" syncable="YES"/>
         <attribute name="chargeAfterIndividualDiscounts" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -335,7 +354,6 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="discountType" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -358,7 +376,6 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="firstDayOfTrading" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="firstDayOfWeek" attributeType="Integer 32" defaultValueString="1" syncable="YES"/>
@@ -399,7 +416,6 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="deluxe" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -423,7 +439,6 @@
         <attribute name="bqCloudID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bqHasClientChanges" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqMetadata" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="bqNeedsCloudImport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="bqNeedsCoreDataExport" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="hidden" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -509,33 +524,33 @@
         <relationship name="workRecordTemplateForEmployee" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Employee" inverseName="workRecordTemplate" inverseEntity="Employee" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="0" positionY="0" width="128" height="360"/>
+        <element name="Account" positionX="0" positionY="0" width="128" height="450"/>
         <element name="AccountingPaymentGroup" positionX="0" positionY="0" width="128" height="240"/>
-        <element name="AccountReconciliation" positionX="0" positionY="0" width="128" height="90"/>
-        <element name="Appointment" positionX="0" positionY="0" width="128" height="330"/>
+        <element name="AccountReconciliation" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="Appointment" positionX="0" positionY="0" width="128" height="315"/>
         <element name="BQExportDeletionRequest" positionX="9" positionY="153" width="128" height="165"/>
         <element name="BusinessFunction" positionX="0" positionY="0" width="128" height="105"/>
         <element name="CalendarDay" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="Customer" positionX="0" positionY="0" width="128" height="450"/>
-        <element name="Employee" positionX="0" positionY="0" width="128" height="585"/>
+        <element name="Customer" positionX="0" positionY="0" width="128" height="435"/>
+        <element name="Employee" positionX="0" positionY="0" width="128" height="570"/>
         <element name="Holiday" positionX="0" positionY="0" width="128" height="135"/>
         <element name="IntervalDuringDay" positionX="0" positionY="0" width="128" height="120"/>
         <element name="LastUpdatedBy" positionX="0" positionY="0" width="128" height="105"/>
         <element name="Note" positionX="0" positionY="0" width="128" height="330"/>
         <element name="OpeningHoursDayTemplate" positionX="0" positionY="0" width="128" height="90"/>
         <element name="OpeningHoursWeekTemplate" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="Payment" positionX="0" positionY="0" width="128" height="435"/>
-        <element name="PaymentCategory" positionX="0" positionY="0" width="128" height="300"/>
+        <element name="Payment" positionX="0" positionY="0" width="128" height="510"/>
+        <element name="PaymentCategory" positionX="0" positionY="0" width="128" height="390"/>
         <element name="Permission" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Product" positionX="0" positionY="0" width="128" height="165"/>
         <element name="RecurringItem" positionX="0" positionY="0" width="128" height="180"/>
         <element name="Role" positionX="0" positionY="0" width="128" height="225"/>
         <element name="Salary" positionX="0" positionY="0" width="128" height="180"/>
-        <element name="Sale" positionX="0" positionY="0" width="128" height="435"/>
-        <element name="SaleItem" positionX="0" positionY="0" width="128" height="345"/>
-        <element name="Salon" positionX="0" positionY="0" width="128" height="660"/>
-        <element name="Service" positionX="0" positionY="0" width="128" height="375"/>
-        <element name="ServiceCategory" positionX="0" positionY="0" width="128" height="330"/>
+        <element name="Sale" positionX="0" positionY="0" width="128" height="420"/>
+        <element name="SaleItem" positionX="0" positionY="0" width="128" height="330"/>
+        <element name="Salon" positionX="0" positionY="0" width="128" height="645"/>
+        <element name="Service" positionX="0" positionY="0" width="128" height="360"/>
+        <element name="ServiceCategory" positionX="0" positionY="0" width="128" height="315"/>
         <element name="ShoppingList" positionX="0" positionY="0" width="128" height="120"/>
         <element name="ShoppingListItem" positionX="0" positionY="0" width="128" height="105"/>
         <element name="StockedBrand" positionX="0" positionY="0" width="128" height="120"/>

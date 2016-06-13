@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *bookedDuration;
 @property (nullable, nonatomic, retain) NSString *bqCloudID;
 @property (nullable, nonatomic, retain) NSNumber *bqHasClientChanges;
-@property (nullable, nonatomic, retain) NSData *bqMetadata;
+@property (nullable, nonatomic, retain) NSData   *bqMetadata;
 @property (nullable, nonatomic, retain) NSNumber *bqNeedsCoreDataExport;
 @property (nullable, nonatomic, retain) NSString *cancellationNote;
 @property (nullable, nonatomic, retain) NSNumber *cancellationType;
@@ -28,9 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *completed;
 @property (nullable, nonatomic, retain) NSString *completionNote;
 @property (nullable, nonatomic, retain) NSNumber *completionType;
-@property (nullable, nonatomic, retain) NSDate *createdDate;
-@property (nullable, nonatomic, retain) NSDate *lastUpdatedDate;
-@property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
+@property (nullable, nonatomic, retain) NSDate   *createdDate;
+@property (nullable, nonatomic, retain) NSDate   *lastUpdatedDate;
 @property (nullable, nonatomic, retain) Customer *customer;
 @property (nullable, nonatomic, retain) NSSet<Note *> *notes;
 @property (nullable, nonatomic, retain) Sale *sale;

@@ -28,7 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *maximumCharge;
 @property (nullable, nonatomic, retain) NSNumber *minimumCharge;
 @property (nullable, nonatomic, retain) NSNumber *nominalCharge;
-@property (nullable, nonatomic, retain) NSNumber *bqNeedsCloudImport;
 @property (nullable, nonatomic, retain) NSNumber *isActive;
 @property (nullable, nonatomic, retain) NSSet<Note *> *notes;
 @property (nullable, nonatomic, retain) Employee *performedBy;
