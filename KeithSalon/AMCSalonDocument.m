@@ -56,6 +56,7 @@
 #import "Customer.h"
 #import "Appointment.h"
 #import "Account.h"
+#import "Payment.h"
 // End imports for data fixes
 
 static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
@@ -186,6 +187,28 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
                 appointment.customer = appointment.sale.customer;
             } else {
                 appointment.sale.customer = appointment.customer;
+            }
+        }
+    }
+    
+    // Begin fix for payments associated with sales that have suffered reversion to quote state
+    
+    for (Sale * sale in [Sale allObjectsWithMoc:self.managedObjectContext]) {
+        if (sale.isQuote.boolValue && sale.hidden.boolValue == false && !sale.voided.boolValue) {
+            NSSet<Payment*> * payments = sale.payments;
+            NSInteger paymentCount = payments.count;
+            if (payments.count == 0) {
+                NSLog(@"Sale in quote state but has no payments");
+                continue;
+            } else {
+                NSLog(@"Sale has %li payment(s) but is in quote state - amount outstanding is/: %f",(long)paymentCount,sale.amountOutstanding);
+                for (Payment * payment in payments) {
+                    if (payment.amount.doubleValue == 0.0) {
+                        [self.managedObjectContext deleteObject:payment];
+                    }
+                }
+                sale.isQuote = @NO;
+                [Sale markSaleForExportInMoc:self.managedObjectContext saleID:sale.objectID];
             }
         }
     }

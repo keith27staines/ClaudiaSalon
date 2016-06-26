@@ -177,10 +177,21 @@
 }
 -(NSArray*)paymentsBetween:(NSDate*)startDate endDate:(NSDate*)endDate {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    
+//    NSDateFormatter * df = [[NSDateFormatter alloc] init];
+//    df.dateFormat = @"dd/MM/yyyy, HH:mm";
+//    
+//    NSDate * start17 = [df dateFromString:@"18/06/2016, 00:00"];
+//    NSDate * end17 = [df dateFromString:@"18/06/2016, 23:00"];
+    
+    
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Payment" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
+    
     // Specify criteria for filtering which objects to fetch
+    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account = %@ and paymentDate >= %@ and paymentDate <= %@ and voided = %@", self,startDate,endDate,@NO];
+    
     [fetchRequest setPredicate:predicate];
     // Specify how the fetched objects should be sorted
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"paymentDate"

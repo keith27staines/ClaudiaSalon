@@ -191,17 +191,19 @@ class RobustImporter : RobustImporterDelegate {
     }
     
     func importDidProgressState(importer: RobustImporter) {
-        print("\(self.recordType) entered importDidProgressState")
-        // If our child imports are all downloaded, then we are downloaded. If any one of them hasn't downloaded, then neither are we
-        if  self.isReadyForAllRequiredDataDownloadedState() {
-            self.changeState(.AllRequiredDataDownloaded)
-            return
-        }
-        
-        // If our child imports are all downloaded, then we are downloaded. If any one of them hasn't downloaded, then neither are we
-        if self.isReadyForSuccessfulCompletetion() {
-            self.changeState(.Complete)
-            return
+        self.synchQueue.addOperationWithBlock() {
+            print("\(self.recordType) entered importDidProgressState")
+            // If our child imports are all downloaded, then we are downloaded. If any one of them hasn't downloaded, then neither are we
+            if  self.isReadyForAllRequiredDataDownloadedState() {
+                self.unsafeChangeState(ImportState.AllRequiredDataDownloaded)
+                return
+            }
+            
+            // If our child imports are all downloaded, then we are downloaded. If any one of them hasn't downloaded, then neither are we
+            if self.isReadyForSuccessfulCompletetion() {
+                self.unsafeChangeState(.Complete)
+                return
+            }
         }
     }
 
@@ -333,54 +335,57 @@ extension RobustImporter {
 
 // MARK:- State machine
 extension RobustImporter {
-    private func changeState(nextState:ImportState) {
+    private func unsafeChangeState(nextState:ImportState) {
         let recordType = self.recordType
         let currentState = self.state()
         print("\(recordType) is changing state from \(currentState) to \(nextState)")
-        self.synchQueue.addOperationWithBlock() {
-
-            let currentState = self.importData.state
-            self.ensureStateTransitionIsValid(currentState, nextState: nextState)
-
-            self.importData.state = nextState
-            self.delegate?.importDidProgressState(self)
+        
+        self.ensureStateTransitionIsValid(currentState, nextState: nextState)
+        
+        self.importData.state = nextState
+        self.delegate?.importDidProgressState(self)
+        
+        switch nextState {
+        case .InPreparation: break
             
-            switch nextState {
-            case .InPreparation: break
-                
-            case .DownloadingRecord:
-                if self.importData.cloudRecord == nil {
-                    self.cloudDatabase.fetchRecordWithID(self.recordID, completionHandler: self.handleFetchedPrimaryRecord)
-                }
-            case .DownloadedRecord:
-                self.changeState(ImportState.AddingChildImporters)
-            case .AddingChildImporters:
-                self.startAddingChildImporters()
-            case .AddedChildImporters:
-                self.changeState(ImportState.DownloadingChildRecords)
-            case .DownloadingChildRecords:
-                self.startChildRecordImporters()
-            case .AllRequiredDataDownloaded:
-                self.changeState(ImportState.WritingToCoredata)
-            case .WritingToCoredata:
-                self.writeToCoredata()
-            case .Complete:
-                break
-            case ImportState.FailedToDownloadRecord(let error):
-                self.importData.error = error
-                self.delegate.importDidFail(self)
-            case ImportState.FailedToAddChildImporters(let error):
-                self.importData.error = error
-                self.delegate.importDidFail(self)
-            case ImportState.FailedToDownloadRequiredChild(let error):
-                self.importData.error = error
-                self.delegate.importDidFail(self)
-            case ImportState.FailedToWriteToCoredata(let error):
-                self.importData.error = error
-                self.delegate.importDidFail(self)
-            case ImportState.InvalidState: break
-                self.delegate.importDidFail(self)
+        case .DownloadingRecord:
+            if self.importData.cloudRecord == nil {
+                self.cloudDatabase.fetchRecordWithID(self.recordID, completionHandler: self.handleFetchedPrimaryRecord)
             }
+        case .DownloadedRecord:
+            self.changeState(ImportState.AddingChildImporters)
+        case .AddingChildImporters:
+            self.startAddingChildImporters()
+        case .AddedChildImporters:
+            self.changeState(ImportState.DownloadingChildRecords)
+        case .DownloadingChildRecords:
+            self.startChildRecordImporters()
+        case .AllRequiredDataDownloaded:
+            self.changeState(ImportState.WritingToCoredata)
+        case .WritingToCoredata:
+            self.writeToCoredata()
+        case .Complete:
+            break
+        case ImportState.FailedToDownloadRecord(let error):
+            self.importData.error = error
+            self.delegate.importDidFail(self)
+        case ImportState.FailedToAddChildImporters(let error):
+            self.importData.error = error
+            self.delegate.importDidFail(self)
+        case ImportState.FailedToDownloadRequiredChild(let error):
+            self.importData.error = error
+            self.delegate.importDidFail(self)
+        case ImportState.FailedToWriteToCoredata(let error):
+            self.importData.error = error
+            self.delegate.importDidFail(self)
+        case ImportState.InvalidState:
+            self.delegate.importDidFail(self)
+        }
+    }
+    
+    private func changeState(nextState:ImportState) {
+        self.synchQueue.addOperationWithBlock() {
+            self.unsafeChangeState(nextState)
         }
     }
     

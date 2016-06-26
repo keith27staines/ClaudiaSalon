@@ -44,6 +44,38 @@
     array = [moc executeFetchRequest:fetch error:nil];
     return array;
 }
+
++(void)markSaleForExportInMoc:(NSManagedObjectContext*)parentMoc saleID:(NSManagedObjectID*)saleID {
+    NSManagedObjectContext * privateMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    privateMoc.parentContext = parentMoc;
+    [privateMoc performBlockAndWait:^{
+        Sale * sale = [privateMoc objectWithID:saleID];
+        Appointment * appointment = sale.fromAppointment;
+        if (appointment) {
+            NSDate * rightNow = [NSDate date];
+            if (appointment.customer != sale.customer) {
+                appointment.customer = sale.customer;
+                appointment.customer.bqNeedsCoreDataExport = @YES;
+                appointment.customer.lastUpdatedDate = rightNow;
+                appointment.lastUpdatedDate = rightNow;
+                appointment.bqNeedsCoreDataExport = @YES;
+            }
+            sale.lastUpdatedDate = rightNow;
+            sale.bqNeedsCoreDataExport = @YES;
+            for (SaleItem * saleItem in sale.saleItem) {
+                saleItem.lastUpdatedDate = rightNow;
+                saleItem.bqNeedsCoreDataExport = @YES;
+            }
+            
+            NSError * error;
+            [privateMoc save:(&error)];
+            if (error) {
+                NSAssert(@"Error while marking appointment for export: %@",error.description);
+            }
+        }
+    }];
+}
+
 +(NSArray*)salesBetweenStartDate:(NSDate*)startDate endDate:(NSDate*)endDate withMoc:(NSManagedObjectContext*)moc{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Sale" inManagedObjectContext:moc];

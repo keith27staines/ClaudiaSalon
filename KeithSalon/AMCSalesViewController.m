@@ -155,7 +155,17 @@
     self.quickQuoteViewController.sale = [self selectedSale];
     [self.quickQuoteViewController prepareForDisplayWithSalon:self.salonDocument];
     
-    [self presentViewController:self.quickQuoteViewController asPopoverRelativeToRect:amountRect ofView:self.salesTable preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorSemitransient];
+    [self presentViewController:self.quickQuoteViewController asPopoverRelativeToRect:amountRect ofView:self.salesTable preferredEdge:NSMinYEdge behavior:NSPopoverBehaviorApplicationDefined];
+}
+-(void)dismissViewController:(NSViewController *)viewController {
+    [super dismissViewController:viewController];
+    if (viewController == self.quickQuoteViewController) {
+        Sale * sale = self.quickQuoteViewController.sale;
+        if (sale.bqNeedsCoreDataExport) {
+            [Sale markSaleForExportInMoc:self.documentMoc saleID:sale.objectID];
+            [self configureForSelectedSale];
+        }
+    }
 }
 #pragma mark - Action: Show customer details
 - (IBAction)rightClickShowCustomerDetails:(id)sender {
@@ -246,6 +256,8 @@
 }
 -(void)editObjectViewController:(EditObjectViewController *)controller didEditObject:(id)object {
     if (controller == self.editSaleViewController) {
+        Sale * sale = object;
+        [Sale markSaleForExportInMoc:self.documentMoc saleID:sale.objectID];
         self.previouslySelectedSale = object;
         [self saleEditOperationComplete];
     }
