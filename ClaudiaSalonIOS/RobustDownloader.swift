@@ -216,13 +216,18 @@ class RobustImporter : RobustImporterDelegate {
         print("\(self.recordType) entered createOrUpdatePrimaryCoredataRecord")
         var bqExportable:BQExportable!
         self.moc.performBlockAndWait() {
-            let recordName = self.importData.cloudRecord!.recordID.recordName
+            guard let cloudRecord = self.importData.cloudRecord else { fatalError("The import data was expercted to contain a cloud record") }
+            let recordName = cloudRecord.recordID.recordName
             let BQType = classTypeForRecordType(self.recordType)
             bqExportable = BQType.fetchBQExportable(recordName, moc: self.moc)
             if bqExportable == nil {
                 bqExportable = BQType.newExportableWithMoc(self.moc)
             }
-            bqExportable.updateFromCloudRecord(self.importData.cloudRecord!)
+            let cloudRecordChangeTag = cloudRecord.recordChangeTag
+            let coredataRecordChangeTag = bqExportable.recordChangeTag()
+            if cloudRecordChangeTag != coredataRecordChangeTag {
+                bqExportable.updateFromCloudRecord(cloudRecord)
+            }
             self.importData.coredataRecord = (bqExportable as! NSManagedObject)
         }
         return bqExportable

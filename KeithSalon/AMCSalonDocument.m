@@ -198,7 +198,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
             NSSet<Payment*> * payments = sale.payments;
             NSInteger paymentCount = payments.count;
             if (payments.count == 0) {
-                NSLog(@"Sale in quote state but has no payments");
+                // Sale in quote state but has no payments. This is a legitimate state so we do nothing
                 continue;
             } else {
                 NSLog(@"Sale has %li payment(s) but is in quote state - amount outstanding is/: %f",(long)paymentCount,sale.amountOutstanding);

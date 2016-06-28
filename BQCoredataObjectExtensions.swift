@@ -26,6 +26,10 @@ protocol BQExportable: class {
 }
 
 extension BQExportable {
+    func recordChangeTag() -> String? {
+        guard let cloudRecord = self.cloudRecordFromMetadata() else { return nil }
+        return cloudRecord.recordChangeTag
+    }
     func setBQDataFromRecord(record:CKRecord) {
         self.managedObjectContext!.performBlockAndWait() {
             self.bqCloudID = record.recordID.recordName

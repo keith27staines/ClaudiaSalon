@@ -162,7 +162,7 @@
     if (viewController == self.quickQuoteViewController) {
         Sale * sale = self.quickQuoteViewController.sale;
         if (sale.bqNeedsCoreDataExport) {
-            [Sale markSaleForExportInMoc:self.documentMoc saleID:sale.objectID];
+            [self saleWasEdited:sale];
             [self configureForSelectedSale];
         }
     }
@@ -256,10 +256,20 @@
 }
 -(void)editObjectViewController:(EditObjectViewController *)controller didEditObject:(id)object {
     if (controller == self.editSaleViewController) {
-        Sale * sale = object;
-        [Sale markSaleForExportInMoc:self.documentMoc saleID:sale.objectID];
-        self.previouslySelectedSale = object;
+        Sale * sale = (Sale*)object;
+        [self saleWasEdited:sale];
+        self.previouslySelectedSale = sale;
         [self saleEditOperationComplete];
+    }
+}
+
+-(void)saleWasEdited:(Sale*)sale {
+    sale.bqHasClientChanges = @YES;
+    Appointment * fromAppointment = sale.fromAppointment;
+    if (fromAppointment) {
+        [Appointment markAppointmentForExportInMoc:self.documentMoc appointmentID:fromAppointment.objectID];
+    } else {
+        [Sale markSaleForExportInMoc:self.documentMoc saleID:sale.objectID];
     }
 }
 
@@ -336,6 +346,7 @@
     [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse response) {
         if (response == NSAlertFirstButtonReturn) {
             sale.voided = @(YES);
+            [self saleWasEdited:sale];
             [self.salesTable reloadData];
         }
     }];
@@ -356,10 +367,12 @@
             sale.fromAppointment.completed = @(NO);
             sale.fromAppointment.completionNote = @"";
             sale.fromAppointment.completionType = AMCompletionTypeNotCompleted;
+            [self saleWasEdited:sale];
             [self.salesTable reloadData];
         }
         if (response == NSAlertSecondButtonReturn) {
             sale.voided = @(YES);
+            [self saleWasEdited:sale];
             [self.salesTable reloadData];
         }
     }];
