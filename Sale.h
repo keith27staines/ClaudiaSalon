@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(double)amountPaidNet;
 -(double)amountOutstanding;
 -(double)amountAdvanced;
+-(void)reopenAppointment;
 -(BOOL)isVoidable;
 -(void)convertToDiscountVersion2;
 -(NSArray*)activeSaleItems;

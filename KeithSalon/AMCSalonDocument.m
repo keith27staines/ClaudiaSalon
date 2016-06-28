@@ -207,8 +207,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
                         [self.managedObjectContext deleteObject:payment];
                     }
                 }
-                sale.isQuote = @NO;
-                [Sale markSaleForExportInMoc:self.managedObjectContext saleID:sale.objectID];
+                if (sale.amountOutstanding < 0.10) {
+                    sale.isQuote = @NO;
+                    [Sale markSaleForExportInMoc:self.managedObjectContext saleID:sale.objectID];                    
+                }
             }
         }
     }

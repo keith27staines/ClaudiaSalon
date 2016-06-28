@@ -225,7 +225,7 @@
     Sale * sale = [self sale];
     [self.paymentCompleteButton setEnabled:NO];
     double d = self.amountGivenByCustomer.doubleValue;
-    if (d >= sale.actualCharge.doubleValue) {
+    if (d >= sale.amountOutstanding) {
         [self.paymentCompleteButton setEnabled:YES];
         [self.paymentCompleteButton.window setDefaultButtonCell:self.paymentCompleteButton.cell];
     } else {

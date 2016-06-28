@@ -131,6 +131,20 @@
     }
     return YES;
 }
+-(void)reopenAppointment {
+    self.hidden = @(YES);
+    self.isQuote = @(YES);
+    self.amountGivenByCustomer = @(0);
+    self.changeGiven = @(0);
+    self.fromAppointment.completed = @(NO);
+    self.fromAppointment.completionNote = @"";
+    self.fromAppointment.completionType = AMCompletionTypeNotCompleted;
+    for (Payment * payment in self.payments) {
+        if (payment != self.advancePayment) {
+            payment.voided = @YES;
+        }
+    }
+}
 -(void)setVoided:(NSNumber *)voided {
     NSString * voidedKey = @"voided";
     if ([voided isEqualToNumber:[self primitiveValueForKey:voidedKey]]) {

@@ -10,6 +10,7 @@
 #import "Sale.h"
 #import "Appointment.h"
 #import "Customer.h"
+#import "Payment.h"
 #import "AMCSalonDocument.h"
 #import "Account.h"
 #import "AMCCancelAppointmentViewController.h"
@@ -264,6 +265,7 @@
 }
 
 -(void)saleWasEdited:(Sale*)sale {
+    [self.salonDocument saveDocument:self];
     sale.bqHasClientChanges = @YES;
     Appointment * fromAppointment = sale.fromAppointment;
     if (fromAppointment) {
@@ -360,13 +362,7 @@
     [alert addButtonWithTitle:@"Cancel"];
     [alert beginSheetModalForWindow:[NSApp mainWindow] completionHandler:^(NSModalResponse response) {
         if (response == NSAlertFirstButtonReturn) {
-            sale.hidden = @(YES);
-            sale.isQuote = @(YES);
-            sale.amountGivenByCustomer = @(0);
-            sale.changeGiven = @(0);
-            sale.fromAppointment.completed = @(NO);
-            sale.fromAppointment.completionNote = @"";
-            sale.fromAppointment.completionType = AMCompletionTypeNotCompleted;
+            [sale reopenAppointment];
             [self saleWasEdited:sale];
             [self.salesTable reloadData];
         }

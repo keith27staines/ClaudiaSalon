@@ -85,7 +85,13 @@
     [self clear];
 }
 - (IBAction)selectAnonymousCustomer:(id)sender {
-    self.objectToManage = self.salonDocument.anonymousCustomer;
+    [self clearAllFields:self];
+    Customer * anon = self.salonDocument.anonymousCustomer;
+    self.objectToManage = anon;
+    self.firstName.stringValue = anon.firstName;
+    self.lastName.stringValue = anon.lastName;
+    self.email.stringValue = anon.email;
+    self.phone.stringValue = anon.phone;
     [self reloadData];
     [self selectCustomer:self.customer];
 }
