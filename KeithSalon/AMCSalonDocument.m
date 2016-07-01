@@ -193,27 +193,27 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     
     // Begin fix for payments associated with sales that have suffered reversion to quote state
     
-    for (Sale * sale in [Sale allObjectsWithMoc:self.managedObjectContext]) {
-        if (sale.isQuote.boolValue && sale.hidden.boolValue == false && !sale.voided.boolValue) {
-            NSSet<Payment*> * payments = sale.payments;
-            NSInteger paymentCount = payments.count;
-            if (payments.count == 0) {
-                // Sale in quote state but has no payments. This is a legitimate state so we do nothing
-                continue;
-            } else {
-                NSLog(@"Sale has %li payment(s) but is in quote state - amount outstanding is/: %f",(long)paymentCount,sale.amountOutstanding);
-                for (Payment * payment in payments) {
-                    if (payment.amount.doubleValue == 0.0) {
-                        [self.managedObjectContext deleteObject:payment];
-                    }
-                }
-                if (sale.amountOutstanding < 0.10) {
-                    sale.isQuote = @NO;
-                    [Sale markSaleForExportInMoc:self.managedObjectContext saleID:sale.objectID];                    
-                }
-            }
-        }
-    }
+//    for (Sale * sale in [Sale allObjectsWithMoc:self.managedObjectContext]) {
+//        if (sale.isQuote.boolValue && sale.hidden.boolValue == false && !sale.voided.boolValue) {
+//            NSSet<Payment*> * payments = sale.payments;
+//            NSInteger paymentCount = payments.count;
+//            if (payments.count == 0) {
+//                // Sale in quote state but has no payments. This is a legitimate state so we do nothing
+//                continue;
+//            } else {
+//                NSLog(@"Sale has %li payment(s) but is in quote state - amount outstanding is/: %f",(long)paymentCount,sale.amountOutstanding);
+//                for (Payment * payment in payments) {
+//                    if (payment.amount.doubleValue == 0.0) {
+//                        [self.managedObjectContext deleteObject:payment];
+//                    }
+//                }
+//                if (sale.amountOutstanding < 0.10) {
+//                    sale.isQuote = @NO;
+//                    [Sale markSaleForExportInMoc:self.managedObjectContext saleID:sale.objectID];                    
+//                }
+//            }
+//        }
+//    }
 
     // Begin Service category data fix
     ServiceCategory * rootServiceCategory = _salon.rootServiceCategory;

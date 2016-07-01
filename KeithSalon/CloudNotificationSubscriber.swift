@@ -130,12 +130,12 @@ extension CloudNotificationSubscriber {
         let salonRecordID = CKRecordID(recordName: self.cloudSalonRecordName)
         let predicate = NSPredicate(format: "parentSalonReference == %@",salonRecordID)
         var subscription: CKSubscription
-        var cloudRecordType:CloudRecordType
+        var cloudRecordType:ICloudRecordType
         var recordType:String
         var subscriptionID: String
         
         // iCloudSalon
-        cloudRecordType = CloudRecordType.CRSalon
+        cloudRecordType = ICloudRecordType.CRSalon
         recordType = cloudRecordType.rawValue
         subscriptionID = recordType + self.cloudSalonRecordName
         let salonPredicate = NSPredicate(format: "recordID == %@",salonRecordID)
@@ -148,7 +148,7 @@ extension CloudNotificationSubscriber {
         // icloudAppointment
         let appointmentInfo = CKNotificationInfo()
         appointmentInfo.desiredKeys = notificationInfo.desiredKeys
-        cloudRecordType = CloudRecordType.CRAppointment
+        cloudRecordType = ICloudRecordType.CRAppointment
         recordType = cloudRecordType.rawValue
         subscriptionID = recordType + self.cloudSalonRecordName
         subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
@@ -156,7 +156,7 @@ extension CloudNotificationSubscriber {
         subscriptions.append(subscription)
         
         // icloudEmployee
-        cloudRecordType = CloudRecordType.CREmployee
+        cloudRecordType = ICloudRecordType.CREmployee
         recordType = cloudRecordType.rawValue
         subscriptionID = recordType + self.cloudSalonRecordName
         subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
@@ -164,7 +164,7 @@ extension CloudNotificationSubscriber {
         subscriptions.append(subscription)
         
         // icloudCustomer
-        cloudRecordType = CloudRecordType.CRCustomer
+        cloudRecordType = ICloudRecordType.CRCustomer
         recordType = cloudRecordType.rawValue
         subscriptionID = recordType + self.cloudSalonRecordName
         subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
@@ -172,7 +172,7 @@ extension CloudNotificationSubscriber {
         subscriptions.append(subscription)
         
         // icloudServiceCategory
-        cloudRecordType = CloudRecordType.CRServiceCategory
+        cloudRecordType = ICloudRecordType.CRServiceCategory
         recordType = cloudRecordType.rawValue
         subscriptionID = recordType + self.cloudSalonRecordName
         subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])
@@ -180,7 +180,7 @@ extension CloudNotificationSubscriber {
         subscriptions.append(subscription)
         
         // icloudService
-        cloudRecordType = CloudRecordType.CRService
+        cloudRecordType = ICloudRecordType.CRService
         recordType = cloudRecordType.rawValue
         subscriptionID = recordType + self.cloudSalonRecordName
         subscription = CKSubscription(recordType: recordType, predicate: predicate, subscriptionID: subscriptionID, options: [.FiresOnRecordCreation, .FiresOnRecordUpdate])

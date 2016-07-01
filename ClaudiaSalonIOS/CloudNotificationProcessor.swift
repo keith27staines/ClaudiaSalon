@@ -112,7 +112,7 @@ class CloudNotificationProcessor {
     }
     
     private func recordBelongsToSalon(record:CKRecord) -> Bool {
-        if record.recordType == CloudRecordType.CRSalon.rawValue {
+        if record.recordType == ICloudRecordType.CRSalon.rawValue {
             return (record.recordID.recordName == self.cloudSalonRecordName)
         } else {
             guard let parentSalonReference = record["parentSalonReference"] as? CKReference else {

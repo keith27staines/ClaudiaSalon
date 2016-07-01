@@ -37,6 +37,7 @@ class BQCloudImporter : NSObject {
     private var salons = [(salon:Salon,record:CKRecord)]()
     private var services = [(service:Service,record:CKRecord)]()
     private var serviceCategories = [(serviceCategory:ServiceCategory,record:CKRecord)]()
+    private var accounts = [(account:Account,record:CKRecord)]()
     
     private (set) var cancelled = false
     private (set) var cloudNotificationProcessor:CloudNotificationProcessor!
@@ -90,7 +91,7 @@ class BQCloudImporter : NSObject {
         self.synchQueue.addOperationWithBlock() {
             self.downloadedRecords.removeAll(keepCapacity: true)
             self.downloads.removeAll()
-            for recordType in CloudRecordType.typesAsArray() {
+            for recordType in ICloudRecordType.typesAsArray() {
                 let info = DownloadInfo(recordType: recordType)
                 self.downloads[recordType.rawValue] = info
             }
@@ -113,8 +114,8 @@ class BQCloudImporter : NSObject {
             self.cloudNotificationProcessor.suspendNotificationProcessing()
             self.deleteAllCoredataObjects()
             self.makePrivateMoc()
-            for recordType in CloudRecordType.typesAsArray() {
-                self.addQueryOperationToQueueForType(recordType)
+            for cloudRecordType in ICloudRecordType.typesAsArray() {
+                self.addQueryOperationToQueueForType(cloudRecordType)
             }
         }
     }
@@ -127,10 +128,10 @@ class BQCloudImporter : NSObject {
         }
     }
 
-    private func addQueryOperationToQueueForType(type:CloudRecordType) {
-        let downloadInfoForType = DownloadInfo(recordType: type)
-        downloads[type.rawValue] = downloadInfoForType
-        let queryOperation = self.fetchRecordsFromCloudOperation(type.rawValue)
+    private func addQueryOperationToQueueForType(cloudRecordType:ICloudRecordType) {
+        let downloadInfoForType = DownloadInfo(recordType: cloudRecordType)
+        downloads[cloudRecordType.rawValue] = downloadInfoForType
+        let queryOperation = self.fetchRecordsFromCloudOperation(cloudRecordType.rawValue)
         self.ThreadSafeAddQueryOperationToQueue(queryOperation)
     }
     
@@ -268,12 +269,40 @@ class BQCloudImporter : NSObject {
     func deepProcessCustomerRecord(r: (customer:Customer, record:CKRecord))  -> Bool {
         return true
     }
-
+    func deepProcessAccounts() {
+        for r in accounts {
+            self.deepProcessAccountRecord(r)
+        }
+    }
+    func deepProcessAccountRecord(r: (account:Account, record:CKRecord)) -> Bool {
+        assertionFailure("deepProcessAccounts function is not implemented")
+        return false
+    }
+    
+    func deepProcessBQExportable(bqExportable:BQExportable, record:CKRecord) -> Bool {
+        let cloudRecordType = ICloudRecordType(rawValue: record.recordType)!
+        let bqExportableType = cloudRecordType.bqExportableType()
+        let managedObject = bqExportable as! NSManagedObject
+        guard bqExportableType == managedObject.dynamicType else { fatalError("Coredata type and cloud record type are inconsistent")}
+        switch cloudRecordType {
+        case .CRAccount:         return deepProcessAccountRecord((bqExportable as! Account, record))
+        case .CRAppointment:     return deepProcessAppointmentRecord((bqExportable as! Appointment, record))
+        case .CRCustomer:        return deepProcessCustomerRecord((bqExportable as! Customer, record))
+        case .CREmployee:        return deepProcessEmployeeRecord((bqExportable as! Employee, record))
+        case .CRSale:            return deepProcessSaleRecord((bqExportable as! Sale, record))
+        case .CRSaleItem:        return deepProcessSaleItemRecord((bqExportable as! SaleItem, record))
+        case .CRSalon:           return deepProcessSalonRecord((bqExportable as! Salon, record))
+        case .CRService:         return deepProcessServiceRecord((bqExportable as! Service, record))
+        case .CRServiceCategory: return deepProcessServiceCategoryRecord((bqExportable as! ServiceCategory, record))
+        }
+    }
+    
     func deepProcessServiceCategories() {
         for r in serviceCategories {
             self.deepProcessServiceCategoryRecord(r)
         }
     }
+
     func deepProcessServiceCategoryRecord(r: (serviceCategory:ServiceCategory, record:CKRecord)) -> Bool {
         var result = false
         let category = r.serviceCategory
@@ -409,11 +438,11 @@ class BQCloudImporter : NSObject {
     private func deepProcessRecord(record:CKRecord) -> Bool {
         let type = record.recordType
         let recordName = record.recordID.recordName
-        let cType = CloudRecordType.typeFromCloudRecordType(type)
+        let cloudRecordType = ICloudRecordType.typeFromCloudRecordType(type)
         var result = false
         var bqExportable: BQExportable?
         moc.performBlockAndWait() {
-            switch cType {
+            switch cloudRecordType {
             case .CRAppointment:
                 if let appointment = Appointment.fetchForCloudID(recordName, moc: self.moc) {
                     bqExportable = appointment
@@ -470,6 +499,12 @@ class BQCloudImporter : NSObject {
                 } else {
                     result = false
                 }
+            case .CRAccount:
+                if let bqExportable = cloudRecordType.bqExportableType().fetchBQExportable(recordName, moc: self.moc) {
+                    result = self.deepProcessBQExportable(bqExportable, record: record)
+                } else {
+                    result = false
+                }
             }
             if result == true {
                 bqExportable?.bqNeedsCoreDataExport = false
@@ -485,10 +520,10 @@ class BQCloudImporter : NSObject {
     private func shallowProcessRecord(record:CKRecord) {
         let type = record.recordType
         let recordName = record.recordID.recordName
-        let cType = CloudRecordType.typeFromCloudRecordType(type)
+        let cloudRecordType = ICloudRecordType.typeFromCloudRecordType(type)
         
         moc.performBlockAndWait() {
-            switch cType {
+            switch cloudRecordType {
             case .CRAppointment:
                 var appointment:Appointment?
                 appointment = Appointment.fetchForCloudID(recordName, moc: self.moc)
@@ -554,6 +589,11 @@ class BQCloudImporter : NSObject {
                 }
                 serviceCategory!.updateFromCloudRecordIfNeeded(record)
                 self.serviceCategories.append((serviceCategory!,record))
+            case .CRAccount:
+                let exportableType = cloudRecordType.bqExportableType()
+                let bqExportable = exportableType.fetchOrCreateBQExportable(recordName, moc: self.moc)
+                bqExportable.updateFromCloudRecord(record)
+                self.accounts.append((bqExportable as! Account, record))
             }
             try! self.moc.save()
         }
@@ -605,7 +645,7 @@ extension BQCloudImporter {
         let predicate:NSPredicate
         let iType = ICloudRecordType(rawValue: recordType)!
         switch iType {
-        case .Salon:
+        case ICloudRecordType.CRSalon:
             predicate = NSPredicate(format: "self.recordID = %@", salonID)
         default:
             predicate = NSPredicate(format: "parentSalonReference = %@", salonRef)

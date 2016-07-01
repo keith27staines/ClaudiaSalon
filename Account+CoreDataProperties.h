@@ -2,7 +2,7 @@
 //  Account+CoreDataProperties.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/01/2016.
+//  Created by Keith Staines on 30/06/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -17,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSString *accountNumber;
 @property (nullable, nonatomic, retain) NSString *bankName;
+@property (nullable, nonatomic, retain) NSString *bqCloudID;
+@property (nullable, nonatomic, retain) NSNumber *bqHasClientChanges;
+@property (nullable, nonatomic, retain) NSData *bqMetadata;
+@property (nullable, nonatomic, retain) NSNumber *bqNeedsCoreDataExport;
 @property (nullable, nonatomic, retain) NSNumber *csvAmountColumn;
 @property (nullable, nonatomic, retain) NSNumber *csvDateColumn;
 @property (nullable, nonatomic, retain) NSNumber *csvFeeColumn;
@@ -27,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *csvStatusExclude;
 @property (nullable, nonatomic, retain) NSString *csvStatusInclude;
 @property (nullable, nonatomic, retain) NSString *friendlyName;
+@property (nullable, nonatomic, retain) NSNumber *isActive;
+@property (nullable, nonatomic, retain) NSDate *lastUpdatedDate;
 @property (nullable, nonatomic, retain) NSString *sortCode;
 @property (nullable, nonatomic, retain) NSNumber *transactionFeePercentageIncoming;
 @property (nullable, nonatomic, retain) NSNumber *transactionFeePercentageOutgoing;

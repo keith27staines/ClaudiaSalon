@@ -218,7 +218,7 @@ class RobustImporter : RobustImporterDelegate {
         self.moc.performBlockAndWait() {
             guard let cloudRecord = self.importData.cloudRecord else { fatalError("The import data was expercted to contain a cloud record") }
             let recordName = cloudRecord.recordID.recordName
-            let BQType = classTypeForRecordType(self.recordType)
+            let BQType = ICloudRecordType.bqExportableType(self.recordType) 
             bqExportable = BQType.fetchBQExportable(recordName, moc: self.moc)
             if bqExportable == nil {
                 bqExportable = BQType.newExportableWithMoc(self.moc)
@@ -289,51 +289,29 @@ class RobustImporter : RobustImporterDelegate {
 extension RobustImporter {
     
     class func importerForRecord(record:CKRecord, cloudDatabase:CKDatabase, moc:NSManagedObjectContext, delegate:RobustImporterDelegate) -> RobustImporter {
-        guard let type = ICloudRecordType(rawValue: record.recordType) else {
+        guard let cloudRecordType = ICloudRecordType(rawValue: record.recordType) else {
             fatalError("There is no importer for records of type \(record.recordType)")
         }
         let recordID = record.recordID
-        switch type {
-        case .Salon:
+        switch cloudRecordType {
+        case .CRSalon:
             return SalonImporter(key: "salon", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
-        case .Customer:
+        case .CRCustomer:
             return CustomerImporter(key: "customer", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
-        case .Employee:
+        case .CREmployee:
             return EmployeeImporter(key: "employee", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
-        case .ServiceCategory:
+        case .CRServiceCategory:
             return ServiceCategoryImporter(key: "serviceCategory", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
-        case .Service:
+        case .CRService:
             return ServiceImporter(key: "service", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
-        case .Appointment:
+        case .CRAppointment:
             return AppointmentImporter(key: "appointment", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
-        case .Sale:
+        case .CRSale:
             return SaleImporter(key: "sale", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
-        case .SaleItem:
+        case .CRSaleItem:
             return SaleItemImporter(key: "saleItem", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
-        }
-    }
-    
-    class func importerForRecordType(recordType:String, recordID: CKRecordID, database:CKDatabase, moc:NSManagedObjectContext, delegate:RobustImporterDelegate) -> RobustImporter {
-        guard let type = ICloudRecordType(rawValue: recordType) else {
-            fatalError("There is no importer for records of type \(recordType)")
-        }
-        switch type {
-        case .Salon:
-            return SalonImporter(key: "salon", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
-        case .Customer:
-            return CustomerImporter(key: "customer", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
-        case .Employee:
-            return EmployeeImporter(key: "employee", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
-        case .ServiceCategory:
-            return ServiceCategoryImporter(key: "serviceCategory", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
-        case .Service:
-            return ServiceImporter(key: "service", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
-        case .Appointment:
-            return AppointmentImporter(key: "appointment", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
-        case .Sale:
-            return SaleImporter(key: "sale", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
-        case .SaleItem:
-            return SaleItemImporter(key: "saleItem", moc: moc, cloudDatabase: database, recordID: recordID, record:nil , successRequired: true, delegate: delegate)
+        case .CRAccount:
+            return AccountImporter(key: "account", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record: record, successRequired: true, delegate: delegate)
         }
     }
 }
@@ -477,8 +455,8 @@ extension RobustImporter {
 extension RobustImporter {
     private var referenceFieldNameForChildren:String {
         let recordType = self.recordType
-        let cloudRecordType = CloudRecordType(rawValue: recordType.rawValue)
-        let entityName = CloudRecordType.coredataEntityNameForType(cloudRecordType!)
+        let cloudRecordType = ICloudRecordType(rawValue: recordType.rawValue)
+        let entityName = ICloudRecordType.coredataEntityNameForType(cloudRecordType!)
         let fieldname = "parent" + entityName + "Reference"
         return fieldname
     }
@@ -546,7 +524,7 @@ class AppointmentImporter : RobustImporter {
     private var saleImporter: SaleImporter?
     
     override class func getRecordType() -> ICloudRecordType {
-        return ICloudRecordType.Appointment
+        return ICloudRecordType.CRAppointment
     }
     
     private override func handleFetchedPrimaryRecord(record: CKRecord?, error: NSError?) {
@@ -566,7 +544,7 @@ class AppointmentImporter : RobustImporter {
         self.addChildImporter(self.customerKey,importer: self.customerImporter!)
         
         // Add importers for child records for which we don't yet have recordIDs
-        saleFetcher = self.makeFetchChildRecordsOperation(ICloudRecordType.Sale)
+        saleFetcher = self.makeFetchChildRecordsOperation(ICloudRecordType.CRSale)
         saleFetcher.recordFetchedBlock = { [weak self] record in
             let recordID = record.recordID
             guard let weakSelf = self else {
@@ -616,7 +594,7 @@ class SaleImporter : RobustImporter {
     private let saleItemKey = "saleItem"
     
     override class func getRecordType() -> ICloudRecordType {
-        return ICloudRecordType.Sale
+        return ICloudRecordType.CRSale
     }
     
     private override func handleFetchedPrimaryRecord(record: CKRecord?, error: NSError?) {
@@ -634,7 +612,7 @@ class SaleImporter : RobustImporter {
         self.addChildImporter(self.customerKey,importer: self.customerImporter!)
         
         // Add importers for child records for which we don't yet have recordIDs
-        childRecordFetcher = self.makeFetchChildRecordsOperation(ICloudRecordType.SaleItem)
+        childRecordFetcher = self.makeFetchChildRecordsOperation(ICloudRecordType.CRSaleItem)
         childRecordFetcher.recordFetchedBlock = { [weak self] record in
             let recordID = record.recordID
             guard let weakSelf = self else {
@@ -657,7 +635,7 @@ class SaleImporter : RobustImporter {
         self.moc.performBlockAndWait() {
             sale.customer = (self.customerImporter!.importData.coredataRecord as! Customer)
             for (_,importer) in self.childImporters {
-                if importer.recordType == ICloudRecordType.SaleItem {
+                if importer.recordType == ICloudRecordType.CRSaleItem {
                     let saleItem = importer.importData.coredataRecord as! SaleItem
                     sale.addSaleItemObject(saleItem)
                 }
@@ -673,9 +651,15 @@ class SaleImporter : RobustImporter {
 class CustomerImporter : ChildlessRobustImporter {
     
     override class func getRecordType() -> ICloudRecordType {
-        return ICloudRecordType.Customer
+        return ICloudRecordType.CRCustomer
     }
 
+}
+
+//////////////////////////////////////////////////////
+// MARK:- AccountImporter (RobustImporter sublcass) -
+class AccountImporter : RobustImporter {
+    
 }
 
 //////////////////////////////////////////////////////
@@ -692,7 +676,7 @@ class SaleItemImporter : RobustImporter {
     private var employeeImporter: EmployeeImporter?
     
     override class func getRecordType() -> ICloudRecordType {
-        return ICloudRecordType.SaleItem
+        return ICloudRecordType.CRSaleItem
     }
     
     private override func handleFetchedPrimaryRecord(record: CKRecord?, error: NSError?) {
@@ -739,7 +723,7 @@ class SaleItemImporter : RobustImporter {
 class ServiceImporter : ChildlessRobustImporter {
     
     override class func getRecordType() -> ICloudRecordType {
-        return ICloudRecordType.Service
+        return ICloudRecordType.CRService
     }
 
 }
@@ -749,7 +733,7 @@ class ServiceImporter : ChildlessRobustImporter {
 class EmployeeImporter : ChildlessRobustImporter {
 
     override class func getRecordType() -> ICloudRecordType {
-        return ICloudRecordType.Employee
+        return ICloudRecordType.CREmployee
     }
 
 }
@@ -759,7 +743,7 @@ class EmployeeImporter : ChildlessRobustImporter {
 class SalonImporter : ChildlessRobustImporter {
 
     override class func getRecordType() -> ICloudRecordType {
-        return ICloudRecordType.Salon
+        return ICloudRecordType.CRSalon
     }
 
 }
@@ -769,7 +753,7 @@ class SalonImporter : ChildlessRobustImporter {
 class ServiceCategoryImporter : ChildlessRobustImporter {
 
     override class func getRecordType() -> ICloudRecordType {
-        return ICloudRecordType.ServiceCategory
+        return ICloudRecordType.CRServiceCategory
     }
     
 }

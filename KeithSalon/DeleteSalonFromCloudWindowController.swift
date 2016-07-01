@@ -118,21 +118,21 @@ extension DeleteSalonFromCloudWindowController : NSTableViewDataSource {
     func recordTypeForRow(row:Int) -> ICloudRecordType {
         switch row {
         case 0:
-            return ICloudRecordType.Salon
+            return ICloudRecordType.CRSalon
         case 1:
-            return ICloudRecordType.Employee
+            return ICloudRecordType.CREmployee
         case 2:
-            return ICloudRecordType.Customer
+            return ICloudRecordType.CRCustomer
         case 3:
-            return ICloudRecordType.Appointment
+            return ICloudRecordType.CRAppointment
         case 4:
-            return ICloudRecordType.Sale
+            return ICloudRecordType.CRSale
         case 5:
-            return ICloudRecordType.SaleItem
+            return ICloudRecordType.CRSaleItem
         case 6:
-            return ICloudRecordType.ServiceCategory
+            return ICloudRecordType.CRServiceCategory
         case 7:
-            return ICloudRecordType.Service
+            return ICloudRecordType.CRService
         default:
             fatalError("Row \(row) doesn't correspond to a recordType")
         }

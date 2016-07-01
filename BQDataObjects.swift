@@ -18,38 +18,6 @@ enum DiscountType : Int {
     case Percent = 0
     case Amount = 1
 }
-// MARK:- ICloudRecordType enumeration
-enum ICloudRecordType: String {
-    case Salon = "iCloudSalon"
-    case Customer = "icloudCustomer"
-    case ServiceCategory = "icloudServiceCategory"
-    case Service = "iCloudService"
-    case Employee = "icloudEmployee"
-    case Sale = "icloudSale"
-    case SaleItem = "icloudSaleItem"
-    case Appointment = "icloudAppointment"
-}
-
-func classTypeForRecordType(recordType:ICloudRecordType) -> BQExportable.Type {
-    switch recordType {
-    case .Appointment:
-        return Appointment.self
-    case .Customer:
-        return Customer.self
-    case .Employee:
-        return Employee.self
-    case .Sale:
-        return Sale.self
-    case .SaleItem:
-        return SaleItem.self
-    case .Salon:
-        return Salon.self
-    case .Service:
-        return Service.self
-    case .ServiceCategory:
-        return ServiceCategory.self
-    }
-}
 
 // MARK:- abstract base class ICloudRecord
 public class ICloudRecord {
@@ -81,8 +49,8 @@ public class ICloudRecord {
     func makeShallowCoredataObject(moc:NSManagedObjectContext) -> BQExportable {
         var exportable:BQExportable?
         moc.performBlockAndWait() {
-            let type = CloudRecordType.typeFromCloudRecordType(self.cloudRecord!.recordType)
-            switch type {
+            let cloudRecordType = ICloudRecordType.typeFromCloudRecordType(self.cloudRecord!.recordType)
+            switch cloudRecordType {
             case .CRSalon: exportable = Salon(moc: moc)
             case .CRCustomer: exportable = Customer.newObjectWithMoc(moc)
             case .CREmployee: exportable = Employee.newObjectWithMoc(moc)
@@ -91,6 +59,7 @@ public class ICloudRecord {
             case .CRAppointment: exportable = Appointment.newObjectWithMoc(moc)
             case .CRSale: exportable = Sale.newObjectWithMoc(moc)
             case .CRSaleItem: exportable = SaleItem.newObjectWithMoc(moc)
+            case .CRAccount: exportable = Account.newObjectWithMoc(moc)
             }
         }
         guard let returnExportable = exportable else {
@@ -109,7 +78,7 @@ public class ICloudRecord {
             let metadata = bqObject.bqMetadata
             self.unarchiveCloudRecordMetadataFromdata(metadata, coredataObject: managedObject)
             
-            if recordType != ICloudRecordType.Salon.rawValue {
+            if recordType != ICloudRecordType.CRSalon.rawValue {
                 guard let parentSalon = managedObject.managedObjectContext!.objectWithID(parentSalonID!) as? Salon else {
                     preconditionFailure("Parent salon is compulsory for any managed object that isn't itself of type Salon")
                 }
@@ -183,7 +152,7 @@ public class ICloudSalon : ICloudRecord {
     
     init(coredataSalon: Salon) {
         
-        super.init(recordType: ICloudRecordType.Salon.rawValue, managedObject: coredataSalon, parentSalonID: nil)
+        super.init(recordType: ICloudRecordType.CRSalon.rawValue, managedObject: coredataSalon, parentSalonID: nil)
         
         coredataSalon.managedObjectContext!.performBlockAndWait() {
             self.name = coredataSalon.salonName
@@ -231,7 +200,7 @@ public class ICloudCustomer : ICloudRecord {
     var phone: String?
     init(coredataCustomer: Customer, parentSalonID: NSManagedObjectID) {
 
-        super.init(recordType:ICloudRecordType.Customer.rawValue,managedObject: coredataCustomer, parentSalonID: parentSalonID)
+        super.init(recordType:ICloudRecordType.CRCustomer.rawValue,managedObject: coredataCustomer, parentSalonID: parentSalonID)
 
         coredataCustomer.managedObjectContext!.performBlockAndWait() {
             self.firstName = coredataCustomer.firstName
@@ -267,7 +236,7 @@ public class ICloudEmployee : ICloudRecord {
     
     init(coredataEmployee: Employee, parentSalonID: NSManagedObjectID) {
         
-        super.init(recordType:ICloudRecordType.Employee.rawValue, managedObject: coredataEmployee, parentSalonID: parentSalonID)
+        super.init(recordType:ICloudRecordType.CREmployee.rawValue, managedObject: coredataEmployee, parentSalonID: parentSalonID)
         
         coredataEmployee.managedObjectContext!.performBlockAndWait() {
             self.firstName = coredataEmployee.firstName
@@ -309,7 +278,7 @@ public class ICloudServiceCategory : ICloudRecord {
     
     init(coredataServiceCategory: ServiceCategory, parentSalonID: NSManagedObjectID) {
         
-        super.init(recordType:ICloudRecordType.ServiceCategory.rawValue,managedObject: coredataServiceCategory, parentSalonID: parentSalonID)
+        super.init(recordType:ICloudRecordType.CRServiceCategory.rawValue,managedObject: coredataServiceCategory, parentSalonID: parentSalonID)
         
         coredataServiceCategory.managedObjectContext!.performBlockAndWait() {
             self.name = coredataServiceCategory.name
@@ -348,7 +317,7 @@ public class ICloudService : ICloudRecord {
 
     init(coredataService: Service, parentSalonID: NSManagedObjectID) {
         
-        super.init(recordType:ICloudRecordType.Service.rawValue,managedObject: coredataService, parentSalonID: parentSalonID)
+        super.init(recordType:ICloudRecordType.CRService.rawValue,managedObject: coredataService, parentSalonID: parentSalonID)
         
         coredataService.managedObjectContext!.performBlockAndWait() {
             self.name = coredataService.name
@@ -397,7 +366,7 @@ class ICloudAppointment:ICloudRecord {
     var completed = false
     init(coredataAppointment: Appointment, parentSalonID: NSManagedObjectID) {
         
-        super.init(recordType:ICloudRecordType.Appointment.rawValue,managedObject: coredataAppointment, parentSalonID: parentSalonID)
+        super.init(recordType:ICloudRecordType.CRAppointment.rawValue,managedObject: coredataAppointment, parentSalonID: parentSalonID)
         
         coredataAppointment.managedObjectContext!.performBlockAndWait() {
             self.appointmentStartDate = coredataAppointment.appointmentDate
@@ -442,7 +411,7 @@ class ICloudAppointment:ICloudRecord {
     class func operationToDetermineExpiredAppointments(salonReference:CKReference) -> CKOperation {
         let earliestNonExpired = NSDate().dateByAddingTimeInterval(-appointmentExpiryTime)
         let expiredPredicate = NSPredicate(format: "appointmentDate < %@ and cloudSalonRef == ", earliestNonExpired,salonReference)
-        let expiredQuery = CKQuery(recordType: ICloudRecordType.Appointment.rawValue, predicate: expiredPredicate)
+        let expiredQuery = CKQuery(recordType: ICloudRecordType.CRAppointment.rawValue, predicate: expiredPredicate)
         let expiredOperation = CKQueryOperation(query: expiredQuery)
         expiredOperation.desiredKeys = ["recordID"]
         return expiredOperation
@@ -465,7 +434,7 @@ class ICloudSale:ICloudRecord {
     
     init(coredataSale: Sale, parentSalonID: NSManagedObjectID) {
         
-        super.init(recordType: ICloudRecordType.Sale.rawValue,managedObject: coredataSale, parentSalonID: parentSalonID)
+        super.init(recordType: ICloudRecordType.CRSale.rawValue,managedObject: coredataSale, parentSalonID: parentSalonID)
         
         coredataSale.managedObjectContext!.performBlockAndWait() {
             self.actualCharge = coredataSale.actualCharge?.doubleValue
@@ -539,7 +508,7 @@ class ICloudSaleItem: ICloudRecord {
     
     init(coredataSaleItem: SaleItem, parentSalonID: NSManagedObjectID) {
         
-        super.init(recordType: ICloudRecordType.SaleItem.rawValue, managedObject: coredataSaleItem, parentSalonID: parentSalonID)
+        super.init(recordType: ICloudRecordType.CRSaleItem.rawValue, managedObject: coredataSaleItem, parentSalonID: parentSalonID)
         
         coredataSaleItem.managedObjectContext!.performBlockAndWait() {
             self.discountVersion = coredataSaleItem.discountVersion?.integerValue

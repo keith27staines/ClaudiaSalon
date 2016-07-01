@@ -86,19 +86,19 @@ class BQDataExtractViewController: NSViewController, BQFirstExtractControllerDel
             let type = recordType
             var progressIndicator: NSProgressIndicator?
             switch type {
-            case ICloudRecordType.Appointment.rawValue:
+            case ICloudRecordType.CRAppointment.rawValue:
                 progressIndicator = self.appointmentProgressIndicator
-            case ICloudRecordType.Customer.rawValue:
+            case ICloudRecordType.CRCustomer.rawValue:
                 progressIndicator = self.customerProgressIndicator
-            case ICloudRecordType.Employee.rawValue:
+            case ICloudRecordType.CREmployee.rawValue:
                 progressIndicator = self.employeeProgressIndicator
-            case ICloudRecordType.Service.rawValue:
+            case ICloudRecordType.CRService.rawValue:
                 progressIndicator = self.serviceProgressIndicator
-            case ICloudRecordType.ServiceCategory.rawValue:
+            case ICloudRecordType.CRServiceCategory.rawValue:
                 progressIndicator = self.serviceCategoryProgressIndicator
-            case ICloudRecordType.Appointment.rawValue:
+            case ICloudRecordType.CRAppointment.rawValue:
                 progressIndicator = self.appointmentProgressIndicator
-            case ICloudRecordType.Salon.rawValue:
+            case ICloudRecordType.CRSalon.rawValue:
                 break
             default:
                 break

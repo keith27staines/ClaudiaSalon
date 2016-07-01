@@ -2,7 +2,7 @@
 //  Account+CoreDataProperties.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/01/2016.
+//  Created by Keith Staines on 30/06/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,6 +15,10 @@
 
 @dynamic accountNumber;
 @dynamic bankName;
+@dynamic bqCloudID;
+@dynamic bqHasClientChanges;
+@dynamic bqMetadata;
+@dynamic bqNeedsCoreDataExport;
 @dynamic csvAmountColumn;
 @dynamic csvDateColumn;
 @dynamic csvFeeColumn;
@@ -25,6 +29,8 @@
 @dynamic csvStatusExclude;
 @dynamic csvStatusInclude;
 @dynamic friendlyName;
+@dynamic isActive;
+@dynamic lastUpdatedDate;
 @dynamic sortCode;
 @dynamic transactionFeePercentageIncoming;
 @dynamic transactionFeePercentageOutgoing;

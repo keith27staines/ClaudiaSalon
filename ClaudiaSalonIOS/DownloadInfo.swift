@@ -9,7 +9,7 @@
 import Foundation
 
 struct DownloadInfo {
-    var recordType: CloudRecordType
+    var recordType: ICloudRecordType
     var activeOperations = 0
     var recordsDownloaded = 0
     var error:NSError?
@@ -35,7 +35,7 @@ struct DownloadInfo {
     var executing = false
     var finished = false
     var waiting = true
-    init(recordType:CloudRecordType) {
+    init(recordType:ICloudRecordType) {
         self.recordType = recordType
     }
 }

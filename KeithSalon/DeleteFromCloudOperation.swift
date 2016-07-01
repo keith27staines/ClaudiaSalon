@@ -19,14 +19,14 @@ class DeleteFromCloudOperation : NSOperation {
     private let cloudDatabase:CKDatabase
     private var operations = [NSOperation]()
     private var deleteOperationsForRecordType = [ICloudRecordType:[DeleteRecordTypeOperation]]()
-    private let recordTypeOrder = [ICloudRecordType.Employee,
-                                   ICloudRecordType.Customer,
-                                   ICloudRecordType.Service,
-                                   ICloudRecordType.ServiceCategory,
-                                   ICloudRecordType.SaleItem,
-                                   ICloudRecordType.Sale,
-                                   ICloudRecordType.Appointment,
-                                   ICloudRecordType.Salon]
+    private let recordTypeOrder = [ICloudRecordType.CREmployee,
+                                   ICloudRecordType.CRCustomer,
+                                   ICloudRecordType.CRService,
+                                   ICloudRecordType.CRServiceCategory,
+                                   ICloudRecordType.CRSaleItem,
+                                   ICloudRecordType.CRSale,
+                                   ICloudRecordType.CRAppointment,
+                                   ICloudRecordType.CRSalon]
     
     private let synchQueue:NSOperationQueue = {
         var queue = NSOperationQueue()

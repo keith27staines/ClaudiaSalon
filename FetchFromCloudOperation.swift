@@ -16,7 +16,7 @@ struct DeletionInfo {
 
 struct RecordTypeInfo {
     var status = RecordTypeInfoStates.Waiting
-    var recordType:ICloudRecordType = ICloudRecordType.Salon
+    var recordType:ICloudRecordType = ICloudRecordType.CRSalon
     var records = [CKRecord]()
     var error:NSError? = nil
 }
@@ -70,14 +70,14 @@ class FetchFromCloudOperation : NSOperation {
     
     func setupInformation() {
         self.deletionInfo.state = .Waiting
-        self.deletionInfo.recordTypeInformation[ICloudRecordType.Salon] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.Salon, records: [CKRecord](), error:nil)
-        self.deletionInfo.recordTypeInformation[ICloudRecordType.Employee] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.Employee, records: [CKRecord](), error:nil)
-        self.deletionInfo.recordTypeInformation[ICloudRecordType.Customer] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.Customer, records: [CKRecord](), error:nil)
-        self.deletionInfo.recordTypeInformation[ICloudRecordType.ServiceCategory] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.ServiceCategory, records: [CKRecord](), error:nil)
-        self.deletionInfo.recordTypeInformation[ICloudRecordType.Service] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.Service, records: [CKRecord](), error:nil)
-        self.deletionInfo.recordTypeInformation[ICloudRecordType.Appointment] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.Appointment, records: [CKRecord](), error:nil)
-        self.deletionInfo.recordTypeInformation[ICloudRecordType.Sale] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.Sale, records: [CKRecord](), error:nil)
-        self.deletionInfo.recordTypeInformation[ICloudRecordType.SaleItem] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.SaleItem, records: [CKRecord](), error:nil)
+        self.deletionInfo.recordTypeInformation[ICloudRecordType.CRSalon] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.CRSalon, records: [CKRecord](), error:nil)
+        self.deletionInfo.recordTypeInformation[ICloudRecordType.CREmployee] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.CREmployee, records: [CKRecord](), error:nil)
+        self.deletionInfo.recordTypeInformation[ICloudRecordType.CRCustomer] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.CRCustomer, records: [CKRecord](), error:nil)
+        self.deletionInfo.recordTypeInformation[ICloudRecordType.CRServiceCategory] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.CRServiceCategory, records: [CKRecord](), error:nil)
+        self.deletionInfo.recordTypeInformation[ICloudRecordType.CRService] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.CRService, records: [CKRecord](), error:nil)
+        self.deletionInfo.recordTypeInformation[ICloudRecordType.CRAppointment] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.CRAppointment, records: [CKRecord](), error:nil)
+        self.deletionInfo.recordTypeInformation[ICloudRecordType.CRSale] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.CRSale, records: [CKRecord](), error:nil)
+        self.deletionInfo.recordTypeInformation[ICloudRecordType.CRSaleItem] = RecordTypeInfo(status: .Waiting, recordType: ICloudRecordType.CRSaleItem, records: [CKRecord](), error:nil)
     }
     
     override func main() {
@@ -118,16 +118,16 @@ class FetchFromCloudOperation : NSOperation {
 }
 
 extension FetchFromCloudOperation {
-    func fetchIDOperationForRecordType(recordType:ICloudRecordType) -> CKQueryOperation {
+    func fetchIDOperationForRecordType(cloudRecordType:ICloudRecordType) -> CKQueryOperation {
         var predicate : NSPredicate!
         let salonRecordID = CKRecordID(recordName: self.salonRecordName)
         let salonReference = CKReference(recordID: salonRecordID, action: .None)
-        if recordType == ICloudRecordType.Salon {
+        if cloudRecordType == ICloudRecordType.CRSalon {
             predicate = NSPredicate(format: "recordID = %@", salonRecordID)
         } else {
             predicate = NSPredicate(format: "parentSalonReference = %@", salonReference)
         }
-        let query = CKQuery(recordType: recordType.rawValue, predicate: predicate)
+        let query = CKQuery(recordType: cloudRecordType.rawValue, predicate: predicate)
         let queryOp = CKQueryOperation(query: query)
         queryOp.desiredKeys = ["parentSalonReference"]
         queryOp.queuePriority = .VeryHigh
