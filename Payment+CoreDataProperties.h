@@ -2,7 +2,7 @@
 //  Payment+CoreDataProperties.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/01/2016.
+//  Created by Keith Staines on 04/07/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -17,9 +17,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, retain) NSNumber *amount;
 @property (nullable, nonatomic, retain) NSNumber *amountNet;
+@property (nullable, nonatomic, retain) NSString *bqCloudID;
+@property (nullable, nonatomic, retain) NSNumber *bqHasClientChanges;
+@property (nullable, nonatomic, retain) NSData *bqMetadata;
+@property (nullable, nonatomic, retain) NSNumber *bqNeedsCoreDataExport;
 @property (nullable, nonatomic, retain) NSDate *createdDate;
 @property (nullable, nonatomic, retain) NSString *direction;
 @property (nullable, nonatomic, retain) NSNumber *hidden;
+@property (nullable, nonatomic, retain) NSNumber *isActive;
 @property (nullable, nonatomic, retain) NSNumber *isManagersBudgetItem;
 @property (nullable, nonatomic, retain) NSNumber *isManagersBudgetStatusManuallyChanged;
 @property (nullable, nonatomic, retain) NSDate *lastUpdatedDate;

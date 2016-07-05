@@ -30,7 +30,7 @@
     NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
     return fetchedObjects;
 }
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc {
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc {
     Role * role = [NSEntityDescription insertNewObjectForEntityForName:@"Role" inManagedObjectContext:moc];
     return role;
 }

@@ -2,7 +2,7 @@
 //  Payment+CoreDataProperties.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/01/2016.
+//  Created by Keith Staines on 04/07/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,9 +15,14 @@
 
 @dynamic amount;
 @dynamic amountNet;
+@dynamic bqCloudID;
+@dynamic bqHasClientChanges;
+@dynamic bqMetadata;
+@dynamic bqNeedsCoreDataExport;
 @dynamic createdDate;
 @dynamic direction;
 @dynamic hidden;
+@dynamic isActive;
 @dynamic isManagersBudgetItem;
 @dynamic isManagersBudgetStatusManuallyChanged;
 @dynamic lastUpdatedDate;

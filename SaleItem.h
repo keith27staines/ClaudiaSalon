@@ -14,7 +14,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SaleItem : NSManagedObject <AMCObjectWithNotesProtocol>
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(void)markSaleItemsForExportInMoc:(NSManagedObjectContext*)parentMoc saleItemIDs:(NSSet*)saleItemIDs;
 -(void)updatePrice;

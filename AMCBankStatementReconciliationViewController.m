@@ -491,7 +491,7 @@
             NSInteger statementTransactionIndex = self.statementTransactionsTable.selectedRow;
             NSMutableDictionary * transactionDictionary = self.parser.transactionDictionaries[statementTransactionIndex];
             [self unpairStatementTransaction:transactionDictionary];
-            Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
+            Payment * payment = [Payment createObjectInMoc:self.documentMoc];
             payment.paymentDate = transactionDictionary[@"date"];
             double amount = ((NSNumber*)transactionDictionary[@"amount"]).doubleValue;
             double fee = ((NSNumber*)transactionDictionary[@"fee"]).doubleValue;

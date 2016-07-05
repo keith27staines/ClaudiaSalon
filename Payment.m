@@ -20,7 +20,7 @@
 
 
 @implementation Payment
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     Payment * payment = [NSEntityDescription insertNewObjectForEntityForName:@"Payment" inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];

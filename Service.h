@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface Service:NSManagedObject <AMCObjectWithNotesProtocol,AMCTreeNode>
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 
 -(NSString*)displayText;

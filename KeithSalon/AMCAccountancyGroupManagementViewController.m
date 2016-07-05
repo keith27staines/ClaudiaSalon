@@ -74,7 +74,7 @@
     AMCCashBookNode * newLeaf = nil;
     if (!parentNode) return nil;
     if (parentNode.isLeaf) return nil;
-    PaymentCategory * paymentCategory = [PaymentCategory newObjectWithMoc:self.documentMoc];
+    PaymentCategory * paymentCategory = [PaymentCategory createObjectInMoc:self.documentMoc];
     paymentCategory.categoryName = @"New Payment Category";
     newLeaf = [[AMCCashBookNode alloc] initWithPaymentCategory:paymentCategory];
     [parentNode addChild:newLeaf];
@@ -87,7 +87,7 @@
     if (!parentNode) return nil;
     if (parentNode.isLeaf) return nil;
     id<AMCTreeNode> representedObject = nil;
-    representedObject = [AccountingPaymentGroup newObjectWithMoc:self.documentMoc];
+    representedObject = [AccountingPaymentGroup createObjectInMoc:self.documentMoc];
     representedObject.name = @"New Accounting Group";
     newNode = [[AMCCashBookNode alloc] initWithAccountancyGroup:representedObject];
     [parentNode addChild:newNode];

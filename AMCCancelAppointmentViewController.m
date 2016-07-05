@@ -267,7 +267,7 @@ static NSString * const kAMCExplanationText = @"kAMCExplanationText";
 
 - (IBAction)yesButtonClicked:(id)sender {
     self.cancelled = NO;
-    Note * note = [Note newObjectWithMoc:self.documentMoc];
+    Note * note = [Note createObjectInMoc:self.documentMoc];
     note.isAuditNote = @(NO);
     self.appointment.cancellationType = @([self selectedCancellationType]);
     if (self.appointment.cancellationType.integerValue == AMCancellationTypeNotCancelled) {

@@ -30,7 +30,7 @@
     }
     return fetchedObjects;
 }
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     PaymentCategory * paymentCategory = [NSEntityDescription insertNewObjectForEntityForName:@"PaymentCategory" inManagedObjectContext:moc];
     paymentCategory.createdDate = [NSDate date];

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Role: NSManagedObject
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 -(NSNumber*)allowsBusinessFunction:(BusinessFunction*)function verb:(NSString*)verb;
 -(Permission*)permissionForBusinessFunction:(BusinessFunction*)function;
 @end

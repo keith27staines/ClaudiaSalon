@@ -12,7 +12,7 @@
 
 @interface AccountingPaymentGroup (Methods) <AMCTreeNode>
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 
 // Only call this method to initialise the AccountingPaymentGroup entity for a new Salon
 +(void)buildDefaultGroupsForSalon:(Salon*)salon;

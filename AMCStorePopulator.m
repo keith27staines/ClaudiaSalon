@@ -149,29 +149,29 @@ NSDate * amcsAutoLoadDate;
     if (categories.count > 0) {
         return NO;
     }
-    amcscHairCutMen = [ServiceCategory newObjectWithMoc:moc];
+    amcscHairCutMen = [ServiceCategory createObjectInMoc:moc];
     amcscHairCutMen.name = @"Hair cut (men)";
-    amcscHairCutWomen = [ServiceCategory newObjectWithMoc:moc];
+    amcscHairCutWomen = [ServiceCategory createObjectInMoc:moc];
     amcscHairCutWomen.name = @"Hair cut (women)";
-    amcscHairStyling = [ServiceCategory newObjectWithMoc:moc];
+    amcscHairStyling = [ServiceCategory createObjectInMoc:moc];
     amcscHairStyling.name = @"Hair styling";
-    amcscHairColouring = [ServiceCategory newObjectWithMoc:moc];
+    amcscHairColouring = [ServiceCategory createObjectInMoc:moc];
     amcscHairColouring.name = @"Hair colouring";
-    amcscHairHighlighting = [ServiceCategory newObjectWithMoc:moc];
+    amcscHairHighlighting = [ServiceCategory createObjectInMoc:moc];
     amcscHairHighlighting.name = @"Hair highlighting";
-    amcscHairPerming = [ServiceCategory newObjectWithMoc:moc];
+    amcscHairPerming = [ServiceCategory createObjectInMoc:moc];
     amcscHairPerming.name = @"Hair perming";
-    amcscMakeup = [ServiceCategory newObjectWithMoc:moc];
+    amcscMakeup = [ServiceCategory createObjectInMoc:moc];
     amcscMakeup.name = @"Makeup";
-    amcscWaxing = [ServiceCategory newObjectWithMoc:moc];
+    amcscWaxing = [ServiceCategory createObjectInMoc:moc];
     amcscWaxing.name = @"Waxing";
-    amcscManicure = [ServiceCategory newObjectWithMoc:moc];
+    amcscManicure = [ServiceCategory createObjectInMoc:moc];
     amcscManicure.name = @"Manicure";
-    amcscPedicure = [ServiceCategory newObjectWithMoc:moc];
+    amcscPedicure = [ServiceCategory createObjectInMoc:moc];
     amcscPedicure.name = @"Pedicure";
-    amcscMassage = [ServiceCategory newObjectWithMoc:moc];
+    amcscMassage = [ServiceCategory createObjectInMoc:moc];
     amcscMassage.name = @"Massage (women only)";
-    amcscPackages = [ServiceCategory newObjectWithMoc:moc];
+    amcscPackages = [ServiceCategory createObjectInMoc:moc];
     amcscPackages.name = @"Packages";
 
     NSArray * allObjects = [ServiceCategory allObjectsWithMoc:moc];
@@ -190,7 +190,7 @@ NSDate * amcsAutoLoadDate;
     Service * s = nil;
     
     // Hair cutting
-    amcServiceHairCutMen = [Service newObjectWithMoc:moc];
+    amcServiceHairCutMen = [Service createObjectInMoc:moc];
     s = amcServiceHairCutMen;
     s.name = @"Hair cut only (men)";
     s.minimumCharge = @(8);
@@ -199,7 +199,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(0);
     s.serviceCategory = amcscHairCutMen;
     
-    amcServiceHairCutMenWithWashAndBlowDry = [Service newObjectWithMoc:moc];
+    amcServiceHairCutMenWithWashAndBlowDry = [Service createObjectInMoc:moc];
     s = amcServiceHairCutMenWithWashAndBlowDry;
     s.name = @"Hair cut with wash & blow-dry (men)";
     s.minimumCharge = @(8);
@@ -208,7 +208,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(0);
     s.serviceCategory = amcscHairCutMen;
     
-    amcServiceHairCutWomenShort = [Service newObjectWithMoc:moc];
+    amcServiceHairCutWomenShort = [Service createObjectInMoc:moc];
     s = amcServiceHairCutWomenShort;
     s.name = @"Hair cut only (women - short hair)";
     s.minimumCharge = @(14);
@@ -217,7 +217,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairCutWomen;
     
-    amcServiceHairCutWomenMedium = [Service newObjectWithMoc:moc];
+    amcServiceHairCutWomenMedium = [Service createObjectInMoc:moc];
     s = amcServiceHairCutWomenMedium;
     s.name = @"Hair cut only (women - medium hair)";
     s.minimumCharge = @(15);
@@ -226,7 +226,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(2);
     s.serviceCategory = amcscHairCutWomen;
     
-    amcServiceHairCutWomenLong = [Service newObjectWithMoc:moc];
+    amcServiceHairCutWomenLong = [Service createObjectInMoc:moc];
     s = amcServiceHairCutWomenLong;
     s.name = @"Hair cut only (women - long hair)";
     s.minimumCharge = @(16);
@@ -235,7 +235,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(3);
     s.serviceCategory = amcscHairCutWomen;
     
-    amcServiceWashAndBlowDryShort = [Service newObjectWithMoc:moc];
+    amcServiceWashAndBlowDryShort = [Service createObjectInMoc:moc];
     s = amcServiceWashAndBlowDryShort;
     s.name = @"Wash and blow dry (women - short hair)";
     s.minimumCharge = @(10);
@@ -244,7 +244,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairCutWomen;
     
-    amcServiceWashAndBlowDryMedium = [Service newObjectWithMoc:moc];
+    amcServiceWashAndBlowDryMedium = [Service createObjectInMoc:moc];
     s = amcServiceWashAndBlowDryMedium;
     s.name = @"Wash and blow dry (women - medium hair)";
     s.minimumCharge = @(13);
@@ -253,7 +253,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(2);
     s.serviceCategory = amcscHairCutWomen;
     
-    amcServiceWashAndBlowDryLong = [Service newObjectWithMoc:moc];
+    amcServiceWashAndBlowDryLong = [Service createObjectInMoc:moc];
     s = amcServiceWashAndBlowDryLong;
     s.name = @"Wash and blow dry (women - long hair)";
     s.minimumCharge = @(15);
@@ -262,7 +262,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(3);
     s.serviceCategory = amcscHairCutWomen;
     
-    amcServiceDamagedHairTreatmentShort = [Service newObjectWithMoc:moc];
+    amcServiceDamagedHairTreatmentShort = [Service createObjectInMoc:moc];
     s = amcServiceDamagedHairTreatmentShort;
     s.name = @"Damaged hair treatment (short hair)";
     s.minimumCharge = @(4);
@@ -271,7 +271,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairCutWomen;
     
-    amcServiceDamagedHairTreatmentMedium = [Service newObjectWithMoc:moc];
+    amcServiceDamagedHairTreatmentMedium = [Service createObjectInMoc:moc];
     s = amcServiceDamagedHairTreatmentMedium;
     s.name = @"Damaged hair treatment (medium hair)";
     s.minimumCharge = @(5);
@@ -280,7 +280,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(2);
     s.serviceCategory = amcscHairCutWomen;
     
-    amcServiceDamagedHairTreatmentLong = [Service newObjectWithMoc:moc];
+    amcServiceDamagedHairTreatmentLong = [Service createObjectInMoc:moc];
     s = amcServiceDamagedHairTreatmentLong;
     s.name = @"Damaged hair treatment (long hair)";
     s.minimumCharge = @(6);
@@ -290,7 +290,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscHairCutWomen;
     
     // Hair styling
-    amcServiceHairStylingStraighteningShort = [Service newObjectWithMoc:moc];
+    amcServiceHairStylingStraighteningShort = [Service createObjectInMoc:moc];
     s = amcServiceHairStylingStraighteningShort;
     s.name = @"Straightening (short hair)";
     s.minimumCharge = @(20);
@@ -299,7 +299,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairStyling;
     
-    amcServiceHairStylingStraighteningMedium = [Service newObjectWithMoc:moc];
+    amcServiceHairStylingStraighteningMedium = [Service createObjectInMoc:moc];
     s = amcServiceHairStylingStraighteningMedium;
     s.name = @"Straightening (medium hair)";
     s.minimumCharge = @(23);
@@ -308,7 +308,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(2);
     s.serviceCategory = amcscHairStyling;
     
-    amcServiceHairStylingStraighteningLong = [Service newObjectWithMoc:moc];
+    amcServiceHairStylingStraighteningLong = [Service createObjectInMoc:moc];
     s = amcServiceHairStylingStraighteningLong;
     s.name = @"Straightening (long hair)";
     s.minimumCharge = @(25);
@@ -317,7 +317,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairStyling;
     
-    amcServiceHairStylingCurlingShort = [Service newObjectWithMoc:moc];
+    amcServiceHairStylingCurlingShort = [Service createObjectInMoc:moc];
     s = amcServiceHairStylingCurlingShort;
     s.name = @"Curling (short hair)";
     s.minimumCharge = @(20);
@@ -326,7 +326,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairStyling;
     
-    amcServiceHairStylingCurlingMedium = [Service newObjectWithMoc:moc];
+    amcServiceHairStylingCurlingMedium = [Service createObjectInMoc:moc];
     s = amcServiceHairStylingCurlingMedium;
     s.name = @"Curling (medium hair)";
     s.minimumCharge = @(23);
@@ -335,7 +335,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(2);
     s.serviceCategory = amcscHairStyling;
     
-    amcServiceHairStylingCurlingLong = [Service newObjectWithMoc:moc];
+    amcServiceHairStylingCurlingLong = [Service createObjectInMoc:moc];
     s = amcServiceHairStylingCurlingLong;
     s.name = @"Curling (long hair)";
     s.minimumCharge = @(25);
@@ -344,7 +344,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairStyling;
     
-    amcServiceRestyleAllHair = [Service newObjectWithMoc:moc];
+    amcServiceRestyleAllHair = [Service createObjectInMoc:moc];
     s = amcServiceRestyleAllHair;
     s.name = @"Hair restyling";
     s.minimumCharge = @(25);
@@ -353,7 +353,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(0);
     s.serviceCategory = amcscHairStyling;
     
-    amcServiceOccasionalStyleAllHair = [Service newObjectWithMoc:moc];
+    amcServiceOccasionalStyleAllHair = [Service createObjectInMoc:moc];
     s = amcServiceOccasionalStyleAllHair;
     s.name = @"Occasional styling (and bridal)";
     s.minimumCharge = @(25);
@@ -363,7 +363,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscHairStyling;
     
     // Hair colouring
-    amcServiceColouringShort = [Service newObjectWithMoc:moc];
+    amcServiceColouringShort = [Service createObjectInMoc:moc];
     s = amcServiceColouringShort;
     s.name = @"Colouring (standard, short hair)";
     s.minimumCharge = @(29);
@@ -372,7 +372,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairColouring;
     
-    amcServiceColouringMedium = [Service newObjectWithMoc:moc];
+    amcServiceColouringMedium = [Service createObjectInMoc:moc];
     s = amcServiceColouringMedium;
     s.name = @"Colouring (standard, medium hair)";
     s.minimumCharge = @(34);
@@ -381,7 +381,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(2);
     s.serviceCategory = amcscHairColouring;
     
-    amcServiceColouringLong = [Service newObjectWithMoc:moc];
+    amcServiceColouringLong = [Service createObjectInMoc:moc];
     s = amcServiceColouringLong;
     s.name = @"Colouring (standard, long hair)";
     s.minimumCharge = @(39);
@@ -390,7 +390,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(3);
     s.serviceCategory = amcscHairColouring;
     
-    amcServiceColouringShortDeluxe = [Service newObjectWithMoc:moc];
+    amcServiceColouringShortDeluxe = [Service createObjectInMoc:moc];
     s = amcServiceColouringShortDeluxe;
     s.name = @"Colouring (deluxe, short hair)";
     s.minimumCharge = @(33);
@@ -401,7 +401,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(YES);
     [s addProductObject:amcProductLorealColour];
     
-    amcServiceColouringMediumDeluxe = [Service newObjectWithMoc:moc];
+    amcServiceColouringMediumDeluxe = [Service createObjectInMoc:moc];
     s = amcServiceColouringMediumDeluxe;
     s.name = @"Colouring (deluxe, medium hair)";
     s.minimumCharge = @(38);
@@ -412,7 +412,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(YES);
     [s addProductObject:amcProductLorealColour];
     
-    amcServiceColouringLongDeluxe = [Service newObjectWithMoc:moc];
+    amcServiceColouringLongDeluxe = [Service createObjectInMoc:moc];
     s = amcServiceColouringLongDeluxe;
     s.name = @"Colouring (deluxe, long hair)";
     s.minimumCharge = @(43);
@@ -423,7 +423,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(YES);
     [s addProductObject:amcProductLorealColour];
     
-    amcServiceSpecialColouring = [Service newObjectWithMoc:moc];
+    amcServiceSpecialColouring = [Service createObjectInMoc:moc];
     s = amcServiceSpecialColouring;
     s.name = @"Special Colouring";
     s.minimumCharge = @(30);
@@ -433,7 +433,7 @@ NSDate * amcsAutoLoadDate;
 
     
     // Highlighting
-    amcServiceHighlightingHalfHeadShort = [Service newObjectWithMoc:moc];
+    amcServiceHighlightingHalfHeadShort = [Service createObjectInMoc:moc];
     s = amcServiceHighlightingHalfHeadShort;
     s.name = @"Highlighting (half-head, short hair)";
     s.minimumCharge = @(23);
@@ -442,7 +442,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairHighlighting;
     
-    amcServiceHighlightingHalfHeadMedium = [Service newObjectWithMoc:moc];
+    amcServiceHighlightingHalfHeadMedium = [Service createObjectInMoc:moc];
     s = amcServiceHighlightingHalfHeadMedium;
     s.name = @"Highlighting (half-head, medium hair)";
     s.minimumCharge = @(28);
@@ -451,7 +451,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(2);
     s.serviceCategory = amcscHairHighlighting;
     
-    amcServiceHighlightingHalfHeadLong = [Service newObjectWithMoc:moc];
+    amcServiceHighlightingHalfHeadLong = [Service createObjectInMoc:moc];
     s = amcServiceHighlightingHalfHeadLong;
     s.name = @"Highlighting (half-head, long hair)";
     s.minimumCharge = @(30);
@@ -460,7 +460,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(3);
     s.serviceCategory = amcscHairHighlighting;
     
-    amcServiceHighlightingFullHeadShort = [Service newObjectWithMoc:moc];
+    amcServiceHighlightingFullHeadShort = [Service createObjectInMoc:moc];
     s = amcServiceHighlightingFullHeadShort;
     s.name = @"Highlighting (full-head, short hair)";
     s.minimumCharge = @(45);
@@ -469,7 +469,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairHighlighting;
     
-    amcServiceHighlightingFullHeadMedium = [Service newObjectWithMoc:moc];
+    amcServiceHighlightingFullHeadMedium = [Service createObjectInMoc:moc];
     s = amcServiceHighlightingFullHeadMedium;
     s.name = @"Highlighting (full-head, medium hair)";
     s.minimumCharge = @(55);
@@ -478,7 +478,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(2);
     s.serviceCategory = amcscHairHighlighting;
     
-    amcServiceHighlightingFullHeadLong = [Service newObjectWithMoc:moc];
+    amcServiceHighlightingFullHeadLong = [Service createObjectInMoc:moc];
     s = amcServiceHighlightingFullHeadLong;
     s.name = @"Highlighting (full-head, long hair)";
     s.minimumCharge = @(60);
@@ -487,7 +487,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(3);
     s.serviceCategory = amcscHairHighlighting;
     
-    amcServicePermingHeadShort = [Service newObjectWithMoc:moc];
+    amcServicePermingHeadShort = [Service createObjectInMoc:moc];
     s = amcServicePermingHeadShort;
     s.name = @"Perming (short hair)";
     s.minimumCharge = @(40);
@@ -496,7 +496,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(1);
     s.serviceCategory = amcscHairPerming;
     
-    amcServicePermingMedium = [Service newObjectWithMoc:moc];
+    amcServicePermingMedium = [Service createObjectInMoc:moc];
     s = amcServicePermingMedium;
     s.name = @"Perming (medium hair)";
     s.minimumCharge = @(45);
@@ -505,7 +505,7 @@ NSDate * amcsAutoLoadDate;
     s.hairLength    = @(2);
     s.serviceCategory = amcscHairPerming;
     
-    amcServicePermingLong = [Service newObjectWithMoc:moc];
+    amcServicePermingLong = [Service createObjectInMoc:moc];
     s = amcServicePermingLong;
     s.name = @"Perming (long hair)";
     s.minimumCharge = @(50);
@@ -515,7 +515,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscHairPerming;
     
     // Manicure
-    amcServiceStandardManicure = [Service newObjectWithMoc:moc];
+    amcServiceStandardManicure = [Service createObjectInMoc:moc];
     s = amcServiceStandardManicure;
     s.name = @"Manicure (standard)";
     s.minimumCharge = @(15);
@@ -527,7 +527,7 @@ NSDate * amcsAutoLoadDate;
     [s addProductObject:amcProductOPINailPolish];
     [s addProductObject:amcProductLorealNailPolish];
 
-    amcServiceExpressManicure = [Service newObjectWithMoc:moc];
+    amcServiceExpressManicure = [Service createObjectInMoc:moc];
     s = amcServiceExpressManicure;
     s.name = @"Manicure (deluxe)";
     s.minimumCharge = @(25);
@@ -538,7 +538,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(YES);
     [s addProductObject:amcProductOPIGel];
     
-    amcServiceNailsPolishOnly = [Service newObjectWithMoc:moc];
+    amcServiceNailsPolishOnly = [Service createObjectInMoc:moc];
     s = amcServiceNailsPolishOnly;
     s.name = @"Nail polish (standard)";
     s.minimumCharge = @(5);
@@ -550,7 +550,7 @@ NSDate * amcsAutoLoadDate;
     [s addProductObject:amcProductOPINailPolish];
     [s addProductObject:amcProductLorealNailPolish];
     
-    amcServiceNailsPolishOnlyDeluxe = [Service newObjectWithMoc:moc];
+    amcServiceNailsPolishOnlyDeluxe = [Service createObjectInMoc:moc];
     s = amcServiceNailsPolishOnlyDeluxe;
     s.name = @"Nail polish (deluxe)";
     s.minimumCharge = @(10);
@@ -562,7 +562,7 @@ NSDate * amcsAutoLoadDate;
     [s addProductObject:amcProductOPINailPolish];
     [s addProductObject:amcProductLorealNailPolish];
     
-    amcServiceNailsFullSet = [Service newObjectWithMoc:moc];
+    amcServiceNailsFullSet = [Service createObjectInMoc:moc];
     s = amcServiceNailsFullSet;
     s.name = @"Nails - Full set";
     s.minimumCharge = @(35);
@@ -572,7 +572,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscManicure;
     s.deluxe = @(NO);
     
-    amcServiceNailsRefill = [Service newObjectWithMoc:moc];
+    amcServiceNailsRefill = [Service createObjectInMoc:moc];
     s = amcServiceNailsRefill;
     s.name = @"Nails - Refill only";
     s.minimumCharge = @(17);
@@ -582,7 +582,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscManicure;
     s.deluxe = @(NO);
     
-    amcServiceNailsTakeOff = [Service newObjectWithMoc:moc];
+    amcServiceNailsTakeOff = [Service createObjectInMoc:moc];
     s = amcServiceNailsTakeOff;
     s.name = @"Nails - Take-off nails";
     s.minimumCharge = @(15);
@@ -592,7 +592,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscManicure;
     s.deluxe = @(NO);
     
-    amcServiceNailModellingAndDesign = [Service newObjectWithMoc:moc];
+    amcServiceNailModellingAndDesign = [Service createObjectInMoc:moc];
     s = amcServiceNailModellingAndDesign;
     s.name = @"Nail modelling and design";
     s.minimumCharge = @(5);
@@ -602,7 +602,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscManicure;
     s.deluxe = @(NO);
     
-    amcServiceHandTreatmentForDamagedSkin = [Service newObjectWithMoc:moc];
+    amcServiceHandTreatmentForDamagedSkin = [Service createObjectInMoc:moc];
     s = amcServiceHandTreatmentForDamagedSkin;
     s.name = @"Treat damaged skin on hands";
     s.minimumCharge = @(10);
@@ -613,7 +613,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     
     // Pedicure
-    amcServiceStandardPedicureCosmetic = [Service newObjectWithMoc:moc];
+    amcServiceStandardPedicureCosmetic = [Service createObjectInMoc:moc];
     s = amcServiceStandardPedicureCosmetic;
     s.name = @"Pedicure (cosmetic)";
     s.minimumCharge = @(25);
@@ -625,7 +625,7 @@ NSDate * amcsAutoLoadDate;
     [s addProductObject:amcProductOPINailPolish];
     [s addProductObject:amcProductLorealNailPolish];
     
-    amcServiceStandardPedicureMedical = [Service newObjectWithMoc:moc];
+    amcServiceStandardPedicureMedical = [Service createObjectInMoc:moc];
     s = amcServiceStandardPedicureMedical;
     s.name = @"Pedicure (medical - standard)";
     s.minimumCharge = @(40);
@@ -637,7 +637,7 @@ NSDate * amcsAutoLoadDate;
     [s addProductObject:amcProductOPINailPolish];
     [s addProductObject:amcProductLorealNailPolish];
     
-    amcServiceDeluxePedicureMedical = [Service newObjectWithMoc:moc];
+    amcServiceDeluxePedicureMedical = [Service createObjectInMoc:moc];
     s = amcServiceDeluxePedicureMedical;
     s.name = @"Pedicure (medical - deluxe)";
     s.minimumCharge = @(43);
@@ -649,7 +649,7 @@ NSDate * amcsAutoLoadDate;
     [s addProductObject:amcProductOPIGel];
 
     // Makeup
-    amcServiceMakeupDaytime = [Service newObjectWithMoc:moc];
+    amcServiceMakeupDaytime = [Service createObjectInMoc:moc];
     s = amcServiceMakeupDaytime;
     s.name = @"Makeup (for daytime)";
     s.minimumCharge = @(25);
@@ -659,7 +659,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscMakeup;
     s.deluxe = @(NO);
     
-    amcServiceMakeupEveningParty = [Service newObjectWithMoc:moc];
+    amcServiceMakeupEveningParty = [Service createObjectInMoc:moc];
     s = amcServiceMakeupEveningParty;
     s.name = @"Makeup (for evening/party)";
     s.minimumCharge = @(25);
@@ -669,7 +669,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscMakeup;
     s.deluxe = @(NO);
     
-    amcServiceMakeupBridal = [Service newObjectWithMoc:moc];
+    amcServiceMakeupBridal = [Service createObjectInMoc:moc];
     s = amcServiceMakeupBridal;
     s.name = @"Makeup (for bridal)";
     s.minimumCharge = @(25);
@@ -679,7 +679,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscMakeup;
     s.deluxe = @(NO);
     
-    amcServiceEyebrowShaping = [Service newObjectWithMoc:moc];
+    amcServiceEyebrowShaping = [Service createObjectInMoc:moc];
     s = amcServiceEyebrowShaping;
     s.name = @"Eyebrow shaping (tweezers)";
     s.minimumCharge = @(6);
@@ -689,7 +689,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscMakeup;
     s.deluxe = @(NO);
     
-    amcServiceEyebrowColour = [Service newObjectWithMoc:moc];
+    amcServiceEyebrowColour = [Service createObjectInMoc:moc];
     s = amcServiceEyebrowColour;
     s.name = @"Eyebrow colouring";
     s.minimumCharge = @(10);
@@ -699,7 +699,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscMakeup;
     s.deluxe = @(NO);
     
-    amcServiceEyelashesOnly = [Service newObjectWithMoc:moc];
+    amcServiceEyelashesOnly = [Service createObjectInMoc:moc];
     s = amcServiceEyelashesOnly;
     s.name = @"Eyelashes only";
     s.minimumCharge = @(15);
@@ -709,7 +709,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscMakeup;
     s.deluxe = @(NO);
     
-    amcServiceEyelashExtensionFullSet = [Service newObjectWithMoc:moc];
+    amcServiceEyelashExtensionFullSet = [Service createObjectInMoc:moc];
     s = amcServiceEyelashExtensionFullSet;
     s.name = @"Eyelash extension (full set)";
     s.minimumCharge = @(35);
@@ -720,7 +720,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     
     // Waxing
-    amcServiceWaxingLip = [Service newObjectWithMoc:moc];
+    amcServiceWaxingLip = [Service createObjectInMoc:moc];
     s = amcServiceWaxingLip;
     s.name = @"Wax Lip";
     s.minimumCharge = @(7);
@@ -731,7 +731,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(5);
     
-    amcServiceWaxingChin = [Service newObjectWithMoc:moc];
+    amcServiceWaxingChin = [Service createObjectInMoc:moc];
     s = amcServiceWaxingChin;
     s.name = @"Wax Chin";
     s.minimumCharge = @(7);
@@ -742,7 +742,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(5);
     
-    amcServiceWaxingEyebrow = [Service newObjectWithMoc:moc];
+    amcServiceWaxingEyebrow = [Service createObjectInMoc:moc];
     s = amcServiceWaxingEyebrow;
     s.name = @"Wax Eyebrows";
     s.minimumCharge = @(7);
@@ -753,7 +753,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(10);
     
-    amcServiceWaxingEyebrowAndLip = [Service newObjectWithMoc:moc];
+    amcServiceWaxingEyebrowAndLip = [Service createObjectInMoc:moc];
     s = amcServiceWaxingEyebrowAndLip;
     s.name = @"Wax Eyebrows and Lip";
     s.minimumCharge = @(10);
@@ -764,7 +764,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(15);
 
-    amcServiceWaxingFullFace = [Service newObjectWithMoc:moc];
+    amcServiceWaxingFullFace = [Service createObjectInMoc:moc];
     s = amcServiceWaxingFullFace;
     s.name = @"Wax Face (other areas)";
     s.minimumCharge = @(20);
@@ -775,7 +775,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(15);
     
-    amcServiceWaxingUnderarm = [Service newObjectWithMoc:moc];
+    amcServiceWaxingUnderarm = [Service createObjectInMoc:moc];
     s = amcServiceWaxingUnderarm;
     s.name = @"Wax Underarms";
     s.minimumCharge = @(11);
@@ -786,7 +786,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(15);
     
-    amcServiceWaxingHalfArms = [Service newObjectWithMoc:moc];
+    amcServiceWaxingHalfArms = [Service createObjectInMoc:moc];
     s = amcServiceWaxingHalfArms;
     s.name = @"Wax Half Arms";
     s.minimumCharge = @(9);
@@ -797,7 +797,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(15);
     
-    amcServiceWaxingFullArms = [Service newObjectWithMoc:moc];
+    amcServiceWaxingFullArms = [Service createObjectInMoc:moc];
     s = amcServiceWaxingFullArms;
     s.name = @"Wax Full Arms";
     s.minimumCharge = @(19);
@@ -808,7 +808,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(30);
     
-    amcServiceWaxingHollywood = [Service newObjectWithMoc:moc];
+    amcServiceWaxingHollywood = [Service createObjectInMoc:moc];
     s = amcServiceWaxingHollywood;
     s.name = @"Bikini (hollywood)";
     s.minimumCharge = @(36);
@@ -819,7 +819,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(40);
     
-    amcServiceWaxingBrazilian = [Service newObjectWithMoc:moc];
+    amcServiceWaxingBrazilian = [Service createObjectInMoc:moc];
     s = amcServiceWaxingBrazilian;
     s.name = @"Bikini (brazilian)";
     s.minimumCharge = @(30);
@@ -830,7 +830,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(30);
     
-    amcServiceWaxingBikini = [Service newObjectWithMoc:moc];
+    amcServiceWaxingBikini = [Service createObjectInMoc:moc];
     s = amcServiceWaxingBikini;
     s.name = @"Bikini (bikini)";
     s.minimumCharge = @(18);
@@ -841,7 +841,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(15);
     
-    amcServiceWaxingFullLeg = [Service newObjectWithMoc:moc];
+    amcServiceWaxingFullLeg = [Service createObjectInMoc:moc];
     s = amcServiceWaxingFullLeg;
     s.name = @"Wax Full Legs";
     s.minimumCharge = @(24);
@@ -852,7 +852,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(30);
     
-    amcServiceWaxingHalfLeg = [Service newObjectWithMoc:moc];
+    amcServiceWaxingHalfLeg = [Service createObjectInMoc:moc];
     s = amcServiceWaxingHalfLeg;
     s.name = @"Wax Half Legs";
     s.minimumCharge = @(18);
@@ -863,7 +863,7 @@ NSDate * amcsAutoLoadDate;
     s.deluxe = @(NO);
     s.expectedTimeRequired = @(15);
     
-    amcServiceWaxingThreeQuartersLeg = [Service newObjectWithMoc:moc];
+    amcServiceWaxingThreeQuartersLeg = [Service createObjectInMoc:moc];
     s = amcServiceWaxingThreeQuartersLeg;
     s.name = @"Wax Three-quarter Legs";
     s.minimumCharge = @(20);
@@ -875,7 +875,7 @@ NSDate * amcsAutoLoadDate;
     s.expectedTimeRequired = @(18);
     
     // Packages
-    amcServicePackageManicureAndPedicure = [Service newObjectWithMoc:moc];
+    amcServicePackageManicureAndPedicure = [Service createObjectInMoc:moc];
     s = amcServicePackageManicureAndPedicure;
     s.name = @"Manicure & Pedicure";
     s.minimumCharge = @(60);
@@ -885,7 +885,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscPackages;
     s.deluxe = @(NO);
     
-    amcServicePackageWaxingFullBody = [Service newObjectWithMoc:moc];
+    amcServicePackageWaxingFullBody = [Service createObjectInMoc:moc];
     s = amcServicePackageWaxingFullBody;
     s.name = @"Full Body Wax";
     s.minimumCharge = @(97);
@@ -895,7 +895,7 @@ NSDate * amcsAutoLoadDate;
     s.serviceCategory = amcscPackages;
     s.deluxe = @(NO);
 
-    amcServicePackageHairCutStyleColour = [Service newObjectWithMoc:moc];
+    amcServicePackageHairCutStyleColour = [Service createObjectInMoc:moc];
     s = amcServicePackageHairCutStyleColour;
     s.name = @"Colour, Cut & Restyle";
     s.minimumCharge = @(50);

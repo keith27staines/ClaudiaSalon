@@ -9,7 +9,7 @@
 #import "Note.h"
 
 @implementation Note
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     Note * note = [NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];

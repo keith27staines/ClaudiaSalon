@@ -28,7 +28,7 @@
     NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:&error];
     return fetchedObjects;
 }
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc {
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc {
     BusinessFunction * action = [NSEntityDescription insertNewObjectForEntityForName:@"BusinessFunction" inManagedObjectContext:moc];
     return action;
 }

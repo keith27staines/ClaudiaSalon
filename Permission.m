@@ -19,7 +19,7 @@
     NSArray *fetchedObjects = [moc executeFetchRequest:fetchRequest error:nil];
     return fetchedObjects;
 }
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc {
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc {
     Permission * permission = [NSEntityDescription insertNewObjectForEntityForName:@"Permission" inManagedObjectContext:moc];
     return permission;
 }

@@ -24,7 +24,7 @@
 
 @implementation Sale
 
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     Sale * sale = [NSEntityDescription insertNewObjectForEntityForName:@"Sale" inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];

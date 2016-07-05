@@ -22,7 +22,7 @@
 
 @implementation Employee
 
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     Employee *employee = [NSEntityDescription insertNewObjectForEntityForName:@"Employee" inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];
@@ -41,7 +41,7 @@
     employee.startingDate = rightNow;
     employee.leavingDate = [NSDate distantFuture];
     employee.uid = @"";
-    employee.workRecordTemplate = [WorkRecord newObjectWithMoc:moc];
+    employee.workRecordTemplate = [WorkRecord createObjectInMoc:moc];
     Role * basicUserRole = [Salon salonWithMoc:moc].basicUserRole;
     if (basicUserRole) {
         [employee addRolesObject:basicUserRole];
@@ -98,7 +98,7 @@
 }
 -(void)ensureOneSalaryExists {
     if (!self.salaries || self.salaries.count == 0) {
-        Salary * salary = [Salary newObjectWithMoc:self.managedObjectContext];
+        Salary * salary = [Salary createObjectInMoc:self.managedObjectContext];
         salary.validFromDate = [self.startingDate copy];
         [self addSalariesObject:salary];
     }
@@ -110,7 +110,7 @@
 -(Salary*)endCurrentSalaryAndCreateNextOnDate:(NSDate*)lastDay {
     Salary * currentSalary = [self currentSalary];
     currentSalary.validToDate = [[lastDay endOfDay] dateByAddingTimeInterval:-1];
-    Salary * nextSalary = [Salary newObjectWithMoc:self.managedObjectContext];
+    Salary * nextSalary = [Salary createObjectInMoc:self.managedObjectContext];
     nextSalary.validFromDate = [[[lastDay endOfDay] dateByAddingTimeInterval:1] beginningOfDay];
     nextSalary.validToDate = [NSDate distantFuture];
     nextSalary.payByHour = [currentSalary.payByHour copy];
@@ -141,7 +141,7 @@
         }
     }
     if (workRecords.count == 0) {
-        WorkRecord * workRecord = [WorkRecord newObjectWithMoc:self.managedObjectContext];
+        WorkRecord * workRecord = [WorkRecord createObjectInMoc:self.managedObjectContext];
         Salon * salon = [Salon salonWithMoc:self.managedObjectContext];
         workRecord.weekEndingDate = [[date lastDayOfSalonWeek:salon] endOfDay];
         WorkRecord * templateWorkRecord = [self ensureWorkRecordTemplateExists];
@@ -153,7 +153,7 @@
 }
 -(WorkRecord*)ensureWorkRecordTemplateExists {
     if (!self.workRecordTemplate) {
-        WorkRecord * workRecord = [WorkRecord newObjectWithMoc:self.managedObjectContext];
+        WorkRecord * workRecord = [WorkRecord createObjectInMoc:self.managedObjectContext];
         workRecord.isTemplate = @YES;
         self.workRecordTemplate = workRecord;
     }

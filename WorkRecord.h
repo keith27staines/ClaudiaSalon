@@ -12,7 +12,7 @@
 @class Employee, Payment;
 
 @interface WorkRecord: NSManagedObject
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 @property (readonly) NSNumber * totalHoursForWeek;
 @property (readonly) NSNumber * daysWorked;

@@ -14,9 +14,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AccountReconciliation : NSManagedObject
-
-// Insert code here to declare functionality of your managed object subclass
-
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 @end
 
 NS_ASSUME_NONNULL_END

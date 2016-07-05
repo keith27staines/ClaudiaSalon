@@ -215,7 +215,7 @@
     }
 }
 - (IBAction)createNewRole:(id)sender {
-    Role * newRole = [Role newObjectWithMoc:self.documentMoc];
+    Role * newRole = [Role createObjectInMoc:self.documentMoc];
     newRole.name = self.roleName.stringValue;
     newRole.fullDescription = self.roleDescription.stringValue;
     for (NSDictionary * d in self.rolesToCopyArray) {
@@ -237,7 +237,7 @@
         NSSet * existingPermissions = [copyToRole.permissions filteredSetUsingPredicate:predicate];
         NSAssert(existingPermissions.count < 2,@"Should be only one permission mapping role to business function");
         if (existingPermissions.count == 0) {
-            copyToPermission = [Permission newObjectWithMoc:self.documentMoc];
+            copyToPermission = [Permission createObjectInMoc:self.documentMoc];
             copyToPermission.role = copyToRole;
             copyToPermission.businessFunction = copyFromPermission.businessFunction;
         } else {

@@ -15,7 +15,7 @@
 #import "Service.h"
 
 @implementation ServiceCategory
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     ServiceCategory * serviceCategory = [NSEntityDescription insertNewObjectForEntityForName:@"ServiceCategory"
                                                                       inManagedObjectContext:moc];

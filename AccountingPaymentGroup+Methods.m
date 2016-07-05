@@ -26,21 +26,21 @@
     }
     return fetchedObjects;
 }
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     AccountingPaymentGroup * group = [NSEntityDescription insertNewObjectForEntityForName:@"AccountingPaymentGroup" inManagedObjectContext:moc];
     return group;
 }
 +(void)buildDefaultGroupsForSalon:(Salon*)salon {
     if (!salon.rootAccountingGroup) {
-        AccountingPaymentGroup * root = [AccountingPaymentGroup newObjectWithMoc:salon.managedObjectContext];
+        AccountingPaymentGroup * root = [AccountingPaymentGroup createObjectInMoc:salon.managedObjectContext];
         root.isExpenditure = @YES;
         root.isIncome = @YES;
         root.isSystemCategory = @YES;
         root.name = @"Accounting Categories";
         salon.rootAccountingGroup = root;
         
-        AccountingPaymentGroup * income = [AccountingPaymentGroup newObjectWithMoc:salon.managedObjectContext];
+        AccountingPaymentGroup * income = [AccountingPaymentGroup createObjectInMoc:salon.managedObjectContext];
         income.isExpenditure = @NO;
         income.isIncome = @YES;
         income.isSystemCategory = @YES;
@@ -48,7 +48,7 @@
         income.parent = root;
         income.incomeRoot = salon;
         
-        AccountingPaymentGroup * expenditure = [AccountingPaymentGroup newObjectWithMoc:salon.managedObjectContext];
+        AccountingPaymentGroup * expenditure = [AccountingPaymentGroup createObjectInMoc:salon.managedObjectContext];
         expenditure.isExpenditure = @YES;
         expenditure.isIncome = @NO;
         expenditure.isSystemCategory = @YES;
@@ -75,7 +75,7 @@
     }
 }
 -(AccountingPaymentGroup*)addSubgroupWithName:(NSString*)name {
-    AccountingPaymentGroup * subgroup = [AccountingPaymentGroup newObjectWithMoc:self.managedObjectContext];
+    AccountingPaymentGroup * subgroup = [AccountingPaymentGroup createObjectInMoc:self.managedObjectContext];
     subgroup.name = name;
     subgroup.isIncome = self.isIncome;
     subgroup.isExpenditure = self.isExpenditure;

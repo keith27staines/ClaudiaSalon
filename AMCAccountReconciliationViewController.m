@@ -64,7 +64,7 @@
 }
 - (IBAction)addReconciliationButtonClicked:(id)sender {
     [self.reconciliationsTable.window endEditingFor:self.reconciliationsTable];
-    AccountReconciliation * reconciliation = [AccountReconciliation newObjectWithMoc:self.documentMoc];
+    AccountReconciliation * reconciliation = [AccountReconciliation createObjectInMoc:self.documentMoc];
     [self addReconciliation:reconciliation];
     [self displayBalance:self.account];
     [self.reconciliationsTable reloadData];

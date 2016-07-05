@@ -16,10 +16,10 @@
 @interface Salon : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
-
++(NSManagedObject * _Nonnull)createObjectInMoc:(NSManagedObjectContext* _Nonnull)moc;
 +(Salon * _Nonnull)salonWithMoc:(NSManagedObjectContext* _Nonnull)moc;
 +(Salon * _Nullable)defaultSalon:(NSManagedObjectContext * _Nonnull)moc;
-
++(NSArray * _Nonnull)allObjectsWithMoc:(NSManagedObjectContext* _Nonnull)moc;
 @end
 
 #import "Salon+CoreDataProperties.h"

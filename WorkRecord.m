@@ -12,7 +12,7 @@
 #import "NSDate+AMCDate.h"
 
 @implementation WorkRecord 
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     WorkRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"WorkRecord" inManagedObjectContext:moc];
     record.monday    = @8;

@@ -276,22 +276,22 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
     NSArray * categories = [StockedCategory allObjectsWithMoc:self.documentMoc];
     if (categories.count == 0) {
         StockedCategory * category;
-        category = [StockedCategory newObjectWithMoc:self.documentMoc];
+        category = [StockedCategory createObjectInMoc:self.documentMoc];
         category.categoryName = kCategoryNameHairColourTube;
-        category = [StockedCategory newObjectWithMoc:self.documentMoc];
+        category = [StockedCategory createObjectInMoc:self.documentMoc];
         category.categoryName = kCategoryNameHairColourOxydent;
-        category = [StockedCategory newObjectWithMoc:self.documentMoc];
+        category = [StockedCategory createObjectInMoc:self.documentMoc];
         category.categoryName = kCategoryNameHairColourBleach;
-        category = [StockedCategory newObjectWithMoc:self.documentMoc];
+        category = [StockedCategory createObjectInMoc:self.documentMoc];
         category.categoryName = kCategoryNameHairTreatment;
 
-        category = [StockedCategory newObjectWithMoc:self.documentMoc];
+        category = [StockedCategory createObjectInMoc:self.documentMoc];
         category.categoryName = kCategoryNameHairStylingMousse;
 
-        category = [StockedCategory newObjectWithMoc:self.documentMoc];
+        category = [StockedCategory createObjectInMoc:self.documentMoc];
         category.categoryName = kCategoryNameHairSpray;
         
-        category = [StockedCategory newObjectWithMoc:self.documentMoc];
+        category = [StockedCategory createObjectInMoc:self.documentMoc];
         category.categoryName = kCategoryNameMiscellaneous;
     }
 }
@@ -302,27 +302,27 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
     // create a basic set of default brands
     StockedBrand * brand;
     // NXT
-    brand = [StockedBrand newObjectWithMoc:self.documentMoc];
+    brand = [StockedBrand createObjectInMoc:self.documentMoc];
     brand.brandName = @"Next Generation";
     brand.shortBrandName = @"NXT";
     // L'Oreal
-    brand = [StockedBrand newObjectWithMoc:self.documentMoc];
+    brand = [StockedBrand createObjectInMoc:self.documentMoc];
     brand.brandName = @"L'Oreal Paris";
     brand.shortBrandName = @"L'Oreal";
     // OPI
-    brand = [StockedBrand newObjectWithMoc:self.documentMoc];
+    brand = [StockedBrand createObjectInMoc:self.documentMoc];
     brand.brandName = @"OPI";
     brand.shortBrandName = @"OPI";
     // Wella
-    brand = [StockedBrand newObjectWithMoc:self.documentMoc];
+    brand = [StockedBrand createObjectInMoc:self.documentMoc];
     brand.brandName = @"Wella";
     brand.shortBrandName = @"Wella";
     // Unique
-    brand = [StockedBrand newObjectWithMoc:self.documentMoc];
+    brand = [StockedBrand createObjectInMoc:self.documentMoc];
     brand.brandName = @"Unique";
     brand.shortBrandName = @"Unique";
     // TrueZone
-    brand = [StockedBrand newObjectWithMoc:self.documentMoc];
+    brand = [StockedBrand createObjectInMoc:self.documentMoc];
     brand.brandName = @"TrueZone";
     brand.shortBrandName = @"TrueZone";
 }
@@ -338,7 +338,7 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
                        reorderTrigger:(NSInteger)triggerlevel
                     currentStockLevel:(NSInteger)currentStock
 {
-    StockedProduct * product = [StockedProduct newObjectWithMoc:self.documentMoc];
+    StockedProduct * product = [StockedProduct createObjectInMoc:self.documentMoc];
     product.name = name;
     product.stockedBrand = brand;
     product.stockedCategory = category;
@@ -382,7 +382,7 @@ NSString * const kCategoryNameMiscellaneous     = @"Miscellaneous";
 
 -(IBAction)addNewProductClicked:(id)sender {
     self.objectSelectedBeforeEditorInvoked = self.selectedObject;
-    StockedProduct * product = [StockedProduct newObjectWithMoc:self.documentMoc];
+    StockedProduct * product = [StockedProduct createObjectInMoc:self.documentMoc];
     [self editObject:product forSalon:self.salonDocument inMode:EditModeCreate withViewController:self.editObjectViewController];
 }
 - (IBAction)searchFieldChanged:(id)sender {

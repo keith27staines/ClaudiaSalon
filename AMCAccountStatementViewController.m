@@ -179,7 +179,7 @@
 }
 - (IBAction)addItem:(id)sender {
     // Create a new payment
-    Payment * payment = [Payment newObjectWithMoc:self.documentMoc];
+    Payment * payment = [Payment createObjectInMoc:self.documentMoc];
     payment.account = self.account;
     self.editSaleViewController.editMode = EditModeCreate;
     self.editSaleViewController.allowUserToChangeAccount = YES;
@@ -287,7 +287,7 @@
     [alert addButtonWithTitle:@"Cancel"];
     [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSAlertFirstButtonReturn) {
-            AccountReconciliation * reconciliation = [AccountReconciliation newObjectWithMoc:self.documentMoc];
+            AccountReconciliation * reconciliation = [AccountReconciliation createObjectInMoc:self.documentMoc];
             reconciliation.actualBalance = @(self.balance);
             reconciliation.reconciliationDate = self.endDate;
             [self.account addReconciliationsObject:reconciliation];

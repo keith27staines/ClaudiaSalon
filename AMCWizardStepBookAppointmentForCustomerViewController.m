@@ -430,7 +430,7 @@
     [self presentViewController:vc asPopoverRelativeToRect:button.bounds ofView:button preferredEdge:NSMaxXEdge behavior:NSPopoverBehaviorApplicationDefined];
 }
 -(void)addSaleItemForService:(Service*)service performedBy:(Employee*)employee {
-    SaleItem * saleItem = [SaleItem newObjectWithMoc:self.documentMoc];
+    SaleItem * saleItem = [SaleItem createObjectInMoc:self.documentMoc];
     saleItem.service = service;
     saleItem.minimumCharge = service.minimumCharge;
     saleItem.maximumCharge = service.maximumCharge;

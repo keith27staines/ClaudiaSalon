@@ -11,7 +11,7 @@
 
 @interface StockedCategory (Methods) <AMCObjectWithNotesProtocol>
 
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(StockedCategory*)stockedCategoryWithName:(NSString*)name withMoc:(NSManagedObjectContext*)moc;
 -(NSSet*)nonAuditNotes;

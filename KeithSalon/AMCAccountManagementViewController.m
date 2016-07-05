@@ -38,7 +38,7 @@
 }
 
 - (IBAction)addAccount:(id)sender {
-    Account * account = [Account newObjectWithMoc:self.documentMoc];
+    Account * account = [Account createObjectInMoc:self.documentMoc];
     account.friendlyName = @"New account";
     [self.accountArrayController addObject:account];
 }

@@ -15,7 +15,7 @@
 #import "Customer.h"
 
 @implementation Appointment
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     Appointment * appointment = [NSEntityDescription insertNewObjectForEntityForName:@"Appointment" inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];
@@ -24,7 +24,7 @@
     appointment.appointmentDate = [NSDate distantPast];
     appointment.bookedDuration = @(0);
     Sale * sale;
-    sale = [Sale newObjectWithMoc:moc];
+    sale = [Sale createObjectInMoc:moc];
     sale.isQuote = @(YES);
     sale.hidden = @(YES);
     if ([appointment.appointmentDate isGreaterThan:[NSDate distantPast]]) {

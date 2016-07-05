@@ -20,7 +20,7 @@ enum DiscountType : Int {
 }
 
 // MARK:- abstract base class ICloudRecord
-public class ICloudRecord {
+class ICloudRecord {
     var cloudRecord:CKRecord?
     var recordChangedTag: String?
     var needsExortToCoredata = false
@@ -31,6 +31,24 @@ public class ICloudRecord {
     var updateStamp: String?
     var parentSalonReference: CKReference?
     var isActive = true
+    
+    class func makeICloudRecord(bqExportable: BQExportable, parentSalonID: NSManagedObjectID) -> ICloudRecord {
+        let cloudRecordType = ICloudRecordType(bqExportable: bqExportable)
+        switch cloudRecordType {
+        case .CRAppointment: return ICloudAppointment(coredataAppointment: bqExportable as! Appointment, parentSalonID: parentSalonID)
+        case .CRCustomer: return ICloudCustomer(coredataCustomer: bqExportable as! Customer, parentSalonID: parentSalonID)
+        case .CREmployee: return ICloudEmployee(coredataEmployee: bqExportable as! Employee, parentSalonID: parentSalonID)
+        case .CRSale: return ICloudSale(coredataSale: bqExportable as! Sale, parentSalonID: parentSalonID)
+        case .CRSaleItem: return ICloudSaleItem(coredataSaleItem: bqExportable as! SaleItem, parentSalonID: parentSalonID)
+        case .CRServiceCategory: return ICloudServiceCategory(coredataServiceCategory: bqExportable as! ServiceCategory, parentSalonID: parentSalonID)
+        case .CRSalon: return ICloudAppointment(coredataAppointment: bqExportable as! Appointment, parentSalonID: parentSalonID)
+        case .CRService: return ICloudService(coredataService: bqExportable as! Service, parentSalonID: parentSalonID)
+        case .CRAccount: return ICloudAccount(coredataAccount: bqExportable as! Account, parentSalonID: parentSalonID)
+        case .CRAccountReconciliation: return ICloudAccountReconciliation(coredataAccountReconciliation: bqExportable as! AccountReconciliation, parentSalonID: parentSalonID)
+        case .CRPaymentCategory: return ICloudPaymentCategory(coredataPaymentCategory: bqExportable as! PaymentCategory, parentSalonID: parentSalonID)
+        case .CRPayment: return ICloudPayment(coredataPayment: bqExportable as! Payment, parentSalonID: parentSalonID)
+        }
+    }
     
     private init() {
         assertionFailure("Not supported. Init from a managed object, CRRecord or CKReference instead")
@@ -52,14 +70,17 @@ public class ICloudRecord {
             let cloudRecordType = ICloudRecordType.typeFromCloudRecordType(self.cloudRecord!.recordType)
             switch cloudRecordType {
             case .CRSalon: exportable = Salon(moc: moc)
-            case .CRCustomer: exportable = Customer.newObjectWithMoc(moc)
-            case .CREmployee: exportable = Employee.newObjectWithMoc(moc)
-            case .CRServiceCategory: exportable = ServiceCategory.newObjectWithMoc(moc)
-            case .CRService: exportable = Service.newObjectWithMoc(moc)
-            case .CRAppointment: exportable = Appointment.newObjectWithMoc(moc)
-            case .CRSale: exportable = Sale.newObjectWithMoc(moc)
-            case .CRSaleItem: exportable = SaleItem.newObjectWithMoc(moc)
-            case .CRAccount: exportable = Account.newObjectWithMoc(moc)
+            case .CRCustomer: exportable = Customer.createBQExportableWithMoc(moc)
+            case .CREmployee: exportable = Employee.createBQExportableWithMoc(moc)
+            case .CRServiceCategory: exportable = ServiceCategory.createBQExportableWithMoc(moc)
+            case .CRService: exportable = Service.createBQExportableWithMoc(moc)
+            case .CRAppointment: exportable = Appointment.createBQExportableWithMoc(moc)
+            case .CRSale: exportable = Sale.createBQExportableWithMoc(moc)
+            case .CRSaleItem: exportable = SaleItem.createBQExportableWithMoc(moc)
+            case .CRAccount: exportable = Account.createBQExportableWithMoc(moc)
+            case .CRAccountReconciliation: exportable = AccountReconciliation.createBQExportableWithMoc(moc)
+            case .CRPaymentCategory: exportable = PaymentCategory.createBQExportableWithMoc(moc)
+            case .CRPayment: exportable = Payment.createBQExportableWithMoc(moc)
             }
         }
         guard let returnExportable = exportable else {
@@ -95,7 +116,7 @@ public class ICloudRecord {
         }
     }
     
-    private func makeCloudKitRecord()-> CKRecord {
+    func makeCloudKitRecord()-> CKRecord {
         let record:CKRecord
         if let recordID = self.recordID {
             record = CKRecord(recordType: self.recordType, recordID: recordID)
@@ -142,7 +163,7 @@ public class ICloudRecord {
 }
 
 // MARK:- class ICloudSalon
-public class ICloudSalon : ICloudRecord {
+class ICloudSalon : ICloudRecord {
     var name: String?
     var addressLine1: String?
     var addressLine2: String?
@@ -193,8 +214,33 @@ public class ICloudSalon : ICloudRecord {
         return bqExportable
     }
 }
+// MARK:- class ICloudAccount
+class ICloudAccount : ICloudRecord {
+    init(coredataAccount: Account, parentSalonID: NSManagedObjectID) {
+        fatalError("Not implemented yet")
+    }
+}
+// MARK:- class ICloudAccountReconciliation
+class ICloudAccountReconciliation : ICloudRecord {
+    init(coredataAccountReconciliation: AccountReconciliation, parentSalonID: NSManagedObjectID) {
+        fatalError("Not implemented yet")
+    }
+}
+// MARK:- class ICloudPaymentCategory
+class ICloudPaymentCategory : ICloudRecord {
+    init(coredataPaymentCategory: PaymentCategory, parentSalonID: NSManagedObjectID) {
+        fatalError("Not implemented yet")
+    }
+}
+// MARK:- class ICloudPayment
+class ICloudPayment : ICloudRecord {
+    init(coredataPayment: Payment, parentSalonID: NSManagedObjectID) {
+        fatalError("Not implemented yet")
+    }
+}
+
 // MARK:- class ICloudCustomer
-public class ICloudCustomer : ICloudRecord {
+class ICloudCustomer : ICloudRecord {
     var firstName: String?
     var lastName: String?
     var phone: String?
@@ -227,7 +273,7 @@ public class ICloudCustomer : ICloudRecord {
     }
 }
 // MARK:- class ICloudEmployee
-public class ICloudEmployee : ICloudRecord {
+class ICloudEmployee : ICloudRecord {
     var firstName: String?
     var lastName: String?
     var email: String?
@@ -272,7 +318,7 @@ public class ICloudEmployee : ICloudRecord {
     }
 }
 // MARK:- class ICloudServiceCategory
-public class ICloudServiceCategory : ICloudRecord {
+class ICloudServiceCategory : ICloudRecord {
     var parentCategoryReference: CKReference?
     var name: String?
     
@@ -308,7 +354,7 @@ public class ICloudServiceCategory : ICloudRecord {
     }
 }
 // MARK:- class ICloudService
-public class ICloudService : ICloudRecord {
+class ICloudService : ICloudRecord {
     var name: String?
     var minPrice: Double?
     var maxPrice: Double?

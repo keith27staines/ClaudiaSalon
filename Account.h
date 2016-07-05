@@ -15,7 +15,7 @@
 @interface Account: NSManagedObject
 
 NS_ASSUME_NONNULL_BEGIN
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 +accountWithFriendlyName:(NSString*)friendlyName withMoc:(NSManagedObjectContext*)moc;
 -(AccountReconciliation*)latestAccountReconcilliation;
 -(AccountReconciliation*)lastAccountReconcilliationOnOrBeforeDate:(NSDate*)date;

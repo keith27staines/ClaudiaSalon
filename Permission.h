@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Permission: NSManagedObject
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 +(Permission*)fetchPermissionWithRole:(Role*)role businessFunction:(BusinessFunction*)businessFunction;
 @end
 

@@ -40,7 +40,7 @@
 }
 
 -(IBAction)createCustomer:(id)sender {
-    Customer *customer = [Customer newObjectWithMoc:self.documentMoc];
+    Customer *customer = [Customer createObjectInMoc:self.documentMoc];
     customer.firstName = [self.firstName.stringValue capitalizedString];
     customer.lastName = [self.lastName.stringValue capitalizedString];
     customer.phone = self.phone.stringValue;

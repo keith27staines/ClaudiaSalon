@@ -21,17 +21,49 @@ protocol BQExportable: class {
     var managedObjectContext:NSManagedObjectContext? { get }
     func updateFromCloudRecord(record:CKRecord)
     func cascadeHasChangesUpdwards()
-    static func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable?
-    static func newExportableWithMoc(moc:NSManagedObjectContext) -> BQExportable
-
+    var objectID: NSManagedObjectID { get }
+    static func createObjectInMoc(moc:NSManagedObjectContext) -> NSManagedObject
+    //func prepareForInitialExport()
+    //static func makeExportRecords() -> [CKRecord]
 }
 
 extension BQExportable {
+    static func createBQExportableWithMoc(moc:NSManagedObjectContext) -> BQExportable {
+        return self.createObjectInMoc(moc) as! BQExportable
+    }
+    func prepareForInitialExport() {
+        self.bqNeedsCoreDataExport = true
+        self.bqHasClientChanges = false
+        self.bqMetadata = nil
+    }
+    static func makeExportRecords(bqExportables:[BQExportable], salonID: NSManagedObjectID) -> [CKRecord] {
+        var icloudRecords = [CKRecord]()
+
+        for bqExportable in bqExportables {
+            let icloudRecord = ICloudRecord.makeICloudRecord(bqExportable, parentSalonID: salonID)
+            let ckRecord = icloudRecord.makeCloudKitRecord()
+            icloudRecords.append(ckRecord)
+        }
+        return icloudRecords
+    }
+
+    static func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
+        let icloudRecordType = ICloudRecordType(bqExportableType: self)
+        let fetchRequest = NSFetchRequest(entityName: icloudRecordType.coredataEntityName())
+        let predicate = NSPredicate(format: "bqCloudID = %@", cloudID)
+        fetchRequest.predicate = predicate
+        var bqExportables = [BQExportable]()
+        moc.performBlockAndWait() {
+            bqExportables = try! moc.executeFetchRequest(fetchRequest) as! [BQExportable]
+        }
+        return bqExportables.first
+    }
+    
     static func fetchOrCreateBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable {
         if let bqExportable = self.fetchBQExportable(cloudID, moc: moc) {
             return bqExportable
         } else {
-            return self.newExportableWithMoc(moc)
+            return self.createObjectInMoc(moc) as! BQExportable
         }
     }
 
@@ -69,9 +101,7 @@ extension BQExportable {
 
 // MARK:- Account
 extension Account : BQExportable {
-    class func newExportableWithMoc(moc:NSManagedObjectContext) -> BQExportable {
-        return Account.newObjectWithMoc(moc)
-    }
+
     class func fetchBQExportable(cloudID: String, moc:NSManagedObjectContext) -> BQExportable? {
         return Account.fetchBQExportable(cloudID, moc: moc)
     }
@@ -96,11 +126,50 @@ extension Account : BQExportable {
         }
     }
 }
+// MARK:- AccountReconciliation : BQExportable
+extension AccountReconciliation : BQExportable {
+    func updateFromCloudRecord(record: CKRecord) {
+        
+    }
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return AccountReconciliation.createObjectInMoc(moc) as! BQExportable
+    }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        // We are already a top level object so there is nothing else do
+    }
+}
+// MARK: PaymentCategory : BQExportable
+extension PaymentCategory : BQExportable {
+    func updateFromCloudRecord(record: CKRecord) {
+        
+    }
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return AccountReconciliation.createObjectInMoc(moc) as! BQExportable
+    }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        // We are already a top level object so there is nothing else do
+    }
+}
+// MARK:- Payment : BQExportable 
+extension Payment : BQExportable {
+    func updateFromCloudRecord(record: CKRecord) {
+        
+    }
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return AccountReconciliation.createObjectInMoc(moc) as! BQExportable
+    }
+    func cascadeHasChangesUpdwards() {
+        self.bqHasClientChanges = true
+        // We are already a top level object so there is nothing else do
+    }
+}
 
 // MARK:- Salon
 extension Salon : BQExportable {
-    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
-        return Salon(moc: moc)
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Salon.createObjectInMoc(moc) as! BQExportable
     }
     class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
         return Salon.fetchForCloudID(cloudID, moc: moc)
@@ -148,8 +217,8 @@ extension Salon {
 
 // MARK:- Appointment
 extension Appointment : BQExportable {
-    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
-        return Appointment.newObjectWithMoc(moc)
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Appointment.createObjectInMoc(moc) as! BQExportable
     }
     class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
         return Appointment.fetchForCloudID(cloudID, moc: moc)
@@ -216,7 +285,7 @@ extension Appointment {
         var appointment:Appointment!
         moc.performBlockAndWait { () -> Void in
             precondition(record.recordType == "icloudAppointment", "Unable to create an appointment from this record \(record)")
-            appointment = Appointment.newObjectWithMoc(moc)
+            appointment = Appointment.createObjectInMoc(moc) as! Appointment
             appointment.updateFromCloudRecord(record)
         }
         return appointment
@@ -225,8 +294,8 @@ extension Appointment {
 
 // MARK:- Customer
 extension Customer : BQExportable {
-    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
-        return Customer.newObjectWithMoc(moc)
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Customer.createObjectInMoc(moc) as! BQExportable
     }
     class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
         return Customer.fetchForCloudID(cloudID, moc: moc)
@@ -263,7 +332,7 @@ extension Customer {
         var customer: Customer!
         moc.performBlockAndWait() {
             precondition(record.recordType == "icloudCustomer", "Unable to create a customer from this record \(record)")
-            customer = Customer.newObjectWithMoc(moc)
+            customer = Customer.createObjectInMoc(moc) as! Customer
             customer.updateFromCloudRecord(record)
         }
         return customer
@@ -294,8 +363,8 @@ extension Customer {
 }
 // MARK:- Employee
 extension Employee : BQExportable {
-    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
-        return Employee.newObjectWithMoc(moc)
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Employee.createObjectInMoc(moc) as! BQExportable
     }
     class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
         return Employee.fetchForCloudID(cloudID, moc: moc)
@@ -331,7 +400,7 @@ extension Employee {
         var employee: Employee!
         moc.performBlockAndWait() {
             precondition(record.recordType == "icloudEmployee", "Unable to create an Employee from this record \(record)")
-            employee = Employee.newObjectWithMoc(moc)
+            employee = Employee.createObjectInMoc(moc) as! Employee
             employee.updateFromCloudRecord(record)
         }
         return employee
@@ -365,8 +434,8 @@ extension Employee {
 }
 // MARK:- Service
 extension Service : BQExportable {
-    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
-        return Service.newObjectWithMoc(moc)
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Service.createObjectInMoc(moc) as! BQExportable
     }
     class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
         return Service.fetchForCloudID(cloudID, moc: moc)
@@ -381,7 +450,7 @@ extension Service {
         var service: Service!
         moc.performBlockAndWait() {
             precondition(record.recordType == "iCloudService", "Unable to create a Service from this record \(record)")
-            service = Service.newObjectWithMoc(moc)
+            service = Service.createObjectInMoc(moc) as! Service
             service.updateFromCloudRecord(record)
         }
         return service
@@ -434,8 +503,8 @@ extension Service {
 }
 // MARK:- ServiceCategory
 extension ServiceCategory : BQExportable {
-    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
-        return ServiceCategory.newObjectWithMoc(moc)
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return ServiceCategory.createObjectInMoc(moc) as! BQExportable
     }
     class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
         return ServiceCategory.fetchForCloudID(cloudID, moc: moc)
@@ -471,7 +540,7 @@ extension ServiceCategory {
         var serviceCategory: ServiceCategory!
         moc.performBlockAndWait() {
             precondition(record.recordType == "iCloudServiceCategory", "Unable to create a Service Category from this record \(record)")
-            serviceCategory = ServiceCategory.newObjectWithMoc(moc)
+            serviceCategory = ServiceCategory.createObjectInMoc(moc) as! ServiceCategory
             serviceCategory.updateFromCloudRecord(record)
         }
         return serviceCategory
@@ -500,8 +569,8 @@ extension ServiceCategory {
 }
 // MARK:- SaleItem
 extension SaleItem : BQExportable {
-    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
-        return SaleItem.newObjectWithMoc(moc)
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return SaleItem.createObjectInMoc(moc) as! BQExportable
     }
     class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
         return SaleItem.fetchForCloudID(cloudID, moc: moc)
@@ -530,7 +599,7 @@ extension SaleItem {
         var saleItem: SaleItem!
         moc.performBlockAndWait() {
             precondition(record.recordType == "icloudSaleItem", "Unable to create a SaleItem from this record \(record)")
-            saleItem = SaleItem.newObjectWithMoc(moc)
+            saleItem = SaleItem.createObjectInMoc(moc) as! SaleItem
             saleItem.updateFromCloudRecord(record)
         }
         return saleItem
@@ -568,8 +637,8 @@ extension SaleItem {
 
 // MARK:- Sale : BQExportable extension
 extension Sale : BQExportable {
-    class func newExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
-        return Sale.newObjectWithMoc(moc)
+    class func createBQExportableWithMoc(moc: NSManagedObjectContext) -> BQExportable {
+        return Sale.createObjectInMoc(moc) as! BQExportable
     }
     class func fetchBQExportable(cloudID: String, moc: NSManagedObjectContext) -> BQExportable? {
         return Sale.fetchForCloudID(cloudID, moc: moc)
@@ -599,7 +668,7 @@ extension Sale {
         var sale: Sale!
         moc.performBlockAndWait() {
             precondition(record.recordType == "icloudSale", "Unable to create a customer from this record \(record)")
-            sale = Sale.newObjectWithMoc(moc)
+            sale = Sale.createObjectInMoc(moc) as! Sale
             sale.isQuote = true
             sale.hidden = true
             sale.updateFromCloudRecord(record)

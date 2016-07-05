@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Customer : NSManagedObject <AMCObjectWithNotesProtocol>
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 -(NSNumber*)totalMoneySpent;
 -(NSNumber*)totalMoneyRefunded;
 -(NSNumber*)numberOfPreviousVisits;

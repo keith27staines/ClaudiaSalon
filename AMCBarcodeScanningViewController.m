@@ -103,7 +103,7 @@
     [self editObject:self.product inMode:EditModeView withViewController:self.stockedProductEditor];
 }
 - (IBAction)createProduct:(id)sender {
-    self.product = [StockedProduct newObjectWithMoc:self.documentMoc];
+    self.product = [StockedProduct createObjectInMoc:self.documentMoc];
     self.product.barcode = self.barcode.stringValue;
     [self editObject:self.product inMode:EditModeCreate withViewController:self.stockedProductEditor];
 }

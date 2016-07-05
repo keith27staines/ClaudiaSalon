@@ -111,7 +111,7 @@ class FindCustomerViewController: UIViewController {
             return
         }
         let moc = Coredata.sharedInstance.managedObjectContext
-        let customer = Customer.newObjectWithMoc(moc)
+        let customer = Customer.createObjectInMoc(moc)
         let names = fullName.componentsSeparatedByString(" ")
         customer.firstName = names[0]
         var lastName = ""

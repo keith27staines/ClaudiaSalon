@@ -160,7 +160,7 @@ static NSString * const kAMCExplanationText = @"kAMCExplanationText";
 }
 - (IBAction)yesButtonClicked:(id)sender {
     self.cancelled = NO;
-    Note * note = [Note newObjectWithMoc:self.documentMoc];
+    Note * note = [Note createObjectInMoc:self.documentMoc];
     self.appointment.completed = @(YES);
     self.appointment.completionType = @([self selectedOperationType]);
     if ([self.explanationText.stringValue isEqualToString:[AMCAppointmentCompletionBoilerPlate boilerPlateExplanationForCompletionType:[self selectedOperationType]]]) {

@@ -14,7 +14,7 @@
 
 @implementation Salary
 
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     Salary *salary = [NSEntityDescription insertNewObjectForEntityForName:@"Salary" inManagedObjectContext:moc];
     salary.extraHoursRate = @(0);

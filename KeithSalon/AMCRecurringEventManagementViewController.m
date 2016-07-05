@@ -56,7 +56,7 @@
     recurringItem.period = @(AMCRecurrencePeriodMonthly);
 
     // We make a voided payment as a template for future payments of this recurring item
-    recurringItem.paymentTemplate = [Payment newObjectWithMoc:self.documentMoc];
+    recurringItem.paymentTemplate = [Payment createObjectInMoc:self.documentMoc];
     recurringItem.paymentTemplate.voided = @(YES);
     recurringItem.paymentTemplate.payeeName = recurringItem.name;
     recurringItem.paymentTemplate.amount = @(0);

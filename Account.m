@@ -15,8 +15,7 @@
 #import "NSDate+AMCDate.h"
 
 @implementation Account
-
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc {
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc {
     Account * account = [NSEntityDescription insertNewObjectForEntityForName:@"Account" inManagedObjectContext:moc];
     account.friendlyName = @"friendly name";
     account.sortCode = @"";
@@ -48,7 +47,7 @@
                        direction:(NSString*)direction
                        payeeName:(NSString*)name
                           reason:(NSString*)reason {
-    Payment * newPayment = [Payment newObjectWithMoc:self.managedObjectContext];
+    Payment * newPayment = [Payment createObjectInMoc:self.managedObjectContext];
     newPayment.createdDate = date;
     newPayment.paymentDate = date;
     newPayment.payeeName = [name copy];
@@ -77,7 +76,7 @@
                        direction:(NSString*)direction
                        payeeName:(NSString*)name
                           reason:(NSString*)reason {
-    Payment * newPayment = [Payment newObjectWithMoc:self.managedObjectContext];
+    Payment * newPayment = [Payment createObjectInMoc:self.managedObjectContext];
     newPayment.createdDate = date;
     newPayment.paymentDate = date;
     newPayment.payeeName = [name copy];

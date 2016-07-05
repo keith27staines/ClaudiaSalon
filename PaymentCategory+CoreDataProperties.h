@@ -2,7 +2,7 @@
 //  PaymentCategory+CoreDataProperties.h
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/01/2016.
+//  Created by Keith Staines on 04/07/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,9 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PaymentCategory (CoreDataProperties)
 
+@property (nullable, nonatomic, retain) NSString *bqCloudID;
+@property (nullable, nonatomic, retain) NSNumber *bqHasClientChanges;
+@property (nullable, nonatomic, retain) NSData *bqMetadata;
+@property (nullable, nonatomic, retain) NSNumber *bqNeedsCoreDataExport;
 @property (nullable, nonatomic, retain) NSString *categoryName;
 @property (nullable, nonatomic, retain) NSDate *createdDate;
 @property (nullable, nonatomic, retain) NSString *fullDescription;
+@property (nullable, nonatomic, retain) NSNumber *isActive;
 @property (nullable, nonatomic, retain) NSNumber *isDefault;
 @property (nullable, nonatomic, retain) NSNumber *isDirectorsLoan;
 @property (nullable, nonatomic, retain) NSNumber *isManagersBudgetItem;
@@ -25,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSNumber *isSale;
 @property (nullable, nonatomic, retain) NSNumber *isStartupCost;
 @property (nullable, nonatomic, retain) NSNumber *isTransferBetweenAccounts;
+@property (nullable, nonatomic, retain) NSDate *lastUpdatedDate;
 @property (nullable, nonatomic, retain) Salon *defaultCategoryForMoneyTransfers;
 @property (nullable, nonatomic, retain) Salon *defaultCategoryForPayments;
 @property (nullable, nonatomic, retain) Salon *defaultCategoryForSales;

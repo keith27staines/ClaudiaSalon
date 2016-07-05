@@ -346,7 +346,6 @@
 		53D69D1D1A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C971A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m */; };
 		53D69D1E1A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69C981A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m */; };
 		53D69D3C1A9B240C0004CE10 /* Product+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CB61A9B240C0004CE10 /* Product+Methods.m */; };
-		53D69D431A9B240C0004CE10 /* AccountReconciliation+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CBD1A9B240C0004CE10 /* AccountReconciliation+Methods.m */; };
 		53D69D451A9B240C0004CE10 /* StockedBrand+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CBF1A9B240C0004CE10 /* StockedBrand+Methods.m */; };
 		53D69D461A9B240C0004CE10 /* StockedProduct+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CC01A9B240C0004CE10 /* StockedProduct+Methods.m */; };
 		53D69D471A9B240C0004CE10 /* StockedItem+Methods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D69CC11A9B240C0004CE10 /* StockedItem+Methods.m */; };
@@ -871,7 +870,6 @@
 		53D69C971A9B240C0004CE10 /* AMCAppointmentCompletionBoilerPlate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCAppointmentCompletionBoilerPlate.m; sourceTree = "<group>"; };
 		53D69C981A9B240C0004CE10 /* AMCCompleteAppointmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMCCompleteAppointmentViewController.m; sourceTree = "<group>"; };
 		53D69CB61A9B240C0004CE10 /* Product+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Product+Methods.m"; sourceTree = "<group>"; };
-		53D69CBD1A9B240C0004CE10 /* AccountReconciliation+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AccountReconciliation+Methods.m"; sourceTree = "<group>"; };
 		53D69CBF1A9B240C0004CE10 /* StockedBrand+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "StockedBrand+Methods.m"; sourceTree = "<group>"; };
 		53D69CC01A9B240C0004CE10 /* StockedProduct+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "StockedProduct+Methods.m"; sourceTree = "<group>"; };
 		53D69CC11A9B240C0004CE10 /* StockedItem+Methods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "StockedItem+Methods.m"; sourceTree = "<group>"; };
@@ -959,7 +957,6 @@
 		53D69DA71A9B243C0004CE10 /* AMCCompleteAppointmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCCompleteAppointmentViewController.h; sourceTree = "<group>"; };
 		53D69DC51A9B243C0004CE10 /* Product+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Product+Methods.h"; sourceTree = "<group>"; };
 		53D69DCA1A9B243C0004CE10 /* AMCObjectWithNotesProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMCObjectWithNotesProtocol.h; sourceTree = "<group>"; };
-		53D69DCD1A9B243C0004CE10 /* AccountReconciliation+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AccountReconciliation+Methods.h"; sourceTree = "<group>"; };
 		53D69DCF1A9B243C0004CE10 /* StockedBrand+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StockedBrand+Methods.h"; sourceTree = "<group>"; };
 		53D69DD01A9B243C0004CE10 /* StockedProduct+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StockedProduct+Methods.h"; sourceTree = "<group>"; };
 		53D69DD11A9B243C0004CE10 /* StockedItem+Methods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StockedItem+Methods.h"; sourceTree = "<group>"; };
@@ -2495,12 +2492,6 @@
 				536B9E241C56077D00F170EC /* LastUpdatedBy+CoreDataProperties.m */,
 				536B9E251C56077D00F170EC /* LastUpdatedBy.h */,
 				536B9E261C56077D00F170EC /* LastUpdatedBy.m */,
-				53D69DCD1A9B243C0004CE10 /* AccountReconciliation+Methods.h */,
-				53D69CBD1A9B240C0004CE10 /* AccountReconciliation+Methods.m */,
-				536B9E2B1C56077D00F170EC /* AccountReconciliation+CoreDataProperties.h */,
-				536B9E2C1C56077D00F170EC /* AccountReconciliation+CoreDataProperties.m */,
-				536B9E2D1C56077D00F170EC /* AccountReconciliation.h */,
-				536B9E2E1C56077D00F170EC /* AccountReconciliation.m */,
 				536B9E431C56077E00F170EC /* ShoppingListItem+CoreDataProperties.h */,
 				536B9E441C56077E00F170EC /* ShoppingListItem+CoreDataProperties.m */,
 				536B9E451C56077E00F170EC /* ShoppingListItem.h */,
@@ -2570,6 +2561,22 @@
 		53FDCA611C79CF8E006B4002 /* Coredata  */ = {
 			isa = PBXGroup;
 			children = (
+				536B9DE31C56077D00F170EC /* Account+CoreDataProperties.h */,
+				536B9DE41C56077D00F170EC /* Account+CoreDataProperties.m */,
+				536B9DE51C56077D00F170EC /* Account.h */,
+				536B9DE61C56077D00F170EC /* Account.m */,
+				536B9E2B1C56077D00F170EC /* AccountReconciliation+CoreDataProperties.h */,
+				536B9E2C1C56077D00F170EC /* AccountReconciliation+CoreDataProperties.m */,
+				536B9E2D1C56077D00F170EC /* AccountReconciliation.h */,
+				536B9E2E1C56077D00F170EC /* AccountReconciliation.m */,
+				536B9E371C56077E00F170EC /* PaymentCategory+CoreDataProperties.h */,
+				536B9E381C56077E00F170EC /* PaymentCategory+CoreDataProperties.m */,
+				536B9E391C56077E00F170EC /* PaymentCategory.h */,
+				536B9E3A1C56077E00F170EC /* PaymentCategory.m */,
+				536B9E511C56077E00F170EC /* Payment+CoreDataProperties.h */,
+				536B9E521C56077E00F170EC /* Payment+CoreDataProperties.m */,
+				536B9E531C56077E00F170EC /* Payment.h */,
+				536B9E541C56077E00F170EC /* Payment.m */,
 				5358DD581C8C93DF009DD63E /* CalendarDay+CoreDataProperties.h */,
 				5358DD591C8C93DF009DD63E /* CalendarDay+CoreDataProperties.m */,
 				5358DD5A1C8C93DF009DD63E /* CalendarDay.h */,
@@ -2623,10 +2630,6 @@
 				536B9E211C56077D00F170EC /* Appointment.h */,
 				536B9E221C56077D00F170EC /* Appointment.m */,
 				5330544C1AE4EA49007B1264 /* ClaudiasSalon.xcdatamodeld */,
-				536B9E371C56077E00F170EC /* PaymentCategory+CoreDataProperties.h */,
-				536B9E381C56077E00F170EC /* PaymentCategory+CoreDataProperties.m */,
-				536B9E391C56077E00F170EC /* PaymentCategory.h */,
-				536B9E3A1C56077E00F170EC /* PaymentCategory.m */,
 				536B9E271C56077D00F170EC /* Permission+CoreDataProperties.h */,
 				536B9E281C56077D00F170EC /* Permission+CoreDataProperties.m */,
 				536B9E291C56077D00F170EC /* Permission.h */,
@@ -2647,14 +2650,6 @@
 				536B9E301C56077D00F170EC /* Note+CoreDataProperties.m */,
 				536B9E311C56077D00F170EC /* Note.h */,
 				536B9E321C56077D00F170EC /* Note.m */,
-				536B9DE31C56077D00F170EC /* Account+CoreDataProperties.h */,
-				536B9DE41C56077D00F170EC /* Account+CoreDataProperties.m */,
-				536B9DE51C56077D00F170EC /* Account.h */,
-				536B9DE61C56077D00F170EC /* Account.m */,
-				536B9E511C56077E00F170EC /* Payment+CoreDataProperties.h */,
-				536B9E521C56077E00F170EC /* Payment+CoreDataProperties.m */,
-				536B9E531C56077E00F170EC /* Payment.h */,
-				536B9E541C56077E00F170EC /* Payment.m */,
 				536B9E3B1C56077E00F170EC /* BusinessFunction+CoreDataProperties.h */,
 				536B9E3C1C56077E00F170EC /* BusinessFunction+CoreDataProperties.m */,
 				536B9E3D1C56077E00F170EC /* BusinessFunction.h */,
@@ -3047,7 +3042,6 @@
 				536B9E6C1C56077E00F170EC /* Employee.m in Sources */,
 				536B9E741C56077E00F170EC /* StockedItem.m in Sources */,
 				537ABAC51D250783005D7816 /* AppointmentBuilderProtocol.swift in Sources */,
-				53D69D431A9B240C0004CE10 /* AccountReconciliation+Methods.m in Sources */,
 				536B9E911C56077E00F170EC /* Service+CoreDataProperties.m in Sources */,
 				53D325661A9B9D2300AFCDE4 /* NSViewController+SalonMethods.m in Sources */,
 				53D69CF31A9B240C0004CE10 /* AMCDayAndMonthPopupViewController.m in Sources */,

@@ -26,7 +26,17 @@
 @implementation Salon
 
 // Insert code here to add functionality to your managed object subclass
-
++(NSManagedObject* _Nonnull)createObjectInMoc:(NSManagedObjectContext* _Nonnull)moc {
+    Salon * salon = [NSEntityDescription insertNewObjectForEntityForName:@"Salon" inManagedObjectContext:moc];
+    salon.salonName = @"New Salon";
+    salon.firstDayOfTrading = [NSDate date];
+    salon.firstDayOfWeek = @(1);
+    salon.startOfAccountingYear = salon.firstDayOfTrading;
+    [salon addOpeningHoursWeekTemplate];
+    [salon addDefaultAccounts];
+    [salon addDefaultPaymentCategories];
+    return salon;
+}
 +(Salon * _Nullable)defaultSalon:(NSManagedObjectContext * _Nonnull)moc {
     Salon * salon = nil;
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -70,6 +80,12 @@
     [salon addDefaultPaymentCategories];
     return salon;
 }
++(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc {
+    NSArray * array = nil;
+    NSFetchRequest * fetch = [NSFetchRequest fetchRequestWithEntityName:@"Salon"];
+    array = [moc executeFetchRequest:fetch error:nil];
+    return array;
+}
 -(void)addOpeningHoursWeekTemplate {
     OpeningHoursWeekTemplate * openingHoursWeekTemplate = [NSEntityDescription insertNewObjectForEntityForName:@"OpeningHoursWeekTemplate" inManagedObjectContext:self.managedObjectContext];
     openingHoursWeekTemplate.salon = self;
@@ -87,9 +103,9 @@
 -(void)addDefaultAccounts {
     NSArray * accounts = [Account allObjectsWithMoc:self.managedObjectContext];
     if (accounts.count == 0) {
-        self.tillAccount = [Account newObjectWithMoc:self.managedObjectContext];
-        self.cardPaymentAccount = [Account newObjectWithMoc:self.managedObjectContext];
-        self.primaryBankAccount = [Account newObjectWithMoc:self.managedObjectContext];
+        self.tillAccount = [Account createObjectInMoc:self.managedObjectContext];
+        self.cardPaymentAccount = [Account createObjectInMoc:self.managedObjectContext];
+        self.primaryBankAccount = [Account createObjectInMoc:self.managedObjectContext];
         self.tillAccount.friendlyName = @"Till Account";
         self.cardPaymentAccount.friendlyName = @"Card Payment Account";
         self.primaryBankAccount.friendlyName = @"Primary bank account";
@@ -97,28 +113,28 @@
 }
 -(void)addDefaultPaymentCategories {
     if (!self.defaultPaymentCategoryForSales) {
-        self.defaultPaymentCategoryForSales = [PaymentCategory newObjectWithMoc:self.managedObjectContext];
+        self.defaultPaymentCategoryForSales = [PaymentCategory createObjectInMoc:self.managedObjectContext];
         self.defaultPaymentCategoryForSales.categoryName = @"Sales";
         self.defaultPaymentCategoryForSales.isManagersBudgetItem = @NO;
         self.defaultPaymentCategoryForSales.isSale = @YES;
         self.defaultPaymentCategoryForSales.fullDescription = @"Payments from sales";
     }
     if (!self.defaultPaymentCategoryForPayments) {
-        self.defaultPaymentCategoryForPayments = [PaymentCategory newObjectWithMoc:self.managedObjectContext];
+        self.defaultPaymentCategoryForPayments = [PaymentCategory createObjectInMoc:self.managedObjectContext];
         self.defaultPaymentCategoryForPayments.categoryName = @"Awaiting categorisation";
         self.defaultPaymentCategoryForPayments.isManagersBudgetItem = @NO;
         self.defaultPaymentCategoryForPayments.isDefault = @YES;
         self.defaultPaymentCategoryForPayments.fullDescription = @"These payments are waiting to be assigned to the correct category";
     }
     if (!self.defaultPaymentCategoryForMoneyTransfers) {
-        self.defaultPaymentCategoryForMoneyTransfers = [PaymentCategory newObjectWithMoc:self.managedObjectContext];
+        self.defaultPaymentCategoryForMoneyTransfers = [PaymentCategory createObjectInMoc:self.managedObjectContext];
         self.defaultPaymentCategoryForMoneyTransfers.categoryName = @"Money transfer";
         self.defaultPaymentCategoryForMoneyTransfers.isManagersBudgetItem = @NO;
         self.defaultPaymentCategoryForMoneyTransfers.isSale = @YES;
         self.defaultPaymentCategoryForMoneyTransfers.fullDescription = @"Transfer money between salon accounts";
     }
     if (!self.defaultPaymentCategoryForWages) {
-        self.defaultPaymentCategoryForWages = [PaymentCategory newObjectWithMoc:self.managedObjectContext];
+        self.defaultPaymentCategoryForWages = [PaymentCategory createObjectInMoc:self.managedObjectContext];
         self.defaultPaymentCategoryForWages.categoryName = @"Wages";
         self.defaultPaymentCategoryForWages.isManagersBudgetItem = @NO;
         self.defaultPaymentCategoryForWages.isSalary = @YES;

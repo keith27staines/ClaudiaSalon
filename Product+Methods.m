@@ -9,7 +9,7 @@
 #import "Product+Methods.h"
 
 @implementation Product (Methods)
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     Product * product = [NSEntityDescription insertNewObjectForEntityForName:@"Product" inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];

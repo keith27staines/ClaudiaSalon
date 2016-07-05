@@ -18,7 +18,7 @@
 #import "Account.h"
 
 @implementation Service
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     Service * service = [NSEntityDescription insertNewObjectForEntityForName:@"Service" inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];

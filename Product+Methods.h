@@ -11,6 +11,6 @@
 #import "AMCObjectWithNotesProtocol.h"
 
 @interface Product (Methods) <AMCObjectWithNotesProtocol>
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 @end

@@ -597,7 +597,7 @@ NSAnimationDelegate>
     self.currentWizard = [[AMCWizardForNewAppointmentWindowController alloc] init];
     self.currentWizard.editMode = editMode;
     if (editMode == EditModeCreate) {
-        self.currentWizard.objectToManage = [Appointment newObjectWithMoc:self.documentMoc];
+        self.currentWizard.objectToManage = [Appointment createObjectInMoc:self.documentMoc];
     } else {
         self.currentWizard.objectToManage = [self selectedAppointment];
         for (SaleItem * saleItem in self.selectedAppointment.sale.saleItem) {

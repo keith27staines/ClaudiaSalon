@@ -221,7 +221,7 @@ class RobustImporter : RobustImporterDelegate {
             let BQType = ICloudRecordType.bqExportableType(self.recordType) 
             bqExportable = BQType.fetchBQExportable(recordName, moc: self.moc)
             if bqExportable == nil {
-                bqExportable = BQType.newExportableWithMoc(self.moc)
+                bqExportable = BQType.createBQExportableWithMoc(self.moc)
             }
             let cloudRecordChangeTag = cloudRecord.recordChangeTag
             let coredataRecordChangeTag = bqExportable.recordChangeTag()
@@ -312,7 +312,14 @@ extension RobustImporter {
             return SaleItemImporter(key: "saleItem", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record:record , successRequired: true, delegate: delegate)
         case .CRAccount:
             return AccountImporter(key: "account", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record: record, successRequired: true, delegate: delegate)
+        case .CRAccountReconciliation:
+            return AccountReconciliationImporter(key: "accountReconciliation", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record: record, successRequired: true, delegate: delegate)
+        case .CRPaymentCategory:
+            return PaymentCategoryImporter(key: "paymentCategory", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record: record, successRequired: true, delegate: delegate)
+        case .CRPayment:
+            return PaymentImporter(key: "payment", moc: moc, cloudDatabase: cloudDatabase, recordID: recordID, record: record, successRequired: true, delegate: delegate)
         }
+
     }
 }
 
@@ -661,6 +668,25 @@ class CustomerImporter : ChildlessRobustImporter {
 class AccountImporter : RobustImporter {
     
 }
+
+//////////////////////////////////////////////////////
+// MARK:- AccountReconciliationImporter (RobustImporter sublcass) -
+class AccountReconciliationImporter : RobustImporter {
+    
+}
+
+//////////////////////////////////////////////////////
+// MARK:- PaymentCategoryImporter (RobustImporter sublcass) -
+class PaymentCategoryImporter : RobustImporter {
+    
+}
+
+//////////////////////////////////////////////////////
+// MARK:- PaymentImporter (RobustImporter sublcass) -
+class PaymentImporter : RobustImporter {
+    
+}
+
 
 //////////////////////////////////////////////////////
 // MARK:- SaleItemImporter (RobustImporter sublcass) -

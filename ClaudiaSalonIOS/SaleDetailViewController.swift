@@ -55,7 +55,7 @@ class SaleDetailViewController: UITableViewController, NSFetchedResultsControlle
     
     func insertNewObject(sender: AnyObject) {
         let moc = Coredata.sharedInstance.managedObjectContext
-        let saleItem = SaleItem.newObjectWithMoc(moc)
+        let saleItem = SaleItem.createObjectInMoc(moc)
         saleItem.sale = self.sale
         self.saleItemBeingEdited = saleItem
         self.saleItemWasUpdated(saleItem)

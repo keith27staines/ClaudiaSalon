@@ -34,7 +34,7 @@
     return _objectWithNotes;
 }
 - (IBAction)addNoteButtonClicked:(id)sender {
-    Note * newNote = [Note newObjectWithMoc:self.documentMoc];
+    Note * newNote = [Note createObjectInMoc:self.documentMoc];
     newNote.isAuditNote = @(NO);
     newNote.title = nil;
     newNote.text = nil;

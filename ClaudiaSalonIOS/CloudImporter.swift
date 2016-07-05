@@ -285,15 +285,18 @@ class BQCloudImporter : NSObject {
         let managedObject = bqExportable as! NSManagedObject
         guard bqExportableType == managedObject.dynamicType else { fatalError("Coredata type and cloud record type are inconsistent")}
         switch cloudRecordType {
-        case .CRAccount:         return deepProcessAccountRecord((bqExportable as! Account, record))
-        case .CRAppointment:     return deepProcessAppointmentRecord((bqExportable as! Appointment, record))
-        case .CRCustomer:        return deepProcessCustomerRecord((bqExportable as! Customer, record))
-        case .CREmployee:        return deepProcessEmployeeRecord((bqExportable as! Employee, record))
-        case .CRSale:            return deepProcessSaleRecord((bqExportable as! Sale, record))
-        case .CRSaleItem:        return deepProcessSaleItemRecord((bqExportable as! SaleItem, record))
-        case .CRSalon:           return deepProcessSalonRecord((bqExportable as! Salon, record))
-        case .CRService:         return deepProcessServiceRecord((bqExportable as! Service, record))
-        case .CRServiceCategory: return deepProcessServiceCategoryRecord((bqExportable as! ServiceCategory, record))
+        case .CRAppointment:           return deepProcessAppointmentRecord((bqExportable as! Appointment, record))
+        case .CRCustomer:              return deepProcessCustomerRecord((bqExportable as! Customer, record))
+        case .CREmployee:              return deepProcessEmployeeRecord((bqExportable as! Employee, record))
+        case .CRSale:                  return deepProcessSaleRecord((bqExportable as! Sale, record))
+        case .CRSaleItem:              return deepProcessSaleItemRecord((bqExportable as! SaleItem, record))
+        case .CRSalon:                 return deepProcessSalonRecord((bqExportable as! Salon, record))
+        case .CRService:               return deepProcessServiceRecord((bqExportable as! Service, record))
+        case .CRServiceCategory:       return deepProcessServiceCategoryRecord((bqExportable as! ServiceCategory, record))
+        case .CRAccount:               return deepProcessAccountRecord((bqExportable as! Account, record))
+        case .CRAccountReconciliation: return deepProcessAccountReconciliationRecord((bqExportable as! AccountReconciliation, record))
+        case .CRPaymentCategory:       return deepProcessPaymentCategoryRecord((bqExportable as! PaymentCategory, record))
+        case .CRPayment:               return deepProcessPaymentRecord((bqExportable as! Payment, record))
         }
     }
     
@@ -528,7 +531,7 @@ class BQCloudImporter : NSObject {
                 var appointment:Appointment?
                 appointment = Appointment.fetchForCloudID(recordName, moc: self.moc)
                 if appointment == nil {
-                    appointment = Appointment.newObjectWithMoc(self.moc)
+                    appointment = (Appointment.createObjectInMoc(self.moc) as! Appointment)
                 }
                 appointment!.updateFromCloudRecordIfNeeded(record)
                 self.appointments.append((appointment!,record))
@@ -536,7 +539,7 @@ class BQCloudImporter : NSObject {
                 var customer:Customer?
                 customer = Customer.fetchForCloudID(recordName, moc: self.moc)
                 if customer == nil {
-                    customer = Customer.newObjectWithMoc(self.moc)
+                    customer = (Customer.createObjectInMoc(self.moc) as! Customer)
                 }
                 customer!.updateFromCloudRecordIfNeeded(record)
                 self.customers.append((customer!, record))
@@ -544,7 +547,7 @@ class BQCloudImporter : NSObject {
                 var employee:Employee?
                 employee = Employee.fetchForCloudID(recordName, moc: self.moc)
                 if employee == nil {
-                    employee = Employee.newObjectWithMoc(self.moc)
+                    employee = (Employee.createObjectInMoc(self.moc) as! Employee)
                 }
                 employee!.updateFromCloudRecordIfNeeded(record)
                 self.employees.append((employee!, record))
@@ -552,7 +555,7 @@ class BQCloudImporter : NSObject {
                 var sale:Sale?
                 sale = Sale.fetchForCloudID(recordName, moc: self.moc)
                 if sale == nil {
-                    sale = Sale.newObjectWithMoc(self.moc)
+                    sale = (Sale.createObjectInMoc(self.moc) as! Sale)
                 }
                 sale!.updateFromCloudRecordIfNeeded(record)
                 self.sales.append((sale!,record))
@@ -560,7 +563,7 @@ class BQCloudImporter : NSObject {
                 var saleItem:SaleItem?
                 saleItem = SaleItem.fetchForCloudID(recordName, moc: self.moc)
                 if saleItem == nil {
-                    saleItem = SaleItem.newObjectWithMoc(self.moc)
+                    saleItem = (SaleItem.createObjectInMoc(self.moc) as! SaleItem)
                 }
                 saleItem!.updateFromCloudRecordIfNeeded(record)
                 self.saleItems.append((saleItem!,record))
@@ -577,7 +580,7 @@ class BQCloudImporter : NSObject {
                 var service:Service?
                 service = Service.fetchForCloudID(recordName, moc: self.moc)
                 if service == nil {
-                    service = Service.newObjectWithMoc(self.moc)
+                    service = (Service.createObjectInMoc(self.moc) as! Service)
                 }
                 service!.updateFromCloudRecordIfNeeded(record)
                 self.services.append((service!,record))
@@ -585,7 +588,7 @@ class BQCloudImporter : NSObject {
                 var serviceCategory:ServiceCategory?
                 serviceCategory = ServiceCategory.fetchForCloudID(recordName, moc: self.moc)
                 if serviceCategory == nil {
-                    serviceCategory = ServiceCategory.newObjectWithMoc(self.moc)
+                    serviceCategory = (ServiceCategory.createObjectInMoc(self.moc) as! ServiceCategory)
                 }
                 serviceCategory!.updateFromCloudRecordIfNeeded(record)
                 self.serviceCategories.append((serviceCategory!,record))

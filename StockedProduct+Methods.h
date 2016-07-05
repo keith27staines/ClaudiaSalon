@@ -11,7 +11,7 @@
 #import "AMCObjectWithNotesProtocol.h"
 
 @interface StockedProduct (Methods) <AMCObjectWithNotesProtocol>
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 -(NSSet*)nonAuditNotes;
 +(NSArray*)allProductsForCategory:(StockedCategory*)category withMoc:(NSManagedObjectContext*)moc;

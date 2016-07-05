@@ -138,7 +138,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
 
     func insertNewObject(sender: AnyObject) {
-        let appointment = Appointment.newObjectWithMoc(self.moc)
+        let appointment = Appointment.createObjectInMoc(self.moc)
         appointment.customer = self.salon.anonymousCustomer
         appointment.sale?.customer = self.salon.anonymousCustomer
         appointment.appointmentDate = NSDate()

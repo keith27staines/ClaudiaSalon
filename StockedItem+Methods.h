@@ -10,7 +10,7 @@
 #import "AMCObjectWithNotesProtocol.h"
 
 @interface StockedItem (Methods) <AMCObjectWithNotesProtocol>
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 -(NSSet*)nonAuditNotes;
 @end

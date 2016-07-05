@@ -12,7 +12,7 @@
 #import "StockedCategory+Methods.h"
 
 @implementation StockedProduct (Methods)
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     StockedProduct *stockedProduct = [NSEntityDescription insertNewObjectForEntityForName:@"StockedProduct" inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];

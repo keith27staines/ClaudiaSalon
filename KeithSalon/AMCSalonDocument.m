@@ -218,10 +218,10 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     // Begin Service category data fix
     ServiceCategory * rootServiceCategory = _salon.rootServiceCategory;
     if (!rootServiceCategory) {
-        rootServiceCategory   = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
+        rootServiceCategory   = [ServiceCategory createObjectInMoc:self.managedObjectContext];
         _salon.rootServiceCategory = rootServiceCategory;
-        ServiceCategory * hairCategory = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
-        ServiceCategory * beautyCategory = [ServiceCategory newObjectWithMoc:self.managedObjectContext];
+        ServiceCategory * hairCategory = [ServiceCategory createObjectInMoc:self.managedObjectContext];
+        ServiceCategory * beautyCategory = [ServiceCategory createObjectInMoc:self.managedObjectContext];
 
         rootServiceCategory.name   = @"Service Categories";
         hairCategory.name   = @"Hair";
@@ -276,13 +276,13 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
     
     // Roles
     if ([Role allObjectsWithMoc:self.managedObjectContext].count == 0) {
-        self.salon.systemRole       = [Role newObjectWithMoc:self.managedObjectContext];
-        self.salon.systemAdminRole  = [Role newObjectWithMoc:self.managedObjectContext];
-        self.salon.devSupportRole   = [Role newObjectWithMoc:self.managedObjectContext];
-        self.salon.managerRole      = [Role newObjectWithMoc:self.managedObjectContext];
-        self.salon.accountantRole   = [Role newObjectWithMoc:self.managedObjectContext];
-        self.salon.receptionistRole = [Role newObjectWithMoc:self.managedObjectContext];
-        self.salon.basicUserRole    = [Role newObjectWithMoc:self.managedObjectContext];
+        self.salon.systemRole       = [Role createObjectInMoc:self.managedObjectContext];
+        self.salon.systemAdminRole  = [Role createObjectInMoc:self.managedObjectContext];
+        self.salon.devSupportRole   = [Role createObjectInMoc:self.managedObjectContext];
+        self.salon.managerRole      = [Role createObjectInMoc:self.managedObjectContext];
+        self.salon.accountantRole   = [Role createObjectInMoc:self.managedObjectContext];
+        self.salon.receptionistRole = [Role createObjectInMoc:self.managedObjectContext];
+        self.salon.basicUserRole    = [Role createObjectInMoc:self.managedObjectContext];
         self.salon.systemRole.name       = @"System";
         self.salon.systemAdminRole.name  = @"System Administrator";
         self.salon.devSupportRole.name   = @"Dev";
@@ -322,12 +322,12 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
         if (businessFunction) continue; // Already added this view action and its related edit/create/delete actions
         
         // add business function
-        businessFunction = [BusinessFunction newObjectWithMoc:self.managedObjectContext];
+        businessFunction = [BusinessFunction createObjectInMoc:self.managedObjectContext];
         businessFunction.codeUnitName = className;
         businessFunction.functionName = [self generateFunctionName:businessFunction];
         
         for (Role * role in [Role allObjectsWithMoc:self.managedObjectContext]) {
-            Permission * permission = [Permission newObjectWithMoc:self.managedObjectContext];
+            Permission * permission = [Permission createObjectInMoc:self.managedObjectContext];
             permission.role = role;
             permission.businessFunction = businessFunction;
             if (role == self.salon.managerRole || role == self.salon.systemAdminRole || role == self.salon.systemRole) {
@@ -510,7 +510,7 @@ static NSString * const kAMCDataStoreDirectory = @"kAMCDataStoreDirectory";
 }
 -(Customer *)anonymousCustomer {
     if (!self.salon.anonymousCustomer) {
-        self.salon.anonymousCustomer = [Customer newObjectWithMoc:self.managedObjectContext];
+        self.salon.anonymousCustomer = [Customer createObjectInMoc:self.managedObjectContext];
         self.salon.anonymousCustomer.firstName = @"Anonymous";
         self.salon.anonymousCustomer.lastName = @"Customer";
         self.salon.anonymousCustomer.phone = @"00000000000";

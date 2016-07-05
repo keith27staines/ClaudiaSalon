@@ -10,7 +10,7 @@
 #import "Note.h"
 
 @implementation StockedBrand (Methods)
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     StockedBrand * brand = [NSEntityDescription insertNewObjectForEntityForName:@"StockedBrand" inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];

@@ -11,7 +11,7 @@
 
 @implementation StockedItem (Methods)
 
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc
 {
     StockedItem *stockedItem = [NSEntityDescription insertNewObjectForEntityForName:@"StockedItem" inManagedObjectContext:moc];
     NSDate * rightNow = [NSDate date];

@@ -11,7 +11,7 @@
 #import "AMCObjectWithNotesProtocol.h"
 
 @interface StockedBrand (Methods) <AMCObjectWithNotesProtocol>
-+(id)newObjectWithMoc:(NSManagedObjectContext*)moc;
++(NSManagedObject*)createObjectInMoc:(NSManagedObjectContext*)moc;
 +(NSArray*)allObjectsWithMoc:(NSManagedObjectContext*)moc;
 +(StockedBrand*)brandFromShortBrandName:(NSString*)shortName withMoc:(NSManagedObjectContext*)moc;
 -(NSSet*)nonAuditNotes;

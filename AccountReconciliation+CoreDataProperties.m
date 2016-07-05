@@ -2,7 +2,7 @@
 //  AccountReconciliation+CoreDataProperties.m
 //  ClaudiaSalon
 //
-//  Created by Keith Staines on 26/01/2016.
+//  Created by Keith Staines on 04/07/2016.
 //  Copyright © 2016 ClaudiasSalon. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -14,7 +14,14 @@
 @implementation AccountReconciliation (CoreDataProperties)
 
 @dynamic actualBalance;
+@dynamic bqCloudID;
+@dynamic bqHasClientChanges;
+@dynamic bqMetadata;
+@dynamic bqNeedsCoreDataExport;
+@dynamic isActive;
+@dynamic lastUpdatedDate;
 @dynamic reconciliationDate;
+@dynamic calculatedBalance;
 @dynamic account;
 
 @end

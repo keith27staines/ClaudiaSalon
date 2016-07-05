@@ -384,7 +384,7 @@
 }
 -(Sale*)newSale
 {
-    Sale * sale = [Sale newObjectWithMoc:self.documentMoc];
+    Sale * sale = [Sale createObjectInMoc:self.documentMoc];
     sale.isQuote = @YES;
     [self.saleArrayController addObject:sale];
     [self.saleArrayController rearrangeObjects];
